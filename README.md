@@ -11,7 +11,7 @@ Audience: ReactJS developers, CS students.
 * Learn about double buffering
 
 
-## The Game of Life:w
+## The Game of Life
 
 
 We will implement John Conway's [Game of
