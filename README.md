@@ -14,6 +14,7 @@ Audience: ReactJS developers, CS students.
 ## The Game of Life:w
 
 
+
 We will implement John Conway's [Game of
 Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) in a React
 app. This game is a class of discrete model known as a *[Cellular
