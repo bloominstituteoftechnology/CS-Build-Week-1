@@ -11,7 +11,8 @@ Audience: ReactJS developers, CS students.
 * Learn about double buffering
 
 
-## The Game of Life
+## The Game of Life:w
+
 
 We will implement John Conway's [Game of
 Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) in a React
@@ -152,6 +153,15 @@ You can also set them in the same way, and the call `putImageData()` to display 
 	buffer[index + 3] = 0xff; // Alpha: 0xff == 255, fully opaque
 
 	ctx.putImageData(imageData, 0, 0);
+
+
+## References
+
+* [John Conway's Game of
+Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
+* [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
+* [Canvas tutorial](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial)
+* [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
 
 
 ## Assignment
