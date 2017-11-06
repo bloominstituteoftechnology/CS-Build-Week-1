@@ -11,7 +11,8 @@ Audience: ReactJS developers, CS students.
 * Learn about double buffering
 
 
-## The Game of Life
+## The Game of Life:w
+
 
 We will implement John Conway's [Game of
 Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) in a React
@@ -154,7 +155,27 @@ You can also set them in the same way, and the call `putImageData()` to display 
 	ctx.putImageData(imageData, 0, 0);
 
 
+## References
+
+* [John Conway's Game of
+Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
+* [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
+* [Canvas tutorial](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial)
+* [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
+
+
 ## Assignment
+
+Mini-Sprint:
+
+* Implement a React app that animates a pixel moving across a canvas.
+  The pixel should be set by manipulating the array returned from
+  `getImageData()`, and passing that data to `putImageData()`.
+
+  Other code that might be useful: https://github.com/beejjorgensen/react-canvas-anim
+
+Sprint:
+
 
 * Implement a class that plays the Game of Life in an array. This
   shouldn't be a screen buffer, since we want to keep the data in the
@@ -167,8 +188,9 @@ You can also set them in the same way, and the call `putImageData()` to display 
   Remember to use double buffering to keep the next generation separate
   from the current generation while you're doing the computation.
 
-* Implement a React app that instantiates a class of Life, and uses the
-  data from it to fill a canvas screen buffer. This app can use
+* Use the mini-sprint React app and instantiate a class of Life, and use
+  the data from it to fill a canvas screen buffer. The tell the life
+  class to go to the next generation. And repeat. This app can use
   [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
   to drive the process.
 
