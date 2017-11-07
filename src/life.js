@@ -35,7 +35,7 @@ class Life {
       Array2D(width, height)
     ];
     
-    this.clear();
+    this.randomize();
   }
   
   /**
@@ -60,7 +60,13 @@ class Life {
    * Randomize the life grid
    */
   randomize() {
-    // !!! TODO
+    let buffer = this.buffer[this.currentBufferIndex];
+
+    for (let y = 0; y < this.height; y++) {
+      for( let x = 0; x < this.width; x++) {
+        buffer[y][x] = (Math.random()*2)|0;
+      }
+    }
   }
 
   /**

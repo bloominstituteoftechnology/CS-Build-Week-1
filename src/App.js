@@ -18,16 +18,32 @@ class LifeCanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
-    // !!! TODO
+    requestAnimationFrame(() => { this.animFrame(); });
   }
 
   /**
    * Handle an animation frame
    */
   animFrame() {
-    // !!! TODO
+    let width = this.props.width;
+    let height = this.props.height;
 
     // Convert data from life into a bitmap and show it on the canvas
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, width, height);
+
+    for(let row = 0; row < height; row++) {
+      for (let col = 0; col < width; col++) {
+
+        let lifeStatus = cells[row][col];
+        let color = lifeStatus === 0? 0: 255;
+
+        let index = ((row * width) + col) * 4;
+
+        imageData.data
+      }
+    }
 
   }
 
