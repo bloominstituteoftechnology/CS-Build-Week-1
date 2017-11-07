@@ -73,7 +73,18 @@ class LifeCanvas extends Component {
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <div>
+        <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+        <br />
+        <button onClick={console.log("Toggle Pause & Play")}>Pause / Play</button>
+        {/* <button onClick={console.log("Randomize")}>Randomize</button> */}
+        <button onClick={this.life.randomize}>Randomize</button>
+        <button onClick={console.log("Clear the grid")}>Clear the grid</button>
+        <button onClick={console.log("Add a Glider")}>Add a Glider</button>
+        <button onClick={console.log("Add a Gosper Glider Gun")}>Add a Gosper Glider Gun</button>
+      </div>
+    )
   }
 }
 
