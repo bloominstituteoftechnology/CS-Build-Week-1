@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom'; // <~~~ package.json?
 import Life from './life';
 import './App.css';
 
@@ -16,7 +17,7 @@ class LifeCanvas extends Component {
     this.life = new Life(props.width, props.height);
     this.life.randomize();
     this.state = { x: 0, y: 0 };
-    
+
   }
 
   /**
@@ -80,13 +81,21 @@ class LifeCanvas extends Component {
     requestAnimationFrame(() => { this.animFrame(); });
   }
 
+  _onMouseMove(e) {
+    const position = ReactDOM.findDOMNode(this.refs.elem).getBoundingClientRect();
+    console.log(position, e.nativeEvent.offsetX, e.screenX);
+
+    this.setState({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
+  }
+
   /**
    * Render
    */
   render() {
+    const { x, y } = this.state;
     return (
-      <div>
-        <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+      <div ref="elem">
+        <canvas ref="canvas" width={this.props.width} height={this.props.height} onMouseMove={this._onMouseMove.bind(this)} />
         <div>
           <button onClick={() => { this.life.randomize(); } }>Randomize</button>
           <button onClick={() => { this.life.clear(); }}>Clear</button>
@@ -96,7 +105,7 @@ class LifeCanvas extends Component {
           <button onClick={console.log("Add a Gosper Glider Gun")}>Add a Gosper Glider Gun</button>
         </div>
         <div>
-          X: Y:
+          <h1>Mouse coordinates: { x } { y }</h1>
         </div>
         <div>
           Generations:
