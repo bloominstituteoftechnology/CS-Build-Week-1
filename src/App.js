@@ -15,6 +15,8 @@ class LifeCanvas extends Component {
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+    this.state = { x: 0, y: 0 };
+    
   }
 
   /**
