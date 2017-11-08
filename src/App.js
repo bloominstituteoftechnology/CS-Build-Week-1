@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'; // <~~~ package.json?
+import ReactDOM from 'react-dom'; // <~~~ for mouse coordinates
 import Life from './life';
 import './App.css';
 
