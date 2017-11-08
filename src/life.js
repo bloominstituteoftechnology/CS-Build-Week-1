@@ -36,6 +36,8 @@ class Life {
     ];
 
     this.clear();
+
+    this.generation = 0;
   }
 
   /**
@@ -192,6 +194,7 @@ class Life {
     // data. So we declare that to be the new current buffer.
 
     this.currentBufferIndex = this.currentBufferIndex === 0? 1: 0;
+    this.generation++;
   }
 }
 

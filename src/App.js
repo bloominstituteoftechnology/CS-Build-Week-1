@@ -93,6 +93,7 @@ class LifeCanvas extends Component {
    */
   render() {
     const { x, y } = this.state;
+    const count = `Generations: ${this.life.generation}`;
     return (
       <div ref="elem">
         <canvas ref="canvas" width={this.props.width} height={this.props.height} onMouseMove={this._onMouseMove.bind(this)} />
@@ -108,7 +109,7 @@ class LifeCanvas extends Component {
           <h1>Mouse coordinates: { x } { y }</h1>
         </div>
         <div>
-          Generations:
+          <h2>{ count }</h2>
         </div>
       </div>
     )
