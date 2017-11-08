@@ -65,16 +65,18 @@ class LifeCanvas extends Component {
     // Next generation of life
     this.life.step();
 
-    // Request another animation frame
-    requestAnimationFrame(() => {this.animFrame()});
+    // // Request another animation frame
+    // requestAnimationFrame(() => {this.animFrame()});
+    // After render, draw another frame
+    if (!this.stopRequested) {
+      requestAnimationFrame(() => {this.animFrame()});
+    }
   }
 
-  /**
-   * Click Handler
-   */
-   handleClick () {
-
-   }
+  start() {
+    this.stopRequested = false;
+    requestAnimationFrame(() => { this.animFrame(); });
+  }
 
   /**
    * Render
@@ -84,11 +86,10 @@ class LifeCanvas extends Component {
       <div>
         <canvas ref="canvas" width={this.props.width} height={this.props.height} />
         <div>
-          <button onClick={console.log("Toggle Pause & Play")}>Pause / Play</button>
-          {/* <button onClick={console.log("Randomize")}>Randomize</button> */}
-          <button onClick={() => {this.life.randomize(); } }>Randomize</button>
-          {/* <button onClick={console.log("Clear the grid")}>Clear the grid</button> */}
-          <button onClick={() => {this.life.clear(); }}>Clear the grid</button>
+          <button onClick={() => { this.life.randomize(); } }>Randomize</button>
+          <button onClick={() => { this.life.clear(); }}>Clear</button>
+          <button onClick={() => { this.stopRequested = true; }}>Stop</button>
+          <button onClick={() => { this.start(); }}>Start</button>
           <button onClick={console.log("Add a Glider")}>Add a Glider</button>
           <button onClick={console.log("Add a Gosper Glider Gun")}>Add a Gosper Glider Gun</button>
         </div>
