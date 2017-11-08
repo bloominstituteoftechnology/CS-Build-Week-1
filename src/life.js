@@ -45,6 +45,7 @@ class Life {
    */
   getCells() {
     // !!! TODO
+    return this.buffer[this.currentBufferIndex];
   }
 
   /**
@@ -75,12 +76,43 @@ class Life {
   step() {
     // Fill the offscreen buffer with the next life generation built
     // from the current buffer.
+    let currentBuffer = this.buffer[this.currentBufferIndex];
 
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    let backBuffer = this.buffer[this.backBufferIndex];
+
+    let width = this.width;
+    let height = this.height;
     /**
      * Count the neighbors of a cell
      */
-    function countNeighbors(x, y) {
+    function countNeighbors(row, col) {
+      let count = 0;
       // !!! TODO
+      for (let rowOffset = -1; rowOffset <= 1; rowOffset++) {
+        let neighborRow = row + rowOffset;
+
+        if (neighborRow < 0 || neighborRow === height) {
+          continue;
+        }
+
+        for (let colOffset = -1; colOffset <= 1; colOffset++) {
+          let neighborCol = col + colOffset;
+          
+          if (rowOffset === 0 && colOffset === 0) {
+            continue;
+          }
+          if (neighborCol < 0 || neighborCol === width) {
+            continue;
+          }
+          let neighbor = currentBuffer[neighborRow][neighborCol];
+
+          if (neighbor === 1) {
+            count++;
+          }
+        }
+      }
+      return count;
     }
 
     // Loop through and decide if the next generation is alive or dead
@@ -90,8 +122,31 @@ class Life {
 
     // Now the backBuffer is populated with the next generation life
     // data. So we declare that to be the new current buffer.
-    
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+
+        let neighborCount = (countNeighbors.bind(this))(col, row);
+
+        let thisCell = currentBuffer[row][col];
+
+        if (thisCell === 1) { //active
+          if(neighborCount < 2 || neighborCount > 3) {
+            //lost
+            backBuffer[row][col] = 0;
+          } else {
+            backBuffer[row][col] = 1;
+          }
+        } else { 
+          if (neighborCount === 3) {//new life
+            backBuffer[row][col] = 1;
+          } else {
+            backBuffer[row][col] = 0;
+          }
+        }
+      }
+    }
     // !!! TODO
+    this.currentBufferIndex = this.currentBufferIndex === 0? 1: 0;
   }
 }
 
