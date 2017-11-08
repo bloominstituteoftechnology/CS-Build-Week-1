@@ -83,14 +83,21 @@ class LifeCanvas extends Component {
     return (
       <div>
         <canvas ref="canvas" width={this.props.width} height={this.props.height} />
-        <br />
-        <button onClick={console.log("Toggle Pause & Play")}>Pause / Play</button>
-        {/* <button onClick={console.log("Randomize")}>Randomize</button> */}
-        <button onClick={this.life.randomize}>Randomize</button>
-        {/* <button onClick={console.log("Clear the grid")}>Clear the grid</button> */}
-        <button onClick={this.life.clear}>Clear the grid</button>
-        <button onClick={console.log("Add a Glider")}>Add a Glider</button>
-        <button onClick={console.log("Add a Gosper Glider Gun")}>Add a Gosper Glider Gun</button>
+        <div>
+          <button onClick={console.log("Toggle Pause & Play")}>Pause / Play</button>
+          {/* <button onClick={console.log("Randomize")}>Randomize</button> */}
+          <button onClick={() => {this.life.randomize(); } }>Randomize</button>
+          {/* <button onClick={console.log("Clear the grid")}>Clear the grid</button> */}
+          <button onClick={() => {this.life.clear(); }}>Clear the grid</button>
+          <button onClick={console.log("Add a Glider")}>Add a Glider</button>
+          <button onClick={console.log("Add a Gosper Glider Gun")}>Add a Gosper Glider Gun</button>
+        </div>
+        <div>
+          X: Y:
+        </div>
+        <div>
+          Generations:
+        </div>
       </div>
     )
   }
