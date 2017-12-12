@@ -22,6 +22,45 @@
   font-size: large;
 }
 
+.title {
+  color: white;
+  text-shadow: -2px 0 blue, 0 2px green, 2px 0 red, 0 -2px purple;
+}
+
+.btn-div {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  margin: auto;
+  margin-top: 10px;
+}
+
+button {
+  height: 30px;
+  margin: 4px 0;
+  background: -webkit-linear-gradient(top,rgba(255, 0, 0, .2),rgba(0, 255, 0, .2), rgba(0, 0, 255, .2));
+  font-weight: 600;
+  border: solid 1px black;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.game-container {
+  border: 1px outset black;
+  background-color: whitesmoke;
+  width: 500px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+canvas {
+  border: 4px inset white;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

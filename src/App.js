@@ -54,6 +54,9 @@ class LifeCanvas extends Component {
       let width = this.props.width;
       const drawPixel = (x, y, r, g, b) => {
         let index = ((y * width) + x) * 4;
+        r = r ? ((r - 50) * Math.random() + 50) : r;
+        g = g ? ((g - 50) * Math.random() + 50) : g;
+        b = b ? ((b - 50) * Math.random() + 50) : b;
         pixels[index + 0] = r;
         pixels[index + 1] = g;
         pixels[index + 2] = b;
@@ -71,9 +74,9 @@ class LifeCanvas extends Component {
 
   render() {
     return (
-      <div>
+      <div className="game-container" >
         <canvas ref="canvas" width={this.props.width} height={this.props.height}/>
-        <div>
+        <div className="btn-div">
           <button onClick={() => this.startStop()}>{this.state.proceed ? "Stop" : "Start"}</button>
           <button onClick={() => this.randomize()}>Randomize</button>
           <button onClick={() => this.clear()}>Clear</button>
@@ -89,6 +92,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
+        <h1 className="title" >Conway's Game of Life</h1>
         <LifeCanvas width={400} height={300}/>
       </div>
     )
