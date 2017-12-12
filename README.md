@@ -141,7 +141,7 @@ multiply our result by 4:
 You can also set them in the same way, and the call `putImageData()` to display the result:
 
     // Set the pixel at 10,20 to pure red and display on the canvas:
-
+ 
     let buffer = imageData.data;
 
     let x = 10, y = 20;

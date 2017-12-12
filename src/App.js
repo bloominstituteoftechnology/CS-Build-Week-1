@@ -2,68 +2,104 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
-/**
- * Life canvas
- */
 class LifeCanvas extends Component {
-
-  /**
-   * Constructor
-   */
   constructor(props) {
     super(props);
+    this.state = {
+      proceed: true
+    }
+    this.startStop.bind(this);
+    this.randomize.bind(this);
+    this.clear.bind(this);
+    this.addGlider.bind(this);
+    this.addGun.bind(this);
   }
 
-  /**
-   * Component did mount
-   */
+  startStop() {
+    this.setState({ proceed: !this.state.proceed });
+  }
+
+  randomize() {
+    this.life.randomize();
+  }
+
+  clear() {
+    this.life.clear();
+  }
+
+  addGlider() {
+    this.life.addGlider();
+  }
+
+  addGun() {
+    this.life.addGun();
+  }
+
   componentDidMount() {
-    // !!! TODO
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, this.props.width, this.props.height);
+    this.life = new Life(this.props.width, this.props.height);
+    this.life.clear();
+    this.life.randomize();
+    requestAnimationFrame(this.animFrame.bind(this));
   }
 
-  /**
-   * Handle an animation frame
-   */
   animFrame() {
-    // !!! TODO
-
-    // Convert data from life into a bitmap and show it on the canvas
-
+    if (this.state.proceed) {
+      let canvas = this.refs.canvas;
+      let ctx = canvas.getContext('2d');
+      let imageData = ctx.getImageData(0, 0, this.props.width, this.props.height);
+      let pixels = imageData.data;
+      let width = this.props.width;
+      const drawPixel = (x, y, r, g, b) => {
+        let index = ((y * width) + x) * 4;
+        r = r ? ((r - 50) * Math.random() + 50) : r;
+        g = g ? ((g - 50) * Math.random() + 50) : g;
+        b = b ? ((b - 50) * Math.random() + 50) : b;
+        pixels[index + 0] = r;
+        pixels[index + 1] = g;
+        pixels[index + 2] = b;
+        pixels[index + 3] = 0xff;
+      }
+      const cells = this.life.getCells();
+      cells.forEach((row, y) => row.forEach((cell, x) => {
+        cell ? drawPixel(x, y, 255, 255, 255) : drawPixel(x, y, 0, 0, 0);
+      }));
+      ctx.putImageData(imageData, 0, 0);
+      this.life.step();
+    }
+    requestAnimationFrame(this.animFrame.bind(this));
   }
 
-  /**
-   * Render
-   */
   render() {
-    // TODO
+    return (
+      <div className="game-container" >
+        <canvas ref="canvas" width={this.props.width} height={this.props.height}/>
+        <div className="btn-div">
+          <button onClick={() => this.startStop()}>{this.state.proceed ? "Stop" : "Start"}</button>
+          <button onClick={() => this.randomize()}>Randomize</button>
+          <button onClick={() => this.clear()}>Clear</button>
+          <button onClick={() => this.addGlider()}>Glider</button>
+          <button onClick={() => this.addGun()}>Gun</button>
+        </div>
+    </div>
+    )
   }
 }
 
-/**
- * Life holder component
- */
 class LifeApp extends Component {
-
-  /**
-   * Render
-   */
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <h1 className="title" >Conway's Game of Life</h1>
+        <LifeCanvas width={400} height={300}/>
       </div>
     )
   }
 }
 
-/**
- * Outer App component
- */
 class App extends Component {
-
-  /**
-   * Render
-   */
   render() {
     return (
       <div className="App">
