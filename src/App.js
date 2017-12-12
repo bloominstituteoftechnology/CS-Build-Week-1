@@ -48,7 +48,7 @@ class LifeCanvas extends Component {
     }
     const cells = this.life.getCells();
     cells.forEach((row, y) => row.forEach((cell, x) => {
-      cell ? drawPixel(x, y, 0, 0, 0) : drawPixel(x, y, 255, 255, 255);
+      cell ? drawPixel(x, y, 255, 255, 255) : drawPixel(x, y, 0, 0, 0);
     }))
     // Manipulate the data
     ctx.putImageData(imageData, 0, 0);
