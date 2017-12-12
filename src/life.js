@@ -9,10 +9,10 @@ function Array2D(width, height) {
   let a = new Array(height);
 
   for (let i = 0; i < height; i++) {
-    a[i] = new Array(width);
+    a[i] = new Array(width).fill(0);
   }
 
-  return a;
+  return a.map(row => row.map(() => 0));
 }
 
 /**
@@ -44,7 +44,7 @@ class Life {
    * This should NOT be modified by the caller
    */
   getCells() {
-    // !!! TODO
+    return this.buffer[this.currentBufferIndex];
   }
 
   /**
@@ -60,7 +60,7 @@ class Life {
    * Randomize the life grid
    */
   randomize() {
-    // !!! TODO
+    this.buffer[this.currentBufferIndex] = this.buffer[this.currentBufferIndex].map(row => row.map(value => Math.random() < .8 ? 0 : 1));
   }
 
   /**
@@ -73,18 +73,35 @@ class Life {
     /**
      * Count the neighbors of a cell
      */
-    function countNeighbors(x, y) {
+    const countNeighbors = (x, y) => {
       // !!! TODO
+      let neighbors = 0;
+      if (y > 0 && this.buffer[this.currentBufferIndex][y - 1][x]) neighbors++;
+      if (y < this.height - 1 && this.buffer[this.currentBufferIndex][y + 1][x]) neighbors++;
+      if (x > 0 && this.buffer[this.currentBufferIndex][y][x - 1]) neighbors++;
+      if (x < this.width - 1 && this.buffer[this.currentBufferIndex][y][x + 1]) neighbors++;
+      if (x > 0 && y > 0 && this.buffer[this.currentBufferIndex][y - 1][x - 1]) neighbors++;
+      if (y > 0 && x < this.width - 1 && this.buffer[this.currentBufferIndex][y - 1][x + 1]) neighbors++;
+      if (x > 0 && y < this.height - 1 && this.buffer[this.currentBufferIndex][y + 1][x - 1]) neighbors++;
+      if (x < this.width - 1 && y < this.height - 1 && this.buffer[this.currentBufferIndex][y + 1][x + 1]) neighbors++;
+      return neighbors;
     }
-
     // Loop through and decide if the next generation is alive or dead
     // for each cell processed.
+    const backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    
+    this.buffer[backBufferIndex] = this.buffer[backBufferIndex].map((row, y) => row.map((val, x) => {
+      const neighbors = countNeighbors(x, y);
+      if (neighbors === 3) return 1;
+      if (this.buffer[this.currentBufferIndex][y][x] && neighbors === 2) return 1;
+      return 0;
+    }))
 
     // !!! TODO
-
+    
     // Now the backBuffer is populated with the next generation life
     // data. So we declare that to be the new current buffer.
-    
+    this.currentBufferIndex = backBufferIndex;
     // !!! TODO
   }
 }
