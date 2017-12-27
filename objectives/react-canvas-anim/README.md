@@ -112,8 +112,16 @@ What's that weird `ref="canvas"` bit?
 Turns out we can use that later in JS code to get a reference to the canvas that
 was rendered. This will be very useful when we actually want to draw on it.
 
+Inside the `requestAnimationFrame()` handler, you can refer to the canvas with:
 
-### Canvas in React with `requestAnimFrame()`
+```javascript
+const canvas = this.refs.canvas; // refers to the ref attribute in render()
+
+const context = canvas.getContext('2d'); // etc.
+```
+
+
+### Canvas in React with `requestAnimationFrame()`
 
 How do we merge these two things together to get animation?
 

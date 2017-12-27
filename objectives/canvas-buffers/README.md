@@ -26,7 +26,8 @@ intensity".
 
 ## Getting the Pixel Data From A Canvas
 
-If you have a reference to the canvas in JS, you can get the context and then some image data that is the screen buffer:
+If you have a reference to the canvas in JS, you can get the context and then
+some image data that is the screen buffer:
 
 ```html
 <canvas id="my-canvas"></canvas>
@@ -42,6 +43,10 @@ let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
 let screenBuffer = imageData.data;
 ```
+
+> The _context_ is the current drawing state of the canvas. It includes all the
+> state variables (width of current drawing line, fill color, etc.) as well as
+> the functions necessary to manipulate the canvas.
 
 Once you have the screen buffer, you can examine or set values within it
 as you see fit. Once that's done, you can display the changed screen
