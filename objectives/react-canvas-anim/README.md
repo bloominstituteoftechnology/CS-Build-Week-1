@@ -2,7 +2,7 @@
 
 ## Objectives
 
-* Learn about double buffering and why they are useful
+* Learn about double buffering and why it is useful
 * Learn to integrate double-buffer animation into a React canvas app
 * Implement a React canvas app with animated canvas
 * Animate a pixel across the screen
