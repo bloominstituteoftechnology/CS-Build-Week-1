@@ -143,7 +143,7 @@ function getPixel(imageData, x, y) {
     const index = (w * y + x) * 4;
 
     // Return a copy of the R, G, B, and A elements
-    return imageData.slice(index, index + 4);
+    return imageData.data.slice(index, index + 4);
 }
 
 // Example Usage
