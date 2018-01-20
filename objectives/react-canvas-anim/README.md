@@ -131,7 +131,7 @@ class MyComponent extends Component {
      */
     componentDidMount() {
         // Request initial animation frame
-        requestAnimationFrame(() => { this.onAnimFrame(); });
+        requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
     }
 
     /**
@@ -148,7 +148,7 @@ class MyComponent extends Component {
     onAnimFrame(timestamp) {
         // If desired, request another anim frame for later
         if (this.continueAnimation) {
-            requestAnimationFrame(() => { this.onAnimFrame(); });
+            requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
         }
 
         // TODO animate stuff
