@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import fs from 'fs';
 import CCA from './cca';
 import './App.css';
@@ -6,6 +7,21 @@ import './App.css';
 
 export const COLORS =  []
 
+=======
+import CCA from './cca';
+import './App.css';
+
+const COLORS = [
+  [0, 0, 0],
+  [0x8f, 0, 0x5f],
+  [0x5f, 0, 0x8f],
+  [0, 0, 0xff],
+  [0, 0x5f, 0x7f],
+  [0x5f, 0x8f, 0x7f],
+  [0x8f, 0xff, 0x7f],
+  [0xff, 0x5f, 0x7f],
+]
+>>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
 
 /**
  * CCA canvas
@@ -17,25 +33,32 @@ class CCACanvas extends Component {
    */
   constructor(props) {
     super(props);
+<<<<<<< HEAD
     this.width = props.width;
     this.height = props.height;
     this.cca = new CCA(this.width, this.height, this);
     this.cca.randomize();
     this.state = {colors: COLORS}
    
+=======
+>>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
   }
 
   /**
    * Component did mount
    */
   componentDidMount() {
+<<<<<<< HEAD
     requestAnimationFrame(() => this.animFrame());
+=======
+>>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
   }
 
   /**
    * Handle an animation frame
    */
   animFrame() {
+<<<<<<< HEAD
     let width = this.width;
     let height = this.height;
     let cells = this.cca.getCells();
@@ -66,12 +89,15 @@ class CCACanvas extends Component {
     this.cca.step();
 
     requestAnimationFrame(() => this.animFrame());
+=======
+>>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
   }
 
   /**
    * Render
    */
   render() {
+<<<<<<< HEAD
     return (
     <div className="display-wrapper">
       <div>
@@ -85,6 +111,8 @@ class CCACanvas extends Component {
       </div>
     </div>
     );
+=======
+>>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
   }
 }
 
@@ -99,13 +127,18 @@ class CCAApp extends Component {
   render() {
     return (
       <div>
+<<<<<<< HEAD
         <CCACanvas width={300} height={300} parent={this} />
         
+=======
+        <CCACanvas width={400} height={300} />
+>>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
       </div>
     )
   }
 }
 
+<<<<<<< HEAD
 class Controls extends Component {
   constructor(props){
     super();
@@ -121,6 +154,8 @@ class Controls extends Component {
   }
 }
 
+=======
+>>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
 /**
  * Outer App component
  */
@@ -132,16 +167,23 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+<<<<<<< HEAD
         <header className='App-header'><h1>LAMBDA SCHOOL: CCA</h1></header>
         <div className='App-wrapper'>
           <CCAApp />
         </div>
         <footer className='footer'> Copyright 2018 Track Seven Development </footer>
+=======
+        <CCAApp />
+>>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
       </div>
     );
   }
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
 export default App;
