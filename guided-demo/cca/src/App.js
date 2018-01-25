@@ -72,7 +72,6 @@ class CCACanvas extends Component {
    * Render
    */
   render() {
-<<<<<<< HEAD
     return (
     <div className="display-wrapper">
       <div>
@@ -86,8 +85,6 @@ class CCACanvas extends Component {
       </div>
     </div>
     );
-=======
->>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
   }
 }
 
@@ -102,18 +99,13 @@ class CCAApp extends Component {
   render() {
     return (
       <div>
-<<<<<<< HEAD
         <CCACanvas width={300} height={300} parent={this} />
         
-=======
-        <CCACanvas width={400} height={300} />
->>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
       </div>
     )
   }
 }
 
-<<<<<<< HEAD
 class Controls extends Component {
   constructor(props){
     super();
@@ -129,8 +121,6 @@ class Controls extends Component {
   }
 }
 
-=======
->>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
 /**
  * Outer App component
  */
@@ -142,23 +132,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-<<<<<<< HEAD
         <header className='App-header'><h1>LAMBDA SCHOOL: CCA</h1></header>
         <div className='App-wrapper'>
           <CCAApp />
         </div>
         <footer className='footer'> Copyright 2018 Track Seven Development </footer>
-=======
-        <CCAApp />
->>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
       </div>
     );
   }
 }
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
 export default App;
