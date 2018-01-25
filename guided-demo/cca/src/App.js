@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import fs from 'fs';
 import CCA from './cca';
 import './App.css';
@@ -7,21 +6,6 @@ import './App.css';
 
 export const COLORS =  []
 
-=======
-import CCA from './cca';
-import './App.css';
-
-const COLORS = [
-  [0, 0, 0],
-  [0x8f, 0, 0x5f],
-  [0x5f, 0, 0x8f],
-  [0, 0, 0xff],
-  [0, 0x5f, 0x7f],
-  [0x5f, 0x8f, 0x7f],
-  [0x8f, 0xff, 0x7f],
-  [0xff, 0x5f, 0x7f],
-]
->>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
 
 /**
  * CCA canvas
@@ -33,32 +17,25 @@ class CCACanvas extends Component {
    */
   constructor(props) {
     super(props);
-<<<<<<< HEAD
     this.width = props.width;
     this.height = props.height;
     this.cca = new CCA(this.width, this.height, this);
     this.cca.randomize();
     this.state = {colors: COLORS}
    
-=======
->>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
   }
 
   /**
    * Component did mount
    */
   componentDidMount() {
-<<<<<<< HEAD
     requestAnimationFrame(() => this.animFrame());
-=======
->>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
   }
 
   /**
    * Handle an animation frame
    */
   animFrame() {
-<<<<<<< HEAD
     let width = this.width;
     let height = this.height;
     let cells = this.cca.getCells();
@@ -89,8 +66,6 @@ class CCACanvas extends Component {
     this.cca.step();
 
     requestAnimationFrame(() => this.animFrame());
-=======
->>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
   }
 
   /**

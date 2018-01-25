@@ -3,10 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
     "fs": "0.0.1-security",
-=======
->>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.0.17"
@@ -17,8 +14,4 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> a13367503e34c013ada302bb806c598d1e3e2877
