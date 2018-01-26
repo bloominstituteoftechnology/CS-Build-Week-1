@@ -22,10 +22,9 @@ class Life {
   /**
    * Constructor
    */
-  constructor(width, height, pixelSize) {
-    this.pixelSize = pixelSize;
-    this.width = width / pixelSize;
-    this.height = height / pixelSize;
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
     this.buffer = [Array2D(width, height), Array2D(width, height)];
     this.activeBufferIdx = 0;
 

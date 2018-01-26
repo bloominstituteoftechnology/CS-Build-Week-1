@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Life from "./life";
 import "./App.css";
 
+function getRandomColors() {
+  return Array.from({ length: 3 }, () => ~~(Math.random() * 255));
+}
 /**
  * Life canvas
  */
@@ -12,9 +15,9 @@ class LifeCanvas extends Component {
   constructor(props) {
     super(props);
 
-    this.pixelSize = 1;
+    this.prevTime = null;
 
-    this.life = new Life(props.width, props.height, this.pixelSize);
+    this.life = new Life(props.width, props.height);
     this.life.randomize();
   }
 
@@ -22,45 +25,45 @@ class LifeCanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
-    requestAnimationFrame(() => {
-      this.animFrame();
+    requestAnimationFrame(timeStamp => {
+      this.animFrame(timeStamp);
     });
   }
 
   /**
    * Handle an animation frame
    */
-  animFrame() {
-    const { width, height } = this.props;
+  animFrame(timeStamp) {
+    if (!this.prevTime) {
+      this.prevTime = timeStamp;
+    }
+    requestAnimationFrame(timeStamp => this.animFrame(timeStamp));
+    let delta = timeStamp - this.prevTime;
+    let interval = 1000 / 10;
 
-    const cells = this.life.getCells();
-    const canvas = this.refs.canvas;
-    const ctx = canvas.getContext("2d");
+    if (delta > interval) {
+      this.prevTime = timeStamp - delta % interval;
+      const { width, height } = this.props;
 
-    // Change behavior depending on pixel size
-    // if greater than one draw rects to the canvas
-    // else manipulate individual pixels directly
-    if (this.pixelSize > 1) {
-      for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-          this.drawCell(x, y, cells[y][x], ctx);
-        }
-      }
-    } else {
+      const cells = this.life.getCells();
+      const canvas = this.refs.canvas;
+      const ctx = canvas.getContext("2d");
+      ctx.imageSmoothingEnabled = false;
+
       const imageData = ctx.getImageData(0, 0, width, height);
 
       cells.forEach((row, y) => {
         row.forEach((cell, x) => {
           const idx = (y * width + x) * 4;
-          let color = 0;
+          let color = [0, 0, 0];
 
           if (cell === 1) {
-            color = 255;
+            color = getRandomColors();
           }
 
-          imageData.data[idx] = color;
-          imageData.data[idx + 1] = color;
-          imageData.data[idx + 2] = color;
+          imageData.data[idx] = color[0];
+          imageData.data[idx + 1] = color[1];
+          imageData.data[idx + 2] = color[2];
           imageData.data[idx + 3] = 0xff;
         });
       });
@@ -69,21 +72,6 @@ class LifeCanvas extends Component {
     }
 
     this.life.step();
-
-    requestAnimationFrame(() => this.animFrame());
-  }
-
-  // Larger pixel version
-  drawCell(x, y, status, ctx) {
-    ctx.beginPath();
-    ctx.rect(
-      x * this.pixelSize,
-      y * this.pixelSize,
-      this.pixelSize,
-      this.pixelSize
-    );
-    ctx.fillStyle = status === 1 ? "white" : "black";
-    ctx.fill();
   }
 
   /**
@@ -110,7 +98,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={600} height={400} />
+        <LifeCanvas width={240} height={200} />
       </div>
     );
   }
