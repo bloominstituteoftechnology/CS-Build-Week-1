@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import Life from "./life";
 import "./App.css";
 
-function getRandomColors() {
-  return Array.from({ length: 3 }, () => ~~(Math.random() * 255));
-}
 /**
  * Life canvas
  */
@@ -39,7 +36,7 @@ class LifeCanvas extends Component {
     }
     requestAnimationFrame(timeStamp => this.animFrame(timeStamp));
     let delta = timeStamp - this.prevTime;
-    let interval = 1000 / 10;
+    let interval = 1000 / 25;
 
     if (delta > interval) {
       this.prevTime = timeStamp - delta % interval;
@@ -55,10 +52,10 @@ class LifeCanvas extends Component {
       cells.forEach((row, y) => {
         row.forEach((cell, x) => {
           const idx = (y * width + x) * 4;
-          let color = [0, 0, 0];
+          let color = [140, 140, 140];
 
           if (cell === 1) {
-            color = getRandomColors();
+            color = [0, 0, 0];
           }
 
           imageData.data[idx] = color[0];
@@ -69,9 +66,8 @@ class LifeCanvas extends Component {
       });
 
       ctx.putImageData(imageData, 0, 0);
+      this.life.step();
     }
-
-    this.life.step();
   }
 
   /**
@@ -98,7 +94,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={240} height={200} />
+        <LifeCanvas width={100} height={100} />
       </div>
     );
   }

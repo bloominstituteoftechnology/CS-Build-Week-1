@@ -32,6 +32,12 @@
 }
 
 canvas {
-  height: 800px;
-  width: 960px;
+  height: 600px;
+  width: 600px;
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -o-crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
 }
