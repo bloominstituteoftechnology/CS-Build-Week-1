@@ -8,10 +8,11 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+  background-color: black;
+  height: 25px;
+  padding: 5px;
+  color: orange;
+  font-size: 3em;
 }
 
 .App-title {
@@ -50,11 +51,12 @@ canvas {
 
 .button {
   height: 50px;
-  color: white;
-  background-color: skyblue;
+  color: orange;
+  border: 2px solid orange;
+  background-color: black;
   text-align: center;
   padding: 20px 15px;
   padding-bottom: 0;
-  font-size: 1.5em;
+  font-size: 2em;
   margin-top: 15px;
 }

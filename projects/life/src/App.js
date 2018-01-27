@@ -48,10 +48,10 @@ class LifeCanvas extends Component {
     cells.forEach((row, y) => {
       row.forEach((cell, x) => {
         const idx = (y * width + x) * 4;
-        let color = [140, 140, 140];
+        let color = [0, 0, 0];
 
         if (cell === 1) {
-          color = [0, 0, 0];
+          color = [255, 165, 0];
         }
 
         imageData.data[idx] = color[0];
@@ -190,6 +190,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <h1 className="App-header">The Game of Life</h1>
         <LifeApp />
       </div>
     );
