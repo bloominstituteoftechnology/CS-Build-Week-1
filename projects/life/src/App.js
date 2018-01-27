@@ -116,6 +116,13 @@ class LifeCanvas extends Component {
     this.drawCanvas();
   };
 
+  addGlider = e => {
+    e.preventDefault();
+
+    this.state.life.addGlider();
+    this.drawCanvas();
+  };
+
   /**
    * Render
    */
@@ -138,7 +145,9 @@ class LifeCanvas extends Component {
           <div className="button" onClick={this.clear}>
             Clear
           </div>
-          <div className="button">Add Glider</div>
+          <div className="button" onClick={this.addGlider}>
+            Add Glider
+          </div>
           <div className="button">Add Glider Gun</div>
         </div>
       </div>
