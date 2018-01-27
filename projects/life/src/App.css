@@ -41,3 +41,20 @@ canvas {
   image-rendering: pixelated;
   -ms-interpolation-mode: nearest-neighbor;
 }
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.button {
+  height: 50px;
+  color: white;
+  background-color: skyblue;
+  text-align: center;
+  padding: 20px 15px;
+  padding-bottom: 0;
+  font-size: 1.5em;
+  margin-top: 15px;
+}
