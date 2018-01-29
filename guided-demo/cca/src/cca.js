@@ -11,12 +11,12 @@ class CCA {
     this.width = width;
     this.height = height;
     this.currentCanvas = 1;
-
+    this.cca = null;
     this.buffer = [
       Array2D(width, height),
       Array2D(width, height)
     ];
-    this.colors = parent;
+    this.parent = parent;
     this.clear();
   }
 
@@ -33,11 +33,13 @@ class CCA {
   randomize = () => {
     
     const inputColors = require('./color_converter/colors');
-    const colorAmount = Math.floor(Math.random() * 10);
+    let colorAmount = Number(this.parent.state.count) > 0 && Number(this.parent.state.count) < 4 ? 4 : Number(this.parent.state.count);
+    if(colorAmount === 0) colorAmount = Math.floor(Math.random() * 20) | 4;
+    console.log(colorAmount);
     for(let i = 0; i < colorAmount; i++) {
       COLORS[i] = inputColors[Math.floor(Math.random() * inputColors.length)];
     }
-    this.colors.setState({colors:COLORS});
+    this.parent.setState({colors:COLORS});
     const buffer = this.buffer[this.currentCanvas];
     
     for (let y = 0; y < this.height; y++) {
@@ -49,19 +51,17 @@ class CCA {
   }
 
   findNeighbor = (x, y) => {
-    const bottomBufferIndex = !this.currentCanvas ? 1: 0;
     const topBuffer = this.buffer[this.currentCanvas];
-    const bottomBuffer = this.buffer[bottomBufferIndex];
     const nextValue = (topBuffer[y][x] + 1) % COLORS.length ;
     const offset = 1;
 
     //start
-    if (x > offset && (topBuffer[y][x-offset] === nextValue)) return true; 
-    if (y > offset && (topBuffer[y-offset][x] === nextValue)) return true;
+    if (x > offset && (topBuffer[y][x-offset] === nextValue) && this.parent.state.left) return true; 
+    if (y > offset && (topBuffer[y-offset][x] === nextValue) && this.parent.state.up) return true;
 
     //end
-    if (x < this.width - offset && (topBuffer[y][x+offset] === nextValue)) return true;
-    if (y < this.height - offset && (topBuffer[y+offset][x] === nextValue)) return true;
+    if (x < this.width - offset && (topBuffer[y][x+offset] === nextValue) && this.parent.state.right) return true;
+    if (y < this.height - offset && (topBuffer[y+offset][x] === nextValue) && this.parent.state.down) return true;
 
     return false;
   }

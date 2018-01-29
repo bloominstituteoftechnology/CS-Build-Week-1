@@ -4,7 +4,7 @@ import CCA from './cca';
 import './App.css';
 
 
-export const COLORS =  []
+export let COLORS =  []
 
 
 /**
@@ -19,10 +19,9 @@ class CCACanvas extends Component {
     super(props);
     this.width = props.width;
     this.height = props.height;
-    this.cca = new CCA(this.width, this.height, this);
-    this.cca.randomize();
-    this.state = {colors: COLORS}
-   
+    this.state = {colors: COLORS, left:true, up:true, right: true, down: true, count: 5};
+    this.cca = new CCA(this.width, this.height, this, this.state);
+    this.cca.randomize();   
   }
 
   /**
@@ -74,13 +73,13 @@ class CCACanvas extends Component {
   render() {
     return (
     <div className="display-wrapper">
-      <div>
+      <div className="cca-wrapper">
         <canvas ref="display" id="canvas" width={this.width} height={this.height} />
-        <Controls cca={this.cca}/>
+        <Controls cca={this.cca} canvas={this}/>
       </div>
       <div className="display-color-list">
-        {this.state.colors.map((color) => {
-          return <div>{JSON.stringify(color)}</div>
+        {this.state.colors.map((color, i) => {
+          return <div key={i}>{JSON.stringify(color)}</div>
         })}
       </div>
     </div>
@@ -92,30 +91,26 @@ class CCACanvas extends Component {
  * CCA holder component
  */
 class CCAApp extends Component {
-
-  /**
-   * Render
-   */
-  render() {
-    return (
-      <div>
-        <CCACanvas width={300} height={300} parent={this} />
-        
-      </div>
-    )
-  }
+  render = () => <CCACanvas width={300} height={300} />
 }
 
 class Controls extends Component {
   constructor(props){
     super();
     this.cca = props.cca;
+    this.canvas = props.canvas;
   }
+
   render(){
     return (
       <div className="App-wrapper-cca-controls">
+        <button style={this.canvas.state.left ? {background: 'green'} : {background: 'red'}} onClick={() => this.canvas.setState({left: !this.canvas.state.left})}>LEFT</button>
+        <button style={this.canvas.state.up ? {background: 'green'} : {background: 'red'}} onClick={() => this.canvas.setState({up: !this.canvas.state.up})}>UP</button>
+        <button style={this.canvas.state.right ? {background: 'green'} : {background: 'red'}} onClick={() => this.canvas.setState({right: !this.canvas.state.right})}>RIGHT</button>
+        <button style={this.canvas.state.down ? {background: 'green'} : {background: 'red'}} onClick={() => this.canvas.setState({down: !this.canvas.state.down})}>DOWN</button>
         <button onClick={() => this.cca.clear()}> Clear</button>
-        <button  onClick={() => this.cca.randomize()}> Randomize</button>
+        <input onChange={(e) => this.canvas.setState({count: e.target.value})} value={this.canvas.state.count} />
+        <button  onClick={() => {COLORS = []; this.cca.randomize()}}> Randomize</button>
       </div>
     );
   }
