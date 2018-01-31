@@ -9,7 +9,7 @@
 
 ## The Screen Buffer
 
-The *Screen Buffer* is a fancy way of saying "big array that holds pixel
+The _Screen Buffer_ is a fancy way of saying "big array that holds pixel
 information". Screen buffers hold their data in a variety of different
 formats, but JavaScript's `<canvas>` element exposes them in a single,
 one-dimensional array, where each set of 4 sequential elements
@@ -19,10 +19,9 @@ Each of the Red, Green, Blue, and Alpha values are one byte, with 0 (or
 0x00 hex) representing "no intensity", and 255 (0xff) representing "full
 intensity".
 
-* *Alpha* is the transparency of a pixel. `0` is completely transparent. `255`
+* _Alpha_ is the transparency of a pixel. `0` is completely transparent. `255`
   is completely opaque. Images are usually completely `255` for every pixel's
   alpha channel.
-
 
 ## Getting the Pixel Data From A Canvas
 
@@ -34,8 +33,8 @@ some image data that is the screen buffer:
 ```
 
 ```javascript
-let canvas = document.getElementById('my-canvas');
-let ctx = canvas.getContext('2d');
+let canvas = document.getElementById("my-canvas");
+let ctx = canvas.getContext("2d");
 
 let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
@@ -55,7 +54,6 @@ buffer in the canvas:
 ```javascript
 ctx.putImageData(imageData, 0, 0);
 ```
-
 
 ## Manipulating Pixel Values In the Screen Buffer
 
@@ -87,9 +85,9 @@ multiply our result by 4:
 
 let index = (y * width + x) * 4; // 4 elements per pixel
 
-let red   = buffer[index + 0];
+let red = buffer[index + 0];
 let green = buffer[index + 1];
-let blue  = buffer[index + 2];
+let blue = buffer[index + 2];
 let alpha = buffer[index + 3];
 ```
 
@@ -100,7 +98,8 @@ You can also set them in the same way, and the call `putImageData()` to display 
 
 let buffer = imageData.data; // Obtained from getImageData()
 
-let x = 10, y = 20;
+let x = 10,
+  y = 20;
 let index = (y * width + x) * 4;
 
 buffer[index + 0] = 0xff; // Red: 0xff == 255, full intensity
@@ -116,7 +115,6 @@ ctx.putImageData(imageData, 0, 0);
 * [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
 * [Canvas tutorial](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial)
 
-
 ## Exercises
 
 ### Implement Function to Get Pixel Value
@@ -131,25 +129,25 @@ ctx.putImageData(imageData, 0, 0);
  * @return Array [R,G,B,A] for the pixel in question, or null if out of bounds
  */
 function getPixel(imageData, x, y) {
-    const w = imageData.width; // Conveniently the width is here
-    const h = imageData.height;
+  const w = imageData.width; // Conveniently the width is here
+  const h = imageData.height;
 
-    if (x < 0 || x >= w || y < 0 || y >= h) {
-        // Out of bounds
-        return null;
-    }
+  if (x < 0 || x >= w || y < 0 || y >= h) {
+    // Out of bounds
+    return null;
+  }
 
-    // Compute index within the array
-    const index = (w * y + x) * 4;
+  // Compute index within the array
+  const index = (w * y + x) * 4;
 
-    // Return a copy of the R, G, B, and A elements
-    return imageData.data.slice(index, index + 4);
+  // Return a copy of the R, G, B, and A elements
+  return imageData.data.slice(index, index + 4);
 }
 
 // Example Usage
 
-const canvas = document.querySelector('#my-canvas');
-const ctx = canvas.getContext('2d');
+const canvas = document.querySelector("#my-canvas");
+const ctx = canvas.getContext("2d");
 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
 const pixelRGBA = getPixel(imageData, 10, 10);
@@ -160,3 +158,22 @@ console.log(pixelRGBA);
 ### Implement Function to Put (Set) Pixel Value
 
 Implement the same as above, allowing the setting of an RGBA pixel.
+
+```javascript
+function putPixel(imageData, x, y, rgba) {
+  const w = imageData.width;
+  const h = imageData.height;
+
+  if (x < 0 || x >= w || y < 0 || y >= h) {
+    // Out of bounds
+    return null;
+  }
+
+  let index = (w * y + x) * 4;
+
+  rgba.forEach(val => {
+    imageData.data[index] = val;
+    index++;
+  });
+}
+```

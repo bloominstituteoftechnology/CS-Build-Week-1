@@ -8,10 +8,11 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+  background-color: black;
+  height: 25px;
+  padding: 5px;
+  color: orange;
+  font-size: 3em;
 }
 
 .App-title {
@@ -23,6 +24,39 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+canvas {
+  height: 600px;
+  width: 600px;
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -o-crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.button {
+  height: 50px;
+  color: orange;
+  border: 2px solid orange;
+  background-color: black;
+  text-align: center;
+  padding: 20px 15px;
+  padding-bottom: 0;
+  font-size: 2em;
+  margin-top: 15px;
 }
