@@ -1,5 +1,5 @@
 /**
- * Implemention of Conway's game of Life
+ * Implementation of Conway's game of Life
  */
 
 /**
