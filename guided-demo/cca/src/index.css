@@ -1,5 +1,12 @@
 body {
-  margin: 0;
+  margin: 100px auto;
   padding: 0;
   font-family: sans-serif;
+}
+.ABC {
+  background-color: #ffb90f;
+  height: 600px;
+  width: 800px;
+  margin: 100px auto;
+  padding: 0;
 }
