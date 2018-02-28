@@ -32,7 +32,7 @@ class CCACanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()})
+    requestAnimationFrame(() => { this.animFrame(); })
   }
 
   /**
@@ -63,7 +63,7 @@ class CCACanvas extends Component {
 
     this.cca.step();
 
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => { this.animFrame(); });
   }
 
   /**
