@@ -102,7 +102,7 @@ class CCA {
         }
       }
 
-      East
+      // East
       if (x < this.width - 1) {
         if (currentBuffer[y][x + 1] === nextValue) {
           return true;
