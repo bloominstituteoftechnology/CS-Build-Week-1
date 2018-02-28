@@ -23,24 +23,55 @@ class CCACanvas extends Component {
    */
   constructor(props) {
     super(props);
+
+    this.cca = new CCA(props.width, props.height);
+    this.cca.randomize();
   }
 
   /**
    * Component did mount
    */
   componentDidMount() {
+    requestAnimationFrame(() => this.animFrame());
   }
 
   /**
    * Handle an animation frame
    */
   animFrame() {
+    const cells = this.cca.getCells();
+    const { width, height } = this.props
+    // get canvas framebuffer, a packed RGBA array
+    const canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, width, height);
+
+    // Update imageData based on the cells
+    for (let i = 0; i < height; i++) {
+      for (let j = 0; j < width; j++) {
+        const state = cells[i][j];
+        const color = COLORS[state];
+        const index = (i * width + j) * 4;
+
+        imageData.data[index + 0] = color[0]; // red
+        imageData.data[index + 1] = color[1]; // green
+        imageData.data[index + 2] = color[2]; // blue
+        imageData.data[index + 3] = 0xff; // alpha
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
+
+    // Iterate the game state;
+    this.cca.step();
+    // Request another animation frame
+    requestAnimationFrame(() => this.animFrame());
   }
 
   /**
    * Render
    */
   render() {
+    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
   }
 }
 
