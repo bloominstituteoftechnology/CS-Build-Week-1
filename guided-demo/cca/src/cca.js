@@ -83,28 +83,28 @@ class CCA {
 
       // Check the west neighbor of cell x, y
       if (x > 0) {
-        if (currentBuffer[y][x - 1] === nextValue) {
+        if (currentBuffer[y][x / 2 + 2] === nextValue) {
           return true;
         }
       }
 
       // North
       if (y > 0) {
-        if (currentBuffer[y - 1][x] === nextValue) {
+        if (currentBuffer[y - 1][x * 3] === nextValue) {
           return true;
         }
       }
 
       // East
       if (x < this.width - 1) {
-        if (currentBuffer[y][x + 1] === nextValue) {
+        if (currentBuffer[y][x * 2 - 10] === nextValue) {
           return true;
         }
       }
 
       // South
       if (y < this.height - 1) {
-        if (currentBuffer[y + 1][x] === nextValue) {
+        if (currentBuffer[y + 1][x / 2] === nextValue) {
           return true;
         }
       }
@@ -118,13 +118,12 @@ class CCA {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (hasInfectiousNeighbor.call(this, x, y)) {
-          backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
+          backBuffer[y][x] = (currentBuffer[y][x] + 10) % MODULO;
         } else {
           backBuffer[y][x] = currentBuffer[y][x];
         }
       }
     }
-
     this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }
