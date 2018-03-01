@@ -64,7 +64,7 @@ class Life {
   /**
    * Run the simulation for a single step
    */
-  step() {
+  step(pixelSize) {
     let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
 
     let currentBuffer = this.buffer[this.currentBufferIndex];
@@ -76,41 +76,41 @@ class Life {
 
       // north
       if (y > 0) {
-        if (currentBuffer[y - 1][x] === 1) count++;
+        if (currentBuffer[y - pixelSize][x] === 1) count++;
       }
       // northeast
-      if (y > 0 && x < this.width - 1) {
-        if (currentBuffer[y - 1][x + 1] === 1) count++;
+      if (y > 0 && x < this.width - pixelSize) {
+        if (currentBuffer[y - pixelSize][x + pixelSize] === 1) count++;
       }
       // east
-      if (x < this.width - 1) {
-        if (currentBuffer[y][x + 1] === 1) count++;
+      if (x < this.width - pixelSize) {
+        if (currentBuffer[y][x + pixelSize] === 1) count++;
       }
       // southeast
-      if (x < this.width - 1 && y < this.height - 1) {
-        if (currentBuffer[y + 1][x + 1] === 1) count++;
+      if (x < this.width - pixelSize && y < this.height - pixelSize) {
+        if (currentBuffer[y + pixelSize][x + pixelSize] === 1) count++;
       }
       // south
-      if (y < this.height - 1) {
-        if (currentBuffer[y + 1][x] === 1) count++;
+      if (y < this.height - pixelSize) {
+        if (currentBuffer[y + pixelSize][x] === 1) count++;
       }
       // southwest
-      if (y < this.height - 1 && x > 0) {
-        if (currentBuffer[y + 1][x - 1] === 1) count++;
+      if (y < this.height - pixelSize && x > 0) {
+        if (currentBuffer[y + pixelSize][x - pixelSize] === 1) count++;
       }
       // west
       if (x > 0) {
-        if (currentBuffer[y][x - 1] === 1) count++;
+        if (currentBuffer[y][x - pixelSize] === 1) count++;
       }
       // northwest
       if (y > 0 && x > 0) {
-        if (currentBuffer[y - 1][x - 1] === 1) count++;
+        if (currentBuffer[y - pixelSize][x - pixelSize] === 1) count++;
       }
       return count;
     }
 
-    for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++) {
+    for (let y = 0; y < this.height; y+=pixelSize) {
+      for (let x = 0; x < this.width; x+=pixelSize) {
         let neighborCount = countNeighbors.call(this, x, y);
 
         if (currentBuffer[y][x] === 1) {
