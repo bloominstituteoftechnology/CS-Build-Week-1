@@ -28,6 +28,7 @@ class Life {
     this.width = width;
     this.height = height;
     this.currentBufferIndex = 0;
+    
     this.buffer = [
       Array2D(width, height),
       Array2D(width, height),
@@ -74,7 +75,7 @@ class Life {
     let currentBuffer = this.buffer[this.currentBufferIndex];
     let backBuffer = this.buffer[backBufferIndex];
 
-    const countNeighbors = (x, y, options = { border: 'zero' }) => {
+    const countNeighbors = (x, y, options = { border: 'wrap' }) => {
       let neighborCount = 0;
 
       if (options.border === 'zero') {
@@ -92,23 +93,19 @@ class Life {
           }
         }
       } else if (options.border === 'wrap') {
-        let north = y - 1;
-        let south = y + 1;
-        let west = x - 1;
-        let east = x - 1;
+        const north = y <= 0 
+          ? this.height - 1 
+          : y - 1;
+        const south = y >= this.height - 1
+          ? 0
+          : y + 1;
+        const west = x <= 0
+          ? this.width - 1
+          : x - 1;
+        const east = x >= this.width - 1
+          ? 0
+          : x + 1;
 
-        if (north < 0) {
-          north = this.height - 1;
-        }
-        if (south >= this.height) {
-          south = 0;
-        }
-        if (west < 0) {
-          west = this.width - 1;
-        }
-        if (east >= this.width) {
-          east = 0;
-        }
         neighborCount =
           currentBuffer[north][west] +
           currentBuffer[north][x] +
