@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
-const COLORS = [
-  [0, 0, 0],
-  [0x8f, 0, 0x5f],
-  [0x5f, 0, 0x8f],
-  [0, 0, 0xff],
-  [0, 0x5f, 0x7f],
-  [0x5f, 0x8f, 0x7f],
-  [0x8f, 0xff, 0x7f],
-  [0xff, 0x5f, 0x7f]
-];
+const COLORS = [[0, 0, 0], [0xff, 0xff, 0xff]];
 /**
  * Life canvas
  */
@@ -43,7 +34,9 @@ class LifeCanvas extends Component {
     const width = this.props.width;
 
     const canvas = this.refs.canvas;
-    let ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
+    canvas.style.width = canvas.width * 2 + 'px';
+    canvas.style.height = canvas.height * 2 + 'px';
     let imageData = ctx.getImageData(0, 0, width, height);
 
     for (let y = 0; y < height; y++) {
@@ -91,7 +84,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={700} height={400} />
       </div>
     );
   }

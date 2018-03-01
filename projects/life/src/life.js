@@ -14,7 +14,7 @@ function Array2D(width, height) {
 
   return a;
 }
-const MODULO = 8;
+const MODULO = 2;
 /**
  * Life class
  */
@@ -53,7 +53,7 @@ class Life {
    */
   randomize() {
     for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; y++) {
+      for (let x = 0; x < this.width; x++) {
         const rand = Math.floor(Math.random() * MODULO);
         this.buffer[this.currentBufferIndex][y][x] = rand;
       }
