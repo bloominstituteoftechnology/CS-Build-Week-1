@@ -96,7 +96,38 @@ class CCA {
           return true;
         }
       }
+
+      // East
+      if (x < this.width - 1) {
+        if (currentBuffer[y][x + 1] === nextValue) {
+          return true;
+        }
+      }
+
+      // South
+      if (y < this.height - 1) {
+        if (currentBuffer[y + 1][x] === nextValue) {
+          return true;
+        }
+      }
+
+      // if we've made it this far we're not infected!
+      return false;
     }
+
+    // Loop through and decide the state of the next generation
+    // for each cell processed
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        if (hasInfectiousNeighbor.call(this, x, y)) {
+          backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO
+        } else {
+          backBuffer[y][x] = currentBuffer[y][x];
+        }
+      }
+    }
+
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }
 
