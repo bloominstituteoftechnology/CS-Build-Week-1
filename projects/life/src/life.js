@@ -74,7 +74,7 @@ class Life {
 
     // See if we have neighbor to infect this one
     function numberOfLivingNeighbors(x, y) {
-      const nextValue = 1;
+      const nextValue = (1 || 2);
       let counter = 0;
 
       // North
@@ -133,17 +133,66 @@ class Life {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         let count = numberOfLivingNeighbors.call(this, x, y)
-        if (currentBuffer[y][x] === 0 && count === 3) {
-          backBuffer[y][x] = 1;
-        } else if (currentBuffer[y][x] === 1 && count < 2) {
-          backBuffer[y][x] = 0;
-        } else if ((currentBuffer[y][x] === 1) && (count === 2 || count === 3)) {
-          backBuffer[y][x] = 1;
-        } else if (currentBuffer[y][x] === 1 && count > 3) {
-          backBuffer[y][x] = 0;
-        } else {
-          backBuffer[y][x] = 0;
+
+        // if this cell is dead
+        if (currentBuffer[y][x] === 0) {
+          // if live neighbors is exactly 3
+          if (count === 3) {
+            backBuffer[y][x] = 1;
+          } else {
+            backBuffer[y][x] = 0;
+          }
         }
+
+        // the this cell is live
+        if (currentBuffer[y][x] === 1) {
+          // if the live neighbors are <2 or >3
+          if (count < 2 || count > 3) {
+            // this cell dies
+            backBuffer[y][x] = 0;
+          }
+          // if the live neighbors equal 2 or 3
+          if (count === 2) {
+            // this cell lives
+            backBuffer[y][x] = 1;
+          }
+          if (count === 3) {
+            // this cell lives
+            backBuffer[y][x] = 1;
+          }
+        }
+
+        // if (currentBuffer[y][x] === 2) {
+        //   // if the live neighbors are <2 or >3
+        //   if (count < 2 || count > 3) {
+        //     // this cell dies
+        //     backBuffer[y][x] = 0;
+        //   }
+        //   if (count === 2) {
+        //     // this cell lives
+        //     backBuffer[y][x] = 1;
+        //   }
+        //   // if the live neighbors equal 2 or 3
+        //   if (count === 3) {
+        //     // this cell lives
+        //     backBuffer[y][x] = 2;
+        //   }
+        // }
+
+
+
+
+        // if (currentBuffer[y][x] === 0 && count === 3) {
+        //   backBuffer[y][x] = 1;
+        // } else if (currentBuffer[y][x] === 1 && count < 2) {
+        //   backBuffer[y][x] = 0;
+        // } else if ((currentBuffer[y][x] === 1) && (count === 2 || count === 3)) {
+        //   backBuffer[y][x] = 1;
+        // } else if (currentBuffer[y][x] === 1 && count > 3) {
+        //   backBuffer[y][x] = 0;
+        // } else {
+        //   backBuffer[y][x] = 0;
+        // }
       }
     }
     this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;

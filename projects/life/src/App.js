@@ -41,10 +41,12 @@ class LifeCanvas extends Component {
     // Get canvas framebuffer, a packed RGBA array
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext('2d');
-    canvas.style.width = (canvas.width * 2) + "px";
-    canvas.style.height = (canvas.height * 2) + "px";
+    //canvas.style.width = (canvas.width * 0.1) + "px";
+    //canvas.style.height = (canvas.height * 0.1) + "px";
     let imageData = ctx.getImageData(0, 0, width, height);
-
+    ctx.scale(4, 4);
+    ctx.mozImageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
     // Convert the cell values into white or black for the canvas
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
@@ -91,7 +93,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={300} height={300} />
+        <LifeCanvas width={400} height={400} />
       </div>
     )
   }
