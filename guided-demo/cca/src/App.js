@@ -10,7 +10,7 @@ const COLORS = [
   [0, 0x5f, 0x7f],
   [0x5f, 0x8f, 0x7f],
   [0x8f, 0xff, 0x7f],
-  [0xff, 0x5f, 0x7f],
+  [0xff, 0xec, 0x7f],
 ]
 
 /**
@@ -23,7 +23,6 @@ class CCACanvas extends Component {
    */
   constructor(props) {
     super(props);
-
     this.cca = new CCA(props.width, props.height);
     this.cca.randomize();
   }
@@ -32,7 +31,7 @@ class CCACanvas extends Component {
    * Component did mount
     */
   componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => this.animFrame());
   }
 
   /**
@@ -40,8 +39,7 @@ class CCACanvas extends Component {
    */
   animFrame() {
     const cells = this.cca.getCells();
-    const height = this.props.height;
-    const width = this.props.width;
+    const { height, width } = this.props;
 
     // Get canvas framebuffer, a packed RGBA array
     const canvas = this.refs.canvas;
@@ -69,7 +67,7 @@ class CCACanvas extends Component {
     this.cca.step();
 
     // Request another animation frame
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => this.animFrame());
   }
 
   /**

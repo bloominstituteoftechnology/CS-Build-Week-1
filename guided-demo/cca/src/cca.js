@@ -22,12 +22,12 @@ class CCA {
 
   /**
    * Constructor
-    */
+   */
   constructor(width, height) {
     this.width = width;
     this.height = height;
-
     this.currentBufferIndex = 0;
+
     this.buffer = [
       Array2D(width, height),
       Array2D(width, height)
@@ -49,8 +49,8 @@ class CCA {
    * Clear the cca grid of the current active buffer
    */
   clear() {
-    for (let y = 0; y < this.height; y++) {
-      this.buffer[this.currentBufferIndex][y].fill(0);
+    for (let i = 0; i < this.height; i++) {
+      this.buffer[this.currentBufferIndex][i].fill(0);
     }
   }
 
@@ -78,36 +78,27 @@ class CCA {
     let backBuffer = this.buffer[backBufferIndex];
 
     // See if we have a neighbor to infect this one
-    function hasInfectiousNeighbor(x, y) {
+    const hasInfectiousNeighbor = (x, y) =>  {
       const nextValue = (currentBuffer[y][x] + 1) % MODULO;
 
       // Check the west neighbor of cell x, y
-      if (x > 0) {
-        if (currentBuffer[y][x - 1] === nextValue) {
-          return true;
-        }
+      if (x > 0 && currentBuffer[y][x - 1] === nextValue) {
+        return true;
       }
 
-
-          // North
-      if (y > 0) {
-        if (currentBuffer[y - 1][x] === nextValue) {
-            return true;
-        }
+      // North
+      if (y > 0 && currentBuffer[y - 1][x] === nextValue) {
+        return true;
       }
 
       // East
-      if (x < this.width - 1) {
-        if (currentBuffer[y][x + 1] === nextValue) {
-          return true;
-        }
+      if (x < this.width - 1 && currentBuffer[y][x + 1] === nextValue) {
+        return true;
       }
 
       // South
-      if (y < this.height - 1) {
-        if (currentBuffer[y + 1][x] === nextValue) {
-          return true;
-        }
+      if (y < this.height - 1 && currentBuffer[y + 1][x] === nextValue) {
+        return true;
       }
 
       // If we've made it this far we're not infected!
@@ -116,12 +107,12 @@ class CCA {
 
     // Loop through and decide the state of the next generation
     // for each cell processed.
-    for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++) {
-        if (hasInfectiousNeighbor.call(this, x, y)) {
-          backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
+    for (let i = 0; i < this.height; i++) {
+      for (let j = 0; j < this.width; j++) {
+        if (hasInfectiousNeighbor(j, i)) {
+          backBuffer[i][j] = (currentBuffer[i][j] + 1) % MODULO;
         } else {
-          backBuffer[y][x] = currentBuffer[y][x];
+          backBuffer[i][j] = currentBuffer[i][j];
         }
       }
     }
