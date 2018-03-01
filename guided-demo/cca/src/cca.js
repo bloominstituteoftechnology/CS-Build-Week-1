@@ -32,12 +32,27 @@ class CCA {
     this.clear();
   }
 
+  dropPopulationBomb(x, y) {
+    console.log(x, y);
+    // this.clear();
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    let currentBuffer = this.buffer[this.currentBufferIndex];
+    let backBuffer = this.buffer[backBufferIndex];
+    for (let y = 0; y < 15; y++) {
+      for (let x = 0; x < 15; x++) {
+        backBuffer[y][x] = 1;
+      }
+    }
+    // this.randomize();
+  }
+
   /**
    * Return the current active buffer
    *
    * This should NOT be modified by the caller
    */
   getCells() {
+    // console.log(this.currentBufferIndex);
     return this.buffer[this.currentBufferIndex];
   }
 
@@ -56,7 +71,7 @@ class CCA {
   randomize() {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        const rand = Math.floor(Math.random() * MODULO);
+        const rand = Math.floor(Math.random() * 2);
         this.buffer[this.currentBufferIndex][y][x] = rand;
       }
     }
@@ -66,61 +81,57 @@ class CCA {
    * Run the simulation for a single step
    */
   step() {
-    // Fill the offscreen buffer with the next cca generation built
-    // from the current buffer.
-
     let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
     let currentBuffer = this.buffer[this.currentBufferIndex];
     let backBuffer = this.buffer[backBufferIndex];
 
-    // See if we have a neighbor to infect this one
-    function hasInfectiousNeighbor(x, y) {
-      const nextValue = (currentBuffer[y][x] + 1) % MODULO;
+    function checkNeighbours(x, y) {
+      // console.log(status);
+      let NLN = 0;
 
-      // Check the west neighbor of cell x, y
-      if (x > 0) {
-        if (currentBuffer[y][x - 1] === nextValue) {
-          return true;
-        }
+      if (x > 0 && y > 0 && x < this.width - 1 && y < this.height - 1) {
+        // northeast [y-1][x-1]
+        if (currentBuffer[y - 1][x - 1] === 1) NLN++;
+        // north [y-1]
+        if (currentBuffer[y - 1][x] === 1) NLN++;
+        // northwest [y-1][x+1]
+        if (currentBuffer[y - 1][x + 1] === 1) NLN++;
+        // west [x+1]
+        if (currentBuffer[y][x + 1] === 1) NLN++;
+        // southwest [y+1][x+1]
+        if (currentBuffer[y + 1][x + 1] === 1) NLN++;
+        // south [y+1]
+        if (currentBuffer[y + 1][x] === 1) NLN++;
+        // southeast [y+1][x-1]
+        if (currentBuffer[y + 1][x - 1] === 1) NLN++;
+        // east [x-1]
+        if (currentBuffer[y][x - 1] === 1) NLN++;
       }
 
-      // North
-      if (y > 0) {
-        if (currentBuffer[y - 1][x] === nextValue) {
-          return true;
-        }
-      }
-
-      // East
-      if (x < this.width - 1) {
-        if (currentBuffer[y][x + 1] === nextValue) {
-          return true;
-        }
-      }
-
-      // South
-      if (y < this.height - 1) {
-        if (currentBuffer[y + 1][x] === nextValue) {
-          return true;
-        }
-      }
-
-      // If we've made it this far we're not infected!
-      return false;
+      return NLN;
     }
 
-    // Loop through and decide the state of the next generation
-    // for each cell processed.
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        if (hasInfectiousNeighbor.call(this, x, y)) {
-          backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
-        } else {
-          backBuffer[y][x] = currentBuffer[y][x];
+        let neighborCount = checkNeighbours.call(this, x, y);
+
+        if (currentBuffer[y][x] === 1) {
+          if (neighborCount === 2 || neighborCount === 3) {
+            backBuffer[y][x] = 1;
+          } else {
+            backBuffer[y][x] = 0;
+          }
+        }
+
+        if (currentBuffer[y][x] === 0) {
+          if (neighborCount === 3) {
+            backBuffer[y][x] = 1;
+          } else {
+            backBuffer[y][x] = 0;
+          }
         }
       }
     }
-
     this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }

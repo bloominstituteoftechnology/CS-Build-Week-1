@@ -19,17 +19,23 @@ function Array2D(width, height) {
  * Life class
  */
 class Life {
-
   /**
    * Constructor
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+
+    this.currentBufferIndex = 0;
+    this.buffer = [Array2D(width, height), Array2D(width, height)];
+
+    this.clear();
   }
-  
+
   /**
    * Return the current active buffer
-   * 
+   *
    * This should NOT be modified by the caller
    */
   getCells() {
@@ -42,7 +48,7 @@ class Life {
   clear() {
     // !!!! IMPLEMENT ME !!!!
   }
-  
+
   /**
    * Randomize the life grid
    */

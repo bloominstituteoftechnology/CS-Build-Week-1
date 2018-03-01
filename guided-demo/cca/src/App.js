@@ -4,7 +4,7 @@ import './App.css';
 
 const COLORS = [
   [0, 0, 0],
-  [0x8f, 0, 0x5f],
+  [0xff, 0xff, 0xff],
   [0x5f, 0, 0x8f],
   [0, 0, 0xff],
   [0, 0x5f, 0x7f],
@@ -75,6 +75,16 @@ class CCACanvas extends Component {
     });
   }
 
+  onMouseMove(e) {
+    this.setState({ x: e.screenX, y: e.screenY });
+    // console.log(this.state);
+  }
+
+  onClick(e) {
+    this.cca.dropPopulationBomb(this.state.x, this.state.y);
+    this.cca.step();
+  }
+
   /**
    * Render
    */
@@ -84,6 +94,8 @@ class CCACanvas extends Component {
         ref="canvas"
         width={this.props.width}
         height={this.props.height}
+        onMouseMove={this.onMouseMove.bind(this)}
+        onClick={this.onClick.bind(this)}
       />
     );
   }
@@ -99,7 +111,7 @@ class CCAApp extends Component {
   render() {
     return (
       <div>
-        <CCACanvas width={400} height={300} />
+        <CCACanvas width={300} height={300} />
       </div>
     );
   }
