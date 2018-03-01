@@ -1,3 +1,12 @@
+canvas {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  image-rendering: -moz-crisp-edges;    /* Firefox */
+  image-rendering: -webkit-crisp-edges; /* Webkit (Safari) */
+  image-rendering: pixelated;           /* Chrome */
+}
+
 .App {
   text-align: center;
 }
