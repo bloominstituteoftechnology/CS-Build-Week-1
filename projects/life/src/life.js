@@ -60,7 +60,7 @@ class Life {
   randomize() {
     // !!!! IMPLEMENT ME !!!!
     for (let i = 0; i < this.height; i++)
-      for (let j = 0; j < this.height; j++)
+      for (let j = 0; j < this.width; j++)
         this.buffer[this.currentBufferIndex][i][j] =
           Math.floor(Math.random() * MODULO);
   }
@@ -81,7 +81,7 @@ class Life {
         for (let yOffset = -1; yOffset <= 1; yOffset++) {
           const yPos = y + yOffset;
           if (yPos < 0 || yPos >= this.height) continue;
-
+          
           for (let xOffset = -1; xOffset <= 1; xOffset++) {
             const xPos = x + xOffset;
             if (xPos < 0 || xPos >= this.width) continue;
