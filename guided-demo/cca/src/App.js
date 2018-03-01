@@ -40,6 +40,8 @@ class CCACanvas extends Component {
    */
   animFrame() {
     const cells = this.cca.getCells();
+    const height = this.props.height;
+    const width = this.props.width;
 
     const canvas = this.refs.canvas;
     let ctx = canvas.getContext('2d');
@@ -90,7 +92,7 @@ class CCAApp extends Component {
   render() {
     return (
       <div>
-        <CCACanvas width={400} height={300} />
+        <CCACanvas width={700} height={500} />
       </div>
     );
   }

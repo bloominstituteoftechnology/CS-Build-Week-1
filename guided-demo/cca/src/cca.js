@@ -55,7 +55,7 @@ class CCA {
    */
   randomize() {
     for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; y++) {
+      for (let x = 0; x < this.width; x++) {
         const rand = Math.floor(Math.random() * MODULO);
         this.buffer[this.currentBufferIndex][y][x] = rand;
       }
@@ -92,11 +92,11 @@ class CCA {
         }
       }
       // South
-      if (y < this.height - 1) {
-        if (currentBuffer[y + 1][x] === nextValue) {
-          return true;
-        }
-      }
+      // if (y < this.height - 1) {
+      //   if (currentBuffer[y + 1][x] === nextValue) {
+      //     return true;
+      //   }
+      // }
       // If we've made it this far, we're not infected.
       return false;
     }
