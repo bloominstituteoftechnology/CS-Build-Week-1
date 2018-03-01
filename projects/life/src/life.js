@@ -14,7 +14,7 @@ function Array2D(width, height) {
 
   return a;
 }
-
+const MODULO = 8;
 /**
  * Life class
  */
@@ -64,7 +64,51 @@ class Life {
    * Run the simulation for a single step
    */
   step() {
-    // !!!! IMPLEMENT ME !!!!
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    let currentBuffer = this.buffer[this.currentBufferIndex];
+    let backBuffer = this.buffer[backBufferIndex];
+
+    function hasInfectiousNeighbour(x, y) {
+      const nextValue = (currentBuffer[y][x] + 1) % MODULO;
+
+      // West
+      if (x > 0) {
+        if (currentBuffer[y][x - 1] === nextValue) {
+          return true;
+        }
+      }
+      // North
+      if (y > 0) {
+        if (currentBuffer[y - 1][x] === nextValue) {
+          return true;
+        }
+      }
+      // East
+      if (x < this.width - 1) {
+        if (currentBuffer[y][x + 1] === nextValue) {
+          return true;
+        }
+      }
+      // South
+      if (y < this.height - 1) {
+        if (currentBuffer[y + 1][x] === nextValue) {
+          return true;
+        }
+      }
+      // If we've made it this far, we're not infected.
+      return false;
+    }
+    // decide state of next generation
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        if (hasInfectiousNeighbour.call(this, x, y)) {
+          backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
+        } else {
+          backBuffer[y][x] = currentBuffer[y][x];
+        }
+      }
+    }
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }
 

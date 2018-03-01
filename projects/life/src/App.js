@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
-
+const COLORS = [
+  [0, 0, 0],
+  [0x8f, 0, 0x5f],
+  [0x5f, 0, 0x8f],
+  [0, 0, 0xff],
+  [0, 0x5f, 0x7f],
+  [0x5f, 0x8f, 0x7f],
+  [0x8f, 0xff, 0x7f],
+  [0xff, 0x5f, 0x7f]
+];
 /**
  * Life canvas
  */
@@ -30,6 +39,8 @@ class LifeCanvas extends Component {
    */
   animFrame() {
     const cells = this.life.getCells();
+    const height = this.props.height;
+    const width = this.props.width;
 
     const canvas = this.refs.canvas;
     let ctx = canvas.getContext('2d');
