@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  padding: 100px;
 }
 
 .App-logo {
@@ -22,7 +23,24 @@
   font-size: large;
 }
 
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+input {
+  display: block;
+  margin: auto;
+}
+button {
+  display: block;
+  margin: auto;
+}
+canvas {
+  border-style: groove;
+  border-color: blue;
+  border-width: 10px;
+  width: 800px;
+  height: 600px;
 }
