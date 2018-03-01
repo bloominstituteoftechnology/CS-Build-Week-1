@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import Life from './life';
+import Life from './life.js';
 import './App.css';
+
+const COLORS = [[0, 0, 0], [0xff, 0xff, 0xff]];
 
 /**
  * Life canvas
  */
 class LifeCanvas extends Component {
-
-  /**
-   * Constructor
-   */
   constructor(props) {
     super(props);
 
@@ -17,34 +15,92 @@ class LifeCanvas extends Component {
     this.life.randomize();
   }
 
-  /**
-   * Component did mount
-   */
   componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
-  /**
-   * Handle an animation frame
-   */
   animFrame() {
-    //
-    // !!!! IMPLEMENT ME !!!!
-    //
+    const cells = this.life.getCells();
+    const height = this.props.height;
+    const width = this.props.width;
+
+    // Get canvas framebuffer, a packed RGBA array
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext('2d');
+    canvas.style.width = canvas.width * 1 + 'px';
+    canvas.style.height = canvas.height * 1 + 'px';
+    let imageData = ctx.getImageData(0, 0, width, height);
+
+    // Convert the cell values into white or black for the canvas
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const state = cells[y][x];
+        const color = COLORS[state];
+        const index = (y * width + x) * 4;
+
+        imageData.data[index + 0] = color[0]; // Red
+        imageData.data[index + 1] = color[1]; // Blue
+        imageData.data[index + 2] = color[2]; // Green
+        imageData.data[index + 3] = 0xff; // Alpha, 0xff === 255 === opaque
+      }
+    }
+
+    // Put the new image data back on the canvas
+    ctx.putImageData(imageData, 0, 0);
+
+    // Update life and get cells
+    this.life.step();
 
     // Request another animation frame
-    // Update life and get cells
-    // Get canvas framebuffer, a packed RGBA array
-    // Convert the cell values into white or black for the canvas
-    // Put the new image data back on the canvas
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
     // Next generation of life
   }
 
-  /**
-   * Render
-   */
+  onMouseMove(e) {
+    this.setState({ x: e.screenX, y: e.screenY });
+    // console.log(this.state);
+  }
+
+  Sterilization(e) {
+    this.life.Sterilization();
+    COLORS[1] = [0xff, 0x00, 0x00];
+  }
+
+  dropPopulationBomb(e) {
+    this.life.dropPopulationBomb();
+    COLORS[1] = [0x00, 0xff, 0x37];
+  }
+
+  assimilation(e) {
+    this.life.Assimilation();
+    COLORS[1] = [0x68, 0xc7, 0xff];
+  }
+
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <div>
+        <div>
+          <canvas
+            ref="canvas"
+            width={this.props.width}
+            height={this.props.height}
+            // onMouseMove={this.onMouseMove.bind(this)}
+            // onClick={this.onClick.bind(this)}
+          />
+        </div>
+        <div>
+          <button onClick={this.Sterilization.bind(this)}>Sterilization</button>
+          <button onClick={this.dropPopulationBomb.bind(this)}>
+            Population Bomb
+          </button>
+          <button onClick={this.assimilation.bind(this)}>Assimilation</button>
+        </div>
+      </div>
+    );
   }
 }
 
@@ -52,16 +108,18 @@ class LifeCanvas extends Component {
  * Life holder component
  */
 class LifeApp extends Component {
-
   /**
    * Render
    */
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas
+          width={Math.floor(window.innerWidth - 100)}
+          height={Math.floor(window.innerHeight - 100)}
+        />
       </div>
-    )
+    );
   }
 }
 
@@ -69,7 +127,6 @@ class LifeApp extends Component {
  * Outer App component
  */
 class App extends Component {
-
   /**
    * Render
    */
