@@ -73,56 +73,80 @@ class Life {
 		let backBuffer = this.buffer[backBufferIndex];
 
 		// See if we have neighbor to infect this one
-		function hasInfectiousNeighbor(x, y) {
-			const nextValue = (currentBuffer[y][x] + 1) % MODULO;
-
+		function numberOfLivingNeighbors(x, y) {
+			const nextValue = 1;
 			let counter = 0;
 
-			// check West neighbor of cell x, y
-			if (x > 0) {
-				if (currentBuffer[y][x - 1] === nextValue) {
-					counter++;
-				}
-			}
-			// East neighbors
-			if (x < this.width - 1) {
-				if (currentBuffer[y][x + 1] === nextValue) {
-					counter++;
-				}
-			}
-			// North neighbors
+			// North
 			if (y > 0) {
 				if (currentBuffer[y - 1][x] === nextValue) {
 					counter++;
 				}
 			}
-			// South neighbors
+			//NorthWest
+			if (y > 0 && x > 0) {
+				if (currentBuffer[y - 1][x - 1] === nextValue) {
+					counter++;
+				}
+			}
+			//NorthEast
+			if (y > 0 && x < this.width - 1) {
+				if (currentBuffer[y - 1][x + 1] === nextValue) {
+					counter++;
+				}
+			}
+			// South
 			if (y < this.height - 1) {
 				if (currentBuffer[y + 1][x] === nextValue) {
 					counter++;
 				}
 			}
-			// Check to see if cell is dead or not
-
-			// fewer than 2 = dead
-			if (counter < 2) return true;
-			// 2 or 3 = lives on
-			if (counter === 2 || counter === 3) return false;
-			// more than 3 = dead
-			if (counter > 3) return true;
-			// dead cell neighbors = 3 then live on
-			// if (backBuffer[y][x] === 0 && counter === 3) return false;
-			console.log(counter);
+			//SouthEast
+			if (y < this.height - 1 && x < this.width - 1) {
+				if (currentBuffer[y + 1][x + 1] === nextValue) {
+					counter++;
+				}
+			}
+			//SouthWest
+			if (y < this.height - 1 && x > 0) {
+				if (currentBuffer[y + 1][x - 1] === nextValue) {
+					counter++;
+				}
+			}
+			// West
+			if (x > 0) {
+				if (currentBuffer[y][x - 1] === nextValue) {
+					counter++;
+				}
+			}
+			// East
+			if (x < this.width - 1) {
+				if (currentBuffer[y][x + 1] === nextValue) {
+					counter++;
+				}
+			}
+			return counter;
 		}
 
 		// Loop through and decide the state of the next generation (alive or dead in Game of Life)
 		// for each cell processed
 		for (let y = 0; y < this.height; y++) {
 			for (let x = 0; x < this.width; x++) {
-				if (hasInfectiousNeighbor.call(this, x, y)) {
+				// more than 3 = dead
+				if (currentBuffer[y][x] === 0 && count === 3) {
+					backBuffer[y][x] = 1;
+
+					// fewer than 2 = dead
+				} else if (currentBuffer[y][x] === 1 && count < 2) {
+					backBuffer[y][x] = 0;
+					// 2 or 3 = lives on
+				} else if (currentBuffer[y][x] === 1 && (count === 2 || count === 3)) {
+					backBuffer[y][x] = 1;
+					// dead cell neighbors = 3 then live on
+				} else if (currentBuffer[y][x] === 1 && count > 3) {
 					backBuffer[y][x] = 0;
 				} else {
-					backBuffer[y][x] = 1;
+					backBuffer[y][x] = 0;
 				}
 			}
 		}
