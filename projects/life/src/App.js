@@ -4,7 +4,7 @@ import "./App.css";
 
 const COLORS = [
   [0x00, 0x00, 0x00], // black
-  [0xff, 0xff, 0xff] // white
+  [0x00, 0xff, 0xff] // white
 ];
 
 /**
@@ -44,9 +44,12 @@ class LifeCanvas extends Component {
     // Get canvas framebuffer, a packed RGBA array
     const canvas = this.refs.canvas;
     let ctx = canvas.getContext("2d");
+    
+    canvas.style.width = (canvas.width * 1.5) + "px";
+    canvas.style.height = (canvas.height * 1.5) + "px";
     let imageData = ctx.getImageData(0, 0, width, height);
 
-    // Update life and get cells
+    // Convert the cell values into white or black for the canvas
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         const state = cells[y][x];
@@ -59,8 +62,6 @@ class LifeCanvas extends Component {
         imageData.data[index + 3] = 0xff; // alpha, 0xff === 255 === opaque
       }
     }
-
-    // Convert the cell values into white or black for the canvas
 
     // Put the new image data back on the canvas
     ctx.putImageData(imageData, 0, 0);
@@ -94,11 +95,15 @@ class LifeCanvas extends Component {
 class LifeApp extends Component {
   /**
    * Render
+   * <LifeCanvas width={600} height={500} style="width:1200px;height:1000px;"/>
+   * <LifeCanvas width={600} height={500}/>
    */
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <div class="canvas">
+          <LifeCanvas width={600} height={500} />
+        </div>
       </div>
     );
   }

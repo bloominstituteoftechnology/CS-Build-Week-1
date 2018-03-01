@@ -68,7 +68,6 @@ class CCA {
   step() {
     // Fill the offscreen buffer with the next cca generation built
     // from the current buffer.
-
     let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
     let currentBuffer = this.buffer[this.currentBufferIndex];
     let backBuffer = this.buffer[backBufferIndex];

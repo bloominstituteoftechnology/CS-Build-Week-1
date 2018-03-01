@@ -77,21 +77,7 @@ class Life {
     function hasLivingNeighbor(x, y) {
       let LNCounter = 0;
 
-      // Check the west neighbor of cell x, y
-      if (x > 0) {
-        if (currentBuffer[y][x - 1] === 1) {
-          LNCounter++;
-        }
-      }
-
-      // northwest
-      if (x > 0 && y > 0) {
-        if (currentBuffer[y - 1][x - 1] === 1) {
-          LNCounter++;
-        }
-      }
-
-      // North
+      // North neighbor of cell x, y
       if (y > 0) {
         if (currentBuffer[y - 1][x] === 1) {
           LNCounter++;
@@ -99,7 +85,7 @@ class Life {
       }
 
       // northeast
-      if (y > 0 && x > 0) {
+      if (y > 0 && x < this.width - 1) {
         if (currentBuffer[y - 1][x + 1] === 1) {
           LNCounter++;
         }
@@ -133,6 +119,20 @@ class Life {
         }
       }
 
+      // West
+      if (x > 0) {
+        if (currentBuffer[y][x - 1] === 1) {
+          LNCounter++;
+        }
+      }
+
+      // northwest
+      if (x > 0 && y > 0) {
+        if (currentBuffer[y - 1][x - 1] === 1) {
+          LNCounter++;
+        }
+      }
+
       // If we've made it this far we're not infected!
       return LNCounter;
     }
@@ -144,11 +144,11 @@ class Life {
 
         // the this cell is live
         if (currentBuffer[y][x] === 1) {
-          // if the live neighbors are <2 or >3 
+          // if the live neighbors are <2 or >3
           if (neighborCounter < 2 || neighborCounter > 3) {
-            // this cell dies 
+            // this cell dies
             backBuffer[y][x] = 0;
-          } 
+          }
           // if the live neighbors equal 2 or 3
           if (neighborCounter === 2 || neighborCounter === 3) {
             // this cell lives
