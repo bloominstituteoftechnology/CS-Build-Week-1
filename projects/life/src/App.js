@@ -17,7 +17,8 @@ import './App.css';
 // ]
 const COLORS = [
   [0xFF,0xFF,0xFF],
-  [0,0,0]
+  [0,0,0],
+  [0xFF,0,0]
 ]
 
 class LifeCanvas extends Component {
@@ -73,12 +74,14 @@ class LifeCanvas extends Component {
     let imageData = ctx.getImageData(0,0,width,height);
     for (let y = 0;y<height;y++) {
       for (let x = 0;x<width;x++) {
+        // if (cells[y][x] > 1)
+        //   console.log(`red cell ${cells[y][x]}  ${x} ${y} `);
         const state = cells[y][x] % COLORS.length;
         const color = COLORS[state];
         const index = (y * width  + x) * 4;
-        imageData.data[index + 0] = color[0]
-        imageData.data[index + 1] = color[1]
-        imageData.data[index + 2] = color[2]   
+        imageData.data[index + 0] = color[0];
+        imageData.data[index + 1] = color[1];
+        imageData.data[index + 2] = color[2];   
         imageData.data[index + 3] = 0xFF// state > 0 ? 0xff : 0;             
       }
     }

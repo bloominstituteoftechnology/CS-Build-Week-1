@@ -48,24 +48,29 @@ class Life {
         this.noExclusion = [-1, -1]
         this.exlusionForGun = [79, 22]
         this.exclusionZone = this.noExclusion;
-        this.isGun = false
+        this.isGun = false;
+        this.stepCount = 0;
     }
-    rotate = (x, y, radians) => {
-        const ratio = Math.tan(y,x)  /  Math.tan(Math.atan(y, x) + radians);  // ny/nx    nx = x * (old ratio) / (ratio)
-        x *= ratio
-        y /= ratio;
+    rotate = (x, y, radians) => {    
+        y = Math.round(y * Math.cos(radians) + x * Math.sin(radians));
+        x = Math.round(-y * Math.sin(radians) + x * Math.cos(radians));
         return [x, y]
     }
     rotate_glider_gun = () => {
-        this.clear();
+        // this.clear();
         const lines = glider_gun_text.split('\n');
-        console.log(`gun lines: ${lines.length}`);
-        const y = Math.floor((this.height - lines.length) / 2);
-        const x = Math.floor((this.width - 37) / 2);
+        // console.log(`gun lines: ${lines.length}`);
+        let y = Math.floor((this.height - lines.length - 50));
+        let x = Math.floor((this.width - 87) );
         const currentBuffer = this.buffer[this.currentBufferIndex];
+        for (let bl = y-10;bl < y+ 32;bl++) 
+            for (let bx = x -10;bx<x+37+10;bx++)
+                currentBuffer[bl][bx] = 0;
+        x+=15;
+        y+=10;
         lines.forEach((t, l) => {
             for (let i = 0; i < t.length; i++) {
-                const [rx, ry] = this.rotate(i, l, Math.PI / 4);
+                const [rx, ry] = this.rotate(i, l, Math.PI);
                 if (y + ry > this.height)
                     console.log(`height out of bounds y: ${y}  ry: ${ry}`);
                 if (x + rx > this.width)
@@ -74,17 +79,15 @@ class Life {
                     console.log(`height out of bounds y: ${y}  ry: ${ry}`);
                 if (x + rx <= 0)
                     console.log(`width out of bounds x: ${x}  rx: ${rx}`);
-                if (x + rx === 181) {
-                    console.log(`height out of bounds? y: ${y}  ry: ${ry} l: ${l}`);
-                    console.log(`width out of bounds? x: ${x}  rx: ${rx} i: ${i}`);
-                }
                 currentBuffer[y + ry][x + rx] = (t[i] === '*' ? 1 : 0);
             }
         });
     }
     glider_gun = (x, y) => {
-
-        //return this.rotate_glider_gun();
+        this.isGun = true;
+        // if ((this.stepCount % 2) === 0)
+        //     return 
+        this.rotate_glider_gun();
         // this.clear();
         const lines = glider_gun_text.split('\n');
         // console.log(`gun lines: ${lines.length}`);
@@ -106,8 +109,7 @@ class Life {
                 currentBuffer[L][x + i] = (t[i] === '*' ? 1 : 0);
             }
         });
-        this.isGun = true;
-        this.stepCount = 0;
+
     };
     /**
      * Return the current active buffer
@@ -165,80 +167,55 @@ class Life {
         let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
         let currentBuffer = this.buffer[this.currentBufferIndex];
         let backBuffer = this.buffer[backBufferIndex];
-        const [ex, ey] = this.exclusionZone;
+        // const [ex, ey] = this.exclusionZone;
         const sendGun = Math.floor(Math.random() * 1.1);
         if (sendGun === 0 && this.isGun && (this.stepCount % 45) === 0)
             this.glider_gun();
         this.stepCount++;
         const isAlive = (cell, x, y) => {
+            let wrapped = false;
             const wrap = (v, d) => {
-                if (v < 0)
+                if (v < 0) {
+                    wrapped = true;
                     return d + v;
-                if (v >= d)
+                }
+                if (v >= d) {
+                    wrapped = true;
                     return v - d;
+                }
                 return v;
             }
             let n = 0;
-            let after = 0
+            // let after = 0
             for (let i = y - 1; i < y + 2; i++)
                 for (let j = x - 1; j < x + 2; j++) {
                     if (i === y && j === x)
                         continue;
                     const I = wrap(i, this.height)
                     const J = wrap(j, this.width)
-                    if (currentBuffer[I][J] > 0)
+                    if (currentBuffer[I][J] > 0) {
                         n++;
-                }
-            // const ln = n;
-            // n = 0;
-            // if (x > 0 && currentBuffer[y][x - 1] > 0)
-            //     n++;
-            // if (y > 0 && currentBuffer[y - 1][x] > 0)
-            //     n++;
-            // if (x > 0 && y > 0 && currentBuffer[y - 1][x - 1] > 0)
-            //     n++;
-            // if (x < this.width - 1 && currentBuffer[y][x + 1] > 0) {
-            //     n++;
-            //     after++
-            // }
-            // if (y < this.height - 1 && currentBuffer[y + 1][x] > 0) {
-            //     n++;
-            //     after++
-            // }
-            // if (x < this.width - 1 && y < this.height - 1 && currentBuffer[y + 1][x + 1] > 0) {
-            //     n++;
-            //     after++;
-            // }
-            // if (x > 0 && y < this.height - 1 && currentBuffer[y + 1][x - 1] > 0) {
-            //     after++;
-            //     n++
-            // }
-            // if (x < this.width - 1 && y > 0 && currentBuffer[y - 1][x + 1] > 0) {
-            //     after++;
-            //     n++
-            // }
-            // console.log(`ln: ${ln}  n: ${n}`);
+                        if (currentBuffer[I][J] > 1)
+                            wrapped = true;
+                    }
+                };
             switch (n) {
                 case 0:
-                case 1: return false
-                case 2: return cell > 0
-                case 3: return (cell > 0 ? true :
-                    () => {
-                        if (x <= ex && y <= ey && after > 0)
-                            return false;
-                        if (x <= 1 && y <= ey)
-                            return false
-                        if (y <= 1 && x <= ex)
-                            return false
-                        return true;
-                    })
-
-                default: return false
+                case 1: return [false, false]
+                case 2: return [cell > 0, cell > 1]
+                case 3: return (cell > 0 ? [true, cell > 1] : [true, wrapped])
+                default: return [false,false]
             }
 
         }
         this.forEachCell((cell, x, y) => {
-            backBuffer[y][x] = isAlive(cell, x, y) ? 1 : 0;
+            try {
+            const [alive, wrapped] = isAlive(cell, x, y);
+            backBuffer[y][x] = alive ? (wrapped ? 2 : 1) : 0;
+            }
+            catch(error) {
+                console.log(`isAlive: ${isAlive(cell,x,y)}`);
+            }
             return cell;
         });
         this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
