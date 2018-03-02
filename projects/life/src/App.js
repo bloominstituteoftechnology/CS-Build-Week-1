@@ -14,6 +14,7 @@ class LifeCanvas extends Component {
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+    this.pixelSize = 2;
   }
 
   /**
@@ -35,7 +36,8 @@ class LifeCanvas extends Component {
     const cells = this.life.getCells();
     const height = this.props.height;
     const width = this.props.width;
-    const pixelSize = 40;
+
+    const pixelSize = this.pixelSize; //changes the pixel size
 
     const canvas = this.refs.canvas;
     let ctx = canvas.getContext("2d");
@@ -52,32 +54,14 @@ class LifeCanvas extends Component {
           }
         }
         
-        const color = state === 1 ? Math.floor(Math.random() * 256) : 0;
+        const color = state === 1 ? 255 : 0;
 
-        blockIndexArray.forEach((pixel) => {  // This block prints a 4 x 4 pixel as opposed to a single.
+        blockIndexArray.forEach((pixel) => {  // This block prints the selected pixel size as opposed to a single.
           imageData.data[pixel + 0] = color;
           imageData.data[pixel + 1] = color;
           imageData.data[pixel + 2] = color;
           imageData.data[pixel + 3] = 0xff;
         })
-
-        // const color = state === 1 ? 255 : 0; <<<<<<< This block was the former code to print the "live" cells in white
-        // imageData.data[index + 0] = color; // red
-        // imageData.data[index + 1] = color; // green
-        // imageData.data[index + 2] = color; // blue
-        // imageData.data[index + 3] = 0xff; // alpha, 0xff === 255 === opaque
-        
-        // if (state === 0) { <<<<<< This block formerly color all live cells a random color, and all dead cells black
-        //   imageData.data[index + 0] = 0; // red
-        //   imageData.data[index + 1] = 0; // green
-        //   imageData.data[index + 2] = 0; // blue
-        //   imageData.data[index + 3] = 0xff; // alpha, 0xff === 255 === opaque
-        // } else {
-        //   imageData.data[index + 0] = Math.floor(Math.random() * 256); // red
-        //   imageData.data[index + 1] = Math.floor(Math.random() * 256); // green
-        //   imageData.data[index + 2] = Math.floor(Math.random() * 256); // blue
-        //   imageData.data[index + 3] = 0xff; // alpha, 0xff === 255 === opaque
-        // }
       }
     }
 
@@ -91,16 +75,41 @@ class LifeCanvas extends Component {
     });
   }
 
+  changeP(value) {
+    document.getElementById('pText').innerHTML = value;
+  }
   /**
    * Render
    */
   render() {
+    let counter = this.pixelSize;
     return (
-      <canvas
-        ref="canvas"
-        width={this.props.width}
-        height={this.props.height}
-      />
+      <div className = "contentBox">
+        <h1>Conway's Game of Life</h1>
+        <div className = "canvasBox">
+          <canvas
+            ref="canvas"
+            width={this.props.width}
+            height={this.props.height}
+          />
+        </div>
+        <p id="carouselBanner">Choose a pixel size.</p>
+        <div className = "carousel">
+          <p onClick={() => {
+            this.pixelSize--;
+            this.changeP(this.pixelSize);
+            this.life.clear();
+            this.life.randomize();
+          }}>-</p>
+          <p id = "pText">{counter}</p>
+          <p onClick={() => {
+            this.pixelSize++;
+            this.changeP(this.pixelSize);
+            this.life.clear();
+            this.life.randomize();
+          }}>+</p>
+        </div>
+      </div>
     );
   }
 }
@@ -109,14 +118,10 @@ class LifeCanvas extends Component {
  * Life holder component
  */
 class LifeApp extends Component {
-  /**
-   * Render
-   */
+
   render() {
     return (
-      <div>
-        <LifeCanvas width={800} height={700} />
-      </div>
+      <LifeCanvas width={1000} height={400} />
     );
   }
 }

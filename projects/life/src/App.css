@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: black;
 }
 
 .App-logo {
@@ -22,6 +23,44 @@
   font-size: large;
 }
 
+.contentBox {
+  font-family: 'Press Start 2P', cursive;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  padding-top: 40pt;
+}
+
+.contentBox h1 {
+  color: white;
+}
+
+.canvasBox {
+  border: 20px solid white;
+  width: 1000px;
+  height: 400px;
+}
+
+#carouselBanner {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12pt;
+  color: white;
+}
+
+.carousel {
+  display: flex;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 30pt;
+}
+
+.carousel p {
+  padding-left: 5px;
+  padding-right: 5px;
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
