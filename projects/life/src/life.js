@@ -1,7 +1,8 @@
+import gliderGun from './gliderGun.js';
 /**
  * Implementation of Conway's game of Life
  */
-const MODULO = 2;
+
 /**
  * Make a 2D array helper function
  */
@@ -58,8 +59,7 @@ class Life {
   randomize() {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        const rand = Math.floor(Math.random() * MODULO);
-        this.buffer[this.currentBufferIndex][y][x] = rand;
+        this.buffer[this.currentBufferIndex][y][x] = Math.floor(Math.random() * 2);
       }
     }
   }
@@ -69,34 +69,62 @@ class Life {
    */
   step() {
     const backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
-    const currentBuffer = this.buffer[this.currentBufferIndex];
-    const backBuffer = this.buffer[backBufferIndex];
+    const cB = this.buffer[this.currentBufferIndex]; // currentBuffer
+    const bB = this.buffer[backBufferIndex]; // backBuffer
     const w = this.width, h = this.height;
 
-    const neighborsCounter = (x, y) => {
-      let c = 0;
-      if (x > 0 && currentBuffer[y][x - 1]) c++;
-      if (x < w - 1 && currentBuffer[y][x + 1]) c++;
-      if (y > 0 && currentBuffer[y - 1][x]) c++;
-      if (y < h - 1 && currentBuffer[y + 1][x]) c++;
-      if (x > 0 && y < h - 1 && currentBuffer[y + 1][x - 1]) c++;
-      if (y > 0 && x < w - 1 && currentBuffer[y - 1][x + 1]) c++;
-      if (x > 0 && y > 0 && currentBuffer[y - 1][x - 1]) c++;
-      if (x < w - 1 && y < h - 1 && currentBuffer[y + 1][x + 1]) c++;
+    const countNeighbors = (x, y) => {
+      let c = 0; // counter
+      if (x > 0 && cB[y][x - 1]) c++;
+      if (x < w - 1 && cB[y][x + 1]) c++;
+      if (y > 0 && cB[y - 1][x]) c++;
+      if (y < h - 1 && cB[y + 1][x]) c++;
+      if (x > 0 && y < h - 1 && cB[y + 1][x - 1]) c++;
+      if (y > 0 && x < w - 1 && cB[y - 1][x + 1]) c++;
+      if (x > 0 && y > 0 && cB[y - 1][x - 1]) c++;
+      if (x < w - 1 && y < h - 1 && cB[y + 1][x + 1]) c++;
       return c;
     }
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        const quantity = neighborsCounter(x, y);
-        if (currentBuffer[y][x] && quantity === 2) backBuffer[y][x] = 1;
-        else if (currentBuffer[y][x] && quantity === 3) backBuffer[y][x] = 1;
-        else if (!currentBuffer[y][x] && quantity === 3) backBuffer[y][x] = 1;
-        else backBuffer[y][x] = 0;
+        const counter = countNeighbors(x, y);
+        const cell = cB[y][x];
+        if (cell && counter === 2) bB[y][x] = 1;
+        else if (cell && counter === 3) bB[y][x] = 1;
+        else if (!cell && counter === 3) bB[y][x] = 1;
+        else bB[y][x] = 0;
       }
     }
 
     this.currentBufferIndex = backBufferIndex;
+  }
+
+  addGlider() {
+    const randX = Math.floor(Math.random() * (this.width - 100)) + 1;
+    const randY = Math.floor(Math.random() * (this.height - 100)) + 1;
+    const cB = this.buffer[this.currentBufferIndex]; // currentBuffer
+    cB[randY - 1][randX - 1] = 0;     // 0 1 0
+    cB[randY - 1][randX] = 1;         // 0 0 1
+    cB[randY - 1][randX + 1] = 0;     // 1 1 1
+    cB[randY][randX - 1] = 0;
+    cB[randY][randX] = 0;
+    cB[randY][randX + 1] = 1;
+    cB[randY + 1][randX - 1] = 1;
+    cB[randY + 1][randX] = 1;
+    cB[randY + 1][randX + 1] = 1;
+  }
+
+  addGliderGun() {
+    const randX = Math.floor(Math.random() * (this.width - 100)) + 40;
+    const randY = Math.floor(Math.random() * (this.height - 100)) + 40;
+    const cB = this.buffer[this.currentBufferIndex]; // currentBuffer
+    for (let y = 0; y < gliderGun.length; y++) {
+      for (let x = 0; x < gliderGun[0].length; x++) {
+        cB[randY + y][randX + x] = gliderGun[y][x];
+      }
+    }
+
   }
 }
 
