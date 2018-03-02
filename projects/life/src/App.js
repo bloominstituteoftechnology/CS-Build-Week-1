@@ -11,15 +11,30 @@ const COLORS = [
  * Life canvas
  */
 class LifeCanvas extends Component {
-
-  /**
-   * Constructor
-   */
   constructor(props) {
     super(props);
+    this.state = {
+      motion: true
+    }
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+  }
+
+  onClickRandomize = (e) => {
+    this.life.randomize();
+  }
+
+  onClickClear = (e) => {
+    this.life.clear();
+  }
+
+  onClickMotion = (e) => {
+    if (this.state.motion) {
+      this.setState({ motion: false });
+    } else {
+      this.setState({ motion: true });
+    }
   }
 
   /**
@@ -65,7 +80,10 @@ class LifeCanvas extends Component {
     ctx.putImageData(imageData, 0, 0);
 
     // Update life and get cells
-    this.life.step();
+    if (this.state.motion) {
+      this.life.step();
+    }
+
 
     // Request another animation frame
     requestAnimationFrame(() => {
@@ -78,7 +96,14 @@ class LifeCanvas extends Component {
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <div>
+        <button onClick={this.onClickRandomize}>Randomize</button>
+        <button onClick={this.onClickClear}>Clear</button>
+        <button onClick={this.onClickMotion}>{this.state.motion ? 'Stop' : 'Start'}</button>
+        <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+      </div>
+    )
   }
 }
 
@@ -87,7 +112,7 @@ class LifeCanvas extends Component {
  */
 class LifeApp extends Component {
 
-  /**
+  /**<button onClick={this.dropPopulationBomb.bind(this)}>333</button>
    * Render
    */
   render() {
