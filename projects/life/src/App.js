@@ -21,6 +21,10 @@ class LifeCanvas extends Component {
     this.life.randomize();
   }
 
+  onClickGlider = (e) => {
+    this.life.glider();
+  }
+
   onClickRandomize = (e) => {
     this.life.randomize();
   }
@@ -101,6 +105,7 @@ class LifeCanvas extends Component {
         <button onClick={this.onClickRandomize}>Randomize</button>
         <button onClick={this.onClickClear}>Clear</button>
         <button onClick={this.onClickMotion}>{this.state.motion ? 'Stop' : 'Start'}</button>
+        <button onClick={this.onClickGlider}>Glider</button>
         <canvas ref="canvas" width={this.props.width} height={this.props.height} />
       </div>
     )

@@ -33,18 +33,17 @@ class Life {
 
     this.clear();
   }
-
 	/**
-	 * Return the current active buffer
+   * Return the current active buffer
 	 *
-	 * This should NOT be modified by the caller
+   * This should NOT be modified by the caller
 	 */
   getCells() {
     return this.buffer[this.currentBufferIndex];
   }
 
 	/**
-	 * Clear the life grid
+   * Clear the life grid
 	 */
   clear() {
     for (let y = 0; y < this.height; y++) {
@@ -53,7 +52,7 @@ class Life {
   }
 
 	/**
-	 * Randomize the life grid
+   * Randomize the life grid
 	 */
   randomize() {
     for (let y = 0; y < this.height; y++) {
@@ -64,9 +63,53 @@ class Life {
     }
   }
 
-	/**
-	 * Run the simulation for a single step
-	 */
+  assimilation() {
+    // choose random y & x coordinates for start positions
+    const randystart = Math.floor(Math.random() * this.height);
+    const randxstart = Math.floor(Math.random() * this.width);
+    // choose random y & x coordinates for end positions
+    const randyend = Math.floor(
+      Math.random() * (this.height - randystart) + randystart
+    );
+    const randxend = Math.floor(
+      Math.random() * (this.width - randystart) + randystart
+    );
+    // loop through the pixels between start and stop values
+    for (let y = randystart; y < randyend; y++) {
+      for (let x = randxstart; x < randxend; x++) {
+        // const rand = Math.floor(Math.random() * 2);
+        // set these cells to alive
+        this.buffer[this.currentBufferIndex][y][x] = 1;
+      }
+    }
+  }
+
+  glider() {
+    const randYstart = Math.floor(Math.random() * this.height / 2);
+    const randXstart = Math.floor(Math.random() * this.width / 2);
+
+    let m = randYstart;
+    let n = randXstart;
+
+    let glider = [
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 1, 0, 0, 0],
+      [0, 0, 0, 1, 0, 0],
+      [0, 1, 1, 1, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0]]
+
+    for (let y = 0; y < glider.length; y++) {
+      for (let x = 0; x < glider[y].length; x++) {
+        this.buffer[this.currentBufferIndex][m + y][n + x] = glider[y][x];
+      }
+    }
+  }
+
+
+  /**
+   * Run the simulation for a single step
+   */
   step() {
     let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
     let currentBuffer = this.buffer[this.currentBufferIndex];
