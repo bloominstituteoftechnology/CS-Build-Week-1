@@ -13,6 +13,11 @@ class LifeCanvas extends Component {
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+
+    this.state = {
+      weaponSelect: 1,
+      draw: 0,
+    };
   }
 
   componentDidMount() {
@@ -61,19 +66,49 @@ class LifeCanvas extends Component {
     // Next generation of life
   }
 
-  onMouseMove(e) {
-    // this.life.phaseShifter(e.clientX, e.clientY);
-    // this.setState({ x: e.screenX, y: e.screenY });
-    // console.log(this.state);
+  toggleDraw(e) {
+    console.log(this.state);
+    if (this.state.draw === 0) {
+      this.setState({ draw: 1 });
+      console.log('draw');
+    } else {
+      this.setState({ draw: 0 });
+      console.log('no draw');
+    }
   }
 
-  onClick(e) {
+  draw(e) {
+    if (this.state.draw === 1) {
+      this.life.draw(e.clientX, e.clientY);
+      this.setState({ x: e.screenX, y: e.screenY });
+      console.log('drawing');
+    }
+  }
+
+  chooseWeapon = i => e => {
+    this.setState({ weaponSelect: i });
+    console.log(this.state);
+  };
+
+  fireWeapon(e) {
+    switch (this.state.weaponSelect) {
+      case 1:
+        this.life.glider(e.clientX, e.clientY);
+        break;
+      case 2:
+        this.life.switchEngine(e.clientX, e.clientY);
+        break;
+      case 3:
+        this.life.railGun(e.clientX, e.clientY);
+        break;
+      case 4:
+        this.life.pulsar(e.clientX, e.clientY);
+        break;
+      case 5:
+        this.life.phaseBlaster(e.clientX, e.clientY);
+        break;
+    }
     // console.log(this.refs.canvas);
-    // this.life.phaseShifter(e.clientX, e.clientY);
-    // this.life.glider(e.clientX, e.clientY);
-    // this.life.switchEngine(e.clientX, e.clientY);
-    // this.life.railGun(e.clientX, e.clientY);
-    this.life.phaseBlaster(e.clientX, e.clientY);
   }
 
   Sterilization(e) {
@@ -108,8 +143,8 @@ class LifeCanvas extends Component {
             ref="canvas"
             width={this.props.width}
             height={this.props.height}
-            onMouseMove={this.onMouseMove.bind(this)}
-            onClick={this.onClick.bind(this)}
+            onMouseMove={this.draw.bind(this)}
+            onClick={this.fireWeapon.bind(this)}
           />
         </div>
         <div>
@@ -120,6 +155,20 @@ class LifeCanvas extends Component {
           <button onClick={this.assimilation.bind(this)}>Assimilation</button>
           <button onClick={this.clear.bind(this)}>Extinction</button>
           <button onClick={this.randomize.bind(this)}>Randomize</button>
+        </div>
+        <div>
+          <span>Select Weapon</span>
+          <button onClick={this.chooseWeapon.bind(this)(1)}>Glider</button>
+          <button onClick={this.chooseWeapon.bind(this)(2)}>Engine</button>
+          <button onClick={this.chooseWeapon.bind(this)(3)}>2x Rail Gun</button>
+          <button onClick={this.chooseWeapon.bind(this)(4)}>Pulsar</button>
+          <button onClick={this.chooseWeapon.bind(this)(5)}>
+            Phase Blaster
+          </button>
+        </div>
+        <div>
+          <span />
+          <button onClick={this.toggleDraw.bind(this)}>Toggle Draw</button>
         </div>
       </div>
     );

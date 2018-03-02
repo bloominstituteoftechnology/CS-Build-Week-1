@@ -33,8 +33,8 @@ class CCA {
   }
 
   Sterilization() {
-    for (let y = 25; y < this.height - 25; y++) {
-      for (let x = 25; x < this.width - 25; x++) {
+    for (let y = 10; y < this.height - 10; y++) {
+      for (let x = 10; x < this.width - 10; x++) {
         this.buffer[this.currentBufferIndex][y][x] = 1;
       }
     }
@@ -58,10 +58,32 @@ class CCA {
     }
   }
 
-  phaseShifter(x, y) {
+  pulsar(x, y) {
     // console.log(x, y);
-    const y2 = y + 40;
-    const x2 = x + 40;
+    x = Math.floor(x / 2);
+    y = Math.floor(y / 2);
+
+    const y2 = y + 10;
+    const x2 = x + 10;
+    for (y; y < y2; y++) {
+      for (x; x < x2; x++) {
+        this.buffer[this.currentBufferIndex][y][x] = 1;
+      }
+    }
+    // for (let y = 25; y < this.height - 25; y++) {
+    //   for (let x = 25; x < this.width - 25; x++) {
+    //     this.buffer[this.currentBufferIndex][y][x] = 1;
+    //   }
+    // }
+  }
+
+  draw(x, y) {
+    // console.log(x, y);
+    x = Math.floor(x / 2);
+    y = Math.floor(y / 2);
+
+    const y2 = y + 3;
+    const x2 = x + 3;
     for (y; y < y2; y++) {
       for (x; x < x2; x++) {
         this.buffer[this.currentBufferIndex][y][x] = 1;
@@ -169,11 +191,8 @@ class CCA {
   }
 
   switchEngine(a, b) {
-    const randYstart = Math.floor(Math.random() * this.height / 2);
-    const randXstart = Math.floor(Math.random() * this.width / 2);
-
-    let m = randYstart;
-    let n = randXstart;
+    a = Math.floor(a / 2);
+    b = Math.floor(b / 2);
 
     let engine = [
       [0, 0, 0, 0, 0, 0, 0],
