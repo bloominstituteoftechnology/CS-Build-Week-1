@@ -29,8 +29,8 @@ class LifeCanvas extends Component {
     // Get canvas framebuffer, a packed RGBA array
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext('2d');
-    canvas.style.width = canvas.width * 1 + 'px';
-    canvas.style.height = canvas.height * 1 + 'px';
+    canvas.style.width = canvas.width * 2 + 'px';
+    canvas.style.height = canvas.height * 2 + 'px';
     let imageData = ctx.getImageData(0, 0, width, height);
 
     // Convert the cell values into white or black for the canvas
@@ -62,14 +62,18 @@ class LifeCanvas extends Component {
   }
 
   onMouseMove(e) {
-    this.life.phaseShifter(e.clientX, e.clientY);
+    // this.life.phaseShifter(e.clientX, e.clientY);
     // this.setState({ x: e.screenX, y: e.screenY });
     // console.log(this.state);
   }
 
   onClick(e) {
-    console.log(this.refs.canvas);
-    this.life.phaseShifter(e.clientX, e.clientY);
+    // console.log(this.refs.canvas);
+    // this.life.phaseShifter(e.clientX, e.clientY);
+    // this.life.glider(e.clientX, e.clientY);
+    // this.life.switchEngine(e.clientX, e.clientY);
+    // this.life.railGun(e.clientX, e.clientY);
+    this.life.phaseBlaster(e.clientX, e.clientY);
   }
 
   Sterilization(e) {
@@ -135,8 +139,8 @@ class LifeApp extends Component {
         <LifeCanvas
           width={Math.floor(300)}
           height={Math.floor(300)}
-          width={Math.floor(window.innerWidth / 1)}
-          height={Math.floor((window.innerHeight - 100) / 1)}
+          width={Math.floor(window.innerWidth / 2)}
+          height={Math.floor((window.innerHeight - 100) / 2)}
         />
       </div>
     );
