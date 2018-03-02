@@ -78,8 +78,8 @@ class CCA {
     // console.log(x, y);
     x = Math.floor(x / 2);
     y = Math.floor(y / 2);
-    const y2 = y + 5;
-    const x2 = x + 5;
+    const y2 = y + 1;
+    const x2 = x + 1;
 
     for (y; y < y2; y++) {
       for (let z = 0; z < this.width; z++) {
@@ -87,11 +87,11 @@ class CCA {
       }
     }
 
-    // for (let z = x; z < this.width; z++) {
-    //   for (x; x < x2; x++) {
-    //     this.buffer[this.currentBufferIndex][z][x] = 1;
-    //   }
-    // }
+    for (x; x < x2; x++) {
+      for (let z = 0; z < this.height; z++) {
+        this.buffer[this.currentBufferIndex][z][x] = 1;
+      }
+    }
   }
 
   railGun(a, b) {
