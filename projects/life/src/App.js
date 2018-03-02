@@ -4,7 +4,8 @@ import "./App.css";
 
 const COLORS = [
   [0x00, 0x00, 0x00], // black
-  [0x00, 0xff, 0xff] // white
+  [0x00, 0xff, 0xff], // blue
+  [0xff, 0x00, 0x00] // red
 ];
 
 /**
@@ -19,6 +20,24 @@ class LifeCanvas extends Component {
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+
+    this.sterilization = this.sterilization.bind(this);
+    this.assimilation = this.assimilation.bind(this);
+    this.dropPopulationBomb = this.dropPopulationBomb.bind(this);
+  }
+
+  dropPopulationBomb(e) {
+    this.life.dropPopulationBomb();
+    COLORS[1] = [0x00, 0xff, 0x37];
+  }
+
+  assimilation(e) {
+    this.life.assimilation();
+    COLORS[1] = [0xd3, 0xd3, 0xd3];
+  }
+
+  sterilization(e) {
+    this.life.sterilization();
   }
 
   /**
@@ -28,6 +47,10 @@ class LifeCanvas extends Component {
     requestAnimationFrame(() => {
       this.animFrame();
     });
+  }
+
+  handleReset(e) {
+    window.location.reload();
   }
 
   /**
@@ -44,9 +67,9 @@ class LifeCanvas extends Component {
     // Get canvas framebuffer, a packed RGBA array
     const canvas = this.refs.canvas;
     let ctx = canvas.getContext("2d");
-    
-    canvas.style.width = (canvas.width * 1.5) + "px";
-    canvas.style.height = (canvas.height * 1.5) + "px";
+
+    canvas.style.width = canvas.width * 1.25 + "px";
+    canvas.style.height = canvas.height * 1.25 + "px";
     let imageData = ctx.getImageData(0, 0, width, height);
 
     // Convert the cell values into white or black for the canvas
@@ -80,11 +103,22 @@ class LifeCanvas extends Component {
    */
   render() {
     return (
-      <canvas
-        ref="canvas"
-        width={this.props.width}
-        height={this.props.height}
-      />
+      <div>
+        <canvas
+          ref="canvas"
+          width={this.props.width}
+          height={this.props.height}
+        />
+        <div>
+          <button onClick={e => this.handleReset(e)}>Reset Game</button>
+          { }
+          <button onClick={e => this.assimilation(e)}>Borgify</button>
+          { }
+          <button onClick={e => this.dropPopulationBomb(e)}>Population Bloom</button>
+          { }
+          <button onClick={e => this.sterilization(e)}>Population Nuke</button>
+        </div>
+      </div>
     );
   }
 }
@@ -101,7 +135,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <div class="canvas">
+        <div className="canvas">
           <LifeCanvas width={600} height={500} />
         </div>
       </div>
@@ -119,6 +153,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        Conway's Game of Life
         <LifeApp />
       </div>
     );

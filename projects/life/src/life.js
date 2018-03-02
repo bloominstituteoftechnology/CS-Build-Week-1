@@ -30,6 +30,50 @@ class Life {
     this.clear();
   }
 
+  sterilization() {
+    for (let y = 25; y < this.height - 25; y++) {
+      for (let x = 25; x < this.width - 25; x++) {
+        this.buffer[this.currentBufferIndex][y][x] = 1;
+      }
+    }
+  }
+
+  assimilation() {
+    const randystart = Math.floor(Math.random() * this.height);
+    const randxstart = Math.floor(Math.random() * this.width);
+    const randyend = Math.floor(
+      Math.random() * (this.height - randystart) + randystart
+    );
+    const randxend = Math.floor(
+      Math.random() * (this.width - randystart) + randystart
+    );
+
+    for (let y = randystart; y < randyend; y++) {
+      for (let x = randxstart; x < randxend; x++) {
+        const rand = Math.floor(Math.random() * 2);
+        this.buffer[this.currentBufferIndex][y][x] = 1;
+      }
+    }
+  }
+
+  dropPopulationBomb() {
+    const randystart = Math.floor(Math.random() * this.height);
+    const randxstart = Math.floor(Math.random() * this.width);
+    const randyend = Math.floor(
+      Math.random() * (this.height - randystart) + randystart
+    );
+    const randxend = Math.floor(
+      Math.random() * (this.width - randystart) + randystart
+    );
+
+    for (let y = randystart; y < randyend; y++) {
+      for (let x = randxstart; x < randxend; x++) {
+        const rand = Math.floor(Math.random() * 2);
+        this.buffer[this.currentBufferIndex][y][x] = rand;
+      }
+    }
+  }
+
   /**
    * Return the current active buffer
    *
@@ -141,9 +185,10 @@ class Life {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         let neighborCounter = hasLivingNeighbor.call(this, x, y);
+        let currentCell = currentBuffer[y][x];
 
         // the this cell is live
-        if (currentBuffer[y][x] === 1) {
+        if (currentCell === 1) {
           // if the live neighbors are <2 or >3
           if (neighborCounter < 2 || neighborCounter > 3) {
             // this cell dies
@@ -156,7 +201,7 @@ class Life {
           }
         }
         // if this cell is dead
-        if (currentBuffer[y][x] === 0) {
+        if (currentCell === 0) {
           // if live neighbors is exactly 3
           if (neighborCounter === 3) {
             backBuffer[y][x] = 1;
