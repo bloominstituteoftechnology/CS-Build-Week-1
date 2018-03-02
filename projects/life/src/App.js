@@ -82,7 +82,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={500} height={500} />
       </div>
     )
   }

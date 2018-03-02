@@ -8,9 +8,8 @@ const MODULO = 2;
 function Array2D(width, height) {
   let a = new Array(height);
 
-  for (let i = 0; i < height; i++) {
+  for (let i = 0; i < height; i++)
     a[i] = new Array(width);
-  }
 
   return a;
 }
@@ -24,7 +23,6 @@ class Life {
    * Constructor
    */
   constructor(width, height) {
-    // !!!! IMPLEMENT ME !!!!
     this.width = width;
     this.height = height;
     this.currentBufferIndex = 0;
@@ -42,7 +40,6 @@ class Life {
    * This should NOT be modified by the caller
    */
   getCells() {
-    // !!!! IMPLEMENT ME !!!!
     return this.buffer[this.currentBufferIndex];
   }
 
@@ -50,7 +47,6 @@ class Life {
    * Clear the life grid
    */
   clear() {
-    // !!!! IMPLEMENT ME !!!!
     for (let i = 0; i < this.height; i++)
       this.buffer[this.currentBufferIndex][i].fill(0);
   }
@@ -59,7 +55,6 @@ class Life {
    * Randomize the life grid
    */
   randomize() {
-    // !!!! IMPLEMENT ME !!!!
     for (let i = 0; i < this.height; i++)
       for (let j = 0; j < this.width; j++)
         this.buffer[this.currentBufferIndex][i][j] =
@@ -70,8 +65,7 @@ class Life {
    * Run the simulation for a single step
    */
   step() {
-    // !!!! IMPLEMENT ME !!!!
-    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    const backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
     let currentBuffer = this.buffer[this.currentBufferIndex];
     let backBuffer = this.buffer[backBufferIndex];
 
@@ -116,7 +110,7 @@ class Life {
           currentBuffer[y][west] +
           currentBuffer[y][east]; 
       } else {
-        throw new Error('unknown border option' + options.border);
+        throw new Error('unknown border option ' + options.border);
       }
       return neighborCount;
     };
