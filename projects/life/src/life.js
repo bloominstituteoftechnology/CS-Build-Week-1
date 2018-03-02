@@ -47,7 +47,7 @@ class CCA {
       Math.random() * (this.height - randystart) + randystart
     );
     const randxend = Math.floor(
-      Math.random() * (this.width - randystart) + randystart
+      Math.random() * (this.width - randxstart) + randxstart
     );
 
     for (let y = randystart; y < randyend; y++) {
@@ -56,6 +56,22 @@ class CCA {
         this.buffer[this.currentBufferIndex][y][x] = 1;
       }
     }
+  }
+
+  phaseShifter(x, y) {
+    console.log(x, y);
+    const y2 = y + 40;
+    const x2 = x + 40;
+    for (y; y < y2; y++) {
+      for (x; x < x2; x++) {
+        this.buffer[this.currentBufferIndex][y][x] = 1;
+      }
+    }
+    // for (let y = 25; y < this.height - 25; y++) {
+    //   for (let x = 25; x < this.width - 25; x++) {
+    //     this.buffer[this.currentBufferIndex][y][x] = 1;
+    //   }
+    // }
   }
 
   dropPopulationBomb() {
