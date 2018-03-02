@@ -92,11 +92,11 @@ class CCA {
         }
       }
       // South
-      // if (y < this.height - 1) {
-      //   if (currentBuffer[y + 1][x] === nextValue) {
-      //     return true;
-      //   }
-      // }
+      if (y < this.height - 1) {
+        if (currentBuffer[y + 1][x] === nextValue) {
+          return true;
+        }
+      }
       // If we've made it this far, we're not infected.
       return false;
     }

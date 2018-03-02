@@ -1,0 +1,2 @@
+- add buttons to do stuff (clear/reset, randomize)
+- throw this (life and cca) onto portfolio w/ small writeup
