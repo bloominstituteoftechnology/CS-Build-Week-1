@@ -24,6 +24,11 @@ class Life {
     this.clear();
   }
 
+  // wrap canvas
+  handleWrap() {
+    this.props.handleWrap(this.state.wrapCanvas);
+  }
+
   // return the arrays
   getCells() {
     return this.buffer[this.currentBufferIndex];
@@ -91,7 +96,7 @@ class Life {
     // loop from start to stop positions
     for (let y = randystart; y < randyend; y++) {
       for (let x = randxstart; x < randxend; x++) {
-        // select a random value 1 or 2
+        // select a random value 0 or 1
         const rand = Math.floor(Math.random() * 2);
         // and assign it to these cells
         this.buffer[this.currentBufferIndex][y][x] = rand;
@@ -99,10 +104,29 @@ class Life {
     }
   }
 
+    // creates random life
+    contagion() {
+      // start positions
+      const randystart = Math.floor(Math.random() * this.height);
+      const randxstart = Math.floor(Math.random() * this.width);
+      // end positions
+      const randyend = randystart + 30;
+      const randxend = randxstart + 30;
+      // loop from start to stop positions
+      for (let y = randystart; y < randyend; y++) {
+        for (let x = randxstart; x < randxend; x++) {
+          // select a random value 0 through 3 -> implements zombies
+          const rand = Math.floor(Math.random() * 4);
+          // and assign it to these cells
+          this.buffer[this.currentBufferIndex][y][x] = rand;
+        }
+      }
+    }
+
   /**
    * Run the simulation for a single step
    */
-  step() {
+  step(wrap = 0) {
     // initialize backBufferIndex to 0, and toggle back and forth between the two
     let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
     // initialize current buffer to this.buffer of the current index
@@ -112,35 +136,61 @@ class Life {
 
     // function to check for living neighbors
     const hasLivingNeighbor = (x, y, options = { wrap: false }) => {
-      let LNCounter = 0;
+      let LNCounter = 0,
+        zCounter = 0,
+        zMod = 2;
 
       // option to wrap
       if (!options.wrap) {
         // confine your looping to the size of the canvas
         if (y > 0 && y < this.height - 1 && x > 0 && x < this.width - 1) {
           // North neighbor of cell x, y
-          if (currentBuffer[y - 1][x] === 1) LNCounter++;
+          if (currentBuffer[y - 1][x] % zMod === 1) {
+            LNCounter++;
+            // if (currentBuffer[y - 1][x] === 3) zCounter++;
+          }
 
           // northeast
-          if (currentBuffer[y - 1][x + 1] === 1) LNCounter++;
+          if (currentBuffer[y - 1][x + 1] % zMod === 1) {
+            LNCounter++;
+            // if (currentBuffer[y - 1][x] === 3) zCounter++;
+          }
 
           // East
-          if (currentBuffer[y][x + 1] === 1) LNCounter++;
+          if (currentBuffer[y][x + 1] % zMod === 1) {
+            LNCounter++;
+            // if (currentBuffer[y - 1][x] === 3) zCounter++;
+          }
 
           // southeast
-          if (currentBuffer[y + 1][x + 1] === 1) LNCounter++;
+          if (currentBuffer[y + 1][x + 1] % zMod === 1) {
+            LNCounter++;
+            // if (currentBuffer[y - 1][x] === 3) zCounter++;
+          }
 
           // South
-          if (currentBuffer[y + 1][x] === 1) LNCounter++;
+          if (currentBuffer[y + 1][x] % zMod === 1) {
+            LNCounter++;
+            // if (currentBuffer[y - 1][x] === 3) zCounter++;
+          }
 
           //southwest
-          if (currentBuffer[y + 1][x - 1] === 1) LNCounter++;
+          if (currentBuffer[y + 1][x - 1] % zMod === 1) {
+            LNCounter++;
+            // if (currentBuffer[y - 1][x] === 3) zCounter++;
+          }
 
           // West
-          if (currentBuffer[y][x - 1] === 1) LNCounter++;
+          if (currentBuffer[y][x - 1] % zMod === 1) {
+            LNCounter++;
+            // if (currentBuffer[y - 1][x] === 3) zCounter++;
+          }
 
           // northwest
-          if (currentBuffer[y - 1][x - 1] === 1) LNCounter++;
+          if (currentBuffer[y - 1][x - 1] % zMod === 1) {
+            LNCounter++;
+            // if (currentBuffer[y - 1][x] === 3) zCounter++;
+          }
         }
       } else if (options.wrap) {
         let north = y - 1;
@@ -164,7 +214,7 @@ class Life {
           currentBuffer[y][west] +
           currentBuffer[north][west];
       } else {
-        throw new Error('unknown border option' + options.border);
+        throw new Error("unknown border option" + options.wrap);
       }
 
       // return count of our neighbors is alive for use in the RULES!
@@ -179,8 +229,8 @@ class Life {
         // grab the currently displayed cell (less typing)
         let currentCell = currentBuffer[y][x];
 
-        // if this cell is currently alive
-        if (currentCell === 1) {
+        // if this cell is currently alive, --> in the contagion scenario, odd numbers are live cells
+        if ((currentCell % 2) === 1) {
           // if the live neighbors are <2 or >3
           if (neighborCounter < 2 || neighborCounter > 3) {
             // this cell dies in the next buffer
@@ -192,8 +242,8 @@ class Life {
             backBuffer[y][x] = 1;
           }
         }
-        // if this cell is currently dead
-        if (currentCell === 0) {
+        // if this cell is currently dead ---> in the contagion scenario, even numbers are dead 
+        if ((currentCell % 2) === 0) {
           // if live neighbors is exactly 3
           if (neighborCounter === 3) {
             backBuffer[y][x] = 1;

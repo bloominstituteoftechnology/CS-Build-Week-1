@@ -21,13 +21,16 @@ class LifeCanvas extends Component {
     this.sterilization = this.sterilization.bind(this);
     this.assimilation = this.assimilation.bind(this);
     this.dropPopulationBomb = this.dropPopulationBomb.bind(this);
-    this.life.step.hasLivingNeighbor.options.wrap = this.life.step.hasLivingNeighbor.options.wrap.bind(
-      this
-    );
+    // this.life.step.hasLivingNeighbor.options.wrap = this.life.step.hasLivingNeighbor.options.wrap.bind(
+    //   this
+    // );
+    // this.refs.life.step().hasLivingNeighbor().options.wrap = this.refs.life.step().hasLivingNeighbor().options.wrap.bind(this);
+    this.contagion = this.contagion.bind(this);
 
     this.state = {
       stop: false,
-      step: false
+      step: false,
+      toggleWrap: false
     };
   }
 
@@ -38,12 +41,17 @@ class LifeCanvas extends Component {
   }
 
   // toggle wrap
-  handleWrap(e) {
-    !this.life.step.handleLivingNeighbor.options.wrap
-      ? this.life.step.handleLivingNeighbor.options.wrap === true
-      : this.life.step.handleLivingNeighbor.options.wrap === false;
+  handleWrap(e, newState) {
+    !this.state.toggleWrap
+      ? this.setState({toggleWrap : true})
+      : this.setState({toggleWrap : false});
   }
 
+  // start contagion
+  contagion(e) {
+    this.life.contagion();
+    // COLORS[1] = [0xff, 0x00, 0x00];
+  }
   // randomly adds life
   dropPopulationBomb(e) {
     this.life.dropPopulationBomb();
@@ -85,11 +93,11 @@ class LifeCanvas extends Component {
     // [0xd3, 0xd3, 0xd3]
   }
 
-  // handleStep(e) {
-  //   this.state.step
-  //     ? this.setState({ stop: false }, this.life.step())
-  //     : this.setState({ stop: true }, this.animFrame());
-  // }
+  handleStep(e) {
+    this.state.step
+      ? this.setState({ stop: false }, this.life.step())
+      : this.setState({ stop: true }, this.animFrame());
+  }
 
   animFrame() {
     if (!this.state.stop) {
@@ -104,6 +112,8 @@ class LifeCanvas extends Component {
       // these lines zoom the canvas
       // canvas.style.width = canvas.width * 1.25 + "px";
       // canvas.style.height = canvas.height * 1.25 + "px";
+      
+      // creates a canvas starting at 0,0 and extending passed in width and height pixels
       let imageData = ctx.getImageData(0, 0, width, height);
 
       // Convert the cell values into white or black for the canvas
@@ -139,6 +149,8 @@ class LifeCanvas extends Component {
    * Render
    */
   //           <button onClick={e => this.handleStep(e)}>Single Step</button>
+  //                     {}
+  //          <button onClick={e => this.handleWrap(e)}>Wrap</button>
   render() {
     return (
       <div>
@@ -146,11 +158,11 @@ class LifeCanvas extends Component {
           ref="canvas"
           width={this.props.width}
           height={this.props.height}
+          // handleWrap={this.handleWrap.bind(this)}
         />
         <div>
           <button onClick={e => this.life.randomize(e)}>Genisis</button>
-          {}
-          <button onClick={e => this.handleWrap(e)}>Wrap</button>
+
           {}
           <button onClick={e => this.handleClear(e)}>Mass Extinction</button>
           {}
@@ -169,6 +181,8 @@ class LifeCanvas extends Component {
           </button>
           {}
           <button onClick={e => this.sterilization(e)}>Population Nuke</button>
+          {}
+          <button onClick={e => this.contagion(e)}>Zombies</button>
         </div>
       </div>
     );

@@ -78,17 +78,17 @@ class CCA {
 
       // Check the west neighbor of cell x, y
       if (x > 0) {
-        if (currentBuffer[y][x-2] === nextValue) {
+        if (currentBuffer[y][x-1] === nextValue) {
           return true;
         }
       }
 
-      // northwest
-      if (x > 0 && y > 0) {
-        if (currentBuffer[y-1][x-2] === nextValue) {
-          return true;
-        }
-      }
+      // // northwest
+      // if (x > 0 && y > 0) {
+      //   if (currentBuffer[y-1][x-2] === nextValue) {
+      //     return true;
+      //   }
+      // }
 
       // North
       if (y > 0) {
@@ -97,26 +97,26 @@ class CCA {
         }
       }
 
-      // northeast
-      if (y > 0 && x > 0) {
-        if (currentBuffer[y-1][x+2] === nextValue) {
-          return true;
-        }
-      }
+      // // northeast
+      // if (y > 0 && x > 0) {
+      //   if (currentBuffer[y-1][x+2] === nextValue) {
+      //     return true;
+      //   }
+      // }
 
       // East
       if (x < this.width - 1) {
-        if (currentBuffer[y][x+2] === nextValue) {
+        if (currentBuffer[y][x+1] === nextValue) {
           return true;
         }
       }
 
-      // southeast
-      if (x < this.width - 1 && y < this.height - 1) {
-        if (currentBuffer[y+1][x+2] === nextValue) {
-          return true;
-        }
-      }
+      // // southeast
+      // if (x < this.width - 1 && y < this.height - 1) {
+      //   if (currentBuffer[y+1][x+2] === nextValue) {
+      //     return true;
+      //   }
+      // }
 
       // South
       if (y < this.height - 1) {
@@ -125,12 +125,12 @@ class CCA {
         }
       }
 
-      //southwest
-      if ( y < this.height - 1 && x > 0) {
-        if (currentBuffer[y+1][x-2] === nextValue) {
-          return true;
-        }
-      }
+      // //southwest
+      // if ( y < this.height - 1 && x > 0) {
+      //   if (currentBuffer[y+1][x-y] === nextValue) {
+      //     return true;
+      //   }
+      // }
 
       // If we've made it this far we're not infected!
       return false;
