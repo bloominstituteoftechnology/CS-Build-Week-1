@@ -26,3 +26,26 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.img{
+  position:absolute;
+  z-index:1;
+}
+
+#container{
+  display:inline-block;
+  width:300px; 
+  height:400px;
+  margin: 0 auto; 
+  border:5px solid black; 
+  border-radius: 10px; 
+  box-shadow: 0 5px 50px #333
+}
+  
+  #gameCanvas{
+    position:relative;
+    height: 300px;
+    width: 400px;
+    background-image: url("sand.jpg");  
+    z-index:1; 
+  }
