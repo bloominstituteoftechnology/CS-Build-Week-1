@@ -133,27 +133,38 @@ class Life {
           count++;
         }
       }
+    };
+
         /* 
     Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
     Any live cell with two or three live neighbours lives on to the next generation.
     Any live cell with more than three live neighbours dies, as if by overpopulation.
     Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
     */
-   switch (true) {
-    case (count < 2):
-    // DEAD - if dead or alive
-      break;
-    case (count === 2):
-    // if alive - ALIVE, if dead - stay dead (nothing changes)
-      break;
-    case (count === 3):
-    // ALIVE - if alive or dead
-      break;
-    case (count > 3):
-    // DEAD - if alive or dead
-      break;
-   }
-   };
+    for (let h = 0; h < this.height; h++) {
+      for (let w = 0; w < this.weight; w++) {
+        let count = needsToChange(h, w);
+        switch (true) {
+          case (count < 2):
+          // DEAD - if dead or alive
+            backBuffer[h][w] = 0;
+            break;
+          case (count === 2):
+          // if alive - ALIVE, if dead - stay dead (nothing changes)
+            backBuffer[h][w] = currentBuffer[h][w] === 1 ? 1 : 0;
+            break;
+          case (count === 3):
+          // ALIVE - if alive or dead
+            backBuffer[h][w] = 1;
+            break;
+          case (count > 3):
+          // DEAD - if alive or dead
+            backBuffer[h][w] = 0;
+            break;
+        }
+      }
+    }
+    this.currentBufferIndex = backBufferIndex;
   }
 }
 
