@@ -65,7 +65,7 @@ class CCA {
     const buffer = this.buffer[this.curentBufferIndex]
     for( let y = 0; y < this.height; y++) {
       for( let x = 0; x < this.width; x++) {
-        buffer[x][y] = Math.floor(Math.random() * MODULO);
+        buffer[y][x] = Math.floor(Math.random() * MODULO);
       }
     }
   }
