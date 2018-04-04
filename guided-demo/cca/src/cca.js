@@ -83,7 +83,7 @@ class CCA {
 
     // Helper function to see if cell has "infectious" neighbor
     // i.e. neighbor with the next state to change to
-     function hasInfectiousNeighbor(x,y) {
+    const hasInfectiousNeighbor = (x,y) => {
        const nextValue = (currentBuffer[y][x] + 1) % MODULO;
 
        // West neighbor
@@ -113,6 +113,20 @@ class CCA {
 
        return false;
      }
+
+     // Loop through the currentBuffer and populate the 
+     // backBuffer (next generation) based on above helper
+     for (let y = 0; y < this.height; y++) {
+       for (let x = 0; x < this.width; x++) {
+         if (hasInfectiousNeighbor(x, y)) {
+           backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
+         } else {
+           backBuffer[y][x] = currentBuffer[y][x];
+         }
+       }
+     }
+
+     this.currentBufferIndex = backBufferIndex;
   }
 }
   
