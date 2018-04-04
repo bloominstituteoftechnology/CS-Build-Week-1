@@ -90,8 +90,55 @@ class Life {
     */
    const needsToChange = (h, w) => {
      let count = 0;
-      
-
+      // need to check:
+      //check top left diagonal
+      if (h > 0) {
+        if (currentBuffer[h-1][w-1] === 1) {
+          count++;
+        }
+      }
+      //check top
+      if (h > 0) {
+        if (currentBuffer[-h][w] === 1) {
+          count++;
+        }
+      }
+      //check top right diagonal
+      if (h > 0) {
+        if (currentBuffer[-h][w+1] === 1) {
+          count++;
+        }
+      }
+      //check left
+      if (w > 0) {
+        if (currentBuffer[h][w-1] === 1) {
+          count++;
+        }
+      }
+      //check right
+      if (w < this.width-1) {
+        if (currentBuffer[h][w+1] === 1) {
+          count++;
+        }
+      }
+      //check bottom left diagonal
+      if (h < this.height-1) {
+        if (currentBuffer[h+1][w-1] === 1) {
+          count++;
+        }
+      }
+      //check bottom
+      if (h < this.height-1) {
+        if (currentBuffer[h+1][w] === 1) {
+          count++;
+        }
+      }
+      //check bottom right diagonal
+      if (h < this.height-1) {
+        if (currentBuffer[h+1][w+1] === 1) {
+          count++;
+        }
+      }
    };
   }
 }
