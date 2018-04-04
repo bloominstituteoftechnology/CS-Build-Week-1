@@ -61,7 +61,7 @@ class CCA {
    * Randomize the cca grid
    */
   randomize() {
-    const buffer = this.buffer[this.currentBufferIndex];
+    const buffer = this.buffer[this.currentBufferIndex]; //0 will set buffer = this.buffer[0] or this.buffer[1]
 
     for (let h = 0; h < this.height; h++) {
       for (let w = 0; w < this.width; w++) {
@@ -88,6 +88,14 @@ class CCA {
         if (currentBuffer[h][w-1] === nextValue) {
           return true;
         }
+      } else if (h > 0) { //check the end of the previous row
+        if (currentBuffer[h-1][this.width-1] === nextValue) {
+          return true;
+        }
+      } else { //if we are in the top left corner, check the bottom right corner
+        if (currentBuffer[this.height-1][this.width-1] === nextValue) {
+          return true;
+        }
       }
       
       //check north (top) neighbor
@@ -95,11 +103,23 @@ class CCA {
         if (currentBuffer[h-1][w] === nextValue) {
           return true;
         }
+      } else { // if we are the top row, check the value of the bottom row
+        if (currentBuffer[this.height-1][w] === nextValue) {
+          return true;
+        }
       }
 
       //check east (right) neighbor
       if (w < this.width-1) {
         if (currentBuffer[h][w+1] === nextValue) {
+          return true;
+        }
+      } else if (h < this.height-1) { // if we're not bottom row, check first item of next row
+        if (currentBuffer[h+1][0] === nextValue) {
+          return true;
+        }
+      } else { //if we are bottom right, check top left
+        if (currentBuffer[0][0] === nextValue) {
           return true;
         }
       }

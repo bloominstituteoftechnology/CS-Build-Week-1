@@ -12,7 +12,6 @@ class LifeCanvas extends Component {
    */
   constructor(props) {
     super(props);
-
     this.life = new Life(props.width, props.height);
     this.life.randomize();
   }
