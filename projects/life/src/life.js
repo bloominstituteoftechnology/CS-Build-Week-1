@@ -82,12 +82,6 @@ class Life {
     let backBuffer = this.buffer[backBufferIndex];
 
     // check if neighbors are alive (1) or dead (0)
-    /* 
-    Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
-    Any live cell with two or three live neighbours lives on to the next generation.
-    Any live cell with more than three live neighbours dies, as if by overpopulation.
-    Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-    */
    const needsToChange = (h, w) => {
      let count = 0;
       // need to check:
@@ -139,6 +133,26 @@ class Life {
           count++;
         }
       }
+        /* 
+    Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
+    Any live cell with two or three live neighbours lives on to the next generation.
+    Any live cell with more than three live neighbours dies, as if by overpopulation.
+    Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+    */
+   switch (true) {
+    case (count < 2):
+    // DEAD - if dead or alive
+      break;
+    case (count === 2):
+    // if alive - ALIVE, if dead - stay dead (nothing changes)
+      break;
+    case (count === 3):
+    // ALIVE - if alive or dead
+      break;
+    case (count > 3):
+    // DEAD - if alive or dead
+      break;
+   }
    };
   }
 }
