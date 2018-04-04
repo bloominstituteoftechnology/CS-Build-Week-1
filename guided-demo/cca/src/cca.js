@@ -82,19 +82,19 @@ class CCA {
                     return true;
                 }
             }
-
+            // north neighbor
             if (y > 0) {
                 if (currentBuffer[y - 1][x] === nextValue) {
                     return true;
                 }
             }
-
+            // east neighbor
             if (x < this.width - 1) {
                 if (currentBuffer[y][x + 1] === nextValue) {
                     return true;
                 }
             }
-
+            // south neighbor
             if (y < this.height - 1) {
                 if (currentBuffer[y + 1][x] === nextValue) {
                     return true;
