@@ -65,7 +65,7 @@ class CCA {
 
     for (let h = 0; h < this.height; h++) {
       for (let w = 0; w < this.width; w++) {
-        buffer[h][w] = (Math.random() * MODULO) | 0; // Math.floor(Math.random()*MODULO)
+        buffer[h][w] = Math.floor(Math.random() * MODULO);
       }
     }
   }
@@ -110,14 +110,14 @@ class CCA {
           return true;
         }
       }
-
       return false;
     }
+
     // loop through the current buffer and populate the back buffer(next gen) based on above helper
     for (let h = 0; h < this.height; h++){
       for (let w = 0; w < this.width; w++){
         if (hasInfectiousNeighbor(h, w))  {
-          backBuffer[h][w] = (currentBuffer[h][w] + 1) * MODULO; // increments
+          backBuffer[h][w] = (currentBuffer[h][w] + 1) % MODULO; // increments
         } else {
           backBuffer[h][w] = currentBuffer[h][w]; // stays the same
         }
