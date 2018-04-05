@@ -1,50 +1,191 @@
-import React, { Component } from 'react';
-import Life from './life';
-import './App.css';
+import React, { Component } from "react";
+import Life from "./life";
+import "./App.css";
+
+const COLORS = [
+  [0x00, 0x00, 0x00], // black
+  [0x00, 0xff, 0xff], // blue
+  [0xff, 0x00, 0x00] // red
+];
 
 /**
  * Life canvas
  */
 class LifeCanvas extends Component {
-
-  /**
-   * Constructor
-   */
   constructor(props) {
     super(props);
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+
+    this.sterilization = this.sterilization.bind(this);
+    this.assimilation = this.assimilation.bind(this);
+    this.dropPopulationBomb = this.dropPopulationBomb.bind(this);
+    // this.life.step.hasLivingNeighbor.options.wrap = this.life.step.hasLivingNeighbor.options.wrap.bind(
+    //   this
+    // );
+    // this.refs.life.step().hasLivingNeighbor().options.wrap = this.refs.life.step().hasLivingNeighbor().options.wrap.bind(this);
+    this.contagion = this.contagion.bind(this);
+
+    this.state = {
+      stop: false,
+      step: false,
+      toggleWrap: false
+    };
   }
 
-  /**
-   * Component did mount
-   */
   componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
-  /**
-   * Handle an animation frame
-   */
-  animFrame() {
-    //
-    // !!!! IMPLEMENT ME !!!!
-    //
+  // toggle wrap
+  handleWrap(e, newState) {
+    !this.state.toggleWrap
+      ? this.setState({toggleWrap : true})
+      : this.setState({toggleWrap : false});
+  }
 
-    // Request another animation frame
-    // Update life and get cells
-    // Get canvas framebuffer, a packed RGBA array
-    // Convert the cell values into white or black for the canvas
-    // Put the new image data back on the canvas
-    // Next generation of life
+  // start contagion
+  contagion(e) {
+    this.life.contagion();
+    // COLORS[1] = [0xff, 0x00, 0x00];
+  }
+  // randomly adds life
+  dropPopulationBomb(e) {
+    this.life.dropPopulationBomb();
+    // COLORS[1] = [0x00, 0xff, 0x37];
+  }
+
+  //
+  assimilation(e) {
+    this.life.assimilation();
+    COLORS[1] = [0xd3, 0xd3, 0xd3];
+  }
+
+  //
+  sterilization(e) {
+    this.life.sterilization();
+  }
+
+  // handleReset(e) {
+  //   window.location.reload();
+  // }
+
+  handleClear(e) {
+    this.life.clear();
+  }
+
+  handleStop(e) {
+    !this.state.stop
+      ? this.setState({ stop: true })
+      : this.setState({ stop: false }, () => {
+          this.animFrame();
+        });
+  }
+
+  random_rgb() {
+    let o = Math.round,
+      r = Math.random,
+      s = 255;
+    COLORS[1] = [o(r() * s), o(r() * s), o(r() * s)];
+    // [0xd3, 0xd3, 0xd3]
+  }
+
+  handleStep(e) {
+    this.state.step
+      ? this.setState({ stop: false }, this.life.step())
+      : this.setState({ stop: true }, this.animFrame());
+  }
+
+  animFrame() {
+    if (!this.state.stop) {
+      const cells = this.life.getCells();
+      const height = this.props.height;
+      const width = this.props.width;
+
+      // Get canvas framebuffer, a packed RGBA array
+      const canvas = this.refs.canvas;
+      let ctx = canvas.getContext("2d");
+
+      // these lines zoom the canvas
+      // canvas.style.width = canvas.width * 1.25 + "px";
+      // canvas.style.height = canvas.height * 1.25 + "px";
+      
+      // creates a canvas starting at 0,0 and extending passed in width and height pixels
+      let imageData = ctx.getImageData(0, 0, width, height);
+
+      // Convert the cell values into white or black for the canvas
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          const state = cells[y][x];
+          const color = COLORS[state];
+          const index = (y * width + x) * 4;
+
+          imageData.data[index + 0] = color[0]; // red
+          imageData.data[index + 1] = color[1]; // green
+          imageData.data[index + 2] = color[2]; // blue
+          imageData.data[index + 3] = 0xff; // alpha, 0xff === 255 === opaque
+        }
+      }
+
+      // Put the new image data back on the canvas
+      ctx.putImageData(imageData, 0, 0);
+
+      // Next generation of life
+      // if (this.motion === true) {
+      this.life.step();
+      // }
+
+      // Request another animation frame
+      requestAnimationFrame(() => {
+        this.animFrame();
+      });
+    }
   }
 
   /**
    * Render
    */
+  //           <button onClick={e => this.handleStep(e)}>Single Step</button>
+  //                     {}
+  //          <button onClick={e => this.handleWrap(e)}>Wrap</button>
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <div>
+        <canvas
+          ref="canvas"
+          width={this.props.width}
+          height={this.props.height}
+          // handleWrap={this.handleWrap.bind(this)}
+        />
+        <div>
+          <button onClick={e => this.life.randomize(e)}>Genesis</button>
+
+          {}
+          <button onClick={e => this.handleClear(e)}>Mass Extinction</button>
+          {}
+          <button onClick={e => this.handleStop(e)}>
+            {this.state.stop ? "Start" : "Stop"}
+          </button>
+          {}
+          <button onClick={e => this.random_rgb(e)}>Random Color</button>
+        </div>
+        <div />
+        <div>
+          <button onClick={e => this.assimilation(e)}>Disrupt Nature</button>
+          {}
+          <button onClick={e => this.dropPopulationBomb(e)}>
+            Population Bloom
+          </button>
+          {}
+          <button onClick={e => this.sterilization(e)}>Population Nuke</button>
+          {}
+          <button onClick={e => this.contagion(e)}>Zombies</button>
+        </div>
+      </div>
+    );
   }
 }
 
@@ -52,16 +193,19 @@ class LifeCanvas extends Component {
  * Life holder component
  */
 class LifeApp extends Component {
-
   /**
    * Render
+   * <LifeCanvas width={600} height={500} style="width:1200px;height:1000px;"/>
+   * <LifeCanvas width={600} height={500}/>
    */
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <div className="canvas">
+          <LifeCanvas width={600} height={500} />
+        </div>
       </div>
-    )
+    );
   }
 }
 
@@ -69,17 +213,16 @@ class LifeApp extends Component {
  * Outer App component
  */
 class App extends Component {
-
   /**
    * Render
    */
   render() {
     return (
       <div className="App">
+        Conway's Game of Life
         <LifeApp />
       </div>
     );
   }
 }
-
 export default App;
