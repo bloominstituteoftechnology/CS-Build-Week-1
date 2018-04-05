@@ -64,9 +64,10 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    let buffer = this.buffer[this.currentBufferIndex];
     for (let h = 0; h < this.height; h++) {
       for (let w = 0; w < this.weight; w++) {
-        buffer[h][w] = Math.round(Math.random());
+        buffer[h][w] = Math.floor(Math.random() * 2);
       }
     }
 
@@ -133,6 +134,7 @@ class Life {
           count++;
         }
       }
+      return count;
     };
 
         /* 
@@ -158,6 +160,8 @@ class Life {
           case (count === 3):
           // ALIVE - if alive or dead
             backBuffer[h][w] = 1;
+            break;
+          default:
             break;
         }
       }

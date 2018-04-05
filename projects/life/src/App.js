@@ -37,6 +37,33 @@ class LifeCanvas extends Component {
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
+    const height = this.props.height;
+    const width = this.props.width;
+    let cells = this.life.getCells();
+
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, width, height);
+
+    for (let h = 0; h < height; h++) {
+      for (let w = 0; w < width; w++) {
+        const index = (h * width + w) * 4;
+        const color = cells[h][w] ? 0x00 : 0xff;
+
+        imageData.data[index + 0] = color; // red
+        imageData.data[index + 1] = color; // green
+        imageData.data[index + 2] = color; // blue
+        imageData.data[index + 3] = 0xff; // alpha - opaque
+      }
+    }
+    // put image data on the canvas
+    ctx.putImageData(imageData, 0, 0);
+
+    // iterate the life
+    this.life.step();
+
+    // request new animation frame
+    requestAnimationFrame(() => { this.animFrame() });
   }
 
   /**
