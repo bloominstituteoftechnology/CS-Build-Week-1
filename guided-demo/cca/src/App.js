@@ -3,7 +3,7 @@ import CCA from './cca';
 import './App.css';
 
 const COLORS = [
-  [0, 0, 0],
+  [0, 0, 0], 
   [0x8f, 0, 0x5f],
   [0x5f, 0, 0x8f],
   [0, 0, 0xff],
