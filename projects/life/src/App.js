@@ -92,6 +92,15 @@ class Buttons extends Component{
   stopClicked() {
     this.life.randomize();
   }
+  gclicked(){
+   
+  }
+  gGclicked(){
+
+  }
+  randomClicked() {
+
+  }
   
   render() {
     return(
@@ -99,7 +108,7 @@ class Buttons extends Component{
       <Button color="primary" size="sm" onClick={() => this.clearClicked.bind(this)}> Clear</Button>{' '}
       <Button color="danger" size="sm"onClick={() => this.stopClicked.bind(this)}>Stop</Button>{' '}
       <Button color="success" size="sm">Start</Button>{' '}
-      <Button color="secondary" size="sm">Randomize</Button>{' '}
+      <Button color="secondary" size="sm"onClick={() => this.forceUpdate()}>Randomize</Button>{' '}
       <Button color="warning" size="sm"> Add a Glider</Button>{' '}
       <Button color="primary" size="sm"> Add a Gosper Glider</Button>
       </div>
@@ -117,6 +126,7 @@ class LifeApp extends Component {
   render() {
     return (
      <div>
+       <h2> Game of Life </h2>
         <Buttons/>
         <LifeCanvas width={500} height={400} />
     </div>
