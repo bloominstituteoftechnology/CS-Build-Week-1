@@ -3,11 +3,6 @@ import Life from './life';
 import './App.css';
 
 
-const COLORS = [
-  [0, 0, 0], // black
-  [0xff, 0xff, 0xff] // white
-]
-
 /**
  * Life canvas
  */
@@ -39,8 +34,6 @@ class LifeCanvas extends Component {
     // !!!! IMPLEMENT ME !!!!
     //
     // Request another animation frame
-    requestAnimationFrame(() => { this.animFrame() }); 
-
     // Update life and get cells
     const width = this.props.width;
     const height = this.props.height;
@@ -57,12 +50,13 @@ class LifeCanvas extends Component {
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         const index = (y * width + x) * 4;
-        const status = cells[y][x]; // integer 0, 1
 
+        const status = cells[y][x]; // integer 0, 1
+        let color = cells[y][x] ? 0xff : 0x00;
         // Actually update the colors
-        imageData.data[index + 0] = COLORS[status][0]; // red
-        imageData.data[index + 1] = COLORS[status][1]; // green
-        imageData.data[index + 2] = COLORS[status][2]; // blue
+        imageData.data[index + 0] = color; // red
+        imageData.data[index + 1] = color; // green
+        imageData.data[index + 2] = color; // blue
         imageData.data[index + 3] = 0xff; // alpha, 0xff = opaque (255)
       }
     }
@@ -73,9 +67,7 @@ class LifeCanvas extends Component {
     // Next generation of life
     this.life.step();
 
-    
-    
-    
+    requestAnimationFrame(() => { this.animFrame() });   
   }
 
   /**

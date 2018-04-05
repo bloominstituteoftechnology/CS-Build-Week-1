@@ -37,7 +37,7 @@ class Life {
       Array2D(width, height)
     ];
 
-    this.clear();
+    this.clear(); // this.randomize()
   }
   
   /**
@@ -127,6 +127,101 @@ class Life {
 
       return count;
     }
+
+    /**
+     * const countNeighbors = (x, y, options={border: 'wrap'}) => {
+     *    let neighborCount = 0;
+     *    if (option.border === 'wrap') {
+     *        // count neighbors, wrapping around the edges
+     *        let north = y - 1;
+     *        let south = y + 1;
+     *        let west = x - 1;
+     *        let east = x + 1;
+     * 
+     *        if (north < 0) {
+     *            north = this.height - 1;
+     *        }
+     * 
+     *        if (south > this.height - 1) {
+     *            south = 0;
+     *        }
+     * 
+     *        if (west < 0) {
+     *            west = this.width - 1;
+     *        }
+     * 
+     *        if (east > this.width - 1) {
+     *            east = 0;
+     *        }
+     * 
+     *        neighborCount = 
+     *            currentBuffer[north][west] +
+     *            currentBuffer[north][x] +
+     *            currentBuffer[north][east] +
+     *            currentBuffer[y][west] +
+     *            currentBuffer[y][east] +
+     *            currentBuffer[south][x] +
+     *            currentBuffer[south][west] +
+     *            currentBuffer[south][east] 
+     * 
+     *    } else if (options.border === 'nowrap) {
+     *        // treat out-of-bounds as zero
+     *        for (let yOffset = -1; yOffset <= 1; yOffset++) {
+     *            let yPos = y + yOffset;
+     *            if (yPos < 0 || yPos >= this.height) {
+     *                // out of bounds
+     *                continue;
+     *            }
+     *            for (let xOffset = -1; xOffset <= 1; xOffset++) {
+     *                let xPos = x + xOffset;
+     *                if (xPos < 0 || xPos >= this.width) {
+     *                // out of bounds
+     *                continue;
+     *                }
+     * 
+     *                if (yPos === y && xPos === x) {
+     *                    // can't be your own neighbor
+     *                    continue;
+     *                }
+     * 
+     *                neighborCount += currentBuffer[yPos][xPos];
+     *            }
+     *        }
+     *    } else {
+     *        throw new Error('Unknown border option: ' + options.border);
+     *    }
+     * 
+     *    return neighborCount;
+     * }
+     * 
+     * // update backBuffer to have the next time state
+     * for (let y = 0; y < this.height; y++) {
+     *    for (let x = 0; x < this.width; x++) {
+     *        const neighbors = countNeighbors(x, y);
+     *        const thisCell = currentBuffer[y][x];
+     * 
+     *        // implement Gol rules
+     *        if (thisCell) {
+     *            // current cell is alive
+     *            if (neighbors < 2 || neighbors > 3) {
+     *                // death 
+     *                backBuffer[y][x] = 0;
+     *            } else {
+     *                // still alive
+     *                backBuffer[y][x] = 1;
+     *            }
+     *        } else {
+     *            // current cell is dead
+     *            if (neighbor === 3) {
+     *                // alive
+     *                backBuffer[y][x] = 1;
+     *            } else {
+     *                backBuffer[y][x] = 0;
+     *            }
+     *        }
+     *    }
+     * }
+     */
 
     // loop through the currentBuffer and populate the 
     // backBuffer (next genration) based on above helper
