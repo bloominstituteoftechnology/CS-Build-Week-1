@@ -1,18 +1,18 @@
 /**
- * Implementation of Conway's game of Life
+ * Implemention of Conway's game of Life
  */
 
 /**
  * Make a 2D array helper function
  */
-function Array2D(width, height) {
-  let a = new Array(height);
+function Array2D(width, height) { // array/grid creation function
+    let a = new Array(height);
 
-  for (let i = 0; i < height; i++) {
-    a[i] = new Array(width);
-  }
+    for (let i = 0; i < height; i++) {
+        a[i] = new Array(width);
+    }
 
-  return a;
+    return a;
 }
 
 /**
@@ -20,149 +20,180 @@ function Array2D(width, height) {
  */
 class Life {
 
-  /**
-   * Constructor
-   */
-  constructor(width, height) {
-    // !!!! IMPLEMENT ME !!!!
-    this.width = width;
-    this.height = height;
+    /**
+     * Constructor
+     */
+    constructor(width, height) {
+        this.width = width;
+        this.height = height;
 
-    this.currentBufferIndex = 0;
+        this.currentBufferIndex = 0; // set current grid variable in this.buffer array 
 
-    this.buffer = [
-      Array2D(width, height),
-      Array2D(width, height),
-    ];
+        // Allocate the double buffer
+        this.buffer = [ // array of two grids
+            Array2D(width, height), // 0
+            Array2D(width, height) // 1
+        ];
 
-    this.alive = [false, true];
-
-    this.clear();
-  }
-
-  /**
-   * Return the current active buffer
-   * 
-   * This should NOT be modified by the caller
-   */
-  getCells() {
-    // !!!! IMPLEMENT ME !!!!
-    return this.buffer[this.currentBufferIndex];
-  }
-
-  /**
-   * Clear the life grid
-   */
-  clear() {
-    // !!!! IMPLEMENT ME !!!!
-    for (let y = 0; y < this.height; y++) {
-      this.buffer[this.currentBufferIndex][y].fill(0);
+        this.clear();
     }
-  }
 
-  /**
-   * Randomize the life grid
-   */
-  randomize() {
-    // !!!! IMPLEMENT ME !!!!
-    let buffer = this.buffer[this.currentBufferIndex];
-
-    for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++) {
-        buffer[y][x] = Math.floor(Math.random() * 2);
-      }
+    /**
+     * Return the current active buffer
+     * 
+     * This should NOT be modified by the caller
+     */
+    getCells() {
+        return this.buffer[this.currentBufferIndex]; // return which grid is in use
     }
-  }
 
-  /**
-   * Run the simulation for a single step
-   */
-  step() {
-    // !!!! IMPLEMENT ME !!!!
-    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
-    let currentBuffer = this.buffer[this.currentBufferIndex];
-    let backBuffer = this.buffer[backBufferIndex];
+    /**
+     * Clear the life grid
+     */
+    clear() {
+        for (let y = 0; y < this.height; y++) {
+            this.buffer[this.currentBufferIndex][y].fill(0); // clear the current grids values and set to 0 / .fill takes care of the x values for every y column
+        } // .fill: method fills all elements of an array from stat index to end index 
+    }
 
-    const countNeighbors = (x, y, options = { border: 'wrap' }) => {
-      let neighborCount = 0;
+    /**
+     * Randomize the life grid
+     */
+    randomize() { // randomize current grid and fill it with 0s and 1s which will be converted to black and white in the app.js file
+        let buffer = this.buffer[this.currentBufferIndex];
 
-      if (options.border === 'wrap') {
-        let north = y - 1;
-        let south = y + 1;
-        let west = x - 1;
-        let east = x + 1;
-
-        if (north < 0) {
-          north = this.height - 1;
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+                buffer[y][x] = Math.floor(Math.random() * 2); // 2 for two colors
+            } // math.random returns value from 0 to 1, need to multiply by 2 in order to get number above 1 since math.floor rounds down
         }
-        if (south > this.height - 1) {
-          south = 0;
-        }
-        if (west < 0) {
-          west = this.width - 1;
-        }
-        if (east > this.width - 1) {
-          east = 0;
-        }
+    }
 
-        neighborCount =
-          currentBuffer[north][west] +
-          currentBuffer[north][x] +
-          currentBuffer[north][east] +
-          currentBuffer[y][west] +
-          currentBuffer[y][east] +
-          currentBuffer[south][x] +
-          currentBuffer[south][east] +
-          currentBuffer[south][west];
+    /**
+     * Run the simulation for a single step
+     */
+    step() {
+        // Fill the offscreen buffer with the next life generation built
+        // from the current buffer.
 
-      } else if (options.border === 'nowrap') {
-        for (let yOffset = -1; yOffset <= 1; yOffset++) {
-          let yPos = y + yOffset;
-          if (yPos < 0 || yPos >= this.height) {
-            continue;
-          }
-          for (let xOffset = -1; xOffset <= 1; xOffset++) {
-            let xPos = x + xOffset;
-            if (xPos < 0 || xPos >= this.width) {
-              continue;
+        let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0; // toggle between two grids
+        let currentBuffer = this.buffer[this.currentBufferIndex]; //
+        let backBuffer = this.buffer[backBufferIndex];
+
+        /**
+         * Count the neighbors of a cell
+         */
+        const countNeighbors = (x, y, options = { border: 'wrap' }) => { // add options object
+            let neighborCount = 0;
+
+            if (options.border === 'wrap') {
+                // count neighbors, wrapping around the edges
+                // refer to directions relative to the cell we are checking
+                let north = y - 1;
+                let south = y + 1;
+                let west = x - 1;
+                let east = x + 1;
+
+                // if we're outside boundaries of grid, come back the opposite side
+                if (north < 0) { // if we've reached the top
+                    north = this.height - 1; // go to the bottom 
+                }
+
+                if (south > this.height - 1) { // if we've reached the very bottom
+                    south = 0; // go back up to the top
+                }
+
+                if (west < 0) { // if we've reached the start
+                    west = this.width - 1; // go to the end
+                }
+
+                if (east > this.width - 1) { // if we've reached the end
+                    east = 0; // go back to the start
+                }
+
+                // count neighbors of current grid, 1 represents living neighbor, 0 represents dead
+                neighborCount =
+                    currentBuffer[north][west] +
+                    currentBuffer[north][x] +
+                    currentBuffer[north][east] +
+                    currentBuffer[y][west] +
+                    currentBuffer[y][east] +
+                    currentBuffer[south][west] +
+                    currentBuffer[south][x] +
+                    currentBuffer[south][east];
+
+                // alternative solution
+                // } else if (options.border === 'nowrap') {
+
+                //     // Treat out of bounds as zero
+                //     for (let yOffset = -1; yOffset <= 1; yOffset++) {
+                //         let yPos = y + yOffset;
+
+                //         if (yPos < 0 || yPos === this.height) {
+                //             // Out of bounds
+                //             continue;
+                //         }
+
+                //         for (let xOffset = -1; xOffset <= 1; xOffset++) {
+                //             let xPos = x + xOffset;
+
+                //             if (xPos < 0 || xPos === this.width) {
+                //                 // Out of bounds
+                //                 continue;
+                //             }
+
+                //             // Don't count center element
+                //             if (xOffset === 0 && yOffset === 0) {
+                //                 continue;
+                //             }
+
+                //             neighborCount += currentBuffer[yPos][xPos];
+                //         }
+                //     }
+
+            } else {
+                throw new Error('unknown border option' + options.border);
             }
-            if (yPos === y && xPos === x) {
-              continue;
+
+            return neighborCount;
+
+        }
+
+        // Loop through and decide if the next generation is alive or dead for each cell processed.
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+
+                let neighborCount = countNeighbors(x, y); // count neighbors
+
+                let thisCell = currentBuffer[y][x]; // get current cell to check
+
+                // set logic of whether or not a cell based on neighbors
+                if (thisCell === 1) {
+                    // We're alive. Let's check if we're dying.
+                    if (neighborCount < 2 || neighborCount > 3) {
+                        // Wake up. Time to die.
+                        backBuffer[y][x] = 0;
+                    } else {
+                        // We're still alive!
+                        backBuffer[y][x] = 1;
+                    }
+                } else {
+                    // We're dead. Let's see if we come to life.
+                    if (neighborCount === 3) {
+                        // A rebirth!
+                        backBuffer[y][x] = 1;
+                    } else {
+                        // We're still dead
+                        backBuffer[y][x] = 0;
+                    }
+                }
             }
-            neighborCount += currentBuffer[yPos][xPos];
-          }
         }
-      } else {
-        throw new Error('Unknown border option: ' + options.border);
-      }
-      return neighborCount;
+
+        // Now the backBuffer is populated with the next generation life
+        // data. So we declare that to be the new current buffer.
+        this.currentBufferIndex = backBufferIndex;
     }
-
-    for (let y = 0; y < this.height; y++) {
-      for (let x = 0; y < this.width; x++) {
-        const neighbors = countNeighbors(x, y);
-        const thisCell = currentBuffer[y][x];
-
-        // logic 
-        if (thisCell) {
-          if (neighbors < 2 || neighbors > 3) {
-            backBuffer[y][x] = 0;
-          } else {
-            backBuffer[y][x] = 1;
-          }
-        } else {
-          if (neighbors === 3) {
-            backBuffer[y][x] = 1;
-          } else {
-            backBuffer[y][x] = 0;
-          }
-        }
-      }
-    }
-    this.currentBufferIndex = backBufferIndex;
-  }
-
-
 }
 
 export default Life;
