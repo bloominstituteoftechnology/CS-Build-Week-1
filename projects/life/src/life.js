@@ -53,7 +53,6 @@ class Life {
    * Clear the life grid
    */
   clear() {
-    // !!!! IMPLEMENT ME !!!!
     for (let h = 0; h < this.height; h++) {
       this.buffer[this.currentBufferIndex][h].fill(0);
     }
@@ -63,21 +62,18 @@ class Life {
    * Randomize the life grid
    */
   randomize() {
-    // !!!! IMPLEMENT ME !!!!
-    let buffer = this.buffer[this.currentBufferIndex];
+     const buffer = this.buffer[this.currentBufferIndex];
     for (let h = 0; h < this.height; h++) {
-      for (let w = 0; w < this.weight; w++) {
-        buffer[h][w] = Math.floor(Math.random() * 2);
+      for (let w = 0; w < this.width; w++) {
+        buffer[h][w] = Math.round(Math.random());
       }
     }
-
   }
 
   /**
    * Run the simulation for a single step
    */
   step() {
-    // !!!! IMPLEMENT ME !!!!
     let backBufferIndex = this.currentBufferIndex === 0 ? 1: 0;
     let currentBuffer = this.buffer[this.currentBufferIndex];
     let backBuffer = this.buffer[backBufferIndex];
@@ -85,25 +81,19 @@ class Life {
     // check if neighbors are alive (1) or dead (0)
    const needsToChange = (h, w) => {
      let count = 0;
-      // need to check:
-      //check top left diagonal
+      //check top row
       if (h > 0) {
-        if (currentBuffer[h-1][w-1] === 1) {
+        if (currentBuffer[h-1][w-1] === 1) { // top left diag
+          count++;
+        }
+        if (currentBuffer[h-1][w] === 1) { // top
+          count++;
+        }
+        if (currentBuffer[h-1][w+1] === 1) { // top right diag
           count++;
         }
       }
-      //check top
-      if (h > 0) {
-        if (currentBuffer[-h][w] === 1) {
-          count++;
-        }
-      }
-      //check top right diagonal
-      if (h > 0) {
-        if (currentBuffer[-h][w+1] === 1) {
-          count++;
-        }
-      }
+
       //check left
       if (w > 0) {
         if (currentBuffer[h][w-1] === 1) {
@@ -116,53 +106,38 @@ class Life {
           count++;
         }
       }
-      //check bottom left diagonal
+      //check bottom row
       if (h < this.height-1) {
-        if (currentBuffer[h+1][w-1] === 1) {
+        if (currentBuffer[h+1][w-1] === 1) { // bottom left diag
           count++;
         }
-      }
-      //check bottom
-      if (h < this.height-1) {
-        if (currentBuffer[h+1][w] === 1) {
+        if (currentBuffer[h+1][w] === 1) { // bottom
           count++;
         }
-      }
-      //check bottom right diagonal
-      if (h < this.height-1) {
-        if (currentBuffer[h+1][w+1] === 1) {
+        if (currentBuffer[h+1][w+1] === 1) { // bottom right diag
           count++;
         }
       }
       return count;
     };
 
-        /* 
-    Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
-    Any live cell with two or three live neighbours lives on to the next generation.
-    Any live cell with more than three live neighbours dies, as if by overpopulation.
-    Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-    */
+    // loop through current buffer and populate the back buffer
     for (let h = 0; h < this.height; h++) {
-      for (let w = 0; w < this.weight; w++) {
+      for (let w = 0; w < this.width; w++) {
         let count = needsToChange(h, w);
         const thisCell = currentBuffer[h][w];
 
-        switch (true) {
-          case (count < 2 || count > 3):
-          // DEAD - if dead or alive
-            backBuffer[h][w] = 0;
-            break;
-          case (count === 2):
-          // if alive - stay ALIVE, if dead - stay DEAD (nothing changes)
-            backBuffer[h][w] = thisCell === 1 ? 1 : 0;
-            break;
-          case (count === 3):
-          // ALIVE - if alive or dead
-            backBuffer[h][w] = 1;
-            break;
-          default:
-            break;
+        if (count < 2 || count > 3) {
+        // DEAD - if dead or alive
+          backBuffer[h][w] = 0;
+        }
+        else if (count === 2) {
+        // if alive - stay ALIVE, if dead - stay DEAD (nothing changes)
+          backBuffer[h][w] = thisCell === 1 ? 1 : 0;
+        }
+        else if (count === 3) {
+        // ALIVE - if alive or dead
+          backBuffer[h][w] = 1;
         }
       }
     }

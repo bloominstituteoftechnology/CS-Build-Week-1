@@ -47,8 +47,9 @@ class LifeCanvas extends Component {
 
     for (let h = 0; h < height; h++) {
       for (let w = 0; w < width; w++) {
-        const index = (h * width + w) * 4;
-        const color = cells[h][w] ? 0x00 : 0xff;
+        let index = (h * width + w) * 4;
+        let lifeStatus = cells[h][w];
+        let color = lifeStatus === 1? 0xff : 0x00;
 
         imageData.data[index + 0] = color; // red
         imageData.data[index + 1] = color; // green
