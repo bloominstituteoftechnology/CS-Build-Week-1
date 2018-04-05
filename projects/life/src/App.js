@@ -14,12 +14,18 @@ class LifeCanvas extends Component {
     super(props);
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+    this.state = {
+      stillGoing: true
+    };
   }
 
   /**
    * Component did mount
    */
   componentDidMount() {
+  }
+
+  beginAnimation() {
     requestAnimationFrame(() => {this.animFrame()});
   }
 
@@ -27,16 +33,6 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
-    //
-    // !!!! IMPLEMENT ME !!!!
-    //
-
-    // Request another animation frame
-    // Update life and get cells
-    // Get canvas framebuffer, a packed RGBA array
-    // Convert the cell values into white or black for the canvas
-    // Put the new image data back on the canvas
-    // Next generation of life
     const height = this.props.height;
     const width = this.props.width;
     let cells = this.life.getCells();
@@ -64,21 +60,8 @@ class LifeCanvas extends Component {
     this.life.step();
 
     // request new animation frame
-    requestAnimationFrame(() => { this.animFrame() });
+      requestAnimationFrame(() => { this.animFrame() });
   }
-
-  /**
-   * Render
-   */
-  render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
-  }
-}
-
-/**
- * Life holder component
- */
-class LifeApp extends Component {
 
   /**
    * Render
@@ -86,9 +69,13 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+        <div>
+          <button onClick={this.beginAnimation()} >Begin Animation</button>
+          <button onClick = {console.log('test')} >End Animation</button>
+        </div>
       </div>
-    )
+    );
   }
 }
 
@@ -103,7 +90,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <LifeApp />
+        <LifeCanvas width = {1000} height = {700} />
       </div>
     );
   }
