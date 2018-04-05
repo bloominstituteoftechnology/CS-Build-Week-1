@@ -144,22 +144,20 @@ class Life {
     for (let h = 0; h < this.height; h++) {
       for (let w = 0; w < this.weight; w++) {
         let count = needsToChange(h, w);
+        const thisCell = currentBuffer[h][w];
+
         switch (true) {
-          case (count < 2):
+          case (count < 2 || count > 3):
           // DEAD - if dead or alive
             backBuffer[h][w] = 0;
             break;
           case (count === 2):
-          // if alive - ALIVE, if dead - stay dead (nothing changes)
-            backBuffer[h][w] = currentBuffer[h][w] === 1 ? 1 : 0;
+          // if alive - stay ALIVE, if dead - stay DEAD (nothing changes)
+            backBuffer[h][w] = thisCell === 1 ? 1 : 0;
             break;
           case (count === 3):
           // ALIVE - if alive or dead
             backBuffer[h][w] = 1;
-            break;
-          case (count > 3):
-          // DEAD - if alive or dead
-            backBuffer[h][w] = 0;
             break;
         }
       }
