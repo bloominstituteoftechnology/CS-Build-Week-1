@@ -49,11 +49,11 @@ class LifeCanvas extends Component {
       for (let w = 0; w < width; w++) {
         let index = (h * width + w) * 4;
         let lifeStatus = cells[h][w];
-        let color = lifeStatus === 1? 0xff : 0x00;
+        let color = lifeStatus === 0? [0x00, 0x00, 0x00] : [0x39, 0xFF, 0x14];
 
-        imageData.data[index + 0] = color; // red
-        imageData.data[index + 1] = color; // green
-        imageData.data[index + 2] = color; // blue
+        imageData.data[index + 0] = color[0]; // red
+        imageData.data[index + 1] = color[1]; // green
+        imageData.data[index + 2] = color[2]; // blue
         imageData.data[index + 3] = 0xff; // alpha - opaque
       }
     }
