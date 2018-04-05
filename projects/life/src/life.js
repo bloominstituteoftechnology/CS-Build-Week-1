@@ -2,6 +2,8 @@
  * Implementation of Conway's game of Life
  */
 
+const MODULO = 2;
+
 /**
  * Make a 2D array helper function
  */
@@ -28,11 +30,14 @@ class Life {
     this.width = width;
     this.height = height;
 
-    this.currentBuffer = 0;
+    this.currentBufferIndex = 0;
+
     this.buffer = [
       Array2D(width, height),
       Array2D(width, height),
     ];
+
+    this.alive = [false, true];
 
     this.clear();
   }
@@ -79,15 +84,15 @@ class Life {
     let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
     let currentBuffer = this.buffer[this.currentBufferIndex];
     let backBuffer = this.buffer[backBufferIndex];
+    let count = 0;
+    let isAlive = this.alive[0];
 
     const hasInfectiousNeighbor = (x, y) => {
       const nextValue = (currentBuffer[y][x] + 1) % MODULO;
-      let count = 0;
 
       // west
       if (x > 0) { // as long as it's not the first cell in the row
         if (currentBuffer[y][x - 1] === nextValue) {
-          return true;
           count++;
         }
       }
@@ -95,7 +100,6 @@ class Life {
       // north west 
       if (x > 0 && y > 0) {
         if (currentBuffer[y - 1][x - 1] === nextValue) {
-          return true;
           count++;
         }
       }
@@ -103,14 +107,12 @@ class Life {
       // north
       if (y > 0) { // if not very top row
         if (currentBuffer[y - 1][x] === nextValue) {
-          count++;
         }
       }
 
       // north east
       if (y > 0 && x < this.width - 1) {
         if (currentBuffer[y - 1][x + 1] === nextValue) {
-          return true;
           count++;
         }
       }
@@ -142,21 +144,31 @@ class Life {
           count++;
         }
       }
-
       return count;
     }
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        if (count === 2 || count === 3) {
-          backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
-
-        } else
-        // if alive, count is 2 or 3, then remain alive
-        // else dies
-        // if dead, and has 2 neighbors, then come back to life
-        // else stay dead
+        if (hasInfectiousNeighbor(x, y)) {
+          if (isAlive && (count === 2 || count === 3)) {
+            isAlive = true;
+            backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
+          }
+          if (count < 2) {
+            isAlive = false;
+            backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
+          }
+          if (count > 3) {
+            isAlive = false;
+            backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
+          }
+          if (count === 3) {
+            isAlive = true;
+            backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
+          }
+        }
       }
+
     }
     this.currentBufferIndex = backBufferIndex;
   }

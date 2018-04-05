@@ -69,6 +69,7 @@ class CCACanvas extends Component {
 
       // request another animation frame
       requestAnimationFrame(() => { this.animFrame() });
+      // setTimeout(() => { this.animFrame() }, 32);
     }
   }
 
