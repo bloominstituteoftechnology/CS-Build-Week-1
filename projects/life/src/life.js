@@ -2,8 +2,6 @@
  * Implementation of Conway's game of Life
  */
 
-const MODULO = 2;
-
 /**
  * Make a 2D array helper function
  */
@@ -71,7 +69,7 @@ class Life {
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        buffer[y][x] = Math.floor(Math.random() * MODULO);
+        buffer[y][x] = Math.floor(Math.random() * 2);
       }
     }
   }
@@ -84,94 +82,86 @@ class Life {
     let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
     let currentBuffer = this.buffer[this.currentBufferIndex];
     let backBuffer = this.buffer[backBufferIndex];
-    let count = 0;
-    let isAlive = this.alive[0];
 
-    const hasInfectiousNeighbor = (x, y) => {
-      const nextValue = (currentBuffer[y][x] + 1) % MODULO;
+    const countNeighbors = (x, y, options = { border: 'wrap' }) => {
+      let neighborCount = 0;
 
-      // west
-      if (x > 0) { // as long as it's not the first cell in the row
-        if (currentBuffer[y][x - 1] === nextValue) {
-          count++;
+      if (options.border === 'wrap') {
+        let north = y - 1;
+        let south = y + 1;
+        let west = x - 1;
+        let east = x + 1;
+
+        if (north < 0) {
+          north = this.height - 1;
         }
-      }
-
-      // north west 
-      if (x > 0 && y > 0) {
-        if (currentBuffer[y - 1][x - 1] === nextValue) {
-          count++;
+        if (south > this.height - 1) {
+          south = 0;
         }
-      }
-
-      // north
-      if (y > 0) { // if not very top row
-        if (currentBuffer[y - 1][x] === nextValue) {
+        if (west < 0) {
+          west = this.width - 1;
         }
-      }
-
-      // north east
-      if (y > 0 && x < this.width - 1) {
-        if (currentBuffer[y - 1][x + 1] === nextValue) {
-          count++;
+        if (east > this.width - 1) {
+          east = 0;
         }
-      }
 
-      // east
-      if (x < this.width - 1) {
-        if (currentBuffer[y][x + 1] === nextValue) {
-          count++;
-        }
-      }
+        neighborCount =
+          currentBuffer[north][west] +
+          currentBuffer[north][x] +
+          currentBuffer[north][east] +
+          currentBuffer[y][west] +
+          currentBuffer[y][east] +
+          currentBuffer[south][x] +
+          currentBuffer[south][east] +
+          currentBuffer[south][west];
 
-      // south east
-      if (x < this.width - 1 && y < this.height - 1) {
-        if (currentBuffer[y + 1][x + 1] === nextValue) {
-          count++;
+      } else if (options.border === 'nowrap') {
+        for (let yOffset = -1; yOffset <= 1; yOffset++) {
+          let yPos = y + yOffset;
+          if (yPos < 0 || yPos >= this.height) {
+            continue;
+          }
+          for (let xOffset = -1; xOffset <= 1; xOffset++) {
+            let xPos = x + xOffset;
+            if (xPos < 0 || xPos >= this.width) {
+              continue;
+            }
+            if (yPos === y && xPos === x) {
+              continue;
+            }
+            neighborCount += currentBuffer[yPos][xPos];
+          }
         }
+      } else {
+        throw new Error('Unknown border option: ' + options.border);
       }
-
-      // south
-      if (y < this.height - 1) {
-        if (currentBuffer[y + 1][x] === nextValue) {
-          count++;
-        }
-      }
-
-      // south west
-      if (x > 0 && y < this.height - 1) {
-        if (currentBuffer[y + 1][x - 1] === nextValue) {
-          count++;
-        }
-      }
-      return count;
+      return neighborCount;
     }
 
     for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++) {
-        if (hasInfectiousNeighbor(x, y)) {
-          if (isAlive && (count === 2 || count === 3)) {
-            isAlive = true;
-            backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
+      for (let x = 0; y < this.width; x++) {
+        const neighbors = countNeighbors(x, y);
+        const thisCell = currentBuffer[y][x];
+
+        // logic 
+        if (thisCell) {
+          if (neighbors < 2 || neighbors > 3) {
+            backBuffer[y][x] = 0;
+          } else {
+            backBuffer[y][x] = 1;
           }
-          if (count < 2) {
-            isAlive = false;
-            backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
-          }
-          if (count > 3) {
-            isAlive = false;
-            backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
-          }
-          if (count === 3) {
-            isAlive = true;
-            backBuffer[y][x] = (currentBuffer[y][x] + 1) % MODULO;
+        } else {
+          if (neighbors === 3) {
+            backBuffer[y][x] = 1;
+          } else {
+            backBuffer[y][x] = 0;
           }
         }
       }
-
     }
     this.currentBufferIndex = backBufferIndex;
   }
+
 
 }
 

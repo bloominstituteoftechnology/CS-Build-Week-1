@@ -3,12 +3,6 @@ import Life from './life';
 import './App.css';
 
 
-
-const COLORS = [
-  [0, 0, 0],
-  [255, 255, 255],
-]
-
 /**
  * Life canvas
  */
@@ -57,13 +51,13 @@ class LifeCanvas extends Component {
         // entries per pixel, Red, Green, Blue, and Alpha:
         let index = (y * width + x) * 4;
 
-        let status = cells[y][x];
+        let color = cells[y][x] ? 0xff : 0x00;
 
         // FYI: Alpha channel controls how transparent a pixel is.
 
-        imageData.data[index + 0] = COLORS[status][0]; // Red channel
-        imageData.data[index + 1] = COLORS[status][1]; // Green channel
-        imageData.data[index + 2] = COLORS[status][2]; // Blue channel
+        imageData.data[index + 0] = color; // Red channel
+        imageData.data[index + 1] = color; // Green channel
+        imageData.data[index + 2] = color; // Blue channel
         imageData.data[index + 3] = 0xff;  // Alpha channel, 0xff = opaque
       }
     }
@@ -71,7 +65,7 @@ class LifeCanvas extends Component {
     // Put the new image data back on the canvas
     ctx.putImageData(imageData, 0, 0);
 
-    // Next generation of cca
+    // Next generation of life
     this.life.step();
 
     // Request another animation frame
