@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import CCA from './cca';
+import COLORS from './Utilities/Colors';
 import './App.css';
-
-const COLORS = [
-  [0, 0, 0],
-  [0x8f, 0, 0x5f],
-  [0x5f, 0, 0x8f],
-  [0, 0, 0xff],
-  [0, 0x5f, 0x7f],
-  [0x5f, 0x8f, 0x7f],
-  [0x8f, 0xff, 0x7f],
-  [0xff, 0x5f, 0x7f],
-];
+import CurrentColors from './Components/CurrentColors/CurrentColors';
+import ColorDisplay from './Containers/Colors/ColorDisplay';
 
 /**
  * CCA canvas
@@ -91,7 +83,9 @@ class CCAApp extends Component {
   render() {
     return (
       <div>
-        <CCACanvas width={1000} height={1000} />
+        <CCACanvas width={400} height={300} />
+        <CurrentColors />
+        <ColorDisplay />
       </div>
     );
   }

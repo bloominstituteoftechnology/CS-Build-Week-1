@@ -80,11 +80,11 @@ class CCA {
       const nextValue = (currentBuffer[y][x] + 1) % MODULO;
 
       // West neighbor
-      if (x > 0) {
-        if (currentBuffer[y][x - 1] === nextValue) {
-          return true;
-        }
-      }
+      // if (x > 0) {
+      //   if (currentBuffer[y][x - 1] === nextValue) {
+      //     return true;
+      //   }
+      // }
       // North neighbor
       if (y > 0) {
         if (currentBuffer[y - 1][x] === nextValue) {
