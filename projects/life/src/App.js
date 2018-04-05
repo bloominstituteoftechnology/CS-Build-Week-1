@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
+const COLORS = [
+  [0x0e, 0x18, 0x20],
+  [0x0f, 0x33, 0x4d],
+  [0x0b, 0x5d, 0x85],
+  [0xb8, 0xb7, 0xc5],
+  [0xf0, 0xdd, 0xe0]
+];
 /**
  * Life canvas
  */
@@ -45,7 +52,7 @@ class LifeCanvas extends Component {
       for (let w = 0; w < width; w++) {
         let index = (h * width + w) * 4;
         let lifeStatus = cells[h][w];
-        let color = lifeStatus === 0? [0x00, 0x00, 0x00] : [0x39, 0xFF, 0x14];
+        let color = COLORS[lifeStatus];
 
         imageData.data[index + 0] = color[0]; // red
         imageData.data[index + 1] = color[1]; // green
@@ -90,7 +97,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <LifeCanvas width = {1000} height = {700} />
+        <LifeCanvas width = {1400} height = {900} />
       </div>
     );
   }

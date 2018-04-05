@@ -83,38 +83,38 @@ class Life {
      let count = 0;
       //check top row
       if (h > 0) {
-        if (currentBuffer[h-1][w-1] === 1) { // top left diag
+        if (currentBuffer[h-1][w-1] > 0) { // top left diag
           count++;
         }
-        if (currentBuffer[h-1][w] === 1) { // top
+        if (currentBuffer[h-1][w] > 0) { // top
           count++;
         }
-        if (currentBuffer[h-1][w+1] === 1) { // top right diag
+        if (currentBuffer[h-1][w+1] > 0) { // top right diag
           count++;
         }
       }
 
       //check left
       if (w > 0) {
-        if (currentBuffer[h][w-1] === 1) {
+        if (currentBuffer[h][w-1] > 0) {
           count++;
         }
       }
       //check right
       if (w < this.width-1) {
-        if (currentBuffer[h][w+1] === 1) {
+        if (currentBuffer[h][w+1] > 0) {
           count++;
         }
       }
       //check bottom row
       if (h < this.height-1) {
-        if (currentBuffer[h+1][w-1] === 1) { // bottom left diag
+        if (currentBuffer[h+1][w-1] > 0) { // bottom left diag
           count++;
         }
-        if (currentBuffer[h+1][w] === 1) { // bottom
+        if (currentBuffer[h+1][w] > 0) { // bottom
           count++;
         }
-        if (currentBuffer[h+1][w+1] === 1) { // bottom right diag
+        if (currentBuffer[h+1][w+1] > 0) { // bottom right diag
           count++;
         }
       }
@@ -133,7 +133,17 @@ class Life {
         }
         else if (count === 2) {
         // if alive - stay ALIVE, if dead - stay DEAD (nothing changes)
-          backBuffer[h][w] = thisCell === 1 ? 1 : 0;
+          // backBuffer[h][w] = thisCell === 1 ? 1 : 0;
+          switch (thisCell) {
+            case (1):
+            case (2):
+            case (3):
+              backBuffer[h][w] = thisCell + 1;
+              break;
+            default:
+              backBuffer[h][w] = thisCell;
+              break;
+          }
         }
         else if (count === 3) {
         // ALIVE - if alive or dead
