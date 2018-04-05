@@ -161,7 +161,7 @@ class LifeCanvas extends Component {
           // handleWrap={this.handleWrap.bind(this)}
         />
         <div>
-          <button onClick={e => this.life.randomize(e)}>Genisis</button>
+          <button onClick={e => this.life.randomize(e)}>Genesis</button>
 
           {}
           <button onClick={e => this.handleClear(e)}>Mass Extinction</button>
