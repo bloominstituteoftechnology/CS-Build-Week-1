@@ -43,6 +43,13 @@ class Life {
     return this.buffer[this.currentBufferIndex];
   }
 
+  setCells(y, x) {
+    console.log('SetCells called:');
+    const currentBuffer = this.buffer[this.currentBufferIndex];
+    const currentSquare = currentBuffer[y][x];
+    console.log(currentSquare);
+  }
+
   /**
    * Clear the life grid
    */
