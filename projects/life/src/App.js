@@ -68,6 +68,10 @@ class LifeCanvas extends Component {
     }
   };
 
+  clear = () => {
+    this.life.clear();
+  };
+
   /**
    * Handle an animation frame
    */
@@ -142,6 +146,9 @@ class LifeCanvas extends Component {
           </div>
           <div>
             <Button label={this.state.stopped ? 'start' : 'stop'} handleClick={this.toggleStart} />
+          </div>
+          <div>
+            <Button label={'clear'} handleClick={this.clear} />
           </div>
         </div>
 

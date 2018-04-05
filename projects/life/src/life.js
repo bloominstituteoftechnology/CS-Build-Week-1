@@ -44,10 +44,7 @@ class Life {
   }
 
   setCells(y, x) {
-    console.log('SetCells called:');
-    const currentBuffer = this.buffer[this.currentBufferIndex];
-    const currentSquare = currentBuffer[y][x];
-    console.log(currentSquare);
+    console.log('Set Cells');
   }
 
   /**
