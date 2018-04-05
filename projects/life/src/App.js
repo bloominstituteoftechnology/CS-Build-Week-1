@@ -51,7 +51,7 @@ class LifeCanvas extends Component {
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         let index = (y * width + x) * 4;
-        let color = cells[y][x] ? 0xff : 0x00;
+        let color = cells[y][x] === 1 ? 0xff : 0x00;
 
         imageData.data[index + 0] = color;
         imageData.data[index + 1] = color;
@@ -80,7 +80,32 @@ class LifeCanvas extends Component {
     );
   }
 }
-
+class Buttons extends Component{
+  constructor(props) {
+    super(props);
+    this.life = new Life(props.width, props.height);
+  }
+  clearClicked() {
+    
+    this.life.clear();
+  }
+  stopClicked() {
+    this.life.randomize();
+  }
+  
+  render() {
+    return(
+      <div>
+      <Button color="primary" size="sm" onClick={() => this.clearClicked.bind(this)}> Clear</Button>{' '}
+      <Button color="danger" size="sm"onClick={() => this.stopClicked.bind(this)}>Stop</Button>{' '}
+      <Button color="success" size="sm">Start</Button>{' '}
+      <Button color="secondary" size="sm">Randomize</Button>{' '}
+      <Button color="warning" size="sm"> Add a Glider</Button>{' '}
+      <Button color="primary" size="sm"> Add a Gosper Glider</Button>
+      </div>
+    );
+  }
+}
 
 /**
  * Life holder component
@@ -91,13 +116,8 @@ class LifeApp extends Component {
    */
   render() {
     return (
-      <div>
-        <Button color="primary" size="sm" onClick={() => this.life.clear()}> Clear</Button>{' '}
-        <Button color="danger" size="sm"onClick={() => this.life.stop()}>Stop</Button>{' '}
-        <Button color="success" size="sm">Start</Button>{' '}
-        <Button color="primary" size="sm">Randomize</Button>{' '}
-        <Button color="primary" size="sm"> Add a Glider</Button>{' '}
-        <Button color="primary" size="sm"> Add a Gosper Glider</Button>
+     <div>
+        <Buttons/>
         <LifeCanvas width={500} height={400} />
     </div>
     );

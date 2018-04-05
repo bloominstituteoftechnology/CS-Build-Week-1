@@ -69,13 +69,13 @@ class Life {
    }
   }
 
-  stop() {
-let backBufferIndex =this.currentBufferIndex === 0? 1:0;
-let currentBuffer = this.buffer[this.currentBufferIndex];
-let backBuffer =  this.buffer[backBufferIndex];
+//   stop() {
+// let backBufferIndex =this.currentBufferIndex === 0? 1:0;
+// let currentBuffer = this.buffer[this.currentBufferIndex];
+// let backBuffer =  this.buffer[backBufferIndex];
 
-this.currentBuffer = backBuffer;
-  }
+// this.currentBuffer = backBuffer;
+//   }
 
   /**
    * Run the simulation for a single step
@@ -86,8 +86,9 @@ let backBufferIndex =this.currentBufferIndex === 0? 1:0;
 let currentBuffer = this.buffer[this.currentBufferIndex];
 let backBuffer =  this.buffer[backBufferIndex];
 
-const findLiveNeighbors = (x, y, options={border: 'wrap'}) => {
+const findLiveNeighbors = (x, y, options={border: 'nowrap'}) => {
   let liveNeighbors = 0;
+
   if(options.border ==='wrap') {
     let north = y - 1;
     let south = y + 1;
@@ -117,7 +118,7 @@ const findLiveNeighbors = (x, y, options={border: 'wrap'}) => {
     currentBuffer[south][west]+
     currentBuffer[south][east];
 
-  } else if (options.border ==='wrap') {
+  } else if (options.border === 'nowrap') {
     for (let j =-1; j <= 1; j++) {
       let yPos = y + j;
       if (yPos < 0 || yPos >= this.height) {
@@ -149,7 +150,7 @@ const findLiveNeighbors = (x, y, options={border: 'wrap'}) => {
 for (let y = 0; y < this.height;y++) {
   for(let x = 0; x < this.width; x++) {
 
-    const neighbours = findLiveNeighbors(x,y);
+    let neighbours = (findLiveNeighbors.bind(this))(x,y);
     const thisCell =  currentBuffer[y][x];
     
     if (thisCell === 1) {
