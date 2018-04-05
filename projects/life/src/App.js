@@ -16,6 +16,7 @@ class LifeCanvas extends Component {
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+    this.continueAnimaiton = true;
   }
 
   /**
@@ -27,6 +28,9 @@ class LifeCanvas extends Component {
     });
   }
 
+  componentWillUnmount() {
+    this.continueAnimaiton = false;
+  }
   /**
    * Handle an animation frame
    */
@@ -61,21 +65,64 @@ class LifeCanvas extends Component {
 
     this.life.step();
 
-    requestAnimationFrame(() => {
-      this.animFrame();
-    });
+    if (this.continueAnimaiton) {
+      requestAnimationFrame(() => {
+        this.animFrame();
+      });
+    }
   }
+
+  handleStop = () => {
+    this.continueAnimaiton = false;
+  };
+
+  handleStart = () => {
+    this.continueAnimaiton = true;
+    this.animFrame();
+  };
+
+  handleClear = () => {
+    this.continueAnimaiton = false;
+    this.refs.canvas
+      .getContext('2d')
+      .clearRect(0, 0, this.props.width, this.props.height);
+    this.life.clear();
+  };
+
+  handleRandom = () => {
+    this.continueAnimaiton = false;
+    this.life.randomize();
+    this.animFrame();
+  };
+
+  // handleDropGlider = () => {
+  //   let width = this.props.width;
+  //   let height = this.props.height;
+  //   let x = Math.floor(Math.random() * width);
+  //   let y = Math.floor(Math.random() * height);
+  //   let canvas = this.refs.canvas;
+  //   let ctx = canvas.getContext('2d');
+  //   let imageData = ctx.getImageData(0, 0, width, height);
+  //   const index = (y * width + x) * 4;
+  //   if (imageData.data[index])
+  // };
 
   /**
    * Render
    */
   render() {
     return (
-      <canvas
-        ref="canvas"
-        width={this.props.width}
-        height={this.props.height}
-      />
+      <div>
+        <canvas
+          ref="canvas"
+          width={this.props.width}
+          height={this.props.height}
+        />
+        <button onClick={this.handleStop}>STOP</button>
+        <button onClick={this.handleStart}>START</button>
+        <button onClick={this.handleClear}>CLEAR</button>
+        <button onClick={this.handleRandom}>RANDOM</button>
+      </div>
     );
   }
 }
@@ -90,7 +137,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={500} height={400} />
       </div>
     );
   }
