@@ -12,7 +12,7 @@ class LifeCanvas extends Component {
    */
   constructor(props) {
     super(props);
-
+    this.isPaused = false;
     this.life = new Life(props.width, props.height);
     this.life.randomize();
   }
@@ -28,6 +28,8 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
+    if (this.isPaused) return;
+
     const { width, height } = this.props;
     const cells = this.life.getCells();
     const canvas = this.refs.canvas;
@@ -53,11 +55,32 @@ class LifeCanvas extends Component {
     requestAnimationFrame(() => this.animFrame());
   }
 
+  pause() {
+    this.isPaused = true;
+  }
+
+  play() {
+    this.isPaused = false;
+    this.animFrame();
+  }
+
   /**
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <div>
+        <div>
+          <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+        </div>
+        <div style={{display: 'grid', gridColumnGap: '25px', gridTemplateColumns: '1fr 1fr 1fr 1fr'}}>
+          <button onClick={() => this.play()}>Start</button>
+          <button onClick={() => this.pause()}>Stop</button>
+          <button onClick={() => this.life.randomize()}>Randomize</button>
+          <button onClick={() => this.life.clear()}>Clear</button>
+        </div>
+      </div>
+    )
   }
 }
 
@@ -72,7 +95,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={1280} height={720} />
       </div>
     )
   }
