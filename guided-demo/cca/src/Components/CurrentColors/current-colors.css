@@ -1,0 +1,10 @@
+.colors-container {
+  display: flex;
+  justify-content: center;
+}
+
+.colors-container > div {
+  margin: 10px;
+  padding: 20px;
+  font-size: 30px;
+}
