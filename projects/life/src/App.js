@@ -13,7 +13,8 @@ class LifeCanvas extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      status: false,
+      isOn: false,
+      isOnButtonText: "Start"
     }
     this.frameReference = null;
 
@@ -23,11 +24,13 @@ class LifeCanvas extends Component {
 
   // start top click button
   handleStartStop = () => {
-    if (this.state.status === true) {
-      this.setState({ status: false });
+    if (this.state.isOn === true) {
+      this.setState({ isOn: false });
+      this.setState({ isOnButtonText: "Start" });
       cancelAnimationFrame(this.frameReference);
     } else {
-      this.setState({ status: true });
+      this.setState({ isOn: true });
+      this.setState({ isOnButtonText: "Stop" });
       requestAnimationFrame(() => { this.animFrame() })
     }
   }
@@ -92,8 +95,7 @@ class LifeCanvas extends Component {
     return (
       <div>
         <canvas ref="canvas" width={this.props.width} height={this.props.height} />
-        <button onClick={this.handleStartStop}> Start/Stop
-      </button>
+        <button onClick={this.handleStartStop}>{this.state.isOnButtonText}</button>
       </div>
     )
   }
