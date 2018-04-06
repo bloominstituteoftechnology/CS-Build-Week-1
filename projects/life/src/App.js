@@ -95,17 +95,33 @@ class LifeCanvas extends Component {
     this.animFrame();
   };
 
-  // handleDropGlider = () => {
-  //   let width = this.props.width;
-  //   let height = this.props.height;
-  //   let x = Math.floor(Math.random() * width);
-  //   let y = Math.floor(Math.random() * height);
-  //   let canvas = this.refs.canvas;
-  //   let ctx = canvas.getContext('2d');
-  //   let imageData = ctx.getImageData(0, 0, width, height);
-  //   const index = (y * width + x) * 4;
-  //   if (imageData.data[index])
-  // };
+  handleDropGlider = () => {
+    let width = this.props.width;
+    let height = this.props.height;
+    let x = Math.floor(Math.random() * width);
+    let y = Math.floor(Math.random() * height);
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, width, height);
+    const index = (y * width + x) * 4;
+    if (imageData.data[index]) {
+      this.life.dropGlider(x, y);
+    }
+  };
+
+  handleGosperGliderGun = () => {
+    let width = this.props.width;
+    let height = this.props.height;
+    let x = Math.floor(Math.random() * width);
+    let y = Math.floor(Math.random() * height);
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, width, height);
+    const index = (y * width + x) * 4;
+    if (imageData.data[index]) {
+      this.life.dropGosperGliderGun(x, y);
+    }
+  };
 
   /**
    * Render
@@ -113,15 +129,23 @@ class LifeCanvas extends Component {
   render() {
     return (
       <div>
+        <h2 className="title">Conway's Game Of Life</h2>
         <canvas
+          className="canvas"
           ref="canvas"
           width={this.props.width}
           height={this.props.height}
         />
-        <button onClick={this.handleStop}>STOP</button>
-        <button onClick={this.handleStart}>START</button>
-        <button onClick={this.handleClear}>CLEAR</button>
-        <button onClick={this.handleRandom}>RANDOM</button>
+        <div className="button-group">
+          <button onClick={this.handleStop}>STOP</button>
+          <button onClick={this.handleStart}>START</button>
+          <button onClick={this.handleClear}>CLEAR</button>
+          <button onClick={this.handleRandom}>RANDOM</button>
+          <button onClick={this.handleDropGlider}>Glider</button>
+          <button onClick={this.handleGosperGliderGun}>
+            Gosper Glider Gun
+          </button>
+        </div>
       </div>
     );
   }

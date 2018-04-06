@@ -1,3 +1,5 @@
+import { get } from 'https';
+
 /**
  * Implementation of Conway's game of Life
  */
@@ -122,33 +124,35 @@ class Life {
             count += currentBuffer[yPos][xPos];
           }
         }
-        // if (getCell(x - 1, y - 1)) {
-        //   count++;
-        // }
-        // if (getCell(x, y - 1)) {
-        //   count++;
-        // }
-        // if (getCell(x + 1, y - 1)) {
-        //   count++;
-        // }
-        // if (getCell(x + 1, y)) {
-        //   count++;
-        // }
-        // if (getCell(x + 1, y + 1)) {
-        //   count++;
-        // }
-        // if (getCell(x, y + 1)) {
-        //   count++;
-        // }
-        // if (getCell(x - 1, y + 1)) {
-        //   count++;
-        // }
-        // if (getCell(x - 1, y)) {
-        //   count++;
-        // }
       } else {
         throw new Error('Unknown border option: ' + options.border);
       }
+
+      // if (getCell(x - 1, y - 1)) {
+      //   count++;
+      // }
+      // if (getCell(x, y - 1)) {
+      //   count++;
+      // }
+      // if (getCell(x + 1, y - 1)) {
+      //   count++;
+      // }
+      // if (getCell(x + 1, y)) {
+      //   count++;
+      // }
+      // if (getCell(x + 1, y + 1)) {
+      //   count++;
+      // }
+      // if (getCell(x, y + 1)) {
+      //   count++;
+      // }
+      // if (getCell(x - 1, y + 1)) {
+      //   count++;
+      // }
+      // if (getCell(x - 1, y)) {
+      //   count++;
+      // }
+
       return count;
     };
 
@@ -202,8 +206,98 @@ class Life {
       backBuffer[y + 1][x + 1] = 1;
       backBuffer[y + 1][x] = 1;
       backBuffer[y + 1][x - 1] = 1;
-      this.currentBufferIndex = backBufferIndex;
     }
+    this.currentBufferIndex = backBufferIndex;
+  }
+
+  dropGosperGliderGun(x, y) {
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    let currentBuffer = this.buffer[this.currentBufferIndex];
+    let backBuffer = this.buffer[backBufferIndex];
+
+    const getCell = (x, y) => {
+      if (x < 0 || x > this.width - 1 || y < 0 || y > this.height - 1) {
+        return null;
+      }
+      return currentBuffer[y][x];
+    };
+
+    if (
+      getCell(x, y) === 0 &&
+      getCell(x - 1, y - 3) === 0 &&
+      getCell(x - 1, y + 3) === 0 &&
+      getCell(x - 2, y - 3) === 0 &&
+      getCell(x - 2, y + 3) === 0 &&
+      getCell(x - 3, y - 2) === 0 &&
+      getCell(x - 3, y + 2) === 0 &&
+      getCell(x - 4, y) === 0 &&
+      getCell(x - 4, y - 1) === 0 &&
+      getCell(x - 4, y + 1) === 0 &&
+      getCell(x - 13, y) === 0 &&
+      getCell(x - 13, y - 1) === 0 &&
+      getCell(x - 14, y) === 0 &&
+      getCell(x - 14, y - 1) === 0 &&
+      getCell(x + 1, y - 2) === 0 &&
+      getCell(x + 1, y + 2) === 0 &&
+      getCell(x + 2, y) === 0 &&
+      getCell(x + 2, y - 1) === 0 &&
+      getCell(x + 2, y + 1) === 0 &&
+      getCell(x + 3, y) === 0 &&
+      getCell(x + 6, y - 1) === 0 &&
+      getCell(x + 7, y - 1) === 0 &&
+      getCell(x + 6, y - 2) === 0 &&
+      getCell(x + 7, y - 2) === 0 &&
+      getCell(x + 6, y - 3) === 0 &&
+      getCell(x + 7, y - 3) === 0 &&
+      getCell(x + 8, y) === 0 &&
+      getCell(x + 8, y - 4) === 0 &&
+      getCell(x + 10, y) === 0 &&
+      getCell(x + 10, y + 1) === 0 &&
+      getCell(x + 10, y - 4) === 0 &&
+      getCell(x + 10, y - 5) === 0 &&
+      getCell(x + 20, y - 2) === 0 &&
+      getCell(x + 20, y - 3) === 0 &&
+      getCell(x + 21, y - 2) === 0 &&
+      getCell(x + 21, y - 3) === 0
+    ) {
+      backBuffer[y][x] = 1;
+      backBuffer[y - 3][x - 1] = 1;
+      backBuffer[y + 3][x - 1] = 1;
+      backBuffer[y - 3][x - 2] = 1;
+      backBuffer[y + 3][x - 2] = 1;
+      backBuffer[y - 2][x - 3] = 1;
+      backBuffer[y + 2][x - 3] = 1;
+      backBuffer[y][x - 4] = 1;
+      backBuffer[y - 1][x - 4] = 1;
+      backBuffer[y + 1][x - 4] = 1;
+      backBuffer[y][x - 13] = 1;
+      backBuffer[y - 1][x - 13] = 1;
+      backBuffer[y][x - 14] = 1;
+      backBuffer[y - 1][x - 14] = 1;
+      backBuffer[y - 2][x + 1] = 1;
+      backBuffer[y + 2][x + 1] = 1;
+      backBuffer[y][x + 2] = 1;
+      backBuffer[y - 1][x + 2] = 1;
+      backBuffer[y + 1][x + 2] = 1;
+      backBuffer[y][x + 3] = 1;
+      backBuffer[y - 1][x + 6] = 1;
+      backBuffer[y - 1][x + 7] = 1;
+      backBuffer[y - 2][x + 6] = 1;
+      backBuffer[y - 2][x + 7] = 1;
+      backBuffer[y - 3][x + 6] = 1;
+      backBuffer[y - 3][x + 7] = 1;
+      backBuffer[y][x + 8] = 1;
+      backBuffer[y - 4][x + 8] = 1;
+      backBuffer[y][x + 10] = 1;
+      backBuffer[y + 1][x + 10] = 1;
+      backBuffer[y - 4][x + 10] = 1;
+      backBuffer[y - 5][x + 10] = 1;
+      backBuffer[y - 2][x + 20] = 1;
+      backBuffer[y - 3][x + 20] = 1;
+      backBuffer[y - 2][x + 21] = 1;
+      backBuffer[y - 3][x + 21] = 1;
+    }
+    this.currentBufferIndex = backBufferIndex;
   }
 }
 
