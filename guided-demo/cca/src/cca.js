@@ -130,7 +130,7 @@ class CCA {
 
       }
     }
-    this.currentBufferIndex === backBufferIndex;
+    this.currentBufferIndex = backBufferIndex;
   }
 
  
