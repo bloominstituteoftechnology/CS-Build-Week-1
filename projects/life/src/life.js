@@ -1,5 +1,3 @@
-import { get } from 'https';
-
 /**
  * Implementation of Conway's game of Life
  */
@@ -76,7 +74,7 @@ class Life {
     //   return currentBuffer[y][x];
     // };
 
-    const countInfectiousNeighbor = (x, y, options = { border: 'wrap' }) => {
+    const countInfectiousNeighbor = (x, y, options = { border: 'nowrap' }) => {
       let count = 0;
       if (options.border === 'wrap') {
         let north = y - 1;
@@ -105,7 +103,7 @@ class Life {
           currentBuffer[south][x] +
           currentBuffer[south][east] +
           currentBuffer[south][west];
-      } else if (options.border === 'wrap') {
+      } else if (options.border === 'nowrap') {
         for (let yOffset = -1; yOffset <= 1; yOffset++) {
           let yPos = y + yOffset;
           if (yPos < 0 || yPos >= this.height) {
