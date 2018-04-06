@@ -165,26 +165,20 @@ class Life {
 
                 let neighborCount = countNeighbors(x, y); // count neighbors
 
-                let thisCell = currentBuffer[y][x]; // get current cell to check
+                let thisCell = currentBuffer[y][x]; // get current cell to check if it's 1 or 0
 
-                // set logic of whether or not a cell based on neighbors
-                if (thisCell === 1) {
-                    // We're alive. Let's check if we're dying.
-                    if (neighborCount < 2 || neighborCount > 3) {
-                        // Wake up. Time to die.
-                        backBuffer[y][x] = 0;
-                    } else {
-                        // We're still alive!
-                        backBuffer[y][x] = 1;
+                // set logic of whether or not a cell is dead or alive based on neighbors 
+                if (thisCell === 1) { // cell is alive
+                    if (neighborCount < 2 || neighborCount > 3) { // has less than two and greater than 3 neighbors
+                        backBuffer[y][x] = 0; // cell dies
+                    } else { // has 2 or 3 neighbors
+                        backBuffer[y][x] = 1; // cell lives on
                     }
-                } else {
-                    // We're dead. Let's see if we come to life.
-                    if (neighborCount === 3) {
-                        // A rebirth!
-                        backBuffer[y][x] = 1;
-                    } else {
-                        // We're still dead
-                        backBuffer[y][x] = 0;
+                } else { // cell is dead
+                    if (neighborCount === 3) { // neighbor count is equal to 3
+                        backBuffer[y][x] = 1; // cell lives
+                    } else { // neighbor count not equal to 3
+                        backBuffer[y][x] = 0; // stays dead
                     }
                 }
             }

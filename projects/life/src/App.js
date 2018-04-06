@@ -12,16 +12,31 @@ class LifeCanvas extends Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      status: false,
+    }
+    this.frameReference = null;
 
-    this.life = new Life(props.width, props.height); // create new instance of life class and pass in width and height
+    this.life = new Life(props.width, props.height); // create new instance of life class and pass in width and height that is specified in the lifecanvas component
     this.life.randomize(); // using the width and height from created instance, randomize the new grid with black and white colors
+  }
+
+  // start top click button
+  handleStartStop = () => {
+    if (this.state.status === true) {
+      this.setState({ status: false });
+      cancelAnimationFrame(this.frameReference);
+    } else {
+      this.setState({ status: true });
+      requestAnimationFrame(() => { this.animFrame() })
+    }
   }
 
   /**
    * Component did mount
    */
   componentDidMount() {
-    requestAnimationFrame(() => { this.animFrame() }); // call the animFrame function
+    // requestAnimationFrame(() => { this.animFrame() }); // call the animFrame function as fast as canvas can render 
   }
 
   /**
@@ -50,7 +65,7 @@ class LifeCanvas extends Component {
         let index = (y * width + x) * 4; // Index needs to be multiplied by 4 because there are 4 array entries per pixel, Red, Green, Blue, and Alpha:
 
         // state at this coordinate
-        let color = cells[y][x] ? 0xff : 0x00; // if cells are alive (1) then color is black, otherwise color is white
+        let color = cells[y][x] ? 0xff : 0x00; // if cell is alive (1) then color is black, otherwise color is white
 
         // FYI: Alpha channel controls how transparent a pixel is.
         imageData.data[index + 0] = color; // Red channel
@@ -67,14 +82,20 @@ class LifeCanvas extends Component {
     this.life.step(); // make a new grid
 
     // Request another animation frame
-    requestAnimationFrame(() => { this.animFrame() });
+    this.frameReference = requestAnimationFrame(() => { this.animFrame() })
   }
 
   /**
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <div>
+        <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+        <button onClick={this.handleStartStop}> Start/Stop
+      </button>
+      </div>
+    )
   }
 }
 
