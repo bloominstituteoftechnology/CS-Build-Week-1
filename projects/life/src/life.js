@@ -51,6 +51,7 @@ class Life {
      * Clear the life grid
      */
     clear() {
+        console.log(this.height);
         for (let y = 0; y < this.height; y++) {
             this.buffer[this.currentBufferIndex][y].fill(0); // clear the current grids values and set to 0 / .fill takes care of the x values for every y column
         } // .fill: method fills all elements of an array from stat index to end index 

@@ -23,7 +23,7 @@ class LifeCanvas extends Component {
   }
 
   // start top click button
-  handleStartStop = () => {
+  handleStartStopClick = () => {
     if (this.state.isOn === true) {
       this.setState({ isOn: false });
       this.setState({ isOnButtonText: "Start" });
@@ -33,6 +33,15 @@ class LifeCanvas extends Component {
       this.setState({ isOnButtonText: "Stop" });
       requestAnimationFrame(() => { this.animFrame() })
     }
+    console.log("start/stop clicked isOn", this.state.isOn);
+  }
+
+  handleRandomizeClick = () => {
+    this.life.randomize();
+  }
+
+  handleClearGridClick = () => {
+    this.life.clear();
   }
 
   /**
@@ -95,7 +104,9 @@ class LifeCanvas extends Component {
     return (
       <div>
         <canvas ref="canvas" width={this.props.width} height={this.props.height} />
-        <button onClick={this.handleStartStop}>{this.state.isOnButtonText}</button>
+        <button onClick={this.handleStartStopClick}>{this.state.isOnButtonText}</button>
+        <button onClick={this.handleRandomizeClick}>Randomize</button>
+        <button onClick={this.handleClearGridClick}>Clear Grid</button>
       </div>
     )
   }
