@@ -8,6 +8,7 @@ const MODULO = 8;
  * Make a 2D array helper function
  */
 function Array2D(width, height) {
+  //NOTE:  Iterate through Array2D row first then column
 	let a = new Array(height);
   
 	for (let i = 0; i < height; i++) {
