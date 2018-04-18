@@ -30,14 +30,35 @@ class LifeCanvas extends Component {
   animFrame() {
     //
     // !!!! IMPLEMENT ME !!!!
+    let width = this.props.width;
+    let height = this.props.height;
     //
 
     // Request another animation frame
+    //requestAnimationFrame(() => {this.animFrame()});
     // Update life and get cells
+    let cells = this.life.getCells();
     // Get canvas framebuffer, a packed RGBA array
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, width, height);
+    for (let y = 0; y < height; y++) {
+      for (let x =0; x < width; x++) {
+        let index = (y * width + x) *4;
+        let color = cells[y][x] ? 0xff : 0x00;
+        imageData.data[index + 0] = color; // Red channel
+        imageData.data[index + 1] = color; // Green channel
+        imageData.data[index + 2] = color; // Blue channel
+        imageData.data[index + 3] = 0xff;  // Alpha channel, 0xff = opaque
+      }
+    }
+    
+     ctx.putImageData(imageData, 0, 0);
+     this.life.step();
+     requestAnimationFrame(() => {this.animFrame()});
   }
 
   /**
