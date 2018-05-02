@@ -13,7 +13,17 @@ const COLORS = [
   [0xff, 0x5f, 0x7f],
 ];
 
-const canvasWidth = 700;
+const ZOMBIE = {
+  y: (Math.random() * this.height) | 0,
+  x: (Math.random() * this.width) | 0,
+  color: [255, 121, 77] /* red */,
+};
+
+const HUMAN = {
+  color: [255, 229, 180],
+};
+
+const canvasWidth = 1000;
 const canvasHeight = 400;
 
 /**
@@ -27,7 +37,8 @@ class CCACanvas extends Component {
     super(props);
 
     this.cca = new CCA(props.width, props.height);
-    this.cca.randomize();
+    // this.cca.randomize();
+    this.cca.zombie_simul(ZOMBIE);
   }
 
   /**
@@ -59,9 +70,12 @@ class CCACanvas extends Component {
         const index = (row * width + col) * 4; /* 4 for each pixel  */
         const color = CCAGrid[row][col];
 
-        imageData.data[index + 0] = COLORS[color][0];
-        imageData.data[index + 1] = COLORS[color][1];
-        imageData.data[index + 2] = COLORS[color][2];
+        // imageData.data[index + 0] = COLORS[color][0];
+        // imageData.data[index + 1] = COLORS[color][1];
+        // imageData.data[index + 2] = COLORS[color][2];
+        imageData.data[index + 0] = index === 0 ? ZOMBIE[0] : HUMAN[0];
+        imageData.data[index + 1] = index === 0 ? ZOMBIE[1] : HUMAN[1];
+        imageData.data[index + 2] = index === 0 ? ZOMBIE[2] : HUMAN[2];
 
         imageData.data[index + 3] = 0xff; /* alpha channel solid */
       }
@@ -70,7 +84,7 @@ class CCACanvas extends Component {
     ctx.putImageData(imageData, 0, 0);
     requestAnimationFrame(_ => this.animFrame());
 
-    this.cca.step();
+    // this.cca.step();
   }
 
   /**

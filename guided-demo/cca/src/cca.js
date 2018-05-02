@@ -65,6 +65,16 @@ class CCA {
     }
   }
 
+  zombie_simul = zombie => {
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        /* 0 = zombie, 1 = human */
+        this.buffer[this.bufferI][row][col] =
+          row === zombie.y && col === zombie.x ? 0 : 1;
+      }
+    }
+  };
+
   /**
    * Run the simulation for a single step
    */
@@ -74,10 +84,11 @@ class CCA {
     const currentBuffer = this.buffer[this.bufferI];
 
     const hasInfectiousNeighbor = (row, col) => {
-      const nextVal = (currentBuffer[row][col] + 1) % MODULO;
+      const nextVal = (currentBuffer[row][col] + 2) % MODULO;
 
       /* north */
       if (row > 0) {
+        // if (currentBuffer[row - 1][col] === nextVal) return true;
         if (currentBuffer[row - 1][col] === nextVal) return true;
       }
 
@@ -100,7 +111,7 @@ class CCA {
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
         if (hasInfectiousNeighbor(row, col))
-          backBuffer[row][col] = (currentBuffer[row][col] + 1) % MODULO;
+          backBuffer[row][col] = (currentBuffer[row][col] + 2) % MODULO;
         else backBuffer[row][col] = currentBuffer[row][col];
       }
     }
