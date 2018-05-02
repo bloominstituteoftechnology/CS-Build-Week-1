@@ -20,35 +20,51 @@ function Array2D(width, height) {
  * Life class
  */
 class Life {
-
   /**
    * Constructor
    */
   constructor(width, height) {
-    // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+
+    this.i = 0;
+
+    this.buffer = [
+      Array2D(this.width, this.height),
+      Array2D(this.width, this.height),
+    ];
+
+    this.clear();
   }
-  
+
   /**
    * Return the current active buffer
-   * 
+   *
    * This should NOT be modified by the caller
    */
   getCells() {
-    // !!!! IMPLEMENT ME !!!!
+    return this.buffer[this.i];
   }
 
   /**
    * Clear the life grid
    */
   clear() {
-    // !!!! IMPLEMENT ME !!!!
+    for (let row = 0; row < this.height; row++) {
+      this.buffer[this.i][row].fill(0);
+    }
   }
-  
+
   /**
    * Randomize the life grid
    */
-  randomize() {
-    // !!!! IMPLEMENT ME !!!!
+  randomize(prob) {
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        this.buffer[this.i][row][col] =
+          Math.random() < prob ? 0 : 1; /* 1 = alive, 0 = dead */
+      }
+    }
   }
 
   /**

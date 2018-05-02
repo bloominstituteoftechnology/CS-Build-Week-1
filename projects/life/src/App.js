@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
+const ALIVE = [255, 255, 255]; /* white */
+const DEAD = [0, 0, 0]; /* black */
+
 /**
  * Life canvas
  */
 class LifeCanvas extends Component {
-
   /**
    * Constructor
    */
@@ -14,26 +16,56 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(props.width, props.height);
-    this.life.randomize();
+    this.life.randomize(0.5);
   }
 
   /**
    * Component did mount
    */
   componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
    * Handle an animation frame
    */
   animFrame() {
-    //
-    // !!!! IMPLEMENT ME !!!!
-    //
+    const w = this.props.width;
+    const h = this.props.height;
 
-    // Request another animation frame
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, w, h);
+    ctx.fill();
+
+    const imageData = ctx.getImageData(0, 0, w, h);
+
+    for (let row = 0; row < h; row++) {
+      for (let col = 0; col < w; col++) {
+        const lifeGrid = this.life.getCells();
+        const index = (row * w + col) * 4; /* 4 for each pixel  */
+        const alive = lifeGrid[row][col];
+
+        imageData.data[index + 0] = alive ? ALIVE[0] : DEAD[0];
+        imageData.data[index + 1] = alive ? ALIVE[1] : DEAD[1];
+        imageData.data[index + 2] = alive ? ALIVE[2] : DEAD[2];
+
+        imageData.data[index + 3] = 0xff; /* alpha channel solid */
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
+
     // Update life and get cells
+
     // Get canvas framebuffer, a packed RGBA array
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
@@ -44,7 +76,13 @@ class LifeCanvas extends Component {
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <canvas
+        ref="canvas"
+        width={this.props.width}
+        height={this.props.height}
+      />
+    );
   }
 }
 
@@ -52,7 +90,6 @@ class LifeCanvas extends Component {
  * Life holder component
  */
 class LifeApp extends Component {
-
   /**
    * Render
    */
@@ -61,7 +98,7 @@ class LifeApp extends Component {
       <div>
         <LifeCanvas width={400} height={300} />
       </div>
-    )
+    );
   }
 }
 
@@ -69,7 +106,6 @@ class LifeApp extends Component {
  * Outer App component
  */
 class App extends Component {
-
   /**
    * Render
    */
