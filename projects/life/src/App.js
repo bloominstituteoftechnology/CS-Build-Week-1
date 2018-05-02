@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
+const color = [[255, 40, 100], [150, 255, 60]];
 /**
  * Life canvas
  */
@@ -46,11 +47,10 @@ class LifeCanvas extends Component {
       for (let x = 0; x < width; x++) {
         let index = (y * width + x) * 4;
         let lifeStatus = cells[y][x];
-        let color = lifeStatus === 0? 0x00: 0xff;
 
-        imageData.data[index + 0] = color;
-        imageData.data[index + 1] = color;
-        imageData.data[index + 2] = color;
+        imageData.data[index + 0] = color[lifeStatus][0];
+        imageData.data[index + 1] = color[lifeStatus][1];
+        imageData.data[index + 2] = color[lifeStatus][2];
         imageData.data[index + 3] = 0xff;
       }
     }
