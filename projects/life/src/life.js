@@ -1,6 +1,7 @@
 /**
  * Implementation of Conway's game of Life
  */
+const MODULO = 2;
 
 /**
  * Make a 2D array helper function
@@ -26,6 +27,18 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+    this.currentBufferIndex = 0;
+    this.buffer = [
+	    Array2D(width, height),
+	    Array2D(width, height)
+    ];
+    this.north = 1;
+    this.south = 1;
+    this.east = 1;
+    this.west = 1;
+    this.clear();
   }
   
   /**
@@ -35,6 +48,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.buffer[this.currentBufferIndex];
   }
 
   /**
@@ -42,6 +56,8 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+    for(let y = 0; y < this.height; y++)
+		  this.buffer[this.currentBufferIndex][y].fill(0);
   }
   
   /**
@@ -49,6 +65,10 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    let buffer = this.buffer[this.currentBufferIndex];
+	  for(let y = 0; y < this.height; y++)
+		  for(let x = 0; x < this.width; x++) 
+			  buffer[y][x] = Math.floor(Math.random() * MODULO)
   }
 
   /**
@@ -56,6 +76,81 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+	  let currentBuffer = this.buffer[this.currentBufferIndex];
+	  let backBuffer = this.buffer[backBufferIndex];
+
+    const countNeighbors = (x, y, options={border: 'wrap'}) => {
+      let neightborCount = 0;
+      if(options.border === 'nowrap' ) {
+        for(let yOffset = -1; yOffset <= 1; yOffset++){
+          let yPos = y + yOffset;
+          if(yPos < 0 || yPos  >= this.height) {
+            continue;
+          }
+          for(let xOffset = -1; xOffset <= 1; xOffset++){
+            let xPos = x + xOffset;
+            if(xPos < 0 || xPos  >= this.width)
+              continue;
+
+            if(yPos === y && xPos === x)
+              continue;
+            
+            neightborCount += currentBuffer[yPos][xPos];
+          }
+        }
+
+      } else if(options.border === 'wrap') {
+        let north = y - 1;
+        let south = y + 1; 
+        let west = x - 1;
+        let east = x + 1;
+        if(north < 0) {
+          north = this.height - 1
+        }
+        if(south > this.height - 1) {
+          south = 0;
+        }
+        if(west < 0 ) {
+          west = this.width - 1;
+        }
+        if(east > this.width - 1) {
+          east = 0;
+        }
+        neightborCount = currentBuffer[north][west] +
+        currentBuffer[north][x] +
+        currentBuffer[north][x] +
+        currentBuffer[north][east] +
+        currentBuffer[y][west] +
+        currentBuffer[y][east] +
+        currentBuffer[south][x] +
+        currentBuffer[south][east] +
+        currentBuffer[south][west];
+      } else {
+        throw new Error('Unknow border option:' + options.border)
+      }
+      return neightborCount;
+    }
+    for (let y = 0; y < this.height; y++)
+      for (let x = 0; x < this.width; x++){ 
+        const neighbors = countNeighbors(x,y, {border: 'nowrap'})
+        const thisCell = currentBuffer[y][x];
+        if(thisCell){
+          if(neighbors < 2 || neighbors > 3){
+            backBuffer[y][x] = 0;
+          } else {
+            backBuffer[y][x] = 1;
+          }
+        }
+        else {
+          if(neighbors === 3){
+            backBuffer[y][x] = 1;
+          } else {
+            backBuffer[y][x] = 0;
+          }
+        }
+      }
+    this.currentBufferIndex = backBufferIndex;
   }
 }
 
