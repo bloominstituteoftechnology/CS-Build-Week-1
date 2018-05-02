@@ -42,7 +42,7 @@ class LifeCanvas extends Component {
     let canvas = this.refs.canvas;
     let ctx = canvas.getContext('2d');
     let imageData = ctx.getImageData(0, 0, width, height);
-    // Convert the cell values into white or black for the canvas
+    // Convert the cell colors
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         let index = (y * width + x) * 4;
