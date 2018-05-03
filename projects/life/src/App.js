@@ -60,7 +60,7 @@ class LifeCanvas extends Component {
     // Next generation of life
     this.life.step();
 
-    // requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => {this.animFrame()});
   }
 
   /**
