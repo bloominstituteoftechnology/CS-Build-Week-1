@@ -1,85 +1,145 @@
-import React, { Component } from 'react';
-import Life from './life';
-import './App.css';
+/**
+ * Implementation of Conway's game of Life
+ */
 
 /**
- * Life canvas
+ * Make a 2D array helper function
  */
-class LifeCanvas extends Component {
+function Array2D(width, height) {
+  let a = new Array(height);
+
+  for (let i = 0; i < height; i++) {
+    a[i] = new Array(width);
+  }
+
+  return a;
+}
+
+/**
+ * Life class
+ */
+class Life {
 
   /**
    * Constructor
    */
-  constructor(props) {
-    super(props);
-
-    this.life = new Life(props.width, props.height);
-    this.life.randomize();
-  }
-
-  /**
-   * Component did mount
-   */
-  componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()});
-  }
-
-  /**
-   * Handle an animation frame
-   */
-  animFrame() {
-    //
+  constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
-    //
+    this.width = width;
+    this.height = height;
 
-    // Request another animation frame
-    // Update life and get cells
-    // Get canvas framebuffer, a packed RGBA array
-    // Convert the cell values into white or black for the canvas
-    // Put the new image data back on the canvas
-    // Next generation of life
+    this.currentBufferIndex = 0;
+    this.buffer = [
+      Array2D(width, height),
+      Array2D(width, height)
+    ];
+  }
+  
+  /**
+   * Return the current active buffer
+   * 
+   * This should NOT be modified by the caller
+   */
+  getCells() {
+    // !!!! IMPLEMENT ME !!!!
+    return this.buffer[this.currentBufferIndex];
   }
 
   /**
-   * Render
+   * Clear the life grid
    */
-  render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+  clear() {
+    // !!!! IMPLEMENT ME !!!!
+    for (let y = 0; y < this.height; y++) {
+      this.buffer[this.currentBufferIndex][y].fill(0);
+    }
   }
-}
-
-/**
- * Life holder component
- */
-class LifeApp extends Component {
+  
+  /**
+   * Randomize the life grid
+   */
+  randomize() {
+    // !!!! IMPLEMENT ME !!!!
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        this.buffer[this.currentBufferIndex][y][x] = Math.floor(Math.random() * 2);
+      }
+    }
+  }
 
   /**
-   * Render
+   * Run the simulation for a single step
    */
-  render() {
-    return (
-      <div>
-        <LifeCanvas width={400} height={300} />
-      </div>
-    )
+  step() {
+    // !!!! IMPLEMENT ME !!!!
+    const backBufferIndex = this.currentBufferIndex === 1 ? 0 : 1;
+    const currentBuffer = this.buffer[this.currentBufferIndex];
+    const backBuffer = this.buffer[backBufferIndex];
+
+    const checkAliveNeighbors = (x, y) => {
+
+      let count = 0;
+      
+      // North ~ Top
+      if (y > 0)
+        if (currentBuffer[y - 1][x] === 1) count++;
+      // South ~ Bottom
+      if (y < this.height - 1)
+        if (currentBuffer[y + 1][x] === 1) count++;
+      // West ~ Left
+      if (x > 0)
+        if (currentBuffer[y][x - 1] === 1) count++;
+      // East ~ Right
+      if (x < this.width - 1)
+        if (currentBuffer[y][x + 1] === 1) count++;
+
+      // Diagonals
+      // North West ~ Top Left
+      if (y > 0 && x > 0)
+        if (currentBuffer[y - 1][x - 1] === 1) count++;
+      // North East ~ Top Right
+      if (y > 0 && x < this.width - 1)
+        if (currentBuffer[y - 1][x + 1] === 1) count++;
+      // South West ~ Bottom Left
+      if (y < this.height - 1 && x > 0)
+        if (currentBuffer[y + 1][x - 1] === 1) count++;
+      // South East ~ Bottom Right
+      if (y < this.height - 1 && x < this.width - 1)
+        if (currentBuffer[y + 1][x + 1] === 1) count++;
+
+      return count;
+
+    }
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        
+        const livingNeighborsCount = checkAliveNeighbors(x, y);
+
+        const currentState = currentBuffer[y][x];
+        let futureState = currentState;
+
+        if (currentState === 1) {
+          if (livingNeighborsCount < 2) {
+            futureState = 0;
+          }
+          else if (livingNeighborsCount > 3) {
+            futureState = 0;
+          }
+        } else {
+          if (livingNeighborsCount === 3) {
+            futureState = 1;
+          }
+        }
+
+        backBuffer[y][x] = futureState;
+
+      }
+    }
+
+    this.currentBufferIndex = backBufferIndex;
+
   }
 }
 
-/**
- * Outer App component
- */
-class App extends Component {
-
-  /**
-   * Render
-   */
-  render() {
-    return (
-      <div className="App">
-        <LifeApp />
-      </div>
-    );
-  }
-}
-
-export default App;
+export default Life;
