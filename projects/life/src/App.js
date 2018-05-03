@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
-const color = [[255, 40, 100], [150, 255, 60]];
+const colors = [[255, 40, 100], [150, 255, 60], [100, 50, 200]];
 /**
  * Life canvas
  */
@@ -48,18 +48,19 @@ class LifeCanvas extends Component {
         let index = (y * width + x) * 4;
         let lifeStatus = cells[y][x];
 
-        imageData.data[index + 0] = color[lifeStatus][0];
-        imageData.data[index + 1] = color[lifeStatus][1];
-        imageData.data[index + 2] = color[lifeStatus][2];
+        imageData.data[index + 0] = colors[lifeStatus][0];
+        imageData.data[index + 1] = colors[lifeStatus][1];
+        imageData.data[index + 2] = colors[lifeStatus][1];
         imageData.data[index + 3] = 0xff;
-      }
-    }
+      }      
+  }
+
     // Put the new image data back on the canvas
     ctx.putImageData(imageData, 0, 0);
     // Next generation of life
     this.life.step();
 
-    requestAnimationFrame(() => {this.animFrame()});
+    // requestAnimationFrame(() => {this.animFrame()});
   }
 
   /**

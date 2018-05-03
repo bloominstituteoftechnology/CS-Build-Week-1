@@ -87,7 +87,7 @@ class Life {
     let backBuffer = this.buffer[backBufferIndex];
 
     function countNeighbors(col, row, options={border:'zero'}) {
-      let neightborCount = 0;
+      let neighborCount = 0;
       if (options.border === 'wrap') {
         let n = row - 1;
         let s = row + 1;
@@ -110,7 +110,7 @@ class Life {
           e = 0;
         }
 
-        neightborCount =
+        neighborCount =
         currentBuffer[n][w] +
         currentBuffer[n][col] +
         currentBuffer[n][e] +
@@ -134,14 +134,14 @@ class Life {
             if (colOffset === 0 && rowOffset === 0) {
               continue;
             }
-            neightborCount += currentBuffer[rowPos][colPos];
+            neighborCount += currentBuffer[rowPos][colPos];
         }
       }
     } else {
       throw new Error('unknown border option' + options.border);
     }
 
-    return neightborCount;
+    return neighborCount;
 
   }
 
