@@ -2,6 +2,9 @@
  * Implementation of Conway's game of Life
  */
 
+const ALIVE = 1;
+const DEAD = 0;
+
 /**
  * Make a 2D array helper function
  */
@@ -61,8 +64,7 @@ class Life {
   randomize(prob) {
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
-        this.buffer[this.i][row][col] =
-          Math.random() < prob ? 0 : 1; /* 1 = alive, 0 = dead */
+        this.buffer[this.i][row][col] = Math.random() < 1 - prob ? DEAD : ALIVE;
       }
     }
   }
@@ -71,7 +73,65 @@ class Life {
    * Run the simulation for a single step
    */
   step() {
-    // !!!! IMPLEMENT ME !!!!
+    const bI = this.i === 0 ? 1 : 0;
+    const bB = this.buffer[bI];
+    const cB = this.buffer[this.i];
+
+    const nextCondition = (r, c) => {
+      const status = cB[r][c];
+      let neighbors = 0;
+
+      /* north */
+      if (r > 0 && cB[r - 1][c] === ALIVE) neighbors++;
+
+      /* northeast */
+      if (r > 0 && c < this.width - 1 && cB[r - 1][c + 1] === ALIVE)
+        neighbors++;
+
+      /* east */
+      if (c < this.width - 1 && cB[r][c + 1] === ALIVE) neighbors++;
+
+      /* southeast */
+      if (
+        c < this.width - 1 &&
+        r < this.height - 1 &&
+        cB[r + 1][c + 1] === ALIVE
+      )
+        neighbors++;
+
+      /* south */
+      if (r < this.height - 1 && cB[r + 1][c] === ALIVE) neighbors++;
+
+      /* southwest */
+      if (r < this.height - 1 && c > 0 && cB[r + 1][c - 1] === ALIVE)
+        neighbors++;
+
+      /* west */
+      if (c > 0 && cB[r][c - 1] === ALIVE) neighbors++;
+
+      /* PNW */
+      if (c > 0 && r > 0 && cB[r - 1][c - 1] === ALIVE) neighbors++;
+
+      /* currently alive */
+      if (status === ALIVE) {
+        if (neighbors === 2 || neighbors === 3) return ALIVE;
+
+        return DEAD;
+      }
+
+      /* currently dead */
+      if (neighbors === 3) return ALIVE;
+
+      return DEAD;
+    };
+
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        bB[row][col] = nextCondition(row, col);
+      }
+    }
+
+    this.i = this.i === 0 ? 1 : 0;
   }
 }
 

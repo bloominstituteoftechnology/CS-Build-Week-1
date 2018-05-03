@@ -4,6 +4,11 @@ import './App.css';
 
 const ALIVE = [255, 255, 255]; /* white */
 const DEAD = [0, 0, 0]; /* black */
+const PROB = 0.5; /* seeded probability of life */
+
+/* canvas width/height */
+const WIDTH = 300;
+const HEIGHT = 300;
 
 /**
  * Life canvas
@@ -16,7 +21,7 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(props.width, props.height);
-    this.life.randomize(0.5);
+    this.life.randomize(PROB);
   }
 
   /**
@@ -60,9 +65,9 @@ class LifeCanvas extends Component {
 
     ctx.putImageData(imageData, 0, 0);
 
-    requestAnimationFrame(() => {
-      this.animFrame();
-    });
+    requestAnimationFrame(_ => this.animFrame());
+
+    this.life.step();
 
     // Update life and get cells
 
@@ -96,7 +101,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={WIDTH} height={HEIGHT} />
       </div>
     );
   }
