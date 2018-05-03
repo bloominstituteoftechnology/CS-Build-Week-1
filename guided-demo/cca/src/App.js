@@ -53,15 +53,6 @@ class CCACanvas extends Component {
 
     let imageData = ctx.getImageData(0, 0, width, height);
 
-    // for(let pixel of imageData.data)
-    // {
-    //   pixel = 128;
-    //   //console.log(pixel);
-    // }
-    
-    
-    // blueComponent = imageData.data[((50 * (imageData.width * 4)) + (200 * 4)) + 2];
-    
     for(let row = 0; row < height; row++){
       for(let col = 0; col < width; col++){
         let ccaGrid = this.cca.getCells();
