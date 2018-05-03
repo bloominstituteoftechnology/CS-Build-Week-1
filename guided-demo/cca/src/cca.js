@@ -30,6 +30,13 @@ class CCA {
     this.width = width;
     this.height = height;
 
+    this.currentBufferIndex = 0;
+    // allocate the DOUBLE BUFFER
+    this.buffer = [
+      Array2D(width, height),
+      Array2D(width, height)
+    ];
+
     this.clear();
   }
 
@@ -39,24 +46,106 @@ class CCA {
    * This should NOT be modified by the caller
    */
   getCells() {
+    return this.buffer[this.currentBufferIndex];
   }
 
   /**
    * Clear the cca grid
    */
   clear() {
+    for (let y = 0; y < this.height; y++) {
+      this.buffer[this.currentBufferIndex][y].fill(0);
+    }
   }
 
   /**
    * Randomize the cca grid
    */
   randomize() {
+    const buffer = this.buffer[this.currentBufferIndex]; //0 will set buffer = this.buffer[0] or this.buffer[1]
+
+    for (let h = 0; h < this.height; h++) {
+      for (let w = 0; w < this.width; w++) {
+        buffer[h][w] = Math.floor(Math.random() * MODULO);
+      }
+    }
   }
 
   /**
    * Run the simulation for a single step
    */
-  step() {
+  step(){
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1: 0;
+    let currentBuffer = this.buffer[this.currentBufferIndex];
+    let backBuffer = this.buffer[backBufferIndex];
+
+    // Helper function to see if cell has "infectious" neighbor
+    const hasInfectiousNeighbor = (h, w) => {
+      const nextValue = (currentBuffer[h][w] + 1) % MODULO;
+
+      // check that we are not the very first cell in a row
+      if (w > 0) {
+        // check west (left-side) neighbor
+        if (currentBuffer[h][w-1] === nextValue) {
+          return true;
+        }
+      } else if (h > 0) { //check the end of the previous row
+        if (currentBuffer[h-1][this.width-1] === nextValue) {
+          return true;
+        }
+      } else { //if we are in the top left corner, check the bottom right corner
+        if (currentBuffer[this.height-1][this.width-1] === nextValue) {
+          return true;
+        }
+      }
+      
+      //check north (top) neighbor
+      if (h > 0) {
+        if (currentBuffer[h-1][w] === nextValue) {
+          return true;
+        }
+      } else { // if we are the top row, check the value of the bottom row
+        if (currentBuffer[this.height-1][w] === nextValue) {
+          return true;
+        }
+      }
+
+      //check east (right) neighbor
+      if (w < this.width-1) {
+        if (currentBuffer[h][w+1] === nextValue) {
+          return true;
+        }
+      } else if (h < this.height-1) { // if we're not bottom row, check first item of next row
+        if (currentBuffer[h+1][0] === nextValue) {
+          return true;
+        }
+      } else { //if we are bottom right, check top left
+        if (currentBuffer[0][0] === nextValue) {
+          return true;
+        }
+      }
+
+      //check south neighbor
+      if (h < this.height-1) {
+        if (currentBuffer[h+1][w] === nextValue) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // loop through the current buffer and populate the back buffer(next gen) based on above helper
+    for (let h = 0; h < this.height; h++){
+      for (let w = 0; w < this.width; w++){
+        if (hasInfectiousNeighbor(h, w))  {
+          backBuffer[h][w] = (currentBuffer[h][w] + 1) % MODULO; // increments
+        } else {
+          backBuffer[h][w] = currentBuffer[h][w]; // stays the same
+        }
+      }
+    }
+
+    this.currentBufferIndex = backBufferIndex;
   }
 }
 
