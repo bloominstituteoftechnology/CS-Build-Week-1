@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
+const colors = [[255, 40, 100], [150, 255, 60], [100, 50, 200]];
 /**
  * Life canvas
  */
@@ -30,14 +31,36 @@ class LifeCanvas extends Component {
   animFrame() {
     //
     // !!!! IMPLEMENT ME !!!!
+    let width = this.props.width;
+    let height = this.props.height;
     //
 
     // Request another animation frame
     // Update life and get cells
+    let cells = this.life.getCells();
     // Get canvas framebuffer, a packed RGBA array
-    // Convert the cell values into white or black for the canvas
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, width, height);
+    // Convert the cell colors
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        let index = (y * width + x) * 4;
+        let lifeStatus = cells[y][x];
+
+        imageData.data[index + 0] = colors[lifeStatus][0];
+        imageData.data[index + 1] = colors[lifeStatus][1];
+        imageData.data[index + 2] = colors[lifeStatus][1];
+        imageData.data[index + 3] = 0xff;
+      }      
+  }
+
     // Put the new image data back on the canvas
+    ctx.putImageData(imageData, 0, 0);
     // Next generation of life
+    this.life.step();
+
+    requestAnimationFrame(() => {this.animFrame()});
   }
 
   /**
