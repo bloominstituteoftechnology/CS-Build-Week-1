@@ -68,6 +68,11 @@ class Life {
     for(let row = 0; row < this.height; row++){
       for(let col = 0; col < this.width; col++){
         this.buffer[this.currentBufferIndex][row][col] = (Math.random() * MODULO) | 0;
+        if (this.buffer[this.currentBufferIndex][row][col] === 1) {
+          if (Math.random() < 0.1) {
+            this.buffer[this.currentBufferIndex][row][col] = 2;
+          }
+        }
       }
     }
   }
@@ -111,28 +116,61 @@ class Life {
       return neighbors;
     }
 
+    function checkForZombies(row, col) {
+      let neighbors = 0;
+
+      for (let neighborRow = -1; neighborRow <= 1; neighborRow++) {
+        // global row position for neighbor being tested
+        let rowPos = row + neighborRow;
+        if (rowPos < 0 || rowPos >= this.height) {
+          // out of bounds
+          continue;
+        }
+        for (let neighborCol = -1; neighborCol <= 1; neighborCol++) {
+          let colPos = col + neighborCol;
+          if (colPos < 0 || colPos >= this.width) {
+            // out of bounds
+            continue;
+          }
+          //we are in bounds
+          if (currentBuffer[rowPos][colPos] === 2) {
+            if (!(rowPos === row && colPos === col)) {
+              return true;
+            }
+          }
+        }
+      }
+
+      return false;
+    }
+
     for(let row = 0; row < this.height; row++){
       for(let col = 0; col < this.width; col++){
         let numberOfNeighbors = countLivingNeighbors.call(this, row, col);
-        // if cell is alive
-        if (currentBuffer[row][col] === 1) {
+        let hasZombieNeighbor = checkForZombies.call(this, row, col);
+        let lifeState = 1;
+        if (hasZombieNeighbor) { 
+          lifeState = 2;
+        }
+        // if cell is alive or zombie
+        if (currentBuffer[row][col] === 1 || currentBuffer[row][col] === 2) {
           if (numberOfNeighbors < 2) {
             // cell dies of loneliness
             backBuffer[row][col] = 0;
           }
-          if (numberOfNeighbors === 2 || numberOfNeighbors === 3) {
-            backBuffer[row][col] = 1;
+          if (numberOfNeighbors === 2 || numberOfNeighbors === 3 || numberOfNeighbors === 4) {
+            backBuffer[row][col] = lifeState;
           }
-          if (numberOfNeighbors > 3) {
+          if (numberOfNeighbors > 4) {
             // die of overpopulation
             backBuffer[row][col] = 0;
           }
         }
         // cell is dead
         else if (currentBuffer[row][col] === 0) {
-          if (numberOfNeighbors === 3) {
+          if (numberOfNeighbors === 3 || numberOfNeighbors === 4) {
             // come to life
-            backBuffer[row][col] = 1;
+            backBuffer[row][col] = lifeState;
           }
           else {
             // stay dead
@@ -145,53 +183,6 @@ class Life {
         }
       }
     }
-
-    // function hasInfectiousNeighbor(row, col){
-    //   const nextValue = (this.buffer[this.currentBufferIndex][row][col] + 1) % MODULO;
-
-    //   // North
-    //   if (row > 0) {
-    //     if (currentBuffer[row-1][col] === nextValue)  {
-    //       return true;
-    //     }
-    //   }
-
-    //   // South
-    //   if (row < this.height - 1) {
-    //     if (currentBuffer[row+1][col] === nextValue) {
-    //       return true;
-    //     }
-    //   }
-      
-    //   // East
-    //   if (col < this.width - 1) {
-    //     if (currentBuffer[row][col+1] === nextValue) {
-    //       return true;
-    //     }  
-    //   }  
-
-    //   // West
-    //   if (col > 0) {
-    //     if (currentBuffer[row][col - 1] === nextValue) {
-    //       return true;
-    //     }      
-    //   }
-
-
-    //   //if no neighbers can infect this cell
-    //   return false;
-    // }
-
-    // for(let row = 0; row < this.height; row++){
-    //   for(let col = 0; col < this.width; col++){
-    //     if (hasInfectiousNeighbor.call(this, row, col)){
-    //       backBuffer[row][col] = (currentBuffer[row][col] + 1) % MODULO;
-    //     }
-    //     else{
-    //       backBuffer[row][col] = currentBuffer[row][col];
-    //     }
-    //   }
-    // }
 
     this.currentBufferIndex = this.currentBufferIndex === 0? 1: 0;
   }

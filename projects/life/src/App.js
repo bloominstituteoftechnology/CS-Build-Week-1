@@ -2,20 +2,10 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
-// const COLORS = [
-//   [0, 0, 0],
-//   [0x8f, 0, 0x5f],
-//   [0x5f, 0, 0x8f],
-//   [0, 0, 0xff],
-//   [0, 0x5f, 0x7f],
-//   [0x5f, 0x8f, 0x7f],
-//   [0x8f, 0xff, 0x7f],
-//   [0xff, 0x5f, 0x7f],
-// ]
-
 const COLORS = [
   [0, 0, 0],
   [0xff, 0xff, 0xff],
+  [0, 0xff, 0],
 ]
 
 /**
@@ -82,7 +72,7 @@ class LifeCanvas extends Component {
     }
 
     ctx.putImageData(imageData, 0, 0);
-    requestAnimationFrame(() => this.animFrame());
+    requestAnimationFrame(() => this.animFrame());     // TODO: TURN ON LATER
     // Request another animation frame
     // Update life and get cells
     // Get canvas framebuffer, a packed RGBA array
