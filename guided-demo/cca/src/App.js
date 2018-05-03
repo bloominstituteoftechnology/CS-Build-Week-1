@@ -23,24 +23,52 @@ class CCACanvas extends Component {
    */
   constructor(props) {
     super(props);
+
+    this.cca = new CCA(props.width, props.height);
+    this.cca.randomize();
   }
 
   /**
    * Component did mount
    */
   componentDidMount() {
+    requestAnimationFrame(() => { this.animFrame(); });
   }
 
   /**
    * Handle an animation frame
    */
   animFrame() {
+    const { width, height } = this.props;
+    const cells = this.cca.getCells();
+
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.getImageData(0,0,width,height);
+    
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const index = (y * width + x) * 4;
+        const status = cells[y][x];
+
+        imageData.data[index + 0] = COLORS[status][0];
+        imageData.data[index + 1] = COLORS[status][1];
+        imageData.data[index + 2] = COLORS[status][2];
+        imageData.data[index + 3] = 0xff;
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    this.cca.step();
+    
+    requestAnimationFrame(() => { this.animFrame(); });
   }
 
   /**
    * Render
    */
   render() {
+    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />;
   }
 }
 
