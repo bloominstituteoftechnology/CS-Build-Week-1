@@ -4,11 +4,12 @@ import './App.css';
 
 const ALIVE = [255, 255, 255]; /* white */
 const DEAD = [0, 0, 0]; /* black */
+const ZOMBIE = [255, 121, 77]; /* red */
 const PROB = 0.5; /* seeded probability of life */
 
 /* canvas width/height */
-const WIDTH = 300;
-const HEIGHT = 300;
+const WIDTH = 480;
+const HEIGHT = 480;
 
 /**
  * Life canvas
@@ -68,13 +69,6 @@ class LifeCanvas extends Component {
     requestAnimationFrame(_ => this.animFrame());
 
     this.life.step();
-
-    // Update life and get cells
-
-    // Get canvas framebuffer, a packed RGBA array
-    // Convert the cell values into white or black for the canvas
-    // Put the new image data back on the canvas
-    // Next generation of life
   }
 
   /**

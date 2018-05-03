@@ -64,7 +64,7 @@ class Life {
   randomize(prob) {
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
-        this.buffer[this.i][row][col] = Math.random() < 1 - prob ? DEAD : ALIVE;
+        this.buffer[this.i][row][col] = Math.random() < prob ? ALIVE : DEAD;
       }
     }
   }
@@ -81,36 +81,49 @@ class Life {
       const status = cB[r][c];
       let neighbors = 0;
 
-      /* north */
-      if (r > 0 && cB[r - 1][c] === ALIVE) neighbors++;
+      for (let x = r - 1; x <= r + 1; x++) {
+        if (x < 0 || x > this.height - 1) {
+          continue;
+        }
+        for (let y = c - 1; y <= c + 1; y++) {
+          if (y < 0 || y > this.width - 1) {
+            continue;
+          }
 
-      /* northeast */
-      if (r > 0 && c < this.width - 1 && cB[r - 1][c + 1] === ALIVE)
-        neighbors++;
+          if (cB[x][y] === ALIVE && `${x}${y}` !== `${r}${c}`) neighbors++;
+        }
+      }
 
-      /* east */
-      if (c < this.width - 1 && cB[r][c + 1] === ALIVE) neighbors++;
+      // /* north */
+      // if (r > 0 && cB[r - 1][c] === ALIVE) neighbors++;
 
-      /* southeast */
-      if (
-        c < this.width - 1 &&
-        r < this.height - 1 &&
-        cB[r + 1][c + 1] === ALIVE
-      )
-        neighbors++;
+      // /* northeast */
+      // if (r > 0 && c < this.width - 1 && cB[r - 1][c + 1] === ALIVE)
+      //   neighbors++;
 
-      /* south */
-      if (r < this.height - 1 && cB[r + 1][c] === ALIVE) neighbors++;
+      // /* east */
+      // if (c < this.width - 1 && cB[r][c + 1] === ALIVE) neighbors++;
 
-      /* southwest */
-      if (r < this.height - 1 && c > 0 && cB[r + 1][c - 1] === ALIVE)
-        neighbors++;
+      // /* southeast */
+      // if (
+      //   c < this.width - 1 &&
+      //   r < this.height - 1 &&
+      //   cB[r + 1][c + 1] === ALIVE
+      // )
+      //   neighbors++;
 
-      /* west */
-      if (c > 0 && cB[r][c - 1] === ALIVE) neighbors++;
+      // /* south */
+      // if (r < this.height - 1 && cB[r + 1][c] === ALIVE) neighbors++;
 
-      /* PNW */
-      if (c > 0 && r > 0 && cB[r - 1][c - 1] === ALIVE) neighbors++;
+      // /* southwest */
+      // if (r < this.height - 1 && c > 0 && cB[r + 1][c - 1] === ALIVE)
+      //   neighbors++;
+
+      // /* west */
+      // if (c > 0 && cB[r][c - 1] === ALIVE) neighbors++;
+
+      // /* PNW */
+      // if (c > 0 && r > 0 && cB[r - 1][c - 1] === ALIVE) neighbors++;
 
       /* currently alive */
       if (status === ALIVE) {
