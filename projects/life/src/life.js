@@ -26,6 +26,18 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    
+    this.width = width;
+    this.height = height;
+    
+    this.currentBufferIndex = 0;
+    // Array2D buffer
+    this.buffer = [
+      Array2D(width, height),
+      Array2D(width, height)
+    ];
+    // clear buffer, call clear function from below
+    this.clear();
   }
   
   /**
@@ -35,6 +47,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.buffer[this.currentBufferIndex];
   }
 
   /**
@@ -42,6 +55,9 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+    for (let row = 0; row < this.height; row++) {
+      this.buffer[this.currentBufferIndex][row].fill(0);
+    }
   }
   
   /**
@@ -49,6 +65,11 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        this.buffer[this.currentBufferIndex][row][col] = Math.round(Math.random());
+      }
+    }
   }
 
   /**
@@ -56,6 +77,97 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+    let backBufferIndex = this.currentBufferIndex === 0? 1: 0;  
+    let currentBuffer = this.buffer[this.currentBufferIndex];
+    let backBuffer = this.buffer[backBufferIndex];
+    
+    function countLiveNeighbors(row, col) {
+      let liveNeighborCount = 0;
+
+      // West
+      if (col > 0) {
+        if (currentBuffer[row][col - 1] > 0) {
+          liveNeighborCount++;
+        }
+      }
+
+      // North
+      if (row > 0) {
+        if (currentBuffer[row - 1][col] > 0) {
+          liveNeighborCount++;
+        }
+      }
+
+      // East
+      if (col < this.width - 1) {
+        if (currentBuffer[row][col + 1] > 0) {
+          liveNeighborCount++;
+        }
+      }
+
+      // South
+      if (row < this.height - 1) {
+        if (currentBuffer[row + 1][col] > 0) {
+          liveNeighborCount++;
+        }
+      }
+
+      // Diagonals
+
+      // NW
+      if (row > 0 && col > 0) {
+        if (currentBuffer[row - 1][col - 1] > 0) {
+          liveNeighborCount++;
+        }
+      }
+
+      // NE
+      if (row > 0 && col < this.width - 1) {
+        if (currentBuffer[row - 1][col + 1] > 0) {
+          liveNeighborCount++;
+        }
+      }
+
+      // SW
+      if (row < this.height - 1 && col > 0) {
+        if (currentBuffer[row + 1][col - 1] > 0) {
+          liveNeighborCount++;
+        }
+      }
+
+      // SE
+      if (row < this.height - 1 && col < this.width - 1) {
+        if (currentBuffer[row + 1][col + 1] > 0) {
+          liveNeighborCount++;
+        }
+      }
+
+      return liveNeighborCount;
+    }
+
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        const neighborCount = countLiveNeighbors.call(this, row, col);
+        // cell is alive
+        if (currentBuffer[row][col]) {
+          // if alive cell has 2 or 3 alive neighbors
+          if (neighborCount > 1 && neighborCount <= 4) {
+            backBuffer[row][col] = 1;
+          } else {
+            backBuffer[row][col] = 0;
+          }
+        } else {
+          // else if cell is dead and has exactly 3 alive neighbors
+          if (neighborCount === 3) {
+            backBuffer[row][col] = 1;
+          } else {
+            backBuffer[row][col] = 0;
+          }
+        }
+      }
+    }
+
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }
 
