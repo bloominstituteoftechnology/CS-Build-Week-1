@@ -84,28 +84,24 @@ class Life {
     function countLiveNeighbors(row, col) {
       let liveNeighborCount = 0;
 
-      // West
       if (col > 0) {
         if (currentBuffer[row][col - 1] > 0) {
           liveNeighborCount++;
         }
       }
 
-      // North
       if (row > 0) {
         if (currentBuffer[row - 1][col] > 0) {
           liveNeighborCount++;
         }
       }
 
-      // East
       if (col < this.width - 1) {
         if (currentBuffer[row][col + 1] > 0) {
           liveNeighborCount++;
         }
       }
 
-      // South
       if (row < this.height - 1) {
         if (currentBuffer[row + 1][col] > 0) {
           liveNeighborCount++;
@@ -114,33 +110,33 @@ class Life {
 
       // Diagonals
 
-      // NW
-      if (row > 0 && col > 0) {
-        if (currentBuffer[row - 1][col - 1] > 0) {
-          liveNeighborCount++;
-        }
-      }
+      // // NW
+      // if (row > 0 && col > 0) {
+      //   if (currentBuffer[row - 1][col - 1] > 0) {
+      //     liveNeighborCount++;
+      //   }
+      // }
 
-      // NE
-      if (row > 0 && col < this.width - 1) {
-        if (currentBuffer[row - 1][col + 1] > 0) {
-          liveNeighborCount++;
-        }
-      }
+      // // NE
+      // if (row > 0 && col < this.width - 1) {
+      //   if (currentBuffer[row - 1][col + 1] > 0) {
+      //     liveNeighborCount++;
+      //   }
+      // }
 
-      // SW
-      if (row < this.height - 1 && col > 0) {
-        if (currentBuffer[row + 1][col - 1] > 0) {
-          liveNeighborCount++;
-        }
-      }
+      // // SW
+      // if (row < this.height - 1 && col > 0) {
+      //   if (currentBuffer[row + 1][col - 1] > 0) {
+      //     liveNeighborCount++;
+      //   }
+      // }
 
-      // SE
-      if (row < this.height - 1 && col < this.width - 1) {
-        if (currentBuffer[row + 1][col + 1] > 0) {
-          liveNeighborCount++;
-        }
-      }
+      // // SE
+      // if (row < this.height - 1 && col < this.width - 1) {
+      //   if (currentBuffer[row + 1][col + 1] > 0) {
+      //     liveNeighborCount++;
+      //   }
+      // }
 
       return liveNeighborCount;
     }
