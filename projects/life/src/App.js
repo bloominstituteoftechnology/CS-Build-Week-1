@@ -5,6 +5,7 @@ import './App.css';
 /**
  * Life canvas
  */
+
 class LifeCanvas extends Component {
 
   /**
@@ -15,6 +16,7 @@ class LifeCanvas extends Component {
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+    this.continueAnimation = true;
   }
 
   /**
@@ -27,6 +29,10 @@ class LifeCanvas extends Component {
   /**
    * Handle an animation frame
    */
+
+  componentWillUnmount(){
+  
+  }
   animFrame() {
     //
     // !!!! IMPLEMENT ME !!!!
