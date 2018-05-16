@@ -44,15 +44,37 @@ class CCACanvas extends Component {
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    // Here is the screen buffer array we can manipulate
+    /////EXPERIMENT//////
 
-    let screenBuffer = imageData.data;
-    console.log("scfreen buffer: ", screenBuffer);
 
-    imageData.data[0] = 0;
-    imageData.data[1] = 0;
-    imageData.data[2] = 0;
-    console.log("after change scfreen buffer: ", screenBuffer);
+    // // Here is the screen buffer array we can manipulate
+
+    // let screenBuffer = imageData.data;
+    // console.log("scfreen buffer: ", screenBuffer);
+
+    // imageData.data[0] = 0;
+    // imageData.data[1] = 0;
+    // imageData.data[2] = 0;
+    // console.log("after change scfreen buffer: ", screenBuffer);
+
+    ///// EXP END///////
+
+    let buffer = imageData.data;
+
+    for (let row = 0; row < this.props.height; row++) {
+      for (let col = 0; col < this.props.width; col++) {
+        let index = (row * this.props.width + col) * 4;
+
+      let greyScale = Math.floor(Math.random() * 255);
+
+      buffer[index + 0] = greyScale; // RED: full intensity
+      buffer[index + 1] = greyScale; // GREEN: zero intensity
+      buffer[index + 2] = greyScale; // BLUE: zero intensity
+      buffer[index + 3] = 0xff; // APLHA: fully opaque
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
 
   }
 
