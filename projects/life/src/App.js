@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import Life from "./life";
-import "./App.css";
+import React, { Component } from 'react';
+import Life from './life';
+import './App.css';
 
 const COLORS = [
   [0, 0, 0],
@@ -43,24 +43,24 @@ class LifeCanvas extends Component {
   animFrame() {
     let buffer = this.life.getCells();
     let canvas = this.refs.canvas;
-    let ctx = canvas.getContext("2d");
+    let ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = "white";
+    ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, this.props.width, this.props.height);
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    let buffering = imageData.data;
+    let pixels = imageData.data;
 
     for (let row = 0; row < this.props.height; row++) {
       for (let col = 0; col < this.props.width; col++) {
         let index = (row * this.props.width + col) * 4;
 
-        let currentNumber = buffer[row][col];
-        buffering[index + 0] = COLORS[currentNumber][0]; // Red: 0xff == 255, full intensity
-        buffering[index + 1] = COLORS[currentNumber][1]; // Green: zero intensity
-        buffering[index + 2] = COLORS[currentNumber][2]; // Blue: zero intensity
-        buffering[index + 3] = 0xff; // Alpha: 0xff == 255, fully opaque
+        let currentNumber = buffer[ row ][ col ];
+        pixels[ index + 0 ] = COLORS[ currentNumber ][ 0 ]; // Red: 0xff == 255, full intensity
+        pixels[ index + 1 ] = COLORS[ currentNumber ][ 1 ]; // Green: zero intensity
+        pixels[ index + 2 ] = COLORS[ currentNumber ][ 2 ]; // Blue: zero intensity
+        pixels[ index + 3 ] = 0xff; // Alpha: 0xff == 255, fully opaque
       }
     }
     //

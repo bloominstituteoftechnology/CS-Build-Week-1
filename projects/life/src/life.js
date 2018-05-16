@@ -10,7 +10,7 @@ function Array2D(width, height) {
   let a = new Array(height);
 
   for (let i = 0; i < height; i++) {
-    a[i] = new Array(width);
+    a[ i ] = new Array(width);
   }
 
   return a;
@@ -42,7 +42,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
-    return this.buffers[this.currentIndex];
+    return this.buffers[ this.currentIndex ];
   }
 
   /**
@@ -51,7 +51,7 @@ class Life {
   clear() {
     // !!!! IMPLEMENT ME !!!!
     for (let row = 0; row < this.height; row++) {
-      this.buffers[this.currentIndex][row].fill(0);
+      this.buffers[ this.currentIndex ][ row ].fill(0);
     }
   }
 
@@ -60,11 +60,11 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
-    let buffer = this.buffers[this.currentIndex];
+    let buffer = this.buffers[ this.currentIndex ];
 
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
-        buffer[row][col] = (Math.random() * MODULO) | 0;
+        buffer[ row ][ col ] = (Math.random() * MODULO) | 0;
       }
     }
   }
@@ -75,38 +75,50 @@ class Life {
   step() {
     // !!!! IMPLEMENT ME !!!!
     let nextIndex = this.currentIndex === 0 ? 1 : 0;
-    let currentBuffer = this.buffers[this.currentIndex];
-    let nextBuffer = this.buffers[nextIndex];
+    let currentBuffer = this.buffers[ this.currentIndex ];
+    let nextBuffer = this.buffers[ nextIndex ];
 
     function hasInfectiousNeighbor(row, col) {
-      const nextValue = (currentBuffer[row][col] + 1) % MODULO;
+      const nextValue = (currentBuffer[ row ][ col ] + 1) % MODULO;
 
       // West
       if (col > 0) {
-        if (currentBuffer[row][col - 1] === nextValue) {
-          return true;
-        }
+        if (currentBuffer[ row ][ col - 1 ] === nextValue) return true;
+      }
+
+      // Northwest
+      if (col > 0 && row > 0) {
+        if (currentBuffer[ row - 1 ][ col - 1 ] === nextValue) return true;
       }
 
       // North
       if (row > 0) {
-        if (currentBuffer[row - 1][col] === nextValue) {
-          return true;
-        }
+        if (currentBuffer[ row - 1 ][ col ] === nextValue) return true;
+      }
+
+      // Northeast
+      if (row > 0 && col < this.width - 1) {
+        if (currentBuffer[ row - 1 ][ col + 1 ] === nextValue) return true;
       }
 
       // East
       if (col < this.width - 1) {
-        if (currentBuffer[row][col + 1] === nextValue) {
-          return true;
-        }
+        if (currentBuffer[ row ][ col + 1 ] === nextValue) return true;
+      }
+
+      // Southeast
+      if (col < this.width - 1 && row < this.height - 1) {
+        if (currentBuffer[ row + 1 ][ col + 1 ] === nextValue) return true;
       }
 
       // South
       if (row < this.height - 1) {
-        if (currentBuffer[row + 1][col] === nextValue) {
-          return true;
-        }
+        if (currentBuffer[ row + 1 ][ col ] === nextValue) return true;
+      }
+
+      // Southwest
+      if (row < this.height -1 && col > 0) {
+        if (currentBuffer[ row + 1 ][ col - 1 ]) return true;
       }
 
       return false;
@@ -115,9 +127,9 @@ class Life {
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
         if (hasInfectiousNeighbor.call(this, row, col)) {
-          nextBuffer[row][col] = (currentBuffer[row][col] + 1) % MODULO; //Change to infection
+          nextBuffer[ row ][ col ] = (currentBuffer[ row ][ col ] + 1) % MODULO; //Change to infection
         } else {
-          nextBuffer[row][col] = currentBuffer[row][col]; //no change
+          nextBuffer[ row ][ col ] = currentBuffer[ row ][ col ]; //no change
         }
       }
     }
