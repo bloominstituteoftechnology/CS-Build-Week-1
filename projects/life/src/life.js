@@ -42,7 +42,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
-    return this.cells;
+    return this.cells[this.currentBufferIndex];
   }
 
   /**
