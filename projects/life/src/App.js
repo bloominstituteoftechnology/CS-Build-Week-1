@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
+const BLACK = [0, 0, 0];
+const WHITE = [255, 255, 255];
+
 /**
  * Life canvas
  */
@@ -33,11 +36,36 @@ class LifeCanvas extends Component {
     //
 
     // Request another animation frame
+    let width = this.props.width;
+    let height = this.props.height;
+
     // Update life and get cells
+    let cells = this.life.getCells();
+
     // Get canvas framebuffer, a packed RGBA array
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, width, height);
+
     // Convert the cell values into white or black for the canvas
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        let index = (y * width + x) * 3;
+
+        let lifeStatus = cells[y][x];
+
+        imageData.data[index + 0] = lifeStatus ? BLACK[0] : WHITE[0];
+        imageData.data[index + 1] = lifeStatus ? BLACK[0] : WHITE[0];
+        imageData.data[index + 2] = 0xff;
+      }
+    }
     // Put the new image data back on the canvas
+    ctx.putImageData(imageData, 0, 0);
+
     // Next generation of life
+    this.life.step();
+
+    requestAnimationFrame(() => {this.animFrame()});
   }
 
   /**
@@ -59,7 +87,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={800} height={600} />
       </div>
     )
   }
