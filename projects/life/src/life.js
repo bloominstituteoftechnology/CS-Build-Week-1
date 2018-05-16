@@ -68,14 +68,9 @@ class Life {
     // !!!! IMPLEMENT ME !!!!
     for (let row = 0; row < this.height; row++) {
       for (let column = 0; column < this.width; column++) {
-        if(row % 2 === 1 || column % 2 === 1) {
           this.cells.foreground[row][column] = Math.round(Math.random());
         }
-        else {
-          this.cells.foreground[row][column] = 0;
-        }
       }
-    }
   }
 
   /**
@@ -83,58 +78,65 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
-    let currentBuffer = this.currentBuffer;
-    let width = this.width;
-    let height = this.height;
-    function kill(row, column) {
-      let next = (currentBuffer[row][column] + 1) % 2;
+    let kill =(row, column) => {
+      let next = this.currentBuffer[row][column];
 
+      //if 200,200
       //West
+      //row = y, column = x
       let count = 0;
       if (column > 0) {
-        if (currentBuffer[row][column - 1] === next) {
+        //199,200
+        if (this.currentBuffer[row][column - 1] === next) {
           count++;
         }
       }
       //North-West
       if (column > 0 && row > 0) {
-        if (currentBuffer[row - 1][column - 1] === next) {
+        //199,199
+        if (this.currentBuffer[row - 1][column - 1] === next) {
           count++;
         }
       }
       //North
       if (row > 0) {
-        if (currentBuffer[row - 1][column] === next) {
+        //200,199
+        if (this.currentBuffer[row - 1][column] === next) {
           count++;
         }
       }
       //North-East
-      if (row > 0 && column < width - 1) {
-        if (currentBuffer[row - 1][column + 1] === next) {
+      if (row > 0 && column < this.width - 1) {
+        //201,199
+        if (this.currentBuffer[row - 1][column + 1] === next) {
           count++;
         }
       }
       //East
-      if (column < width - 1) {
-        if (currentBuffer[row][column + 1] === next) {
+      if (column < this.width - 1) {
+        //201,200
+        if (this.currentBuffer[row][column + 1] === next) {
           count++;
         }
       }
       //South-East
-      if (column < width - 1 && row < height - 1) {
-        if (currentBuffer[row + 1][column + 1] === next) {
+      if (column < this.width - 1 && row < this.height - 1) {
+        //201,201
+        if (this.currentBuffer[row + 1][column + 1] === next) {
           count++;
         }
       }
       //South
-      if (row < height - 1) {
-        if (currentBuffer[row + 1][column] === next) {
+      if (row < this.height - 1) {
+        //200,201
+        if (this.currentBuffer[row + 1][column] === next) {
           count++;
         }
       }
       //South-West
-      if (row < height - 1 && column > 0) {
-        if (currentBuffer[row + 1][column - 1] === next) {
+      if (row < this.height - 1 && column > 0) {
+        //199,201
+        if (this.currentBuffer[row + 1][column - 1] === next) {
           count++;
         }
       }
@@ -144,19 +146,19 @@ class Life {
     for (let row = 0; row < this.height; row++) {
       for (let column = 0; column < this.width; column++) {
         let death = kill(row, column);
-        if (currentBuffer[row][column] === 1) {
+        if (this.currentBuffer[row][column] === 0) {
           if (death < 2 || death > 3) {
-            this.cells.background[row][column] = 0;
+            this.cells.background[row][column] = 1;
           } else {
-            this.cells.background[row][column] = currentBuffer[row][column];
+            this.cells.background[row][column] = this.currentBuffer[row][column];
           }
         }
         else {
           if (death === 3) {
-            this.cells.background[row][column] = 1;
+            this.cells.background[row][column] = 0;
           }
           else {
-            this.cells.background[row][column] = currentBuffer[row][column];
+            this.cells.background[row][column] = this.currentBuffer[row][column];
           }
         }
         

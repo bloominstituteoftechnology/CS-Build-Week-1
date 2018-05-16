@@ -67,7 +67,7 @@ class LifeCanvas extends Component {
       requestAnimationFrame(() => {
         this.animFrame();
       });
-    }, 250);
+    }, 500);
     
   }
 
@@ -89,7 +89,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={500} height={500} />
+        <LifeCanvas width={100} height={100} />
       </div>
     );
   }
