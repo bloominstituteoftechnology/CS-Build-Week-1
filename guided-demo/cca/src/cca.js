@@ -10,14 +10,14 @@ const MODULO = 8;
 function Array2D(width, height) {
   //NOTE:  Iterate through Array2D row first then column
 	let a = new Array(height);
-  
+
 	for (let i = 0; i < height; i++) {
     a[i] = new Array(width);
 	}
-  
+
 	return a;
 }
-  
+
 /**
  * CCA class
  */
@@ -36,13 +36,13 @@ class CCA {
       Array2D(width, height),
       Array2D(width, height)
     ]
-        
+
     this.clear();
   }
 
   /**
    * Return the current active buffer
-   * 
+   *
    * This should NOT be modified by the caller
    */
   getCells() {
@@ -90,7 +90,7 @@ class CCA {
           return true;
         }
       }
-      
+
       // North
       if(row > 0){
         if (currentBuffer[row - 1][col] === nextValue){
