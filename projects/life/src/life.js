@@ -68,9 +68,9 @@ class Life {
     // !!!! IMPLEMENT ME !!!!
     for (let row = 0; row < this.height; row++) {
       for (let column = 0; column < this.width; column++) {
-          this.cells.foreground[row][column] = Math.round(Math.random());
-        }
+        this.cells.foreground[row][column] = Math.round(Math.random());
       }
+    }
   }
 
   /**
@@ -78,7 +78,7 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
-    let kill =(row, column) => {
+    let kill = (row, column) => {
       let next = this.currentBuffer[row][column];
 
       //if 200,200
@@ -141,7 +141,7 @@ class Life {
         }
       }
       return count;
-    }
+    };
 
     for (let row = 0; row < this.height; row++) {
       for (let column = 0; column < this.width; column++) {
@@ -152,17 +152,13 @@ class Life {
           } else {
             this.cells.background[row][column] = this.currentBuffer[row][column];
           }
-        }
-        else {
+        } else {
           if (death === 3) {
             this.cells.background[row][column] = 0;
-          }
-          else {
+          } else {
             this.cells.background[row][column] = this.currentBuffer[row][column];
           }
         }
-        
-
       }
     }
 
