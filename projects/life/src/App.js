@@ -7,6 +7,9 @@ const COLORS = [
   [0xff, 0x82, 0x2f],
 ]
 
+// let test = 10;
+// let counter = 0;
+
 /**
  * Life canvas
  */
@@ -33,6 +36,7 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
+    // if (test !== 0) {
     let cells = this.life.getCells();
 
     let canvas = this.refs.canvas;
@@ -50,7 +54,9 @@ class LifeCanvas extends Component {
         let index = (row * this.props.width + col) *4;
 
         const currentNumber = cells[row][col];
-
+        
+        if (currentNumber === undefined) console.log(test);
+        // console.log(currentNumber, "Here is the counter:", ++counter);
         currentImage[index + 0] = COLORS[currentNumber][0]; // set Red value
         currentImage[index + 1] = COLORS[currentNumber][1]; // set Green value
         currentImage[index + 2] = COLORS[currentNumber][2]; // set Blue value
@@ -70,6 +76,8 @@ class LifeCanvas extends Component {
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
+    // test--;
+  // }
   }
 
   /**

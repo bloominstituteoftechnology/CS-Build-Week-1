@@ -54,9 +54,9 @@ class Life {
    */
   clear() {
     const choice = Math.floor(Math.random() * 2);
-    let current = this.cells[this.currentIndex];
+    let current = this.frames[this.currentIndex];
     for(let row = 0; row < this.height; row++) {
-      for(let col = 0; col < this.height; col++) {
+      for(let col = 0; col < this.width; col++) {
         current[row][col] = choice;
       }
     }
@@ -66,9 +66,9 @@ class Life {
    * Randomize the life grid
    */
   randomize() {
-    let current = this.cells[this.currentIndex];
+    let current = this.frames[this.currentIndex];
     for(let row = 0; row < this.height; row++) {
-      for(let col = 0; col < this.height; col++) {
+      for(let col = 0; col < this.width; col++) {
         current[row][col] = (Math.floor(Math.random() * 2)) | 0;
       }
     }
@@ -80,8 +80,8 @@ class Life {
    */
   step() {
     let bufferIndex = this.currentIndex === 0 ? 1 : 0;
-    let current = this.cells[this.currentIndex];
-    let buffer = this.cells[bufferIndex];
+    let current = this.frames[this.currentIndex];
+    let buffer = this.frames[bufferIndex];
 
     function countNeighbors(row, col) {
       let neighbors = 0;
