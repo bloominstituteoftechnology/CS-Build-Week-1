@@ -26,6 +26,12 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+
+    this.currentBufferIndex = 0;
+
+    this.buffers = [Array2D(width, height), Array2D(width, height)];
   }
   
   /**
@@ -35,6 +41,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.buffers[this.currentBufferIndex];
   }
 
   /**
@@ -42,6 +49,9 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+    for (let i=0; i < this.height; i++) {
+      this.buffers[this.currentBufferIndex][i].fill(0);
+    }
   }
   
   /**
@@ -49,6 +59,12 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    const buffer = this.buffers[this.currentBufferIndex];
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        buffer[row][col] = (Math.random() * 2) | 0;
+      }
+    }
   }
 
   /**
@@ -56,6 +72,62 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+    const backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    const currentBuffer = this.buffers[this.currentBufferIndex];
+    const backBuffer = this.buffers[backBufferIndex];
+
+    const checkAliveNeighbors = (row, col) => {
+
+      let count = 0;
+
+      if (row > 0) {
+        if (currentBuffer[row - 1][col] === 1) count++;
+        if (col > 0) {
+          if (currentBuffer[row - 1][col - 1] === 1) count++;
+        }
+        if (col < this.width - 1) {
+          if (currentBuffer[row - 1][col + 1] === 1) count++;
+        }
+      }
+
+      if (row < this.height - 1) {
+        if (currentBuffer[row + 1][col] === 1) count++;
+        if (col > 0) {
+          if (currentBuffer[row +1][col - 1] === 1) count++;
+        }
+        if (col < this.width - 1) {
+          if (currentBuffer[row + 1][col + 1] === 1) count++;
+        }
+      }
+
+      if (col > 0) {
+        if (currentBuffer[row][col - 1] === 1) count++;
+      }
+      if (col < this.width - 1) {
+        if (currentBuffer[row][col + 1] === 1) count++;
+      }
+
+      return count;
+    }
+    
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        const neighbors = checkAliveNeighbors(row, col);
+          if (neighbors < 2 || neighbors > 3) {
+            backBuffer[row][col] = 0;
+          }
+      
+          if (neighbors === 2) {
+            backBuffer[row][col] = currentBuffer[row][col] === 1 ? 1 : 0;
+          }
+      
+          if (neighbors === 3) {
+            backBuffer[row][col] = 1
+          }
+      }
+    }
+
+    this.currentBufferIndex = backBufferIndex;
   }
 }
 
