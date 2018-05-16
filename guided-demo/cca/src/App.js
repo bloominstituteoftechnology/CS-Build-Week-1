@@ -23,6 +23,8 @@ class CCACanvas extends Component {
    */
   constructor(props) {
     super(props);
+    this.cca = new CCA(props.width, props.height);
+    this.cca.randomize();
   }
 
   /**
