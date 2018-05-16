@@ -26,6 +26,7 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+   
   }
   
   /**
