@@ -58,9 +58,9 @@ class life {
   clear() {
     let buffer = this.cells[this.currentBufferIndex];
     for(let row = 0; row < this.height; row++) {
-      for(let col = 0; col < this.width; col++) {
-        buffer[0][col].fill(0);// makes all 0
-      }
+      // for(let col = 0; col < this.width; col++) {
+        buffer[row].fill(1);// makes all 0
+      
     }
   }
 
