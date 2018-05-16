@@ -41,6 +41,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.buffer[this.currentBuffer]; //returns at current index
   }
 
   /**
@@ -48,6 +49,7 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+    this.buffer[this.currentBuffer].forEach(elem => elem.fill(0));
   }
   
   /**
@@ -55,6 +57,12 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    let buffer = this.buffer[this.currentBuffer];
+    for (let y = 0; y < this.height; y ++) {
+      for (let x = 0; x < this.width; x++) {
+        buffer[x][y] = (Math.random() * 2);
+      }
+    }
   }
 
   /**
