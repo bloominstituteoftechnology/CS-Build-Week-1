@@ -28,6 +28,12 @@ class Life {
     // !!!! IMPLEMENT ME !!!!
     this.width = width;
     this.height = height;
+    this.currentBufferIndex = 0;
+    this.cells = [
+      Array2D(width, height),
+      Array2D(width, height)
+    ]
+    console.log(this.cells);
   }
   
   /**
@@ -51,7 +57,12 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
-    console.log(alert());
+    let currentBuffer = this.cells[this.currentBufferIndex];
+    for(let row = 0; row < this.height; row++) {
+      for(let col = 0; col < this.width; col++) {
+        currentBuffer[row][col] = Math.floor(Math.random() * 2);
+      }
+    }
   }
 
   /**
