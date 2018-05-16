@@ -1,7 +1,7 @@
 /**
  * Implementation of Conway's game of Life
  */
-
+ const MODULO = 8;
 /**
  * Make a 2D array helper function
  */
@@ -25,7 +25,11 @@ class Life {
    * Constructor
    */
   constructor(width, height) {
-    // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+    this.cells = Array2D(width, height);
+    
+    this.clear();
   }
   
   /**
@@ -35,6 +39,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    
   }
 
   /**
@@ -49,6 +54,12 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    for(let row = 0; row < this.height; row++) {
+      for(let col = 0; col < this.width; col++){
+        this.cells[row][col] = (Math.random() * MODULO) | 0;
+
+      }
+    }
   }
 
   /**
