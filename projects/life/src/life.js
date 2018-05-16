@@ -26,6 +26,8 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
 
     this.currentBuffer = 0;
     this.buffer = [
@@ -49,6 +51,11 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+    for (let x = 0; x <= this.height; x++){
+      for (let y = 0; y <= this.width; y++){
+        this.buffer[this.currentBuffer][x][y] = 0;
+      }
+    }
   }
   
   /**
@@ -56,6 +63,11 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    for (let x = 0; x <= this.height; x++){
+      for (let y = 0; y <= this.width; y++){
+        this.buffer[this.currentBuffer][x][y] = Math.floor(Math.random() * 2);
+      }
+    }
   }
 
   /**
