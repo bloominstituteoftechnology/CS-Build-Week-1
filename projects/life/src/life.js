@@ -26,6 +26,15 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+
+    this.currentBufferIndex = 0;
+
+    this.cells = [ Array2D(width, height), Array2D(width, height) ];
+
+    this.randomize();
+    this.clear();
   }
   
   /**
@@ -35,6 +44,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.cells[this.currentBufferIndex];
   }
 
   /**
@@ -49,6 +59,12 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    let buffer = this.cells[this.currentBuffer];
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        buffer[row][col] = Math.floor(Math.random() * 2);
+      }
+    }
   }
 
   /**
@@ -56,6 +72,14 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+    const otherBufferIndex = 1 - this.currentBufferIndex;
+    const currentBuffer = this.cells[this.currentBufferIndex];
+    const otherBuffer = this.cells[otherBufferIndex];
+
+    // implement rules
+
+
+    this.currentBufferIndex = otherBufferIndex;
   }
 }
 
