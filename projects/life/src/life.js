@@ -1,7 +1,7 @@
 /**
  * Implementation of Conway's game of Life
  */
-
+const MODULO = 8;
 /**
  * Make a 2D array helper function
  */
@@ -57,11 +57,11 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
-    let buffer = this.buffers[this.currentIndex];
+    let buffer = this.buffers[ this.currentIndex ];
 
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
-        buffer[row][col] = Math.random() * MODULO | 0;
+        buffer[ row ][ col ] = (Math.random() * MODULO) | 0;
       }
     }
   }
@@ -71,6 +71,12 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+    let nextIndex = this.currentIndex === 0 ? 1 : 0;
+    let currentBuffer = this.buffers[ this.currentIndex ];
+    let nextBuffer = this.buffers[ this.nextIndex ];
+
+    // Switch the current buffer index for the next step
+    this.currentIndex = this.currentIndex === 0 ? 1 : 0;
   }
 }
 
