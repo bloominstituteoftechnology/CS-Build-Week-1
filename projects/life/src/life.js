@@ -81,7 +81,7 @@ class Life {
   step() {
     let bufferIndex = this.currentIndex === 0 ? 1 : 0;
     let current = this.cells[this.currentIndex];
-    let buffer = this.cells[this.bufferIndex];
+    let buffer = this.cells[bufferIndex];
 
     function countNeighbors(row, col) {
       let neighbors = 0;
@@ -146,7 +146,7 @@ class Life {
         const numberOfNeighbors = countNeighbors.call(this, row, col);
 
         if (alive) {
-          buffer[row][col] = (numberOfNeighbors != 2 && numberOfNeighbors != 3) ?
+          buffer[row][col] = (numberOfNeighbors !== 2 && numberOfNeighbors !== 3) ?
           0 : 1;
         } else {
           buffer[row][col] = (numberOfNeighbors === 3) ?
