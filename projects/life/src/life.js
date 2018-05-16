@@ -26,6 +26,8 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+
+    this.lifeGrid = Array2D(this.width, this.height);
   }
   
   /**
