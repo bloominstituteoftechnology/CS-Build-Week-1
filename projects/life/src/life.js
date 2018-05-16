@@ -26,6 +26,8 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
   }
   
   /**
@@ -49,6 +51,7 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    console.log(alert());
   }
 
   /**
