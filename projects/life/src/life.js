@@ -10,7 +10,7 @@ function Array2D(width, height) {
   let a = new Array(height);
 
   for (let i = 0; i < height; i++) {
-    a[i] = new Array(width);
+    a[ i ] = new Array(width);
   }
 
   return a;
@@ -20,21 +20,29 @@ function Array2D(width, height) {
  * Life class
  */
 class Life {
-
   /**
    * Constructor
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+
+    this.currentIndex = 0;
+    this.buffers = [Array2D(width, height), Array2D(width, height)];
+
+    this.randomize();
+    this.clear();
   }
-  
+
   /**
    * Return the current active buffer
-   * 
+   *
    * This should NOT be modified by the caller
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.buffers[ this.currentIndex ];
   }
 
   /**
@@ -43,12 +51,19 @@ class Life {
   clear() {
     // !!!! IMPLEMENT ME !!!!
   }
-  
+
   /**
    * Randomize the life grid
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    let buffer = this.buffers[this.currentIndex];
+
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        buffer[row][col] = Math.random() * MODULO | 0;
+      }
+    }
   }
 
   /**
