@@ -122,7 +122,7 @@ class MyComponent extends Component {
      */
     constructor(props) {
         super(props);
-
+        this.xPos = 0;
         this.continueAnimation = true;
     }
 
@@ -151,7 +151,29 @@ class MyComponent extends Component {
             requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
         }
 
+        if (prevTimestamp === null)  prevTimestamp = timestamp - 30;
+        const elapsed = timestamp - prevTimestamp
+        prevTimestamp = timestamp;
         // TODO animate stuff
+        function setPixelBlack(imageData, x, y) {
+            let buffer = imageData.data;
+
+            let index = (y * width + x) * 4;
+
+            buffer[index + 0] = 0xff; 
+            buffer[index + 1] = 0xff; 
+            buffer[index + 2] = 0xff; 
+            buffer[index + 3] = 0xff; 
+        }
+
+        const movePerFrame = 1000 / elapsed;
+        const canvas = document.querySelector('#my-canvas');
+        const ctx = canvas.getContext('2d');
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+        const currentXPos = this.xPos += movePerFrame;
+        setPixelBlack(imageData, currentXPos , 20);
+        ctx.putImageData(imageData, 0, 0);
     }
 
     /**
