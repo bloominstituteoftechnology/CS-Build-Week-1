@@ -76,8 +76,51 @@ class Life {
     // !!!! IMPLEMENT ME !!!!
     let nextIndex = this.currentIndex === 0 ? 1 : 0;
     let currentBuffer = this.buffers[this.currentIndex];
-    let nextBuffer = this.buffers[this.nextIndex];
+    let nextBuffer = this.buffers[nextIndex];
 
+    function hasInfectiousNeighbor(row, col) {
+      const nextValue = (currentBuffer[row][col] + 1) % MODULO;
+
+      // West
+      if (col > 0) {
+        if (currentBuffer[row][col - 1] === nextValue) {
+          return true;
+        }
+      }
+
+      // North
+      if (row > 0) {
+        if (currentBuffer[row - 1][col] === nextValue) {
+          return true;
+        }
+      }
+
+      // East
+      if (col < this.width - 1) {
+        if (currentBuffer[row][col + 1] === nextValue) {
+          return true;
+        }
+      }
+
+      // South
+      if (row < this.height - 1) {
+        if (currentBuffer[row + 1][col] === nextValue) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        if (hasInfectiousNeighbor.call(this, row, col)) {
+          nextBuffer[row][col] = (currentBuffer[row][col] + 1) % MODULO; //Change to infection
+        } else {
+          nextBuffer[row][col] = currentBuffer[row][col]; //no change
+        }
+      }
+    }
     // Switch the current buffer index for the next step
     this.currentIndex = this.currentIndex === 0 ? 1 : 0;
   }
