@@ -30,15 +30,12 @@ class LifeCanvas extends Component {
   animFrame() {
     //
     // !!!! IMPLEMENT ME !!!!
-    //
-
     // Request another animation frame
     // Update life and get cells
     let cells = this.life.getCells();
     let canvas = this.refs.canvas;
     let ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, this.props.width, this.props.height);
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -58,6 +55,9 @@ class LifeCanvas extends Component {
       }
     }
     ctx.putImageData(imageData, 0, 0);
+    this.life.step();
+    requestAnimationFrame(() => {this.animFrame()});
+    //
     // Get canvas framebuffer, a packed RGBA array
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas

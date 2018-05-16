@@ -70,6 +70,68 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    let currentBuffer = this.cells[this.currentBufferIndex];
+    let backBuffer = this.cells[backBufferIndex];
+    let height = this.height;
+    let width = this.width;
+
+    function neighbors(row, col){
+      let count = 0;
+      //west
+      if(col > 0){
+        if(currentBuffer[row][col] - 1 === 1){
+          count++;
+        }
+      }
+     
+      //east
+      if(col < width - 1){
+        if(currentBuffer[row][col] + 1 === 1){
+          count++;
+        }
+      }
+
+      //north
+      if(row > 0){
+        if(currentBuffer[row - 1][col] === 1){
+          count++;
+        }
+      }
+
+      //south
+      if(row < height - 1){
+        if(currentBuffer[row + 1][col] === 1){
+          count++;
+        }
+      }
+
+      return count;
+    }
+
+     for(let row = 0; row < this.height; row++) {
+      for(let col = 0; col < this.width; col++) {
+
+        if(currentBuffer[row][col] === 1){
+          const count = neighbors(row, col);
+          if(count === 2 || count === 3){
+            backBuffer[row][col] = 1;
+          }else{
+            backBuffer[row][col] = 0;
+          }
+        }
+
+        if(currentBuffer[row][col] === 0){
+          const count = neighbors(row, col);
+          if(count === 3){
+            backBuffer[row][col] = 1;
+          }else{
+            backBuffer[row][col] = 0;
+          }
+        }
+      }
+    }
+    this.currentBufferIndex = this.currentBufferIndex === 0? 1: 0;
   }
 }
 
