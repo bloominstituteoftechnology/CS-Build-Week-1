@@ -26,7 +26,12 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
-   
+    this.width = width;
+    this.height = height;
+    this.currentBuffer = 0; //current buffer index
+    this.buffer = [Array2D(width, height), Array2D(width, height)];
+    this.clear();
+
   }
   
   /**
