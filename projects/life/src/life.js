@@ -27,7 +27,11 @@ class Life {
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
 
-    this.lifeGrid = Array2D(this.width, this.height);
+    this.currentBuffer = 0;
+    this.buffer = [
+      Array2D(width, height),
+      Array2D(width, height)
+    ]
   }
   
   /**
@@ -37,6 +41,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.buffer[this.currentBuffer];
   }
 
   /**
