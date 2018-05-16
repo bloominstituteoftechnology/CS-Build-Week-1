@@ -1,40 +1,44 @@
 /**
- * Implementation of Conway's game of Life
+ * Implemention of a CCA
  */
+
+const MODULO = 2;
 
 /**
  * Make a 2D array helper function
  */
 function Array2D(width, height) {
   //NOTE:  Iterate through Array2D row first then column
-  let a = new Array(height);
-
-  for (let i = 0; i < height; i++) {
-    a[i] = new Array(width);
-  }
-
-  return a;
+	let a = new Array(height);
+  
+	for (let i = 0; i < height; i++) {
+	  a[i] = new Array(width);
+	}
+  
+	return a;
 }
-
+  
 /**
- * Life class
+ * CCA class
  */
-class Life {
+class life {
 
   /**
    * Constructor
    */
   constructor(width, height) {
-    // !!!! IMPLEMENT ME !!!!
-    this.height = height;
     this.width = width;
+    this.height = height;
 
     this.currentBufferIndex = 0;
 
-    this.canvasCells = [
+    this.cells = [
       Array2D(width, height),
       Array2D(width, height)
-    ];
+    ]
+    console.log(this.cells);
+
+    this.randomize();
 
     this.clear();
   }
@@ -45,30 +49,29 @@ class Life {
    * This should NOT be modified by the caller
    */
   getCells() {
-    // !!!! IMPLEMENT ME !!!!
-    return this.canvasCells[this.currentBufferIndex];
+    return this.cells[this.currentBufferIndex];
   }
 
   /**
-   * Clear the life grid
+   * Clear the cca grid
    */
   clear() {
-    // !!!! IMPLEMENT ME !!!!
-    /*  for (let i = 0; i < height; i++) {
-       this.canvasCells[this.currentBufferIndex].forEach */
-    ctx.clearRect(0, 0, 400, 300);
-
+    let buffer = this.cells[this.currentBufferIndex];
+    for(let row = 0; row < this.height; row++) {
+      for(let col = 0; col < this.width; col++) {
+        buffer[0][col].fill(0);// makes all 0
+      }
+    }
   }
 
   /**
-   * Randomize the life grid
+   * Randomize the cca grid
    */
   randomize() {
-    // !!!! IMPLEMENT ME !!!!
-    let buffer = this.canvasCells[this.currentBufferIndex];
-    for (let row = 0; row < this.height; row++) {
-      for (let col = 0; col < this.width; col++) {
-        buffer[row][col] = (Math.random() > .5 ? 1 : 0);
+    let buffer = this.cells[this.currentBufferIndex];
+    for(let row = 0; row < this.height; row++) {
+      for(let col = 0; col < this.width; col++) {
+        buffer[row][col] = (Math.random() * 2) | 0;// makes integers
       }
     }
   }
@@ -77,12 +80,55 @@ class Life {
    * Run the simulation for a single step
    */
   step() {
-    // !!!! IMPLEMENT ME !!!!
     let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
-    let currentBufferIndex = this.canvasCells[this.currentBufferIndex];
-    let backBuffer = this.canvasCells[backBufferIndex]
+    let currentBuffer = this.cells[this.currentBufferIndex];
+    let backBuffer = this.cells[backBufferIndex];
 
+    function hasInfectiousNeighbor(row, col){
+      const nextValue = (currentBuffer[row][col] + 1) % MODULO;
+
+      // West
+      if(col > 0){
+        if (currentBuffer[row][col - 1] === nextValue){
+          return true;
+        }
+      }
+      
+      // North
+      if(row > 0){
+        if (currentBuffer[row - 1][col] === nextValue){
+          return true;
+        }
+      }
+
+      // East
+      if(col < this.width - 1){
+        if (currentBuffer[row][col + 1] === nextValue){
+          return true;
+        }
+      }
+
+      // South
+      if(row < this.height - 1){
+        if (currentBuffer[row + 1][col] === nextValue) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    for(let row = 0; row < this.height; row++) {
+      for(let col = 0; col < this.width; col++) {
+        if (hasInfectiousNeighbor.call(this, row, col)){
+          backBuffer[row][col] = (currentBuffer[row][col] + 1 ) % MODULO;  //Change to infection
+        } else {
+          backBuffer[row][col] = currentBuffer[row][col]; //no change
+        }
+      }
+    }
+    this.currentBufferIndex = this.currentBufferIndex === 0? 1: 0;
   }
 }
 
-export default Life;
+export default life;
