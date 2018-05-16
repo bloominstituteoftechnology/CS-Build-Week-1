@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
+const COLORS = [
+  [0,0,0],[255,255,255]
+];
 /**
  * Life canvas
  */
@@ -31,6 +34,9 @@ class LifeCanvas extends Component {
     //
     // !!!! IMPLEMENT ME !!!!
     //
+
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext('2d');
 
     // Request another animation frame
     // Update life and get cells
