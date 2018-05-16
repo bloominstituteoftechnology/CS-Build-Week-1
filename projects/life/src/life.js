@@ -26,8 +26,19 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    this.height = height;
+    this.width = width;
+
+    this.currentBufferIndex = 0;
+
+    this.canvasCells = [
+      Array2D(width, height),
+      Array2D(width, height)
+    ];
+
+    this.clear();
   }
-  
+
   /**
    * Return the current active buffer
    * 
@@ -35,6 +46,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.canvasCells[this.currentBufferIndex];
   }
 
   /**
@@ -42,13 +54,23 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+    /*  for (let i = 0; i < height; i++) {
+       this.canvasCells[this.currentBufferIndex].forEach */
+    ctx.clearRect(0, 0, 400, 300);
+
   }
-  
+
   /**
    * Randomize the life grid
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    let buffer = this.canvasCells[this.currentBufferIndex];
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        buffer[row][col] = (Math.random() > .5 ? 1 : 0);
+      }
+    }
   }
 
   /**
@@ -56,6 +78,10 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    let currentBufferIndex = this.canvasCells[this.currentBufferIndex];
+    let backBuffer = this.canvasCells[backBufferIndex]
+
   }
 }
 
