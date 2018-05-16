@@ -28,20 +28,20 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
-    let width = this.props.width;
-    let height = this.props.height;
+    const width = this.props.width;
+    const height = this.props.height;
 
-    let cells = this.life.getCells();
+    const cells = this.life.getCells();
 
-    let canvas = this.refs.canvas;
-    let ctx = canvas.getContext('2d');
-    let imageData = ctx.getImageData(0, 0, width, height);
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.getImageData(0, 0, width, height);
 
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        let index = (y * width + x) * 4;
-        let lifeStatus = cells[y][x];
-        let color = lifeStatus === 0 ? 0x00 : 0xff;
+        const index = (y * width + x) * 4;
+        const lifeStatus = cells[y][x];
+        const color = lifeStatus === 0 ? 0x00 : 0xff;
 
         imageData.data[index + 0] = color; // Red
         imageData.data[index + 1] = color; // Green 

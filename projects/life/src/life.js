@@ -60,7 +60,7 @@ class Life {
    * Randomize the life grid
    */
   randomize() {
-    let buffer = this.buffer[this.currentBufferIndex];
+    const buffer = this.buffer[this.currentBufferIndex];
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -73,22 +73,22 @@ class Life {
    * Run the simulation for a single step
    */
   step() {
-    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
-    let currentBuffer = this.buffer[this.currentBufferIndex];
-    let backBuffer = this.buffer[backBufferIndex];
+    const backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    const currentBuffer = this.buffer[this.currentBufferIndex];
+    const backBuffer = this.buffer[backBufferIndex];
 
     const neighborCount = (x, y) => {
       let neighbors = 0;
 
       for (let yOffset = -1; yOffset <= 1; yOffset++) {
-        let yPos = y + yOffset;
+        const yPos = y + yOffset;
 
         if (yPos < 0 || yPos === this.height) {
           continue;
         }
 
         for (let xOffset = -1; xOffset <= 1; xOffset++) {
-          let xPos = x + xOffset;
+          const xPos = x + xOffset;
 
           if (xPos < 0 || xPos === this.width) {
             continue;
@@ -106,9 +106,9 @@ class Life {
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        let countNeighbors = (neighborCount.bind(this))(x, y);
+        const countNeighbors = (neighborCount.bind(this))(x, y);
 
-        let currentCell = currentBuffer[y][x];
+        const currentCell = currentBuffer[y][x];
 
         if (currentCell === 1) {
           if (countNeighbors < 2 || countNeighbors > 3) {
