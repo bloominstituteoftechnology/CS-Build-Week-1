@@ -29,18 +29,39 @@ class CCACanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
+    this.animFrame(); //TODO this should animate
   }
 
   /**
    * Handle an animation frame
    */
   animFrame() {
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, this.props.width, this.props.height);
+
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    // Here is the screen buffer array we can manipulate
+
+    let screenBuffer = imageData.data;
+    console.log("scfreen buffer: ", screenBuffer);
+
+    imageData.data[0] = 0;
+    imageData.data[1] = 0;
+    imageData.data[2] = 0;
+    console.log("after change scfreen buffer: ", screenBuffer);
+
   }
 
   /**
    * Render
    */
   render() {
+    //my code
+    return <canvas ref="canvas" width={this.props.width} height={this.props.height} /> 
   }
 }
 
