@@ -2,7 +2,8 @@
  * Implementation of Conway's game of Life
  */
 
-const MAKE_BINARY = 2;
+const ALIVE = 1;
+const DEAD = 0;
 
 /**
  * Make a 2D array helper function
@@ -62,8 +63,16 @@ class Life {
 
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
-        bufferPointer[row][col] = Math.floor(Math.random() * 2);
+        bufferPointer[row][col] = DEAD;
       }
+    }
+
+    const amountOfLife = 500;
+    for (let i = 0; i < amountOfLife; i++) {
+      const row = Math.floor(Math.random() * 30) + 100;
+      const col = Math.floor(Math.random() * 30) + 100;
+
+      bufferPointer[row][col] = ALIVE;
     }
   }
 
@@ -74,47 +83,89 @@ class Life {
     let backBufferIndex = this.activeBuffer === 0 ? 1 : 0;
     let currentBuffer = this.buffers[this.activeBuffer];
     let backBuffer = this.buffers[backBufferIndex];
+    let neighbors = 0;
 
-    const hasInfectiousNeighbor = (row, col) => {
-      const nextValue = (currentBuffer[row][col] + 1) % MAKE_BINARY;
+    const lifeOrDeath = (row, col) => {
+      neighbors = 0;
 
-      // West
-      if (col > 0) {
-        if (currentBuffer[row][col - 1] === nextValue) {
-          return true;
+      if (currentBuffer[row][col]) {
+        // North
+        if (row > 0) {
+          if (currentBuffer[row - 1][col]) {
+            neighbors++;
+          }
+        }
+
+        // East
+        if (col < this.width - 1) {
+          if (currentBuffer[row][col + 1]) {
+            neighbors++;
+          }
+        }
+
+        // South
+        if (row < this.height - 1) {
+          if (currentBuffer[row + 1][col]) {
+            neighbors++;
+          }
+        }
+
+        // West
+        if (col > 0) {
+          if (currentBuffer[row][col - 1]) {
+            neighbors++;
+          }
+        }
+
+        // North-East
+        if (row > 0 && col < this.height - 1) {
+          if (currentBuffer[row - 1][col + 1]) {
+            neighbors++;
+          }
+        }
+
+        // North-West
+        if (col > 0 && row > 0) {
+          if (currentBuffer[row - 1][col - 1]) {
+            neighbors++;
+          }
+        }
+
+        // South-East
+        if (row < this.height - 1 && col < this.width - 1) {
+          if (currentBuffer[row + 1][col + 1]) {
+            neighbors++;
+          }
+        }
+
+        // South-West
+        if (col > 0 && row < this.height - 1) {
+          if (currentBuffer[row + 1][col - 1]) {
+            neighbors++;
+          }
         }
       }
-
-      // North
-      if (row > 0) {
-        if (currentBuffer[row - 1][col] === nextValue) {
-          return true;
-        }
-      }
-
-      // East
-      if (col < this.width - 1) {
-        if (currentBuffer[row][col + 1] === nextValue) {
-          return true;
-        }
-      }
-
-      // South
-      if (row < this.height - 1) {
-        if (currentBuffer[row + 1][col] === nextValue) {
-          return true;
-        }
-      }
-
-      return false;
     };
 
+    // If the cell is alive and has 2 or 3 neighbors, then it remains alive.
+    // Else it dies.
+    // If the cell is dead and has exactly 3 neighbors, then it comes to life.
+    // Else if remains dead.
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
-        if (hasInfectiousNeighbor(row, col)) {
-          backBuffer[row][col] = (currentBuffer[row][col] + 1) % MAKE_BINARY; //Change to infection
+        lifeOrDeath(row, col);
+        if (currentBuffer[row][col]) {
+          if (neighbors === 2 || neighbors === 3) {
+            backBuffer[row][col] = ALIVE;
+          } else {
+            backBuffer[row][col] = DEAD;
+          }
         } else {
-          backBuffer[row][col] = currentBuffer[row][col]; //no change
+          if (neighbors === 3) {
+            backBuffer[row][col] = ALIVE;
+          } else {
+            backBuffer[row][col] = DEAD;
+          }
         }
       }
     }
