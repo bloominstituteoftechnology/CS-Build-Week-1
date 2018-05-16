@@ -33,7 +33,6 @@ class Life {
       Array2D(width, height),
       Array2D(width, height)
     ]
-    console.log(this.cells);
   }
   
   /**
@@ -43,6 +42,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.cells;
   }
 
   /**
