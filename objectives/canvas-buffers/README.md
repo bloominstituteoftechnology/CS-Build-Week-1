@@ -171,8 +171,6 @@ function setPixelBlack(imageData, x, y) {
     buffer[index + 1] = 0xff; 
     buffer[index + 2] = 0xff; 
     buffer[index + 3] = 0xff; 
-
-    ctx.putImageData(imageData, 0, 0);
 }
 
 const canvas = document.querySelector('#my-canvas');
