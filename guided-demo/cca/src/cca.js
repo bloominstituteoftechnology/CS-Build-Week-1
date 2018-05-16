@@ -12,7 +12,7 @@ function Array2D(width, height) {
 	let a = new Array(height);
   
 	for (let i = 0; i < height; i++) {
-	  a[i] = new Array(width);
+    a[i] = new Array(width);
 	}
   
 	return a;
@@ -36,9 +36,7 @@ class CCA {
       Array2D(width, height),
       Array2D(width, height)
     ]
-
-    this.randomize();
-
+        
     this.clear();
   }
 
@@ -55,13 +53,18 @@ class CCA {
    * Clear the cca grid
    */
   clear() {
+    for (let y = 0; y < this.height; y++) {
+      this.cells[this.currentBufferIndex][y].fill(0);
+    }
   }
 
   /**
    * Randomize the cca grid
    */
   randomize() {
+    // Arrays pass by ref, so buffer mutates this.cells:
     let buffer = this.cells[this.currentBufferIndex];
+
     for(let row = 0; row < this.height; row++) {
       for(let col = 0; col < this.width; col++) {
         buffer[row][col] = (Math.random() * MODULO) | 0;
@@ -78,7 +81,7 @@ class CCA {
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[backBufferIndex];
 
-    function hasInfectiousNeighbor(row, col){
+    const hasInfectiousNeighbor = (row, col) => {
       const nextValue = (currentBuffer[row][col] + 1) % MODULO;
 
       // West
@@ -114,7 +117,7 @@ class CCA {
 
     for(let row = 0; row < this.height; row++) {
       for(let col = 0; col < this.width; col++) {
-        if (hasInfectiousNeighbor.call(this, row, col)){
+        if (hasInfectiousNeighbor(row, col)){
           backBuffer[row][col] = (currentBuffer[row][col] + 1 ) % MODULO;  //Change to infection
         } else {
           backBuffer[row][col] = currentBuffer[row][col]; //no change

@@ -11,7 +11,10 @@ const COLORS = [
   [0x5f, 0x8f, 0x7f],
   [0x8f, 0xff, 0x7f],
   [0xff, 0x5f, 0x7f],
-]
+];
+
+const WIDTH = 600;
+const HEIGHT = 600;
 
 /**
  * CCA canvas
@@ -25,6 +28,7 @@ class CCACanvas extends Component {
     super(props);
 
     this.cca = new CCA(props.width, props.height);
+    this.cca.randomize();
   }
 
   /**
@@ -59,7 +63,7 @@ class CCACanvas extends Component {
     let buffer = imageData.data; // Obtained from getImageData()
 
     for(let row = 0; row < this.props.height; row++) {
-      for(let col = 0; col < this.props.width; col++){
+      for(let col = 0; col < this.props.width; col++) {
         let index = (row * this.props.width + col) * 4;
 
         let currentNumber = cells[row][col];
@@ -97,7 +101,7 @@ class CCAApp extends Component {
   render() {
     return (
       <div>
-        <CCACanvas width={400} height={300} />
+        <CCACanvas width={WIDTH} height={HEIGHT} />
       </div>
     )
   }
