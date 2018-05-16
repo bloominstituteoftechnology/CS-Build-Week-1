@@ -10,7 +10,7 @@ function Array2D(width, height) {
   let a = new Array(height);
 
   for (let i = 0; i < height; i++) {
-    a[ i ] = new Array(width);
+    a[i] = new Array(width);
   }
 
   return a;
@@ -42,7 +42,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
-    return this.buffers[ this.currentIndex ];
+    return this.buffers[this.currentIndex];
   }
 
   /**
@@ -50,6 +50,9 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+    for (let row = 0; row < this.height; row++) {
+      this.buffers[this.currentIndex][row].fill(0);
+    }
   }
 
   /**
@@ -57,11 +60,11 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
-    let buffer = this.buffers[ this.currentIndex ];
+    let buffer = this.buffers[this.currentIndex];
 
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
-        buffer[ row ][ col ] = (Math.random() * MODULO) | 0;
+        buffer[row][col] = (Math.random() * MODULO) | 0;
       }
     }
   }
@@ -72,8 +75,8 @@ class Life {
   step() {
     // !!!! IMPLEMENT ME !!!!
     let nextIndex = this.currentIndex === 0 ? 1 : 0;
-    let currentBuffer = this.buffers[ this.currentIndex ];
-    let nextBuffer = this.buffers[ this.nextIndex ];
+    let currentBuffer = this.buffers[this.currentIndex];
+    let nextBuffer = this.buffers[this.nextIndex];
 
     // Switch the current buffer index for the next step
     this.currentIndex = this.currentIndex === 0 ? 1 : 0;

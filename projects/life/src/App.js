@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import Life from './life';
-import './App.css';
+import React, { Component } from "react";
+import Life from "./life";
+import "./App.css";
 
 /**
  * Life canvas
  */
 class LifeCanvas extends Component {
-
   /**
    * Constructor
    */
@@ -21,17 +20,26 @@ class LifeCanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
    * Handle an animation frame
    */
   animFrame() {
+    let buffer = this.life.getCells();
+    console.log(buffer);
+
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext("2d");
+
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, this.props.width, this.props.height);
     //
     // !!!! IMPLEMENT ME !!!!
     //
-
     // Request another animation frame
     // Update life and get cells
     // Get canvas framebuffer, a packed RGBA array
@@ -44,7 +52,13 @@ class LifeCanvas extends Component {
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <canvas
+        ref="canvas"
+        width={this.props.width}
+        height={this.props.height}
+      />
+    );
   }
 }
 
@@ -52,7 +66,6 @@ class LifeCanvas extends Component {
  * Life holder component
  */
 class LifeApp extends Component {
-
   /**
    * Render
    */
@@ -61,7 +74,7 @@ class LifeApp extends Component {
       <div>
         <LifeCanvas width={400} height={300} />
       </div>
-    )
+    );
   }
 }
 
@@ -69,7 +82,6 @@ class LifeApp extends Component {
  * Outer App component
  */
 class App extends Component {
-
   /**
    * Render
    */
