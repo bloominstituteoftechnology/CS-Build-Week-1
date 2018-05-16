@@ -23,6 +23,8 @@ class CCACanvas extends Component {
    */
   constructor(props) {
     super(props);
+
+    this.cca = new CCA(props.width, props.height);
   }
 
   /**
@@ -36,6 +38,8 @@ class CCACanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
+    let cells = this.cca.getCells();
+
     let canvas = this.refs.canvas;
     let ctx = canvas.getContext('2d');
 
@@ -65,16 +69,18 @@ class CCACanvas extends Component {
       for (let col = 0; col < this.props.width; col++) {
         let index = (row * this.props.width + col) * 4;
 
-      let greyScale = Math.floor(Math.random() * 255);
+        let currentNumber = cells[row][col];
 
-      buffer[index + 0] = greyScale; // RED: full intensity
-      buffer[index + 1] = greyScale; // GREEN: zero intensity
-      buffer[index + 2] = greyScale; // BLUE: zero intensity
+      buffer[index + 0] = COLORS[currentNumber][0];//0x5f; // RED: full intensity
+      buffer[index + 1] = COLORS[currentNumber][1];//0x7f; // GREEN: zero intensity
+      buffer[index + 2] = COLORS[currentNumber][2];//'black'; // BLUE: zero intensity
       buffer[index + 3] = 0xff; // APLHA: fully opaque
       }
     }
 
     ctx.putImageData(imageData, 0, 0);
+
+    requestAnimationFrame(() => {this.animFrame()}); //ONE LINER FUNC
 
   }
 
