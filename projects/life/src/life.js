@@ -78,16 +78,42 @@ class Life {
 
     function neighbors(row, col){
       let count = 0;
+
+      //northwest
+      if(col > 0 && row > 0){
+        if(currentBuffer[row - 1][col - 1] === 1){
+          count++;
+        }
+      }
+      //northeast
+      if(col < width - 1 && row > 0){
+        if(currentBuffer[row -1 ][col + 1] === 1){
+          count++;
+        }
+      }
+      //southwest
+      if(col > 0 && row < height -1){
+        if(currentBuffer[row + 1][col - 1] === 1){
+          count++;
+        }
+      }
+      //southeast
+      if(col < width - 1 && row < height -1){
+        if(currentBuffer[row + 1][col + 1] === 1){
+          count++;
+        }
+      }
+
       //west
       if(col > 0){
-        if(currentBuffer[row][col] - 1 === 1){
+        if(currentBuffer[row][col-1] === 1){
           count++;
         }
       }
      
       //east
       if(col < width - 1){
-        if(currentBuffer[row][col] + 1 === 1){
+        if(currentBuffer[row][col+1] === 1){
           count++;
         }
       }
@@ -111,7 +137,7 @@ class Life {
 
      for(let row = 0; row < this.height; row++) {
       for(let col = 0; col < this.width; col++) {
-
+        // alive
         if(currentBuffer[row][col] === 1){
           const count = neighbors(row, col);
           if(count === 2 || count === 3){
@@ -121,6 +147,7 @@ class Life {
           }
         }
 
+        // dead
         if(currentBuffer[row][col] === 0){
           const count = neighbors(row, col);
           if(count === 3){

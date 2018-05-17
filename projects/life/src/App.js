@@ -56,6 +56,7 @@ class LifeCanvas extends Component {
     }
     ctx.putImageData(imageData, 0, 0);
     this.life.step();
+    this.counter++;
     requestAnimationFrame(() => {this.animFrame()});
     //
     // Get canvas framebuffer, a packed RGBA array
