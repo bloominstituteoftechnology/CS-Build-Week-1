@@ -28,7 +28,7 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
-    const framerate = 15;
+    const framerate = 60;
     const width = this.props.width;
     const height = this.props.height;
 
@@ -36,6 +36,8 @@ class LifeCanvas extends Component {
 
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    ctx.scale(2, 2);
     const imageData = ctx.getImageData(0, 0, width, height);
 
     for (let y = 0; y < height; y++) {

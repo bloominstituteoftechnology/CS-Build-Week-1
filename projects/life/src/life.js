@@ -106,22 +106,29 @@ class Life {
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        const countNeighbors = (neighborCount.bind(this))(x, y);
-
+        const countNeighbors = neighborCount(x, y);
         const currentCell = currentBuffer[y][x];
+        const bornArray = [3]; // rules for creating new cells
+        const surviveArray = [2, 3]; // rules for cells to survive
 
-        if (currentCell === 1) {
-          if (countNeighbors < 2 || countNeighbors > 3) {
-            backBuffer[y][x] = 0;
-          } else {
-            backBuffer[y][x] = 1;
-          }
-        } else {
-          if (countNeighbors === 3) {
-            backBuffer[y][x] = 1;
-          } else {
-            backBuffer[y][x] = 0;
-          }
+        switch (currentCell) {
+          case 0: // dead cell
+            if (bornArray.some((rule) => {return countNeighbors === rule})) {
+              backBuffer[y][x] = 1; // reanimate cell
+            } else {
+              backBuffer[y][x] = 0; // cell remains dead
+            }
+          break;
+          case 1: // living cell
+            if (surviveArray.some((rule) => {return countNeighbors === rule})) {
+              backBuffer[y][x] = 1; // survive
+            } else {
+              backBuffer[y][x] = 0; // kill cell
+            }
+            break;
+          default:
+            console.log("Unknown cell state!");
+            break;
         }
       }
     }
