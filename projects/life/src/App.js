@@ -33,6 +33,23 @@ class LifeCanvas extends Component {
     this.continueAnimation = !this.continueAnimation;
     if (this.continueAnimation) this.animFrame();
   }
+
+  randomizeCanvas = () => {
+    this.life.randomize();
+  }
+
+  clearCanvas = () => {
+    this.life.clear();
+  }
+
+  addGlider = () => {
+    this.life.addGlider();
+  }
+
+  addGospelGliderGun = () => {
+    this.life.addGospelGliderGun();
+  }
+
   /**
    * Handle an animation frame
    */
@@ -78,9 +95,18 @@ class LifeCanvas extends Component {
    */
   render() {
     return (
-      <div>
-        <button onClick={this.toggleAnimation}>Toggle Animation</button>
+      <div style={{ display: 'flex', flexDirection: 'column', width: `${this.props.width}px`, margin: '0 auto' }}>
         <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+          <button onClick={this.toggleAnimation}>Toggle Animation</button>
+          <button onClick={this.randomizeCanvas}>Randomize Canvas</button>
+          <button onClick={this.clearCanvas}>Clear Canvas</button>
+        </div>
+        <div>
+          <span style={{ fontSize: '12px' }}>Add to canvas: </span>
+          <button onClick={this.addGlider}>Glider</button>
+          <button onClick={this.addGospelGliderGun}>Gospel Glider Gun</button>
+        </div>
       </div>
     )
   }

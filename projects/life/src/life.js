@@ -71,6 +71,60 @@ class Life {
     }
   }
 
+  addGlider() {
+    // pick a random spot
+    const x = Math.floor(Math.random() * (this.height - 5));
+    const y = Math.floor(Math.random() * (this.width - 5));
+    const glider = {
+      12: 1,
+      23: 1,
+      31: 1,
+      32: 1,
+      33: 1
+    };
+
+    let buffer = this.cells[this.currentBufferIndex];
+    for (let row = x; row < x + 5; row++) {
+      for (let col = y; col < y + 5; col++) {
+        if (glider[`${row - x}${col - y}`]) buffer[row][col] = 0;
+        else buffer[row][col] = 1;
+      }
+    }
+    console.log('added at: ', x, y);
+  }
+
+  addGospelGliderGun() {
+    const x = Math.floor(Math.random() * (this.height - 36));
+    const y = Math.floor(Math.random() * (this.width - 9));
+    const glider = {
+      024: 1,
+      122: 1,
+      124: 1,
+      212: 1,
+      213: 1,
+      220: 1,
+      221: 1,
+      234: 1,
+      235: 1,
+      311: 1,
+      315: 1,
+      320: 1,
+      321: 1,
+      334: 1,
+      335: 1,
+      400: 
+    };
+
+    let buffer = this.cells[this.currentBufferIndex];
+    for (let row = x; row < x + 5; row++) {
+      for (let col = y; col < y + 5; col++) {
+        if (glider[`${row - x}${col - y}`]) buffer[row][col] = 0;
+        else buffer[row][col] = 1;
+      }
+    }
+    console.log('added at: ', x, y);
+  }
+
   /**
    * Run the simulation for a single step
    */
