@@ -40,6 +40,21 @@ class LifeCanvas extends Component {
     ctx.scale(2, 2);
     const imageData = ctx.getImageData(0, 0, width, height);
 
+    const newLife = (event) => {
+      const mouseDrag = (e) => {
+        const mouseX = e.layerX;
+        const mouseY = e.layerY;
+  
+        cells[mouseY][mouseX] = 1;
+      }
+      const mouseUp = () => {
+        canvas.removeEventListener('mousemove', mouseDrag);
+      }
+      canvas.addEventListener('mousemove', mouseDrag);
+      canvas.addEventListener('mouseup', mouseUp)
+    }
+    canvas.addEventListener('mousedown', newLife);
+
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         const index = (y * width + x) * 4;
@@ -52,7 +67,6 @@ class LifeCanvas extends Component {
         imageData.data[index + 3] = 255;  // Alpha
       }
     }
-
     ctx.putImageData(imageData, 0, 0);
 
     this.life.step();
@@ -81,7 +95,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={800} height={600} />
+        <LifeCanvas width={1024} height={768} />
       </div>
     )
   }

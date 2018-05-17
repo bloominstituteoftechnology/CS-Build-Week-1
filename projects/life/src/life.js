@@ -127,7 +127,6 @@ class Life {
             }
             break;
           default:
-            console.log("Unknown cell state!");
             break;
         }
       }
