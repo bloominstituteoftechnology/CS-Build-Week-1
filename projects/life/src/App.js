@@ -28,16 +28,66 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
-    //
-    // !!!! IMPLEMENT ME !!!!
-    //
+    const framerate = 60;
+    const width = this.props.width;
+    const height = this.props.height;
 
-    // Request another animation frame
-    // Update life and get cells
-    // Get canvas framebuffer, a packed RGBA array
-    // Convert the cell values into white or black for the canvas
-    // Put the new image data back on the canvas
-    // Next generation of life
+    const cells = this.life.getCells();
+
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext('2d');
+    // ctx.imageSmoothingEnabled = false;
+    // ctx.scale(2, 2);
+    // These do nothing :/
+    const imageData = ctx.getImageData(0, 0, width, height);
+
+    // const newLife = (event) => {
+    //   const mouseX = event.layerX;
+    //   const mouseY = event.layerY;
+
+    //   cells[mouseY][mouseX] = 2;
+    // }
+
+    // canvas.addEventListener('mousemove', newLife);
+
+    // Adding an event listener every frame causes performance problems after a time, and
+    // eventually crashes the tab.
+
+    const rgba = (index, r, g, b, a) => {
+      imageData.data[index + 0] = r; // Red
+      imageData.data[index + 1] = g; // Green 
+      imageData.data[index + 2] = b; // Blue 
+      imageData.data[index + 3] = a;  // Alpha
+    }
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const index = (y * width + x) * 4;
+        const lifeStatus = cells[y][x];
+
+        switch (lifeStatus) {
+          case 0:
+            rgba(index, 0, 16, 0, 255);
+            break;
+          case 1:
+            rgba(index, 0, 200, 0, 255);
+            break;
+          case 2:
+            rgba(index, 200, 0, 0, 255);
+            break;
+          default:
+            rgba(index, 0, 16, 0, 255);
+            break;
+        }
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
+
+    this.life.step();
+
+    setTimeout(() => {
+      requestAnimationFrame(() => {this.animFrame()});
+    }, 1000 / framerate);
   }
 
   /**
@@ -59,7 +109,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={1024} height={768} />
       </div>
     )
   }
