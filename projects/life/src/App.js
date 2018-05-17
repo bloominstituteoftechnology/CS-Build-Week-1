@@ -14,7 +14,7 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(props.width, props.height);
-    this.life.drawRandomGlider();
+    this.life.randomize();
   }
 
   /**
@@ -26,7 +26,8 @@ class LifeCanvas extends Component {
   /**
    * Handle an animation frame
    */
-  animFrame() {
+  
+  animFrame(timestamp) {
     let cells = this.life.getCells();
 
     let canvas = this.refs.canvas;
@@ -60,7 +61,7 @@ class LifeCanvas extends Component {
     ctx.putImageData(imageData, 0, 0);
 
     this.life.step();
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => {this.animFrame(Date.now())});
   }
 
   /**
