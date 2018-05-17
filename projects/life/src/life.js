@@ -79,11 +79,56 @@ class Life {
     if (this.currentBufferIndex) backBufferIndex = 0;
     else backBufferIndex = 1;
 
-    const currentBuffer = this.buffer[this.currentBufferIndex];
+    const mainBuffer = this.buffer[this.currentBufferIndex];
     const backBuffer = this.buffer[backBufferIndex];
 
-    const checkCells = (x, y) => {
+    const checkCells = (row, col) => {
+      let livingNeighbors = 0;
 
+      //looping over top, bottom, left, and right:
+      if (row > 0){
+        if (mainBuffer[row - 1][col]) livingNeighbors++;
+      }
+
+      if (col < this.width - 1){
+        if (mainBuffer[row][col + 1]) livingNeighbors++
+      }
+
+      if (row < this.height - 1){
+        if (mainBuffer[row + 1][col]) livingNeighbors++;
+      }
+
+      if (col > 0){
+        if (mainBuffer[row][col - 1]) livingNeighbors++;
+      }
+
+      //diagonals
+
+      if (row > 0 && col < this.width - 1){
+        if (mainBuffer[row - 1][col + 1]) livingNeighbors++;
+      }
+
+      if (row > 0 && col > 0){
+        if (mainBuffer[row - 1][col - 1]) livingNeighbors++;
+      }
+
+      if (row < this.height - 1 && col < this.width - 1){
+        if (mainBuffer[row + 1][col + 1]) livingNeighbors++;
+      }
+
+      if (row < this.height - 1 && col > 0){
+        if (mainBuffer[row + 1][col - 1]) livingNeighbors++;
+      }
+
+      return livingNeighbors;
+    }
+
+    for (let x; x < this.height; x++) {
+      for (let y; y < this.width; y++) {
+        const numberOfLivingNeighbors = checkCells(x, y); 
+
+      
+      }
     }
   }
 }
