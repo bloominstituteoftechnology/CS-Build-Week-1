@@ -23,24 +23,66 @@ class CCACanvas extends Component {
    */
   constructor(props) {
     super(props);
+    this.cca = new CCA(props.width, props.height);
   }
 
   /**
    * Component did mount
    */
   componentDidMount() {
+    requestAnimationFrame(() => { this.animFrame() });
   }
 
   /**
    * Handle an animation frame
    */
   animFrame() {
+    let cells = this.cca.getCells();
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, this.props.width, this.props.height);
+
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    // let screenBuffer = imageData.data;
+    // console.log('screen buffer: ', screenBuffer);
+
+    // imageData.data[0] = 0;
+    // imageData.data[1] = 0;
+    // imageData.data[2] = 0;
+
+    // console.log('after change buffer: ', screenBuffer);
+    // imageData.data = screenBuffer;
+
+    let buffer = imageData.data;
+    for (let row = 0; row < this.props.height; row++) {
+      for (let col = 0; col < this.props.width; col++) {
+        let index = (row * this.props.width + col) * 4;
+    
+        let currentNumber = cells[row][col];
+
+        // let grayScale = Math.floor(Math.random() * 255);
+        buffer[index + 0] = COLORS[currentNumber][0];
+        buffer[index + 1] = COLORS[currentNumber][1];
+        buffer[index + 2] = COLORS[currentNumber][2];
+        buffer[index + 3] = 0xff;
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    this.cca.step();
+    requestAnimationFrame(() => { this.animFrame() });
   }
 
   /**
    * Render
    */
   render() {
+    return (
+      <canvas ref='canvas' width={this.props.width} height={this.props.height} />
+    )
   }
 }
 

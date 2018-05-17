@@ -160,3 +160,22 @@ console.log(pixelRGBA);
 ### Implement Function to Put (Set) Pixel Value
 
 Implement the same as above, allowing the setting of an RGBA pixel.
+
+```javascript
+function setPixelBlack(imageData, x, y) {
+    let buffer = imageData.data;
+
+    let index = (y * width + x) * 4;
+
+    buffer[index + 0] = 0xff; 
+    buffer[index + 1] = 0xff; 
+    buffer[index + 2] = 0xff; 
+    buffer[index + 3] = 0xff; 
+}
+
+const canvas = document.querySelector('#my-canvas');
+const ctx = canvas.getContext('2d');
+const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+setPixelBlack(imageData, 10, 20);
+ctx.putImageData(imageData, 0, 0);
