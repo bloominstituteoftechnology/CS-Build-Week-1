@@ -28,6 +28,7 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
+    const framerate = 15;
     const width = this.props.width;
     const height = this.props.height;
 
@@ -54,7 +55,9 @@ class LifeCanvas extends Component {
 
     this.life.step();
 
-    requestAnimationFrame(() => {this.animFrame()});
+    setTimeout(() => {
+      requestAnimationFrame(() => {this.animFrame()});
+    }, 1000 / framerate);
   }
 
   /**
