@@ -27,8 +27,11 @@ class Life {
   constructor(width, height) {
     this.width = width;
     this.height = height;
-    this.cells = Array2D(width, height);
-    
+    this.currentBufferIndex = 0;
+    this.cells =  [
+      Array2D(width, height),
+      Array2D(width, height)
+    ]
     this.clear();
   }
   
@@ -39,9 +42,8 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
-    
+    return this.cells(this.currentBuffer);
   }
-
   /**
    * Clear the life grid
    */
@@ -54,9 +56,10 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    let buffer = this.cells(this.currentBufferIndex);
     for(let row = 0; row < this.height; row++) {
       for(let col = 0; col < this.width; col++){
-        this.cells[row][col] = (Math.random() * MODULO) | 0;
+        buffer[row][col] = (Math.random() * MODULO) | 0;
 
       }
     }
@@ -67,6 +70,50 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    let currentBuffer = this.cells[this.currentBufferIndex];
+    let backBuffer = this.cells[backBufferIndex];
+
+    function hasInfNeighbor(row,col) {
+      const nextValue = (currentBuffer[row][col] + 1) % MODULO;
+      if(col > 0){
+        if (currentBuffer[row][col - 1] === nextValue + 1){
+          return true;
+        }
+      }
+      
+      // North
+      if(row > 0){
+        if (currentBuffer[row - 1][col] === nextValue + 2){
+          return true;
+        }
+      }
+
+      // East
+      if(col < this.width - 1){
+        if (currentBuffer[row][col + 1] === nextValue -2){
+          return true;
+        }
+      }
+
+      // South
+      if(row < this.height - 1){
+        if (currentBuffer[row + 1][col] === nextValue -3) {
+          return true;
+        }
+      }
+      return false;
+    }
+    for(let row = 0; row < this.height; row++) {
+      for(let col = 0; col < this.width; col++){
+        if (hasInfNeighbor.call(this, row, col)){
+          backBuffer[row][col] = (currentBuffer[row][col] + 1 ) % MODULO;  //Change to infection
+        } else {
+          backBuffer[row][col] = currentBuffer[row][col]; //no change
+        }
+      }
+    }
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }
 

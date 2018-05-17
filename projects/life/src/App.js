@@ -43,7 +43,7 @@ class LifeCanvas extends Component {
     //
       let canvas = this.refs.canvas;
     // Request another animation frame
-    let lifecells = this.life.getCells();
+    let cells = this.life.getCells();
     // Update life and get cells
     let ctx = canvas.getContext('2d');
     ctx.fillStyle = 'white';
@@ -67,9 +67,9 @@ class LifeCanvas extends Component {
     }
     // Put the new image data back on the canvas
     ctx.putImageData(imageData, 0, 0);
-
+    this.life.step();
     // Next generation of life
-   // requestAnimationFrame(() => {this.animFrame()});
+   requestAnimationFrame(() => {this.animFrame()});
 
   }
 
@@ -92,7 +92,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={800} height={600} />
       </div>
     )
   }
