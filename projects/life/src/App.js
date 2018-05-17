@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
+const COLORS = [
+  [0, 0, 0],
+  [0xff, 0, 0], // red
+  [0, 0xff, 0], // green
+  [0, 0, 0xff], // blue
+]
+
 /**
  * Life canvas
  */
@@ -15,6 +22,7 @@ class LifeCanvas extends Component {
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+    this.counter = 0;
   }
 
   /**
@@ -30,10 +38,38 @@ class LifeCanvas extends Component {
   animFrame() {
     //
     // !!!! IMPLEMENT ME !!!!
-    //
-
     // Request another animation frame
     // Update life and get cells
+    let cells = this.life.getCells();
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+
+    ctx.fillRect(0, 0, this.props.width, this.props.height);
+
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    for(let row = 0; row < this.props.height; row++) {
+      for(let col = 0; col < this.props.width; col++) {
+
+        let colorIndex = (row * this.props.width + col) * 4;
+
+        let currentCellIndex = cells[row][col];
+
+        //let color = currentCellIndex === 1? 255 : 0;
+
+        // imageData.data[colorIndex + 0] = color;
+        // imageData.data[colorIndex + 1] = color;
+        // imageData.data[colorIndex + 2] = color;
+        // imageData.data[colorIndex + 3] = 255;
+
+        imageData.data[colorIndex + 0] = COLORS[currentCellIndex][0];
+        imageData.data[colorIndex + 1] = COLORS[currentCellIndex][1];
+        imageData.data[colorIndex + 2] = COLORS[currentCellIndex][2];
+        imageData.data[colorIndex + 3] = 255;
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
+    this.life.step();
+      requestAnimationFrame(() => {this.animFrame()});
     // Get canvas framebuffer, a packed RGBA array
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
