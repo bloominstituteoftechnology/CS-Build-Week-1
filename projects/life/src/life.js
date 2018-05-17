@@ -86,8 +86,8 @@ class Life {
     let buffer = this.cells[this.currentBufferIndex];
     for (let row = x; row < x + 5; row++) {
       for (let col = y; col < y + 5; col++) {
-        if (glider[`${row - x}${col - y}`]) buffer[row][col] = 0;
-        else buffer[row][col] = 1;
+        if (glider[`${row - x}${col - y}`]) buffer[row][col] = 1;
+        else buffer[row][col] = 0;
       }
     }
     console.log('added at: ', x, y);
@@ -139,8 +139,8 @@ class Life {
     for (let row = x; row < x + 9; row++) {
       for (let col = y; col < y + 36; col++) {
         const colY = `${col - y}`.length === 2 ? `${col - y}` : `0${col - y}`;
-        if (glider[`${row - x}${colY}`]) buffer[row][col] = 0;
-        else buffer[row][col] = 1;
+        if (glider[`${row - x}${colY}`]) buffer[row][col] = 1;
+        else buffer[row][col] = 0;
       }
     }
     console.log('added at: ', x, y);
