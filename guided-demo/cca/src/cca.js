@@ -67,6 +67,7 @@ class Life {
         buffer[row][col] = (Math.random() * MODULO) | 0;
       }
     }
+    
     // console.log('cells after randomize', this.cells);
   }
 
@@ -74,7 +75,7 @@ class Life {
    * Run the simulation for a single step
    */
   step() {
-    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0; //switch the (: 0) for 1, and it turns into a strobe
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[backBufferIndex];
 
@@ -84,7 +85,7 @@ class Life {
       let colorCount = {
         red: 1,
         green: 0,
-        blue: 0,
+        blue: 1,
         };
 
       // 000
@@ -100,7 +101,7 @@ class Life {
       if(col > 0){
         switch (currentBuffer[row][col - 1]){
           case 0: 
-                  // nothing
+                  colorCount.green++; //added a green background
                   break;
           case 1: 
                 colorCount.red++;
@@ -318,7 +319,7 @@ class Life {
           } else {
             backBuffer[row][col] = currentBuffer[row][col];
           }
-        }
+        }``
       }
     }
     this.currentBufferIndex = this.currentBufferIndex === 0? 1: 0;
