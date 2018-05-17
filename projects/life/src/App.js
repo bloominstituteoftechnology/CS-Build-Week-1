@@ -2,15 +2,10 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
+// COLORS = white, red, green, blue   
 const COLORS = [
-  [0, 0, 0],
-  [0x8f, 0, 0x5f],
-  [0x5f, 0, 0x8f],
-  [0, 0, 0xff],
-  [0, 0x5f, 0x7f],
-  [0x5f, 0x8f, 0x7f],
-  [0x8f, 0xff, 0x7f],
-  [0xff, 0x5f, 0x7f],
+    [0, 0, 0],
+    [0xff, 0xff, 0xff],
 ]
 
 /**
@@ -25,6 +20,7 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(props.width, props.height);
+
     this.randomize = this.randomize.bind(this);
     this.clear = this.clear.bind(this);
   }
@@ -49,8 +45,8 @@ class LifeCanvas extends Component {
     let canvas = this.refs.canvas;
     let ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = 'lightgray';
-    ctx.fillRect(0, 0, this.props.width, this.props.height)
+    // ctx.fillStyle = 'white';
+    // ctx.fillRect(0, 0, this.props.width, this.props.height)
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
@@ -115,7 +111,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={800} height={600} />
+        <LifeCanvas width={400} height={300} />
       </div>
     )
   }

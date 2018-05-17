@@ -2,7 +2,7 @@
  * Implementation of Conway's game of Life
  */
 
-const MODULO = 8;
+const MODULO = 2;
 
 /**
  * Make a 2D array helper function
@@ -85,47 +85,95 @@ class Life {
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[backBufferIndex];
 
-    function hasInfectiousNeighbor(row, col) {
-      const nextValue = (currentBuffer[row][col] + 1) % MODULO;
+    function countNeighbors(row, col) {
+        let livingCount = 0;
 
-      // North
-      if(row > 0){
-        if (currentBuffer[row - 1][col] === nextValue){
-          return true;
+
+        // North
+        if(row > 0){
+            if (currentBuffer[row - 1][col] === 1){
+                livingCount++;
+            }
         }
-      }
 
-      // South
-      if(row < this.height - 1){
-        if (currentBuffer[row + 1][col] === nextValue) {
-          return true;
+        // Northeast
+        if(col > this.width - 1 && row > 0){
+            if (currentBuffer[row - 1][col + 1] === 1){
+                livingCount++;
+            }
         }
-      }
 
-      // East
-      if(col < this.width - 1){
-        if (currentBuffer[row][col + 1] === nextValue){
-          return true;
+        // X00
+        // 0A0
+        // 000
+        // Northwest
+        if(col > 0 && row > 0){
+            if (currentBuffer[row - 1][col - 1] === 1){
+                livingCount++;
+            }
         }
-      }
 
-      // West
-      if(col > 0){
-        if (currentBuffer[row][col - 1] === nextValue){
-          return true;
+        // South
+        if(row < this.height - 1){
+            if (currentBuffer[row + 1][col] === 1) {
+                livingCount++;
+            }
         }
-      }
 
-      return false;
+        // Southeast
+        if(col > this.width - 1 && row < this.height - 1){
+            if (currentBuffer[row + 1][col + 1] === 1){
+                livingCount++;
+            }
+        }
+
+        // Southwest
+        if(col > 0 && row < this.height - 1){
+            if (currentBuffer[row + 1][col - 1] === 1){
+                livingCount++;
+            }
+        }
+
+        // East
+        if(col < this.width - 1){
+            if (currentBuffer[row][col + 1] === 1){
+                livingCount++;
+            }
+        }
+
+        // 000
+        // XA0
+        // 000
+        // West
+        if(col > 0){
+            if (currentBuffer[row][col - 1] === 1){
+                livingCount++;
+            }
+        }
+
+      return livingCount;
     }
 
     for(let row = 0; row < this.height; row++) {
       for(let col = 0; col < this.width; col++) {
-        if (hasInfectiousNeighbor.call(this, row, col)){
-          backBuffer[row][col] = (currentBuffer[row][col] + 1 ) % MODULO;  //Change to infection
-        } else {
-          backBuffer[row][col] = currentBuffer[row][col]; //no change
-        }
+          const totalNeighbors = countNeighbors.call(this, row, col);
+
+          // If living
+          if (currentBuffer[row][col] === 1) {
+              // do alive rules
+              if (totalNeighbors < 2 || totalNeighbors > 3) {
+                  backBuffer[row][col] = 0;
+              } else {
+                  backBuffer[row][col] = currentBuffer[row][col];
+              }
+          } else {
+              // do dead rules
+              if (totalNeighbors === 3) {
+                  backBuffer[row][col] = 1;
+              } else {
+                backBuffer[row][col] = currentBuffer[row][col];
+              }
+          }
       }
     }
     this.currentBufferIndex = this.currentBufferIndex === 0 ? 1: 0;
