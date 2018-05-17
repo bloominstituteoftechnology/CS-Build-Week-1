@@ -29,6 +29,10 @@ class LifeCanvas extends Component {
     this.continueAnimation = false;
   }
 
+  toggleAnimation = () => {
+    this.continueAnimation = !this.continueAnimation;
+    if (this.continueAnimation) this.animFrame();
+  }
   /**
    * Handle an animation frame
    */
@@ -73,7 +77,12 @@ class LifeCanvas extends Component {
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <div>
+        <button onClick={this.toggleAnimation}>Toggle Animation</button>
+        <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+      </div>
+    )
   }
 }
 
