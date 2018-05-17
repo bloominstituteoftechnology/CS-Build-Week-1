@@ -1,3 +1,4 @@
+const secureRandom = require('secure-random')
 /**
  * Implementation of Conway's game of Life
  */
@@ -25,7 +26,19 @@ class Life {
    * Constructor
    */
   constructor(width, height) {
-    // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+
+    this.currentBufferIndex = 0;
+
+    this.cells = [
+      Array2D(width, height),
+      Array2D(width, height)
+    ]
+
+    this.randomize();
+
+    this.clear();
   }
   
   /**
@@ -35,6 +48,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.cells[this.currentBufferIndex];
   }
 
   /**
@@ -42,6 +56,7 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+
   }
   
   /**
@@ -49,13 +64,66 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    let buffer = this.cells[this.currentBufferIndex];
+    for(let row = 0; row < this.height; row++) {
+      for(let col = 0; col < this.width; col++) {
+        buffer[row][col] = Math.random() * 1 | 0;
+      }
+    }
   }
 
   /**
    * Run the simulation for a single step
    */
-  step() {
-    // !!!! IMPLEMENT ME !!!!
+    step() {
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    let currentBuffer = this.cells[this.currentBufferIndex];
+    let backBuffer = this.cells[backBufferIndex];
+
+    function hasInfectiousNeighbor(row, col){
+      const nextValue = (currentBuffer[row][col] + 1) % 8;
+
+      // West
+      if(col > 0){
+        if (currentBuffer[row][col - 1] === nextValue){
+          return true;
+        }
+      }
+      
+      // North
+      if(row > 0){
+        if (currentBuffer[row - 1][col] === nextValue){
+          return true;
+        }
+      }
+
+      // East
+      if(col < this.width - 1){
+        if (currentBuffer[row][col + 1] === nextValue){
+          return true;
+        }
+      }
+
+      // South
+      if(row < this.height - 1){
+        if (currentBuffer[row + 1][col] === nextValue) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    for(let row = 0; row < this.height; row++) {
+      for(let col = 0; col < this.width; col++) {
+        if (hasInfectiousNeighbor.call(this, row, col)){
+          backBuffer[row][col] = (currentBuffer[row][col] + 1 ) % 8;  //Change to infection
+        } else {
+          backBuffer[row][col] = currentBuffer[row][col]; //no change
+        }
+      }
+    }
+    this.currentBufferIndex = this.currentBufferIndex === 0? 1: 0;
   }
 }
 
