@@ -161,14 +161,14 @@ class Life {
           // If living
           if (currentBuffer[row][col] === 1) {
               // do alive rules
-              if (totalNeighbors < 2 || totalNeighbors > 3) {
+              if (totalNeighbors === 3) {
                   backBuffer[row][col] = 0;
               } else {
                   backBuffer[row][col] = currentBuffer[row][col];
               }
           } else {
               // do dead rules
-              if (totalNeighbors === 3) {
+              if (totalNeighbors > 3) {
                   backBuffer[row][col] = 1;
               } else {
                 backBuffer[row][col] = currentBuffer[row][col];
