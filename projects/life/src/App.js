@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
-const WIDTH = 600;
-const HEIGHT = 600;
+const HEIGHT = 400;
+const WIDTH = 400;
 
-const COLORS = [[0, 0, 0], [255, 255, 255]];
+const COLORS = [[0, 0, 0], [255, 255, 255], [255, 0, 0]];
 
 /**
  * Life canvas

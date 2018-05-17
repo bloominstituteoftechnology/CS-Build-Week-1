@@ -2,7 +2,8 @@
  * Implementation of Conway's game of Life
  */
 
-const ALIVE = 1;
+const CHILD = 2;
+const ADULT = 1;
 const DEAD = 0;
 
 /**
@@ -67,13 +68,67 @@ class Life {
       }
     }
 
-    const amountOfLife = 500;
-    for (let i = 0; i < amountOfLife; i++) {
-      const row = Math.floor(Math.random() * 30) + 100;
-      const col = Math.floor(Math.random() * 30) + 100;
+    // const amountOfLife = 50000;
+    // for (let i = 0; i < amountOfLife; i++) {
+    //   const row = Math.floor(Math.random() * this.height);
+    //   const col = Math.floor(Math.random() * this.width);
+    //   bufferPointer[row][col] = ADULT;
+    // }
 
-      bufferPointer[row][col] = ALIVE;
+    const amountOfLife = 100000;
+    for (let i = 0; i < amountOfLife; i++) {
+      const row = Math.floor(Math.random() * 50) + Math.floor(this.width / 2);
+      const col = Math.floor(Math.random() * 50) + Math.floor(this.height / 4);
+      bufferPointer[row][col] = ADULT;
     }
+    for (let i = 0; i < amountOfLife; i++) {
+      const row = Math.floor(Math.random() * 50) + Math.floor(this.width / 2);
+      const col = Math.floor(Math.random() * 50) + Math.floor(this.height / 4 * 2);
+      bufferPointer[row][col] = ADULT;
+    }
+
+    const left = this.width / 4;
+    const right = this.height / 4;
+
+    bufferPointer[6 + left][2 + right] = ADULT;
+    bufferPointer[6 + left][3 + right] = ADULT;
+    bufferPointer[7 + left][2 + right] = ADULT;
+    bufferPointer[7 + left][3 + right] = ADULT;
+
+    bufferPointer[4 + left][14 + right] = ADULT;
+    bufferPointer[4 + left][15 + right] = ADULT;
+    bufferPointer[5 + left][13 + right] = ADULT;
+    bufferPointer[5 + left][17 + right] = ADULT;
+    bufferPointer[6 + left][12 + right] = ADULT;
+    bufferPointer[6 + left][18 + right] = ADULT;
+    bufferPointer[7 + left][12 + right] = ADULT;
+    bufferPointer[7 + left][16 + right] = ADULT;
+    bufferPointer[7 + left][18 + right] = ADULT;
+    bufferPointer[7 + left][19 + right] = ADULT;
+    bufferPointer[8 + left][12 + right] = ADULT;
+    bufferPointer[8 + left][18 + right] = ADULT;
+    bufferPointer[9 + left][13 + right] = ADULT;
+    bufferPointer[9 + left][17 + right] = ADULT;
+    bufferPointer[10 + left][14 + right] = ADULT;
+    bufferPointer[10 + left][15 + right] = ADULT;
+
+    bufferPointer[2 + left][26 + right] = ADULT;
+    bufferPointer[3 + left][24 + right] = ADULT;
+    bufferPointer[3 + left][26 + right] = ADULT;
+    bufferPointer[4 + left][22 + right] = ADULT;
+    bufferPointer[4 + left][23 + right] = ADULT;
+    bufferPointer[5 + left][22 + right] = ADULT;
+    bufferPointer[5 + left][23 + right] = ADULT;
+    bufferPointer[6 + left][22 + right] = ADULT;
+    bufferPointer[6 + left][23 + right] = ADULT;
+    bufferPointer[7 + left][24 + right] = ADULT;
+    bufferPointer[7 + left][26 + right] = ADULT;
+    bufferPointer[8 + left][26 + right] = ADULT;
+
+    bufferPointer[4 + left][36 + right] = ADULT;
+    bufferPointer[4 + left][37 + right] = ADULT;
+    bufferPointer[5 + left][36 + right] = ADULT;
+    bufferPointer[5 + left][37 + right] = ADULT;
   }
 
   /**
@@ -88,81 +143,79 @@ class Life {
     const lifeOrDeath = (row, col) => {
       neighbors = 0;
 
-      if (currentBuffer[row][col]) {
-        // North
-        if (row > 0) {
-          if (currentBuffer[row - 1][col]) {
-            neighbors++;
-          }
+      // North
+      if (row > 0) {
+        if (currentBuffer[row - 1][col]) {
+          neighbors++;
         }
+      }
 
-        // East
-        if (col < this.width - 1) {
-          if (currentBuffer[row][col + 1]) {
-            neighbors++;
-          }
+      // East
+      if (col < this.width - 1) {
+        if (currentBuffer[row][col + 1]) {
+          neighbors++;
         }
+      }
 
-        // South
-        if (row < this.height - 1) {
-          if (currentBuffer[row + 1][col]) {
-            neighbors++;
-          }
+      // South
+      if (row < this.height - 1) {
+        if (currentBuffer[row + 1][col]) {
+          neighbors++;
         }
+      }
 
-        // West
-        if (col > 0) {
-          if (currentBuffer[row][col - 1]) {
-            neighbors++;
-          }
+      // West
+      if (col > 0) {
+        if (currentBuffer[row][col - 1]) {
+          neighbors++;
         }
+      }
 
-        // North-East
-        if (row > 0 && col < this.height - 1) {
-          if (currentBuffer[row - 1][col + 1]) {
-            neighbors++;
-          }
+      // North-East
+      if (row > 0 && col < this.width - 1) {
+        if (currentBuffer[row - 1][col + 1]) {
+          neighbors++;
         }
+      }
 
-        // North-West
-        if (col > 0 && row > 0) {
-          if (currentBuffer[row - 1][col - 1]) {
-            neighbors++;
-          }
+      // North-West
+      if (col > 0 && row > 0) {
+        if (currentBuffer[row - 1][col - 1]) {
+          neighbors++;
         }
+      }
 
-        // South-East
-        if (row < this.height - 1 && col < this.width - 1) {
-          if (currentBuffer[row + 1][col + 1]) {
-            neighbors++;
-          }
+      // South-East
+      if (row < this.height - 1 && col < this.width - 1) {
+        if (currentBuffer[row + 1][col + 1]) {
+          neighbors++;
         }
+      }
 
-        // South-West
-        if (col > 0 && row < this.height - 1) {
-          if (currentBuffer[row + 1][col - 1]) {
-            neighbors++;
-          }
+      // South-West
+      if (col > 0 && row < this.height - 1) {
+        if (currentBuffer[row + 1][col - 1]) {
+          neighbors++;
         }
       }
     };
 
-    // If the cell is alive and has 2 or 3 neighbors, then it remains alive.
-    // Else it dies.
-    // If the cell is dead and has exactly 3 neighbors, then it comes to life.
-    // Else if remains dead.
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
         lifeOrDeath(row, col);
+        // If the cell is alive and has 2 or 3 neighbors, then it remains alive.
+        // Else it dies.
         if (currentBuffer[row][col]) {
           if (neighbors === 2 || neighbors === 3) {
-            backBuffer[row][col] = ALIVE;
+            backBuffer[row][col] = ADULT;
           } else {
             backBuffer[row][col] = DEAD;
           }
+          // If the cell is dead and has exactly 3 neighbors, then it comes to life.
+          // Else if remains dead.
         } else {
           if (neighbors === 3) {
-            backBuffer[row][col] = ALIVE;
+            backBuffer[row][col] = CHILD;
           } else {
             backBuffer[row][col] = DEAD;
           }
