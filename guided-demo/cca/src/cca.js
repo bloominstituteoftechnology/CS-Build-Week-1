@@ -107,7 +107,7 @@ class Life {
                 colorCount.red++;
                 break;
           case 2: 
-                colorCount.green++;
+                colorCount.red++;
                 break;
           case 3:
                 colorCount.blue++;

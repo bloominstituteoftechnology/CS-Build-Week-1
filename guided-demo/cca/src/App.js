@@ -104,13 +104,54 @@ class CCAApp extends Component {
   render() {
     return (
       <div>
-        <CCACanvas width={400} height={300} />
-        <CCACanvas width={400} height={300} />
-        <CCACanvas width={400} height={300} />
-        <CCACanvas width={400} height={300} />
-        <CCACanvas width={400} height={300} />
-        <CCACanvas width={400} height={300} />
-
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
+        <CCACanvas width={100} height={200} />
       </div>
     )
   }
