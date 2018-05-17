@@ -42,7 +42,7 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
-    return this.cells(this.currentBuffer);
+    return this.cells[this.currentBufferIndex];
   }
   /**
    * Clear the life grid
@@ -56,7 +56,7 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
-    let buffer = this.cells(this.currentBufferIndex);
+    let buffer = this.cells[this.currentBufferIndex];
     for(let row = 0; row < this.height; row++) {
       for(let col = 0; col < this.width; col++){
         buffer[row][col] = (Math.random() * MODULO) | 0;
@@ -98,7 +98,7 @@ class Life {
 
       // South
       if(row < this.height - 1){
-        if (currentBuffer[row + 1][col] === nextValue -3) {
+        if (currentBuffer[row + 1][col] === nextValue -1) {
           return true;
         }
       }
