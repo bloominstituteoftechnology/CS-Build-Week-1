@@ -52,6 +52,10 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+    let buffer = this.cells[this.currentBufferIndex];
+    for (let row = 0; row < this.height; row++) {
+      buffer[row].fill(0);
+    }
   }
   
   /**
