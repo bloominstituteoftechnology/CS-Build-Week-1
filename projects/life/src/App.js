@@ -33,13 +33,10 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
-    //
-    // !!!! IMPLEMENT ME !!!!
-    //
     // Request another animation frame
     if (this.continueAnimation) {
       requestAnimationFrame(() => {
-        this.onAnimFrame();
+        this.animFrame();
       });
     }
 
@@ -56,7 +53,7 @@ class LifeCanvas extends Component {
     for (let row = 0; row < this.props.height; row++) {
       for (let col = 0; col < this.props.width; col++) {
         const index = (row * this.props.width + col) * 4;
-        const color = cells[row][col] === 1 ? 'ff' : '00';
+        const color = cells[row][col] === 0 ? 'ff' : '00';
 
         buffer[index] = '0x' + color;
         buffer[index + 1] = '0x' + color;
@@ -67,7 +64,7 @@ class LifeCanvas extends Component {
 
     // Put the new image data back on the canvas
     ctx.putImageData(imageData, 0, 0);
-    
+
     // Next generation of life
     this.life.step();
   }
