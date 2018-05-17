@@ -2,7 +2,7 @@
  * Implemention of a CCA
  */
 
-const MODULO = 5;
+const MODULO = 4;
 
 /**
  * Make a 2D array helper function
@@ -57,39 +57,25 @@ class Life {
    */
   randomize() {
     let bufferPointer = this.cells[this.currentBufferIndex];
+
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
-        bufferPointer[row][col] = Math.floor(Math.random() * MODULO);
+        if ((row * col) % 125 === 0) {
+          bufferPointer[row][col] = Math.floor(Math.random() * MODULO) + 1;
+        } else {
+          bufferPointer[row][col] = 0;
+        }
       }
     }
 
     // for (let row = 0; row < this.height; row++) {
     //   for (let col = 0; col < this.width; col++) {
-    //     if ((row * col) % 25 === 0) {
+    //     if ((row * col) % 50 === 0 && Math.cos(row * col) > .2) {
     //       bufferPointer[row][col] = Math.floor(Math.random() * MODULO) + 1;
     //     } else {
     //       bufferPointer[row][col] = 0;
     //     }
     //   }
-    // }
-
-    // for (let row = 0; row < this.height; row++) {
-    //   for (let col = 0; col < this.width; col++) {
-    //     bufferPointer[row][col] = 0;
-    //   }
-    // }
-
-    // const amountOfLife = 100;
-    // for (let i = 0; i < amountOfLife; i++) {
-    //   const row = Math.floor(Math.random() * 50) + Math.floor(this.width / 2);
-    //   const col = Math.floor(Math.random() * 50) + Math.floor(this.height / 4);
-    //   bufferPointer[row][col] = 2;
-    // }
-    // for (let i = 0; i < amountOfLife; i++) {
-    //   const row = Math.floor(Math.random() * 50) + Math.floor(this.width / 2);
-    //   const col =
-    //     Math.floor(Math.random() * 50) + Math.floor(this.height / 4 * 2);
-    //   bufferPointer[row][col] = 1;
     // }
   }
 
@@ -180,7 +166,8 @@ class Life {
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
         const neighbors = countNeighbors(row, col);
-        const totalNeighbors = neighbors.red + neighbors.green + neighbors.blue + neighbors.black;
+        const totalNeighbors =
+          neighbors.red + neighbors.green + neighbors.blue + neighbors.black;
 
         const lookUp = {
           0: 'background',
