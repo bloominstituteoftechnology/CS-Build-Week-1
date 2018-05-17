@@ -79,6 +79,7 @@ class Life {
     let nextBuffer = this.buffers[nextIndex];
 
     function hasInfectiousNeighbor(row, col) {
+      // check
       const nextValue = (currentBuffer[row][col] + 1) % MODULO;
 
       // West
