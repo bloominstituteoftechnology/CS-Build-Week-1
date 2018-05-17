@@ -306,7 +306,7 @@ class Life {
           //console.log('found alive cell');
           // do alive rules
           //console.log(totalNeighbors);
-          if(totalNeighbors < 2 || totalNeighbors > 3){
+          if(totalNeighbors < 0 || totalNeighbors > 2){
             //console.log('and killed it');
             backBuffer[row][col] = 0;
           } else {
