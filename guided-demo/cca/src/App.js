@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
-import CCA from './cca';
+import Life from './cca';
 import './App.css';
 
-const COLORS = [
-  [0, 0, 0],
-  [0x8f, 0, 0x5f],
-  [0x5f, 0, 0x8f],
-  [0, 0, 0xff],
-  [0, 0x5f, 0x7f],
-  [0x5f, 0x8f, 0x7f],
-  [0x8f, 0xff, 0x7f],
-  [0xff, 0x5f, 0x7f],
-];
+// const COLORS = [
+//   [0, 0, 0],
+//   [0x8f, 0, 0x5f],
+//   [0x5f, 0, 0x8f],
+//   [0, 0, 0xff],
+//   [0, 0x5f, 0x7f],
+//   [0x5f, 0x8f, 0x7f],
+//   [0x8f, 0xff, 0x7f],
+//   [0xff, 0x5f, 0x7f],
+// ]
 
-const WIDTH = 600;
-const HEIGHT = 600;
+const COLORS = [
+  [255, 255, 255],
+  [150, 0, 0], // red
+  [0, 150, 0], // green
+  [0, 0, 150], // blue
+  [0, 0, 0], // black
+]
 
 /**
  * CCA canvas
@@ -27,8 +32,7 @@ class CCACanvas extends Component {
   constructor(props) {
     super(props);
 
-    this.cca = new CCA(props.width, props.height);
-    this.cca.randomize();
+    this.cca = new Life(props.width, props.height);
   }
 
   /**
@@ -63,7 +67,7 @@ class CCACanvas extends Component {
     let buffer = imageData.data; // Obtained from getImageData()
 
     for(let row = 0; row < this.props.height; row++) {
-      for(let col = 0; col < this.props.width; col++) {
+      for(let col = 0; col < this.props.width; col++){
         let index = (row * this.props.width + col) * 4;
 
         let currentNumber = cells[row][col];
@@ -101,7 +105,7 @@ class CCAApp extends Component {
   render() {
     return (
       <div>
-        <CCACanvas width={WIDTH} height={HEIGHT} />
+        <CCACanvas width={400} height={300} />
       </div>
     )
   }

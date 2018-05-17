@@ -3,9 +3,11 @@ import Life from './life';
 import './App.css';
 
 const HEIGHT = 400;
-const WIDTH = 400;
+const WIDTH = 401;
 
-const COLORS = [[0, 0, 0], [255, 255, 255], [255, 0, 0]];
+// const COLORS = [[0, 0, 0], [255, 255, 255], [255, 0, 0]];
+const COLORS = [[0, 0, 0], [200, 0, 0], [255, 255, 255], [0, 255, 0]];
+// BACKGROUND, DEAD, ADULT, CHILD
 
 /**
  * Life canvas
