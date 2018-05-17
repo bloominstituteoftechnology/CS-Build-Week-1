@@ -97,7 +97,7 @@ class Life {
     const x = Math.floor(Math.random() * (this.height - 36));
     const y = Math.floor(Math.random() * (this.width - 9));
     const glider = {
-      024: 1,
+      '024': 1,
       122: 1,
       124: 1,
       212: 1,
@@ -112,13 +112,34 @@ class Life {
       321: 1,
       334: 1,
       335: 1,
-      400: 
+      400: 1,
+      401: 1,
+      410: 1,
+      416: 1,
+      420: 1,
+      421: 1,
+      500: 1,
+      501: 1,
+      510: 1,
+      514: 1,
+      516: 1,
+      517: 1,
+      522: 1,
+      524: 1,
+      610: 1,
+      616: 1,
+      624: 1,
+      711: 1,
+      715: 1,
+      812: 1,
+      813: 1
     };
 
     let buffer = this.cells[this.currentBufferIndex];
-    for (let row = x; row < x + 5; row++) {
-      for (let col = y; col < y + 5; col++) {
-        if (glider[`${row - x}${col - y}`]) buffer[row][col] = 0;
+    for (let row = x; row < x + 9; row++) {
+      for (let col = y; col < y + 36; col++) {
+        const colY = `${col - y}`.length === 2 ? `${col - y}` : `0${col - y}`;
+        if (glider[`${row - x}${colY}`]) buffer[row][col] = 0;
         else buffer[row][col] = 1;
       }
     }
