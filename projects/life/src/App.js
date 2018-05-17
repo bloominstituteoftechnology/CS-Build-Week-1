@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
-import Life from './life';
-import './App.css';
+import React, { Component } from "react";
+import Life from "./life";
+import "./App.css";
+
+const COLORS = [
+  [0x00, 0x00, 0x00], // Black
+  [0x00, 0xff, 0xff]  // White
+];
 
 /**
  * Life canvas
  */
 class LifeCanvas extends Component {
-
   /**
    * Constructor
    */
@@ -21,30 +25,64 @@ class LifeCanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
    * Handle an animation frame
    */
   animFrame() {
-    //
-    // !!!! IMPLEMENT ME !!!!
-    //
+    const cells = this.life.getCells();
+    const height = this.props.height;
+    const width = this.props.width;
+
+    // Get canvas framebuffer, a packed RGBA array
+    const canvas = this.refs.canvas;
+    let ctx = canvas.getContext("2d");
+    
+    canvas.style.width = (canvas.width * 1) + "px";
+    canvas.style.height = (canvas.height * 1) + "px";
+    let imageData = ctx.getImageData(0, 0, width, height);
+
+    // Convert the cell values into white or black for the canvas
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const state = cells[y][x];
+        const color = COLORS[state];
+        const index = (y * width + x) * 4;
+
+        imageData.data[index + 0] = color[0]; // red
+        imageData.data[index + 1] = color[1]; // green
+        imageData.data[index + 2] = color[2]; // blue
+        imageData.data[index + 3] = 0xff; // alpha, 0xff === 255 === opaque
+      }
+    }
+
+    // Put the new image data back on the canvas
+    ctx.putImageData(imageData, 0, 0);
+
+    // Next generation of life
+    this.life.step();
 
     // Request another animation frame
-    // Update life and get cells
-    // Get canvas framebuffer, a packed RGBA array
-    // Convert the cell values into white or black for the canvas
-    // Put the new image data back on the canvas
-    // Next generation of life
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <canvas
+        ref="canvas"
+        width={this.props.width}
+        height={this.props.height}
+      />
+    );
   }
 }
 
@@ -52,16 +90,19 @@ class LifeCanvas extends Component {
  * Life holder component
  */
 class LifeApp extends Component {
-
   /**
    * Render
+   * <LifeCanvas width={600} height={500} style="width:1200px;height:1000px;"/>
+   * <LifeCanvas width={600} height={500}/>
    */
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <div class="canvas">
+          <LifeCanvas width={600} height={500} />
+        </div>
       </div>
-    )
+    );
   }
 }
 
@@ -69,7 +110,6 @@ class LifeApp extends Component {
  * Outer App component
  */
 class App extends Component {
-
   /**
    * Render
    */
