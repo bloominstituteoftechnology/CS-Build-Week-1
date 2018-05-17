@@ -108,7 +108,7 @@ class Life {
       for (let x = 0; x < this.width; x++) {
         const countNeighbors = neighborCount(x, y);
         const currentCell = currentBuffer[y][x];
-        const bornArray = [3]; // rules for creating new cells
+        const bornArray = [3, 6]; // rules for creating new cells
         const surviveArray = [2, 3]; // rules for cells to survive
 
         switch (currentCell) {
