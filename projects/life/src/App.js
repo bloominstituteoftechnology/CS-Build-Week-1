@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
-const blackOrWhite = [[0, 0, 0], [255, 255, 255]];
+const blackOrWhite = [[0, 0, 0], [0, 161, 214], [11, 214, 0], [255, 0, 0]];
 
 /**
  * Life canvas
@@ -15,13 +15,18 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(props.width, props.height);
+    this.state = {
+      armySizes: [],
+      finished: false,
+      winner: null,
+    }
   }
 
   /**
    * Component did mount
    */
   componentDidMount() {
-      this.animFrame();
+    this.animFrame();
   }
 
   /**
@@ -36,6 +41,14 @@ class LifeCanvas extends Component {
     this.life.step();
     // Update life and get cells
     let life = this.life.getCells();
+    this.setState({armySizes: this.life.getArmySizes()});
+    let done = this.life.getDone();
+    if(done) {
+      this.setState({finished:true});
+      if(this.state.armySizes[0] > this.state.armySizes[1]) this.setState({winner: "Eastern"})
+      else this.setState({winner:"Western"})
+    }
+
     // Get canvas framebuffer, a packed RGBA array
     let canvas = this.refs.canvas;
     let ctx = canvas.getContext('2d');
@@ -51,7 +64,11 @@ class LifeCanvas extends Component {
       for (let column = 0; column < this.props.width; column++) {
         let index = (row * this.props.width + column) * 4;
 
-        let currentNumber = life[row][column] % 2;
+        //conway
+        // let currentNumber = life[row][column] % 2;
+
+        //war
+        let currentNumber = life[row][column];
 
         buffer[index + 0] = blackOrWhite[currentNumber][0];
         buffer[index + 1] = blackOrWhite[currentNumber][1];
@@ -67,15 +84,23 @@ class LifeCanvas extends Component {
       requestAnimationFrame(() => {
         this.animFrame();
       });
-    }, 500);
-    
+    }, 0);
+
   }
 
   /**
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />;
+    return (
+      <div>
+      <h5>Eastern Army Size: {this.state.armySizes[0]}</h5>
+      <h5> Western Army Size: {this.state.armySizes[1]}</h5>
+      <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+      {this.state.finished ? <h3>The Winner is the {this.state.winner} Army </h3> : null}
+      
+      </div>
+    );
   }
 }
 
@@ -89,7 +114,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={100} height={100} />
+        <LifeCanvas width={500} height={500} />
       </div>
     );
   }
