@@ -5,6 +5,9 @@ import './App.css';
 /**
  * Life canvas
  */
+
+const COLORS = [[0, 0, 0], [0xff, 0, 0], [0, 0xff, 0], [0, 0, 0xff]];
+
 class LifeCanvas extends Component {
   /**
    * Constructor
@@ -44,17 +47,17 @@ class LifeCanvas extends Component {
     let ctx = canvas.getContext('2d');
     let imageData = ctx.getImageData(0, 0, width, height);
     // Convert the cell values into white or black for the canvas
+    let buffer = imageData.data;
     for (let row = 0; row < height; row++) {
       for (let col = 0; col < width; col++) {
         let index = (row * width + col) * 4;
 
         let current = cells[row][col];
-        let color = current === 0 ? 0x00 : 0xff;
 
-        imageData.data[index + 0] = color;
-        imageData.data[index + 1] = color;
-        imageData.data[index + 2] = color;
-        imageData.data[index + 3] = 0xff;
+        buffer[index + 0] = COLORS[current][0];
+        buffer[index + 1] = COLORS[current][1];
+        buffer[index + 2] = COLORS[current][2];
+        buffer[index + 3] = 0xff;
       }
     }
     // Put the new image data back on the canvas
