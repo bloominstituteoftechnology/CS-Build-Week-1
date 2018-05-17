@@ -14,7 +14,7 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(props.width, props.height);
-    this.life.randomize();
+    this.life.drawRandomGlider();
   }
 
   /**
@@ -49,10 +49,10 @@ class LifeCanvas extends Component {
         let index = (row * this.props.width + col) * 4;
 
         let currentNumber = cells[row][col];
-        let color = currentNumber === 1 ? 0x00 : 0xff;
-        buffer[index] = color;
-        buffer[index + 1] = color;
-        buffer[index + 2] = color;
+        let color = currentNumber === 1 ? [0x00, 0x00, 0x00] : [0x00, 0xFF, 0x66];
+        buffer[index] = color[0];
+        buffer[index + 1] = color[1];
+        buffer[index + 2] = color[2];
         buffer[index + 3] = 0xff;
       }
     }

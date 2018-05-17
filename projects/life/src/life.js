@@ -31,8 +31,8 @@ class Life {
 
     this.cells = [Array2D(width, height), Array2D(width, height)];
 
-    // this.drawRandomGlider();
-    this.randomize();
+    this.drawRandomGlider();
+    // this.randomize();
 
     this.clear();
   }
@@ -66,30 +66,22 @@ class Life {
     let buffer = this.cells[this.currentBufferIndex];
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
-         buffer[row][col] = Math.round(Math.random());
+        buffer[row][col] = Math.round(Math.random()); // Random 0 or 1
       }
     }
   }
 
   drawRandomGlider() {
-    // let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
-    // let currentBuffer = this.cells[this.currentBufferIndex];
-    // let backBuffer = this.cells[backBufferIndex];
-
-    // const randY = Math.floor(Math.random() * Math.floor(this.height));
-    // const randX = Math.floor(Math.random() * Math.floor(this.width));
-
-    // console.log(currentBuffer[randY][randX]);
-    // if (currentBuffer[randY][randX] !== undefined) backBuffer[randY][randX] = 1;
-    // if (currentBuffer[randY + 1][randX + 1] !== undefined)
-    //   console.log(backBuffer[randY + 1][randX + 1]);
-    // if (currentBuffer[randY + 2][randX + 1] !== undefined)
-    //   backBuffer[randY + 2][randX + 1] = 1;
-    // if (currentBuffer[randY + 2][randX] !== undefined)
-    //   backBuffer[randY + 2][randX] = 1;
-    // if (currentBuffer[randY + 2][randX - 1] !== undefined)
-    //   backBuffer[randY + 2][randX - 1] = 1;
-    // this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    // let buffer = this.cells[this.currentBufferIndex];
+    // const randY = Math.floor(Math.random() * Math.floor(this.height - 1));
+    // const randX = Math.floor(Math.random() * Math.floor(this.width - 1));
+    // if (buffer[randY][randX] !== undefined) buffer[randY][randX] = 1;
+    // if (buffer[randY + 1][randX + 1] !== undefined)
+    //   if (buffer[randY + 2][randX + 1] !== undefined)
+    //     buffer[randY + 2][randX + 1] = 1;
+    // if (buffer[randY + 2][randX] !== undefined) buffer[randY + 2][randX] = 1;
+    // if (buffer[randY + 2][randX - 1] !== undefined)
+    //   buffer[randY + 2][randX - 1] = 1;
   }
 
   /**
@@ -158,17 +150,22 @@ class Life {
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
         let neighbors = numberOfNeighbors.call(this, row, col);
-        if (neighbors < 2) {
-          backBuffer[row][col] = currentBuffer[row][col] * 0; // Kill cell
-        } else if (
-          currentBuffer[row][col] === 1 &&
-          (neighbors === 2 || neighbors === 3)
-        ) {
-          backBuffer[row][col] = currentBuffer[row][col]; // No change if alive and neighbors === 2 || 3
-        } else if (currentBuffer[row][col] === 0 && neighbors === 3) {
-          backBuffer[row][col] = currentBuffer[row][col] + 1; // Bring back to life
-        } else if (neighbors > 3) {
-          backBuffer[row][col] = currentBuffer[row][col] * 0;
+        if (currentBuffer[row][col] === 1) {
+          if (neighbors < 2 || neighbors > 3) {
+            backBuffer[row][col] = 0; // Kill cell
+          } else if (neighbors === 2 || neighbors === 3) {
+            backBuffer[row][col] = currentBuffer[row][col];
+          } else {
+            backBuffer[row][col] = currentBuffer[row][col];
+          }
+        } else {
+          if (neighbors === 3) {
+            backBuffer[row][col] = 1;
+          } else if (neighbors > 3) {
+            backBuffer[row][col] = 0;
+          } else {
+            backBuffer[row][col] = currentBuffer[row][col];
+          }
         }
       }
     }
