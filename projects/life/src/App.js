@@ -2,17 +2,6 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
-const COLORS = [
-  [0, 0, 0],
-  [0x8f, 0, 0x5f],
-  [0x5f, 0, 0x8f],
-  [0, 0, 0xff],
-  [0, 0x5f, 0x7f],
-  [0x5f, 0x8f, 0x7f],
-  [0x8f, 0xff, 0x7f],
-  [0xff, 0x5f, 0x7f],
-]
-
 /**
  * Life canvas
  */
@@ -34,7 +23,6 @@ class LifeCanvas extends Component {
   componentDidMount() {
     requestAnimationFrame(() => {this.animFrame()});
   }
-
   /**
    * Handle an animation frame
    */
@@ -43,9 +31,6 @@ class LifeCanvas extends Component {
 
     let canvas = this.refs.canvas;
     let ctx = canvas.getContext('2d');
-
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, this.props.width, this.props.height)
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
@@ -64,17 +49,16 @@ class LifeCanvas extends Component {
         let index = (row * this.props.width + col) * 4;
 
         let currentNumber = cells[row][col];
-
-        buffer[index] = COLORS[currentNumber][0];
-        buffer[index + 1] = COLORS[currentNumber][1];
-        buffer[index + 2] = COLORS[currentNumber][2];
+        let color = currentNumber === 1 ? 0x00 : 0xff;
+        buffer[index] = color;
+        buffer[index + 1] = color;
+        buffer[index + 2] = color;
         buffer[index + 3] = 0xff;
       }
     }
 
     ctx.putImageData(imageData, 0, 0);
 
-    //ctx.putImageData(imageData, 0, 0);
     this.life.step();
     requestAnimationFrame(() => {this.animFrame()});
   }
@@ -98,7 +82,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={500} height={400} />
       </div>
     )
   }
