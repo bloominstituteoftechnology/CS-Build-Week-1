@@ -118,7 +118,7 @@ class Life {
             } else {
               backBuffer[y][x] = 0; // cell remains dead
             }
-          break;
+            break;
           case 1: // living cell
             if (surviveArray.some((rule) => {return countNeighbors === rule})) {
               backBuffer[y][x] = 1; // survive

@@ -36,35 +36,49 @@ class LifeCanvas extends Component {
 
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = false;
-    ctx.scale(2, 2);
+    // ctx.imageSmoothingEnabled = false;
+    // ctx.scale(2, 2);
+    // These do nothing :/
     const imageData = ctx.getImageData(0, 0, width, height);
 
-    const newLife = (event) => {
-      const mouseDrag = (e) => {
-        const mouseX = e.layerX;
-        const mouseY = e.layerY;
-  
-        cells[mouseY][mouseX] = 1;
-      }
-      const mouseUp = () => {
-        canvas.removeEventListener('mousemove', mouseDrag);
-      }
-      canvas.addEventListener('mousemove', mouseDrag);
-      canvas.addEventListener('mouseup', mouseUp)
+    // const newLife = (event) => {
+    //   const mouseX = event.layerX;
+    //   const mouseY = event.layerY;
+
+    //   cells[mouseY][mouseX] = 2;
+    // }
+
+    // canvas.addEventListener('mousemove', newLife);
+
+    // Adding an event listener every frame causes performance problems after a time, and
+    // eventually crashes the tab.
+
+    const rgba = (index, r, g, b, a) => {
+      imageData.data[index + 0] = r; // Red
+      imageData.data[index + 1] = g; // Green 
+      imageData.data[index + 2] = b; // Blue 
+      imageData.data[index + 3] = a;  // Alpha
     }
-    canvas.addEventListener('mousedown', newLife);
 
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         const index = (y * width + x) * 4;
         const lifeStatus = cells[y][x];
-        const color = lifeStatus === 0 ? 0 : 255;
 
-        imageData.data[index + 0] = color; // Red
-        imageData.data[index + 1] = color; // Green 
-        imageData.data[index + 2] = color; // Blue 
-        imageData.data[index + 3] = 255;  // Alpha
+        switch (lifeStatus) {
+          case 0:
+            rgba(index, 0, 16, 0, 255);
+            break;
+          case 1:
+            rgba(index, 0, 200, 0, 255);
+            break;
+          case 2:
+            rgba(index, 200, 0, 0, 255);
+            break;
+          default:
+            rgba(index, 0, 16, 0, 255);
+            break;
+        }
       }
     }
     ctx.putImageData(imageData, 0, 0);
