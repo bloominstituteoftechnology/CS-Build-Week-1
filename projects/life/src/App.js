@@ -3,11 +3,11 @@ import life from './life';
 import './App.css';
 
 const COLORS = [
-  [0, 0, 0],
-  [0x8f, 0, 0x5f],
-  [0x5f, 0, 0x8f],
-  [0, 0, 0xff],
-  [0xff, 0xff, 0xff],
+  'white',
+  'black',
+  'red',
+  'blue',
+  'green',
 
 ]
 
@@ -29,7 +29,7 @@ class LifeCanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => { this.animFrame() });
   }
 
   /**
@@ -56,8 +56,8 @@ class LifeCanvas extends Component {
 
     let buffer = imageData.data; // Obtained from getImageData()
 
-    for(let row = 0; row < this.props.height; row++) {
-      for(let col = 0; col < this.props.width; col++){
+    for (let row = 0; row < this.props.height; row++) {
+      for (let col = 0; col < this.props.width; col++) {
         let index = (row * this.props.width + col) * 4;
 
         let currentNumber = cells[row][col];
@@ -73,7 +73,7 @@ class LifeCanvas extends Component {
 
     //ctx.putImageData(imageData, 0, 0);
     this.life.step();
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => { this.animFrame() });
   }
 
   /**
