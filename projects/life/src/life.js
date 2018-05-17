@@ -26,15 +26,27 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+
+    this.currentBufferIndex = 0;
+
+    this.buffer = [
+      Array2D(width, height),
+      Array2D(width, height)
+    ];
+
+    this.clear();
   }
-  
+
   /**
    * Return the current active buffer
-   * 
+   *
    * This should NOT be modified by the caller
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.buffer[this.currentBufferIndex];
   }
 
   /**
@@ -42,13 +54,23 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+    for (let y = 0; y < this.height; y++) {
+      this.buffer[this.currentBufferIndex][y].fill(0);
+    }
   }
-  
+
   /**
    * Randomize the life grid
    */
-  randomize() {
+  randomize(stat) {
     // !!!! IMPLEMENT ME !!!!
+    let buffer = this.buffer[this.currentBufferIndex];
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        buffer[y][x] = Math.random() > 1 - stat ? 1 : 0;
+      }
+    }
   }
 
   /**
@@ -56,6 +78,92 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    let backBuffer = this.buffer[backBufferIndex];
+    let currentBuffer = this.buffer[this.currentBufferIndex];
+
+    // See if we have a neighbor to infect this one
+    const hasInfectiousNeighbor = (x, y) => {
+      const nextValue = currentBuffer[y][x];
+      let neighbor = 0;
+
+      // West
+      if (x > 0) {
+        if (currentBuffer[y][x - 1] === 1) {
+          neighbor++;
+        }
+      }
+
+      // North
+      if (y > 0) {
+        if (currentBuffer[y - 1][x] === 1) {
+          neighbor++;
+        }
+      }
+
+      // East
+      if (x < this.width - 1) {
+        if (currentBuffer[y][x + 1] === 1) {
+          neighbor++;
+        }
+      }
+
+      // South
+      if (y < this.height - 1) {
+        if (currentBuffer[y + 1][x] === 1) {
+          neighbor++;
+        }
+      }
+
+      // NW
+      if (x > 0 && y > 0) {
+        if (currentBuffer[y - 1][x - 1] === 1) {
+          neighbor++;
+        }
+      }
+
+      // NE
+      if (x < this.width - 1 && y > 0) {
+        if (currentBuffer[y - 1][x + 1] === 1) {
+          neighbor++;
+        }
+      }
+
+      // SE
+      if (x < this.width - 1 && y < this.height - 1) {
+        if (currentBuffer[y + 1][x + 1] === 1) {
+          neighbor++;
+        }
+      }
+
+      // SW
+      if (x > 0 && y < this.height - 1) {
+        if (currentBuffer[y + 1][x - 1] === 1) {
+          neighbor++;
+        }
+      }
+
+      if (nextValue === 1) {
+        if (neighbor === 2 || neighbor === 3) {
+          return 1;
+        }
+        return 0;
+      }
+
+      if (neighbor === 3) {
+        return 1;
+      }
+
+      return 0;
+    }
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+       backBuffer[y][x] = hasInfectiousNeighbor(x, y);
+      }
+    }
+
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }
 

@@ -17,7 +17,7 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(props.width, props.height);
-    this.life.randomize();
+    this.life.randomize(0.5);
   }
 
   /**
@@ -50,13 +50,14 @@ class LifeCanvas extends Component {
     // Convert the cell values into white or black for the canvas
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        let index = (y * width + x) * 3;
+        let index = (y * width + x) * 4;
 
         let lifeStatus = cells[y][x];
 
-        imageData.data[index + 0] = lifeStatus ? BLACK[0] : WHITE[0];
-        imageData.data[index + 1] = lifeStatus ? BLACK[0] : WHITE[0];
-        imageData.data[index + 2] = 0xff;
+        imageData.data[index + 0] = lifeStatus ? WHITE[0] : BLACK[0];
+        imageData.data[index + 1] = lifeStatus ? WHITE[0] : BLACK[0];
+        imageData.data[index + 2] = lifeStatus ? WHITE[0] : BLACK[0];
+        imageData.data[index + 3] = 0xff;
       }
     }
     // Put the new image data back on the canvas
