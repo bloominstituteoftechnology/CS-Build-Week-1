@@ -6,7 +6,13 @@ import './App.css';
  * Life canvas
  */
 
-const COLORS = [[0, 0, 0], [0xff, 0, 0], [0, 0xff, 0], [0, 0, 0xff]];
+const COLORS = [
+  [0, 0, 0],
+  [0xff, 0, 0],
+  [0, 0xff, 0],
+  [0, 0, 0xff],
+  [0xff, 0xff, 0xff],
+];
 
 class LifeCanvas extends Component {
   /**

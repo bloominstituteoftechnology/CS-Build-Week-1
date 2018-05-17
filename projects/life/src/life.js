@@ -2,7 +2,7 @@
  * Implemention of a CCA
  */
 
-const MODULO = 4;
+const MODULO = 5;
 
 /**
  * Make a 2D array helper function
@@ -80,6 +80,7 @@ class Life {
         red: 0,
         green: 0,
         blue: 0,
+        white: 0,
       };
 
       // 000
@@ -101,6 +102,9 @@ class Life {
             break;
           case 3:
             colorCount.blue++;
+            break;
+          case 4:
+            colorCount.white++;
             break;
           default:
             console.log('error, invalid number');
@@ -165,23 +169,37 @@ class Life {
       for (let col = 0; col < this.width; col++) {
         const neighbors = countNeighbors.call(this, row, col);
         // console.log(neighbors);
-        const totalNeighbors = neighbors.red + neighbors.green + neighbors.blue;
+        const totalNeighbors =
+          neighbors.red + neighbors.green + neighbors.blue + neighbors.white;
 
         let dominantColor = currentBuffer[row][col];
-        if (neighbors.red > neighbors.blue && neighbors.red > neighbors.green) {
+        if (
+          neighbors.red > neighbors.blue &&
+          neighbors.red > neighbors.green &&
+          neighbors.red > neighbors.white
+        ) {
           dominantColor = 1;
         }
         if (
           neighbors.green > neighbors.red &&
-          neighbors.green > neighbors.blue
+          neighbors.green > neighbors.blue &&
+          neighbors.green > neighbors.white
         ) {
           dominantColor = 2;
         }
         if (
           neighbors.blue > neighbors.red &&
-          neighbors.blue > neighbors.green
+          neighbors.blue > neighbors.green &&
+          neighbors.blue > neighbors.white
         ) {
           dominantColor = 3;
+        }
+        if (
+          neighbors.white > neighbors.red &&
+          neighbors.white > neighbors.blue &&
+          neighbors.white > neighbors.green
+        ) {
+          dominantColor = 4;
         }
 
         // "Elements of War"
