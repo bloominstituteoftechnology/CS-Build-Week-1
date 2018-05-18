@@ -32,7 +32,7 @@ class Life {
     this.cells = [Array2D(width, height), Array2D(width, height)];
 
     // this.drawRandomGlider();
-    this.randomize();
+    // this.randomize();
 
     this.clear();
   }
@@ -61,25 +61,39 @@ class Life {
   /**
    * Randomize the life grid
    */
+  drawCanvas(imageArray) {
+    let buffer = this.cells[this.currentBufferIndex];
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        let index = (row * this.width + col) * 4;
+
+        if (imageArray.data[index + 1] === 0xff) {
+          buffer[row][col] = 1;
+        } else {
+          buffer[row][col] = 0;
+        }
+      }
+    }
+  }
+
   randomize() {
     // !!!! IMPLEMENT ME !!!!
-    let buffer = this.cells[this.currentBufferIndex];
+    // let buffer = this.cells[this.currentBufferIndex];
     // for (let row = 0; row < this.height; row++) {
     //   for (let col = 0; col < this.width; col++) {
     //     buffer[row][col] = Math.round(Math.random()); // Random 0 or 1
     //   }
     // }
-
-    for (let row = 0; row < this.height; row++) {
-      for (let col = 0; col < this.width; col++) {
-        let randSeed = Math.round(3 / (3 * Math.PI));
-        if (col % 100/*(this.width/10)*/ === 0 || row % 100/*(this.height/10)*/ === 0) {
-          if (col < this.width - randSeed && row < this.height - randSeed) {
-            buffer[row + randSeed][col + randSeed] = 1;
-          }
-        }
-      }
-    }
+    // for (let row = 0; row < this.height; row++) {
+    //   for (let col = 0; col < this.width; col++) {
+    //     let randSeed = Math.round(3 / (3 * Math.PI));
+    //     if (col % 100/*(this.width/10)*/ === 0 || row % 100/*(this.height/10)*/ === 0) {
+    //       if (col < this.width - randSeed && row < this.height - randSeed) {
+    //         buffer[row + randSeed][col + randSeed] = 1;
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   drawRandomGlider() {
