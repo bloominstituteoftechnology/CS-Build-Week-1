@@ -56,14 +56,6 @@ class CCACanvas extends Component {
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    // // Here is the screen buffer array we can manipulate:
-
-    // imageData.data[0] = 0;
-    // imageData.data[1] = 0;
-    // imageData.data[2] = 0;
-
-    // Set the pixel at 10,20 to pure red and display on the canvas:
-
     let buffer = imageData.data; // Obtained from getImageData()
 
     for(let row = 0; row < this.props.height; row++) {
@@ -81,7 +73,6 @@ class CCACanvas extends Component {
 
     ctx.putImageData(imageData, 0, 0);
 
-    //ctx.putImageData(imageData, 0, 0);
     this.cca.step();
     requestAnimationFrame(() => {this.animFrame()});
   }
