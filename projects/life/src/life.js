@@ -20,21 +20,24 @@ function Array2D(width, height) {
  * Life class
  */
 class Life {
-
   /**
    * Constructor
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+    this.state = Array2D(width, height);
   }
-  
+
   /**
    * Return the current active buffer
-   * 
+   *
    * This should NOT be modified by the caller
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.state;
   }
 
   /**
@@ -42,13 +45,20 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+    return (this.state = Array2D(width, height));
   }
-  
+
   /**
    * Randomize the life grid
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+
+    for (let row = 0; row <= this.height; row++) {
+      for (let col = 0; col <= this.width; col++) {
+        this.state[row][col] = <div>X</div>;
+      }
+    }
   }
 
   /**
