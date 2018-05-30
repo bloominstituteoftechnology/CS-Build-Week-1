@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
+const BLACK = [0, 0, 0];
+const WHITE = [255, 255, 255];
+
 /**
  * Life canvas
  */
@@ -14,7 +17,7 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(props.width, props.height);
-    this.life.randomize();
+    this.life.randomize(0.5);
   }
 
   /**
@@ -40,10 +43,30 @@ class LifeCanvas extends Component {
     let cells = this.life.getCells();
 
     // Get canvas framebuffer, a packed RGBA array
-    
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, width, height);
+
     // Convert the cell values into white or black for the canvas
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        let index = (y * width + x) * 4;
+
+        let lifeStatus = cells[y][x];
+
+        imageData.data[index + 0] = lifeStatus ? WHITE[0] : BLACK[0];
+        imageData.data[index + 1] = lifeStatus ? WHITE[0] : BLACK[0];
+        imageData.data[index + 2] = lifeStatus ? WHITE[0] : BLACK[0];
+        imageData.data[index + 3] = 0xff;
+      }
+    }
     // Put the new image data back on the canvas
+    ctx.putImageData(imageData, 0, 0);
+
     // Next generation of life
+    this.life.step();
+
+    requestAnimationFrame(() => {this.animFrame()});
   }
 
   /**
@@ -65,7 +88,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={800} height={600} />
       </div>
     )
   }
