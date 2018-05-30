@@ -124,8 +124,36 @@ class Life {
         }
       }
       //SOUTHEAST
+      if (x < this.width - 1 && y < this.height - 1) {
+        if (currentBuffer[y + 1][x + 1] === 1) {
+          neighbor++;
+        }
+      }
       //SOUTHWEST
+      if (x > 0 && y < this.height - 1) {
+        if (currentBuffer[y + 1][x - 1] === 1) {
+          neighbor++;
+        }
+      }
+      
+      if (nextValue === 1) {
+        if (neighbor === 2 || neighbor === 3) {
+          return 1;
+        }
+        return 0;
+      }
+      if (neighbor === 3) {
+        return 1;
+      }
+      return 0;
     }
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        backBuffer[x][y] = hasInfectiousNeighbor(x, y);
+      }
+    }
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }
 
