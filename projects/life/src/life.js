@@ -54,13 +54,23 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+    for (let y = 0; y < this.height; y++) {
+      this.buffer[this.currentBufferIndex][y].fill(0);
+    }
   }
   
   /**
    * Randomize the life grid
    */
-  randomize() {
+  randomize(stat) {
     // !!!! IMPLEMENT ME !!!!
+    let buffer = this.buffer[this.currentBufferIndex];
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        buffer[x][y] = Math.random() > 1 - stat ? 1 : 0;
+      }
+    }
   }
 
   /**
