@@ -78,6 +78,54 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    let backBuffer = this.buffer[backBufferIndex];
+    let currentBuffer = this.buffer[this.currentBufferIndex];
+
+    //Check for infectious neighbors
+    const hasInfectiousNeighbor = (x, y) => {
+      const nextValue = currentBuffer[x][y];
+      let neighbor = 0;
+
+      //WEST
+      if (x > 0) {
+        if (currentBuffer[y][x - 1] === 1) {
+          neighbor++;
+        }
+      }
+      //NORTH
+      if (y > 0) {
+        if (currentBuffer[y - 1][x] === 1) {
+          neighbor++;
+        }
+      }
+      //EAST
+      if (x < this.width - 1) {
+        if (currentBuffer[y][x + 1] === 1) {
+          neighbor++;
+        }
+      }
+      //SOUTH
+      if (y < this.height - 1) {
+        if (currentBuffer[y + 1][x] === 1) {
+          neighbor++;
+        }
+      }
+      //NORTHWEST
+      if (x > 0 && y > 0) {
+        if (currentBuffer[y - 1][x - 1] === 1) {
+          neighbor++;
+        }
+      }
+      //NORTHEAST
+      if (x < this.width - 1 && y > 0) {
+        if (currentBuffer[y - 1][x + 1] === 1) {
+          neighbor++;
+        }
+      }
+      //SOUTHEAST
+      //SOUTHWEST
+    }
   }
 }
 
