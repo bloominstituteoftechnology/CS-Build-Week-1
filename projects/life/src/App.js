@@ -33,8 +33,14 @@ class LifeCanvas extends Component {
     //
 
     // Request another animation frame
+    let width = this.props.width;
+    let height = this.props.height;
+
     // Update life and get cells
+    let cells = this.life.getCells();
+
     // Get canvas framebuffer, a packed RGBA array
+    
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
