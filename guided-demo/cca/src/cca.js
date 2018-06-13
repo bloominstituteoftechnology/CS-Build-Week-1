@@ -91,19 +91,19 @@ class CCA {
       }
       // North
       if (height > 0) {
-        if (currentBuffer[height -1][width] === nextValue) {
+        if (currentBuffer[height - 1][width] === nextValue) {
           return true;
         }
       }
       // East
-      if (width < this.width -1) {
-        if (currentBuffer[height][width + 1] === nextValue) {
+      if (width < this.width - 1) {
+        if (currentBuffer[height][width + 5] === nextValue) {
           return true;
         }
       }
       // South
       if (height < this.height - 1) {
-        if (currentBuffer[height + 1][width] === nextValue) {
+        if (currentBuffer[height + 1][width + 3] === nextValue) {
           return true;
         }
       }
