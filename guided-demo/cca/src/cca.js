@@ -71,7 +71,7 @@ class CCA {
 
     function hasInfectiousNeighbor(height, width) {
       // console.log("Inside Has infection:", currentBuffer);
-      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
+      const nextValue = (currentBuffer[height][width] + 3) % MODULO;
       //West
       if (width > 0) {
         if (currentBuffer[height][width - 1] === nextValue) {
@@ -97,13 +97,35 @@ class CCA {
           return true;
         }
       }
+      //Southwest
+      if (height < this.height - 1 && width > 0) {
+        if (currentBuffer[height + 1][width - 1] === nextValue) {
+          return true;
+        }
+      }
+      //Southeast
+      if (height < this.height - 1 && width > this.width - 1) {
+        if (currentBuffer[height + 1][width + 1] === nextValue) {
+          return true;
+        }
+      }
+      if (height < this.height - 1) {
+        if (currentBuffer[height + 1][width] === nextValue) {
+          return true;
+        }
+      }
+      if (height < this.height - 1) {
+        if (currentBuffer[height + 1][width] === nextValue) {
+          return true;
+        }
+      }
     }
 
     for (let height = 0; height < this.height; height++) {
       for (let width = 0; width < this.width; width++) {
         if (hasInfectiousNeighbor.call(this, height, width)) {
           backBuffer[height][width] =
-            (currentBuffer[height][width] + 1) % MODULO;
+            (currentBuffer[height][width] + 3) % MODULO;
         } else {
           backBuffer[height][width] = currentBuffer[height][width];
         }

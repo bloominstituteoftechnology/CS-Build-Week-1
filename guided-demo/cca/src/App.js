@@ -62,7 +62,12 @@ class CCACanvas extends Component {
 
     console.log("Screenbuffer in animFrame", screenBuffer);
     ctx.putImageData(imageData, 0, 0);
-    this.cca.step();
+    setInterval(() => {
+      this.cca.step();
+      requestAnimationFrame(() => {
+        this.animFrame();
+      });
+    }, 1000);
   }
 
   /**
