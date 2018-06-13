@@ -30,6 +30,13 @@ class CCA {
     this.width = width;
     this.height = height;
 
+    this.currentBufferIndex = 0;
+
+    this.buffer = [
+      Array2D(width, height),
+      Array2D(width, height)
+    ]
+
     this.clear();
   }
 
@@ -39,18 +46,23 @@ class CCA {
    * This should NOT be modified by the caller
    */
   getCells() {
+    return this.buffer[this.currentBufferIndex]
   }
 
   /**
    * Clear the cca grid
    */
   clear() {
+    for(let y = 0; y < this.height; y++) {
+      this.buffer[this.currentBufferIndex][y].fill(0);
+    }
   }
 
   /**
    * Randomize the cca grid
    */
   randomize() {
+    const buffer = this.buffer[this.currentBufferIndex]
   }
 
   /**
