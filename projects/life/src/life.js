@@ -61,7 +61,7 @@ class Life {
     for (let height = 0; height < this.height; height++) {
       for (let width = 0; width < this.width; width++) {
         this.cells[this.currentBufferIndex][height][width] =
-          Math.random() > 0.95 ? 1 : 0;
+          Math.random() > 0.6 ? 1 : 0;
       }
     }
   }

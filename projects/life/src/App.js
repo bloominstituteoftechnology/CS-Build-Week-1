@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Life from "./life";
 import "./App.css";
 
-const canvasWidth = 100;
-const canvasHeight = 50;
+const canvasWidth = 600;
+const canvasHeight = 400;
 /**
  * Life canvas
  */
