@@ -5,6 +5,8 @@
 /**
  * Make a 2D array helper function
  */
+const MODULO = 8;
+
 function Array2D(width, height) {
   //NOTE:  Iterate through Array2D row first then column
   let a = new Array(height);

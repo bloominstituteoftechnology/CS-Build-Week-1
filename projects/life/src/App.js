@@ -53,9 +53,9 @@ class CCACanvas extends Component {
         let index = (height * canvasWidth + width) * 4;
         let ccaStatus = cells[height][width];
 
-        screenBuffer[index + 0] = COLORS[ccaStatus][0];
-        screenBuffer[index + 1] = COLORS[ccaStatus][1];
-        screenBuffer[index + 2] = COLORS[ccaStatus][2];
+        screenBuffer[index + 0] = COLORS[0];
+        screenBuffer[index + 1] = COLORS[1];
+        screenBuffer[index + 2] = COLORS[2];
         screenBuffer[index + 3] = 255;
       }
     }
@@ -106,7 +106,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <LifeApp />
+        <CCAApp />
       </div>
     );
   }
