@@ -127,18 +127,6 @@ class Life {
           neighbor++;
         }
       }
-
-      //   if (nextValue === 1) {
-      //     if (neighbor === 2 || neighbor === 3) {
-      //       return 1;
-      //     }
-      //     return 0;
-      //   }
-
-      //   if (neighbor === 3) {
-      //     return 1;
-      //   }
-      //   return 0;
     }
 
     for (let h = 0; h < this.height; h++) {
