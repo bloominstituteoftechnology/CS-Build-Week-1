@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import CCA from './cca';
 import './App.css';
 
+const canvasWidth = 400;
+const canvasHeight = 300;
+
 const COLORS = [
   [0, 0, 0],
   [0x8f, 0, 0x5f],
@@ -12,8 +15,6 @@ const COLORS = [
   [0x8f, 0xff, 0x7f],
   [0xff, 0x5f, 0x7f]
 ];
-const canvasWidth = 700;
-const canvasHeight = 350;
 
 /**
  * CCA canvas
@@ -32,7 +33,9 @@ class CCACanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
-    this.animFrame();
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
@@ -44,32 +47,44 @@ class CCACanvas extends Component {
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
+    let cells = this.cca.getCells();
     // Here is the screen buffer array we can
 
     let screenBuffer = imageData.data;
-    console.log('screenBuffer in animFrame: ', screenBuffer);
 
-    for (let i = 0; i < 1000; i++) {
-      screenBuffer[i] = 0; // R
-      screenBuffer[i + 1] = 0; // G
-      screenBuffer[i + 2] = 0; // B
-      screenBuffer[i + 3] = 0; // A
-      screenBuffer[i + 4] = 255;
+    // for (let i = 0; i < 1000; i += 4) {
+    //   screenBuffer[i + 0] = 0; // R
+    //   screenBuffer[i + 1] = 0; // G
+    //   screenBuffer[i + 2] = 0; // B
+    //   screenBuffer[i + 3] = 255; // A
+    // }
+
+    for (let height = 0; height < canvasHeight; height++) {
+      for (let width = 0; width < canvasWidth; width++) {
+        //convert xy to index
+        const index = (height * canvasWidth + width) * 4; // should be taking and converting our xy grid into that 123412341234...????
+
+        const ccaStatus = cells[height][width];
+
+        // change pixels at index to match ccaStatus
+        screenBuffer[index + 0] = COLORS[ccaStatus][0]; // R
+        screenBuffer[index + 1] = COLORS[ccaStatus][1]; // G
+        screenBuffer[index + 2] = COLORS[ccaStatus][2]; // B
+        screenBuffer[index + 3] = 255; // A
+      }
     }
 
+    console.log('screenBuffer in animFrame: ', screenBuffer);
+
     ctx.putImageData(imageData, 0, 0);
+
+    this.cca.step();
   }
   /**
    * Render
    */
   render() {
-    return (
-      <canvas
-        ref="canvas"
-        width={this.props.width}
-        height={this.props.height}
-      />
-    );
+    return <canvas ref="canvas" width={canvasWidth} height={canvasHeight} />;
   }
 }
 
