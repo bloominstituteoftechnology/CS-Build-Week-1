@@ -45,7 +45,7 @@ class CCACanvas extends Component {
     let canvas=this.refs.canvas;
     let ctx= canvas.getContext('2d');
 
-    let imageData=ctx.getImageData(0, 0, canvas.width. canvas.height);
+    let imageData=ctx.getImageData(0, 0, canvas.width, canvas.height);
    let cells =this.cca.getCells();
    //
     let screenBuffer=imageData.data;

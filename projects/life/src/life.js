@@ -26,6 +26,16 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+
+  this.currentBufferIndex=0;
+  this.cells= [Array2D(width, height), Array2D(width, height)];
+  
+  this.randomize();
+
+    this.clear();
+
   }
   
   /**

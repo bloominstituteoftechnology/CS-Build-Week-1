@@ -15,6 +15,7 @@ class LifeCanvas extends Component {
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+    this.life = new Life(300, 300);
   }
 
   /**
@@ -38,6 +39,19 @@ class LifeCanvas extends Component {
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
+  
+
+
+
+   // let canvas=this.refs.canvas;
+    //let ctx= canvas.getContext('2d');
+
+    //let imageData=ctx.getImageData(0, 0, canvas.width, canvas.height);
+  // let cells =this.cca.getCells();
+   //
+  
+  //let screenBuffer=imageData.data;
+  
   }
 
   /**

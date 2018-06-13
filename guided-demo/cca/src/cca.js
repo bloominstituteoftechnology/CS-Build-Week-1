@@ -1,7 +1,7 @@
 /**
  * Implemention of a CCA
  */
-export default CCA;
+
 const MODULO = 8;
 
 /**
@@ -115,3 +115,6 @@ if(hasInfectiousNeighbor.call(this, this.h, this.w)){
   backbuffer[height][width] =currentBuffer[height][width];
 }
 this.currentBufferIndex=this.currentBufferIndex=== 0 ? 1: 0;
+}
+}
+export default CCA;
