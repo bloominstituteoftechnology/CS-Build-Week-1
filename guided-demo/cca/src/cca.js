@@ -91,6 +91,13 @@ class CCA {
           return true;
         }
       }
+
+      // East 
+      if (width < this.width - 1){
+        if (currentBuffer[height][width + 1] === nextValue) {
+          return true;
+        }
+      }
     }
     for (let h = 0; h < this.height; h++) {
       for (let w = 0; w < this.width; w++) {
