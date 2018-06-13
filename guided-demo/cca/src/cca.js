@@ -30,7 +30,11 @@ class CCA {
     this.width = width;
     this.height = height;
 
-    this.cells = Array2D(width, height);
+    this.cells = [
+      Array2D(width, height),
+      Array2D(width, height)
+    ];
+    this.currentBufferIndex = 0;
     this.randomize();
 
     console.log('cells array', this.cells);
@@ -68,7 +72,54 @@ class CCA {
    * Run the simulation for a single step
    */
   step() {
+    let currentBuffer = this.cells[this.currentBufferIndex];
+    let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
+    // console.log('current', currentBuffer);
+    // console.log('back', backBuffer);
+    // see if we have neibor that can infect cell
+    function hasInfectiousNeighbor(height, width) {
+      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
+      // - 0 -
+      // 0 X 0
+      // - 0 -
 
+      // left
+      if (width > 0) {
+        if (currentBuffer[height][width - 1] === nextValue) {
+          return true;
+        }
+      }
+      // up
+      if (height > 0) {
+        if (currentBuffer[height - 1][width] === nextValue) {
+          return true;
+        }
+      }
+      // right
+      if (width < this.width - 1) {
+        if (currentBuffer[height][width + 1] === nextValue) {
+          return true;
+        }
+      }
+      // down
+      if (height < this.height - 1) {
+        if (currentBuffer[height + 1][width] === nextValue) {
+          return true;
+        }
+      }
+    }
+
+    for (let height = 0; height < this.height; height++) {
+      for (let width = 0; width < this.width; width++) {
+        if (hasInfectiousNeighbor.call(this, height, width)) {
+          backBuffer[height][width] = (currentBuffer[height][width] + 1) % MODULO;
+        } else {
+          backBuffer[height][width] = currentBuffer[height][width];
+        }
+      }
+    }
+
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }
 
