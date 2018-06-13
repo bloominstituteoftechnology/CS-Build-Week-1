@@ -34,8 +34,6 @@ class Life {
 
     this.currentBufferIndex = 0;
 
-    this.randomize();
-
     this.clear();
   }
 
@@ -54,6 +52,9 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
+    for (let row = 0; row < this.height; row++) {
+      this.cells[this.currentBufferIndex][row].fill(0);
+    }
   }
 
   /**
@@ -74,6 +75,8 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+
+    let backBufferIndex = this;
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
 
@@ -100,7 +103,7 @@ class Life {
       }
       // East
       if (width < this.width - 1) {
-        if (currentBuffer[height][width + 1] === Math.sin(nextValue)) {
+        if (currentBuffer[height][width + 1] === nextValue) {
           return true;
         }
       }
@@ -114,7 +117,7 @@ class Life {
 
     for (let h = 0; h < this.height; h++) {
       for (let w = 0; w < this.width; w++) {
-        if (hasInfectiousNeighbor(this, h, w)) {
+        if (hasInfectiousNeighbor.call(this, h, w)) {
           backBuffer[h][w] = (currentBuffer[h][w] + 1) % MODULO;
         } else {
           backBuffer[h][w] = currentBuffer[h][w];

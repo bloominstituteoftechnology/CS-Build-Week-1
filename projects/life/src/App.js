@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
-const canvasWidth = 800;
-const canvasHeight = 600;
+const canvasWidth = 600;
+const canvasHeight = 400;
 
 const COLORS = [[0x00, 0x00, 0x00], [0xff, 0xff, 0xff]];
 
@@ -50,6 +50,7 @@ class LifeCanvas extends Component {
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let cells = this.life.getCells();
     // Here is the screen buffer array we can manipulate:
+    console.log(canvas.width, canvas.height);
 
     let screenBuffer = imageData.data;
 
@@ -101,7 +102,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={canvasWidth} height={canvasHeight} />
       </div>
     );
   }
