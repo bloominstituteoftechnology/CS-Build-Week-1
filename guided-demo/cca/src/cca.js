@@ -9,15 +9,15 @@ const MODULO = 8;
  */
 function Array2D(width, height) {
   //NOTE:  Iterate through Array2D row first then column
-	let a = new Array(height);
-  
-	for (let i = 0; i < height; i++) {
-	  a[i] = new Array(width);
-	}
-  
-	return a;
+  let a = new Array(height);
+
+  for (let i = 0; i < height; i++) {
+    a[i] = new Array(width);
+  }
+
+  return a;
 }
-  
+
 /**
  * CCA class
  */
@@ -30,6 +30,11 @@ class CCA {
     this.width = width;
     this.height = height;
 
+    this.cells = Array2D(width, height);
+    this.randomize();
+
+    console.log('cells array', this.cells);
+
     this.clear();
   }
 
@@ -39,6 +44,7 @@ class CCA {
    * This should NOT be modified by the caller
    */
   getCells() {
+    return this.cells[this.currentBufferIndex];
   }
 
   /**
@@ -51,12 +57,18 @@ class CCA {
    * Randomize the cca grid
    */
   randomize() {
+    for (let height = 0; height < this.height; height++) {
+      for (let width = 0; width < this.width; width++) {
+        this.cells[this.currentBufferIndex][height][width] = (Math.random() * MODULO) | 0;
+      }
+    }
   }
 
   /**
    * Run the simulation for a single step
    */
   step() {
+
   }
 }
 
