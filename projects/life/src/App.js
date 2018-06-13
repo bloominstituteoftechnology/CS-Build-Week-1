@@ -38,6 +38,12 @@ class LifeCanvas extends Component {
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
+
+    let width = this.props.width;
+    let height = this.props.height;
+
+    let cells = this.life.getCells();
+
   }
 
   /**
