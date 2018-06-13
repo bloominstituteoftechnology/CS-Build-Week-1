@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Life from "./life";
 import "./App.css";
 
-const canvasWidth = 600;
-const canvasHeight = 400;
+const canvasWidth = 100;
+const canvasHeight = 50;
 /**
  * Life canvas
  */
@@ -15,7 +15,7 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(props.width, props.height);
-    this.life.randomize();
+    // this.life.randomize();
   }
 
   /**
@@ -56,7 +56,7 @@ class LifeCanvas extends Component {
           screenBuffer[index + 1] = 255;
           screenBuffer[index + 2] = 255;
           screenBuffer[index + 3] = 255;
-        } else {
+        } else if (cells[height][width] === 1) {
           screenBuffer[index + 0] = 0;
           screenBuffer[index + 1] = 0;
           screenBuffer[index + 2] = 0;
@@ -67,12 +67,13 @@ class LifeCanvas extends Component {
 
     // console.log("Screenbuffer in animFrame", screenBuffer);
     ctx.putImageData(imageData, 0, 0);
+
+    this.life.step();
     setInterval(() => {
-      this.life.step();
       requestAnimationFrame(() => {
         this.animFrame();
       });
-    }, 10);
+    }, 1000);
   }
 
   /**

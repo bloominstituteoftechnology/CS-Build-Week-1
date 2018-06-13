@@ -60,9 +60,8 @@ class Life {
     // !!!! IMPLEMENT ME !!!!
     for (let height = 0; height < this.height; height++) {
       for (let width = 0; width < this.width; width++) {
-        this.cells[this.currentBufferIndex][height][width] = Math.round(
-          Math.random()
-        );
+        this.cells[this.currentBufferIndex][height][width] =
+          Math.random() > 0.95 ? 1 : 0;
       }
     }
   }
@@ -137,13 +136,18 @@ class Life {
             backBuffer[height][width] = 1;
             break;
           case 3:
-            backBuffer[height][width] = 0;
+            backBuffer[height][width] = 1;
             break;
           default:
             backBuffer[height][width] = 0;
         }
-      } else if (aliveNeighbors === 3) {
+      } else if (
+        (currentBuffer[height][width] === 0) &
+        (aliveNeighbors === 3)
+      ) {
         backBuffer[height][width] = 1;
+      } else {
+        backBuffer[height][width] = currentBuffer[height][width];
       }
     }
     for (let height = 0; height < this.height; height++) {
@@ -151,6 +155,7 @@ class Life {
         isAlive.call(this, height, width);
       }
     }
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }
 
