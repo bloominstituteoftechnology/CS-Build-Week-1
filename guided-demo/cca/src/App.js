@@ -33,7 +33,9 @@ class CCACanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
-    this.animFrame();
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
@@ -66,12 +68,13 @@ class CCACanvas extends Component {
       }
     }
 
-    console.log('screenBuffer in animFrame: ', screenBuffer);
-
     ctx.putImageData(imageData, 0, 0);
 
     // step the sim forward
     this.cca.step();
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**

@@ -81,10 +81,37 @@ class CCA {
         }
       }
       //north
-      if (currentBuffer[height - 1][width] === nextValue) {
-        return true;
+      if (height > 0) {
+        if (currentBuffer[height - 1][width] === nextValue) {
+          return true;
+        }
+      }
+      //east
+      if (width < this.width - 1) {
+        if (currentBuffer[height][width + 1] === nextValue) {
+          return true;
+        }
+      }
+      //south
+      if (height < this.height - 1) {
+        if (currentBuffer[height + 1][width] === nextValue) {
+          return true;
+        }
       }
     }
+
+    for (let height = 0; height < this.height; height++) {
+      for (let width = 0; width < this.width; width++) {
+        if (hasInfectiousNeighbor.call(this, height, width)) {
+          backBuffer[height][width] =
+            (currentBuffer[height][width] + 1) % MODULO;
+        } else {
+          backBuffer[height][width] = currentBuffer[height][width];
+        }
+      }
+    }
+
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }
 
