@@ -29,7 +29,8 @@ class CCA {
     this.width = width;
     this.height = height;
 
-    this.cells = Array2D(width, height);
+    this.cells = [Array2D(width, height), Array2D(width, height)];
+    this.currentBufferIndex = 0;
     this.randomize();
     this.clear();
   }
@@ -40,13 +41,13 @@ class CCA {
    * This should NOT be modified by the caller
    */
   getCells() {
-    return this.cells;
+    return this.cells[this.currentBufferIndex];
   }
 
   /**
    * Clear the cca grid
    */
-  clear() {}
+  clear() { }
 
   /**
    * Randomize the cca grid
@@ -54,7 +55,7 @@ class CCA {
   randomize() {
     for (let height = 0; height < this.height; height++) {
       for (let width = 0; width < this.width; width++) {
-        this.cells[height][width] = (Math.random() * MODULO) | 0;
+        this.cells[this.currentBufferIndex][height][width] = (Math.random() * MODULO) | 0;
       }
     }
   }
@@ -62,7 +63,22 @@ class CCA {
   /**
    * Run the simulation for a single step
    */
-  step() {}
+  step() {
+    let currentBuffer = this.cells[this.currentBufferIndex];
+    let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
+
+    function hasInfectiousNeighbor(height, width) {
+      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
+
+      if(width > 0) {
+        if(currentBuffer[height-1][width] === nextValue) {
+          return true
+        }
+      }
+
+    
+    }
+  }
 }
 
 export default CCA;
