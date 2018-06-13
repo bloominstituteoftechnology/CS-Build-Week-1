@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import CCA from './cca';
 import './App.css';
 
-const canvasWidth = 400;
-const canvasHeight = 300;
+const canvasWidth = 800;
+const canvasHeight = 600;
 
 const COLORS = [
   [0, 0, 0],
@@ -74,11 +74,12 @@ class CCACanvas extends Component {
       }
     }
 
-    console.log('screenBuffer in animFrame: ', screenBuffer);
+    // console.log('screenBuffer in animFrame: ', screenBuffer);
 
     ctx.putImageData(imageData, 0, 0);
 
     this.cca.step();
+    requestAnimationFrame(() => this.animFrame());
   }
   /**
    * Render

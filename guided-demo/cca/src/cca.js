@@ -89,40 +89,27 @@ class CCA {
       // See visual rep below:
       // We are not interested in comparing X with diagonal values, only cardinal values.
 
-      // West
-      // -0-
-      // .X0
-      // -0-
+      // WEST
       if (width > 0) {
         if (currentBuffer[height][width - 1] === nextValue) {
           return true;
         }
       }
-      // North
-      // -.-
-      // 0X0
-      // -0-
+      // NORTH
       if (height > 0) {
-        if ((currentBuffer[height - 1][width] = nextValue)) {
+        if (currentBuffer[height - 1][width] === nextValue) {
           return true;
         }
       }
-      // South
-      // -0-
-      // 0X0
-      // -.-
-      if (height < this.height - 1) {
-        if ((currentBuffer[height + 1][width] = nextValue)) {
-          return true;
-        }
-      }
-
-      // East
-      // -0-
-      // 0X.
-      // -0-
+      // EAST
       if (width < this.width - 1) {
-        if ((currentBuffer[height][width + 1] = nextValue)) {
+        if (currentBuffer[height][width + 1] === nextValue) {
+          return true;
+        }
+      }
+      // SOUTH
+      if (height < this.height - 1) {
+        if (currentBuffer[height + 1][width] === nextValue) {
           return true;
         }
       }
