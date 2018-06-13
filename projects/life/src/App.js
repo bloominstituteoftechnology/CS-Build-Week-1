@@ -28,20 +28,23 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
-    //
-    // !!!! IMPLEMENT ME !!!!
-    //
-    // let canvas = this.refs.canvas;
-    // let ctx = canvas.getContext('2d');
-    // requestAnimationFrame(() => {this.animFrame()});
 
-    // let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    // let cells = this.life.getCells();
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let cells = this.life.getCells();
 
     // // get framebuffer / convert to black/white
+    
+    let frameBuffer = imageData.data;
 
+    for (let height = 0; height < this.props.height; height++) {
+      for (let width = 0; width < this.props.width; width++) {
+        let
+      }
+    }
 
-    // ctx.putImageData(imageData, 0, 0);
 
     // this.life.step();
     // Request another animation frame
@@ -50,6 +53,11 @@ class LifeCanvas extends Component {
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
+
+    ctx.putImageData(imageData, 0, 0);
+
+    this.life.step();
+    requestAnimationFrame(() => {this.animFrame()});
   }
 
   /**
