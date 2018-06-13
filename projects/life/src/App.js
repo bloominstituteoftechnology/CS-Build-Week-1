@@ -3,6 +3,7 @@ import Life from './life';
 import './App.css';
 
 /**
+ * // WIP
  * Life canvas
  */
 class LifeCanvas extends Component {
