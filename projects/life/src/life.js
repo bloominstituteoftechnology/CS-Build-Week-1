@@ -1,5 +1,5 @@
 /**
- * Implementation of Conway's game of Life
+ * Implemention of Conway's game of Life
  */
 
 /**
@@ -25,7 +25,18 @@ class Life {
    * Constructor
    */
   constructor(width, height) {
-    // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+
+    this.currentBufferIndex = 0;
+
+    // Allocate the double buffer
+    this.buffer = [
+      Array2D(width, height),
+      Array2D(width, height)
+    ];
+    
+    this.clear();
   }
   
   /**
@@ -34,29 +45,35 @@ class Life {
    * This should NOT be modified by the caller
    */
   getCells() {
-    // !!!! IMPLEMENT ME !!!!
+    return this.buffer[this.currentBufferIndex];
   }
 
   /**
    * Clear the life grid
    */
   clear() {
-    // !!!! IMPLEMENT ME !!!!
+    for (let row = 0; row < this.height; row++) {
+      this.buffer[this.currentBufferIndex][row].fill(0);
+    }
   }
   
   /**
    * Randomize the life grid
    */
   randomize() {
-    // !!!! IMPLEMENT ME !!!!
+    let buffer = this.buffer[this.currentBufferIndex];
+
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        buffer[row][col] = (Math.random()*2)|0; // Random 0 or 1
+      }
+    }
   }
 
   /**
    * Run the simulation for a single step
    */
-  step() {
-    // !!!! IMPLEMENT ME !!!!
-  }
+  
 }
 
 export default Life;
