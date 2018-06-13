@@ -2,13 +2,8 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
-const canvasWidth = 400;
-const canvasHeight = 300;
-
-const COLORS = [
-  [0x00, 0x00, 0x00], // Black
-  [0xff, 0xff, 0xff], // White
-];
+const canvasWidth = 600;
+const canvasHeight = 400;
 
 /**
  * Life canvas
@@ -50,20 +45,23 @@ class LifeCanvas extends Component {
     let ctx = canvas.getContext('2d');
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let cells = this.life.getCells();
-    let height = this.props.height;
-    let width = this.props.width;
     let buffer = imageData.data;
 
-    for (let h = 0; h < height; h++) {
-      for (let w = 0; w < width; w++) {
-        let index = (h * width + w) * 4;
+    for (let h = 0; h < canvasHeight; h++) {
+      for (let w = 0; w < canvasWidth; w++) {
+        let index = (h * canvasWidth + w) * 4;
 
-        let lifeStatus = cells[h][w];
-
-        buffer[index + 0] = COLORS[lifeStatus][0];
-        buffer[index + 1] = COLORS[lifeStatus][1];
-        buffer[index + 2] = COLORS[lifeStatus][2];
-        buffer[index + 3] = 255;
+        if (cells[h][w] === 0) {
+          buffer[index + 0] = 255;
+          buffer[index + 1] = 255;
+          buffer[index + 2] = 255;
+          buffer[index + 3] = 255;
+        } else if (cells[h][w] === 1) {
+          buffer[index + 0] = 0;
+          buffer[index + 1] = 0;
+          buffer[index + 2] = 0;
+          buffer[index + 3] = 255;
+        }
       }
     }
 
@@ -99,7 +97,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={this.props.width} height={this.props.height} />
+        <LifeCanvas width={canvasWidth} height={canvasHeight} />
       </div>
     );
   }

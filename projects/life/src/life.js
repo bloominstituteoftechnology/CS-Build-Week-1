@@ -32,7 +32,7 @@ class Life {
 
     this.currentBufferIndex = 0;
 
-    this.randomize();
+    // this.randomize();
 
     this.clear();
   }
@@ -76,56 +76,56 @@ class Life {
     let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
 
     function deadOrAlive(height, width) {
-      const nextValue = (currentBuffer[height][width] + 1) % 2;
       let counter = 0;
       // North
       if (height > 0) {
-        if (currentBuffer[height - 1][width] === nextValue) {
+        if (currentBuffer[height - 1][width] === 1) {
           counter++;
         }
       }
       //NE
       if (height > 0 && width < this.width - 1) {
-        if (currentBuffer[height - 1][width + 1] === nextValue) {
+        if (currentBuffer[height - 1][width + 1] === 1) {
           counter++;
         }
       }
       // NW
       if (height > 0 && width > 0) {
-        if (currentBuffer[height - 1][width - 1] === nextValue) {
+        if (currentBuffer[height - 1][width - 1] === 1) {
           counter++;
         }
       }
       // South
       if (height < this.height - 1) {
-        if (currentBuffer[height + 1][width] === nextValue) {
+        if (currentBuffer[height + 1][width] === 1) {
           counter++;
         }
       }
       //Southwest
       if (height < this.height - 1 && width > 0) {
-        if (currentBuffer[height + 1][width - 1] === nextValue) {
+        if (currentBuffer[height + 1][width - 1] === 1) {
           counter++;
         }
       }
       //Southeast
       if (height < this.height - 1 && width > this.width - 1) {
-        if (currentBuffer[height + 1][width + 1] === nextValue) {
+        if (currentBuffer[height + 1][width + 1] === 1) {
           counter++;
         }
       }
       // East
       if (width < this.width - 1) {
-        if (currentBuffer[height][width + 1] === nextValue) {
+        if (currentBuffer[height][width + 1] === 1) {
           counter++;
         }
       }
       // West
       if (width > 0) {
-        if (currentBuffer[height][width - 1] === nextValue) {
+        if (currentBuffer[height][width - 1] === 1) {
           counter++;
         }
       }
+      return counter;
     }
 
     for (let h = 0; h < this.height; h++) {
