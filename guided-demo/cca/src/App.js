@@ -26,6 +26,8 @@ class CCACanvas extends Component {
    */
   constructor(props) {
     super(props);
+
+    this.cca = new CCA(canvasWidth, canvasHeight);
   }
 
   /**
@@ -43,18 +45,29 @@ class CCACanvas extends Component {
     let ctx = canvas.getContext('2d');
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let cells = this.cca.getCells();
 
     // Here is the screen buffer array we can manipulate
     let screenBuffer = imageData.data;
     
-    for(let i = 0; i < 1000; i+=4) {
-      screenBuffer[i + 0] = 0;
-      screenBuffer[i + 1] = 0;
-      screenBuffer[i + 2] = 0;
-      screenBuffer[i + 3] = 255;
+    for(let height = 0; height < canvasHeight; height++) {
+      for(let width = 0; width < canvasWidth; width++) {
+        // convert xy to index
+        let index = (height * canvasWidth + width) * 4;
+
+        let ccaStatus = cells[height][width];
+
+        // change pixels at index to match ccaStatus
+        screenBuffer[index + 0] = COLORS[ccaStatus][0];
+        screenBuffer[index + 1] = COLORS[ccaStatus][1];
+        screenBuffer[index + 2] = COLORS[ccaStatus][2];
+        screenBuffer[index + 3] = 255;
+      }
     }
-    
-    console.log('screenBuffer in animFrand: ', screenBuffer);
+
+    // console.log('screenBuffer in animFrand: ', screenBuffer);
+
+    ctx.putImageData(imageData, 0, 0);
   }
 
   /**
