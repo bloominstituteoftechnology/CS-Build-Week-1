@@ -95,14 +95,14 @@ class Life {
         }
       }
 
-      // N
+      // Check N
       if (height > 0) {
         if (currentBuffer[height - 1][width] === 1) {
           neighborCount++;
         }
       }
       
-      // NE
+      // Check NE
       if (height > 0) {
         if (width < this.width - 1) {
           if (currentBuffer[height - 1][width + 1] === 1) {
@@ -111,21 +111,21 @@ class Life {
         }
       }
 
-      // W
+      // Check W
       if (width > 0) {
         if (currentBuffer[height][width - 1] === 1) {
           neighborCount++;
         }
       }
 
-      // E
+      // Check E
       if (width < this.width - 1) {
         if (currentBuffer[height][width + 1] === 1) {
           neighborCount++;
         }
       }
 
-      // SW
+      // Check SW
       if (height < this.height - 1) {
         if (width > 0) {
           if (currentBuffer[height + 1][width - 1] === 1) {
@@ -134,14 +134,14 @@ class Life {
         }
       }
 
-      // S
+      // Check S
       if (height < this.height - 1) {
         if (currentBuffer[height + 1][width] === 1) {
           neighborCount++;
         }
       }
       
-      // SE
+      // Check SE
       if (height < this.height - 1) {
         if (width < this.width - 1) {
           if (currentBuffer[height + 1][width + 1] === 1) {
@@ -159,7 +159,7 @@ class Life {
         let lifeState = this.cells[this.currentBufferIndex][height][width];
         let neighborCount = countNeighbors.call(this, height, width);
         // handle living cells based on number of neighbors
-        if (lifeState = 1) {
+        if (lifeState === 1) {
           if (neighborCount < 2) {
             // dies of loneliness
             backBuffer[height][width] = 0;
@@ -172,9 +172,11 @@ class Life {
           }
         } else {
           // handle dead cells based on number of neighbors
-          if (neighborCount = 3) {
-          // new cell is born
-          backBuffer[height][width] = 1;
+          if (neighborCount === 3) {
+            // new cell is born
+            backBuffer[height][width] = 1;
+          } else {
+            backBuffer[height][width] = 0;
           }
         }
       }
