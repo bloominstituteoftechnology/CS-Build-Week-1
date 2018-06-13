@@ -65,14 +65,14 @@ class LifeCanvas extends Component {
       }
     }
 
-    console.log("Screenbuffer in animFrame", screenBuffer);
+    // console.log("Screenbuffer in animFrame", screenBuffer);
     ctx.putImageData(imageData, 0, 0);
     setInterval(() => {
       this.life.step();
       requestAnimationFrame(() => {
         this.animFrame();
       });
-    }, 1000);
+    }, 10);
   }
 
   /**

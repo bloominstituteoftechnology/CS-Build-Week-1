@@ -28,8 +28,8 @@ class Life {
     this.width = width;
     this.height = height;
     this.cells = [
-      Array2d(this.width, this.height),
-      Array2d(this.width, this.height)
+      Array2D(this.width, this.height),
+      Array2D(this.width, this.height)
     ];
     this.currentBufferIndex = 0;
 
@@ -60,7 +60,9 @@ class Life {
     // !!!! IMPLEMENT ME !!!!
     for (let height = 0; height < this.height; height++) {
       for (let width = 0; width < this.width; width++) {
-        this.cells[this.currentBufferIndex][height][width] = Math.random() | 0;
+        this.cells[this.currentBufferIndex][height][width] = Math.round(
+          Math.random()
+        );
       }
     }
   }
@@ -142,6 +144,11 @@ class Life {
         }
       } else if (aliveNeighbors === 3) {
         backBuffer[height][width] = 1;
+      }
+    }
+    for (let height = 0; height < this.height; height++) {
+      for (let width = 0; width < this.width; width++) {
+        isAlive.call(this, height, width);
       }
     }
   }
