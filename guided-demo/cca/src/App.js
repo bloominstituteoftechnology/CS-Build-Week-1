@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import CCA from './cca';
 import './App.css';
 
+const canvasWidth = 400;
+const canvasHeight = 300;
+
 const COLORS = [
   [0, 0, 0],
   [0x8f, 0, 0x5f],
@@ -29,18 +32,36 @@ class CCACanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
+    this.animFrame();
   }
 
   /**
    * Handle an animation frame
    */
   animFrame() {
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    // Here is the screen buffer array we can manipulate
+    let screenBuffer = imageData.data;
+    
+    for(let i = 0; i < 1000; i+=4) {
+      screenBuffer[i + 0] = 0;
+      screenBuffer[i + 1] = 0;
+      screenBuffer[i + 2] = 0;
+      screenBuffer[i + 3] = 255;
+    }
+    
+    console.log('screenBuffer in animFrand: ', screenBuffer);
   }
 
   /**
    * Render
    */
   render() {
+    return <canvas ref="canvas" width={canvasWidth} height={canvasHeight}></ canvas>;
   }
 }
 
@@ -55,7 +76,7 @@ class CCAApp extends Component {
   render() {
     return (
       <div>
-        <CCACanvas width={400} height={300} />
+        <CCACanvas width={canvasWidth} height={canvasHeight} />
       </div>
     )
   }
