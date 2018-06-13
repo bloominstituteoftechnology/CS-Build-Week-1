@@ -31,7 +31,19 @@ class LifeCanvas extends Component {
     //
     // !!!! IMPLEMENT ME !!!!
     //
+    // let canvas = this.refs.canvas;
+    // let ctx = canvas.getContext('2d');
+    // requestAnimationFrame(() => {this.animFrame()});
 
+    // let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    // let cells = this.life.getCells();
+
+    // // get framebuffer / convert to black/white
+
+
+    // ctx.putImageData(imageData, 0, 0);
+
+    // this.life.step();
     // Request another animation frame
     // Update life and get cells
     // Get canvas framebuffer, a packed RGBA array
