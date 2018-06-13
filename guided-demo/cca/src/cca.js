@@ -30,6 +30,11 @@ class CCA {
     this.width = width;
     this.height = height;
 
+    this.cells = Array2D(width, height);
+    this.randomize();
+
+    console.log('cells array', this.cells);
+    
     this.clear();
   }
 
@@ -39,6 +44,7 @@ class CCA {
    * This should NOT be modified by the caller
    */
   getCells() {
+    return this.cells;
   }
 
   /**
@@ -51,6 +57,11 @@ class CCA {
    * Randomize the cca grid
    */
   randomize() {
+    for (let height = 0; height < this.height; height++) {
+      for (let width = 0; width < this.width; width++) {
+        this.cells[height][width] = (Math.random() * MODULO) | 0;
+      }
+    }
   }
 
   /**
