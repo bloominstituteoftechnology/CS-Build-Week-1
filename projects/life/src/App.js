@@ -14,6 +14,7 @@ class LifeCanvas extends Component {
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+    this.continueAnimaiton = true;
   }
 
   /**
@@ -23,6 +24,10 @@ class LifeCanvas extends Component {
     requestAnimationFrame(() => {
       this.animFrame();
     });
+  }
+
+  componentWillUnmount() {
+    this.continueAnimaiton = false;
   }
 
   /**
@@ -60,21 +65,53 @@ class LifeCanvas extends Component {
 
     ctx.putImageData(imageData, 0, 0);
     this.life.step();
-    requestAnimationFrame(() => {
-      this.animFrame();
-    });
+
+    if (this.continueAnimaiton) {
+      requestAnimationFrame(() => {
+        this.animFrame();
+      });
+    }
   }
+
+  handleStop = () => {
+    this.continueAnimaiton = false;
+  };
+
+  handleStart = () => {
+    this.continueAnimaiton = true;
+    this.animFrame();
+  };
+
+  handleClear = () => {
+    this.continueAnimaiton = false;
+    this.refs.canvas
+      .getContext('2d')
+      .clearRect(0, 0, this.props.width, this.props.height);
+    this.life.clear();
+  };
+
+  handleRandom = () => {
+    this.continueAnimaiton = true;
+    this.life.randomize();
+    this.animFrame();
+  };
 
   /**
    * Render
    */
   render() {
     return (
-      <canvas
-        ref="canvas"
-        width={this.props.width}
-        height={this.props.height}
-      />
+      <div>
+        <canvas
+          ref="canvas"
+          width={this.props.width}
+          height={this.props.height}
+        />
+        <button onClick={this.handleStop}>Pause</button>
+        <button onClick={this.handleStart}>Start</button>
+        <button onClick={this.handleClear}>Clear</button>
+        <button onClick={this.handleRandom}>Random</button>
+      </div>
     );
   }
 }
