@@ -30,6 +30,14 @@ class CCA {
     this.width = width;
     this.height = height;
 
+    this.cells = [
+      Array2D(width, height),
+      Array2D(width, height),
+    ];
+
+    this.currentBufferIndex = 0;
+
+    this.randomize();
     this.clear();
   }
 
@@ -39,6 +47,7 @@ class CCA {
    * This should NOT be modified by the caller
    */
   getCells() {
+    return this.cells[this.currentBufferIndex];
   }
 
   /**
@@ -51,12 +60,60 @@ class CCA {
    * Randomize the cca grid
    */
   randomize() {
+    for (let height = 0; height < this.height; height++) {
+      for (let width = 0; width < this.width; width++) {
+        this.cells[this.currentBufferIndex][height][width] = (Math.random() * MODULO ) | 0;
+      }
+    }
   }
 
   /**
    * Run the simulation for a single step
    */
   step() {
+    let currentBuffer = this.cells[this.currentBufferIndex];
+    let backBuffer = this.cells[this.currentBufferIndex === 0? 1: 0];
+
+    function hasInfectiousNeighbor(height, width) {
+      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
+      // WEST
+      if (width > 0) {
+        if (currentBuffer[height][width - 1] === nextValue) {
+          return true;
+        }
+      }
+      // NORTH
+      if (height > 0) {
+        if (currentBuffer[height - 1][width] === nextValue) {
+          return true;
+        }
+      }
+      // EAST
+      if (width < this.width - 1) {
+        if (currentBuffer[height][width + 1] === nextValue) {
+          return true;
+        }
+      }
+      // SOUTH
+      if (height < this.height - 1) {
+        if (currentBuffer[height + 1][width] === nextValue) {
+          return true;
+        }
+      }
+    }
+
+    for (let height = 0; height < this.height; height++) {
+      for (let width = 0; width < this.width; width++) {
+        if (hasInfectiousNeighbor.call(this, height, width)) {
+          backBuffer[height][width] = (currentBuffer[height][width] + 1) % MODULO;
+        } else {
+          backBuffer[height][width] = (currentBuffer[height][width]);
+        }
+      }
+    }
+
+    this.currentBufferIndex = this.currentBufferIndex === 0? 1: 0;
+
   }
 }
 

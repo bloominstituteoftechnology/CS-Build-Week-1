@@ -26,6 +26,16 @@ class Life {
    */
   constructor(width, height) {
     // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+
+    this.cells = [
+      Array2D(width, height),
+      Array2D(width, height),
+    ];
+    this.currentBufferIndex = 0;
+    this.randomize();
+    this.clear();
   }
   
   /**
@@ -35,6 +45,9 @@ class Life {
    */
   getCells() {
     // !!!! IMPLEMENT ME !!!!
+    return this.cells[this.currentBufferIndex];
+
+
   }
 
   /**
@@ -49,6 +62,12 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    for (let row = 0; row < this.height; row++) {
+      for (let column = 0; column < this.width; column++) {
+        this.cells[this.currentBufferIndex][row][column] = Math.random()*2 | 0;
+      }
+    }
+  
   }
 
   /**
@@ -56,6 +75,69 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+    let frontBuffer = this.cells[this.currentBufferIndex];
+    let backBuffer = this.cells[this.currentBufferIndex === 0 ?1:0];
+
+    function checkNeighbors(height, width) {
+      const inverse = frontBuffer[height][width] + 1;
+      // Checking West
+      if (width > 0) {
+        if (frontBuffer[height][width - 1] === inverse) {
+          return true;
+        }
+      }
+      // Checking NorthWest
+      if (height > 0 && width > 0) {
+        if (frontBuffer[height - 1][width - 1] === inverse) {
+          return true;
+        }
+      }
+      // Checking North
+      if (height > 0) {
+        if (frontBuffer[height - 1][width] === inverse) {
+          return true;
+        }
+      }
+      // Checking NorthEast
+      if (height > 0 && width < this.width - 1) {
+        if (frontBuffer[height - 1][width + 1] === inverse) {
+          return true;
+        }
+      }
+      // Checking East
+      if (width < this.width - 1) {
+        if (frontBuffer[height][width + 1] === inverse) {
+          return true;
+        }
+      }
+      // Checking SouthEast
+      if (height < this.height - 1 && width < this.width - 1) {
+        if (frontBuffer[height + 1][width + 1] === inverse) {
+          return true;
+        }
+      }
+      // Checking South
+      if (height < this.height - 1) {
+        if (frontBuffer[height + 1][width] === inverse) {
+          return true;
+        }
+      }
+      // Checking SouthWest
+      if (height < this.height - 1 && width > 0) {
+        if (frontBuffer[height + 1][width - 1] === inverse) {
+          return true;
+        }
+      }
+
+      for (let row = 0; row < this.height; row++) {
+        for (let column = 0; column < this.width; column++) {
+          if (checkNeighbors.call(this, height, width) {
+
+          })
+        }
+      }
+
+    }
   }
 }
 
