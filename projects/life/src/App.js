@@ -63,7 +63,7 @@ class LifeCanvas extends Component {
     ctx.putImageData(imageData, 0, 0);
     
     // Next generation of life
-    //this.life.step();
+    this.life.step();
 
     // Request another animation frame
     requestAnimationFrame(() => {this.animFrame()});
