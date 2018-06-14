@@ -1,5 +1,8 @@
 /**
  * Implementation of Conway's game of Life
+ * If you ever want to hear an explantion from brian again 
+ * just go to 42:00 in cs8 cellular automata video 
+ * 
  */
 const MODULO = 2;
 /**
@@ -68,40 +71,56 @@ class Life {
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1: 0];
 
-    function hasInfectedNeighbor(height, width) {
-      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
-      // WEST
-      if (width > 0) {
-        if (currentBuffer[height][width - 1] === nextValue) {
-          return true;
+    function countNeighbors(row,col) {
+      let neighborCount = 0;
+      
+      //Treat neighbors off the grid as dead cells. 
+      for (let rowOffset = -1; rowOffset <= 1; rowOffset++) {
+        let rowPos = row + rowOffset;
+
+        if (rowPos < 0 || rowPos === this.height) {
+          // Out of bounds
+          continue;
+        }
+
+        for (let colOffset = -1; colOffset <= 1; colOffset++) {
+          let colPos = col + colOffset;
+
+          if (colPos < 0 || colPos === this.width) {
+            // Out of bounds
+            continue;
+          }
+
+          // Don't count center element
+          if (colOffset === 0 && rowOffset === 0) {
+            continue;
+          }
+          if (currentBuffer[rowPos][colPos] === 1) {
+            neighborCount++;
+          }
         }
       }
-      // North
-      if (height > 0) {
-        if (currentBuffer[height - 1][width] === nextValue) {
-          return true;
-        }
-      }
-      // EAST
-      if (width < this.width - 1) {
-        if (currentBuffer[height][width + 1] === nextValue) {
-          return true;
-        }
-      }
-      //South
-      if (height < this.height - 1) {
-        if (currentBuffer[height + 1][width] === nextValue) {
-          return true;
-        }
-      }
+      return neighborCount;
     }
 
     for (let height = 0; height < this.height; height++) {
       for (let width = 0; width < this.width; width++) {
-        if (hasInfectedNeighbor.call(this, height, width)) {
-          backBuffer[height][width] = (currentBuffer[height][width] + 1) % MODULO;
+        let neighborCount = countNeighbors.call(this, height, width);
+        //Cell is currently alive 
+        if (currentBuffer[height][width] === 1) {
+          if (neighborCount < 2 || neighborCount > 3) {
+            // WE ARE ALIVE
+            backBuffer[height][width] = 0;
+          } else {
+            backBuffer[height][width] = 1;
+          }
+          // CELL IS CURRENTLY DEAD
         } else {
-          backBuffer[height][width] = currentBuffer[height][width];
+          if (neighborCount === 3) {
+            backBuffer[height][width] = 1;
+          } else {
+            backBuffer[height][width] = 0;
+          }
         }
       }
     }
