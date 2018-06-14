@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import CCA from './cca';
+import Life from './cca';
 import './App.css';
 
 const COLORS = [
   [0, 0, 0],
-  [0x8f, 0, 0x5f],
+  [0xff, 0xff, 0],
   [0x5f, 0, 0x8f],
   [0, 0, 0xff],
   [0, 0x5f, 0x7f],
@@ -19,7 +19,7 @@ const canvasHeight = 300;
 /**
  * CCA canvas
  */
-class CCACanvas extends Component {
+class LifeCanvas extends Component {
 
   /**
    * Constructor
@@ -27,7 +27,7 @@ class CCACanvas extends Component {
   constructor(props) {
     super(props);
 
-    this.cca = new CCA(canvasWidth, canvasHeight);
+    this.life = new Life(canvasWidth, canvasHeight);
   }
 
   /**
@@ -45,36 +45,31 @@ class CCACanvas extends Component {
     let ctx = canvas.getContext('2d');
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    let cells = this.cca.getCells();
+    let cells = this.life.getCells();
 
     let screenBuffer = imageData.data;
 
-    // for (let i = 0; i < 1000; i += 4) {
-    //   screenBuffer[i] = 184; // R
-    //   screenBuffer[i+1] = 234; // G
-    //   screenBuffer[i+2] = 210; // B
-    //   screenBuffer[i+3] = 255; // A
-    // }
-
     for (let height = 0; height < canvasHeight; height++) {
       for (let width = 0; width < canvasWidth; width++) {
-        // convert xy to index
+
         let index = (height * canvasWidth + width) * 4;
 
         let ccaStatus = cells[height][width];
 
-        // change pixels at index to match ccaStatus
         screenBuffer[index + 0] = COLORS[ccaStatus][0];
         screenBuffer[index + 1] = COLORS[ccaStatus][1];
         screenBuffer[index + 2] = COLORS[ccaStatus][2];
-        // screenBuffer[index + 3] = COLORS[ccaStatus][255];
         screenBuffer[index + 3] = [255];
-      }
-    }
+      };
+    };
 
     // console.log('screenBuffer in animFrame: ', screenBuffer);
 
     ctx.putImageData(imageData, 0, 0);
+
+    // step the simulation forward
+    this.life.step();
+    requestAnimationFrame(() => {this.animFrame()});
   }
 
   /**
@@ -88,7 +83,7 @@ class CCACanvas extends Component {
 /**
  * CCA holder component
  */
-class CCAApp extends Component {
+class LifeApp extends Component {
 
   /**
    * Render
@@ -96,7 +91,7 @@ class CCAApp extends Component {
   render() {
     return (
       <div>
-        <CCACanvas width={canvasWidth} height={canvasHeight} />
+        <LifeCanvas ref="canvas" width={canvasWidth} height={canvasHeight} />
       </div>
     )
   }
@@ -113,7 +108,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <CCAApp />
+        <LifeApp />
       </div>
     );
   }
