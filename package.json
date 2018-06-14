@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "node": "^10.4.1",
+    "nodemon": "^1.17.5"
+  }
+}
