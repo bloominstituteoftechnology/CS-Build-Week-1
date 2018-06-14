@@ -2,6 +2,8 @@
  * Implementation of Conway's game of Life
  */
 
+const MODULO = 2;
+
 /**
  * Make a 2D array helper function
  */
@@ -62,11 +64,12 @@ class Life {
    * Randomize the life grid
    */
   randomize() {
-    for (let height = 0; height < this.height; height++) {
-      for (let width = 0; width < this.width; width++) {
-        this.cells[this.currentBufferIndex][height][width] = (Math.random() * 1) | 0;
-      }
-    }
+    // for (let height = 0; height < this.height; height++) {
+    //   for (let width = 0; width < this.width; width++) {
+    //     this.cells[this.currentBufferIndex][height][width] = (Math.random() * MODULO) | 0;
+    //   }
+    // }
+    this.cells[this.currentBufferIndex][250][250] = 1;
   }
 
   /**
@@ -76,91 +79,56 @@ class Life {
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
 
-    function livingNeighbors(height, width) {
+    function livingNeighbors(row, col) {
       let neighbors = 0;
-
-      // west
-      if (width > 0) {
-        if (currentBuffer[height][width - 1] === 1) {
-          neighbors++;
-        }
-        
-        // northwest
-        if (height > 0) {
-          if (currentBuffer[height - 1][width - 1] === 1) {
-            neighbors++;
-          }
-        }
-
-        // southwest
-        if (height < this.height - 1) {
-          if (currentBuffer[height + 1][width - 1] === 1) {
-            neighbors++;
-          }
-        }
-      }
       
-      // north
-      if (height > 0) {
-        if (currentBuffer[height - 1][width] === 1) {
-          neighbors++;
+      for (let rowOffset = -1; rowOffset <= 1; rowOffset++) {
+        let rowPos = row + rowOffset;
+        // check bounds
+        if (rowPos < 0 || rowPos === this.height) {
+          continue;
         }
-      }
-
-      // east
-      if (width < this.width - 1) {
-        if (currentBuffer[height][width + 1] === 1) {
-          neighbors++;
-        }
-
-        // northeast
-        if (height > 0) {
-          if (currentBuffer[height - 1][width + 1] === 1) {
+        for (let colOffset = -1; colOffset <= 1; colOffset++) {
+          let colPos = col + colOffset;
+          // check bounds
+          if (colPos < 0 || colPos === this.width) {
+            continue;
+          }
+          // don't count self
+          if (colOffset === 0 && rowOffset === 0) {
+            continue;
+          }
+          if (currentBuffer[rowPos][colPos] === 1) {
             neighbors++;
           }
         }
-
-        // southeast
-        if (height < this.height - 1) {
-          if (currentBuffer[height + 1][width + 1] === 1) {
-            neighbors++;
-          }
-        }
-      }
-      
-      // south
-      if (height < this.height - 1) {
-        if (currentBuffer[height + 1][width] === 1) {
-          neighbors++;
-        }
-      }
-      
+      }   
       return neighbors;
     }
 
     for (let h = 0; h < this.height; h++) {
       for (let w = 0; w < this.width; w++) {
-        
-        // rebirth
-        if (livingNeighbors.call(this, h, w) === 1 && currentBuffer[h][w] === 0) {
-          backBuffer[h][w] = 1;
-          continue;
-        }
-        
-        // survives
-        if ((livingNeighbors.call(this, h, w) === 1 || livingNeighbors.call(this, h, w) === 2) && currentBuffer[h][w] === 1) {
-          backBuffer[h][w] = currentBuffer[h][w];
-          continue;
-        }
-
-        // dies
-        else {
-          backBuffer[h][w] = 0;
-        }
-      }
-    }
+       let neighbors = livingNeighbors.call(this, h, w);
+       // cell is living
+       if (currentBuffer[h][w] === 1) {
+         if (neighbors < 1 || neighbors > 2) {
+           backBuffer[h][w] = 0;
+         } else {
+           backBuffer[h][w] = 1;
+         }
+         // cell is dead
+       } else {
+         if (neighbors === 1) {
+           backBuffer[h][w] = 1;
+         } else {
+           backBuffer[h][w] = 0;
+         }
+       }
+     }
+   }
 
     this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+      
   }
 }
 
