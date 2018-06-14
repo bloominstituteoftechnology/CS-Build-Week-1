@@ -28,28 +28,21 @@ class CCACanvas extends Component {
     super(props);
 
     this.cca = new CCA(canvasWidth, canvasHeight);
-    // this.cca.randomize();
   }
 
   /**
    * Component did mount
    */
   componentDidMount() {
-    requestAnimationFrame(() => (this.animFrame()));
+    this.animFrame();
   }
 
   /**
    * Handle an animation frame
    */
   animFrame() {
-    let width = this.props.width;
-    let height = this.props.height;
-
     let canvas = this.refs.canvas;
     let ctx = canvas.getContext('2d');
-
-    // let fillStyle = 'white';
-    // ctx.fillRect(0, 0, this.props.width, this.props.height);
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let cells = this.cca.getCells();
@@ -58,37 +51,16 @@ class CCACanvas extends Component {
 
     let screenBuffer = imageData.data;
     
-    // for(let i = 0; i < 1000; i += 4){
-    //   screenBuffer[i + 0] = 0; //R
-    //   screenBuffer[i + 1] = 0; //G
-    //   screenBuffer[i + 2] = 0; //B
-    //   screenBuffer[i + 3] = 255; //A
-    // }
-
-    for(height = 0; height < canvasHeight; height++){
-      for(width = 0; width < canvasWidth; width++){
-        //convert xy to index
-
-        let index = (height * canvasWidth + width) * 4;
-
-        let ccaStatus = cells[height][width];
-
-        // change pixels at index to match status
-
-        screenBuffer[index + 0] = COLORS[ccaStatus][0];
-        screenBuffer[index + 1] = COLORS[ccaStatus][1];
-        screenBuffer[index + 2] = COLORS[ccaStatus][2];
-        screenBuffer[index + 3] = 255;
-      }
+    for(let i = 0; i < 1000; i += 4){
+      screenBuffer[i + 0] = 0; //R
+      screenBuffer[i + 1] = 0; //G
+      screenBuffer[i + 2] = 0; //B
+      screenBuffer[i + 3] = 255; //A
     }
 
-    // console.log('screenBuffer in animFrame: ', screenBuffer);
+    console.log('screenBuffer in animFrame: ', screenBuffer);
 
     ctx.putImageData(imageData, 0, 0);
-
-    this.cca.step();
-
-    requestAnimationFrame(() => {this.animFrame()});
   }
 
   /**
