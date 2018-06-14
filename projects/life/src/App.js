@@ -15,8 +15,22 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(props.width, props.height);
-    // this.life.randomize();
+    this.state = { running: true };
+    this.stopStart = this.stopStart.bind(this);
   }
+
+  stopStart() {
+    console.log("Inside stop pre change: ", this.state.running);
+    this.setState({ running: !this.state.running }, () => {
+      console.log("Inside stop post change: ", this.state.running);
+      if (this.state.running) {
+        requestAnimationFrame(() => {
+          this.animFrame();
+        });
+      }
+    });
+  }
+  // this.life.randomize();
 
   /**
    * Component did mount
@@ -31,6 +45,10 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
+    console.log("Props running?: ", this.state.running);
+    if (!this.state.running) {
+      return;
+    }
     //
     // !!!! IMPLEMENT ME !!!!
     //
@@ -52,14 +70,14 @@ class LifeCanvas extends Component {
       for (let width = 0; width < canvasWidth; width++) {
         let index = (height * canvasWidth + width) * 4;
         if (cells[height][width] === 0) {
-          screenBuffer[index + 0] = 255;
-          screenBuffer[index + 1] = 255;
-          screenBuffer[index + 2] = 255;
+          screenBuffer[index + 0] = 0;
+          screenBuffer[index + 1] = 72;
+          screenBuffer[index + 2] = 124;
           screenBuffer[index + 3] = 255;
         } else if (cells[height][width] === 1) {
-          screenBuffer[index + 0] = 0;
-          screenBuffer[index + 1] = 0;
-          screenBuffer[index + 2] = 0;
+          screenBuffer[index + 0] = 249;
+          screenBuffer[index + 1] = 171;
+          screenBuffer[index + 2] = 85;
           screenBuffer[index + 3] = 255;
         }
       }
@@ -67,13 +85,13 @@ class LifeCanvas extends Component {
 
     // console.log("Screenbuffer in animFrame", screenBuffer);
     ctx.putImageData(imageData, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(canvas, 0, 0, 5 * canvas.width, 5 * canvas.height);
 
     this.life.step();
-    setInterval(() => {
-      requestAnimationFrame(() => {
-        this.animFrame();
-      });
-    }, 1000);
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
@@ -81,11 +99,14 @@ class LifeCanvas extends Component {
    */
   render() {
     return (
-      <canvas
-        ref="canvas"
-        width={this.props.width}
-        height={this.props.height}
-      />
+      <div>
+        <canvas
+          ref="canvas"
+          width={this.props.width}
+          height={this.props.height}
+        />
+        <button onClick={this.stopStart}>Start/Stop</button>
+      </div>
     );
   }
 }
@@ -100,7 +121,11 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={canvasWidth} height={canvasHeight} />
+        <LifeCanvas
+          running={this.props.running}
+          width={canvasWidth}
+          height={canvasHeight}
+        />
       </div>
     );
   }
@@ -113,6 +138,7 @@ class App extends Component {
   /**
    * Render
    */
+
   render() {
     return (
       <div className="App">

@@ -68,32 +68,32 @@ class CCA {
   step() {
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
-
+    let N = 1; //Math.floor(Math.random()*MODULO);
     function hasInfectiousNeighbor(height, width) {
       // console.log("Inside Has infection:", currentBuffer);
-      const nextValue = (currentBuffer[height][width] + 3) % MODULO;
+      const nextValue = (currentBuffer[height][width] + N) % MODULO;
       //West
       if (width > 0) {
-        if (currentBuffer[height][width - 1] === nextValue) {
+        if (currentBuffer[height][width - 1] === nextValue + 2) {
           return true;
         }
       }
       //North
       if (height > 0) {
-        if (currentBuffer[height - 1][width] === nextValue) {
+        if (currentBuffer[height - 1][width] === nextValue + 1) {
           return true;
         }
       }
       //East
       if (width < this.width - 1) {
-        if (currentBuffer[height][width + 1] === nextValue) {
+        if (currentBuffer[height][width + 1] === nextValue + 2) {
           return true;
         }
       }
 
       //South
       if (height < this.height - 1) {
-        if (currentBuffer[height + 1][width] === nextValue) {
+        if (currentBuffer[height + 1][width] === nextValue + 1) {
           return true;
         }
       }
@@ -125,7 +125,7 @@ class CCA {
       for (let width = 0; width < this.width; width++) {
         if (hasInfectiousNeighbor.call(this, height, width)) {
           backBuffer[height][width] =
-            (currentBuffer[height][width] + 3) % MODULO;
+            (currentBuffer[height][width] + N) % MODULO;
         } else {
           backBuffer[height][width] = currentBuffer[height][width];
         }

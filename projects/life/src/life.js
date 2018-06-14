@@ -107,7 +107,7 @@ class Life {
         }
       }
       //Southeast
-      if (height < this.height - 1 && width > this.width - 1) {
+      if (height < this.height - 1 && width < this.width - 1) {
         if (currentBuffer[height + 1][width + 1] === 1) {
           aliveNeighbors++;
         }

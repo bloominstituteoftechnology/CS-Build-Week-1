@@ -26,8 +26,12 @@ class CCACanvas extends Component {
   constructor(props) {
     super(props);
     this.cca = new CCA(canvasWidth, canvasHeight);
+    this.state = { running: false };
   }
 
+  stop() {
+    this.setState({ running: !this.state.running });
+  }
   /**
    * Component did mount
    */
@@ -41,6 +45,9 @@ class CCACanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
+    if (!this.state.running) {
+      return;
+    }
     let canvas = this.refs.canvas;
     let ctx = canvas.getContext("2d");
 
@@ -62,12 +69,12 @@ class CCACanvas extends Component {
 
     console.log("Screenbuffer in animFrame", screenBuffer);
     ctx.putImageData(imageData, 0, 0);
-    setInterval(() => {
-      this.cca.step();
-      requestAnimationFrame(() => {
-        this.animFrame();
-      });
-    }, 1000);
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(canvas, 0, 0, 3 * canvas.width, 3 * canvas.height);
+    this.cca.step();
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
@@ -105,6 +112,13 @@ class App extends Component {
     return (
       <div className="App">
         <CCAApp />
+        <button
+          onClick={() => {
+            this.stop();
+          }}
+        >
+          Start/Stop
+        </button>
       </div>
     );
   }
