@@ -5,6 +5,14 @@ import './App.css';
 /**
  * Life canvas
  */
+const COLORS = [
+  [0, 0, 0],
+  [0xff, 0, 0],
+  [0, 0xff, 0],
+  [0, 0, 0xff],
+  [0xff, 0xff, 0xff],
+];
+
 class LifeCanvas extends Component {
 
   /**
@@ -15,14 +23,15 @@ class LifeCanvas extends Component {
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
-    this.life = new Life(300, 300);
+
   }
 
   /**
    * Component did mount
    */
   componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => requestAnimationFrame(() =>{this.animFrame()
+    });
   }
 
   /**
@@ -39,19 +48,21 @@ class LifeCanvas extends Component {
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
-  
+  let width= this.props.width;
+  let height= this.props.height;  
 
 
 
-   // let canvas=this.refs.canvas;
-    //let ctx= canvas.getContext('2d');
+   
+    
 
-    //let imageData=ctx.getImageData(0, 0, canvas.width, canvas.height);
-  // let cells =this.cca.getCells();
-   //
-  
-  //let screenBuffer=imageData.data;
-  
+    
+   let cells =this.life.getCells();
+   let canvas=this.refs.canvas;
+   let ctx= canvas.getContext('2d');
+   let imageData=ctx.getImageData(0, 0, canvas.width, canvas.height);
+   let buffer=imageData.data;
+  //////////////////////////////////////////
   }
 
   /**

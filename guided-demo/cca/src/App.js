@@ -102,7 +102,7 @@ class CCAApp extends Component {
   render() {
     return (
       <div>
-        <CCACanvas width={400} height={300} />
+        <CCACanvas width={800} height={700} />
       </div>
     );
   }
