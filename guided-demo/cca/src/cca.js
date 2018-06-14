@@ -29,9 +29,11 @@ class CCA {
     this.width = width;
     this.height = height;
 
+
+    // This is where we have our Double Buffer
     this.cells = [
-      Array2D(width, height),
-      Array2D(width, height)
+      Array2D(width, height), // active buffer
+      Array2D(width, height)  // back buffer
     ];
 
     this.currentBufferIndex = 0;
