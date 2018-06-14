@@ -76,7 +76,32 @@ class Life {
     let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
 
     function deadOrAlive(height, width) {
+      // row,  col
       let counter = 0;
+
+      // // treat neighbors off the grid as dead cells.
+      // for (let rowOffset = -1; rowOffset <= 1; rowOffset++) {
+      //   let rowPos = row + rowOffset;
+      //   // check for out of bounds
+      //   if (rowPos < 0 || rowPos === this.height) {
+      //     continue;
+      //   }
+      //   for (let colOffset = -1; colOffset <= 1; colOffset++) {
+      //     // check for out of bounds
+      //     let colPos = col + colOffset;
+      //     if (colPos < 0 || colPos === this.width) {
+      //       continue;
+      //     }
+      //     // dont count this cell
+      //     if (colOffset === 0 && rowOffset === 0) {
+      //       continue;
+      //     }
+      //     if (currentBuffer[rowPos][colPos] === 1) {
+      //       counter++;
+      //     }
+      //   }
+      // }
+
       // North
       if (height > 0) {
         if (currentBuffer[height - 1][width] === 1) {

@@ -66,6 +66,8 @@ class LifeCanvas extends Component {
     }
 
     ctx.putImageData(imageData, 0, 0);
+    // ctx.imageSmoothingEnabled = false;
+    // ctx.drawImage(canvas, 0, 0, 3 * canvas.width, 3 * canvas.height);
 
     this.life.step();
     requestAnimationFrame(() => {
