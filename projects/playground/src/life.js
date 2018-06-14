@@ -2,7 +2,7 @@
  * Implementation of Conway's game of Life
  */
 
-const MODULO = 2;
+const MODULO = 7;
 
 /**
  * Make a 2D array helper function
