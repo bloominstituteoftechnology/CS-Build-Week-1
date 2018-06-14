@@ -8,7 +8,7 @@ const canvasHeight = 600;
 const COLORS = [
   [0, 0, 0],
   [0x8f, 0, 0x5f],
-  [0x5f, 0, 0x8f],
+  [(0x5f, 0, 0x8f)],
   [0, 0, 0xff],
   [0, 0x5f, 0x7f],
   [0x5f, 0x8f, 0x7f],
@@ -62,6 +62,7 @@ class CCACanvas extends Component {
     for (let height = 0; height < canvasHeight; height++) {
       for (let width = 0; width < canvasWidth; width++) {
         //convert xy to index
+        // 4 is the # of pixels -- changing this # drastically alters rendered animation
         const index = (height * canvasWidth + width) * 4; // should be taking and converting our xy grid into that 123412341234...????
 
         const ccaStatus = cells[height][width];
@@ -70,7 +71,7 @@ class CCACanvas extends Component {
         screenBuffer[index + 0] = COLORS[ccaStatus][0]; // R
         screenBuffer[index + 1] = COLORS[ccaStatus][1]; // G
         screenBuffer[index + 2] = COLORS[ccaStatus][2]; // B
-        screenBuffer[index + 3] = 255; // A
+        screenBuffer[index + 3] = 344; // A
       }
     }
 

@@ -90,20 +90,20 @@ class CCA {
       // We are not interested in comparing X with diagonal values, only cardinal values.
 
       // WEST
-      if (width > 0) {
-        if (currentBuffer[height][width - 1] === nextValue) {
+      if (width > 2) {
+        if (currentBuffer[height][width - 2] === nextValue) {
           return true;
         }
       }
       // NORTH
-      if (height > 0) {
+      if (height > 1) {
         if (currentBuffer[height - 1][width] === nextValue) {
           return true;
         }
       }
       // EAST
-      if (width < this.width - 1) {
-        if (currentBuffer[height][width + 1] === nextValue) {
+      if (width < this.width - 2) {
+        if (currentBuffer[height][width + 2] === nextValue) {
           return true;
         }
       }
