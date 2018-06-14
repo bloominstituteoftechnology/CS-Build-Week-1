@@ -31,8 +31,8 @@ class CCA {
 
     this.cells = [Array2D(width, height), Array2D(width, height)];
     this.currentBufferIndex = 0;
-    this.randomize();
 
+    this.randomize();
     this.clear();
   }
 
@@ -74,31 +74,47 @@ class CCA {
 
     // check N S E W
     function hasInfectiousNeighbor(height, width) {
-      const nextValue = currentBuffer[height][width + 1] % MODULO;
+      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
+      // w
       if (width > 0) {
-        if (currentBuffer[height][width - 1] == nextValue) {
+        if (currentBuffer[height][width - 1] === nextValue) {
           return true;
         }
+      }
 
-        if (height > 0) {
-          if (currentBuffer[height - 1][width] == nextValue) {
-            return true;
-          }
+      // n
+      if (height > 0) {
+        if (currentBuffer[height - 1][width] === nextValue) {
+          return true;
         }
+      }
 
-        if (width < this.width - 1) {
-          if (currentBuffer[height][width + 1] == nextValue) {
-            return true;
-          }
+      // e
+      if (width < this.width - 1) {
+        if (currentBuffer[height][width + 1] === nextValue) {
+          return true;
         }
+      }
 
-        if (height < this.height - 1) {
-          if (currentBuffer[height + 1][width] == nextValue) {
-            return true;
-          }
+      //s
+      if (height < this.height - 1) {
+        if (currentBuffer[height + 1][width] === nextValue) {
+          return true;
         }
       }
     }
+
+    for (let h = 0; h < this.height; h++) {
+      for (let w = 0; w < this.width; w++) {
+        if (hasInfectiousNeighbor.call(this, h, w)) {
+          backBuffer[h][w] = (currentBuffer[h][w] + 1) % MODULO;
+        } else {
+          backBuffer[h][w] = currentBuffer[h][w];
+        }
+      }
+    }
+
+    this.currentBufferIndex = this.currentBufferIndex % 1;
   }
 }
 

@@ -78,6 +78,10 @@ class CCACanvas extends Component {
 
     // step the simulation forward
     this.cca.step();
+
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**

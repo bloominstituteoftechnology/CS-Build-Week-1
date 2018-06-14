@@ -72,6 +72,49 @@ class Life {
     // !!!! IMPLEMENT ME !!!!
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[this.currentBufferIndex % 1];
+
+    function hasInfectiousNeighbor(height, width) {
+      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
+      // w
+      if (width > 0) {
+        if (currentBuffer[height][width - 1] === nextValue) {
+          return true;
+        }
+      }
+
+      // n
+      if (height > 0) {
+        if (currentBuffer[height - 1][width] === nextValue) {
+          return true;
+        }
+      }
+
+      // e
+      if (width < this.width - 1) {
+        if (currentBuffer[height][width + 1] === nextValue) {
+          return true;
+        }
+      }
+
+      //s
+      if (height < this.height - 1) {
+        if (currentBuffer[height + 1][width] === nextValue) {
+          return true;
+        }
+      }
+    }
+
+    for (let h = 0; h < this.height; h++) {
+      for (let w = 0; w < this.width; w++) {
+        if (hasInfectiousNeighbor.call(this, h, w)) {
+          backBuffer[h][w] = (currentBuffer[h][w] + 1) % MODULO;
+        } else {
+          backBuffer[h][w] = currentBuffer[h][w];
+        }
+      }
+    }
+
+    this.currentBufferIndex = this.currentBufferIndex % 1;
   }
 }
 
