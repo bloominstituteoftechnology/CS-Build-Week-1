@@ -78,15 +78,16 @@ class Life {
 
       for (let rowOffset = -1; rowOffset <= 1; rowOffset++) {
         let rowPos = row + rowOffset;
-
-        if (rowPos < 0 || rowPos === this.height) {
+        // check for out of bounds
+        if (rowPos <= 0 || rowPos === this.height) {
           continue;
         }
 
         for (let colOffset = -1; colOffset <= 1; colOffset++) {
           let colPos = col + colOffset;
 
-          if (colOffset < 0 || colPos === this.width) {
+          // check for out of bounds
+          if (colPos <= 0 || colPos === this.width) {
             continue;
           }
           if (colOffset === 0 && rowOffset === 0) {

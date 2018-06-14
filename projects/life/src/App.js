@@ -7,7 +7,7 @@ const cHeight = 300;
 
 const COLORS = [
   [0, 0, 0],
-  [0x8f, 0, 0x5f],
+  [0xff, 0, 0x5f],
   [0x5f, 0, 0x8f],
   [0, 0, 0xff],
   [0, 0x5f, 0x7f],
@@ -27,7 +27,7 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(cWidth, cHeight);
-    this.life.randomize();
+    // this.life.randomize();
   }
 
   /**
