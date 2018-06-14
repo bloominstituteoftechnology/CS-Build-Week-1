@@ -6,10 +6,7 @@ import './App.css';
 const canvasWidth = 600;
 const canvasHeight = 500;
 
-const COLORS = [
-  [0xf5, 0xf5, 0xdc],
-  [0x8f, 0, 0x5f],
-  [0x5f, 0, 0x8f],
+const COLORS = [  
   [0xb0, 0xe0, 0xe6],
   [0, 0x5f, 0x7f],
   [0x00, 0xff, 0xff],
@@ -31,7 +28,7 @@ class LifeCanvas extends Component {
   constructor(props) {
     super(props);
 
-    this.life = new Life(props.width, props.height);
+    this.life = new Life(canvasWidth, canvasHeight);
     this.life.randomize();
   }
 
@@ -39,7 +36,7 @@ class LifeCanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => this.animFrame());
   }
 
   /**
@@ -72,7 +69,7 @@ class LifeCanvas extends Component {
         let index = (height * canvasWidth + width) * 4;
         let lifeStatus = cells[height][width];
 
-        //change pixels at index to match ccstatus
+        //change pixels at index to match lifeStatus
         screenBuffer[index + 0] = COLORS[lifeStatus][0];
         screenBuffer[index + 1] = COLORS[lifeStatus][1];
         screenBuffer[index + 2] = COLORS[lifeStatus][2];
