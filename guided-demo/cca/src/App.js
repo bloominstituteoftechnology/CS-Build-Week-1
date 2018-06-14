@@ -34,7 +34,9 @@ class CCACanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
-    this.animFrame();
+    requestAnimationFrame(() => {
+      this.animFrame()
+    });
   }
 
   /**
@@ -69,7 +71,12 @@ class CCACanvas extends Component {
 
     ctx.putImageData(imageData, 0, 0);
 
+
+    // Stepping the simulation forward
     this.cca.step();
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
