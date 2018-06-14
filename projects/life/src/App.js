@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
+const COLORS = [
+  [0, 0, 0],
+  [0xff, 0xB8, 0x1C] 
+]
+const canvasWidth = 800;
+const canvasHeight = 1000;
 /**
  * Life canvas
  */
@@ -38,6 +44,34 @@ class LifeCanvas extends Component {
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let cells = this.life.getCells();
+
+    // Here is the screen buffer array we can manipulate:
+    let screenBuffer = imageData.data;
+    
+    for (let height = 0; height < canvasHeight; height++) {
+      for (let width = 0; width < canvasWidth; width++){
+        let index = (height * canvasWidth + width) * 4;
+
+        let ccaStatus = cells[height][width];
+
+        //change pixels
+        screenBuffer[index + 0] = COLORS[ccaStatus][0];
+        screenBuffer[index + 1] = COLORS[ccaStatus][1];
+        screenBuffer[index + 2] = COLORS[ccaStatus][2];
+        screenBuffer[index + 3] = 255;
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
+    this.life.step();
+
+    requestAnimationFrame(() => {
+      this.animFrame()
+    });
+
   }
 
   /**
@@ -59,7 +93,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={canvasWidth} height={canvasHeight} />
       </div>
     )
   }
@@ -76,7 +110,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <LifeApp />
+        <LifeCanvas width={canvasWidth} height={canvasHeight} />
+        {/* <LifeApp /> */}
       </div>
     );
   }

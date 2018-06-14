@@ -25,7 +25,12 @@ class Life {
    * Constructor
    */
   constructor(width, height) {
-    // !!!! IMPLEMENT ME !!!!
+    this.width = width;
+    this.height = height;
+
+    this.cells = [Array2D(width, height), Array2D(width, height)];
+    this.currentBufferIndex = 0;
+    this.randomize();
   }
   
   /**
@@ -34,7 +39,7 @@ class Life {
    * This should NOT be modified by the caller
    */
   getCells() {
-    // !!!! IMPLEMENT ME !!!!
+    return this.cells[this.currentBufferIndex];
   }
 
   /**
@@ -48,14 +53,104 @@ class Life {
    * Randomize the life grid
    */
   randomize() {
-    // !!!! IMPLEMENT ME !!!!
+    for(let height = 0; height < this.height; height++){
+      for(let width = 0; width < this.width; width++){
+        this.cells[this.currentBufferIndex][height][width] = Math.round(Math.random());
+      }
+    }
   }
 
   /**
    * Run the simulation for a single step
    */
   step() {
-    // !!!! IMPLEMENT ME !!!!
+    let currentBuffer = this.cells[this.currentBufferIndex];
+    let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
+
+    function hasInfectiousNeighbor(height, width) {
+      //North
+      // if (height > 0) {
+      //   if (currentBuffer[height - 1][width] === nextValue)
+      //   return true;
+      // }
+      
+      // // East
+      // if (width < this.width - 1) {
+      //   if (currentBuffer[height][width + 1] === nextValue)
+      //   return true;
+      // }
+      
+      // // South
+      // if (height < this.height - 1) {
+      //   if (currentBuffer[height + 1][width] === nextValue)
+      //   return true;
+      // } 
+      // //west
+      // if (width > 0) {
+      //   if (currentBuffer[height][width - 1] === nextValue) {
+      //     return true;
+      //   } 
+      // }
+    }
+
+    function isAlive(height, width) {
+      let count = 0;
+      if (height < this.height - 1) {
+        if (currentBuffer[height + 1][width])
+          count++;
+      }
+      if (height < this.height - 1 && width < this.width -1) {
+        if (currentBuffer[height + 1][width + 1])
+          count++;
+      }
+      if (height < this.height - 1 && width > 0) {
+        if (currentBuffer[height + 1][width - 1])
+          count++;
+      }
+      if (height > 0) {
+        if (currentBuffer[height - 1][width])
+          count++;
+      }
+      if (height > 0 && width < this.width - 1) {
+        if (currentBuffer[height - 1][width + 1])
+          count++;
+      }
+      if (height > 0 && width > 0) {
+        if (currentBuffer[height - 1][width - 1])
+            count++;
+      }
+      if (width < this.width - 1) {
+        if (currentBuffer[height][width + 1])
+          count++;
+      }
+      if (width > 0) {
+        if (currentBuffer[height][width - 1])
+          count++;
+      }
+
+      if (currentBuffer[height][width]) {
+        if (count === 2 || count === 3)
+          return true;
+      }
+
+      if (!currentBuffer[height][width]){
+        if (count === 3)
+          return true
+      }
+      return false;
+      
+    }
+
+    for (let height = 0; height < this.height; height++) {
+      for (let width = 0; width < this.width; width++) {
+        if (isAlive.call(this, height, width)) {
+          backBuffer[height][width] = 1;
+        } else {
+          backBuffer[height][width] = 0;
+        }
+      }
+    }
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }
 
