@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
-
+const COLORS = [[0, 0, 0], [0xff, 0xff, 0xff]];
 /**
  * Life canvas
  */
@@ -78,7 +78,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={700} height={400} />
       </div>
     )
   }

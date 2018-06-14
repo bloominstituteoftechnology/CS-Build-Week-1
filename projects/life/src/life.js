@@ -155,7 +155,6 @@ class Life {
      }
      this.currentBufferIndex = backBufferIndex;
    }
- }
 }
 
 export default Life;
