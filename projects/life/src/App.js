@@ -5,6 +5,21 @@ import './App.css';
 /**
  * Life canvas
  */
+
+const canvasWidth = 400;
+const canvasHeight = 300;
+
+const COLORS = [
+  [0, 0, 0],
+  [0xff, 0xff, 0],
+  [0x5f, 0, 0x8f],
+  [0, 0, 0xff],
+  [0, 0x5f, 0x7f],
+  [0x5f, 0x8f, 0x7f],
+  [0x8f, 0xff, 0x7f],
+  [0xff, 0x5f, 0x7f],
+];
+
 class LifeCanvas extends Component {
 
   /**
@@ -43,6 +58,8 @@ class LifeCanvas extends Component {
     let height = this.props.height;
 
     let cells = this.life.getCells();
+
+
 
   }
 

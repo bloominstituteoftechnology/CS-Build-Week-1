@@ -36,7 +36,10 @@ class Life {
       Array2D(width, height)
     ];
 
+    this.currentBufferIndex = 0;
+    this.randomize();
     this.clear;
+    
   }
   
   /**
@@ -64,6 +67,11 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    for (let height = 0; height < this.height; height++) {
+      for (let width = 0; width < this.width; width++) {
+        this.cells[this.currentBufferIndex][height][width] = (Math.random() * 2) | 0;
+      }
+    }
   }
 
   /**
@@ -71,7 +79,61 @@ class Life {
    */
   step() {
     // !!!! IMPLEMENT ME !!!!
+    let currentBuffer = this.cells[this.currentBufferIndex];
+    let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
+
+    function countNeighbors(row, col) {
+      let neighborCount = 0;
+
+      for (let rowOffset = -1; rowOffset <= 1; rowOffset++) {
+        let rowPos = row + rowOffset;
+
+        if (rowPos < 0 || rowPos === this.height) {
+          continue;
+        }
+
+        for (let colOffset = -1; colOffset <= 1; colOffset++) {
+          let colPos = col + colOffset;
+
+          if (colPos < 0 || colPos === this.width) {
+            continue;
+          }
+          
+          if (colOffset === 0 && rowOffset === 0) { // Current cell
+            continue;
+          }
+
+          if (currentBuffer[rowPos][colPos] === 1) {
+            neighborCount++;
+          }
+        }
+      }
+      return neighborCount;
+    };
+
+    for (let r = 0; r < this.height; r++) {
+      for (let c = 0; c < this.width; c++) {
+        let neighborCount = countNeighbors.call(this, r, c);
+
+        if (currentBuffer[r][c] === 1) {
+          if (neighborCount < 2 || neighborCount > 3) {
+            backBuffer[r][c] = 0;
+          } else {
+            backBuffer[r][c] = 1;
+          }
+        } else {
+          if (neighborCount === 3) {
+            backBuffer[r][c] = 0;
+          } else {
+            backBuffer[r][c] = 1;
+          }
+        }
+      }
+    }
+
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 }
+
 
 export default Life;
