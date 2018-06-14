@@ -1,4 +1,4 @@
-const MODULO = 8;
+const MODULO = 2;
 /**
  * Implementation of Conway's game of Life
  */
@@ -73,48 +73,99 @@ class Life {
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[this.currentBufferIndex % 1];
 
-    function hasInfectiousNeighbor(height, width) {
-      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
-      // w
-      if (width > 0) {
-        if (currentBuffer[height][width - 1] === nextValue) {
-          return true;
+    // function hasInfectiousNeighbor(height, width) {
+    //   const nextValue = (currentBuffer[height][width] + 1) % MODULO;
+    //   // w
+    //   if (width > 0) {
+    //     if (currentBuffer[height][width - 1] === nextValue) {
+    //       return true;
+    //     }
+    //   }
+
+    //   // n
+    //   if (height > 0) {
+    //     if (currentBuffer[height - 1][width] === nextValue) {
+    //       return true;
+    //     }
+    //   }
+
+    //   // e
+    //   if (width < this.width - 1) {
+    //     if (currentBuffer[height][width + 1] === nextValue) {
+    //       return true;
+    //     }
+    //   }
+
+    //   //s
+    //   if (height < this.height - 1) {
+    //     if (currentBuffer[height + 1][width] === nextValue) {
+    //       return true;
+    //     }
+    //   }
+    // }
+
+    // for (let h = 0; h < this.height; h++) {
+    //   for (let w = 0; w < this.width; w++) {
+    //     if (hasInfectiousNeighbor.call(this, h, w)) {
+    //       backBuffer[h][w] = (currentBuffer[h][w] + 1) % MODULO;
+    //     } else {
+    //       backBuffer[h][w] = currentBuffer[h][w];
+    //     }
+    //   }
+    // }
+
+    // this.currentBufferIndex = this.currentBufferIndex % 1;
+
+    function countNeighbors(row, col) {
+      let neighborCount = 0;
+
+      // Treat neighbors off the grid as dead cells.
+      for (let rowOffset = -1; rowOffset <= 1; rowOffset++) {
+        let rowPos = row + rowOffset;
+        // Check for out of bounds
+        if (rowPos <= 0 || rowPos === this.height) {
+          continue;
+        }
+        for (let colOffset = -1; colOffset <= 1; colOffset++) {
+          let colPos = col + colOffset;
+          // Check for out bounds
+          if (colPos < 0 || colPos === this.width) {
+            continue;
+          }
+          // Don't count this cell
+          if (colOffset === 0 && rowOffset === 0) {
+            continue;
+          }
+          if (currentBuffer[rowPos][colPos] === 1) {
+            neighborCount++;
+          }
         }
       }
 
-      // n
-      if (height > 0) {
-        if (currentBuffer[height - 1][width] === nextValue) {
-          return true;
-        }
-      }
-
-      // e
-      if (width < this.width - 1) {
-        if (currentBuffer[height][width + 1] === nextValue) {
-          return true;
-        }
-      }
-
-      //s
-      if (height < this.height - 1) {
-        if (currentBuffer[height + 1][width] === nextValue) {
-          return true;
-        }
-      }
+      return neighborCount;
     }
 
     for (let h = 0; h < this.height; h++) {
       for (let w = 0; w < this.width; w++) {
-        if (hasInfectiousNeighbor.call(this, h, w)) {
-          backBuffer[h][w] = (currentBuffer[h][w] + 1) % MODULO;
+        let neighborCount = countNeighbors.call(this, h, w);
+
+        // cell is currently alive
+        if (currentBuffer[h][w] === 1) {
+          if (neighborCount < 2 || neighborCount > 3) {
+            backBuffer[h][w] = 0;
+          } else {
+            backBuffer[h][w] = 1;
+          }
+          // Cell is currently dead
         } else {
-          backBuffer[h][w] = currentBuffer[h][w];
+          if (neighborCount === 3) {
+            backBuffer[h][w] = 1;
+          } else {
+            backBuffer[h][w] = 0;
+          }
         }
       }
     }
-
-    this.currentBufferIndex = this.currentBufferIndex % 1;
   }
 }
 
