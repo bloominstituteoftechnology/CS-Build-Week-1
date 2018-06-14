@@ -64,7 +64,7 @@ class Life {
   randomize() {
     for (let row = 0; row < this.height; row++) {
       for (let column = 0; column < this.width; column++) {
-        if (Math.random() < 0.1) {
+        if (Math.random() < 0.05) {
           this.cells[this.currentBufferIndex][row][column] = 1;
         }
       }

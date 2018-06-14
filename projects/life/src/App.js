@@ -33,6 +33,14 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
+    if (this.props.randomize) {
+      this.life.randomize();
+      this.props.toggle({ target: { name: 'randomize'}} );
+    }
+    if (this.props.clear) {
+      this.life.clear();
+      this.props.toggle({ target: { name: 'clear'}} );
+    }
     let canvas = this.refs.canvas;
     let ctx = canvas.getContext('2d');
     
@@ -58,7 +66,18 @@ class LifeCanvas extends Component {
     ctx.putImageData(imageData, 0, 0)
     
     this.life.step();
-    requestAnimationFrame(() => (this.animFrame()));
+
+    // TODO: Work on stopping
+    if (!this.props.running) {
+      console.log(1);
+      window.setTimeout(() => {
+        if (this.props.running) requestAnimationFrame(() => (this.animFrame()));
+      }, 2000);
+    }
+
+    if (this.props.running) {
+      requestAnimationFrame(() => (this.animFrame()));
+    }
   }
 
   /**
@@ -74,13 +93,30 @@ class LifeCanvas extends Component {
  */
 class LifeApp extends Component {
 
+  state = {
+    isRunning: true,
+    randomize: false,
+    clear: false,
+  }
+
+  toggle = (e) => {
+    const button = e.target.name;
+    this.setState({[button]: !this.state[button] })
+  }
+
   /**
    * Render
    */
   render() {
+    this.toggle = this.toggle.bind(this);
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={400} height={300} toggle={this.toggle} running={this.state.isRunning} randomize={this.state.randomize} clear={this.state.clear} />
+        <div>
+          <button name="isRunning" className="button" onClick={this.toggle}>PLAY</button>
+          <button name="randomize" className="button" onClick={this.toggle}>RANDOM</button>
+          <button name="clear" className="button" onClick={this.toggle}>CLEAR</button>
+        </div>
       </div>
     )
   }
