@@ -5,6 +5,15 @@ import './App.css';
 /**
  * Life canvas
  */
+
+const COLORS = [
+    'white',
+    'black',
+    'red',
+    'blue',
+    'green',
+]
+
 class LifeCanvas extends Component {
 
   /**
