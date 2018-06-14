@@ -48,8 +48,8 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
-    for (let h = 0; h < this.height; h++) {
-      this.cells[this.currentBufferIndex][h].fill(0);
+    for (let height = 0; height < this.height; height++) {
+      this.cells[this.currentBufferIndex][height].fill(0);
     }
   }
 
@@ -58,9 +58,10 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
-    for (let h = 0; h < this.height; h++) {
-      for (let w = 0; w < this.width; w++) {
-        this.cells[this.currentBufferIndex][h][w] = (Math.random() * 2) | 0;
+    for (let height = 0; height < this.height; height++) {
+      for (let width = 0; width < this.width; width++) {
+        this.cells[this.currentBufferIndex][height][width] =
+          (Math.random() * 2) | 0;
       }
     }
   }
@@ -71,79 +72,78 @@ class Life {
   step() {
     // !!!! IMPLEMENT ME !!!!
     let currentBuffer = this.cells[this.currentBufferIndex];
-    let backBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
-    let backBuffer = this.cells[backBufferIndex];
+    let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
 
-    function hasInfectiousNeighbor(h, w) {
-      const nextValue = currentBuffer[h][w];
+    function hasInfectiousNeighbor(height, width) {
       let neighbor = 0;
 
       // west
-      if (w < 0) {
-        if (currentBuffer[h][w - 1]) {
+      if (width > 0) {
+        if (currentBuffer[height][width - 1] === 1) {
           neighbor++;
         }
       }
       //north
-      if (h < 0) {
-        if (currentBuffer[h - 1][w]) {
+      if (height > 0) {
+        if (currentBuffer[height - 1][width] === 1) {
           neighbor++;
         }
       }
       //east
-      if (w < this.width - 1) {
-        if (currentBuffer[h][w + 1]) {
+      if (width < this.width - 1) {
+        if (currentBuffer[height][width + 1] === 1) {
           neighbor++;
         }
       }
       //south
-      if (h < this.height - 1) {
-        if (currentBuffer[h + 1][w]) {
+      if (height < this.height - 1) {
+        if (currentBuffer[height + 1][width] === 1) {
           neighbor++;
         }
       }
       //north-west
-      if (h > 0 && w < 0) {
-        if (currentBuffer[h - 1][w - 1]) {
+      if (height > 0 && width > 0) {
+        if (currentBuffer[height - 1][width - 1] === 1) {
           neighbor++;
         }
       }
 
       //north-east
-      if (h < 0 && w < this.width - 1) {
-        if (currentBuffer[h + 1][w - 1]) {
+      if (height > 0 && width < this.width - 1) {
+        if (currentBuffer[height - 1][width + 1] === 1) {
           neighbor++;
         }
       }
       //south-east
-      if (h < this.height - 1 && w < this.width - 1) {
-        if (currentBuffer[h + 1][w + 1]) {
+      if (height < this.height - 1 && width < this.width - 1) {
+        if (currentBuffer[height + 1][width + 1] === 1) {
           neighbor++;
         }
       }
       //south-west
-      if (h < this.height - 1 && w < 0) {
-        if (currentBuffer[h + 1][w - 1]) {
+      if (height < this.height - 1 && width > 0) {
+        if (currentBuffer[height + 1][width - 1] === 1) {
           neighbor++;
         }
       }
+      return neighbor;
     }
 
-    for (let h = 0; h < this.height; h++) {
-      for (let w = 0; w < this.width; w++) {
-        let neighbor = hasInfectiousNeighbor.call(this, h, w);
+    for (let height = 0; height < this.height; height++) {
+      for (let width = 0; width < this.width; width++) {
+        let neighbor = hasInfectiousNeighbor.call(this, height, width);
 
-        if (currentBuffer[h][w] === 1) {
+        if (currentBuffer[height][width] === 1) {
           if (neighbor < 2 || neighbor > 3) {
-            backBuffer[h][w] = 0;
+            backBuffer[height][width] = 0;
           } else {
-            backBuffer[h][w] = 1;
+            backBuffer[height][width] = 1;
           }
         } else {
           if (neighbor === 3) {
-            backBuffer[h][w] = 1;
+            backBuffer[height][width] = 1;
           } else {
-            backBuffer[h][w] = 0;
+            backBuffer[height][width] = 0;
           }
         }
       }

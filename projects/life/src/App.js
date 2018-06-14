@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
-// const width = 300;
-// const height = 300;
-
 /**
  * Life canvas
  */
@@ -41,20 +38,17 @@ class LifeCanvas extends Component {
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
-    let width = this.props.width;
-    let height = this.props.height;
-
     let canvas = this.refs.canvas;
     let ctx = canvas.getContext('2d');
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let cells = this.life.getCells();
 
-    for (let h = 0; h < height; h++) {
-      for (let w = 0; w < width; w++) {
-        let index = (h * width + w) * 4;
+    for (let height = 0; height < canvas.height; height++) {
+      for (let width = 0; width < canvas.width; width++) {
+        let index = (height * canvas.width + width) * 4;
 
-        let lifeStatus = cells[h][w];
+        let lifeStatus = cells[height][width];
         let color = lifeStatus === 0 ? 0xff : 0x00;
 
         imageData.data[index + 0] = color;
