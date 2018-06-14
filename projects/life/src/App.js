@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
+const COLORS = [
+  [0, 0, 0],
+  [20, 255, 255],
+]
 /**
  * Life canvas
  */
@@ -14,6 +18,7 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(props.width, props.height);
+    this.life.clear();
     this.life.randomize();
   }
 
@@ -28,30 +33,32 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
-    //
-    // !!!! IMPLEMENT ME !!!!
-    //
-
-    // Request another animation frame
-    // Update life and get cells
-    // Get canvas framebuffer, a packed RGBA array
-    // Convert the cell values into white or black for the canvas
-    // Put the new image data back on the canvas
-    // Next generation of life
-    requestAnimationFrame(() => (this.animFrame()));
-
     let canvas = this.refs.canvas;
     let ctx = canvas.getContext('2d');
-
-    let imageData = ctx.getData(0, 0, this.props.width, this.props.height);
+    
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let cells = this.life.getCells();
-
+    
     let screenBuffer = imageData.data;
-
-    // Convert to a color
-
+    
+    for (let height = 0; height < this.props.height; height++) {
+      for (let width = 0; width < this.props.width; width++) {
+        
+        let index = (height * this.props.width + width) * 4;
+        
+        let ccaStatus = cells[height][width];
+        
+        screenBuffer[index + 0] = COLORS[ccaStatus][0];
+        screenBuffer[index + 1] = COLORS[ccaStatus][1];
+        screenBuffer[index + 2] = COLORS[ccaStatus][2];
+        screenBuffer[index + 3] = 255;
+      }
+    }
+    
     ctx.putImageData(imageData, 0, 0)
+    
     this.life.step();
+    requestAnimationFrame(() => (this.animFrame()));
   }
 
   /**

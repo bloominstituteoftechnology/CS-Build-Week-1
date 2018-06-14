@@ -34,8 +34,6 @@ class Life {
       Array2D(width, height),
     ];
     this.currentBufferIndex = 0;
-    this.randomize();
-    this.clear();
   }
   
   /**
@@ -46,25 +44,29 @@ class Life {
   getCells() {
     // !!!! IMPLEMENT ME !!!!
     return this.cells[this.currentBufferIndex];
-
-
   }
 
   /**
    * Clear the life grid
    */
   clear() {
-    // !!!! IMPLEMENT ME !!!!
+    for (let row = 0; row < this.height; row++) {
+      for (let column = 0; column < this.width; column++) {
+        this.cells[0][row][column] = 0;
+        this.cells[1][row][column] = 0;
+      }
+    }
   }
   
   /**
    * Randomize the life grid
    */
   randomize() {
-    // !!!! IMPLEMENT ME !!!!
     for (let row = 0; row < this.height; row++) {
       for (let column = 0; column < this.width; column++) {
-        this.cells[this.currentBufferIndex][row][column] = Math.random()*2 | 0;
+        if (Math.random() < 0.1) {
+          this.cells[this.currentBufferIndex][row][column] = 1;
+        }
       }
     }
   
@@ -74,70 +76,77 @@ class Life {
    * Run the simulation for a single step
    */
   step() {
-    // !!!! IMPLEMENT ME !!!!
     let frontBuffer = this.cells[this.currentBufferIndex];
-    let backBuffer = this.cells[this.currentBufferIndex === 0 ?1:0];
+    let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1: 0];
 
     function checkNeighbors(height, width) {
-      const inverse = frontBuffer[height][width] + 1;
+      let neighbors = 0;
+      
       // Checking West
       if (width > 0) {
-        if (frontBuffer[height][width - 1] === inverse) {
-          return true;
+        if (frontBuffer[height][width - 1] === 1) {
+          neighbors++;
         }
       }
       // Checking NorthWest
       if (height > 0 && width > 0) {
-        if (frontBuffer[height - 1][width - 1] === inverse) {
-          return true;
+        if (frontBuffer[height - 1][width - 1] === 1) {
+          neighbors++;
         }
       }
       // Checking North
       if (height > 0) {
-        if (frontBuffer[height - 1][width] === inverse) {
-          return true;
+        if (frontBuffer[height - 1][width] === 1) {
+          neighbors++;
         }
       }
       // Checking NorthEast
       if (height > 0 && width < this.width - 1) {
-        if (frontBuffer[height - 1][width + 1] === inverse) {
-          return true;
+        if (frontBuffer[height - 1][width + 1] === 1) {
+          neighbors++;
         }
       }
       // Checking East
       if (width < this.width - 1) {
-        if (frontBuffer[height][width + 1] === inverse) {
-          return true;
+        if (frontBuffer[height][width + 1] === 1) {
+          neighbors++;
         }
       }
       // Checking SouthEast
       if (height < this.height - 1 && width < this.width - 1) {
-        if (frontBuffer[height + 1][width + 1] === inverse) {
-          return true;
+        if (frontBuffer[height + 1][width + 1] === 1) {
+          neighbors++;
         }
       }
       // Checking South
       if (height < this.height - 1) {
-        if (frontBuffer[height + 1][width] === inverse) {
-          return true;
+        if (frontBuffer[height + 1][width] === 1) {
+          neighbors++;
         }
       }
       // Checking SouthWest
       if (height < this.height - 1 && width > 0) {
-        if (frontBuffer[height + 1][width - 1] === inverse) {
-          return true;
+        if (frontBuffer[height + 1][width - 1] === 1) {
+          neighbors++;
         }
       }
-
-      for (let row = 0; row < this.height; row++) {
-        for (let column = 0; column < this.width; column++) {
-          if (checkNeighbors.call(this, height, width) {
-
-          })
-        }
-      }
-
+      return neighbors;
     }
+
+    for (let row = 0; row < this.height; row++) {
+      for (let column = 0; column < this.width; column++) {
+        const neighbors = checkNeighbors.call(this, row, column);
+        if (frontBuffer[row][column] === 1) {
+          if (neighbors < 2 || neighbors > 3) backBuffer[row][column] = 0;
+          else backBuffer[row][column] = 1;
+        } else {
+          if (neighbors === 3) backBuffer[row][column] = 1;
+          else backBuffer[row][column] = 0;
+        }
+      }
+    }
+
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1: 0;
   }
 }
 
