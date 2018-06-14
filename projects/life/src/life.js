@@ -2,7 +2,7 @@
  * Implemention of a CCA
  */
 
-const MODULO = 5;
+const MODULO = 3;
 
 /**
  * Make a 2D array helper function
@@ -112,8 +112,7 @@ class Life {
         }
       };
 
-      // After fixing ^^, add another color
-
+    
       // West
       if (col > 0) {
         colorSwitch(currentBuffer[row][col - 1]);
