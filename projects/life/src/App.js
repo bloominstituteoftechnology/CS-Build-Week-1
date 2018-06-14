@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Life from './life';
 import './App.css';
 
 /**
  * Life canvas
  */
+const canvasWidth = 500;
 const canvasHeight = 300;
-const canvasWidth = 400;
 
 class LifeCanvas extends Component {
   /**
@@ -14,8 +14,9 @@ class LifeCanvas extends Component {
    */
   constructor(props) {
     super(props);
+    this.state = { animating: false };
 
-    this.life = new Life(props.width, props.height);
+    this.life = new Life(canvasWidth, canvasHeight);
     this.life.randomize();
   }
 
@@ -63,10 +64,16 @@ class LifeCanvas extends Component {
     //     screenBuffer[i] = 255;
     //   }
     // }
-    console.log(cells);
-    console.log(screenBuffer);
     ctx.putImageData(imageData, 0, 0);
-    // this.animFrame();
+    // ctx.imageSmoothingEnabled = false;
+    // ctx.drawImage(canvas, 0, 0, 7 * canvas.width, 7 * canvas.height);
+    this.life.step();
+
+    requestAnimationFrame(() => {
+      if (this.state.animating) {
+        this.animFrame();
+      }
+    });
   }
 
   /**
@@ -74,13 +81,30 @@ class LifeCanvas extends Component {
    */
   render() {
     return (
-      <canvas
-        ref="canvas"
-        width={this.props.width}
-        height={this.props.height}
-      />
+      <div class="main" style={{ width: canvasWidth }}>
+        <canvas
+          ref="canvas"
+          width={this.props.width}
+          height={this.props.height}
+        />
+        <button
+          onClick={() => {
+            this.setState({ animating: !this.state.animating });
+            this.animFrame();
+          }}
+        >
+          {this.state.animating ? 'Pause' : 'Play'}
+        </button>
+        <button onClick={() => this.restartGame()}>Restart Game</button>
+      </div>
     );
   }
+  restartGame = () => {
+    this.setState({ animating: false });
+    this.life = new Life(canvasWidth, canvasHeight);
+    this.life.randomize();
+    this.animFrame();
+  };
 }
 
 /**
@@ -92,7 +116,7 @@ class LifeApp extends Component {
    */
   render() {
     return (
-      <div>
+      <div class="lifeCanvas">
         <LifeCanvas width={canvasWidth} height={canvasHeight} />
       </div>
     );
