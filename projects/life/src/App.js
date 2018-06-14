@@ -1,9 +1,9 @@
+
 import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
 /**
- * // WIP
  * Life canvas
  */
 class LifeCanvas extends Component {
@@ -29,16 +29,45 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
-    //
-    // !!!! IMPLEMENT ME !!!!
-    //
+    let width = this.props.width;
+    let height = this.props.height;
+
+    // Update life and get cells
+    let cells = this.life.getCells();
+
+    // Get canvas framebuffer, a packed RGBA array
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, width, height);
+
+    // Convert the cell values into white or black for the canvas
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+
+        // Index needs to be multiplied by 4 because there are 4 array
+        // entries per pixel, Red, Green, Blue, and Alpha:
+        let index = (y * width + x) * 4;
+
+        let lifeStatus = cells[y][x];
+        let color = lifeStatus === 0? 0xFF: 0x00;
+
+        // FYI: Alpha channel controls how transparent a pixel is.
+
+        imageData.data[index + 0] = color; // Red channel
+        imageData.data[index + 1] = color; // Green channel
+        imageData.data[index + 2] = color; // Blue channel
+        imageData.data[index + 3] = 0xff;  // Alpha channel, 0xff = opaque
+      }
+    }
+
+    // Put the new image data back on the canvas
+    ctx.putImageData(imageData, 0, 0);
+    
+    // Next generation of life
+    this.life.step();
 
     // Request another animation frame
-    // Update life and get cells
-    // Get canvas framebuffer, a packed RGBA array
-    // Convert the cell values into white or black for the canvas
-    // Put the new image data back on the canvas
-    // Next generation of life
+    requestAnimationFrame(() => {this.animFrame()});
   }
 
   /**
@@ -60,7 +89,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={2400} height={1200} />
       </div>
     )
   }
