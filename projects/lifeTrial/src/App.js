@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
-
 // CONWAYS TRANSFER
 const canvasWidth = 400;
 const canvasHeight = 300;
+let clicked = true;
 
 const COLORS = [
   [0, 0, 0],
@@ -60,37 +60,39 @@ class LifeCanvas extends Component {
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
-    let canvas = this.refs.canvas;
-    let ctx = canvas.getContext('2d');
+    if (clicked) {
+      let canvas = this.refs.canvas;
+      let ctx = canvas.getContext('2d');
 
-    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    let cells = this.life.getCells();
+      let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      let cells = this.life.getCells();
 
-    // Here is the screen buffer array we can manipulate
-    let screenBuffer = imageData.data;
-    
-    for(let height = 0; height < canvasHeight; height++) {
-      for(let width = 0; width < canvasWidth; width++) {
-        // convert xy to index
-        let index = (height * canvasWidth + width) * 4;
+      // Here is the screen buffer array we can manipulate
+      let screenBuffer = imageData.data;
 
-        let ccaStatus = cells[height][width];
+      for (let height = 0; height < canvasHeight; height++) {
+        for (let width = 0; width < canvasWidth; width++) {
+          // convert xy to index
+          let index = (height * canvasWidth + width) * 4;
 
-        // change pixels at index to match ccaStatus
-        screenBuffer[index + 0] = COLORS[ccaStatus][0];
-        screenBuffer[index + 1] = COLORS[ccaStatus][1];
-        screenBuffer[index + 2] = COLORS[ccaStatus][2];
-        screenBuffer[index + 3] = 255;
+          let ccaStatus = cells[height][width];
+
+          // change pixels at index to match ccaStatus
+          screenBuffer[index + 0] = COLORS[ccaStatus][0];
+          screenBuffer[index + 1] = COLORS[ccaStatus][1];
+          screenBuffer[index + 2] = COLORS[ccaStatus][2];
+          screenBuffer[index + 3] = 255;
+        }
       }
+
+      // console.log('screenBuffer in animFrand: ', screenBuffer);
+
+      ctx.putImageData(imageData, 0, 0);
+
+
+      // Stepping the simulation forward
+      this.life.step();
     }
-
-    // console.log('screenBuffer in animFrand: ', screenBuffer);
-
-    ctx.putImageData(imageData, 0, 0);
-
-
-    // Stepping the simulation forward
-    this.life.step();
     requestAnimationFrame(() => {
       this.animFrame();
     });
@@ -100,7 +102,12 @@ class LifeCanvas extends Component {
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <div>
+        <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+        <button onClick={() => { clicked = clicked ? false : true }}>Start/Stop</button>
+      </div>
+    );
   }
 }
 
