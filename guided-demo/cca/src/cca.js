@@ -2,7 +2,7 @@
  * Implemention of a CCA
  */
 
-const MODULO = 8;
+const MODULO = 2;
 
 /**
  * Make a 2D array helper function
@@ -21,15 +21,15 @@ function Array2D(width, height) {
 /**
  * CCA class
  */
-class CCA {
+class Life {
   /**
    * Constructor
    */
   constructor(width, height) {
+    this.currentBufferIndex = 0;
     this.width = width;
     this.height = height;
     this.cells = [Array2D(width, height), Array2D(width, height)];
-    this.currentBufferIndex = 0;
     this.randomize();
     this.clear();
   }
@@ -67,46 +67,53 @@ class CCA {
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
     //see if we have a neighbor that can affect this cell (change its color)
-     function hasInfectiousNeigbour(height, width) {
-      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
-      //West
-      if (width > 0) {
-        if (currentBuffer[height][width - 1] === nextValue) {
-          return true;
+    function countNeighbors(row, col) {
+      let neighborCount = 0;
+      //neighbor logic
+      for(let rowOffset = - 1; rowOffset <= 1; rowOffset++){
+        let rowPos = row + rowOffset;
+        //check for out of bounds
+        if(rowPos <= 0 || rowPos === this.height){
+          continue;
+        }
+        for(let colOffset = -1; colOffset <= 1; colOffset++){
+          let colPos = col + colOffset;
+          //check for out of bounds
+          if(colPos < 0 || colPos === this.width){
+            continue;
+          }
+          //dont count this cell
+          if(colOffset === 0 && rowOffset === 0){
+            continue;
+          }
+          if(currentBuffer[rowPos][colPos] === 1){
+            neighborCount++;
+          }
         }
       }
-      // North
-      if (height > 0) {
-        if (currentBuffer[height - 1][width] === nextValue) {
-          return true;
-        }
-      }
-      //East
-      if (width < this.width - 1) {
-        if (currentBuffer[height][width + 1] === nextValue) {
-          return true;
-        }
-      }
-      //South
-      if (height < this.height - 1) {
-        if (currentBuffer[height + 1][width] === nextValue) {
-          return true;
-        }
-      }
-    };
-    for(let h = 0; h < this.h; h++){
-      for(let w = 0; w < this.w; w++){
-        if(hasInfectiousNeigbour.call(this, h, w)){
-          backBuffer[h][w] = (currentBuffer[h][w] + 1) % MODULO;
+      return neighborCount;
+    }
+    for (let h = 0; h < this.h; h++) {
+      for (let w = 0; w < this.w; w++) {
+       let neighborCount = countNeighbors.call(this, h, w);
+        //cell is alive
+        if (currentBuffer[h][w] === 1) {
+          if(neighborCount < 2 || neighborCount > 3){
+            backBuffer[h][w] = 1;
         } else {
-          backBuffer[h][w] = currentBuffer[h][w];
+          backBuffer[h][w] = 1;
+        }
+      } else {
+        if(neighborCount === 3){
+          backBuffer[h][w] = 1;
+        } else {
+          backBuffer[h][w] = 0;
         }
       }
     }
     this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
-
-
+}
 }
 
-export default CCA;
+export default Life;
