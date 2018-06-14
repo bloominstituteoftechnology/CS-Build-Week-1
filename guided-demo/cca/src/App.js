@@ -62,16 +62,16 @@ class CCACanvas extends Component {
 
         let currentNumber = cells[row][col];
 
-        buffer[index + 0] = COLORS[currentNumber][0]; // Red: 0xff == 255, full intensity
-        buffer[index + 1] = COLORS[currentNumber][1]; // Green: zero intensity
-        buffer[index + 2] = COLORS[currentNumber][2]; // Blue: zero intensity
-        buffer[index + 3] = 0xff; // Alpha: 0xff == 255, fully opaque
+        buffer[index + 0] = COLORS[currentNumber][0];
+        buffer[index + 1] = COLORS[currentNumber][1]; 
+        buffer[index + 2] = COLORS[currentNumber][2]; 
+        buffer[index + 3] = 0xff; 
       }
     }
 
     ctx.putImageData(imageData, 0, 0);
 
-    //ctx.putImageData(imageData, 0, 0);
+  
     this.cca.step();
     requestAnimationFrame(() => {
       this.animFrame();
