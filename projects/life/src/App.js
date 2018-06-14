@@ -4,10 +4,12 @@ import './App.css';
 
 const COLORS = [
   [0, 0, 0],
-  [0xff, 0xB8, 0x1C] 
+  [0, 0xff, 0],
+  [0xff, 0, 0] 
 ]
-const canvasWidth = 800;
-const canvasHeight = 1000;
+const canvasWidth = 400 ;
+const canvasHeight = 400;
+let running = true;
 /**
  * Life canvas
  */
@@ -44,36 +46,38 @@ class LifeCanvas extends Component {
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
-    let canvas = this.refs.canvas;
-    
-    let ctx = canvas.getContext('2d');
-    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    let cells = this.life.getCells();
 
-    canvas.addEventListener('click', (event) => {
-      cells[event.offsetY][event.offsetX] = 1;
-      cells[event.offsetY+1][event.offsetX] = 1;   
-      cells[event.offsetY][event.offsetX+1] = 1;
-    }, false);
-    // Here is the screen buffer array we can manipulate:
-    let screenBuffer = imageData.data;
-    
-    for (let height = 0; height < canvasHeight; height++) {
-      for (let width = 0; width < canvasWidth; width++){
-        let index = (height * canvasWidth + width) * 4;
+    if (running){
+      let canvas = this.refs.canvas;
+      
+      let ctx = canvas.getContext('2d');
+      let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      let cells = this.life.getCells();
 
-        let ccaStatus = cells[height][width];
+      canvas.addEventListener('click', (event) => {
+        cells[event.offsetY][event.offsetX] = 1;
+        cells[event.offsetY+1][event.offsetX] = 1;   
+        cells[event.offsetY][event.offsetX+1] = 1;
+      }, false);
+      // Here is the screen buffer array we can manipulate:
+      let screenBuffer = imageData.data;
+      
+      for (let height = 0; height < canvasHeight; height++) {
+        for (let width = 0; width < canvasWidth; width++){
+          let index = (height * canvasWidth + width) * 4;
 
-        //change pixels
-        screenBuffer[index + 0] = COLORS[ccaStatus][0];
-        screenBuffer[index + 1] = COLORS[ccaStatus][1];
-        screenBuffer[index + 2] = COLORS[ccaStatus][2];
-        screenBuffer[index + 3] = 255;
+          let ccaStatus = cells[height][width];
+
+          //change pixels
+          screenBuffer[index + 0] = COLORS[ccaStatus][0];
+          screenBuffer[index + 1] = COLORS[ccaStatus][1];
+          screenBuffer[index + 2] = COLORS[ccaStatus][2];
+          screenBuffer[index + 3] = 255;
+        }
       }
-    }
-    ctx.putImageData(imageData, 0, 0);
-    this.life.step();
-
+      ctx.putImageData(imageData, 0, 0);
+      this.life.step();
+  }
     requestAnimationFrame(() => {
       this.animFrame()
     });
@@ -84,7 +88,17 @@ class LifeCanvas extends Component {
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+
+    return(
+      <div>
+        <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+        <div>
+          <button onClick={() => this.life.randomize()}>Randomize</button>
+          <button onClick={() => this.life.clear()}>Clear</button>
+          <button onClick={() => {running = running ? false : true }}>Start/Stop</button>
+        </div>
+      </div> 
+    )
   }
 }
 
