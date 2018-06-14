@@ -4,7 +4,7 @@
  * Implemention of a Life
  */
 
-const MODULO = 2;
+const MODULO = 3;
 
 /**
  * Make a 2D array helper function
@@ -87,7 +87,7 @@ class Life {
 
       for (let rowOffset = -1; rowOffset <= 1; rowOffset++){
         let rowPos = row + rowOffset;
-        if(rowPos < 0 || rowPos === this.height){
+        if(rowPos < 1 || rowPos === this.height){
           continue;
         }
 
@@ -116,6 +116,11 @@ class Life {
          let lifeCount = hasLife.call(this, height, width)
          
         //  console.log(lifeCount)
+
+          if(currentBuffer[height][width] === 2){
+            backBuffer[height][width] = 2;
+          }
+          else{
           if(currentBuffer[height][width] === 1){
 
             // console.log('currentBuffer')
@@ -128,6 +133,7 @@ class Life {
             }
             
           }
+        
           else {
             if(lifeCount === 3){
               backBuffer[height][width] = 1;
@@ -136,6 +142,7 @@ class Life {
               backBuffer[height][width] = 0;
             }
           }
+        }
         }
       }  
       this.currentBufferIndex = this.currentBufferIndex === 0? 1: 0;
