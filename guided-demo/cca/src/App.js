@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Life from './cca';
 import './App.css';
 
+const canvasWidth = 400;
+const canvasHeight = 300;
+
 const COLORS = [
   [0, 0, 0],
   [0xff, 0xff, 0],
@@ -13,8 +16,13 @@ const COLORS = [
   [0xff, 0x5f, 0x7f],
 ]
 
-const canvasWidth = 400;
-const canvasHeight = 300;
+// const COLORS = [
+//   [255, 255, 255],
+//   [150, 0, 0], // red
+//   [0, 150, 0], // green
+//   [0, 0, 150], // blue
+//   [0, 0, 0], // black
+// ]
 
 /**
  * CCA canvas
