@@ -104,8 +104,8 @@ class LifeCanvas extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={canvasWidth} height={canvasHeight} />
-          <button onClick={() => { clicked = clicked ? false : true }}>Start/Stop</button>
+        <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+        <button onClick={() => { clicked = clicked ? false : true }}>Start/Stop</button>
       </div>
     );
   }
