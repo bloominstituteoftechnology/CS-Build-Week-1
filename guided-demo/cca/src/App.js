@@ -4,6 +4,7 @@ import './App.css';
 
 const canvasWidth = 400;
 const canvasHeight = 300;
+let flag = true;
 
 const COLORS = [
   [0, 0, 0],
@@ -64,7 +65,6 @@ class CCACanvas extends Component {
         screenBuffer[index + 3] = 255;
       }
     }
-
     ctx.putImageData(imageData, 0, 0);
     this.cca.step();
 

@@ -45,10 +45,16 @@ class LifeCanvas extends Component {
     // Put the new image data back on the canvas
     // Next generation of life
     let canvas = this.refs.canvas;
+    
     let ctx = canvas.getContext('2d');
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let cells = this.life.getCells();
 
+    canvas.addEventListener('click', (event) => {
+      cells[event.offsetY][event.offsetX] = 1;
+      cells[event.offsetY+1][event.offsetX] = 1;   
+      cells[event.offsetY][event.offsetX+1] = 1;
+    }, false);
     // Here is the screen buffer array we can manipulate:
     let screenBuffer = imageData.data;
     
