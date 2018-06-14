@@ -97,8 +97,9 @@ class CCA {
         }
       }
       if(height < this.height - 1){
-        if(currentBuffer[height + 1][width] === nextVal)
-        return true;
+        if(currentBuffer[height + 1][width] === nextVal){
+          return true;
+        }
       }
     }
       for (let height = 0; height < this.height; height++){
