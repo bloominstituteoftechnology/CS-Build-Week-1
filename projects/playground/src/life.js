@@ -1,7 +1,7 @@
 /**
  * Implementation of Conway's game of Life
  */
-const MODULO = 2;
+const MODULO = 6;
 
 function Array2D(width, height) {
   //NOTE:  Iterate through Array2D row first then column
@@ -82,7 +82,7 @@ class Life {
         if (rowPos < 0 || rowPos === this.height) {
           continue;
         }
-        for (let colOffset = -1; colOffset <= 1; colOffset++) {
+        for (let colOffset = -3; colOffset <= 1; colOffset++) {
           let colPos = col + colOffset;
           if (colPos < 0 || colPos === this.width) {
             continue;
