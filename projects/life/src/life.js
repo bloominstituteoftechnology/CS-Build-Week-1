@@ -30,7 +30,13 @@ class Life {
     this.height = height;
 
     // Double buffer now, one that is active, the other compiling
-    this.cells = [Array2D(width, height), Array2D(width, height)]; // Will create a 2 Dimentional grid for us to put cells in
+    // Will create a 2 Dimentional grids which will overlay one
+    // another after being manipulated in order to give this movie
+    // like effect.  Each grid is the exact height and width assigned
+    // from App.js.  Each value in the grif is either 1 or 0 - either
+    // 'black' or 'yellow' - see COLORS variable in App.js.
+    this.cells = [Array2D(width, height), Array2D(width, height)];
+    console.log(`this.cells`, this.cells);
     this.currentBufferIndex = 0;
     this.randomize(); // Then call randomize on the above
 
