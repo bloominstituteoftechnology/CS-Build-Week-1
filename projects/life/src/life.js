@@ -3,9 +3,6 @@
  */
 const MODULO = 2;
 
-/**
- * Make a 2D array helper function
- */
 function Array2D(width, height) {
   //NOTE:  Iterate through Array2D row first then column
   let a = new Array(height);
@@ -76,47 +73,47 @@ class Life {
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
 
-    function hasInfectiousNeighbor(height, width) {
-      if (currentBuffer === undefined) {
-        console.log('BROKEN!');
-      }
+    function countNeighbors(row, col) {
+      let neighborCount = 0;
 
-      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
-      // West
-      if (width > 0) {
-        if (currentBuffer[height][width - 1] === nextValue) {
-          return true;
-        }
-      }
+      // Treat neighbors off the grid as dead cells
 
-      // NorthWest
-
-      // North
-      if (height > 0) {
-        if (currentBuffer[height - 1][width] === nextValue) {
-          return true;
+      for (let rowOffset = -1; rowOffset <= 1; rowOffset++) {
+        let rowPos = row + rowOffset;
+        if (rowPos < 0 || rowPos === this.height) {
+          continue;
+        }
+        for (let colOffset = -1; colOffset <= 1; colOffset++) {
+          let colPos = col + colOffset;
+          if (colPos < 0 || colPos === this.width) {
+            continue;
+          }
+          if (colOffset === 0 && rowOffset === 0) {
+            continue;
+          }
+          if (currentBuffer[rowPos][colPos] === 1) {
+            neighborCount++;
+          }
         }
       }
-      // East
-      if (width < this.width - 1) {
-        if (currentBuffer[height][width + 1] === nextValue) {
-          return true;
-        }
-      }
-      // South
-      if (height < this.height - 1) {
-        if (currentBuffer[height + 1][width] === nextValue) {
-          return true;
-        }
-      }
+      return neighborCount;
     }
 
     for (let h = 0; h < this.height; h++) {
       for (let w = 0; w < this.width; w++) {
-        if (hasInfectiousNeighbor.call(this, h, w)) {
-          backBuffer[h][w] = (currentBuffer[h][w] + 1) % MODULO;
+        let neighborCount = countNeighbors.call(this, h, w);
+        if (currentBuffer[(h, w)] === 1) {
+          if (neighborCount < 2 || neighborCount > 3) {
+            backBuffer[h][w] = 0;
+          } else {
+            backBuffer[h][w] = 1;
+          }
         } else {
-          backBuffer[h][w] = currentBuffer[h][w];
+          if (neighborCount === 3) {
+            backBuffer[h][w] = 1;
+          } else {
+            backBuffer[h][w] = 0;
+          }
         }
       }
     }
