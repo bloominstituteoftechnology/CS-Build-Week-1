@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
+const canvasWidth = 600;
+const canvasHeight = 400;
+
 /**
  * Life canvas
  */
 class LifeCanvas extends Component {
-
   /**
    * Constructor
    */
@@ -21,7 +23,9 @@ class LifeCanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
@@ -31,20 +35,57 @@ class LifeCanvas extends Component {
     //
     // !!!! IMPLEMENT ME !!!!
     //
-
     // Request another animation frame
     // Update life and get cells
     // Get canvas framebuffer, a packed RGBA array
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let cells = this.life.getCells();
+    let buffer = imageData.data;
+
+    for (let h = 0; h < canvasHeight; h++) {
+      for (let w = 0; w < canvasWidth; w++) {
+        let index = (h * canvasWidth + w) * 4;
+
+        if (cells[h][w] === 0) {
+          buffer[index + 0] = 255;
+          buffer[index + 1] = 255;
+          buffer[index + 2] = 255;
+          buffer[index + 3] = 255;
+        } else if (cells[h][w] === 1) {
+          buffer[index + 0] = 0;
+          buffer[index + 1] = 0;
+          buffer[index + 2] = 0;
+          buffer[index + 3] = 255;
+        }
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    // ctx.imageSmoothingEnabled = false;
+    // ctx.drawImage(canvas, 0, 0, 3 * canvas.width, 3 * canvas.height);
+
+    this.life.step();
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <canvas
+        ref="canvas"
+        width={this.props.width}
+        height={this.props.height}
+      />
+    );
   }
 }
 
@@ -52,16 +93,15 @@ class LifeCanvas extends Component {
  * Life holder component
  */
 class LifeApp extends Component {
-
   /**
    * Render
    */
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={canvasWidth} height={canvasHeight} />
       </div>
-    )
+    );
   }
 }
 
@@ -69,7 +109,6 @@ class LifeApp extends Component {
  * Outer App component
  */
 class App extends Component {
-
   /**
    * Render
    */
