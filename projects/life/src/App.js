@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
-const canvasWidth = 800;
-const canvasHeight = 600;
+const canvasWidth = 2;
+const canvasHeight = 2;
 
 const COLORS = [[0, 0, 0], [0xe6, 0xe6, 0xfa]];
 
@@ -57,6 +57,7 @@ class LifeCanvas extends Component {
         const index = (height * canvasWidth + width) * 4; // should be taking and converting our xy grid into that 123412341234...????
 
         const lifeStatus = cells[height][width];
+        console.log('lifeStatus:', lifeStatus);
 
         // change pixels at index to match lifeStatus
         screenBuffer[index + 0] = COLORS[lifeStatus][0]; // R
@@ -71,8 +72,8 @@ class LifeCanvas extends Component {
     ctx.putImageData(imageData, 0, 0);
 
     // Updates / Step the simulation forward:
-    this.life.step();
-    requestAnimationFrame(() => this.animFrame());
+    // this.life.step();
+    // requestAnimationFrame(() => this.animFrame());
   }
   /**
    * Render
