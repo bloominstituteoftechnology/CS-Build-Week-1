@@ -45,6 +45,11 @@ class LifeCanvas extends Component {
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let cells = this.life.getCells();
 
+    if (cells[0][0]) {
+      this.life.clear();
+      this.life.randomize();
+    }
+
     let screenBuffer = imageData.data;
 
     for (let height = 0; height < this.props.height; height++) {
