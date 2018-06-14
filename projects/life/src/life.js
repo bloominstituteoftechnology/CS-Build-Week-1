@@ -113,7 +113,9 @@ class Life {
 
       if (currentBuffer[height][width] === 0){
         if (count === 3)
-          return 1
+          return 1;
+        if (Math.random() < .001)
+          return 1;
       }
 
       if (currentBuffer[height][width] === 1){
@@ -124,6 +126,8 @@ class Life {
       }
 
       if (currentBuffer[height][width] === 2){ // mutate all living neighbors
+        if (Math.random() <= .01)
+          return 1;
         if (height < this.height - 1){  
           if (currentBuffer[height + 1][width])
             backBuffer[height + 1][width] = 2;

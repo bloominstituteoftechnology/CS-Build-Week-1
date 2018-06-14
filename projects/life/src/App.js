@@ -55,9 +55,9 @@ class LifeCanvas extends Component {
       let cells = this.life.getCells();
 
       canvas.addEventListener('click', (event) => {
-        cells[event.offsetY][event.offsetX] = 1;
-        cells[event.offsetY+1][event.offsetX] = 1;   
-        cells[event.offsetY][event.offsetX+1] = 1;
+        cells[event.offsetY][event.offsetX] = 2;
+        cells[event.offsetY+1][event.offsetX] = 2;   
+        cells[event.offsetY][event.offsetX+1] = 2;
       }, false);
       // Here is the screen buffer array we can manipulate:
       let screenBuffer = imageData.data;
