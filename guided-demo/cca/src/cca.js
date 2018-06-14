@@ -47,7 +47,7 @@ class CCA {
    * This should NOT be modified by the caller
    */
   getCells() {
-    return this.cells;
+    return this.cells[this.currentBufferIndex];
   }
 
   /**
@@ -71,6 +71,53 @@ class CCA {
    * Run the simulation for a single step
    */
   step() {
+    let currentBuffer = this.cells[this.currentBufferIndex];
+    let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1: 0];
+    
+    // See if we have a neighbor that can infect this cell and change it's color
+    function hasInfectiousNeighbor(height, width) {
+      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
+
+      // West
+      if (width > 0) {
+        if (currentBuffer[height][width - 1] === nextValue) {
+          return true;
+        }
+      }
+
+      // North
+      if (height > 0) {
+        if (currentBuffer[height - 1][width] === nextValue) {
+          return true;
+        }
+      }
+
+      // East
+      if (width < this.width - 1) {
+        if (currentBuffer[height][width + 1] === nextValue) {
+          return true;
+        }
+      }
+
+      // South
+      if (height < this.height - 1) {
+        if (currentBuffer[height + 1][width] === nextValue) {
+          return true;
+        }
+      }
+    }
+
+    for(let h = 0; h < this.height; h++) {
+      for(let w = 0; w < this.width; w++) {
+        if (hasInfectiousNeighbor.call(this, h, w)) {
+          backBuffer[h][w] = (currentBuffer[h][w] + 1) % MODULO;
+        } else {
+          backBuffer[h][w] = currentBuffer[h][w];
+        }
+      }
+    }
+
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1: 0;
   }
 }
 

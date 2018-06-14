@@ -68,6 +68,8 @@ class CCACanvas extends Component {
     // console.log('screenBuffer in animFrand: ', screenBuffer);
 
     ctx.putImageData(imageData, 0, 0);
+
+    this.cca.step();
   }
 
   /**
