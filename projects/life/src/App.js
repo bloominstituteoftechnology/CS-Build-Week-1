@@ -20,6 +20,7 @@ class LifeCanvas extends Component {
 
     this.life = new Life(props.width, props.height);
     this.life.randomize();
+    this.lifeIsRunning = true;                         // Used in pausing the game
   }
 
   /**
@@ -29,6 +30,35 @@ class LifeCanvas extends Component {
     requestAnimationFrame(() => {this.animFrame()});
   }
 
+  /**
+   * Toggle animation on and off
+   */
+  toggleAnimation = () => {
+    if (this.lifeIsRunning) this.lifeIsRunning = false;
+    else {
+      this.lifeIsRunning = true;
+      requestAnimationFrame(() => {this.animFrame()});
+    }
+  }
+  
+  /**
+   * Start a new game
+   */
+  newGame = () => {
+    this.lifeIsRunning = true;
+    this.life.randomize();
+    requestAnimationFrame(() => {this.animFrame()});
+  }
+
+  /**
+   * Clear the game canvas
+   */
+  clearGame = () => {
+    this.lifeIsRunning = false;
+    this.life.clear();
+    // requestAnimationFrame(() => {this.animFrame()});
+  }
+  
   /**
    * Handle an animation frame
    */
@@ -44,8 +74,11 @@ class LifeCanvas extends Component {
     for (let height = 0; height < canvas.height; height++) {
       for (let width = 0; width < canvas.width; width++) {
         let index = (height * canvas.width + width) * 4;
+        // Update life and get cells
         let lifeStatus = cells[height][width];
 
+        // Get canvas framebuffer, a packed RGBA array
+        // Convert the cell values into white or black for the canvas
         screenBuffer[index + 0] = COLORS[lifeStatus][0];
         screenBuffer[index + 1] = COLORS[lifeStatus][1];
         screenBuffer[index + 2] = COLORS[lifeStatus][2];
@@ -53,24 +86,31 @@ class LifeCanvas extends Component {
       }
     }
 
+    // Put the new image data back on the canvas
     ctx.putImageData(imageData, 0, 0);
 
-    this.life.step();
-    requestAnimationFrame(() => {this.animFrame()});
+    // Check to see if the game has been paused
+    if (this.lifeIsRunning) {
+      // Next generation of life
+      this.life.step();
+      requestAnimationFrame(() => {this.animFrame()});
+    }
 
     // Request another animation frame
-    // Update life and get cells
-    // Get canvas framebuffer, a packed RGBA array
-    // Convert the cell values into white or black for the canvas
-    // Put the new image data back on the canvas
-    // Next generation of life
   }
 
   /**
    * Render
    */
   render() {
-    return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+    return (
+      <div>
+        <canvas ref="canvas" width={this.props.width} height={this.props.height} /><br />
+        <button onClick={this.newGame}>New Life</button>&nbsp;
+        <button onClick={this.toggleAnimation}>Start / Stop</button>&nbsp;
+        <button onClick={this.clearGame}>Clear Game</button>
+      </div>
+    )
   }
 }
 
@@ -79,13 +119,14 @@ class LifeCanvas extends Component {
  */
 class LifeApp extends Component {
 
+
   /**
    * Render
    */
   render() {
     return (
       <div>
-        <LifeCanvas width={400} height={300} />
+        <LifeCanvas width={400} height={300}/>
       </div>
     )
   }

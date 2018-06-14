@@ -63,7 +63,7 @@ class Life {
   /**
    * Randomize the life grid
    */
-  randomize() {
+  randomize = () => {
     for (let height = 0; height < this.height; height++) {
       for (let width = 0; width < this.width; width++) {
         this.cells[this.currentBufferIndex][height][width] = (Math.random() * MODULO) | 0;
@@ -82,9 +82,6 @@ class Life {
     
     function countNeighbors(height, width) {
       let neighborCount = 0;
-      // find the number of living neighbors
-      // check if at top or bottom edge; if so, continue to next iteration
-      // check if at left or right edge, if so, continue to next iteration
 
       // NW
       if (height > 0) {
