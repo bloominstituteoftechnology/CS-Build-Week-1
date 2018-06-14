@@ -3,14 +3,12 @@ import Life from './life';
 import './App.css';
 
 const COLORS = [
-  [0, 0, 0],
-  [0x8f, 0, 0x5f],
-  [0x5f, 0, 0x8f],
-  [0, 0, 0xff],
-  [0, 0x5f, 0x7f],
-  [0x5f, 0x8f, 0x7f],
-  [0x8f, 0xff, 0x7f],
-  [0xff, 0x5f, 0x7f],
+  [255, 255, 255],
+  [150, 0, 0], // red
+  [0, 150, 0], // green
+  [0, 0, 150], // blue
+  [0, 0, 0], // black
+
 ]
 /**
  * Life canvas
@@ -24,14 +22,16 @@ class LifeCanvas extends Component {
     super(props);
 
     this.life = new Life(props.width, props.height);
-    this.life.randomize();
+  
   }
 
   /**
    * Component did mount
    */
   componentDidMount() {
-    requestAnimationFrame(() => {this.animFrame()});
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
@@ -40,37 +40,48 @@ class LifeCanvas extends Component {
   animFrame() {
     //
     // !!!! IMPLEMENT ME !!!!
-    //
-      let canvas = this.refs.canvas;
+    ///  
     // Request another animation frame
-    let cells = this.life.getCells();
     // Update life and get cells
-    let ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0,0,this.props.width, this.props.height);
-    let imageData = ctx.getImageData(0,0, canvas.width, canvas.height);
     // Get canvas framebuffer, a packed RGBA array
     // Convert the cell values into white or black for the canvas
-    let buffer = imageData.data; // Obtained from getImageData()
+    let cells = this.life.getCells();
+    let canvas = this.refs.canvas;
+    
+    let ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, this.props.width, this.props.height);
+    let imageData = ctx.getImageData(0,0, canvas.width, canvas.height);
 
     for(let row = 0; row < this.props.height; row++) {
-      for(let col = 0; col < this.props.width; col++){
+      for(let col = 0; col < this.props.width; col++) {
         let index = (row * this.props.width + col) * 4;
 
         let currentNumber = cells[row][col];
 
-        buffer[index + 0] = COLORS[currentNumber][0]; // Red: 0xff == 255, full intensity
-        buffer[index + 1] = COLORS[currentNumber][1]; // Green: zero intensity
-        buffer[index + 2] = COLORS[currentNumber][2]; // Blue: zero intensity
-        buffer[index + 3] = 0xff; // Alpha: 0xff == 255, fully opaque
+        imageData.data[index + 0] = COLORS[currentNumber][0];
+        imageData.data[index + 1] = COLORS[currentNumber][1];
+        imageData.data[index + 2] = COLORS[currentNumber][2];
+        imageData.data[index + 3] =  0xff;
+        // buffer[index + 0] = 0; // Red: 0xff == 255, full intensity
+        // buffer[index + 1] = 0xff; // Green: zero intensity
+        // //buffer[index + 2] = 255; // Blue: zero intensity
+        // //buffer[index + 3] = 0xff; // Alpha: 0xff == 255, fully opaque
       }
     }
-    // Put the new image data back on the canvas
+   
     ctx.putImageData(imageData, 0, 0);
-    this.life.step();
-    // Next generation of life
-   requestAnimationFrame(() => {this.animFrame()});
 
+    this.life.step();
+
+    // Next generation of life
+   requestAnimationFrame(() => {
+     this.animFrame();
+
+    });
+    // setTimeout(() => {
+    //   requestAnimationFrame(() => {this.animFrame()});
+    // }, 1000/framerate);
   }
 
   /**
@@ -92,7 +103,7 @@ class LifeApp extends Component {
   render() {
     return (
       <div>
-        <LifeCanvas width={800} height={600} />
+        <LifeCanvas width={400} height={600} />
       </div>
     )
   }
