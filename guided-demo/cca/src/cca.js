@@ -29,10 +29,11 @@ class CCA {
     this.width = width;
     this.height = height;
 
-    this.cells = Array2D(width, height);
-    this.randomize();
+    this.cells = [Array2D(width, height), Array2D(width, height)];
 
-    console.log('cells array', this.cells);
+    this.currentBufferIndex = 0;
+
+    this.randomize();
 
     this.clear();
   }
@@ -42,7 +43,9 @@ class CCA {
    *
    * This should NOT be modified by the caller
    */
-  getCells() {}
+  getCells() {
+    return this.cells[this.currentBufferIndex];
+  }
 
   /**
    * Clear the cca grid
@@ -55,7 +58,8 @@ class CCA {
   randomize() {
     for (let height = 0; height < this.height; height++) {
       for (let width = 0; width < this.width; width++) {
-        this.cells[height][width] = (Math.random() * MODULO) | 0;
+        this.cells[this.currentBufferIndex][height][width] =
+          (Math.random() * MODULO) | 0;
       }
     }
   }
@@ -63,7 +67,55 @@ class CCA {
   /**
    * Run the simulation for a single step
    */
-  step() {}
+  step() {
+    let currentBuffer = this.cells[this.currentBufferIndex];
+    let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
+
+    // see if neighbor can infect cell and change its color
+    function hasInfectiousNeighbor(height, width) {
+      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
+      // West
+      if (width > 0) {
+        if (currentBuffer[height][width - 1] === nextValue) {
+          return true;
+        }
+      }
+
+      // North
+      if (height > 0) {
+        if (currentBuffer[height - 1][width] === nextValue) {
+          return true;
+        }
+      }
+
+      // East
+      if (width < this.width - 1) {
+        if (currentBuffer[height][width + 1] === nextValue) {
+          return true;
+        }
+      }
+
+      // South
+      if (height < this.height - 1) {
+        if (currentBuffer[height + 1][width] === nextValue) {
+          return true;
+        }
+      }
+    }
+
+    for (let height = 0; height < this.height; height++) {
+      for (let width = 0; width < this.width; width++) {
+        if (hasInfectiousNeighbor.call(this, height, width)) {
+          backBuffer[height][width] =
+            (currentBuffer[height][width] + 1) % MODULO;
+        } else {
+          backBuffer[height][width] = currentBuffer[height][width];
+        }
+      }
+    }
+
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+  }
 }
 
 export default CCA;

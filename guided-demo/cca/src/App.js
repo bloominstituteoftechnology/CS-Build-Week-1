@@ -33,7 +33,7 @@ class CCACanvas extends Component {
    * Component did mount
    */
   componentDidMount() {
-    this.animFrame();
+    requestAnimationFrame(() => this.animFrame());
   }
 
   /**
@@ -44,21 +44,29 @@ class CCACanvas extends Component {
     let ctx = canvas.getContext('2d');
 
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let cells = this.cca.getCells();
 
     // Here is the screen buffer array we can manipulate:
 
     let screenBuffer = imageData.data;
 
-    for (let i = 0; i < 1000; i += 4) {
-      screenBuffer[i + 0] = 0; //R
-      screenBuffer[i + 1] = 0; //G
-      screenBuffer[i + 2] = 0; //B
-      screenBuffer[i + 3] = 255; //A
+    for (let height = 0; height < canvasHeight; height++) {
+      for (let width = 0; width < canvasWidth; width++) {
+        let index = (height * canvasWidth + width) * 4;
+        let ccaStatus = cells[height][width];
+
+        screenBuffer[index + 0] = COLORS[ccaStatus][0];
+        screenBuffer[index + 1] = COLORS[ccaStatus][1];
+        screenBuffer[index + 2] = COLORS[ccaStatus][2];
+        screenBuffer[index + 3] = 255;
+      }
     }
 
-    console.log('screenBuffer in animFrame: ', screenBuffer);
-
     ctx.putImageData(imageData, 0, 0);
+
+    // Step simulation forward
+    this.cca.step();
+    requestAnimationFrame(() => this.animFrame());
   }
 
   /**
