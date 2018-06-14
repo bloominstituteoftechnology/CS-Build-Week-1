@@ -71,21 +71,43 @@ class Life {
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
 
-    function countNeighbors(height, width) {
+    function countNeighbors(row, col) {
       let neighborCount = 0;
 
-      for (let h = 0; h < this.height; h++) {
-        for (let w = 0; w < this.width; w++) {
-          if (hasInfectiousNeighbor.call(this, h, w)) {
-            backBuffer[h][w] = (currentBuffer[h][w] + 1) % MODULO;
-          } else {
-            backBuffer[h][w] = currentBuffer[h][w];
+      for (let rowOffset = -1; rowOffset <= 1; rowOffset++) {
+        let rowPos = row + rowOffset;
+
+        // Checking for row out-of-bounds
+        if (rowPos < 0 || rowPos === this.height) {
+          continue;
+        }
+
+        for (let colOffset = -1; colOffset <= 1; colOffset++) {
+          let colPos = col + colOffset;
+
+          // Checking for col out-of-bounds
+          if (colPos < 0 || colPos === this.width) {
+            continue;
+          } else if (colOffset === 0 && rowOffset === 0) { // Current cell
+            continue;
+          }
+
+          // Now we can count for neighbors
+          if (currentBuffer[rowPos][colPos] === 1) {
+            neighborCount++;
           }
         }
       }
+    };
 
-      this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+    for (let r = 0; r < this.row; r++) {
+      for (let c = 0; c < this.col; c++) {
+        neighborCount = countNeighbors.call(this, r, c);
+      }
     }
-  }
 
-  export default Life;
+    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
+  }
+}
+
+export default Life;
