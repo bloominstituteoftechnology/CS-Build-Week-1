@@ -34,6 +34,8 @@ class Life {
 
     this.currentBufferIndex = 0;
 
+    this.randomize();
+
     this.clear();
   }
 
@@ -62,6 +64,28 @@ class Life {
    */
   randomize() {
     // !!!! IMPLEMENT ME !!!!
+    // for (let height = 0; height < this.height; height++) {
+    //   for (let width = 0; width < this.width; width++) {
+    //     if (Math.random() < 0.1) {
+    //       this.cells[this.currentBufferIndex][height][width] = 2;
+    //       const clusterSize = (Math.random() * 8) | 0;
+    //       for (let i = 0; i < clusterSize; i++) {
+    //         const colOffset = (Math.random() * 4 - 2) | 0;
+    //         const rowOffset = (Math.random() * 4 - 2) | 0;
+    //         if (height + rowOffset > 0 && height + rowOffset < this.height) {
+    //           if (width + colOffset > 0 && width + colOffset < this.width) {
+    //             this.cells[this.currentBufferIndex][height + rowOffset][
+    //               width + colOffset
+    //             ] = 2;
+    //           }
+    //         }
+    //       }
+    //     } else if (this.cells[this.currentBufferIndex][height][width] != 2) {
+    //       this.cells[this.currentBufferIndex][height][width] =
+    //         Math.random() * 2;
+    //     }
+    //   }
+    // }
     for (let height = 0; height < this.height; height++) {
       for (let width = 0; width < this.width; width++) {
         this.cells[this.currentBufferIndex][height][width] =
@@ -76,51 +100,60 @@ class Life {
   step() {
     // !!!! IMPLEMENT ME !!!!
 
-    let backBufferIndex = this;
     let currentBuffer = this.cells[this.currentBufferIndex];
     let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
 
-    function hasInfectiousNeighbor(height, width) {
-      if (currentBuffer === undefined) {
-        console.log('BROKEN!');
-      }
+    function countNeighbors(row, col) {
+      let neighborCount = 0;
 
-      const nextValue = (currentBuffer[height][width] + 1) % MODULO;
-      // West
-      if (width > 0) {
-        if (currentBuffer[height][width - 1] === nextValue) {
-          return true;
+      // Treat neighbors off the grid as dead cells
+      for (let rowOffset = -1; rowOffset <= 1; rowOffset++) {
+        let rowPos = row + rowOffset;
+        // Check for out of bounds
+        if (rowPos <= 0 || rowPos === this.height) {
+          continue;
         }
-      }
 
-      // Northwest
-
-      // North
-      if (height > 0) {
-        if (currentBuffer[height - 1][width] === nextValue) {
-          return true;
+        for (let colOffset = -1; colOffset <= 1; colOffset++) {
+          let colPos = col + colOffset;
+          // Check for out of bounds
+          if (colPos < 0 || colPos === this.width) {
+            continue;
+          }
+          // Don't count this cell
+          if (colOffset === 0 && rowOffset === 0) {
+            continue;
+          }
+          if (currentBuffer[rowPos][colPos] === 1) {
+            neighborCount++;
+          }
         }
       }
-      // East
-      if (width < this.width - 1) {
-        if (currentBuffer[height][width + 1] === nextValue) {
-          return true;
-        }
-      }
-      // South
-      if (height < this.height - 1) {
-        if (currentBuffer[height + 1][width] === nextValue) {
-          return true;
-        }
-      }
+      return neighborCount;
     }
 
     for (let h = 0; h < this.height; h++) {
       for (let w = 0; w < this.width; w++) {
-        if (hasInfectiousNeighbor.call(this, h, w)) {
-          backBuffer[h][w] = (currentBuffer[h][w] + 1) % MODULO;
+        let neighborCount = countNeighbors.call(this, h, w);
+        // If this is a tree, it stays a tree
+        if (currentBuffer[h][w] === 2) {
+          backBuffer[h][w] = 2;
         } else {
-          backBuffer[h][w] = currentBuffer[h][w];
+          // Cell is currently alive
+          if (currentBuffer[(h, w)] === 1) {
+            if (neighborCount < 2 || neighborCount > 3) {
+              backBuffer[h][w] = 0;
+            } else {
+              backBuffer[h][w] = 1;
+            }
+            // Cell is currently dead
+          } else {
+            if (neighborCount === 3) {
+              backBuffer[h][w] = 1;
+            } else {
+              backBuffer[h][w] = 0;
+            }
+          }
         }
       }
     }
