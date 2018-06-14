@@ -88,7 +88,9 @@ class Life {
           // Checking for col out-of-bounds
           if (colPos < 0 || colPos === this.width) {
             continue;
-          } else if (colOffset === 0 && rowOffset === 0) { // Current cell
+          }
+          
+          if (colOffset === 0 && rowOffset === 0) { // Current cell
             continue;
           }
 
@@ -98,11 +100,26 @@ class Life {
           }
         }
       }
+      return neighborCount;
     };
 
-    for (let r = 0; r < this.row; r++) {
-      for (let c = 0; c < this.col; c++) {
-        neighborCount = countNeighbors.call(this, r, c);
+    for (let r = 0; r < this.height; r++) {
+      for (let c = 0; c < this.width; c++) {
+        let neighborCount = countNeighbors.call(this, r, c);
+
+        if (currentBuffer[r][c] === 1) {
+          if (neighborCount < 2 || neighborCount > 3) {
+            backBuffer[r][c] = 0;
+          } else {
+            backBuffer[r][c] = 1;
+          }
+        } else {
+          if (neighborCount === 3) {
+            backBuffer[r][c] = 0;
+          } else {
+            backBuffer[r][c] = 1;
+          }
+        }
       }
     }
 

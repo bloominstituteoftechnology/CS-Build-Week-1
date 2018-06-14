@@ -4,8 +4,8 @@ import './App.css';
 
 
 // CONWAYS TRANSFER
-// const canvasWidth = 400;
-// const canvasHeight = 300;
+const canvasWidth = 400;
+const canvasHeight = 300;
 
 const COLORS = [
   [0, 0, 0],
@@ -29,8 +29,12 @@ class LifeCanvas extends Component {
   constructor(props) {
     super(props);
 
-    this.life = new Life(props.width, props.height);
-    this.life.randomize();
+    // Original
+    // this.life = new Life(props.width, props.height);
+    // this.life.randomize();
+
+    // CCA import
+    this.life = new Life(canvasWidth, canvasHeight);
   }
 
   /**
@@ -56,6 +60,40 @@ class LifeCanvas extends Component {
     // Convert the cell values into white or black for the canvas
     // Put the new image data back on the canvas
     // Next generation of life
+    let canvas = this.refs.canvas;
+    let ctx = canvas.getContext('2d');
+
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let cells = this.life.getCells();
+
+    // Here is the screen buffer array we can manipulate
+    let screenBuffer = imageData.data;
+    
+    for(let height = 0; height < canvasHeight; height++) {
+      for(let width = 0; width < canvasWidth; width++) {
+        // convert xy to index
+        let index = (height * canvasWidth + width) * 4;
+
+        let ccaStatus = cells[height][width];
+
+        // change pixels at index to match ccaStatus
+        screenBuffer[index + 0] = COLORS[ccaStatus][0];
+        screenBuffer[index + 1] = COLORS[ccaStatus][1];
+        screenBuffer[index + 2] = COLORS[ccaStatus][2];
+        screenBuffer[index + 3] = 255;
+      }
+    }
+
+    // console.log('screenBuffer in animFrand: ', screenBuffer);
+
+    ctx.putImageData(imageData, 0, 0);
+
+
+    // Stepping the simulation forward
+    this.life.step();
+    requestAnimationFrame(() => {
+      this.animFrame();
+    });
   }
 
   /**
