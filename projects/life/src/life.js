@@ -38,22 +38,28 @@ class Life {
    * This should NOT be modified by the caller
    */
   getCells() {
-    // !!!! IMPLEMENT ME !!!!
+    return this.buffer[this.currentBufferIndex];
   }
 
   /**
    * Clear the life grid
    */
   clear() {
-    // !!!! IMPLEMENT ME !!!!
-  }
+    for (let y = 0; y < this.height; y++) {
+      this.buffer[this.currentBufferIndex][y].fill(0);
+    }  }
 
   /**
    * Randomize the life grid
    */
   randomize() {
-    // !!!! IMPLEMENT ME !!!!
-  }
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        const rand = Math.floor(Math.random() * MODULO);
+        this.buffer[this.currentBufferIndex][y][x] = rand;
+      }
+    }
+   }
 
   /**
    * Run the simulation for a single step
