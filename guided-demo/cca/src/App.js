@@ -66,6 +66,10 @@ class CCACanvas extends Component {
 
     context.putImageData(imageData, 0, 0);
 
+    this.cca.step();
+    requestAnimationFrame(() => { this.animFrame() });
+
+
   }
 
   /**
