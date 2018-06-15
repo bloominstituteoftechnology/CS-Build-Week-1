@@ -2,10 +2,19 @@ import React, { Component } from 'react';
 import Life from './life';
 import './App.css';
 
-const canvasWidth = 2;
-const canvasHeight = 2;
+const canvasWidth = 800;
+const canvasHeight = 600;
 
-const COLORS = [[0, 0, 0], [0xe6, 0xe6, 0xfa]];
+const COLORS = [
+  [0, 0, 0],
+  [0xff, 0xff, 0],
+  [(0x5f, 0, 0x8f)],
+  [0, 0, 0xff],
+  [0, 0x5f, 0x7f],
+  [0x5f, 0x8f, 0x7f],
+  [0x8f, 0xff, 0x7f],
+  [0xff, 0x5f, 0x7f]
+];
 
 /**
  * Life canvas
@@ -58,9 +67,20 @@ class LifeCanvas extends Component {
         // 4 is the # of pixels -- changing this # drastically alters rendered animation
         // Here canvasHeight is constant, while height is each iteration up to that constant.
         const index = (height * canvasWidth + width) * 4; // should be taking and converting our xy grid into that 123412341234...????
+        // height = 0, canvasWidth = 2, width = 0 => index = 0
+        // height = 0, canvasWidth = 2, width = 1 => index = 4
+        // height = 0,                            => index = 8
+        // height = 1,                            => index = 12
 
-        console.log('index', index);
+        // console.log('height', height);
+        // console.log('index', index);
+
+        // Update Data:
+        // lifeStatus is either 0 - black or 1 - lavender
+        // With more colors, lifeStatus will increase ALTHOUGH, not in this program - you
+        // would need to do that in the guided demo -- cca
         const lifeStatus = cells[height][width];
+        // console.log('lifeStatus', lifeStatus);
 
         // change pixels at index to match lifeStatus
         screenBuffer[index + 0] = COLORS[lifeStatus][0]; // R
@@ -74,13 +94,17 @@ class LifeCanvas extends Component {
     // A 2 by 2 Array here has 16 values in its sceenBuffer.  That is, 2x2 = 4 pixels,
     // each with associated R, G, B, and A values.  Thus 4 pixels times 4 RGBA values = 16.
     // Only two colors: lavender (230, 230, 250, 255) and black (0,0,0,255)
-    console.log('screenBuffer in animFrame: ', screenBuffer);
+    // console.log('screenBuffer in animFrame: ', screenBuffer);
 
     ctx.putImageData(imageData, 0, 0);
 
+    // If you want to ZOOM in: // Could use this to make a controllable zoom with buttons.
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(canvas, 0, 0, 3 * canvas.width, 3 * canvas.height);
+
     // Updates / Step the simulation forward:
-    // this.life.step();
-    // requestAnimationFrame(() => this.animFrame());
+    this.life.step();
+    requestAnimationFrame(() => this.animFrame());
   }
   /**
    * Render

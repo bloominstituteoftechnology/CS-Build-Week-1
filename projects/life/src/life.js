@@ -2,7 +2,8 @@
  * Implemention of a Life
  */
 
-const MODULO = 2;
+const MODULO = 8;
+const CHANCE_TREE = 0.01;
 
 /**
  * Make a 2D array helper function
@@ -68,8 +69,12 @@ class Life {
     // Goes through width and height of grid
     for (let height = 0; height < this.height; height++) {
       for (let width = 0; width < this.width; width++) {
-        this.cells[this.currentBufferIndex][height][width] =
-          (Math.random() * MODULO) | 0;
+        if (Math.random() < CHANCE_TREE) {
+          this.cells[this.currentBufferIndex][height][width] = 2;
+        } else {
+          this.cells[this.currentBufferIndex][height][width] =
+            (Math.random() * 2) | 0;
+        }
       }
     }
   }
@@ -123,18 +128,23 @@ class Life {
     for (let h = 0; h < this.height; h++) {
       for (let w = 0; w < this.width; w++) {
         let neighborCount = countNeighbors.call(this, h, w);
-        // Cell is currently alive:
-        if (currentBuffer[h][w] === 1) {
-          if (neighborCount < 2 || neighborCount > 3) {
-            backBuffer[h][w] = 0;
-          } else {
-            backBuffer[h][w] = 1;
-          }
+        // If this is a tree, it stays a tree
+        if (currentBuffer[h][w] === 2) {
+          backBuffer[h][w] = 2;
         } else {
-          if (neighborCount === 3) {
-            backBuffer[h][w] = 1;
+          // Cell is currently alive:
+          if (currentBuffer[h][w] === 1) {
+            if (neighborCount < 2 || neighborCount > 3) {
+              backBuffer[h][w] = 0;
+            } else {
+              backBuffer[h][w] = 1;
+            }
           } else {
-            backBuffer[h][w] = 0;
+            if (neighborCount === 3) {
+              backBuffer[h][w] = 1;
+            } else {
+              backBuffer[h][w] = 0;
+            }
           }
         }
       }
