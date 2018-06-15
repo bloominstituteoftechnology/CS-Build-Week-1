@@ -52,7 +52,7 @@ class CCACanvas extends Component {
 
     for (let height = 0; height < canvasHeight; height++) {
       for (let width = 0; width < canvasWidth; width++) {
-        let index = (height * canvasWidth * width) * 4;
+        let index = (height * canvasWidth + width) * 4;
         let ccaStatus = cells[height][width];
 
         screenBuffer[index + 0] = COLORS[ccaStatus][0];
