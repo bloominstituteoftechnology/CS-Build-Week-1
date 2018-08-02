@@ -16,3 +16,4 @@ React app.
 ## Copyright
 
 - Some stuff
+- More stuff
