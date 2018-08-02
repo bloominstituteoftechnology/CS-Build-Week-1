@@ -51,23 +51,6 @@ class Life {
    */
   clear() {
     // !!!! IMPLEMENT ME !!!!
-    for (let height = 0; height < this.height; height++) {
-      for (let width = 0; width < this.width; width++) {
-        this.cells[this.currentBufferIndex][height][width] = 0;
-      }
-    }
-  }
-  dropGlider() {
-    let x = Math.floor(Math.random() * (this.width - 2));
-    let y = Math.floor(Math.random() * (this.height - 2));
-    let backBuffer = this.cells[this.currentBufferIndex === 0 ? 1 : 0];
-
-    backBuffer[y - 1][x] = 1;
-    backBuffer[y + 1][x] = 1;
-    backBuffer[y + 1][x - 1] = 1;
-    backBuffer[y][x + 1] = 1;
-    backBuffer[y + 1][x + 1] = 1;
-    this.currentBufferIndex = this.currentBufferIndex === 0 ? 1 : 0;
   }
 
   /**

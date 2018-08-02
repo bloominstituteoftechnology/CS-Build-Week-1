@@ -45,7 +45,7 @@ class LifeCanvas extends Component {
    * Handle an animation frame
    */
   animFrame() {
-    // console.log("Props running?: ", this.state.running);
+    console.log("Props running?: ", this.state.running);
     if (!this.state.running) {
       return;
     }
@@ -70,14 +70,14 @@ class LifeCanvas extends Component {
       for (let width = 0; width < canvasWidth; width++) {
         let index = (height * canvasWidth + width) * 4;
         if (cells[height][width] === 0) {
-          screenBuffer[index + 0] = 255;
-          screenBuffer[index + 1] = 80;
-          screenBuffer[index + 2] = 149;
+          screenBuffer[index + 0] = 0;
+          screenBuffer[index + 1] = 72;
+          screenBuffer[index + 2] = 124;
           screenBuffer[index + 3] = 255;
         } else if (cells[height][width] === 1) {
-          screenBuffer[index + 0] = 255;
-          screenBuffer[index + 1] = 202;
-          screenBuffer[index + 2] = 223;
+          screenBuffer[index + 0] = 249;
+          screenBuffer[index + 1] = 171;
+          screenBuffer[index + 2] = 85;
           screenBuffer[index + 3] = 255;
         }
       }
@@ -100,37 +100,12 @@ class LifeCanvas extends Component {
   render() {
     return (
       <div>
-        <div>
-          <canvas
-            ref="canvas"
-            width={this.props.width}
-            height={this.props.height}
-          />
-        </div>
-        <div>
-          <button onClick={this.stopStart}>Start/Stop</button>
-          <button
-            onClick={() => {
-              this.life.randomize();
-            }}
-          >
-            Randomize
-          </button>
-          <button
-            onClick={() => {
-              this.life.clear();
-            }}
-          >
-            Clear
-          </button>
-          <button
-            onClick={() => {
-              this.life.dropGlider();
-            }}
-          >
-            Drop Glider
-          </button>
-        </div>
+        <canvas
+          ref="canvas"
+          width={this.props.width}
+          height={this.props.height}
+        />
+        <button onClick={this.stopStart}>Start/Stop</button>
       </div>
     );
   }
