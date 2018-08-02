@@ -85,8 +85,8 @@ class LifeCanvas extends Component {
 
     // console.log("Screenbuffer in animFrame", screenBuffer);
     ctx.putImageData(imageData, 0, 0);
-    // ctx.imageSmoothingEnabled = false;
-    // ctx.drawImage(canvas, 0, 0, 5 * canvas.width, 5 * canvas.height);
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(canvas, 0, 0, 5 * canvas.width, 5 * canvas.height);
 
     this.life.step();
     requestAnimationFrame(() => {
