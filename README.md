@@ -5,11 +5,15 @@ React app.
 
 ## Objectives
 
-1. [Learn about HTML canvas and screen buffers](objectives/canvas-buffers)
-2. [Learn about animating a canvas in a React component](objectives/react-canvas-anim)
-3. [Learn about cellular automata and the Game of Life](objectives/ca-life)
-
+1.  [Learn about HTML canvas and screen buffers](objectives/canvas-buffers)
+2.  [Learn about animating a canvas in a React component](objectives/react-canvas-anim)
+3.  [Learn about cellular automata and the Game of Life](objectives/ca-life)
 
 ## Projects
 
-* [Implement the Game of Life as a React canvas app](projects/life)
+- [Implement the Game of Life as a React canvas app](projects/life)
+
+## Copyright
+
+- Some stuff
+- More stuff
