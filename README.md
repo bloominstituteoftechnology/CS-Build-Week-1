@@ -38,8 +38,8 @@ Over the course of this week, students will work on creating their own applicati
 - [ ] Research Conway’s “Game of Life”. Figure out how it works, why it’s useful, and how the notion of Turing Completeness is related to this topic.
 
 #### Requirements
-#### Visualizing the “Game of Life” - the main entry point of your application should house the visualization of this cellular automata. 
-Include any necessary components, such as:
+#### Visualizing the “Game of Life”
+The main entry point of your application should house the visualization of this cellular automata. Include any necessary components, such as:
 - [ ] Grid to display cells
 - [ ] Text to display current generation being simulated
 - [ ] Buttons for actions such as starting & stopping the animation, clearing the grid
