@@ -1,5 +1,6 @@
 # Cellular Automata and The Game of Life
 
+
 ## Cellular Automata
 
 A _cellular automaton_ (plural: cellular automata, abbreviated _CA_) is a
