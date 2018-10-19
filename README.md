@@ -58,13 +58,12 @@ Implement necessary behaviors, such as:
 - [ ] Allow users to type in a specific generation, calculate the configuration of cells at that point in time, and jump to that state
 
 
-## ???
+## Resources
 
 1. [Learn about HTML canvas and screen buffers](objectives/canvas-buffers)
 2. [Learn about animating a canvas in a React component](objectives/react-canvas-anim)
-3. [Learn about cellular automata and the Game of Life](objectives/ca-life)
 
 
-## Projects
+## Sample Projects
 
 * [Implement the Game of Life as a React canvas app](projects/life)
