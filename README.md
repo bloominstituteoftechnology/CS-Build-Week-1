@@ -9,7 +9,6 @@ Over the course of this week, students will work on creating their own applicati
 * [Student should be able to explain what cellular automata are and describe how they are useful in real life](objectives/explain-describe-ca)
 * [Student should be able to correctly analyze the ‘Turing Completeness’ of Conway’s “Game of Life”](objectives/turing-complete)
 * [Student should be able to implement a visualization of Conway’s “Game of Life” using technologies related to their specific track](objectives/visualization)
-* Student should be able to utilize animation in the aforementioned visualization
 * [Student should be able to utilize “double buffering” to implement animations](objectives/double-buffer)
 
 
