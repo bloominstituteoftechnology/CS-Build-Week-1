@@ -43,22 +43,23 @@ The main entry point of your application should house the visualization of this 
 - [ ] Text to display current generation being simulated
 - [ ] Buttons for actions such as starting & stopping the animation, clearing the grid
 
-Store cell infoformation, thinking about items such as:
-- [ ] Object for cells that, at a minimum, should have:
+Make sure to store necessary cell information, thinking about items such as:
+* Object for cells that, at a minimum, should have:
     - [ ] Properties
         1. state: (alive, dead)
     - [ ] Behaviors
         1. update_color( ): color of cell changed according to current state
         2. toggle_state( ): switch between alive & dead either because user manually toggled cell before starting simulation or simulation is running and rules of life caused cell to change state
-- [ ]  An appropriate Data Structure to hold a grid of cells that is at least 20 X 20
-    - [ ] Create two instances of the above structure. When implementing double buffering, we need one grid to keep track of the current generation, and a second grid to keep track of next generation. When all operations required to determine state of cells in the next generation are complete, grids are swapped, applying changes to all cells simultaneously.
+* An appropriate Data Structure to hold a grid of cells that is at least 20 X 20
+    - [ ] Create two instances of the data structure you chose. When implementing double buffering, we need one grid to keep track of the current generation, and a second grid to keep track of next generation. When all operations required to determine state of cells in the next generation are complete, grids are swapped, applying changes to all cells simultaneously.
 
 When the simulation is running:        
-- [ ] For each cell in the current generation's grid:
+* For each cell in the current generation's grid:
     - [ ] Examine state of all eight neightbors
     - [ ] Apply rules of life to determine if this cell will change states
-- [ ] When loop completes, display next generation’s grid as the current generation
-- [ ] Repeat until simulation stopped
+* When loop completes:
+    - [ ] Display next generation’s grid as the current generation
+    - [ ] Repeat until simulation stopped
 - [ ] Allow the user to stop and restart the simulation
 - [ ] Allow the user to clear the animation if stopped
 
