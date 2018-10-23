@@ -80,6 +80,10 @@ Allow users to
 - [ ] Implement some keyboard shortcuts that can be used in addition to click or button press events
 - [ ] Create a how-to guide or blog post that walks readers through the work you did to implement your project
 
+## Sample Wireframe
+
+![wireframe](wireframes/wireframe_1.png)
+
 
 ## Sample Projects
 
