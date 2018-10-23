@@ -63,10 +63,10 @@ When the simulation is running:
 - [ ] Allow the user to clear the animation if stopped
 
 #### Rules 
-- [ ] On the main entry point of the application, link to a second page or screen that describes the two main rules (birth & death) of Conway’s “Game of Life”
+- [ ] On the main entry point of the application, include a separate section or link to another page / screen that describes the two main rules (birth & death) of Conway’s “Game of Life”
 
 #### About this Algorithm
-- [ ]  On the main entry point of the application, link to a third page or screen that describes the Turing Completeness of Conway’s “Game of Life”
+- [ ]  On the main entry point of the application, include a separate section or link to another page / screen that describes the Turing Completeness of Conway’s “Game of Life”
 
 
 ## Stretch Goals
