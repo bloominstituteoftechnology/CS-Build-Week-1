@@ -1,4 +1,4 @@
-# Nesting React Components
+# Implementation of The Game of Life using Basic Components
 
 One approach to implementing the Game of Life could be to build a collection of React Components.
 
