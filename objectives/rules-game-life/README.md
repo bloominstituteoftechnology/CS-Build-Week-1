@@ -37,6 +37,10 @@ the far side.)
 * [Edwin Martin's Implementation](https://bitstorm.org/gameoflife/): run the
   simulation to see what the Game looks like.
 * [Patterns that can be used for testing](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Examples_of_patterns)
+* [Glider pattern](https://en.wikipedia.org/wiki/Glider_(Conway%27s_Life)) to
+  the grid at a random location.
+* [Gosper Glider Gun pattern](https://en.wikipedia.org/wiki/Gun_(cellular_automaton)) to the
+  grid at a random location.
 
 
 ### References
