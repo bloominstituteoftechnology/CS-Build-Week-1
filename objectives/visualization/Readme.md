@@ -12,6 +12,7 @@ resources to help get you started using React.
 2. [Learn about animating a canvas in a React component](../../resources/canvas)
 3. [Consider implementing Game of Life with a Canvas](../../resources/life-canvas)
 4. [Consider implementing Game of Life with a collection of React components](../../resources/simple-components)
+5. [Readme with information on how to perform common React tasks](../../resources/react-setup)
 
 
 ## Data Science
