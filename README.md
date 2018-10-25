@@ -2,6 +2,9 @@
 
 Over the course of this week, students will work on creating their own application in which users will be able to run different "Game of Life" scenarios. This module leads the reader through the fundamentals of Conways's "Game of Life" and will guide them through the process of creating an app utilizing tools and frameworks that have been taught over the course of their specific track.
 
+![example-patterns](https://media.giphy.com/media/4VVZTvTqzRR0BUwNIH/giphy.gif)
+
+[from Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Examples_of_patterns)
 
 ## Objectives
 * Student should be able to create a unique, high-quality project that can be added to a professional portfolio
@@ -49,12 +52,11 @@ The main entry point of your application should house the visualization of this 
           - should NOT be clickable while simulation is running
     * Behaviors
         - [ ] toggle_state( ): switch between alive & dead either because user manually toggled cell before starting simulation or simulation is running and rules of life caused cell to change state
-- [ ] An appropriate Data Structure to hold a grid of cells that is at least 15 X 15. 
+- [ ] An appropriate data structure to hold a grid of cells that is at least 15 X 15. 
 - [ ] Text to display current generation # being displayed
-    * Utilize a timeout function to build the next generation of cells & update the display at the chosen time interval
-* Buttons for actions such as: 
-    - [ ] Starting & stopping the animation
-    - [ ] Clearing the grid
+    * Utilize a timeout function to build the next generation of cells & update the display at the chosen time interval     
+- [ ] Button(s) that start & stop the animation
+- [ ] Button to clear the grid
 
 Write an algorithm that:    
 - [ ] Implements the following basic steps:
@@ -67,6 +69,17 @@ Write an algorithm that:
 - [ ] Breaks down above steps into appropriate sub-tasks implemented with helper functions to improve readability
 - [ ] Uses double buffering to update grid with next generation.
 
+### Custom Features
+Implment at least 3 of the following features:
+- [ ] Create a few sample cell configurations that users can load and run 
+- [ ] Add an option that creates a random cell configuration that users can run
+- [ ] Add additional cell properties, like color or size, and incorporate them into your visualization
+- [ ] Allow users to specify the speed of the simulation
+- [ ] Provide functionality to manually step through simulation, as opposed to animating automatically
+- [ ] Allow users to change the dimension of the grid being displayed
+- [ ] Instead of "killing" cells that move off the edge of the screen, create a wrap-around display
+- [ ] Given a specific generation, calculate the configuration of cells at that point in time, and jump to that state, bypassing animation
+- [ ] If you have an idea for a custom feature on this list, run it by your PM or instructor
 
 #### Rules 
 - [ ] On the main entry point of the application, include a separate section or link to another page / screen that describes the two main rules (birth & death) of Conway’s “Game of Life”
@@ -75,17 +88,10 @@ Write an algorithm that:
 - [ ]  On the main entry point of the application, include a separate section or link to another page / screen that describes more about Conway’s “Game of Life”, such as whether or not it is Turing Complete or the history of this cellular automaton
 
 ### Deployment
-- [ ] Heroku or GitHub Pages or ??? 
+- [ ] Deploy your app using a tool like [GitHub Pages or Heroku](resources/deployment)
 
 
 ## Stretch Goals
-- [ ] Create a few sample cell configurations that users can load and run
-- [ ] Add an option that creates a random cell configuration that users can run
-- [ ] Add additional cell properties, like color or size, and incorporate them into your visualization
-Provide inputs that allow users to 
-    - [ ] specify the speed of the simulation
-    - [ ] change the dimension of the grid being displayed
-    - [ ] type in a specific generation, calculate the configuration of cells at that point in time, and jump to that state, bypassing animation
 - [ ] Implement some keyboard shortcuts that can be used in addition to click or button press events
 - [ ] Create a how-to guide or blog post that walks readers through the work you did to implement your project
 - [ ] Expand your simulation into the third dimension [check out 3D-ThreeJS](https://github.com/LambdaSchool/3D-ThreeJS)
