@@ -12,9 +12,7 @@ It's made up of a grid of cells (usually 2D, but can be any dimension)
 that follow a simple set of rules from which complex behaviors can
 emerge.
 
-In the grid, below, white pixels are alive, and black pixels are dead.
-
-![Conway's Life, many generations in](img/life.png)
+![running simulation](https://media.giphy.com/media/9x32yQPmZg9glAvbIb/giphy.gif)
 
 In the Game of Life, these rules examine each cell of the grid. For each
 cell, it counts that cell's eight neighbors (up, down, left, right, and
