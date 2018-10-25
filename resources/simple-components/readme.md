@@ -8,7 +8,7 @@ The main component of the visualization we want to display is  a grid. We should
 a React Component with any necessary state variables that allow it to be displayed as we wish. Below
 are some thoughts about items to add to your grid component.
 
-![configuring cells](https://gph.is/2CHqEZH)
+![configuring cells](https://media.giphy.com/media/55kAbxxQo5BPzywPjg/giphy.gif)
 
 ### Cells
 This grid is composed of a number of cells. Since we want the user to be able to select which
