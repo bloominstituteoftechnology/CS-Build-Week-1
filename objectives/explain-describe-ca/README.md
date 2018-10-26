@@ -24,6 +24,6 @@ repeats. Each new grid is referred to as a _generation_.
 The beautiful thing about cellular automata is that sometimes very complex
 behavior can emerge from very simple rules.
 
-Practically speaking, CAs have been used in biological and chemical simulation
+Practically speaking, CAs have been used in biological and chemical simulations
 and other areas of research, such as CA-based computer processors, and other
 numeric techniques.
