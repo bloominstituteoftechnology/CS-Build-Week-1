@@ -92,8 +92,7 @@ Implment at least 3 of the following features:
 
 
 ## Stretch Goals
-- [ ] Implement some keyboard shortcuts that can be used in addition to click or button press events
-- [ ] Create a how-to guide or blog post that walks readers through the work you did to implement your project
+- [ ] Write a how-to guide or blog post that walks readers through the work you did to implement your project
 - [ ] Expand your simulation into the third dimension [check out 3D-ThreeJS](https://github.com/LambdaSchool/3D-ThreeJS)
 - [ ] Explore alternate algorithms for finding the nth generation, such as [Hashlife](https://en.wikipedia.org/wiki/Hashlife)
 
@@ -101,3 +100,23 @@ Implment at least 3 of the following features:
 ## Sample Wireframe
 
 ![wireframe](wireframes/wireframe_1.png)
+
+
+## Rubric
+
+#### Your simulation will receive a 2 when it satisfies the following:
+   1. Display includes a text area that shows the current generation of cells being displayed
+   2. Display includes a grid of cells, at least 15 x 15, that can be toggled to be _alive_ or _dead_
+   3. Display includes working buttons that start / stop the animation and clear the grid
+   4. Algorithm to generate new generations of cells correctly implemented
+   5. Display is updated seamlessly using double buffering
+   6. At least 3 features from ***Custom Features*** section successfully implemented
+   7. Application includes a section outlining the rules to Conway's "Game of Life" 
+   8. Application includes a section that describes history of / technical details related to Conway's "Game of Life"
+   9. Application is successfully deployed
+   
+
+#### Your simulation will receive a 3 when it satisfies all of the above requirements AND implements one of the following stretech goals:
+   * Write a how-to guide or blog post that walks readers through the work you did to implement your project
+   * Expand your simulation into the third dimension [check out 3D-ThreeJS](https://github.com/LambdaSchool/3D-ThreeJS)
+   * Explore alternate algorithms for finding the nth generation, such as [Hashlife](https://en.wikipedia.org/wiki/Hashlife)
