@@ -93,7 +93,7 @@ Implment at least 3 of the following features:
 
 ## Stretch Goals
 - [ ] Write a how-to guide or blog post that walks readers through the work you did to implement your project
-- [ ] Expand your simulation into the third dimension [check out 3D-ThreeJS](https://github.com/LambdaSchool/3D-ThreeJS)
+- [ ] Expand your simulation into the third dimension - [check out 3D-ThreeJS](https://github.com/LambdaSchool/3D-ThreeJS)
 - [ ] Explore alternate algorithms for finding the nth generation, such as [Hashlife](https://en.wikipedia.org/wiki/Hashlife)
 
 
@@ -118,5 +118,5 @@ Implment at least 3 of the following features:
 
 #### Your simulation will receive a 3 when it satisfies all of the above requirements AND implements one of the following stretech goals:
    * Write a how-to guide or blog post that walks readers through the work you did to implement your project
-   * Expand your simulation into the third dimension [check out 3D-ThreeJS](https://github.com/LambdaSchool/3D-ThreeJS)
+   * Expand your simulation into the third dimension - [check out 3D-ThreeJS](https://github.com/LambdaSchool/3D-ThreeJS)
    * Explore alternate algorithms for finding the nth generation, such as [Hashlife](https://en.wikipedia.org/wiki/Hashlife)
