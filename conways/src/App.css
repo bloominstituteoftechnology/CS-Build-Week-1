@@ -38,3 +38,23 @@
 .centerContent {
     text-align: center;
 }
+.containerWrapper {
+    width: 100%;
+    border: 1px solid green;
+}
+.dirColumn {
+    display: flex;
+    flex-direction: column;
+}
+.presetBut{
+    padding: 20px;
+    margin: 10%;
+    border-radius: 9px;
+}
+.playB{
+    padding: 10px;
+    border-radius: 9px;
+}
+.thirtyPer {
+    width: 30%;
+}
