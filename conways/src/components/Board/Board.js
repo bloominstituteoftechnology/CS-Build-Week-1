@@ -10,26 +10,40 @@ class Board extends Component {
             matrix: []
         }
     }
-
     componentDidMount() {
-        var matrix = this.state.matrix.slice();
-        for (var i = 0; i < 15; i++) {
+        let matrix = this.state.matrix.slice();
+        for (let i = 0; i < 15; i++) {
             matrix[i] = [];
-            for (var j = 0; j < 15; j++) {
-                matrix[i][j] = undefined;
+            for (let j = 0; j < 15; j++) {
+                matrix[i][j] = { i, j, alive: false };
             }
         }
         this.setState({ matrix });
     }
 
+    toggleAlive = e => {
+        if (this.state.clickEnabled) {
+            let matrix = this.state.matrix.slice();
+            let found = this.findIndex(e.i, e.j);
+
+            found.alive = !found.alive;
+            matrix[e.i][e.j] = found;
+            
+            this.setState({ matrix })
+            console.log(this.findIndex(e.i, e.j));
+        }
+    }
+    findIndex = (i, j) => {
+        return this.state.matrix[i][j];
+    }
     render() {
         return (
             <div className="board-ctn">
                 {
                     this.state.matrix.map(cell => {
                         return (
-                            cell.map(mini => {
-                                return (<Cell clickEnabled={this.state.clickEnabled}/>);
+                            cell.map((mini) => {
+                                return (<Cell key={mini.i + mini.j} index={mini} clickEnabled={this.state.clickEnabled} toggleAlive={this.toggleAlive} />);
                             })
                         );
                     })
