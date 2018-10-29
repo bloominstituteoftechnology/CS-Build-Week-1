@@ -61,7 +61,7 @@ The main entry point of your application should house the visualization of this 
 Write an algorithm that:    
 - [ ] Implements the following basic steps:
     - For each cell in the current generation's grid:
-      1. Examine state of all eight neightbors
+      1. Examine state of all eight neighbors (it's up to you whether you want cells to wrap around the grid and consider cells on the other side or not)
       2.  Apply rules of life to determine if this cell will change states
     - When loop completes:
       1. Swap current and next grids
@@ -75,9 +75,8 @@ Implment at least 3 of the following features:
 - [ ] Add an option that creates a random cell configuration that users can run
 - [ ] Add additional cell properties, like color or size, and incorporate them into your visualization
 - [ ] Allow users to specify the speed of the simulation
-- [ ] Provide functionality to manually step through simulation, as opposed to animating automatically
+- [ ] Provide functionality to manually step through the simulation one generation at a time, as opposed to animating automatically
 - [ ] Allow users to change the dimension of the grid being displayed
-- [ ] Instead of "killing" cells that move off the edge of the screen, create a wrap-around display
 - [ ] Given a specific generation, calculate the configuration of cells at that point in time, and jump to that state, bypassing animation
 - [ ] If you have an idea for a custom feature on this list, run it by your PM or instructor
 
