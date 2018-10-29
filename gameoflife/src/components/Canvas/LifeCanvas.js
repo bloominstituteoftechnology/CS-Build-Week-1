@@ -7,7 +7,7 @@ class LifeCanvas extends React.Component {
 
         this.state = {
             continueAnimation: true,
-            life: new Life(window.innerWidth, window.innerHeight)
+            life: new Life(window.innerWidth, 500)
         }
     }
 
@@ -27,20 +27,27 @@ class LifeCanvas extends React.Component {
         const canvas = this.refs.canvas;
         const context = canvas.getContext('2d');
         const cellSize = 10;
+        const cells = this.state.life.getCells();
 
-        for (let x = 0; x < canvas.width / cellSize; x++) {
-            for (let y = 0; y < canvas.height / cellSize; y++) {
-                context.lineWidth = 1;
-                context.fillStyle = "#7E7E7E";
-                context.fillRect(cellSize * x, cellSize * y, cellSize, cellSize);
-                context.strokeStyle = "#999999";
-                context.strokeRect(cellSize * x, cellSize * y, cellSize, cellSize);
-            }
+        for (let i = 0; i < cells.length; i++) {
+            context.lineWidth = 1;
+            context.fillStyle = cells[i].alive ? "#FFFF00" : "#7E7E7E";
+            context.fillRect(cellSize * cells[i].coords[0], cellSize * cells[i].coords[1], cellSize, cellSize);
+            context.strokeStyle = "#999999";
+            context.strokeRect(cellSize * cells[i].coords[0], cellSize * cells[i].coords[1], cellSize, cellSize);
         }
     }
 
+    toggleLife = event => {
+        const rect = this.refs.canvas.getBoundingClientRect();
+        let x = Math.floor((event.clientX - rect.left) / 10);
+        let y = Math.floor((event.clientY - rect.top) / 10);
+
+        this.state.life.toggleCell(x, y);
+    }
+
     render() {
-        return <canvas ref="canvas" width={this.state.life.width} height={this.state.life.height} />
+        return <canvas onClick={this.toggleLife} ref="canvas" width={this.state.life.width} height={this.state.life.height} />
     }
 }
 
