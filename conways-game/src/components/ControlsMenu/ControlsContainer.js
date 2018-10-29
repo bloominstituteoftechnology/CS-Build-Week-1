@@ -23,9 +23,14 @@ const ControlButton = styled.button`
     width: 10rem;
     background: none;
     border: none;
-    border-right: 3px solid ${colors.darkGrey};
+    border-left: 3px solid ${ colors.darkGrey };
+    border-right: 3px solid ${ colors.darkBlack };
+    border-bottom: 3px solid ${ colors.darkBlack };
     &:last-child {
         border-right: none;
+    }
+    &:active {
+        background: ${ colors.darkBlack };
     }
 `;
 
