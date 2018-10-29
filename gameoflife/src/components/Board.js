@@ -4,7 +4,7 @@ import "./Board.css";
 let cell_size = 20;
 let board_width = 900;
 let board_height = 900;
-let rows = board_height / cell_size; // This lets us manipulate each cell on the board.
+let rows = board_height / cell_size; // This gives us the number of rows that will be in our board.
 let columns = board_width / cell_size;
 
 class Board extends React.Component {
@@ -13,22 +13,23 @@ class Board extends React.Component {
     this.board = this.generateBoard(); // Create a board out of the rows and column sizes
     this.state = {
       cells: [],
-      gridSize: ""
+      gridSize: "",
+      isClickable: false,
+      alive: false
     };
   }
   handleClick = event => {
-    event.preventDefault();
+    // This should handle whether the cell is alive (black) or dead (white).
+    console.log("handleClick event is: ", event);
   };
   handleChange = event => {
     this.setState({ gridSize: event.target.value });
   };
   handleResize = event => {
-    console.log("handleResize is firing");
     event.preventDefault();
     board_width = Number(this.state.gridSize);
     board_height = Number(this.state.gridSize);
     this.setState({});
-    this.generateBoard();
   };
 
   generateBoard = () => {
@@ -43,10 +44,12 @@ class Board extends React.Component {
   };
 
   render() {
-    console.log("this.board is: ", this.board);
+    {
+      /*console.log("this.board is: ", this.board);
     console.log("this.state.cells is: ", this.state.cells);
     console.log("this.state.gridSize is: ", this.state.gridSize);
-    console.log("typeof board_width is: ", typeof board_width);
+  console.log("typeof board_width is: ", typeof board_width);*/
+    }
     return (
       <div>
         <div
