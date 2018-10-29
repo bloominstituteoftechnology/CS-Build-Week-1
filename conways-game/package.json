@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "gatsby-conways-game",
   "description": "Gatsby hello world starter",
   "license": "MIT",
   "scripts": {
