@@ -61,6 +61,35 @@ class Board extends React.Component {
           }}
           onClick={this.handleClick}
         />
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Presets
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">
+              Block
+            </a>
+            <a class="dropdown-item" href="#">
+              Beehive
+            </a>
+            <a class="dropdown-item" href="#">
+              Loaf
+            </a>
+            <a class="dropdown-item" href="#">
+              Boat
+            </a>
+            <a class="dropdown-item" href="#">
+              Tub
+            </a>
+          </div>
+        </div>
         <form>
           <input placeholder="Change grid size to" onChange={this.handleChange} />
           <button onClick={this.handleResize}>Change</button>
