@@ -5,8 +5,8 @@ class Panel extends React.Component {
     return (
       <div className='Panel'>
         <span>0 Generation</span>
-        <button>Start/Stop</button>
-        <button>Clear</button>
+        <div className='button'>Start/Stop</div>
+        <div className='button'>Clear</div>
       </div>
     )
   }
