@@ -7,7 +7,7 @@ class LifeCanvas extends React.Component {
 
         this.state = {
             continueAnimation: true,
-            life: new Life(300, 300)
+            life: new Life(window.innerWidth, window.innerHeight)
         }
     }
 
@@ -23,10 +23,24 @@ class LifeCanvas extends React.Component {
         if (this.state.continueAnimation) {
             requestAnimationFrame(timestamp => { this.onAnimFrame(timestamp); });
         }
+
+        const canvas = this.refs.canvas;
+        const context = canvas.getContext('2d');
+        const cellSize = 10;
+
+        for (let x = 0; x < canvas.width / cellSize; x++) {
+            for (let y = 0; y < canvas.height / cellSize; y++) {
+                context.lineWidth = 1;
+                context.fillStyle = "#7E7E7E";
+                context.fillRect(cellSize * x, cellSize * y, cellSize, cellSize);
+                context.strokeStyle = "#999999";
+                context.strokeRect(cellSize * x, cellSize * y, cellSize, cellSize);
+            }
+        }
     }
 
     render() {
-        return <canvas ref="canvas" width={window.innerWidth} height={500} />
+        return <canvas ref="canvas" width={this.state.life.width} height={this.state.life.height} />
     }
 }
 
