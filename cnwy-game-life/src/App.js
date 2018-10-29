@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Label} from 'reactstrap';
 import styled from 'styled-components';
 import LifeCanvas from './components/LifeCanvas';
 
@@ -23,10 +23,22 @@ const RulesDiv = styled.div`
 const GenDiv = styled.div`
   margin-top:50px;
 `
+
+
+
 class App extends Component {
   constructor (){
     super();
+    this.state = {
+      gridSize:0,
+      cellSize:0
+    }
   }
+
+  componentWillMount(){
+    this.setState({gridSize:500, cellSize:25})
+  }
+
   
   canvasClickHandler = (e) =>{
     console.log('You clicked on the canvas!');
@@ -147,7 +159,18 @@ class App extends Component {
     ctx.putImageData(imageData, 0, 0);
   }
 
-
+  // gridSizeOnChange = (e) => {
+  //   let option = e.target.value.split(" ");
+  //   let gridSize = Number(option[0]);
+  //   this.setState({gridSize});
+  //   console.log("Grid Size: ", gridSize);
+  // }
+  
+  // cellSizeOnChange = (e) => {
+  //   let cellSize = Number(e.target.value);
+  //   this.setState({cellSize});
+  //   console.log("Cell Size: ", cellSize);
+  // }
 
   render() {
     return (
@@ -155,14 +178,48 @@ class App extends Component {
         {/* <LifeCanvas height={500} width={500} clickHandler={this.canvasClickHandler}/> */}
         <MainContainer id="main-container">
           <Row>
+
+            {/* First Column in Main Container */}
             <Col sm="6">
               <div><h2>Conway's Game of Life</h2></div>
               <GenDiv>Generation: 0</GenDiv>
-              <LifeCanvas height={100} width={100} clickHandler={this.canvasClickHandler}/>
-              <div>Update every <input type="text"/> ms</div>
-              <div>Size of grid <input type="text"/> </div>
-              <div>Play Button</div>
+              <LifeCanvas height={this.state.gridSize} width={this.state.gridSize} cellSize={this.state.cellSize} clickHandler={this.canvasClickHandler}/>
+
+              {/* Grid Size Select Row */}
+              <Row>
+                <Col sm="5">
+                  <Label for="gridSizeSelect">Select the size of the grid: </Label>
+                </Col>
+                <Col sm="5">
+                  {/* <GameInput type="select" name="select" id="gridSizeSelect" onChange={this.gridSizeOnChange}>
+                    <option>100 x 100</option>
+                    <option>200 x 200</option>
+                    <option>250 x 250</option>
+                    <option>500 x 500</option>
+                    <option>1000 x 1000</option>
+                  </GameInput> */}
+                </Col>
+              </Row>
+
+              {/* Cell Size Select Row */}
+              <Row>
+                <Col sm="5">
+                  <Label for="cellSizeSelect">Select the size of the cell: </Label>
+                </Col>
+                <Col sm="5">
+                  {/* <GameInput type="select" name="select" id="cellSizeSelect" onChange={this.cellSizeOnChange}>
+                    <option>10</option>
+                    <option>20</option>
+                    <option>25</option>
+                    <option>50</option>
+                  </GameInput> */}
+                </Col>
+              </Row>
+             <button>Play</button>
             </Col>
+
+
+            {/* Second Col in Main Container */}
             <Col sm="6">
             <RulesDiv>
               <h4>Rules</h4>
