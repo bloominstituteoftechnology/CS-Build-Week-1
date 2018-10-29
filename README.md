@@ -24,7 +24,7 @@ Over the course of this week, students will work on creating their own applicati
 
 
 ## Trello Set Up:
-
+- Link to Trello Board [here](https://trello.com/b/5Gv0khtE/gameoflife-vu-cao)
 - [ ] Create a Trello account if you don't have one already
 - [ ] Create a new board called "GameOfLife - {Your Name}"
 - [ ] Create lists titled `backlog`,`To Do`, `In Progress`, and `Done`
