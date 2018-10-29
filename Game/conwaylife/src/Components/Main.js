@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import img from '../Images/finalpixelpls.png';
 import img2 from '../Images/newpause.png';
 import img1 from '../Images/newestart.png'
+import Game from './Game'
+import './Game.css'
 
 const Fatherdiv = styled.div`
 width: 100%;
@@ -15,10 +17,10 @@ const Header = styled.div`
 flex-direction: column;`
 
 const GridOutline = styled.div`
-width: 600px;
+width: 800px;
 height: 600px;
-border: 5px solid black;
-background-color: white;
+border: none;
+
 `
 const Rules = styled.button`
 width: 200px;
@@ -77,16 +79,17 @@ class Main extends Component {
             <Fatherdiv>
                
 
-            <GridOutline/>
+            <GridOutline>
+                <Game/>
+                </GridOutline>
             
             <Header>
             <Welcome>
-                    Welcome to Conway's Game of Life
+                    Welcome to Conway's <br/>Game of Life
                     </Welcome>
 
             
-                <Play/>
-            <Pause/>
+                
                 </Header>
 
             </Fatherdiv>
