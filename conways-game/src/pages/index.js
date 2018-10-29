@@ -1,8 +1,9 @@
 import React, { Fragment } from "react";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import Canvas from "../components/Canvas";
 import ControlsMenu from "../components/ControlsMenu/ControlsContainer";
 import HeaderPanel from "../components/PresetSection/HeaderPanel";
+import CarouselPanel from "../components/PresetSection/CarouselPanel";
 import { colors } from "../utils/variables";
 const GlobalStyle = createGlobalStyle`
     * {
@@ -31,11 +32,12 @@ const GlobalStyle = createGlobalStyle`
 
 export default () => {
   return (
-  <Fragment>
-    <GlobalStyle/>
-    <Canvas />
-    <ControlsMenu />
-    <HeaderPanel />
-  </Fragment>
+    <Fragment>
+      <GlobalStyle />
+        <Canvas />
+        <ControlsMenu />
+        <HeaderPanel />
+        <CarouselPanel />
+    </Fragment>
   );
 };
