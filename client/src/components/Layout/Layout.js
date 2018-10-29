@@ -1,7 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
+import GameOfLife from "./GameOfLife/GameOfLife";
 
-export default class Example extends React.Component {
+export default class Layout extends React.Component {
   render() {
     return (
       <Container>
@@ -11,9 +12,7 @@ export default class Example extends React.Component {
         <Row>
           <Col m="6">
             <h2>Generation: #</h2>
-            <div>
-              <em>display grid of cells here</em>
-            </div>
+            <GameOfLife />
             <button>Play</button>
             <button>Pause</button>
             <button>Stop</button>
