@@ -12,6 +12,57 @@ class App extends React.Component {
     this.toggleSimulation = e => {
       e.preventDefault();
       this.setState({ isClickable: !this.state.isClickable });
+      this.createNextIteration();
+    };
+
+    this.createNextIteration = () => {
+      let grid = this.state.grid;
+      for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[i].length; j++) {
+          let count = this.countNeighbors(i, j);
+          if (grid[i][j]) {
+            if (count === 2 || count === 3) {
+              grid[i][j] = false;
+            }
+          } else {
+            if (count === 3) {
+              grid[i][j] = true;
+            }
+          }
+        }
+      }
+      this.setState({ grid: grid });
+      
+      setTimeout(() => {
+        this.createNextIteration();
+      }, 500);
+    };
+
+    this.countNeighbors = (rowIndex, cellIndex) => {
+      const neighbors = [
+        [rowIndex - 1, cellIndex - 1],
+        [rowIndex - 1, cellIndex],
+        [rowIndex - 1, cellIndex + 1],
+        [rowIndex, cellIndex - 1],
+        [rowIndex, cellIndex + 1],
+        [rowIndex + 1, cellIndex - 1],
+        [rowIndex + 1, cellIndex],
+        [rowIndex + 1, cellIndex + 1]
+      ];
+
+      let count = 0;
+
+      for (let i = 0; i < neighbors.length; i++) {
+        if ((neighbors[i][0] >= 0 && neighbors[i][0] <= 14) &&
+            (neighbors[i][1] >= 0 && neighbors[i][1] <= 14)) {
+               const position = neighbors[i];
+               if (this.state.grid[position[0]][position[1]]) {
+                 count += 1;
+               }
+             }
+      }
+
+      return count;
     };
 
     this.toggleCell = (rowIndex, cellIndex) => {
