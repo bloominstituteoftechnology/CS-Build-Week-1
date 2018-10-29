@@ -4,6 +4,7 @@
 .board {
   width: 400px;
   height: 400px;
+  margin: 1rem auto;
 }
 .cell {
   width: 19px;
