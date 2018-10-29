@@ -35,6 +35,7 @@ class App extends Component {
           <AboutSection>
             <h2>About this Algorithm:</h2>
             <p>Explain Conway's Game of Life and its history. Blah blah blah...</p>
+            <p>If you would like to learn more about Conway's Game of Life, check out this <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">link!</a></p>
         </AboutSection>
         </Content>
       </div>

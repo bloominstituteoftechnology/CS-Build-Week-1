@@ -2,28 +2,26 @@ import React, { Component } from 'react';
 
 import styled from 'styled-components';
 
-
 const Container = styled.div`
+    width: 22px;
+    height: 22px;
     border: 1px solid black;
-    width: 362px;
-    height: 300px;
 `;
 
-
-class GameBox extends Component  {
-    constructor() {
+class GridBox extends Component {
+    constructor(props) {
         super();
         this.state = {
-            boxes: []
+            alive: false
         }
     }
 
     render() {
-        return ( 
+        return (
             <Container>
             </Container>
-        );
+        )
     }
 }
- 
-export default GameBox;
+
+export default GridBox;

@@ -4,7 +4,7 @@ import GameBox from './GameBox';
 import styled from 'styled-components';
 
 const Container = styled.div`
-    width: 360px;
+    width: 362px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
