@@ -10,7 +10,7 @@ class Board extends Component {
             matrix: []
         }
     }
-    componentDidMount() {
+    setBoard = () => {
         let matrix = this.state.matrix.slice();
         for (let i = 0; i < 15; i++) {
             matrix[i] = [];
@@ -20,18 +20,22 @@ class Board extends Component {
         }
         this.setState({ matrix });
     }
+    componentDidMount() {
+        this.setBoard();
+    }
 
     toggleClick = index => {
         if (this.state.clickEnabled) {
             let matrix = this.state.matrix.slice();
-            let found = this.findIndex(index.i, index.j);
-
-            matrix[index.i][index.j] = this.toggleAlive(found);
+            matrix[index.i][index.j] = this.toggleAlive(this.findIndex(index.i, index.j));
 
             this.setState({ matrix })
-            console.log(this.findIndex(index.i, index.j));
+
+            console.log(this.findAlive());
+            console.log("Clicked Index", this.findIndex(index.i, index.j));
         }
     }
+
     toggleAlive = matrices => {
         matrices.alive = !matrices.alive;
         return matrices;
@@ -46,26 +50,37 @@ class Board extends Component {
                 }
             }
         }
-        console.log(alive);
+        return alive;
     }
+
     findIndex = (i, j) => {
         return this.state.matrix[i][j];
     }
-    componentDidUpdate() {
-        this.findAlive();
+
+    clearBoard = () => {
+        this.setBoard();
     }
     render() {
         return (
-            <div className="board-ctn">
-                {
-                    this.state.matrix.map(cell => {
-                        return (
-                            cell.map((mini) => {
-                                return (<Cell key={mini.i + mini.j} index={mini} clickEnabled={this.state.clickEnabled} toggleClick={this.toggleClick} />);
-                            })
-                        );
-                    })
-                }
+            <div className="interface-ctn">
+                <div className="board">
+                    {
+                        this.state.matrix.map(cell => {
+                            return (
+                                cell.map((cell) => {
+                                    return (<Cell key={cell.i + cell.j} index={cell} clickEnabled={this.state.clickEnabled} toggleClick={this.toggleClick} />);
+                                })
+                            );
+                        })
+                    }
+
+                </div>
+                <div className="btn-ctn">
+                    <button className="main-btn">Play</button>
+                    <button className="main-btn">Pause</button>
+                    <button className="main-btn">Stop</button>
+                    <button className="main-btn" onClick={() => this.clearBoard()}>Clear</button>
+                </div>
             </div>
         )
     }
