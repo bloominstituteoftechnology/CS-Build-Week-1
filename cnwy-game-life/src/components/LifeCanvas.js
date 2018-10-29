@@ -3,15 +3,16 @@ import React, { Component } from 'react';
 class LifeCanvas extends Component {
 
   componentDidMount(){
-    this.updateCanvas();
+    this.initializeCanvas();
   }
 
-  updateCanvas = ()=>{
-    const ctx = this.refs.canvas.getContext('2d');
+  initializeCanvas = ()=>{
+    let canvas = this.refs.canvas; 
+    const ctx = canvas.getContext('2d');
     
     //Fill the ctx with a black box:
-    let gridHeight = 500;
-    let gridWidth = 500;
+    let gridHeight = this.props.height;
+    let gridWidth = this.props.width;
     ctx.fillRect(0,0,gridHeight,gridWidth);
     
     //Fill a single Rect:
@@ -27,12 +28,11 @@ class LifeCanvas extends Component {
       ctx.lineWidth = 1;
       ctx.strokeStyle = 'grey';
       ctx.stroke();
+      }
     }
   }
 
 
-
-  }
   render() {
     // return (
     //   <div>
@@ -40,6 +40,7 @@ class LifeCanvas extends Component {
     //   </div>
     // );
   }
+  
 }
 
 export default LifeCanvas;
