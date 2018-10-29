@@ -1,3 +1,5 @@
+/* App styles */
+
 .App {
   text-align: center;
   background-color: #282c34;
@@ -12,3 +14,16 @@
 .App-header {
   width: 70vw;
 }
+
+/* Grid styles */
+
+.Grid {
+  background-color: #000;
+  width: 66.1vw;
+  height: 36.1vw;
+  background-size: 2vw 2vw;
+  background-image:
+    linear-gradient(to right, 	#80F103, 1px, transparent 1px),
+    linear-gradient(to bottom, 	#80F103, 1px, transparent 1px);
+}
+
