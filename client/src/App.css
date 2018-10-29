@@ -1,11 +1,14 @@
+/* App Styles */
 .App {
   text-align: center;
 }
+/* Board Styles */
 .board {
   width: 400px;
   height: 400px;
   margin: 1rem auto;
 }
+/* Cell Styles */
 .cell {
   width: 19px;
   height: 19px;
