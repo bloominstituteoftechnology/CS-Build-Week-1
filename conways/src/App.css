@@ -30,3 +30,11 @@
     transform: rotate(360deg);
   }
 }
+.displayFlex {
+    display: flex;
+    justify-content: space-around;
+    border: 1px blue solid;
+}
+.centerContent {
+    text-align: center;
+}

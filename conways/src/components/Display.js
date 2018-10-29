@@ -19,7 +19,7 @@ class Display extends Component {
     componentDidMount() {
         // Request initial animation frame
         // requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
-        this.animFrame();
+        this.onAnimFrame();
     }
 
     /**
@@ -33,17 +33,7 @@ class Display extends Component {
     /**
      * Called every frame of animation
      */
-    animFrame() {
-        let canvas = this.refs.canvas;
-        let ctx = canvas.getContext('2d');
 
-        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-        // Here is the screen buffer array we can manipulate:
-
-        let screenBuffer = imageData.data;
-        console.log('imageData in animFrame: ', screenBuffer);
-    }
     onAnimFrame(timestamp) {
         // If desired, request another anim frame for later
         if (this.continueAnimation) {
