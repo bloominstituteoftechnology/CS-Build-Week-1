@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTimeout from 'react-timeout';
 import './App.css';
 
 class App extends React.Component {
@@ -6,13 +7,22 @@ class App extends React.Component {
     super(props);
     this.state = {
       grid: [],
-      isClickable: true
+      isRunning: false,
+      iterationCount: 0
     };
 
-    this.toggleSimulation = e => {
+    this.startSimulation = e => {
       e.preventDefault();
-      this.setState({ isClickable: !this.state.isClickable });
+      if (this.state.isRunning) { return; }
+      this.setState({ isRunning: true });
       this.createNextIteration();
+    };
+
+    this.stopSimulation = e => {
+      e.preventDefault();
+      if (!this.state.isRunning) { return; }
+      window.clearTimeout(this.timeout);
+      this.setState({ isRunning: false, iterationCount: 0 });
     };
 
     this.createNextIteration = () => {
@@ -31,9 +41,10 @@ class App extends React.Component {
           }
         }
       }
-      this.setState({ grid: grid });
-      
-      setTimeout(() => {
+      this.setState({ grid: grid,
+                      iterationCount: this.state.iterationCount + 1 });
+
+      this.timeout = setTimeout(() => {
         this.createNextIteration();
       }, 500);
     };
@@ -92,18 +103,20 @@ class App extends React.Component {
                         className="row">{row.map((cell, cellIndex) => {
               return <div key={cellIndex}
                           className={cell ? "black-cell" : "white-cell"}
-                          onClick={this.state.isClickable ?
+                          onClick={!this.state.isRunning ?
                                    () => this.toggleCell(rowIndex, cellIndex) :
                                    null}
                      >{cell}</div>;
             })}</div>;
           })}
         </div>
-        <button onClick={this.toggleSimulation}>start/stop</button>
+        <button onClick={this.startSimulation}>start</button>
+        <button onClick={this.stopSimulation}>stop</button>
         <button onClick={this.clearGrid}>clear</button>
+        <div>{this.state.iterationCount}</div>
       </div>
     );
   }
 }
 
-export default App;
+export default ReactTimeout(App);
