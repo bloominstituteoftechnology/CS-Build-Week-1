@@ -1,25 +1,51 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Grid from "./Components/Grid";
+import Cell from "./Components/Cell";
+import Styled from 'styled-components';
+
+const Container = Styled.div`
+  display: flex;
+`;
+
+const Button = Styled.button`
+  height: 30px;
+  width: 100px;
+`;
+
+const ButtonContainer = Styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      clear: false,
+      currentGen: 0
+    }
+  }
+
+  clearGrid = () => {
+    this.setState({clear: true})
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <h2>Game of Life</h2>
         </header>
+        <Container>
+          <Grid clearGrid={this.clearGrid} clear={this.state.clear}/>
+          <ButtonContainer>
+            <div>Current: {this.state.currentGen}</div>
+            <Button>Start</Button>
+            <Button>Stop</Button>
+            <Button onClick={this.clearGrid}>Clear</Button>
+          </ButtonContainer>
+        </Container>
       </div>
     );
   }
