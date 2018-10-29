@@ -35,15 +35,32 @@ class App extends Component {
     let canvasCoord = this.getCanvasCoord(e);
     console.log("X: ", canvasCoord.x);
     console.log("Y: ", canvasCoord.y);
+    
+    //Get the pixel's RGBA values:
+    let canvas = e.target; 
+    const ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    // See the screenBuffer
+    // let screenBuffer = imageData.data;
+    // console.log("screen buffer: ", screenBuffer);
+
+    const pixelRGBA =  this.getPixel(imageData, canvasCoord.x, canvasCoord.y);
+    console.log("pixelRGBA: ", pixelRGBA);
 
 
+    //Set the pixel to black
+    this.setPixel(canvas, canvasCoord.x, canvasCoord.y);
 
-  } 
+  }
+  
+  
+
   /**
    * Get the Canvas (x,y) coordinates
    * 
-   * Takes in an event from a mouse click to the canvas element
-   * Returns an object with the absolute X and Y values
+   * @param e The event of the click on the canva
+   * @return object canvasCoord which will have the x,y coordinates of the click
    */
   getCanvasCoord = (e) =>{
     //Initialize object to hold the return values
@@ -73,6 +90,65 @@ class App extends Component {
   }
 
 
+
+  /**
+   * Get a pixel value from imageData
+   *
+   * @param imageData HTML canvas imagedata from getImageData()
+   * @param x X coordinate to get pixels from
+   * @param y Y coordinate to get pixels from
+   * @return Array [R,G,B,A] for the pixel in question, or null if out of bounds
+   */
+  getPixel = (imageData, x, y) => {
+    const w = imageData.width; // Conveniently the width is here
+    const h = imageData.height;
+
+    if (x < 0 || x >= w || y < 0 || y >= h) {
+        // Out of bounds
+        return null;
+    }
+
+    // Compute index within the array
+    const index = (w * y + x) * 4;
+
+    // Return a copy of the R, G, B, and A elements
+    return imageData.data.slice(index, index + 4);
+  }
+
+
+/**
+   * Put a pixel value from imageData
+   *
+   * @param canvas HTML canvas
+   * @param x X coordinate to get pixels from
+   * @param y Y coordinate to get pixels from
+   * @return void
+   */
+  setPixel = (canvas, x, y) => {
+    const ctx = canvas.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    const w = imageData.width; // Conveniently the width is here
+    const h = imageData.height;
+
+    if (x < 0 || x >= w || y < 0 || y >= h) {
+        // Out of bounds
+        return null;
+    }
+
+    // Compute index within the array
+    const index = (w * y + x) * 4;
+
+    imageData.data[index + 0] = 0x00; // Red: 0xff == 255, full intensity
+    imageData.data[index + 1] = 0x00; // Green: zero intensity
+    imageData.data[index + 2] = 0x00; // Blue: zero intensity
+    imageData.data[index + 3] = 0xff; // Alpha: 0xff == 255, fully opaque
+  
+    ctx.putImageData(imageData, 0, 0);
+  }
+
+
+
   render() {
     return (
       <div className="App">
@@ -82,7 +158,7 @@ class App extends Component {
             <Col sm="6">
               <div><h2>Conway's Game of Life</h2></div>
               <GenDiv>Generation: 0</GenDiv>
-              <LifeCanvas height={500} width={500} clickHandler={this.canvasClickHandler}/>
+              <LifeCanvas height={100} width={100} clickHandler={this.canvasClickHandler}/>
               <div>Update every <input type="text"/> ms</div>
               <div>Size of grid <input type="text"/> </div>
               <div>Play Button</div>
