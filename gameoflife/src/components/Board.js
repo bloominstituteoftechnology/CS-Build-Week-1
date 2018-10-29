@@ -1,9 +1,9 @@
 import React from "react";
 import "./Board.css";
 
-let cell_size = 20;
-let board_width = 900;
-let board_height = 900;
+let cell_size = 40;
+let board_width = 600;
+let board_height = 600;
 let rows = board_height / cell_size; // This gives us the number of rows that will be in our board.
 let columns = board_width / cell_size;
 
@@ -42,14 +42,27 @@ class Board extends React.Component {
     }
     return cellGrid;
   };
+  generateCells = () => {
+    let cells = [];
+    for (let x = 0; x < columns; x++) {
+      for (let y = 0; y < rows; y++) {
+        if (this.board[x][y]) {
+          cells.push({ x, y });
+        }
+      }
+    }
+    return cells;
+  };
 
   render() {
     {
-      /*console.log("this.board is: ", this.board);
+      /*
     console.log("this.state.cells is: ", this.state.cells);
     console.log("this.state.gridSize is: ", this.state.gridSize);
   console.log("typeof board_width is: ", typeof board_width);*/
     }
+    console.log("this.board is: ", this.board);
+    console.log("this.gCells is: ", this.gCells);
     return (
       <div>
         <div
@@ -61,9 +74,9 @@ class Board extends React.Component {
           }}
           onClick={this.handleClick}
         />
-        <div class="dropdown">
+        <div className="dropdown">
           <button
-            class="btn btn-secondary dropdown-toggle"
+            className="btn btn-secondary dropdown-toggle"
             type="button"
             id="dropdownMenuButton"
             data-toggle="dropdown"
@@ -72,20 +85,20 @@ class Board extends React.Component {
           >
             Presets
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a className="dropdown-item" href="#">
               Block
             </a>
-            <a class="dropdown-item" href="#">
+            <a className="dropdown-item" href="#">
               Beehive
             </a>
-            <a class="dropdown-item" href="#">
+            <a className="dropdown-item" href="#">
               Loaf
             </a>
-            <a class="dropdown-item" href="#">
+            <a className="dropdown-item" href="#">
               Boat
             </a>
-            <a class="dropdown-item" href="#">
+            <a className="dropdown-item" href="#">
               Tub
             </a>
           </div>
