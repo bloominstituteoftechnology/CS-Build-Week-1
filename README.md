@@ -24,6 +24,7 @@ Over the course of this week, students will work on creating their own applicati
 
 
 ## Trello Set Up:
+https://trello.com/invite/b/HbO11up0/ff46a63824806567dd844f03f63ccca5/gameoflife-sagie-gelbhauer
 
 - [ ] Create a Trello account if you don't have one already
 - [ ] Create a new board called "GameOfLife - {Your Name}"
