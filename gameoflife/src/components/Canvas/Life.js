@@ -21,6 +21,7 @@ class Life {
             return element.coords[0] === x && element.coords[1] === y;
         });
         this.cells[index].alive = !this.cells[index].alive;
+        this.step();
     }
 
     clearCells() {
@@ -28,6 +29,11 @@ class Life {
             if (this.cells[i].alive === true) {
                 this.cells[i].alive = false;
             }
+        }
+    }
+
+    step() {
+        for (let i = 0; i < this.cells.length; i++) {
         }
     }
 
