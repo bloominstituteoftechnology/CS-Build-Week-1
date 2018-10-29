@@ -26,14 +26,10 @@ class App extends React.Component {
     };
 
     this.createNextIteration = () => {
-      let grid = this.state.grid;
+      let grid = this.state.grid.map(row => row.slice());
       for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[i].length; j++) {
           let count = this.countNeighbors(i, j);
-          // console.log("position: ", [i, j]);
-          // console.log("original value: ", grid[i][j]);
-          // console.log("count: ", count);
-          // console.log("start value: ", grid[i][j]);
           if (grid[i][j]) {
             if (count < 2 || count > 3) {
               grid[i][j] = false;
@@ -43,10 +39,6 @@ class App extends React.Component {
               grid[i][j] = true;
             }
           }
-          // console.log("end value: ", grid[i][j]);
-          // console.log("position: ", [i, j]);
-          // console.log("new value: ", grid[i][j]);
-          // console.log("count: ", count);
         }
       }
       this.setState({ grid: grid,
