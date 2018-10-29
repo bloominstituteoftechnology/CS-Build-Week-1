@@ -19,6 +19,10 @@ const MainContainer = styled(Container)`
 const RulesDiv = styled.div`
   margin-top:200px;
 `
+
+const GenDiv = styled.div`
+  margin-top:50px;
+`
 class App extends Component {
   render() {
     return (
@@ -27,11 +31,10 @@ class App extends Component {
           <Row>
             <Col sm="6">
               <div><h2>Conway's Game of Life</h2></div>
-              <div>Generation: 0</div>
-              <div>Grid</div> 
+              <GenDiv>Generation: 0</GenDiv>
               <LifeCanvas className="border" height={500} width={500}/>
-              <div>Update: </div>
-              <div>Size: </div>
+              <div>Update every <input type="text"/> ms</div>
+              <div>Size of grid <input type="text"/> </div>
               <div>Play Button</div>
             </Col>
             <Col sm="6">
