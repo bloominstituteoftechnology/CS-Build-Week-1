@@ -1,0 +1,8 @@
+.board-ctn {
+    margin-top:10px;
+    margin-left: 10px;
+    display:flex;
+	width:330px;
+    flex-flow: row wrap;
+    border:1px solid black;
+}
