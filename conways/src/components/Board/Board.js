@@ -21,20 +21,38 @@ class Board extends Component {
         this.setState({ matrix });
     }
 
-    toggleAlive = e => {
+    toggleClick = index => {
         if (this.state.clickEnabled) {
             let matrix = this.state.matrix.slice();
-            let found = this.findIndex(e.i, e.j);
+            let found = this.findIndex(index.i, index.j);
 
-            found.alive = !found.alive;
-            matrix[e.i][e.j] = found;
-            
+            matrix[index.i][index.j] = this.toggleAlive(found);
+
             this.setState({ matrix })
-            console.log(this.findIndex(e.i, e.j));
+            console.log(this.findIndex(index.i, index.j));
         }
+    }
+    toggleAlive = matrices => {
+        matrices.alive = !matrices.alive;
+        return matrices;
+    }
+
+    findAlive = () => {
+        let alive = [];
+        for (let i = 0; i < this.state.matrix.length; i++) {
+            for (let j = 0; j < this.state.matrix.length; j++) {
+                if (this.state.matrix[i][j].alive === true) {
+                    alive.push(this.state.matrix[i][j]);
+                }
+            }
+        }
+        console.log(alive);
     }
     findIndex = (i, j) => {
         return this.state.matrix[i][j];
+    }
+    componentDidUpdate() {
+        this.findAlive();
     }
     render() {
         return (
@@ -43,7 +61,7 @@ class Board extends Component {
                     this.state.matrix.map(cell => {
                         return (
                             cell.map((mini) => {
-                                return (<Cell key={mini.i + mini.j} index={mini} clickEnabled={this.state.clickEnabled} toggleAlive={this.toggleAlive} />);
+                                return (<Cell key={mini.i + mini.j} index={mini} clickEnabled={this.state.clickEnabled} toggleClick={this.toggleClick} />);
                             })
                         );
                     })

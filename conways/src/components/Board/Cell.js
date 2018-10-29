@@ -6,11 +6,9 @@ class Cell extends Component {
         this.state = {
         }
     }
-
- 
     render() {
         return (
-            <div className={`cell + ${this.props.index.alive}`} onClick={() => this.props.toggleAlive(this.props.index)}>
+            <div className={`cell + ${this.props.index.alive}`} onClick={() => this.props.toggleClick(this.props.index)}>
             </div>
         );
     }
