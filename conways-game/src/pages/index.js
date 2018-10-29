@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { createGlobalStyle } from "styled-components";
-
+import Canvas from "../components/Canvas";
 const GlobalStyle = createGlobalStyle`
     * {
         margin: 0;
@@ -20,6 +20,7 @@ export default () => {
   return (
   <Fragment>
     <GlobalStyle/>
+    <Canvas />
     <h2>hello world</h2>
   </Fragment>
   );
