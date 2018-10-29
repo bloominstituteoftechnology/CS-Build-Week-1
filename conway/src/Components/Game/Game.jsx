@@ -26,11 +26,12 @@ const gridOdd = [];
 let curX = 0;
 let curY = 0;
 for (let i = 0; i < TotalNodesX; i++){
-   if(i != 0) curX += 50;
+   if(i !== 0) curX += 50;
    const newArr = [];
 
    for(let j = 0; j < TotalNodesY; j++){
-      if(j != 0) curY += 50;
+      if(j == 0) curY = 0;
+      else curY += 50;
       newArr.push({x: curX, y: curY, xz:50, yz:50})
    }
 
@@ -38,8 +39,6 @@ for (let i = 0; i < TotalNodesX; i++){
 }
 
 console.log(gridOdd)
-
-
 
 function canvasApp() {
   var myCanvas = document.getElementById('myCanvas');
@@ -60,8 +59,9 @@ function canvasApp() {
 
   function drawScreen() {
 
-    var dx = 50;
-    var dy = 50;
+   //init grid square size
+    const dx = 50;
+    const dy = 50;
 
    
     var x = 0;
@@ -109,6 +109,20 @@ function canvasApp() {
       // ctx.font = "1px Calibri";
       // ctx.fillText(xy,x,10);
       // xy+=10;
+
+
+      // draw a box (each square is 50px wide and )
+      // gridOdd.forEach((verticalArr, i) => {
+      //    verticalArr.forEach((node, j) => {
+      //       ctx.rect(node.x, node.y, 50,50)
+      //    })
+      // })
+      let node = gridOdd[0][0];
+      ctx.rect(node.x, node.y, 50,50)
+      // ctx.rect(50, 0, 50, 50);
+      // ctx.rect(0, 0, 50, 50);
+      ctx.fillStyle = "black";
+      ctx.fill();
     }
   }
 
