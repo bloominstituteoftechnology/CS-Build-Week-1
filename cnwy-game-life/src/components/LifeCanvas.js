@@ -16,7 +16,7 @@ class LifeCanvas extends Component {
     ctx.fillRect(0,0,gridHeight,gridWidth);
     
     //Fill a single Rect:
-    let sqEdgeLength = 50;
+    let sqEdgeLength = this.props.cellSize;
 
     //Fill Matrix with Squares:
     for (let i = 0; i<gridHeight/sqEdgeLength; i++){
