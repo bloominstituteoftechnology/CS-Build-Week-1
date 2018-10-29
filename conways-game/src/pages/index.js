@@ -10,10 +10,13 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         box-sizing: border-box;
     }
+    html, body {
+        height: 100%;
+    }
     html {
         font-family: sans-serif;
         font-size: 62.5%;
-        color: ${ colors.white };
+        color: ${colors.white};
     }
     body {
         font-size: 1.6rem;
