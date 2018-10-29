@@ -36,7 +36,7 @@ class LifeCanvas extends Component {
   render() {
     // return (
     //   <div>
-        return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
+        return <canvas ref="canvas" width={this.props.width} height={this.props.height} onClick={this.props.clickHandler}/>
     //   </div>
     // );
   }
