@@ -22,6 +22,15 @@ class Life {
         });
         this.cells[index].alive = !this.cells[index].alive;
     }
+
+    clearCells() {
+        for (let i = 0; i < this.cells.length; i++) {
+            if (this.cells[i].alive === true) {
+                this.cells[i].alive = false;
+            }
+        }
+    }
+
 }
 
 export default Life;

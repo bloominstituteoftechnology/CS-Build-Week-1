@@ -7,7 +7,7 @@ class LifeCanvas extends React.Component {
 
         this.state = {
             continueAnimation: true,
-            life: new Life(window.innerWidth, 500)
+            life: new Life(window.innerWidth, window.innerHeight)
         }
     }
 
@@ -46,8 +46,17 @@ class LifeCanvas extends React.Component {
         this.state.life.toggleCell(x, y);
     }
 
+    clearCells = () => {
+        this.state.life.clearCells();
+    }
+
     render() {
-        return <canvas onClick={this.toggleLife} ref="canvas" width={this.state.life.width} height={this.state.life.height} />
+        return (
+            <div>
+                <button onClick={this.clearCells}>Clear</button>
+                <canvas onClick={this.toggleLife} ref="canvas" width={this.state.life.width} height={this.state.life.height} />
+            </div>
+        );
     }
 }
 
