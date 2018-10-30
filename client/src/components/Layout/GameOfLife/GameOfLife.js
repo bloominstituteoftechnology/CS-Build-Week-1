@@ -8,7 +8,13 @@ class GameOfLife extends React.Component {
     this.rows = 30;
     this.columns = 40;
     this.grid = this.clearGrid();
-    this.state = { rows: 30, columns: 40, cells: [] };
+    this.state = {
+      rows: 30,
+      columns: 40,
+      cells: [],
+      speed: 100,
+      isPlaying: false
+    };
   }
 
   clearGrid() {
@@ -64,6 +70,82 @@ class GameOfLife extends React.Component {
     this.setState({ cells: this.fillCells() });
   };
 
+  startGame = () => {
+    this.setState({ isPlaying: true });
+    this.nextGeneration();
+  };
+  stopGame = () => {
+    this.setState({ isPlaying: false });
+    if (this.speedHandler) {
+      window.clearTimeout(this.speedHandler);
+      this.speedHandler = null;
+    }
+  };
+
+  handleSpeed = event => {
+    this.setState({ speed: event.target.value });
+  };
+
+  nextGeneration() {
+    let generation = this.clearGrid();
+
+    for (let y = 0; y < this.rows; y++) {
+      for (let x = 0; x < this.columns; x++) {
+        let neighbors = this.applyRules(this.grid, x, y);
+        if (this.grid[y][x]) {
+          if (neighbors === 2 || neighbors === 3) {
+            generation[y][x] = true;
+          } else {
+            generation[y][x] = false;
+          }
+        } else {
+          if (!this.grid[y][x] && neighbors === 3) {
+            generation[y][x] = true;
+          }
+        }
+      }
+    }
+
+    this.grid = generation;
+    this.setState({ cells: this.fillCells() });
+
+    this.speedHandler = window.setTimeout(() => {
+      this.nextGeneration();
+    }, this.state.speed);
+  }
+
+  applyRules(grid, x, y) {
+    let neighbors = 0;
+    const directions = [
+      [-1, -1],
+      [-1, 0],
+      [-1, 1],
+      [0, 1],
+      [1, 1],
+      [1, 0],
+      [1, -1],
+      [0, -1]
+    ];
+
+    for (let i = 0; i < directions.length; i++) {
+      const direction = directions[i];
+      let y1 = y + direction[0];
+      let x1 = x + direction[1];
+
+      if (
+        x1 >= 0 &&
+        x1 < this.columns &&
+        y1 >= 0 &&
+        y1 < this.rows &&
+        grid[y1][x1]
+      ) {
+        neighbors++;
+      }
+    }
+
+    return neighbors;
+  }
+
   render() {
     return (
       <div>
@@ -77,6 +159,15 @@ class GameOfLife extends React.Component {
             <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
           ))}
         </Grid>
+        <div>
+          Speed: <input value={this.state.speed} onChange={this.handleSpeed} />{" "}
+          milliseconds
+          {this.state.isPlaying ? (
+            <button onClick={this.stopGame}>Stop</button>
+          ) : (
+            <button onClick={this.startGame}>Start</button>
+          )}
+        </div>
       </div>
     );
   }
