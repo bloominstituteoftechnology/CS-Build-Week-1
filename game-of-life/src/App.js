@@ -10,7 +10,9 @@ class App extends React.Component {
     this.state = {
       grid: [],
       isRunning: false,
-      iterationCount: 0
+      iterationCount: 0,
+      sliderValue: -550,
+      refreshRate: 550
     };
 
     this.startSimulation = e => {
@@ -31,7 +33,7 @@ class App extends React.Component {
       this.createNextIteration();
       this.timeout = setTimeout(() => {
         this.simulationLoop();
-      }, 500);
+      }, this.state.refreshRate);
     };
 
     this.advanceOneIteration = e => {
@@ -92,7 +94,19 @@ class App extends React.Component {
       e.preventDefault();
       clearTimeout(this.timeout);
       let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
-      this.setState({ grid: grid, isRunning: false, iterationCount: 0 });
+      this.setState({ grid: grid,
+                      isRunning: false,
+                      iterationCount: 0,
+                      sliderValue: -550,
+                      refreshRate: 550 });
+    };
+
+    this.onSliderChange = (sliderValue) => {
+      this.setState({ sliderValue });
+    };
+
+    this.onAfterChange = (value) => {
+      this.setState({ refreshRate: value * -1 });
     };
   }
 
@@ -122,8 +136,11 @@ class App extends React.Component {
         <button onClick={this.advanceOneIteration}>next</button>
         <button onClick={this.resetGrid}>reset</button>
         <div className="slider-container">
-          <Slider min={50}
-                  max={1000}/>
+          <Slider min={-1000}
+                  max={-100}
+                  value={this.state.sliderValue}
+                  onChange={this.onSliderChange}
+                  onAfterChange={this.onAfterChange}/>
         </div>
         <div>{this.state.iterationCount}</div>
       </div>
