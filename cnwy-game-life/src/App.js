@@ -39,7 +39,12 @@ class App extends Component {
     this.setState({gridSize:500, cellSize:25})
   }
 
-  
+    /**
+   * Get the Canvas Click Handler. Every time the canvas is clicked this will fire
+   * 
+   * @param e The event of the click on the canva
+   * @return object canvasCoord which will have the x,y coordinates of the click
+   */
   canvasClickHandler = (e) =>{
     console.log('You clicked on the canvas!');
     
@@ -60,13 +65,56 @@ class App extends Component {
     const pixelRGBA =  this.getPixel(imageData, canvasCoord.x, canvasCoord.y);
     console.log("pixelRGBA: ", pixelRGBA);
 
+    this.toggleCell(canvasCoord, pixelRGBA);
 
     //Set the pixel to black
-    this.setPixel(canvas, canvasCoord.x, canvasCoord.y);
+    // this.setPixel(canvas, canvasCoord.x, canvasCoord.y);
 
   }
   
-  
+    /**
+   * Update the canvas
+   * 
+   * @param canvasCoord = an object that contains the user clicked (x,y) coord
+   * @return void
+   */
+  toggleCell = (canvasCoord, pixelRGBA) => {
+    // Get Ref to canvas element
+    let canvas = document.getElementById("canvas");
+    // console.log("canvas in toggle:", canvas);
+    
+    // Get the Context of the canvas Elem
+    const ctx = canvas.getContext('2d');
+    // console.log("context in toggle:", ctx);
+    
+    // Get the imageData
+    // let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    
+    // See the screenBuffer
+    // let screenBuffer = imageData.data;
+    // console.log("screen buffer: ", screenBuffer);
+
+    // Test the Cell Size
+    // console.log("Cell Size: ", this.state.cellSize);
+
+    // Get the multiplier from (x,y), dividing by the cellsize
+    // allows use to find which cell the user clicked on
+    let xMult = Math.floor(canvasCoord.x/this.state.cellSize);
+    let yMult = Math.floor(canvasCoord.y/this.state.cellSize);
+
+
+    //See the pixel color coming in
+    console.log("pixelRGBA: ", pixelRGBA);
+
+    ctx.beginPath();
+    ctx.rect(xMult*this.state.cellSize, yMult*this.state.cellSize, this.state.cellSize, this.state.cellSize);
+    ctx.fillStyle = (pixelRGBA[0] === 255 && pixelRGBA[1] === 255 && pixelRGBA[1] === 255) ? 'black' : 'white';
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'grey';
+    ctx.stroke();
+  }
+
 
   /**
    * Get the Canvas (x,y) coordinates
