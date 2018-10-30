@@ -11,14 +11,24 @@ const Container = styled.div`
 
 class GridBox extends Component {
     constructor(props) {
-        super();
+        super(props);
+        console.log(`PROPS: ${this.props.status}`)
         this.state = {
+        }
+    }
+
+    toggleColor() {
+        const cellStatus = this.props.status;
+        if (cellStatus === 1) {
+            document.getElementById('cell').style.background = 'black';
+        } else {
+            document.getElementById('cell').style.background = 'white'; 
         }
     }
 
     render() {
         return (
-            <Container>
+            <Container id='cell' onClick={this.toggleColor()}>
             </Container>
         )
     }

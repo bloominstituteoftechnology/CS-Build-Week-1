@@ -7,7 +7,7 @@ import GridBox from './GridBox';
 const Container = styled.div`
     border: 1px solid black;
     width: 362px;
-    height: 362px;
+    height: 360px;
     display: flex;
     flex-wrap: wrap;
 `;
@@ -44,7 +44,17 @@ class GameBox extends Component  {
         return (15 * y) + x;
     }
 
-    // get
+    getNeighbors(index) {
+        let top = index - 15;
+        let topRight = index - 14;
+        let right = index + 1;
+        let bottomRight = index + 16;
+        let bottom = index + 15;
+        let bottomLeft = index + 14;
+        let left = index - 1;
+        let topLeft = index - 16;
+        return [top, topRight, right, bottomRight, bottom, bottomLeft, left, topLeft];
+    }
 
     render() {
         return ( 

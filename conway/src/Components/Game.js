@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import GameBox from './GameBox';
 import styled from 'styled-components';
@@ -29,18 +29,28 @@ const Button = styled.button`
     border: 1px solid black
 `;
 
-const Game = () => {
-    return ( 
-        <Container>
-            <Header>Generation: #</Header>
-            <GameBox/>
-            <ButtonContainer>
-                <Button>Play</Button>
-                <Button>Pause</Button>
-                <Button>Stop</Button>
-            </ButtonContainer>
-        </Container>
-    );
+class Game extends Component {
+    constructor() {
+        super();
+        this.state = {}
+
+    }
+
+    
+
+    render() {
+        return ( 
+            <Container>
+                <Header>Generation: #</Header>
+                <GameBox/>
+                <ButtonContainer>
+                    <Button>Play</Button>
+                    <Button>Pause</Button>
+                    <Button>Stop</Button>
+                </ButtonContainer>
+            </Container>
+        );
+    }
 }
  
 export default Game;
