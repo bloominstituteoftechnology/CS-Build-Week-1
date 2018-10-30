@@ -4,7 +4,7 @@
 }
 /* Panel Styles */
 .Panel {
-  width: 399px;
+  width: 449px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -30,21 +30,24 @@
 }
 /* Board Styles */
 .board {
-  width: 400px;
-  height: 400px;
+  width: 450px;
+  height: 450px;
   margin: 1rem auto 0 auto;
   border-left: 1px solid gray;
   border-top: 1px solid gray;
 }
 /* Cell Styles */
 .cell {
-  width: 19px;
-  height: 19px;
+  width: 14px;
+  height: 14px;
   background: #5E5B52;
   border-right: 1px solid gray;
   border-bottom: 1px solid gray;
   display: block;
   float: left;
+}
+.cell:hover {
+  background: rgb(75, 72, 65);
 }
 .cell.active {
   background: #F7CB2E;

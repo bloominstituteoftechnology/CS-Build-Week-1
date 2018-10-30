@@ -4,9 +4,9 @@ class Panel extends Component {
   render() { 
     return (
       <div className='Panel'>
-        <span>0 Generation</span>
-        <div className='button'>Start/Stop</div>
-        <div className='button'>Clear</div>
+        <span>{this.props.gens} Generation</span>
+        <div className='button' onClick={this.props.toggleRun}>Start/Stop</div>
+        <div className='button' onClick={this.props.handleClear}>Clear</div>
       </div>
     )
   }
