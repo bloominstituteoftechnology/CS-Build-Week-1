@@ -8,7 +8,7 @@
   }
 
   .Cell {
-    background: #ccc;
+    background: #ffc107;
     position: absolute;
   }
 
@@ -17,4 +17,19 @@
     color: white;
     font-size: 24px;
     display: flex;
+  }
+
+ 
+  .Clear {
+    cursor: pointer;
+text-decoration: none;
+background-color: #B416AE;
+border: 1px solid #340069;
+width: 200px;
+height: 60px;
+font-family: 'Chakra Petch', sans-serif;
+color: #340069;
+margin-left: 15px;
+font-size: 26px;
+font-style: italic;
   }

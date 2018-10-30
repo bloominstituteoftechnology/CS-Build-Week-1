@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import img2 from '../Images/newpause.png';
 import img1 from '../Images/newestart.png';
 
+import '../Hover/hover-min.css';
+
+
 const Play = styled.button`
 
 cursor: pointer;
@@ -31,29 +34,71 @@ height: 60px;
 background-image:url(${img2})
 `
 const Msecer = styled.input`
-width: 50px;
+width: 75px;
 background-color: none;
 background: none;
-color: white;
-border: 2px solid pink;
+color: #ffc107;
+border: 2px solid #ffc107;
 height: 30px;
 font-family: 'Chakra Petch', sans-serif;
-font-size: 20px;
+font-size: 28px;
 
 `
 
 const Update = styled.h1`
-margin-top: 15px;`
+margin-top: 15px;
+color:#ffc107`
+
+const Clear = styled.button`
+
+cursor: pointer;
+text-decoration: none;
+background-color: #B416AE;
+border: 1px solid #340069;
+width: 200px;
+height: 70px;
+font-family: 'Chakra Petch', sans-serif;
+color: #FBC36A;
+margin-left: 815px;
+
+font-size: 26px;
+font-style: italic;
+position: absolute;
+margin-top: 200px;
+border-radius: 5px;
+
+`
 
 const CELL_SIZE = 20;
 const WIDTH = 800;
 const HEIGHT = 600;
 
 class Cell extends React.Component {
+
+    randint = (max) => {
+     return Math.floor(Math.random() * Math.floor(max));
+     
+  
+
+ } 
+
+
     render() {
       const { x, y } = this.props;
+      const CELLCOLOR = {
+        1: '#FBC36A',
+        2: '#FFD870',
+        3: '#F6A462',
+        4: '#EF5656',
+        5: '#E23D6C',
+        6: '#B416AE',
+        7: '#690B95',
+        8: '#340069'
+       
+      }
       return (
         <div className="Cell" style={{
+            background: `${CELLCOLOR[Math.floor(Math.random() *8)]}`,
           left: `${CELL_SIZE * x + 1}px`,
           top: `${CELL_SIZE * y + 1}px`,
           width: `${CELL_SIZE - 1}px`,
@@ -159,6 +204,8 @@ class Game extends React.Component {
         
         const x = Math.floor(offsetX / CELL_SIZE);
         const y = Math.floor(offsetY / CELL_SIZE);
+
+        
         if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows) {
           this.board[y][x] = !this.board[y][x];
         }
@@ -181,12 +228,29 @@ class Game extends React.Component {
         return neighbors;
     }
 
+    handleClear = () => {
+      this.board = this.makeEmptyBoard();
+      this.setState({ cells: this.makeCells() });
+  }
+  handleRandom = () => {
+    for (let y = 0; y < this.rows; y++) {
+        for (let x = 0; x < this.cols; x++) {
+            this.board[y][x] = (Math.random() >= 0.5);
+        }
+    }
+
+    this.setState({ cells: this.makeCells() });
+}
+
+
   render() {
     const { cells } = this.state;
     return (
       <div>
-
         
+        <a class="button hvr-buzz-out">
+<Clear onClick={this.handleRandom}> Randomize Board</Clear>
+</a>
           
         <div className="Board"
           style={{ width: WIDTH, height: HEIGHT, 
@@ -210,7 +274,10 @@ class Game extends React.Component {
             <Pause onClick={this.stopGame}/> :
             <Play onClick={this.runGame}/>
           }
+          
+          
         </div>
+        
       </div>
     );
   }
