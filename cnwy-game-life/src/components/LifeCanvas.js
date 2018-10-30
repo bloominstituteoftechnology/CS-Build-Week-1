@@ -25,10 +25,6 @@ class LifeCanvas extends Component {
   
   componentDidMount(){
     this.initializeCanvas();
-    this.setState({
-      generation:0,
-      // continueAnimation : true
-    })
   }
 
   componentWillUnmount() {
