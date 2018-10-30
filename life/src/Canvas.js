@@ -40,6 +40,23 @@ class Canvas extends Component {
         }
     }
 
+    stop = () => {
+        this.continueAnimaiton = false;
+    };
+
+    start = () => {
+        this.continueAnimaiton = true;
+        this.animFrame();
+    };
+
+    clear = () => {
+        this.continueAnimaiton = false;
+        this.refs.canvas
+            .getContext('2d')
+            .clearRect(0, 0, this.props.width, this.props.height);
+        this.life.clear();
+    };
+
 
     render() {
         return (
