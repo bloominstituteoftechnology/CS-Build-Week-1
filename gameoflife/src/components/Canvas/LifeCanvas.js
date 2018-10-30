@@ -6,8 +6,8 @@ class LifeCanvas extends React.Component {
         super(props);
 
         this.state = {
-            continueAnimation: true,
-            life: new Life(window.innerWidth, window.innerHeight),
+            continueAnimation: false,
+            life: new Life(window.innerWidth, 500),
             prevTimestamp: null,
             clicked: false
         }
@@ -22,19 +22,21 @@ class LifeCanvas extends React.Component {
     }
 
     onAnimFrame(timestamp) {
-        if (this.state.continueAnimation) {
-            requestAnimationFrame(timestamp => { this.onAnimFrame(timestamp); });
-        }
+        requestAnimationFrame(timestamp => { this.onAnimFrame(timestamp); });
 
         timestamp = Math.floor(timestamp / 1000);
 
         if (timestamp !== this.state.prevTimestamp || this.state.clicked) {
+            if (this.state.continueAnimation) {
+                this.state.life.step();
+            }
+
             this.setState({ prevTimestamp: timestamp, clicked: false });
 
             const canvas = this.refs.canvas;
             const context = canvas.getContext('2d');
-            const cellSize = 10;
             const cells = this.state.life.getCells();
+            const cellSize = this.state.life.getCellSize();
 
             for (let i = 0; i < cells.length; i++) {
                 context.lineWidth = 1;
@@ -47,12 +49,24 @@ class LifeCanvas extends React.Component {
     }
 
     toggleLife = event => {
-        const rect = this.refs.canvas.getBoundingClientRect();
-        let x = Math.floor((event.clientX - rect.left) / 10);
-        let y = Math.floor((event.clientY - rect.top) / 10);
+        if (!this.state.continueAnimation) {
+            const rect = this.refs.canvas.getBoundingClientRect();
+            const size = this.state.life.getCellSize();
+            let x = Math.floor((event.clientX - rect.left) / size);
+            let y = Math.floor((event.clientY - rect.top) / size);
 
-        this.state.life.toggleCell(x, y);
-        this.setState({ clicked: true });
+            this.state.life.toggleCell(x, y);
+            this.setState({ clicked: true });
+        }
+    }
+
+    play = () => {
+        this.setState({ continueAnimation: true });
+        requestAnimationFrame(timestamp => { this.onAnimFrame(timestamp); });
+    }
+
+    pause = () => {
+        this.setState({ continueAnimation: false });
     }
 
     clearCells = () => {
@@ -63,6 +77,9 @@ class LifeCanvas extends React.Component {
     render() {
         return (
             <div>
+                <button onClick={this.play}>Play</button>
+                <button onClick={this.pause}>Pause</button>
+
                 <button onClick={this.clearCells}>Clear</button>
                 <canvas onClick={this.toggleLife} ref="canvas" width={this.state.life.width} height={this.state.life.height} />
             </div>

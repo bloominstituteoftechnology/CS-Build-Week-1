@@ -4,39 +4,113 @@ class Life {
         this.height = height;
 
         this.cellSize = 10;
-        this.cells = [];
+        this.cells = [[], []];
+
         for (let x = 0; x < this.width / this.cellSize; x++) {
             for (let y = 0; y < this.height / this.cellSize; y++) {
-                this.cells.push({ coords: [x, y], alive: false });
+                this.cells[0].push({ coords: [x, y], alive: false });
+                this.cells[1].push({ coords: [x, y], alive: false });
             }
         }
+
+        this.buffer = 0;
     }
 
     getCells() {
-        return this.cells;
+        return this.cells[this.buffer];
+    }
+
+    getCellSize() {
+        return this.cellSize;
     }
 
     toggleCell(x, y) {
-        const index = this.cells.findIndex(element => {
+        const index = this.cells[this.buffer].findIndex(element => {
             return element.coords[0] === x && element.coords[1] === y;
         });
-        this.cells[index].alive = !this.cells[index].alive;
-        this.step();
+        if (index !== -1) {
+            this.cells[this.buffer][index].alive = !this.cells[this.buffer][index].alive;
+        }
     }
 
     clearCells() {
-        for (let i = 0; i < this.cells.length; i++) {
-            if (this.cells[i].alive === true) {
-                this.cells[i].alive = false;
+        for (let i = 0; i < this.cells[this.buffer].length; i++) {
+            if (this.cells[this.buffer][i].alive) {
+                this.cells[this.buffer][i].alive = false;
             }
         }
     }
 
     step() {
-        for (let i = 0; i < this.cells.length; i++) {
-        }
-    }
+        let cells = this.cells[this.buffer];
+        let cellsBuffer = this.cells[this.buffer === 0 ? 1 : 0];
+        let cellWidth = this.width / this.cellSize;
+        let cellHeight = this.height / this.cellSize;
 
+        for (let i = 0; i < cells.length; i++) {
+            let neighbors = 0;
+            let x = cells[i].coords[0];
+            let y = cells[i].coords[1];
+
+            // North
+            if (y > 0 && cells[i - 1].alive) {
+                // console.log('NORTH ' + cells[i - 1].coords);
+                neighbors++;
+            }
+            // North-West
+            if (y > 0 && x > 0 && cells[i - cellHeight - 1].alive) {
+                // console.log('NORTH-WEST ' + cells[i - cellHeight - 1].coords);
+                neighbors++;
+            }
+            // North-East
+            if (y > 0 && x < cellWidth - 1 && cells[i + cellHeight - 1].alive) {
+                // console.log('NORTH-EAST ' + cells[(i + cellHeight) - 1].coords);
+                neighbors++;
+            }
+            // South
+            if (y < cellHeight - 1 && cells[i + 1].alive) {
+                // console.log('SOUTH ' + cells[i + 1].coords);
+                neighbors++;
+            }
+            // South-West
+            if (y < cellHeight - 1 && x > 0 && cells[i + 1 - cellHeight].alive) {
+                // console.log('SOUTH-WEST ' + cells[i + 1 - cellHeight].coords);
+                neighbors++;
+            }
+            // South-East
+            if (y < cellHeight - 1 && x < cellWidth - 1 && cells[i + 1 + cellHeight].alive) {
+                // console.log('SOUTH-EAST ' + cells[i + 1 + cellHeight].coords);
+                neighbors++;
+            }
+            // West
+            if (x > 0 && cells[i - cellHeight].alive) {
+                // console.log('WEST ' + cells[i - cellHeight].coords);
+                neighbors++;
+            }
+            // East
+            if (x < cellWidth - 1 && cells[i + cellHeight].alive) {
+                // console.log('EAST ' + cells[i + cellHeight].coords);
+                neighbors++;
+            }
+
+            if (cells[i].alive) {
+                if (neighbors < 2) {
+                    cellsBuffer[i].alive = false;
+                } else if (neighbors === 2 || neighbors === 3) {
+                    cellsBuffer[i].alive = true;
+                } else {
+                    cellsBuffer[i].alive = false;
+                }
+            } else {
+                if (neighbors === 3) {
+                    cellsBuffer[i].alive = true;
+                } else {
+                    cellsBuffer[i].alive = false;
+                }
+            }
+        }
+        this.buffer = this.buffer === 0 ? 1 : 0;
+    }
 }
 
 export default Life;
