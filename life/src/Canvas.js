@@ -27,7 +27,7 @@ class Canvas extends Component {
             for (let width = 0; width < canvas.width; width++) {
                 let index = (height * canvas.width + width) * 4;
 
-                imageData.data[index + 3] = 0xff;
+                imageData.data[index + 3] = '0xff';
             }
         }
 
@@ -60,12 +60,18 @@ class Canvas extends Component {
 
     render() {
         return (
-            <div>
+            <div className='canvas'>
                 <canvas
                     ref="canvas"
                     width={this.props.width}
                     height={this.props.height}
                 />
+                <div className='buttons'>
+                    <button onClick={this.handleRandom}>Random</button>
+                    <button onClick={this.handleStop}>Pause</button>
+                    <button onClick={this.handleStart}>Start</button>
+                    <button onClick={this.handleClear}>Clear</button>
+                </div>
 
             </div>
         );
