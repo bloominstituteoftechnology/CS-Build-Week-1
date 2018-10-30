@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Two from './Two'
-import Three from './Three'
+import ConThree from './ConThree'
 import Main from './Main'
 
 const AppRouter = () => (
@@ -21,7 +21,7 @@ const AppRouter = () => (
 
             <Route path="/" exact component={Main} />
             <Route path="/two" component={Two} />
-            <Route path="/three" component={Three} />
+            <Route path="/three" component={ConThree} />
         </div>
     </Router>
 )
