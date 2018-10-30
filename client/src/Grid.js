@@ -46,13 +46,26 @@ class Grid extends React.Component {
     return cells;
   }
 
-
   handleClick = (e) => {
     const elementOffset = this.getElementOffset();
     const x = Math.floor((e.pageX - elementOffset.x) / 20);
     const y = Math.floor((e.pageY - elementOffset.y) / 20);
     this.state.grid[y][x] = !this.state.grid[y][x];
     this.setState({ cells: this.fillCells() });
+  }
+
+  randomGame = () => {
+    for (let y = 0; y < 18; y++) {
+        for (let x = 0; x < 33; x++) {
+            this.state.grid[y][x] = (Math.random() < 0.4);
+        }
+    }
+    this.setState({ cells: this.fillCells() });
+  }
+
+  clearGame = () => { 
+    this.refreshGrid();
+    window.location.reload();
   }
 
   render() {
@@ -67,6 +80,10 @@ class Grid extends React.Component {
                   key={`${cell.x},${cell.y}`}/>
           ))}
         </div>
+        <button>Start</button>
+        <button>Stop</button>
+        <button onClick={this.randomGame}>Random</button>
+        <button onClick={this.clearGame}>Clear</button>
       </div>
     );
   }
