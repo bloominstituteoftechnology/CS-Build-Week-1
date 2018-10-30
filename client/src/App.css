@@ -18,12 +18,20 @@
 /* Grid styles */
 
 .Grid {
+  position: relative;
   background-color: #000;
-  width: 66.1vw;
-  height: 36.1vw;
-  background-size: 2vw 2vw;
+  width: 661px;
+  height: 361px;
+  background-size: 20px 20px;
   background-image:
     linear-gradient(to right, 	#80F103, 1px, transparent 1px),
     linear-gradient(to bottom, 	#80F103, 1px, transparent 1px);
+}
+
+/* Cell styles */
+
+.Cell {
+  position: absolute;
+  background: #80F103;
 }
 
