@@ -1,5 +1,6 @@
 import React from "react";
 import "./Board.css";
+import Cell from "./Cell";
 
 let cell_size = 40;
 let board_width = 600;
@@ -18,9 +19,27 @@ class Board extends React.Component {
       alive: false
     };
   }
+  getElementOffset() {
+    const rect = this.clickedGrids.getBoundingClientRect();
+    const doc = document.documentElement;
+    return {
+      x: rect.left + window.pageXOffset - doc.clientLeft,
+      y: rect.top + window.pageYOffset - doc.clientTop
+    };
+  }
+
   handleClick = event => {
-    // This should handle whether the cell is alive (black) or dead (white).
-    console.log("handleClick event is: ", event);
+    const elemOffset = this.getElementOffset();
+    console.log("elemOffset is: ", elemOffset);
+    const offsetX = event.clientX - elemOffset.x;
+    const offsetY = event.clientY - elemOffset.y;
+
+    const x = Math.floor(offsetX / cell_size);
+    const y = Math.floor(offsetY / cell_size);
+    if (x >= 0 && x <= columns && y >= 0 && y <= rows) {
+      this.board[y][x] = !this.board[y][x];
+    }
+    this.setState({ cells: this.generateCells() });
   };
   handleChange = event => {
     this.setState({ gridSize: event.target.value });
@@ -34,19 +53,19 @@ class Board extends React.Component {
 
   generateBoard = () => {
     let cellGrid = [];
-    for (let x = 0; x < columns; x++) {
-      cellGrid[x] = []; // This will create an array of all of x axis of the board.
-      for (let y = 0; y < rows; y++) {
-        cellGrid[x][y] = false; // This will add to the cellGrid array, creating in each array, an array of y's.
+    for (let y = 0; y < rows; y++) {
+      cellGrid[y] = []; // This will create an array of all of x axis of the board.
+      for (let x = 0; x < columns; x++) {
+        cellGrid[y][x] = false; // This will add to the cellGrid array, creating in each array, an array of y's.
       }
     }
     return cellGrid;
   };
   generateCells = () => {
     let cells = [];
-    for (let x = 0; x < columns; x++) {
-      for (let y = 0; y < rows; y++) {
-        if (this.board[x][y]) {
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < columns; x++) {
+        if (this.board[y][x]) {
           cells.push({ x, y });
         }
       }
@@ -55,14 +74,8 @@ class Board extends React.Component {
   };
 
   render() {
-    {
-      /*
-    console.log("this.state.cells is: ", this.state.cells);
-    console.log("this.state.gridSize is: ", this.state.gridSize);
-  console.log("typeof board_width is: ", typeof board_width);*/
-    }
-    console.log("this.board is: ", this.board);
-    console.log("this.gCells is: ", this.gCells);
+    console.log("board_width is: ", board_width);
+    console.log("board_height is: ", board_height);
     return (
       <div>
         <div
@@ -73,7 +86,15 @@ class Board extends React.Component {
             backgroundSize: `${cell_size}px ${cell_size}px`
           }}
           onClick={this.handleClick}
-        />
+          ref={grid => {
+            this.clickedGrids = grid;
+          }}
+        >
+          {" "}
+          {this.state.cells.map(cell => (
+            <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
+          ))}
+        </div>
         <div className="dropdown">
           <button
             className="btn btn-secondary dropdown-toggle"
