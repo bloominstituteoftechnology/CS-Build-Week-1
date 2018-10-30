@@ -11,14 +11,16 @@ class Grid extends React.Component {
     grid: [],
     generation: 0,
     interval: 100,
-    isRunning: false
+    isRunning: false,
+    rows: 18,
+    columns: 33
   }
 
   refreshGrid() {
     let grid = this.state.grid.slice();
-    for (let y = 0; y < 18; y++) {
+    for (let y = 0; y < this.state.rows; y++) {
       grid[y] = [];
-      for (let x = 0; x < 33; x++) {
+      for (let x = 0; x < this.state.columns; x++) {
         grid[y][x] = undefined;
       }
     }
@@ -39,8 +41,8 @@ class Grid extends React.Component {
 
   fillCells() {
     let cells = [];
-    for (let y = 0; y < 18; y++) {
-      for (let x = 0; x < 33; x++) {
+    for (let y = 0; y < this.state.rows; y++) {
+      for (let x = 0; x < this.state.columns; x++) {
         if (this.state.grid[y][x]) {
           cells.push({ x, y });
         }
@@ -50,16 +52,43 @@ class Grid extends React.Component {
   }
 
   handleClick = (e) => {
+    if (!this.state.isRunning) {
     const elementOffset = this.getElementOffset();
     const x = Math.floor((e.pageX - elementOffset.x) / 20);
     const y = Math.floor((e.pageY - elementOffset.y) / 20);
     this.state.grid[y][x] = !this.state.grid[y][x];
     this.setState({ cells: this.fillCells() });
+    }
   }
 
   nextIteration = () => {
-    this.setState({ generation: this.state.generation + 1 })
-  }
+
+    // let firstBuffer = this.state.grid; // grid
+    // let secondBuffer = this.state.grid.slice(0); // grid copy
+
+    // for (let x = 0; x < this.state.rows; x++) { // loop thru rows
+		//   for (let y = 0; y < this.state.columns; y++) { // loop thru columns
+		//     let count = 0; // initialize count
+
+    //       if (firstBuffer[x-1][y]) count++; // left
+    //       if (firstBuffer[x-1][y+1]) count++; // diagonal up and left
+    //       if (firstBuffer[x][y+1]) count++; // up
+    //       if (firstBuffer[x+1][y+1]) count++; // diagonal up and right
+    //       if (firstBuffer[x+1][y]) count++; // right
+    //       if (firstBuffer[x+1][y-1]) count++; // diagonal down and right
+    //       if (firstBuffer[x][y-1]) count++; // down
+    //       if (firstBuffer[x-1][y-1]) count++; // diagonal down left
+
+		//     if (firstBuffer[x][y] && (count < 2 || count > 3)) secondBuffer[x][y] = false; // if less than 2 neighbours or more than three neighbours, it dies
+		//     if (!firstBuffer[x][y] && count === 3) secondBuffer[x][y] = true; // if exactly 3 neighbours, it's born
+		//   }
+		// }
+
+    this.setState({ 
+      // cells: this.fillCells(secondBuffer), // fill cells with second buffer
+      generation: this.state.generation + 1 }) // increase generations
+    }
+  
 
   playGame = () => {
     this.setState({ isRunning: true })
@@ -73,9 +102,9 @@ class Grid extends React.Component {
   }
 
   randomGame = () => {
-    for (let y = 0; y < 18; y++) {
-        for (let x = 0; x < 33; x++) {
-            this.state.grid[y][x] = (Math.random() < 0.4);
+    for (let y = 0; y < this.state.rows; y++) {
+        for (let x = 0; x < this.state.columns; x++) {
+            this.state.grid[y][x] = (Math.random() < 0.2);
         }
     }
     this.setState({ cells: this.fillCells() });
@@ -96,7 +125,7 @@ class Grid extends React.Component {
         {this.state.cells.map(cell => (
             <Cell x={cell.x} 
                   y={cell.y}
-                  key={`${cell.x}${cell.y}`}/>
+                  key={`${cell.x}_${cell.y}`}/>
           ))}
         </div>
         <button onClick={this.playGame}>Play</button>
