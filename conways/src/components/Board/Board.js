@@ -7,7 +7,7 @@ class Board extends Component {
         super(props);
         this.state = {
             clickEnabled: true,
-            matrix: []
+            matrix: [],
         }
     }
 
@@ -66,9 +66,51 @@ class Board extends Component {
     clearButton = () => {
         this.setBoard();
     }
+    neighborCheck = (aliveArr) => {
+        let neighborCount = 0;
+        let matrix = this.state.matrix.slice();
 
+        if (aliveArr.i + 1 <= 14 && aliveArr.j + 1 <= 14 && matrix[aliveArr.i + 1][aliveArr.j + 1].alive) {
+            neighborCount += 1;
+        }
+        if (aliveArr.j - 1 >= 0 && matrix[aliveArr.i][aliveArr.j - 1].alive) {
+            neighborCount += 1;
+        }
+        if (aliveArr.j + 1 <= 14 && matrix[aliveArr.i][aliveArr.j + 1].alive) {
+            neighborCount += 1;
+        }
+        if (aliveArr.i - 1 >= 0  && matrix[aliveArr.i - 1][aliveArr.j].alive) {
+            neighborCount += 1;
+        }
+        if (aliveArr.i + 1 <= 14 && matrix[aliveArr.i + 1][aliveArr.j].alive) {
+            neighborCount += 1;
+        }
+        if (aliveArr.i + 1 <= 14 && aliveArr.j - 1 >= 0  && matrix[aliveArr.i + 1][aliveArr.j - 1].alive) {
+            neighborCount += 1;
+        }
+        if (aliveArr.i - 1 >= 0  && aliveArr.j - 1 >= 0 && matrix[aliveArr.i - 1][aliveArr.j - 1].alive) {
+            neighborCount += 1;
+        }
+        if (aliveArr.i - 1 >= 0 && aliveArr.j + 1 <= 14 && matrix[aliveArr.i - 1][aliveArr.j + 1].alive) {
+            neighborCount += 1;
+        }
+
+        if (neighborCount === 2 || neighborCount === 3) {
+        }
+        else {
+            matrix[aliveArr.i][aliveArr.j].alive = false;
+        }
+
+        this.setState({ matrix });
+    }
     //TODO 
     playButton = () => {
+        let alive = this.findAlive();
+
+        for (let i = 0; i < alive.length; ++i) {
+            this.neighborCheck(alive[i]);
+        }
+
         console.log(this.findAlive());
     }
 
