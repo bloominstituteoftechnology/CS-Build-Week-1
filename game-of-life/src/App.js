@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactTimeout from 'react-timeout';
 import Slider from 'rc-slider';
+import presets from './presets';
 import 'rc-slider/assets/index.css';
 import './App.css';
 
@@ -108,6 +109,20 @@ class App extends React.Component {
     this.onAfterChange = (value) => {
       this.setState({ refreshRate: value * -1 });
     };
+
+    this.loadPreset = (preset) => {
+      clearTimeout(this.timeout);
+      let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
+      const presetToLoad = presets[preset];
+      presetToLoad.forEach(position => {
+        grid[position[0]][position[1]] = true;
+      });
+      this.setState({ grid: grid,
+                      isRunning: false,
+                      iterationCount: 0,
+                      sliderValue: -550,
+                      refreshRate: 550 });
+    };
   }
 
   componentDidMount() {
@@ -135,6 +150,21 @@ class App extends React.Component {
         <button onClick={this.stopSimulation}>stop</button>
         <button onClick={this.advanceOneIteration}>next</button>
         <button onClick={this.resetGrid}>reset</button>
+        <button onClick={() => this.loadPreset("blinker")}>
+          blinker
+        </button>
+        <button onClick={() => this.loadPreset("small exploder")}>
+          small exploder
+        </button>
+        <button onClick={() => this.loadPreset("exploder")}>
+          exploder
+        </button>
+        <button onClick={() => this.loadPreset("nine cell row")}>
+          nine cell row
+        </button>
+        <button onClick={() => this.loadPreset("tumbler")}>
+          tumbler
+        </button>
         <div className="slider-container">
           <Slider min={-1000}
                   max={-100}
@@ -142,7 +172,7 @@ class App extends React.Component {
                   onChange={this.onSliderChange}
                   onAfterChange={this.onAfterChange}/>
         </div>
-        <div>{this.state.iterationCount}</div>
+        <div>iterations: {this.state.iterationCount}</div>
       </div>
     );
   }
