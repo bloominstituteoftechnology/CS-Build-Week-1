@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Grid from './Components/Grid';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Conways Game of Life
-          </p>
-        </header>
-      </div>
-    );
-  }
-}
 
+    render() {
+
+        return (
+            <div className="App">
+                <h1>Conway's Game of Life</h1>
+                <Grid />
+            </div>
+        );
+    }
+}
 export default App;
