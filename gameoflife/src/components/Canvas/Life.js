@@ -28,13 +28,9 @@ class Life {
     }
 
     toggleCell(x, y) {
-        const index = this.cells[this.buffer].findIndex(element => {
-            return element.coords[0] === x && element.coords[1] === y;
-        });
-
-        if (index !== -1) {
-            this.cells[this.buffer][index].alive = !this.cells[this.buffer][index].alive;
-        }
+        const index = (this.cellHeight * x) + y;
+        const cell = this.cells[this.buffer][index];
+        cell.alive = !cell.alive;
     }
 
     clearCells() {
