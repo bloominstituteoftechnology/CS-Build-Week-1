@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <LifeCanvas rows={15} cols = {15}/>
+        <LifeCanvas rows={10} cols = {10}/>
         <GameInfo />
       </div>
     );
