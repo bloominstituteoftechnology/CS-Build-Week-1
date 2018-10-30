@@ -1,0 +1,10 @@
+.grid {
+    width: 150px;
+    margin: 10px auto;
+  }
+  .cell {
+    display: inline-block;
+    border: 1px solid black;
+    width: 15px;
+    height: 15px;
+  }

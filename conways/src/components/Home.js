@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import Display from './Display';
+import './components.css';
 
 class Home extends Component {
     constructor(props) {
@@ -20,13 +21,13 @@ class Home extends Component {
                 <Row className='displayFlex'>
                     <Col xs="3">
                         <Display /></Col>
-                    <Col xs="auto" className='dirColumn'>
+                    <Col xs="2" className='dirColumn'>
                         <button className='presetBut'>Preset 1</button>
                         <button className='presetBut'>Preset 2</button>
                         <button className='presetBut'>Preset 3</button>
                         <button className='presetBut'>Preset 4</button>
                     </Col>
-                    <Col xs="3">
+                    <Col xs="7">
                         <ul>
                             <li>some content</li>
                             <li>some content</li>

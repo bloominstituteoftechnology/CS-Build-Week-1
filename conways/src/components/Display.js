@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Grid from './Grid';
+import './components.css';
 
 const width = 400;
 const height = 400;
@@ -7,10 +9,17 @@ class Display extends Component {
     /**
      * Constructor
      */
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.continueAnimation = true;
+        this.speed = 100;
+        this.rows = 30;
+        this.cols = 30;
+        this.state = {
+            generation: 0,
+            gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false))
+        }
     }
 
     /**
@@ -18,8 +27,8 @@ class Display extends Component {
      */
     componentDidMount() {
         // Request initial animation frame
-        // requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
-        this.onAnimFrame();
+        requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
+        // this.onAnimFrame();
     }
 
     /**
@@ -48,7 +57,15 @@ class Display extends Component {
      */
     render() {
         return (
-            <canvas ref="canvas" width={width} height={height} />
+            <div>
+                <canvas ref="canvas" width={width} height={height} />
+                <Grid
+                    grid={this.state.grid}
+                    rows={this.rows}
+                    cols={this.cols}
+                    selectBox={this.selectBox}
+                />
+            </div>
         );
     }
 }
