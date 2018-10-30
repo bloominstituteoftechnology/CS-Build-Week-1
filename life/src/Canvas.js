@@ -6,7 +6,7 @@ class Canvas extends Component {
     constructor(props) {
         super(props);
 
-        this.continueAnimaiton = true;
+        this.gameOn = true;
     }
 
 
@@ -33,7 +33,7 @@ class Canvas extends Component {
 
         ctx.putImageData(imageData, 0, 0);
 
-        if (this.continueAnimaiton) {
+        if (this.gameOn) {
             requestAnimationFrame(() => {
                 this.animFrame();
             });
@@ -41,16 +41,16 @@ class Canvas extends Component {
     }
 
     stop = () => {
-        this.continueAnimaiton = false;
+        this.gameOn = false;
     };
 
     start = () => {
-        this.continueAnimaiton = true;
+        this.gameOn = true;
         this.animFrame();
     };
 
     clear = () => {
-        this.continueAnimaiton = false;
+        this.gameOn = false;
         this.refs.canvas
             .getContext('2d')
             .clearRect(0, 0, this.props.width, this.props.height);
