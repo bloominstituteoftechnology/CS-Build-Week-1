@@ -91,10 +91,10 @@ class Grid extends React.Component {
                 </div>
 
                 <div className="button-controls">
-                        <button className="button1">Play/Stop</button>
-                        <button className="button">Run</button>
+                        <button className="button1">Play/Pause</button>
+                        <button className="button">Stop</button>
 
-                    <button className="button">Random</button>
+                    <button className="button">Randomized</button>
                     <button className="button">Clear</button>
                 </div>
             </div>
