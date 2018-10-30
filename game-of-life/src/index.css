@@ -1,20 +1,9 @@
-/* body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-} */
 
 body {
-  background-image: url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/squares.png) 
+   background-image: url(wheat.png);
+   
+     /*(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/squares.png) */
+ 
 } 
   
 .box {
@@ -30,12 +19,46 @@ body {
   background-color: lightgray;
 }
 
+.off:link,
+.button:visited {
+  transition: all .2s;  
+}
+
+.off:hover {
+    transform: translateY(-3px);
+    /* box-shadow: 0 10px 20px white; */
+    box-shadow: 0 5px 20px rgb(0,0,.5);
+}
+
+.off:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 20px rgb(0,0,.5);
+}
+
+
 .on {
   background-color: green;
 }
+
+.on:link,
+.button:visited {
+  transition: all .5s;  
+}
+
+/* .on:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px white;
+} */
+
+.on:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 20px rgb(0,0,.3);
+}
+
+
   
 .box:hover { 
-  background: #00CCFF;
+  background: green;
 }
 
 .center {
@@ -63,3 +86,26 @@ h1, h2, h3, h4 {
 h4 {
   margin-top: 0px;
 }
+.button {
+  height: 40px;
+  width: 90px;
+  background: red;
+}
+
+.button:link,
+.button:visited {
+  transition: all .2s;  
+}
+
+.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px white;
+    background-color: white;
+}
+
+.button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 20px rgb(0,0,.3);
+}
+
+
