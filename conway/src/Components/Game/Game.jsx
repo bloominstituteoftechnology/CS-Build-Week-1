@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-// import './Game.css';
+import { withStyles } from '@material-ui/core/styles';
 
 //start drawing a grid with squareSizepx squares (starting at 0,0)
-
-const squareSize = 20
 
 // grid nodes are {x: 0, y:0, xz:squareSize, yz:squareSize}
 
 // const gridOdd = [TotalNodesX][TotalNodesY];
+
+const styles = {
+   gridContainer: {
+     
+   },
+ };
 
 class Game extends Component {
 
@@ -18,28 +22,37 @@ class Game extends Component {
          TotalNodesY: 0,
          curGrid: [],
          gridEven: [],
-         
+         isRunning: false,
+         squareSize : 20
       }
+      this.container = React.createRef();
    }
 
    componentDidMount() {
-      let TotalNodesX = window.innerWidth;
-      let TotalNodesY = window.innerHeight;
+      console.log(this.container.current)
+      // const width = this.container.current.width;
+      // const height = this.container.current.height;
 
-      TotalNodesX = Math.round(Math.floor(TotalNodesX / squareSize))
-      TotalNodesY = Math.round(Math.floor(TotalNodesY / squareSize))
+      const width = 500;
+      const height = 500;
+
+      let TotalNodesX = width
+      let TotalNodesY = height
+
+      TotalNodesX = Math.round(Math.floor(TotalNodesX / this.state.squareSize));
+      TotalNodesY = Math.round(Math.floor(TotalNodesY / this.state.squareSize));
 
       const curGrid = [];
 
       let curX = 0;
       let curY = 0;
       for (let i = 0; i < TotalNodesX; i++){
-         if(i !== 0) curX += squareSize;
+         if(i !== 0) curX += this.state.squareSize;
          const newArr = [];
       
          for(let j = 0; j < TotalNodesY; j++){
-            if(j == 0) curY = 0;
-            else curY += squareSize;
+            if(j === 0) curY = 0;
+            else curY += this.state.squareSize;
             newArr.push({x: curX, y: curY, isAlive: false})
          }
       
@@ -51,14 +64,13 @@ class Game extends Component {
 
 
    canvasApp = () => {
-      console.log(this)
       var myCanvas = document.getElementById('myCanvas');
       if(!myCanvas) return
       var ctx = myCanvas.getContext('2d');
     
     
-      const Width = squareSize * this.state.TotalNodesX;
-      const Height = squareSize * this.state.TotalNodesY;
+      const Width = this.state.squareSize * this.state.TotalNodesX;
+      const Height = this.state.squareSize * this.state.TotalNodesY;
     
       myCanvas.width = Width;
       myCanvas.height = Height;
@@ -67,8 +79,8 @@ class Game extends Component {
       const drawScreen = () => {
     
        //init grid square size
-        const dx = squareSize;
-        const dy = squareSize;
+        const dx = this.state.squareSize;
+        const dy = this.state.squareSize;
     
        
         var x = 0;
@@ -86,7 +98,7 @@ class Game extends Component {
         ctx.stroke();
         // draw horizontal lines
         while (y < h) {
-          y = y + squareSize;
+          y = y + this.state.squareSize;
           ctx.moveTo(x, y);
           ctx.lineTo(w, y);
     
@@ -105,7 +117,7 @@ class Game extends Component {
         ctx.lineTo(x, h);
         ctx.stroke();
         while (x < w) {
-          x = x + squareSize;
+          x = x + this.state.squareSize;
           ctx.moveTo(x, y);
           ctx.lineTo(x, h);
           ctx.stroke();
@@ -116,11 +128,11 @@ class Game extends Component {
           // xy+=10;
         }
 
-         // draw a box (each square is squareSizepx wide and )
+         // draw a box (each square is this.state.squareSizepx wide and )
          this.state.curGrid.forEach((verticalArr, i) => {
             verticalArr.forEach((node, j) => {
                if(node.isAlive){
-                  ctx.rect(node.x, node.y, squareSize,squareSize)
+                  ctx.rect(node.x, node.y, this.state.squareSize,this.state.squareSize)
                }
             })
          })
@@ -133,25 +145,40 @@ class Game extends Component {
     }
 
     handleGridClick = event => {
-      // const nodeNumberX = Math.floor((event.pageX - 10)/ squareSize)
-      const nodeNumberX = Math.floor((event.pageX )/ squareSize)
-      const nodeNumberY = Math.floor(event.pageY / squareSize)
-      // console.log(nodeNumberX)
-      // console.log(nodeNumberY)
-      const curGrid = this.state.curGrid;
-      
-      if(curGrid[nodeNumberX] && curGrid[nodeNumberX][nodeNumberY]){
-         curGrid[nodeNumberX][nodeNumberY].isAlive = !curGrid[nodeNumberX][nodeNumberY].isAlive
-      } 
-      this.canvasApp()
+      if(!this.state.isRunning){
+
+         const rect = document.getElementById('myCanvas').getBoundingClientRect()
+
+         let newX = event.clientX - rect.left;
+         let newY = event.clientY - rect.top;
+
+         const nodeNumberX = Math.floor(newX / this.state.squareSize)
+         const nodeNumberY = Math.floor(newY / this.state.squareSize)
+
+         const curGrid = this.state.curGrid;
+         
+         if(curGrid[nodeNumberX] && curGrid[nodeNumberX][nodeNumberY]){
+            curGrid[nodeNumberX][nodeNumberY].isAlive = !curGrid[nodeNumberX][nodeNumberY].isAlive
+         }
+
+         this.canvasApp()
+       }
+   }//end handleGridClick
+
+   handleWheel = event => {
+      if(event.deltaY > 0){
+         console.log('wheelDown')
+      }else console.log('wheelup')
    }
+
   render() {
-    return (<div>
-        <canvas id="myCanvas" width="400" height="400" onClick={this.handleGridClick} />
-        {this.canvasApp()}
-        </div>
+     const {classes} = this.props
+    return (<div className={classes.gridContainer} ref={this.container}>
+         <canvas id="myCanvas" width={this.props.gridWidth} height={this.props.gridHeight} onClick={this.handleGridClick} onWheel={this.handleWheel} />
+            {this.canvasApp()}
+         </div>
     );
   }
 }
 
-export default Game;
+export default withStyles(styles)(Game);
