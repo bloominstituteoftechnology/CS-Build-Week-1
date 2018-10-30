@@ -21,7 +21,9 @@ class LifeCanvas extends React.Component {
         const header = document.getElementsByClassName('canvas-header');
 
         canvas.width = window.innerWidth
-        canvas.height = window.innerHeight - options[0].clientHeight - header[0].clientHeight;
+        canvas.height = window.innerHeight - options[0].clientHeight - (header[0].clientHeight + 3);
+
+        console.log(options[0].clientHeight, header[0].clientHeight);
 
         this.setState({ life: new Life(canvas.width, canvas.height) });
 

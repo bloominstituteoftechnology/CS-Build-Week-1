@@ -1,5 +1,6 @@
 .canvas-options {
     background: #999999;
+    max-height: 100px;
     height: 100px;
     width: 100vw;
     display: flex;
@@ -12,6 +13,7 @@
 }
 
 .canvas-header {
+    max-height: 100px;
     height: 100px;
     width: 100vw;
 
