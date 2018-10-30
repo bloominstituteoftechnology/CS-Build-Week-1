@@ -16,10 +16,11 @@ const Header = styled.h2`
 `;
 
 const ButtonContainer = styled.div`
-    width: 260px;
+    width: 330px;
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
+
 `;
 
 const Button = styled.button`
@@ -32,21 +33,31 @@ const Button = styled.button`
 class Game extends Component {
     constructor() {
         super();
-        this.state = {}
-
+        this.state = {
+            generation: 0
+        }
     }
 
-    
+
+    gameOfLife() {
+
+        this.setState({generation: this.state.generation + 1});
+    }
+
+    playButton() {
+
+    }
 
     render() {
         return ( 
             <Container>
-                <Header>Generation: #</Header>
+                <Header>Generation: {this.state.generation}</Header>
                 <GameBox/>
                 <ButtonContainer>
                     <Button>Play</Button>
                     <Button>Pause</Button>
                     <Button>Stop</Button>
+                    <Button>Clear</Button>
                 </ButtonContainer>
             </Container>
         );

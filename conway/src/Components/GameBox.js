@@ -22,7 +22,7 @@ class GameBox extends Component  {
         }
     }
 
-    toggleCell(id) {
+    toggleCell = (id) => {
         const cells = this.state.cells;
         cells[id] = (cells[id] + 1) & 1;
         this.setState({cells});
@@ -30,7 +30,7 @@ class GameBox extends Component  {
 
     gridBoxElements() {
         return this.state.cells.map((cell, i) => {
-            return <GridBox status={cell} onClick={this.toggleCell} id={i}/>
+            return <GridBox status={cell} toggleCell={this.toggleCell} id={i}/>
         })
     }
 

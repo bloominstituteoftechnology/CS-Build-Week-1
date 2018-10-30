@@ -6,7 +6,7 @@ const Container = styled.div`
     width: 22px;
     height: 22px;
     border: 1px solid black;
-    background: white;
+    background-color: ${props => props.status ? "black": "white"};
 `;
 
 class GridBox extends Component {
@@ -17,18 +17,11 @@ class GridBox extends Component {
         }
     }
 
-    toggleColor() {
-        const cellStatus = this.props.status;
-        if (cellStatus === 1) {
-            document.getElementById('cell').style.background = 'black';
-        } else {
-            document.getElementById('cell').style.background = 'white'; 
-        }
-    }
+
 
     render() {
         return (
-            <Container id='cell' onClick={this.toggleColor()}>
+            <Container status={this.props.status} id='cell' onClick={() => this.props.toggleCell(this.props.id)}>
             </Container>
         )
     }
