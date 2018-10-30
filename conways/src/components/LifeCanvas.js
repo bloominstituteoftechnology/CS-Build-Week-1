@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
+import Life from "./Life";
 
 
 
@@ -16,11 +17,13 @@ class LifeCanvas extends Component{
       cellBoundaries : [],
       filledCells: [],
       running : false,
+      life : new Life(this.props.rows, this.props.cols),
+      canvas : '',
+      c : '',
     }
   }
 
   componentDidMount() {
-
     
     let numRows = this.state.numRows;
     let numCols = this.state.numCols;
@@ -48,7 +51,11 @@ class LifeCanvas extends Component{
         }
     }
 
+    this.setState({ canvas : canvas, c : c});
     canvas.addEventListener('click', this.handleClick)
+    requestAnimationFrame(() => {
+        this.playGame();
+    })
     
   }
 
@@ -91,25 +98,63 @@ class LifeCanvas extends Component{
     })
   }
 
-  playGame = () => {
 
+  playOrStop = () => {
+    this.state.life.setCells(this.state.filledCells);
+    this.setState({ running: !this.state.running }, () => {
+        if (this.state.running) {
+          requestAnimationFrame(() => {
+            this.playGame();
+          });
+        }
+      })
   }
 
   // filledCells is a list of indices, use this to get boundaries from cellBoundaries and clear all cells
-  clearCells = () => {
+  clearCells = (e) => {
       // Dont allow if running
-      if(this.state.running){
+      if(this.state.running && e){
           return
       }
       let c = this.refs.canvas.getContext("2d");
 
       this.state.filledCells.forEach(cell => this.clearCell(c, this.state.cellBoundaries[cell], cell))
   }
+
+  playGame = () => {
+
+    let c = this.state.c;
+
+    if(!this.state.running){
+        return;
+    }
+    
+    let filledCells = this.state.life.getCells();
+    let cellBoundaries = this.state.cellBoundaries;
+
+
+    if(JSON.stringify(filledCells.sort()) !== JSON.stringify(this.state.filledCells.sort())){
+        
+        this.clearCells();
+
+        for (let i = 0; i < filledCells.length; i++) {
+        
+            this.fillCell(c, cellBoundaries[filledCells[i]], filledCells[i]);
+        }
+    }
+
+    this.state.life.update();
+    requestAnimationFrame(() => {
+        this.playGame();
+    })
+    
+  }
+
   render() {
     return (
       <div ref="outer">
         <CanvasWindow ref="canvas" width={300} height={300}/>
-        <button>Play Game</button>
+        <button onClick={this.playOrStop}>{this.state.running ? "Pause Game" : "Play Game"}</button>
         <button onClick={this.clearCells}>Clear Game</button>
       </div>
     );
