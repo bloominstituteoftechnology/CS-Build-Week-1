@@ -6,27 +6,44 @@ const GameBtns = styled(Button)`
   margin-right:10px;
 `
 
+const GenDiv = styled.div`
+  margin-top:50px;
+`
+
 let prevTimestamp = null;
 
 class LifeCanvas extends Component {
   constructor(props){
     super(props);
     this.continueAnimation = true;
-    this.nextSquare = 0;
+    // this.generation = 0;
+    this.state = {
+      generation : 0,
+      // continueAnimation : true
+    }
   }
   
   componentDidMount(){
     this.initializeCanvas();
-    // requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
+    this.setState({
+      generation:0,
+      // continueAnimation : true
+    })
   }
 
   componentWillUnmount() {
     // Stop animating
     this.continueAnimation = false;
+    // this.setState({continueAnimation:false})
   }
 
   initializeCanvas = ()=>{
-    this.nextSquare = 0;
+    this.setState({generation:0})
+
+    // this.setState({
+    //   generation:0,
+    //   continueAnimation : true
+    // })
 
     let canvas = this.refs.canvas; 
     const ctx = canvas.getContext('2d');
@@ -79,37 +96,47 @@ class LifeCanvas extends Component {
 
     // TODO: Do animation stuff to the canvas
     ctx.beginPath();
-    ctx.rect(this.nextSquare++ * this.props.cellSize, 7*this.props.cellSize, this.props.cellSize, this.props.cellSize);
+    // ctx.rect(this.generation++ * this.props.cellSize, 7*this.props.cellSize, this.props.cellSize, this.props.cellSize);
+    ctx.rect(this.state.generation * this.props.cellSize, 7*this.props.cellSize, this.props.cellSize, this.props.cellSize);
     ctx.fillStyle = 'black';
     ctx.fill();
     ctx.lineWidth = 1;
     ctx.strokeStyle = 'grey';
     ctx.stroke();
+
+    this.setState({generation: this.state.generation + 1} )
   }
 
   startGame = () => {
     requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
     this.continueAnimation = true;
+    // this.setState({continueAnimation:true})
   }
-
+  
   stopGame = () => {
     this.continueAnimation = false;
+    // this.setState({continueAnimation:false})
   }
-
+  
   restartGame = () => {
     this.continueAnimation = false;
     this.initializeCanvas();
+    
+    // this.setState({continueAnimation:false}, ()=>this.initializeCanvas());
   }
 
   stepGame = () => {
     requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
     this.continueAnimation = false;
+    // this.setState({continueAnimation:false})
   }
 
   
   render() {
     return (
       <div>
+        {/* <GenDiv>Generation: {this.generation}</GenDiv> */}
+        <GenDiv>Generation: {this.state.generation}</GenDiv>
         <canvas ref="canvas" id="canvas" width={this.props.width} height={this.props.height} onClick={this.props.clickHandler}/>
         <div>
           <GameBtns onClick={this.startGame}>Start</GameBtns>
