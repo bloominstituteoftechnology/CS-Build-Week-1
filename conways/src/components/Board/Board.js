@@ -38,6 +38,7 @@ class Board extends Component {
         }
         return alive;
     }
+
     //Finds matrices at specific indices
     findIndex = (i, j) => {
         return this.state.matrix[i][j];
@@ -61,17 +62,16 @@ class Board extends Component {
         return matrices;
     }
 
-
-
     //Sets board to default
-    clearBoard = () => {
+    clearButton = () => {
         this.setBoard();
     }
 
     //TODO 
-    playGame = () => {
+    playButton = () => {
         console.log(this.findAlive());
     }
+
     render() {
         return (
             <div className="interface-ctn">
@@ -88,9 +88,9 @@ class Board extends Component {
 
                 </div>
                 <div className="btn-ctn">
-                    <button className="main-btn" onClick={() => this.playGame()}>Play</button>
+                    <button className="main-btn" onClick={() => this.playButton()}>Play</button>
                     <button className="main-btn">Pause</button>
-                    <button className="main-btn" onClick={() => this.clearBoard()}>Clear</button>
+                    <button className="main-btn" onClick={() => this.clearButton()}>Clear</button>
                 </div>
             </div>
         )
