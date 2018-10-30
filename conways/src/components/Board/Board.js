@@ -10,6 +10,11 @@ class Board extends Component {
             matrix: []
         }
     }
+
+    componentDidMount() {
+        this.setBoard();
+    }
+
     setBoard = () => {
         let matrix = this.state.matrix.slice();
         for (let i = 0; i < 15; i++) {
@@ -20,8 +25,22 @@ class Board extends Component {
         }
         this.setState({ matrix });
     }
-    componentDidMount() {
-        this.setBoard();
+
+    //Searches through entire matrix array and returns an array of all active cells
+    findAlive = () => {
+        let alive = [];
+        for (let i = 0; i < this.state.matrix.length; i++) {
+            for (let j = 0; j < this.state.matrix.length; j++) {
+                if (this.state.matrix[i][j].alive === true) {
+                    alive.push(this.state.matrix[i][j]);
+                }
+            }
+        }
+        return alive;
+    }
+    //Finds matrices at specific indices
+    findIndex = (i, j) => {
+        return this.state.matrix[i][j];
     }
 
     //Checks if game is active, if not then it toggles cell from dead to alive(false to true)
@@ -42,28 +61,13 @@ class Board extends Component {
         return matrices;
     }
 
-    //Searches through entire matrix array and returns an array of all active cells
-    findAlive = () => {
-        let alive = [];
-        for (let i = 0; i < this.state.matrix.length; i++) {
-            for (let j = 0; j < this.state.matrix.length; j++) {
-                if (this.state.matrix[i][j].alive === true) {
-                    alive.push(this.state.matrix[i][j]);
-                }
-            }
-        }
-        return alive;
-    }
-    //Finds matrices at specific indices
-    findIndex = (i, j) => {
-        return this.state.matrix[i][j];
-    }
+
 
     //Sets board to default
     clearBoard = () => {
         this.setBoard();
     }
-    
+
     //TODO 
     playGame = () => {
         console.log(this.findAlive());
@@ -86,7 +90,6 @@ class Board extends Component {
                 <div className="btn-ctn">
                     <button className="main-btn" onClick={() => this.playGame()}>Play</button>
                     <button className="main-btn">Pause</button>
-                    <button className="main-btn">Stop</button>
                     <button className="main-btn" onClick={() => this.clearBoard()}>Clear</button>
                 </div>
             </div>
