@@ -37,20 +37,25 @@ const ControlButton = styled.button`
 const Icon = styled.img`
     height: 80%;
     width: 80%;
+    pointer-events: none;
 `;
-class ControlsContainer extends Component {
-    state = {  }
-    render() { 
+const ControlsContainer = (props) => {
         return (
             <ControlsWrapper>
                 <ControlButton><Icon src = {zoomInIcon} /></ControlButton>
                 <ControlButton><Icon src = {zoomOutIcon} /></ControlButton>
-                <ControlButton><Icon src = {playIcon} /></ControlButton>
+                <ControlButton
+                onClick={() => {
+                    props.toggleState("playActive");
+                }}
+                ><Icon src = {props.playActive ? pauseIcon : playIcon} /></ControlButton>
                 <ControlButton><Icon src = {stopIcon} /></ControlButton>
-                <ControlButton><Icon src = {menuIcon} /></ControlButton>
+                <ControlButton 
+                onClick={() => {
+                    props.toggleState("menuActive");
+                    }}><Icon src = {menuIcon} /></ControlButton>
             </ControlsWrapper>
         );
-    }
 }
  
 export default ControlsContainer;

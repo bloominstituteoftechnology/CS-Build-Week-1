@@ -5,6 +5,7 @@ import ControlsMenu from "../components/ControlsMenu/ControlsContainer";
 import HeaderPanel from "../components/PresetSection/HeaderPanel";
 import CarouselPanel from "../components/PresetSection/CarouselPanel";
 import { colors } from "../utils/variables";
+import NavigationContainer from "./NavigationMenu/NavigationContainer";
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -32,15 +33,44 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class App extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      menuActive: false,
+      playActive: false
+    };
+  }
+  componentDidMount() {
+    this.setState({
+      menuActive: false,
+      playActive: false
+    });
+  }
+  toggleState = stateName => {
+    const boolState = this.state[stateName];
+    if (typeof boolState === "boolean") {
+      this.setState({ [stateName]: !boolState });
+    } else {
+      console.error("toggleState: works only with a state name that has a boolean type");
+    }
+  };
+
   render() {
+    const { menuActive, playActive } = this.state;
     return (
       <Fragment>
         <GlobalStyle />
-        <Canvas />
-        <ControlsMenu />
+        <Canvas playActive={playActive} />
+        <ControlsMenu 
+        toggleState={this.toggleState}
+        playActive = {playActive}
+         />
         <HeaderPanel />
         <CarouselPanel />
+        <NavigationContainer
+          toggleState={this.toggleState}
+          menuActive={menuActive}
+        />
       </Fragment>
     );
   }
