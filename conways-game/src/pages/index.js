@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import Canvas from "../components/Canvas";
 import ControlsMenu from "../components/ControlsMenu/ControlsContainer";
 import HeaderPanel from "../components/PresetSection/HeaderPanel";
@@ -34,10 +34,10 @@ export default () => {
   return (
     <Fragment>
       <GlobalStyle />
-        <Canvas />
-        <ControlsMenu />
-        <HeaderPanel />
-        <CarouselPanel />
+      <Canvas />
+      <ControlsMenu />
+      <HeaderPanel />
+      <CarouselPanel />
     </Fragment>
   );
 };
