@@ -6,13 +6,13 @@ const Container = styled.div`
     width: 22px;
     height: 22px;
     border: 1px solid black;
+    background: white;
 `;
 
 class GridBox extends Component {
     constructor(props) {
         super();
         this.state = {
-            alive: false
         }
     }
 

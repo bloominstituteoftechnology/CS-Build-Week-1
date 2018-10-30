@@ -15,7 +15,6 @@ const Content = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   width: 1000px;
-  border: 1px solid red;
 `;
 
 const AboutSection = styled.div`
