@@ -4,6 +4,9 @@ class CellGrid extends Component {
     constructor(props) {
         super(props);
         this.continueAnimation = true;
+        this.state = {
+            size: [150, 100]
+        }
     }
 
     componentDidMount() {
@@ -13,7 +16,7 @@ class CellGrid extends Component {
     componentWillUnmount() {
         this.continueAnimation = false;
     }
-    
+
     onAnimFrame(timestamp) {
         // If desired, request another anim frame for later
         if (this.continueAnimation) {
@@ -21,6 +24,21 @@ class CellGrid extends Component {
         }
 
         // TODO animate stuff
+    }
+
+    renderBoard() {
+        let newGrid = [];
+        let cellRow = [];
+
+        for(let i = 0; i < this.state.size[0]; i++) {
+            for (let j = 0; j < this.state.size[1]; j++) {
+                cellRow.push(<Cell key={[i, j]} />);
+            }
+            newGrid.push(<div className="row" key={i}>{cellRow}</div>)
+            cellRow = [];
+        }
+
+        return newGrid;
     }
 
 
