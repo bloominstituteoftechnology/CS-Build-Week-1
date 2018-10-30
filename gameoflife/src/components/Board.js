@@ -2,11 +2,12 @@ import React from "react";
 import "./Board.css";
 import Cell from "./Cell";
 
-let cell_size = 40;
-let board_width = 600;
-let board_height = 600;
+let cell_size = 30;
+let board_width = 720;
+let board_height = 720;
 let rows = board_height / cell_size; // This gives us the number of rows that will be in our board.
 let columns = board_width / cell_size;
+let count = 0;
 
 class Board extends React.Component {
   constructor() {
@@ -16,7 +17,10 @@ class Board extends React.Component {
       cells: [],
       gridSize: "",
       isClickable: false,
-      alive: false
+      isAlive: false,
+      interval: 300,
+      isPlaying: false,
+      count: 0
     };
   }
   getElementOffset() {
@@ -29,6 +33,9 @@ class Board extends React.Component {
   }
 
   handleClick = event => {
+    if (this.state.isPlaying === true && this.state.isClickable === false) {
+      return;
+    }
     const elemOffset = this.getElementOffset();
     console.log("elemOffset is: ", elemOffset);
     const offsetX = event.clientX - elemOffset.x;
@@ -73,9 +80,110 @@ class Board extends React.Component {
     return cells;
   };
 
+  runGame = () => {
+    this.setState({ isPlaying: true });
+    this.runIteration();
+  };
+  stopGame = () => {
+    this.setState({ isPlaying: false });
+    if (this.timeoutHandler) {
+      window.clearTimeout(this.timeoutHandler);
+      this.timeoutHandler = null;
+    }
+  };
+  handleIntervalChange = event => {
+    this.setState({ interval: event.target.value });
+  };
+
+  calculateNeighbors(board, x, y) {
+    let neighbors = 0;
+    const directions = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
+    for (let i = 0; i < directions.length; i++) {
+      const direction = directions[i];
+      let y1 = y + direction[0];
+      let x1 = x + direction[1];
+
+      if (x1 >= 0 && x1 < columns && y1 >= 0 && y1 < rows && board[y1][x1]) {
+        neighbors++;
+      }
+    }
+
+    return neighbors;
+  }
+  countIterations = event => {
+    let count = this.state.count;
+  };
+
+  runIteration() {
+    let emptyBoard = this.generateBoard();
+    let newBoard = this.generateBoard();
+    if (this.board.toString() === emptyBoard.toString()) {
+      this.stopGame();
+      return;
+    }
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < columns; x++) {
+        let neighbors = this.calculateNeighbors(this.board, x, y);
+        // If the board has been generates and exists
+        if (this.board[y][x]) {
+          if (neighbors === 2 || neighbors === 3) {
+            newBoard[y][x] = true;
+          } else {
+            newBoard[y][x] = false;
+          }
+        } else {
+          if (!this.board[y][x] && neighbors === 3) {
+            newBoard[y][x] = true;
+          }
+        }
+      }
+    }
+    this.board = newBoard;
+    this.setState({ cells: this.generateCells() });
+    this.timeoutHandler = window.setTimeout(() => {
+      this.runIteration();
+    }, this.state.interval);
+  }
+
+  clickIteration = () => {
+    this.setState({ isPlaying: true });
+    let emptyBoard = this.generateBoard();
+    let newBoard = this.generateBoard();
+    if (this.board.toString() === emptyBoard.toString()) {
+      this.stopGame();
+      return;
+    }
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < columns; x++) {
+        let neighbors = this.calculateNeighbors(this.board, x, y);
+        // If the board has been generates and exists
+        if (this.board[y][x]) {
+          if (neighbors === 2 || neighbors === 3) {
+            newBoard[y][x] = true;
+          } else {
+            newBoard[y][x] = false;
+          }
+        } else {
+          if (!this.board[y][x] && neighbors === 3) {
+            newBoard[y][x] = true;
+          }
+        }
+      }
+    }
+    this.board = newBoard;
+    this.setState({ cells: this.generateCells() });
+  };
+
+  toggleClickable = event => {
+    event.preventDefault();
+    this.setState({ isClickable: !this.state.isClickable });
+  };
+  handleReset = event => {};
+
   render() {
-    console.log("board_width is: ", board_width);
-    console.log("board_height is: ", board_height);
+    if (this.state.isPlaying) {
+      count = count + 1;
+    }
     return (
       <div>
         <div
@@ -128,6 +236,24 @@ class Board extends React.Component {
           <input placeholder="Change grid size to" onChange={this.handleChange} />
           <button onClick={this.handleResize}>Change</button>
         </form>
+        <button onClick={this.clickIteration}>Click Iteration</button>
+        <p>Iterations: {count}</p>
+        <div className="controls">
+          Interval Speed <input value={this.state.interval} onChange={this.handleIntervalChange} />{" "}
+          {this.state.isPlaying ? (
+            <button className="button" onClick={this.stopGame}>
+              Stop
+            </button>
+          ) : (
+            <button className="button" onClick={this.runGame}>
+              Run
+            </button>
+          )}
+        </div>
+        <button onClick={this.toggleClickable}>
+          Toggle clickable: {this.state.isClickable ? <span>Yes</span> : <span>No</span>}
+        </button>
+        <button onClick={this.handleReset}>Reset</button>
       </div>
     );
   }
