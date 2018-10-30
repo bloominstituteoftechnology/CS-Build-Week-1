@@ -1,9 +1,7 @@
 import React from 'react';
 import '../App.css';
 
-const CELL_SIZE = 20;
-
-
+const Square = 30;
 
 class Cell extends React.Component {
 
@@ -11,10 +9,10 @@ class Cell extends React.Component {
         const { x, y } = this.props;
         return (
             <div className="Cell" style={{
-                left: `${CELL_SIZE * x + 1}px`,
-                top: `${CELL_SIZE * y + 1}px`,
-                width: `${CELL_SIZE - 1}px`,
-                height: `${CELL_SIZE - 1}px`,
+                left: `${Square * x + 1}px`,
+                top: `${Square * y + 1}px`,
+                width: `${Square - 1}px`,
+                height: `${Square - 1}px`,
             }} />
         );
     }

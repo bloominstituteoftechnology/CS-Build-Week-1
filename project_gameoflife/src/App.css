@@ -8,12 +8,28 @@
 
 }
 
+.Cell {
+    background: #000;
+    position: absolute;
+}
+
+
+.button {
+    height: 20px;
+    width: 60px;
+    border-radius: 5px;
+    margin-left: 12px;
+    cursor: pointer;
+}
+
+
 .button {
   height: 20px;
   width: 50px;
   border-radius: 5px;
 
 }
+
 .button1 {
   height: 20px;
   width: 75px;
