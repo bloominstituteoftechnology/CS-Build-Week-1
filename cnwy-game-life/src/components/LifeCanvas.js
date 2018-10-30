@@ -41,9 +41,9 @@ class LifeCanvas extends Component {
   componentWillMount(){
     this.setState({
       gridSize: 500,
-      cellSize: 50,
-      gameBufferA: Array(Math.pow(500/50,2)).fill(false), 
-      gameBufferB: Array(Math.pow(500/50,2)).fill(false)
+      cellSize: 100,
+      gameBufferA: Array(Math.pow(500/100,2)).fill(false), 
+      gameBufferB: Array(Math.pow(500/100,2)).fill(false)
     })
   }
 
@@ -98,12 +98,11 @@ class LifeCanvas extends Component {
    * @return object canvasCoord which will have the x,y coordinates of the click
    */
   getCanvasXYcoordFromMouseClick = (e) =>{
-    console.log('You clicked on the canvas!');
     
     //Get the mouse click's (x,y) coordinate
     let canvasCoord = this.getCanvasCoord(e);
-    console.log("X: ", canvasCoord.x);
-    console.log("Y: ", canvasCoord.y);
+    // console.log("X: ", canvasCoord.x);
+    // console.log("Y: ", canvasCoord.y);
     
     //Get the pixel's RGBA values:
     let canvas = e.target; 
@@ -116,7 +115,7 @@ class LifeCanvas extends Component {
 
     //Get the pixel Color of where the user clicked
     const pixelRGBA =  this.getPixel(imageData, canvasCoord.x, canvasCoord.y);
-    console.log("pixelRGBA: ", pixelRGBA);
+    // console.log("pixelRGBA: ", pixelRGBA);
 
     //Toggle that pixel's cell color and return that cell's index
     let clickedCellIndex = this.toggleCell(canvasCoord, pixelRGBA);
@@ -324,22 +323,89 @@ class LifeCanvas extends Component {
 
     // Remember this for next frame
     prevTimestamp = timestamp;
-
     console.log(`Current time: ${timestamp} ms, frame time: ${elapsed} ms`);
 
-    // TODO: Do animation stuff to the canvas
-    ctx.beginPath();
-    // ctx.rect(this.generation++ * this.props.cellSize, 7*this.props.cellSize, this.props.cellSize, this.props.cellSize);
-    ctx.rect(this.state.generation * this.state.cellSize, 7*this.state.cellSize, this.state.cellSize, this.state.cellSize);
-    ctx.fillStyle = 'black';
-    ctx.fill();
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = 'grey';
-    ctx.stroke();
+
+    console.log("Cuurent State: ",this.state.gameBufferA);
+    
+    //Calculate the next Gen from BufferA and place into BufferB
+    let nextBuffer = this.calculateNextGen(this.state.gameBufferA);
+    console.log("Next State: ",nextBuffer);
+    
+    //Calcuate the number of cells per row
+    let cellsPerRow = this.state.gridSize/this.state.cellSize;
+
+    //Map through the nextBuffer
+    nextBuffer.forEach( (cv,i) => {
+
+      //For each index calculate the xMult and yMult
+      let xMult = i % cellsPerRow;
+      let yMult = Math.floor(i/cellsPerRow);
+
+      ctx.beginPath();
+      ctx.rect(xMult * this.state.cellSize, yMult*this.state.cellSize, this.state.cellSize, this.state.cellSize);
+      ctx.fillStyle = cv ? 'black' : 'white';
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'grey';
+      ctx.stroke();
+    })
 
     this.setState({generation: this.state.generation + 1} )
   }
 
+
+  /**
+   * Calculate the next Generation
+   * 
+   * @param currBuffer = the buffer with current state of the game
+   * @param nextBuffer = the buffer that will hold the next state of the game
+   */
+  calculateNextGen = (currBuffer) =>{
+
+    //Calcuate the number of cells per row
+    let cellsPerRow = this.state.gridSize/this.state.cellSize;
+
+    //Map over every index of the currBuffer
+    let nextBuffer = currBuffer.map( (cv, i, arr) => {
+      
+      //For each index, declare each of the 8 indexes
+      //left, right, up, down, upperleft, upper-right, lower-left, lower-right
+      let l = i-1;
+      let r = i+1;
+      let u = i-cellsPerRow;
+      let d = i+cellsPerRow;
+      let ul = u - 1;
+      let ur = u + 1;
+      let ll = d - 1;
+      let lr = d + 1;
+
+      //Place all 8 neighbor indexes into an array:
+      let eightNeigborIndexes = [l, r, u, d, ul, ur, ll, lr];
+      
+      //Determine the number of live neighbors = filter out indexes outside grid and accumulate:
+      let liveNeighborsCount =  eightNeigborIndexes
+        .filter( cv => ((cv >= 0) && (cv < Math.pow(cellsPerRow,2))) )
+        .reduce((acc, cv) => acc + arr[cv], 0)
+      
+      //If the cell is alive (aka true)
+      if (cv) {
+
+        //If the number of live neighbors is 2 or 3, this cell stays alive, else it dies
+        return (liveNeighborsCount === 3 || liveNeighborsCount === 2) ? true : false;
+      }  
+
+      // If the cell is dead (aka false)
+      else {
+
+        //If the number of live neighbors is exactly 3, this cell comes to life!
+        return (liveNeighborsCount === 3) ? true : false;
+      }  
+    })
+
+    //Return the newly formedBuffer;
+    return nextBuffer;
+  }
 
   /**
    * Game Controllers
