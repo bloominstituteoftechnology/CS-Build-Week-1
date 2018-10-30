@@ -63,29 +63,29 @@ class Grid extends React.Component {
 
   nextIteration = () => {
 
-    // let firstBuffer = this.state.grid; // grid
-    // let secondBuffer = this.state.grid.slice(0); // grid copy
+    let firstBuffer = this.state.grid; // grid
+    let secondBuffer = this.state.grid.slice(0); // grid copy
 
-    // for (let x = 0; x < this.state.rows; x++) { // loop thru rows
-		//   for (let y = 0; y < this.state.columns; y++) { // loop thru columns
-		//     let count = 0; // initialize count
+    for (let x = 0; x < this.state.rows; x++) { // loop thru rows
+		  for (let y = 0; y < this.state.columns; y++) { // loop thru columns
+		    let neighbours = 0; // initialize neighbours
 
-    //       if (firstBuffer[x-1][y]) count++; // left
-    //       if (firstBuffer[x-1][y+1]) count++; // diagonal up and left
-    //       if (firstBuffer[x][y+1]) count++; // up
-    //       if (firstBuffer[x+1][y+1]) count++; // diagonal up and right
-    //       if (firstBuffer[x+1][y]) count++; // right
-    //       if (firstBuffer[x+1][y-1]) count++; // diagonal down and right
-    //       if (firstBuffer[x][y-1]) count++; // down
-    //       if (firstBuffer[x-1][y-1]) count++; // diagonal down left
+          if (x > 0) if (firstBuffer[x-1][y]) neighbours++; // left
+          if (x > 0 && y < this.columns - 1) if (firstBuffer[x-1][y+1]) neighbours++; // diagonal up and left
+          if (y < 33 - 1) if (firstBuffer[x][y+1]) neighbours++; // up
+          if (x < 18 - 1 && y < 33 - 1) if (firstBuffer[x+1][y+1]) neighbours++; // diagonal up and right
+          if (x < 18 - 1) if (firstBuffer[x+1][y]) neighbours++; // right
+          if (x < 18 - 1 && y > 0) if (firstBuffer[x+1][y-1]) neighbours++; // diagonal down and right
+          if (y > 0) if (firstBuffer[x][y-1]) neighbours++; // down
+          if (x > 0 && y > 0) if (firstBuffer[x-1][y-1]) neighbours++; // diagonal down left
 
-		//     if (firstBuffer[x][y] && (count < 2 || count > 3)) secondBuffer[x][y] = false; // if less than 2 neighbours or more than three neighbours, it dies
-		//     if (!firstBuffer[x][y] && count === 3) secondBuffer[x][y] = true; // if exactly 3 neighbours, it's born
-		//   }
-		// }
+		    if (firstBuffer[x][y] && (neighbours < 2 || neighbours > 3)) secondBuffer[x][y] = false; // if less than 2 neighbours or more than three neighbours, it dies
+		    if (!firstBuffer[x][y] && neighbours === 3) secondBuffer[x][y] = true; // if exactly 3 neighbours, it's born
+		  }
+		}
 
     this.setState({ 
-      // cells: this.fillCells(secondBuffer), // fill cells with second buffer
+      cells: this.fillCells(secondBuffer), // fill cells with second buffer
       generation: this.state.generation + 1 }) // increase generations
     }
   
@@ -130,6 +130,7 @@ class Grid extends React.Component {
         </div>
         <button onClick={this.playGame}>Play</button>
         <button onClick={this.pauseGame}>Pause</button>
+        <button onClick={this.nextIteration}>Next</button>
         <button onClick={this.randomGame}>Random</button>
         <button onClick={this.clearGame}>Clear</button>
       </div>
