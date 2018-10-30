@@ -75,6 +75,7 @@ class GameOfLife extends React.Component {
     this.setState({ isPlaying: true });
     this.nextGeneration();
   };
+
   stopGame = () => {
     this.setState({ isPlaying: false });
     if (this.speedHandler) {
@@ -85,7 +86,7 @@ class GameOfLife extends React.Component {
 
   handleClear = () => {
     this.grid = this.clearGrid();
-    this.setState({ cells: this.fillCells() });
+    this.setState({ cells: this.fillCells(), generation: 0 });
   };
 
   handleSpeed = event => {
@@ -113,8 +114,9 @@ class GameOfLife extends React.Component {
     }
 
     this.grid = generation;
-    this.setState({ cells: this.fillCells() });
+    // this.setState({ cells: this.fillCells() });
     this.setState(state => ({
+      cells: this.fillCells(),
       generation: state.generation + 1
     }));
 
