@@ -1,9 +1,3 @@
-let blinker = [
-  [7, 6],
-  [7, 7],
-  [7, 8]
-];
-
 let smallExploder = [
   [6, 7],
   [7, 6],
@@ -67,7 +61,6 @@ let tumbler = [
 ];
 
 const presets = {
-  "blinker": blinker,
   "small exploder": smallExploder,
   "exploder": exploder,
   "nine cell row": nineCellRow,

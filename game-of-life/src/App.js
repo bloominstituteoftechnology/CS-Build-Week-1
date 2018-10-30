@@ -5,6 +5,8 @@ import presets from './presets';
 import 'rc-slider/assets/index.css';
 import './App.css';
 
+const oneGridSide = 15;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +16,12 @@ class App extends React.Component {
       iterationCount: 0,
       sliderValue: -550,
       refreshRate: 550
+    };
+
+    this.makeEmptyGrid = () => {
+      return Array(oneGridSide).fill(null).map(_ =>
+        Array(oneGridSide).fill(false)
+      );
     };
 
     this.startSimulation = e => {
@@ -59,6 +67,11 @@ class App extends React.Component {
                       iterationCount: this.state.iterationCount + 1 });
     };
 
+    this.isWithinGrid = (rowIndex, cellIndex) => {
+      return ((rowIndex >= 0 && rowIndex <= oneGridSide - 1) &&
+              (cellIndex >= 0 && cellIndex <= oneGridSide - 1));
+    };
+
     this.countNeighbors = (rowIndex, cellIndex) => {
       const neighbors = [
         [rowIndex - 1, cellIndex - 1],
@@ -74,8 +87,7 @@ class App extends React.Component {
       let count = 0;
 
       for (let i = 0; i < neighbors.length; i++) {
-        if ((neighbors[i][0] >= 0 && neighbors[i][0] <= 14) &&
-            (neighbors[i][1] >= 0 && neighbors[i][1] <= 14)) {
+        if (this.isWithinGrid(neighbors[i][0], neighbors[i][1])) {
                const position = neighbors[i];
                if (this.state.grid[position[0]][position[1]]) {
                  count += 1;
@@ -94,8 +106,7 @@ class App extends React.Component {
     this.resetGrid = e => {
       e.preventDefault();
       clearTimeout(this.timeout);
-      let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
-      this.setState({ grid: grid,
+      this.setState({ grid: this.makeEmptyGrid(),
                       isRunning: false,
                       iterationCount: 0,
                       sliderValue: -550,
@@ -112,7 +123,7 @@ class App extends React.Component {
 
     this.loadPreset = (preset) => {
       clearTimeout(this.timeout);
-      let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
+      let grid = this.makeEmptyGrid();
       const presetToLoad = presets[preset];
       presetToLoad.forEach(position => {
         grid[position[0]][position[1]] = true;
@@ -126,8 +137,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
-    this.setState({ grid: grid });
+    this.setState({ grid: this.makeEmptyGrid() });
   }
 
   render() {
@@ -150,9 +160,6 @@ class App extends React.Component {
         <button onClick={this.stopSimulation}>stop</button>
         <button onClick={this.advanceOneIteration}>next</button>
         <button onClick={this.resetGrid}>reset</button>
-        <button onClick={() => this.loadPreset("blinker")}>
-          blinker
-        </button>
         <button onClick={() => this.loadPreset("small exploder")}>
           small exploder
         </button>
