@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  color: #61dafb;
+  letter-spacing: 1px;
+  font-size: 40px;
+  font-weight: bold;
+  font-variant: small-caps;
 }
 
 .App-logo {
@@ -29,4 +34,23 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.grid {
+  width: 800px;
+  height: 800px;
+  margin: auto;
+}
+
+.node {
+  width: 19px;
+  height: 19px;
+  background: lightgray;
+  border: 1px solid black;
+  display: block;
+  float: left;
+}
+
+.node.active {
+  background: #ff0505;
 }
