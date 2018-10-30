@@ -14,11 +14,22 @@ const Container = styled.div`
 
 
 class GameBox extends Component  {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         const cells = (new Array(225)).fill(0);
         this.state = {
             cells
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.clear == true && prevProps != this.props) {
+            let clearedCells = [];
+            for (let i=0; i<225; i++) {
+                clearedCells.push(0);
+            }
+            this.setState({cells: clearedCells});
+            this.props.clearButton();
         }
     }
 

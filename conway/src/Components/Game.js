@@ -34,7 +34,8 @@ class Game extends Component {
     constructor() {
         super();
         this.state = {
-            generation: 0
+            generation: 0,
+            clear: false
         }
     }
 
@@ -45,19 +46,32 @@ class Game extends Component {
     }
 
     playButton() {
+        this.gameOfLife();
+    }
+
+    pauseButton() {
 
     }
+
+    stopButton() {
+
+    }
+
+    clearButton = () => {
+        this.setState({clear: !this.state.clear});
+    }
+
 
     render() {
         return ( 
             <Container>
                 <Header>Generation: {this.state.generation}</Header>
-                <GameBox/>
+                <GameBox clear={this.state.clear} clearButton={this.clearButton}/>
                 <ButtonContainer>
                     <Button>Play</Button>
                     <Button>Pause</Button>
                     <Button>Stop</Button>
-                    <Button>Clear</Button>
+                    <Button onClick={this.clearButton}>Clear</Button>
                 </ButtonContainer>
             </Container>
         );
