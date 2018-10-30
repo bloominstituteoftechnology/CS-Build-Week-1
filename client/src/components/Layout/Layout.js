@@ -11,7 +11,6 @@ export default class Layout extends React.Component {
         </Row>
         <Row>
           <Col m="6">
-            <h2>Generation: #</h2>
             <GameOfLife />
           </Col>
           <Col m="3">

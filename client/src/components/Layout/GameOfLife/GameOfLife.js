@@ -13,7 +13,8 @@ class GameOfLife extends React.Component {
       columns: 40,
       cells: [],
       speed: 100,
-      isPlaying: false
+      isPlaying: false,
+      generation: 0
     };
   }
 
@@ -108,6 +109,9 @@ class GameOfLife extends React.Component {
 
     this.grid = generation;
     this.setState({ cells: this.fillCells() });
+    this.setState(state => ({
+      generation: state.generation + 1
+    }));
 
     this.speedHandler = window.setTimeout(() => {
       this.nextGeneration();
@@ -149,6 +153,7 @@ class GameOfLife extends React.Component {
   render() {
     return (
       <div>
+        <h2>Generation: {this.state.generation}</h2>
         <Grid
           onClick={this.handleClick}
           ref={g => {
