@@ -12,8 +12,7 @@ class LifeCanvas extends Component {
   constructor(props){
     super(props);
     this.continueAnimation = true;
-    this.currentSquare = 0;
-    this.nextSquare = this.currentSquare+1;
+    this.nextSquare = 0;
   }
   
   componentDidMount(){
