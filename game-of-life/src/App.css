@@ -17,13 +17,13 @@
   box-sizing: border-box;
 }
 
-.white-cell {
+.dead-cell {
   width: 20px;
   height: 20px;
   border: 1px solid black;
 }
 
-.black-cell {
+.living-cell {
   width: 20px;
   height: 20px;
   border: 1px solid black;

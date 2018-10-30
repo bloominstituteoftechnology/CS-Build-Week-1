@@ -16,8 +16,8 @@ class App extends React.Component {
     this.startSimulation = e => {
       e.preventDefault();
       if (this.state.isRunning) { return; }
-      this.setState({ isRunning: true }, () => this.createNextIteration());
-
+      this.setState({ isRunning: true },
+        () => this.simulationLoop());
     };
 
     this.stopSimulation = e => {
@@ -25,6 +25,13 @@ class App extends React.Component {
       if (!this.state.isRunning) { return; }
       clearTimeout(this.timeout);
       this.setState({ isRunning: false });
+    };
+
+    this.simulationLoop = () => {
+      this.createNextIteration();
+      this.timeout = setTimeout(() => {
+        this.simulationLoop();
+      }, 500);
     };
 
     this.advanceOneIteration = e => {
@@ -38,25 +45,15 @@ class App extends React.Component {
       for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[i].length; j++) {
           let count = this.countNeighbors(i, j);
-          if (grid[i][j]) {
-            if (count < 2 || count > 3) {
-              grid[i][j] = false;
-            }
-          } else {
-            if (count === 3) {
-              grid[i][j] = true;
-            }
+          if (grid[i][j] && (count < 2 || count > 3)) {
+            grid[i][j] = false;
+          } else if (count === 3) {
+            grid[i][j] = true;
           }
         }
       }
       this.setState({ grid: grid,
                       iterationCount: this.state.iterationCount + 1 });
-
-      if (this.state.isRunning) {
-        this.timeout = setTimeout(() => {
-          this.createNextIteration();
-        }, 500);
-      }
     };
 
     this.countNeighbors = (rowIndex, cellIndex) => {
@@ -93,7 +90,7 @@ class App extends React.Component {
 
     this.resetGrid = e => {
       e.preventDefault();
-      window.clearTimeout(this.timeout);
+      clearTimeout(this.timeout);
       let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
       this.setState({ grid: grid, isRunning: false, iterationCount: 0 });
     };
@@ -112,7 +109,7 @@ class App extends React.Component {
             return <div key={rowIndex}
                         className="row">{row.map((cell, cellIndex) => {
               return <div key={cellIndex}
-                          className={cell ? "black-cell" : "white-cell"}
+                          className={cell ? "living-cell" : "dead-cell"}
                           onClick={!this.state.isRunning ?
                                    () => this.toggleCell(rowIndex, cellIndex) :
                                    null}
