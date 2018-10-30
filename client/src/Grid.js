@@ -9,7 +9,9 @@ class Grid extends React.Component {
   state = {
     cells: [],
     grid: [],
-    generation: 0
+    generation: 0,
+    interval: 100,
+    isRunning: false
   }
 
   refreshGrid() {
@@ -55,16 +57,19 @@ class Grid extends React.Component {
     this.setState({ cells: this.fillCells() });
   }
 
-  startGame = () => {
-    this.setState({
-		  generation: this.state.generation + 1
-		});
+  nextIteration = () => {
+    this.setState({ generation: this.state.generation + 1 })
   }
 
-  stopGame = () => {
-    this.setState({
-		  generation: this.state.generation - 1
-		});
+  playGame = () => {
+    this.setState({ isRunning: true })
+    clearInterval(this.intervalID);
+		this.intervalID = setInterval(this.nextIteration, this.state.interval);
+  }
+
+  pauseGame = () => {
+    this.setState({ isRunning: false })
+    clearInterval(this.intervalID);
   }
 
   randomGame = () => {
@@ -91,11 +96,11 @@ class Grid extends React.Component {
         {this.state.cells.map(cell => (
             <Cell x={cell.x} 
                   y={cell.y}
-                  key={`${cell.x},${cell.y}`}/>
+                  key={`${cell.x}${cell.y}`}/>
           ))}
         </div>
-        <button onClick={this.startGame}>Start</button>
-        <button onClick={this.stopGame}>Stop</button>
+        <button onClick={this.playGame}>Play</button>
+        <button onClick={this.pauseGame}>Pause</button>
         <button onClick={this.randomGame}>Random</button>
         <button onClick={this.clearGame}>Clear</button>
       </div>
