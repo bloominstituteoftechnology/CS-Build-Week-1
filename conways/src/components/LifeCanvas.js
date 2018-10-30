@@ -14,13 +14,14 @@ class LifeCanvas extends Component{
       numRows : this.props.rows,
       numCols : this.props.cols,
       cellBoundaries : [],
-      offsetLeft : 0,
-      offsetTop : 0,
+      filledCells: [],
+      running : false,
     }
   }
 
   componentDidMount() {
 
+    
     let numRows = this.state.numRows;
     let numCols = this.state.numCols;
 
@@ -29,7 +30,6 @@ class LifeCanvas extends Component{
     let squareWidth = canvas.width / numCols;
     let squareHeight = canvas.height / numRows;
     
-    console.log("canvas: ", canvas);
     let c = canvas.getContext("2d");
 
     for (let i = 0; i < numRows; ++i) {
@@ -45,43 +45,72 @@ class LifeCanvas extends Component{
             let boundaries = this.state.cellBoundaries;
             boundaries.push(coords); 
             this.setState({ cellBoundaries : boundaries})
-            console.log("this.state.cellBoundaries: ", this.state.cellBoundaries);
         }
     }
-
-    let imageData = c.getImageData(0,0,canvas.width, canvas.height);
-    let screenBuffer = imageData.data;
-
-    console.log("Image data: " , screenBuffer);
-    this.setState({ offsetLeft : canvas.offsetLeft, offsetTop : canvas.offsetTop });
 
     canvas.addEventListener('click', this.handleClick)
     
   }
 
+  clearCell = (c, cell, index) => {
+    c.fillStyle = "white";
+    c.fillRect(cell.left, cell.top, cell.width, cell.height);
+    c.rect(cell.left, cell.top, cell.width, cell.height)    // Draw rect to retain borders
+    c.stroke();
+    this.setState({ filledCells : this.state.filledCells.filter(num => num !== index)})
+  }
+
+  fillCell = (c, cell, index) => {
+    c.fillStyle = "red";
+    c.fillRect(cell.left, cell.top, cell.width, cell.height);
+    c.rect(cell.left, cell.top, cell.width, cell.height)    // Draw rect to retain borders
+    c.stroke();
+    this.setState({ filledCells : [...this.state.filledCells, index]})
+  }
+
+
   handleClick = (event) => {
-    console.log("clientX:", event.clientX, "clientY: ", event.clientY);
-    console.log("canvas.offsetTop: ", this.state.offsetTop, "canvas.offsetLeft: ", this.state.offsetLeft);
+    // Don't allow clicks when running
+    if(this.state.running){
+        return;
+    }
+    let canvas = this.refs.canvas;
+    let c = canvas.getContext("2d");
 
-    let y = event.clientY - this.state.offsetTop;
-    let x = event.clientX - this.state.offsetLeft;
-
-    console.log("x: ", x, "y: ", y);
-    console.log("this.state.cellBoundaries", this.state.cellBoundaries);
+    let y = event.clientY - canvas.offsetTop;
+    let x = event.clientX - canvas.offsetLeft;
 
     this.state.cellBoundaries.forEach((cell, index) => {
-        console.log("cell top", cell.top, "cell height: ", cell.height, "cell left: ", cell.left, "cell width", cell.width);
         if (y > cell.top && y < cell.top + cell.height && x > cell.left && x < cell.left + cell.width) {
-            alert(`clicked cell #${index}!!`);
+            if(this.state.filledCells.includes(index)){
+                this.clearCell(c, cell, index);
+            }else{
+                this.fillCell(c, cell, index);
+            }
         }
     })
   }
 
+  playGame = () => {
 
+  }
+
+  // filledCells is a list of indices, use this to get boundaries from cellBoundaries and clear all cells
+  clearCells = () => {
+      // Dont allow if running
+      if(this.state.running){
+          return
+      }
+      let c = this.refs.canvas.getContext("2d");
+
+      this.state.filledCells.forEach(cell => this.clearCell(c, this.state.cellBoundaries[cell], cell))
+  }
   render() {
     return (
       <div ref="outer">
         <CanvasWindow ref="canvas" width={300} height={300}/>
+        <button>Play Game</button>
+        <button onClick={this.clearCells}>Clear Game</button>
       </div>
     );
   }
