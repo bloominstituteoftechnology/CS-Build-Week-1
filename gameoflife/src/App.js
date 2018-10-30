@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import ButtonContainer from './components/ButtonContainer';
 
 class App extends Component {
   render() {
@@ -10,6 +11,7 @@ class App extends Component {
             Conway's Game of Life
           </p>
         </header>
+        <ButtonContainer />
       </div>
     );
   }
