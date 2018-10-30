@@ -8,7 +8,8 @@ class Grid extends React.Component {
   }
   state = {
     cells: [],
-    grid: []
+    grid: [],
+    generation: 0
   }
 
   refreshGrid() {
@@ -54,6 +55,18 @@ class Grid extends React.Component {
     this.setState({ cells: this.fillCells() });
   }
 
+  startGame = () => {
+    this.setState({
+		  generation: this.state.generation + 1
+		});
+  }
+
+  stopGame = () => {
+    this.setState({
+		  generation: this.state.generation - 1
+		});
+  }
+
   randomGame = () => {
     for (let y = 0; y < 18; y++) {
         for (let x = 0; x < 33; x++) {
@@ -71,6 +84,7 @@ class Grid extends React.Component {
   render() {
     return (
       <div>
+        <p>Generations: {this.state.generation}</p>
         <div className="Grid"
         onClick={this.handleClick}
         ref={(node) => { this.element = node; }}>
@@ -80,8 +94,8 @@ class Grid extends React.Component {
                   key={`${cell.x},${cell.y}`}/>
           ))}
         </div>
-        <button>Start</button>
-        <button>Stop</button>
+        <button onClick={this.startGame}>Start</button>
+        <button onClick={this.stopGame}>Stop</button>
         <button onClick={this.randomGame}>Random</button>
         <button onClick={this.clearGame}>Clear</button>
       </div>
