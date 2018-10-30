@@ -29,17 +29,22 @@ class LifeCanvas extends Component {
   constructor(props){
     super(props);
     this.continueAnimation = true;
-    // this.generation = 0;
     this.state = {
-      generation : 0,
-      gridSize:0,
-      cellSize:0
-      // continueAnimation : true
+      generation: 0,
+      gridSize: 0,
+      cellSize: 0,
+      gameBufferA: [],
+      gameBufferB: [],
     }
   }
   
   componentWillMount(){
-    this.setState({gridSize:500, cellSize:25})
+    this.setState({
+      gridSize: 500,
+      cellSize: 50,
+      gameBufferA: Array(Math.pow(500/50,2)).fill(false), 
+      gameBufferB: Array(Math.pow(500/50,2)).fill(false)
+    })
   }
 
   componentDidMount(){
@@ -109,10 +114,15 @@ class LifeCanvas extends Component {
     // let screenBuffer = imageData.data;
     // console.log("screen buffer: ", screenBuffer);
 
+    //Get the pixel Color of where the user clicked
     const pixelRGBA =  this.getPixel(imageData, canvasCoord.x, canvasCoord.y);
     console.log("pixelRGBA: ", pixelRGBA);
 
-    this.toggleCell(canvasCoord, pixelRGBA);
+    //Toggle that pixel's cell color and return that cell's index
+    let clickedCellIndex = this.toggleCell(canvasCoord, pixelRGBA);
+
+    //Toggle the appropriate cell in BufferA:
+    this.initializeBufferA(clickedCellIndex);
 
     //Set the pixel to black
     // this.setPixel(canvas, canvasCoord.x, canvasCoord.y);
@@ -120,14 +130,42 @@ class LifeCanvas extends Component {
   }
   
 
+    /**
+   * Initialize BufferA's cells to dead/alive (false/true)
+   * 
+   * @param clickedCellIndex = an object that contains the user clicked (x,y) coordinate index
+   * @return void
+   */
+  initializeBufferA = (clickedCellIndex) => {
+    
+    //Calcuate the number of cells per row
+    let cellsPerRow = this.state.gridSize/this.state.cellSize;
+    
+    //Calcualte the index into the array buffer
+    let indexToToggle = clickedCellIndex.y * cellsPerRow + clickedCellIndex.x;
+    
+    //Copy the gameBufferA
+    let tmpGameBufferA = [...this.state.gameBufferA];
+
+    //Toggle the value at the index in the temp buffer
+    tmpGameBufferA[indexToToggle] = !tmpGameBufferA[indexToToggle]
+    
+    //Update the state:
+    this.setState({gameBufferA:tmpGameBufferA});
+  }
+
+
   /**
    * Toggle cell's color based on the cell's corresponding to the Canvas Coord (x,y)
    * 
    * @param canvasCoord = an object that contains the user clicked (x,y) coord
    * @param pixelRGBA = an array of [R, G, B, A] containing the color of the pixe
-   * @return void
+   * @return clickedCellIndex = index of the clicked cell = the (x,y) of the upper left of the cell
    */
   toggleCell = (canvasCoord, pixelRGBA) => {
+    //Initialize the index of the clicked cell = the (x,y) of the upper left of the cell
+    let clickedCellIndex = {x:0,y:0};
+    
     // Get Ref to canvas element
     let canvas = document.getElementById("canvas");
     // console.log("canvas in toggle:", canvas);
@@ -150,6 +188,8 @@ class LifeCanvas extends Component {
     // allows use to find which cell the user clicked on
     let xMult = Math.floor(canvasCoord.x/this.state.cellSize);
     let yMult = Math.floor(canvasCoord.y/this.state.cellSize);
+    clickedCellIndex.x = xMult;
+    clickedCellIndex.y = yMult;
 
     // Test the pixel color coming in
     // console.log("pixelRGBA: ", pixelRGBA);
@@ -161,6 +201,8 @@ class LifeCanvas extends Component {
     ctx.lineWidth = 1;
     ctx.strokeStyle = 'grey';
     ctx.stroke();
+
+    return clickedCellIndex;
   }
 
 
