@@ -10,8 +10,7 @@ class LifeCanvas extends React.Component {
         this.state = {
             life: null,
             continueAnimation: false,
-            prevTimestamp: null,
-            clicked: false
+            prevTimestamp: null
         }
     }
 
@@ -22,8 +21,6 @@ class LifeCanvas extends React.Component {
 
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight - options[0].clientHeight - (header[0].clientHeight + 3);
-
-        console.log(options[0].clientHeight, header[0].clientHeight);
 
         this.setState({ life: new Life(canvas.width, canvas.height) });
 
@@ -39,7 +36,7 @@ class LifeCanvas extends React.Component {
 
         timestamp = Math.floor(timestamp / 1000);
 
-        if (timestamp !== this.state.prevTimestamp || this.state.clicked) {
+        if (timestamp !== this.state.prevTimestamp) {
             if (this.state.continueAnimation) {
                 this.state.life.step();
             }
@@ -72,7 +69,7 @@ class LifeCanvas extends React.Component {
             let y = Math.floor((event.clientY - rect.top) / size);
 
             this.state.life.toggleCell(x, y);
-            this.setState({ clicked: true });
+            this.drawCanvas();
         }
     }
 
@@ -87,7 +84,12 @@ class LifeCanvas extends React.Component {
 
     clear = () => {
         this.state.life.clearCells();
-        this.setState({ clicked: true });
+        this.drawCanvas();
+    }
+
+    next = () => {
+        this.state.life.step();
+        this.drawCanvas();
     }
 
     render() {
@@ -95,7 +97,7 @@ class LifeCanvas extends React.Component {
             <div className='canvas-container'>
                 <LifeCanvasHeader />
                 <canvas onClick={this.toggleLife} id='canvas' ref="canvas" />
-                <LifeCanvasOptions continue={this.state.continueAnimation} start={this.start} clear={this.clear} />
+                <LifeCanvasOptions continue={this.state.continueAnimation} start={this.start} next={this.next} clear={this.clear} />
             </div>
         );
     }

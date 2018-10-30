@@ -6,6 +6,7 @@ const LifeCanvasOptions = props => {
         <div className='canvas-options'>
             <button onClick={props.clear}>Clear</button>
             <button onClick={props.start}>{props.continue ? 'Stop' : 'Start'}</button>
+            <button onClick={props.next}>Next</button>
         </div>
     );
 }
