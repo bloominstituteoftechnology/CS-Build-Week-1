@@ -18,6 +18,8 @@ class Life{
 
     getCells = () => {
         let buffer = this.buffers[this.state.currentBuffer];
+        // reverse current and backbuffer
+        this.setState({ currentBuffer : this.state.currentBuffer === 1 ? 0 : 1, backBuffer : this.state.backBuffer === 1 ? 0 : 1 })
 
         return buffer;
     }
@@ -122,13 +124,6 @@ class Life{
             let neighbors = this.calculateAliveNeighbors(i, buffer)
             this.deadOrAlive(i, neighbors, buffer);
         }
-
-        this.reverseBuffers();
-    }
-
-    reverseBuffers = () => {
-        // reverse current and backbuffer
-        this.setState({ currentBuffer : this.state.currentBuffer === 1 ? 0 : 1, backBuffer : this.state.backBuffer === 1 ? 0 : 1 })
 
     }
 
