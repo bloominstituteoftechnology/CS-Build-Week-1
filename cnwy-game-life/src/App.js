@@ -20,12 +20,6 @@ const RulesDiv = styled.div`
   margin-top:200px;
 `
 
-const GenDiv = styled.div`
-  margin-top:50px;
-`
-
-
-
 class App extends Component {
   constructor (){
     super();
@@ -230,12 +224,11 @@ class App extends Component {
             {/* First Column in Main Container */}
             <Col sm="6">
               <div><h2>Conway's Game of Life</h2></div>
-              <GenDiv>Generation: 0</GenDiv>
               <LifeCanvas 
                 height={this.state.gridSize} 
                 width={this.state.gridSize} 
                 cellSize={this.state.cellSize} 
-                clickHandler={this.canvasClickHandler} 
+                clickHandler={this.canvasClickHandler}
                 />
 
               {/* Grid Size Select Row */}
