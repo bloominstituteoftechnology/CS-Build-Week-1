@@ -48,7 +48,7 @@ class Board extends Component {
     toggleClick = index => {
         if (this.state.clickEnabled) {
             let matrix = this.state.matrix.slice();
-            matrix[index.i][index.j] = this.toggleAlive(this.findIndex(index.i, index.j));
+            matrix[index.i][index.j].alive = !matrix[index.i][index.j].alive;
 
             this.setState({ matrix })
 
@@ -85,7 +85,6 @@ class Board extends Component {
                             );
                         })
                     }
-
                 </div>
                 <div className="btn-ctn">
                     <button className="main-btn" onClick={() => this.playButton()}>Play</button>
