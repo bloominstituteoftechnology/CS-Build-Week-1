@@ -6,8 +6,11 @@ class Life {
         this.cellSize = 10;
         this.cells = [[], []];
 
-        for (let x = 0; x < this.width / this.cellSize; x++) {
-            for (let y = 0; y < this.height / this.cellSize; y++) {
+        this.cellWidth = Math.floor(this.width / this.cellSize);
+        this.cellHeight = Math.floor(this.height / this.cellSize);
+
+        for (let x = 0; x < this.cellWidth; x++) {
+            for (let y = 0; y < this.cellHeight; y++) {
                 this.cells[0].push({ coords: [x, y], alive: false });
                 this.cells[1].push({ coords: [x, y], alive: false });
             }
@@ -28,6 +31,7 @@ class Life {
         const index = this.cells[this.buffer].findIndex(element => {
             return element.coords[0] === x && element.coords[1] === y;
         });
+
         if (index !== -1) {
             this.cells[this.buffer][index].alive = !this.cells[this.buffer][index].alive;
         }
@@ -44,8 +48,8 @@ class Life {
     step() {
         let cells = this.cells[this.buffer];
         let cellsBuffer = this.cells[this.buffer === 0 ? 1 : 0];
-        let cellWidth = this.width / this.cellSize;
-        let cellHeight = this.height / this.cellSize;
+        let cellWidth = this.cellWidth;
+        let cellHeight = this.cellHeight;
 
         for (let i = 0; i < cells.length; i++) {
             let neighbors = 0;

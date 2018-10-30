@@ -1,0 +1,34 @@
+.canvas-options {
+    background: #7e7e7e;
+    height: 100px;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas-options button {
+    margin: 0 9.6px;
+}
+
+.canvas-header {
+    height: 100px;
+    width: 100vw;
+
+    background: url('/gameoflife.png') no-repeat, url('/gameoflife-bg.png') repeat-x;
+    background-size: contain;
+
+    border-bottom: 3px solid #2A4E97;
+}
+
+.canvas-container {
+    background: #7e7e7e;
+}
+
+canvas {
+    display: block;
+}
+
+
+
+

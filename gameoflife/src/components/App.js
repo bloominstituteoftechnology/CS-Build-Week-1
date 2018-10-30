@@ -5,7 +5,7 @@ import LifeCanvas from './Canvas/LifeCanvas';
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className='App'>
 
         <LifeCanvas />
 
