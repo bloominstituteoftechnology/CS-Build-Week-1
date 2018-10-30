@@ -14,7 +14,7 @@ class App extends Component {
   }
 
   toggleRun = () => {this.setState({ running: !this.state.running })};
-  handleClear = () => {this.setState({ clear: !this.state.clear })};
+  handleClear = () => {this.setState({ clear: !this.state.clear, gens: 0 })};
   handleGen = () => {this.setState({ gens: this.state.gens+1 })}
 
   render() {

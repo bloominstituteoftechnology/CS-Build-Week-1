@@ -19,7 +19,7 @@ class Board extends Component {
     } 
     this.setState({ cells });
   }
-
+  // Calculates neighbors and returns next state
   updateCells = () => {
     const cells = this.state.cells.map((cell, index) => {
       let neighbors = 0
@@ -37,7 +37,7 @@ class Board extends Component {
       if (this.isAlive(row+1, col)) neighbors +=1
       if (this.isAlive(row+1, col+1)) neighbors +=1
       if (this.isAlive(row+1, col-1)) neighbors +=1
-      // Assign nextState
+      // Returns cells next state
       if (cell === 1) {
         if(neighbors < 2) return 0
         if(neighbors > 3) return 0
@@ -45,11 +45,13 @@ class Board extends Component {
       } else {
         if(neighbors === 3) return 1
       }
+
       return cell
     })
+    this.props.handleGen()
     this.setState({ cells })
   }
-  // Function used to check if a cell is alive
+  // Used to check if a cell is alive
   isAlive = (row, col) => {
     const length = Math.sqrt(this.state.cells.length);
     const cell = (row*length)+col
@@ -62,23 +64,22 @@ class Board extends Component {
     this.setState({ cells })
   }
   componentDidUpdate(previousProps) {
-    // This function checks if clear has been clicked
+    // Checks if clear has been clicked
     if (this.props.clear === true && previousProps !== this.state.props) {
       this.setupBoard()
       this.props.handleClear()
     }
-    // This function starts/stops the game from running
+    // Starts/stops the game from running(Invokes updateCells)
     let interval = 0;
     if (this.props.running === true) {
-      console.log("Running!")
-      interval = setTimeout(this.updateCells, 1000);
+      interval = setTimeout(this.updateCells, 1000)
+      // Start generation counter
+      // this.props.handleGen()
     }
-    if (this.props.running === false) {
-      clearTimeout(interval)
-    }
+    if (this.props.running === false) {clearTimeout(interval)}
   }
-  // Function called in render to create cells
-  cellElements = () => {
+  // Creates cell components for render
+  createCells = () => {
     return this.state.cells.map((cell, index) => (
         <Cell key={index} id={index} value={cell} handleClick={this.handleClick} />
     )) 
@@ -86,7 +87,7 @@ class Board extends Component {
 
   render() { 
     return (
-      <div className='board'> {this.cellElements()} </div>
+      <div className='board'> {this.createCells()} </div>
     );
   }
 }
