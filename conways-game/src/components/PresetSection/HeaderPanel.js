@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import { colors } from "../../utils/variables";
+import SearchBox from "./SearchBox";
 const Panel = styled.div`
     height: 9rem;
     width: 100%;
@@ -18,6 +19,7 @@ const HeaderPanel = () => {
     return (  
         <Panel>
             <SectionTitle>Presets</SectionTitle>
+            <SearchBox></SearchBox>
         </Panel>
     );
 }
