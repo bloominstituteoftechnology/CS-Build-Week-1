@@ -6,11 +6,19 @@ import {Grid,Card, Paper, CardContent, CardHeader, Typography} from '@material-u
 
 const styles = {
    homeContainer: {
-     
+      margin: '10px',
+      display: 'flex',
+      justifyContent: 'center',
    },
+
    gridCard:{
-      height: '500px',
-      width: '500px'
+      padding: '20px',
+      paddingTop: '25px'
+   },
+
+   gameGridItem: {
+      minWidth: '540px',
+      maxWidth: '630px'
    }
  };
 
@@ -20,13 +28,16 @@ class Home extends Component {
     return (
       <Grid className={classes.homeContainer} container>
          <Grid item xs={12} id="toprow">
-            <Grid container spacing={16} justify="center">
-               <Grid item xs={8} sm={5}>
-                  {/* <Card className={classes.gridCard} > */}
+            <Grid container spacing={8} justify="center">
+               <Grid item xs={9} className={classes.gameGridItem} >
+                  <Paper className={classes.gridCard} >
                      <Game gridHeight={classes.gridCard.height} gridWidth={classes.gridCard.width}/>
-                  {/* </Card> */}
+                  </Paper>
                </Grid>
             </Grid>
+         </Grid>
+         <Grid item xs={12} id="bottomrow">
+         
          </Grid>
       </Grid>
     );

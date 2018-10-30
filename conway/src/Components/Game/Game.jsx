@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import  TextField  from '@material-ui/core/TextField';
+import  Button  from '@material-ui/core/Button';
+import  IconButton  from '@material-ui/core/IconButton';
 
 //start drawing a grid with squareSizepx squares (starting at 0,0)
 
@@ -8,9 +11,19 @@ import { withStyles } from '@material-ui/core/styles';
 // const gridOdd = [TotalNodesX][TotalNodesY];
 
 const styles = {
-   gridContainer: {
-     
+   gameContainer: {
+     display: 'flex',
+     justifyContent: 'center',
+     flexDirection: 'column',
+     alignItems: 'center',
+     width: '100%',
+     generation: 0,
    },
+   gameControls: {
+      marginTop: '20px',
+      display: 'flex',
+      justifyContent: 'center'
+   }
  };
 
 class Game extends Component {
@@ -20,10 +33,15 @@ class Game extends Component {
       this.state = {
          TotalNodesX: 0,
          TotalNodesY: 0,
-         curGrid: [],
-         gridEven: [],
+         curGrid: 'odd',
+         nextGrid: 'even',
+         Grids: {
+            odd: [],
+            even : [],
+         },
          isRunning: false,
-         squareSize : 20
+         squareSize : 20,
+         
       }
       this.container = React.createRef();
    }
@@ -42,7 +60,7 @@ class Game extends Component {
       TotalNodesX = Math.round(Math.floor(TotalNodesX / this.state.squareSize));
       TotalNodesY = Math.round(Math.floor(TotalNodesY / this.state.squareSize));
 
-      const curGrid = [];
+      const gameGrid = [];
 
       let curX = 0;
       let curY = 0;
@@ -56,9 +74,12 @@ class Game extends Component {
             newArr.push({x: curX, y: curY, isAlive: false})
          }
       
-         curGrid.push(newArr)
+         gameGrid.push(newArr)
       }
-      this.setState({curGrid: curGrid, TotalNodesX: TotalNodesX, TotalNodesY: TotalNodesY})
+      const newGrids = this.state.Grids;
+      newGrids[this.state.curGrid] = gameGrid
+      newGrids[this.state.nextGrid] = Object.assign({}, gameGrid)
+      this.setState({Grids: newGrids, TotalNodesX, TotalNodesY})
       this.canvasApp()
    }
 
@@ -128,8 +149,10 @@ class Game extends Component {
           // xy+=10;
         }
 
+        if(this.state.isRunning) this.incrementGameLoop();
+
          // draw a box (each square is this.state.squareSizepx wide and )
-         this.state.curGrid.forEach((verticalArr, i) => {
+         this.state.Grids[this.state.curGrid].forEach((verticalArr, i) => {
             verticalArr.forEach((node, j) => {
                if(node.isAlive){
                   ctx.rect(node.x, node.y, this.state.squareSize,this.state.squareSize)
@@ -144,6 +167,78 @@ class Game extends Component {
       drawScreen();
     }
 
+    incrementGameLoop = () => {
+      const nextGrid = this.state.Grids[this.state.curGrid];
+      this.state.Grids[this.state.curGrid].forEach((verticalArr, i) => {
+         verticalArr.forEach((node, j) => {
+            if(node.isAlive){
+               this.lifeAlgorithm(nextGrid, i, j)
+            }
+
+         })
+      })
+    }
+
+   lifeAlgorithm = (grid, i , j) => {
+     //get for neighbors and run 4 rules of life
+      const getNeighbors = () => {
+        console.log(grid)
+         const neighborsObj = {};
+         const curNode = grid[i][j];
+         
+         let curNeighbor = 1;
+         while(curNeighbor < 9){
+           let newI = i;
+           let newJ = j;
+            switch(curNeighbor){
+              case 1: newJ--;
+                      if(!grid[newI][newJ]) newJ = grid[newI].length - 1
+                      break;
+              case 2: newI++;
+                      if(!grid[newI]) newI = 0;
+                      newJ--;
+                      if(!grid[newI][newJ]) newJ = grid[newI].length - 1
+                      break;
+              case 3: newI++;
+                      if(!grid[newI]) newI = 0;
+                      break;
+              case 4: newI++;
+                      if(!grid[newI]) newI = 0;
+                      newJ++;
+                      if(!grid[newI][newJ]) newJ = 0;
+                      break;
+              case 5: newJ++;
+                      if(!grid[newI][newJ]) newJ = 0;
+                      break;
+              case 6: newI--;
+                      if(!grid[newI]) newI = grid.length - 1
+                      newJ++;
+                      if(!grid[newI][newJ]) newJ = 0;
+                      break;
+              case 7: newI--;
+                      if(!grid[newI]) newI = grid.length - 1
+                      break;
+              case 8: newI--;
+                      if(!grid[newI]) newI = grid.length - 1
+                      newJ--;
+                      if(!grid[newI][newJ]) newJ = grid[newI].length - 1
+            }
+
+            neighborsObj[curNeighbor] = grid[newI][newJ]
+
+           curNeighbor++;
+         }//end while
+
+         console.log(neighborsObj)
+         return neighborsObj;
+      }
+
+      const neighbors = getNeighbors();
+
+
+
+   }
+
     handleGridClick = event => {
       if(!this.state.isRunning){
 
@@ -155,12 +250,15 @@ class Game extends Component {
          const nodeNumberX = Math.floor(newX / this.state.squareSize)
          const nodeNumberY = Math.floor(newY / this.state.squareSize)
 
-         const curGrid = this.state.curGrid;
+         const Grids = this.state.Grids;
+         const curGrid = Grids[this.state.curGrid];
          
          if(curGrid[nodeNumberX] && curGrid[nodeNumberX][nodeNumberY]){
             curGrid[nodeNumberX][nodeNumberY].isAlive = !curGrid[nodeNumberX][nodeNumberY].isAlive
          }
 
+         Grids[this.state.curGrid] = curGrid;
+         this.setState({Grids})
          this.canvasApp()
        }
    }//end handleGridClick
@@ -171,11 +269,39 @@ class Game extends Component {
       }else console.log('wheelup')
    }
 
+   startStopGame = () => {
+      this.setState({ isRunning: !this.state.isRunning})
+   }
+
   render() {
      const {classes} = this.props
-    return (<div className={classes.gridContainer} ref={this.container}>
-         <canvas id="myCanvas" width={this.props.gridWidth} height={this.props.gridHeight} onClick={this.handleGridClick} onWheel={this.handleWheel} />
+      return (
+         <div className={classes.gameContainer} ref={this.container}>
+            <canvas id="myCanvas" width='0' height='0' onClick={this.handleGridClick} onWheel={this.handleWheel} />
             {this.canvasApp()}
+
+            <div className={classes.gameControls}>
+
+               <TextField
+                  disabled
+                  id="outlined-uncontrolled"
+                  label="Generation"
+                  defaultValue="0"
+                  // className={classes.TextField}
+                  margin="normal"
+                  variant="outlined"
+                  value={this.state.generation}
+               />
+              
+               <Button onClick={this.startStopGame}
+               //FIX THIS: convert this to an IconButton with the MUI play/pause icon
+               >
+                  Start/Stop Game
+               </Button>
+                  
+               
+            </div>
+
          </div>
     );
   }
