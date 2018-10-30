@@ -1,0 +1,14 @@
+.Pixel {
+    border: 1px solid black;
+    height: 15px;
+    width: 15px;
+    background-color: white;
+}
+
+.on{
+    color:aqua;
+}
+
+.off{
+    color:white;
+}

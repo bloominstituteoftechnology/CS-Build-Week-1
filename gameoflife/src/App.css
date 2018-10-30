@@ -1,0 +1,12 @@
+.App {
+  text-align: center;
+  background-color: gold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Top{
+  display:flex;
+  flex-direction: row;
+}
