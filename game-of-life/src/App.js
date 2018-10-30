@@ -72,8 +72,8 @@ class App extends React.Component {
               (cellIndex >= 0 && cellIndex <= oneGridSide - 1));
     };
 
-    this.countNeighbors = (rowIndex, cellIndex) => {
-      const neighbors = [
+    this.findNeighbors = (rowIndex, cellIndex) => {
+      return [
         [rowIndex - 1, cellIndex - 1],
         [rowIndex - 1, cellIndex],
         [rowIndex - 1, cellIndex + 1],
@@ -83,16 +83,18 @@ class App extends React.Component {
         [rowIndex + 1, cellIndex],
         [rowIndex + 1, cellIndex + 1]
       ];
+    };
 
+    this.countNeighbors = (rowIndex, cellIndex) => {
+      const neighbors = this.findNeighbors(rowIndex, cellIndex);
       let count = 0;
-
       for (let i = 0; i < neighbors.length; i++) {
         if (this.isWithinGrid(neighbors[i][0], neighbors[i][1])) {
-               const position = neighbors[i];
-               if (this.state.grid[position[0]][position[1]]) {
-                 count += 1;
-               }
-             }
+           const position = neighbors[i];
+           if (this.state.grid[position[0]][position[1]]) {
+             count += 1;
+           }
+         }
       }
       return count;
     };
