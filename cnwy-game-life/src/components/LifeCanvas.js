@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Button} from 'reactstrap';
 import styled from 'styled-components';
 
+
+/**
+ * Styled Components
+ */
 const GameBtns = styled(Button)`
   margin-right:10px;
 `
@@ -12,6 +16,15 @@ const GenDiv = styled.div`
 
 let prevTimestamp = null;
 
+
+/**
+ * LifeCanvas component
+ * 
+ * This component will create the Game of life canvas element
+ * - It will initialize it
+ * - Allow the user to click on any cell and toggle it's value
+ * - Provide user controls (Start, Stop, Step, etc) to allow the user to control the animation
+ */
 class LifeCanvas extends Component {
   constructor(props){
     super(props);
@@ -38,6 +51,7 @@ class LifeCanvas extends Component {
     this.continueAnimation = false;
     // this.setState({continueAnimation:false})
   }
+
 
   /**
    * Initialize the canvas
@@ -105,6 +119,7 @@ class LifeCanvas extends Component {
 
   }
   
+
   /**
    * Toggle cell's color based on the cell's corresponding to the Canvas Coord (x,y)
    * 
@@ -183,7 +198,6 @@ class LifeCanvas extends Component {
   }
 
 
-
   /**
    * Get a pixel value from imageData
    *
@@ -241,7 +255,6 @@ class LifeCanvas extends Component {
   }
 
 
-
   /**
    * Animate the canvas 
    *
@@ -286,7 +299,6 @@ class LifeCanvas extends Component {
   }
 
 
-
   /**
    * Game Controllers
    * 
@@ -296,7 +308,7 @@ class LifeCanvas extends Component {
     this.continueAnimation = true;
     // this.setState({continueAnimation:true})
   }
-  
+
   stopGame = () => {
     this.continueAnimation = false;
     // this.setState({continueAnimation:false})
@@ -314,7 +326,6 @@ class LifeCanvas extends Component {
     this.continueAnimation = false;
     // this.setState({continueAnimation:false})
   }
-
 
 
   /**
