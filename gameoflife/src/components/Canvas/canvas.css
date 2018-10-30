@@ -1,5 +1,5 @@
 .canvas-options {
-    background: #7e7e7e;
+    background: #999999;
     height: 100px;
     width: 100vw;
     display: flex;
@@ -22,7 +22,7 @@
 }
 
 .canvas-container {
-    background: #7e7e7e;
+    background: #999999;
 }
 
 canvas {
