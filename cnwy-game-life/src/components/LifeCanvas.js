@@ -41,9 +41,9 @@ class LifeCanvas extends Component {
   componentWillMount(){
     this.setState({
       gridSize: 500,
-      cellSize: 100,
-      gameBufferA: Array(Math.pow(500/100,2)).fill(false), 
-      gameBufferB: Array(Math.pow(500/100,2)).fill(false)
+      cellSize: 10,
+      gameBufferA: Array(Math.pow(500/10,2)).fill(false), 
+      gameBufferB: Array(Math.pow(500/10,2)).fill(false)
     })
   }
 
@@ -65,7 +65,11 @@ class LifeCanvas extends Component {
    * @return void
    */
   initializeCanvas = ()=>{
-    this.setState({generation:0})
+    this.setState({
+      generation:0,
+      gameBufferA: Array(Math.pow(this.state.gridSize/this.state.cellSize,2)).fill(false), 
+      gameBufferB: Array(Math.pow(this.state.gridSize/this.state.cellSize,2)).fill(false)
+    })
 
     let canvas = this.refs.canvas; 
     const ctx = canvas.getContext('2d');
@@ -303,45 +307,65 @@ class LifeCanvas extends Component {
    * @return void
    */
   onAnimFrame = (timestamp) => {
-    let canvas = this.refs.canvas; 
-    const ctx = canvas.getContext('2d');
-
+    
     // Request another animation frame for the future
     if (this.continueAnimation) {
       requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
     }
     // requestAnimationFrame(this.onAnimFrame); //No control on animation
-
-
+    
+    
     // If we haven't yet stored the previous time, fake it
     if (prevTimestamp === null) {
-        prevTimestamp = timestamp - 30; // milliseconds
+      prevTimestamp = timestamp - 30; // milliseconds
     }
-
+    
     // Compute how long it took between frames
     const elapsed = timestamp - prevTimestamp
-
+    
     // Remember this for next frame
     prevTimestamp = timestamp;
     console.log(`Current time: ${timestamp} ms, frame time: ${elapsed} ms`);
-
-
+    
+    
     console.log("Cuurent State: ",this.state.gameBufferA);
     
     //Calculate the next Gen from BufferA and place into BufferB
-    let nextBuffer = this.calculateNextGen(this.state.gameBufferA);
-    console.log("Next State: ",nextBuffer);
-    
+    this.setState({
+      gameBufferB : this.calculateNextGen(this.state.gameBufferA)
+    }, () => {
+      //After setting state, update the canvas:
+      this.updateCanvas(this.state.gameBufferB);
+
+      //Set the BufferA = BufferB
+      this.setState({
+        gameBufferA: this.state.gameBufferB
+      })
+    }) 
+
+    this.setState({generation: this.state.generation + 1} )
+  }
+
+  /**
+   * Update Canvas based on nextBuffer
+   * 
+   * @param nextBuffer
+   * @return void
+   */
+  updateCanvas = (nextBuffer) => {
     //Calcuate the number of cells per row
     let cellsPerRow = this.state.gridSize/this.state.cellSize;
 
+    let canvas = this.refs.canvas; 
+    const ctx = canvas.getContext('2d');
+    
     //Map through the nextBuffer
     nextBuffer.forEach( (cv,i) => {
-
+      
       //For each index calculate the xMult and yMult
       let xMult = i % cellsPerRow;
       let yMult = Math.floor(i/cellsPerRow);
-
+      
       ctx.beginPath();
       ctx.rect(xMult * this.state.cellSize, yMult*this.state.cellSize, this.state.cellSize, this.state.cellSize);
       ctx.fillStyle = cv ? 'black' : 'white';
@@ -350,10 +374,7 @@ class LifeCanvas extends Component {
       ctx.strokeStyle = 'grey';
       ctx.stroke();
     })
-
-    this.setState({generation: this.state.generation + 1} )
   }
-
 
   /**
    * Calculate the next Generation
