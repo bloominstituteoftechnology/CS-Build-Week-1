@@ -83,6 +83,11 @@ class GameOfLife extends React.Component {
     }
   };
 
+  handleClear = () => {
+    this.grid = this.clearGrid();
+    this.setState({ cells: this.fillCells() });
+  };
+
   handleSpeed = event => {
     this.setState({ speed: event.target.value });
   };
@@ -165,13 +170,17 @@ class GameOfLife extends React.Component {
           ))}
         </Grid>
         <div>
-          Speed: <input value={this.state.speed} onChange={this.handleSpeed} />{" "}
-          milliseconds
           {this.state.isPlaying ? (
             <button onClick={this.stopGame}>Stop</button>
           ) : (
             <button onClick={this.startGame}>Start</button>
           )}
+          <button onClick={this.handleClear}>Clear</button>
+          Speed: <input
+            value={this.state.speed}
+            onChange={this.handleSpeed}
+          />{" "}
+          milliseconds
         </div>
       </div>
     );
