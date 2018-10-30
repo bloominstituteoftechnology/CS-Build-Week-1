@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactTimeout from 'react-timeout';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 import './App.css';
 
 class App extends React.Component {
@@ -14,15 +16,21 @@ class App extends React.Component {
     this.startSimulation = e => {
       e.preventDefault();
       if (this.state.isRunning) { return; }
-      this.setState({ isRunning: true });
-      this.createNextIteration();
+      this.setState({ isRunning: true }, () => this.createNextIteration());
+
     };
 
     this.stopSimulation = e => {
       e.preventDefault();
       if (!this.state.isRunning) { return; }
-      window.clearTimeout(this.timeout);
-      this.setState({ isRunning: false, iterationCount: 0 });
+      clearTimeout(this.timeout);
+      this.setState({ isRunning: false });
+    };
+
+    this.advanceOneIteration = e => {
+      e.preventDefault();
+      if (this.state.isRunning) { return; }
+      this.createNextIteration();
     };
 
     this.createNextIteration = () => {
@@ -44,9 +52,11 @@ class App extends React.Component {
       this.setState({ grid: grid,
                       iterationCount: this.state.iterationCount + 1 });
 
-      this.timeout = setTimeout(() => {
-        this.createNextIteration();
-      }, 500);
+      if (this.state.isRunning) {
+        this.timeout = setTimeout(() => {
+          this.createNextIteration();
+        }, 500);
+      }
     };
 
     this.countNeighbors = (rowIndex, cellIndex) => {
@@ -81,10 +91,11 @@ class App extends React.Component {
       this.setState({ grid: grid });
     };
 
-    this.clearGrid = e => {
+    this.resetGrid = e => {
       e.preventDefault();
+      window.clearTimeout(this.timeout);
       let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
-      this.setState({ grid: grid });
+      this.setState({ grid: grid, isRunning: false, iterationCount: 0 });
     };
   }
 
@@ -111,7 +122,12 @@ class App extends React.Component {
         </div>
         <button onClick={this.startSimulation}>start</button>
         <button onClick={this.stopSimulation}>stop</button>
-        <button onClick={this.clearGrid}>clear</button>
+        <button onClick={this.advanceOneIteration}>next</button>
+        <button onClick={this.resetGrid}>reset</button>
+        <div className="slider-container">
+          <Slider min={50}
+                  max={1000}/>
+        </div>
         <div>{this.state.iterationCount}</div>
       </div>
     );

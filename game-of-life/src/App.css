@@ -29,3 +29,7 @@
   border: 1px solid black;
   background: black;
 }
+
+.slider-container {
+  width: 300px;
+}
