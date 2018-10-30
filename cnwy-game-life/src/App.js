@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Container, Row, Col, Label} from 'reactstrap';
+import { Container, Row, Col} from 'reactstrap';
 import styled from 'styled-components';
 import LifeCanvas from './components/LifeCanvas';
 
@@ -102,9 +102,8 @@ class App extends Component {
     let xMult = Math.floor(canvasCoord.x/this.state.cellSize);
     let yMult = Math.floor(canvasCoord.y/this.state.cellSize);
 
-
     //See the pixel color coming in
-    console.log("pixelRGBA: ", pixelRGBA);
+    // console.log("pixelRGBA: ", pixelRGBA);
 
     ctx.beginPath();
     ctx.rect(xMult*this.state.cellSize, yMult*this.state.cellSize, this.state.cellSize, this.state.cellSize);
@@ -220,6 +219,7 @@ class App extends Component {
   //   console.log("Cell Size: ", cellSize);
   // }
 
+
   render() {
     return (
       <div className="App">
@@ -231,39 +231,44 @@ class App extends Component {
             <Col sm="6">
               <div><h2>Conway's Game of Life</h2></div>
               <GenDiv>Generation: 0</GenDiv>
-              <LifeCanvas height={this.state.gridSize} width={this.state.gridSize} cellSize={this.state.cellSize} clickHandler={this.canvasClickHandler}/>
+              <LifeCanvas 
+                height={this.state.gridSize} 
+                width={this.state.gridSize} 
+                cellSize={this.state.cellSize} 
+                clickHandler={this.canvasClickHandler} 
+                />
 
               {/* Grid Size Select Row */}
-              <Row>
+              {/* <Row>
                 <Col sm="5">
                   <Label for="gridSizeSelect">Select the size of the grid: </Label>
                 </Col>
                 <Col sm="5">
-                  {/* <GameInput type="select" name="select" id="gridSizeSelect" onChange={this.gridSizeOnChange}>
+                  <GameInput type="select" name="select" id="gridSizeSelect" onChange={this.gridSizeOnChange}>
                     <option>100 x 100</option>
                     <option>200 x 200</option>
                     <option>250 x 250</option>
                     <option>500 x 500</option>
                     <option>1000 x 1000</option>
-                  </GameInput> */}
+                  </GameInput>
                 </Col>
-              </Row>
+              </Row> */}
 
               {/* Cell Size Select Row */}
-              <Row>
+              {/* <Row>
                 <Col sm="5">
                   <Label for="cellSizeSelect">Select the size of the cell: </Label>
                 </Col>
                 <Col sm="5">
-                  {/* <GameInput type="select" name="select" id="cellSizeSelect" onChange={this.cellSizeOnChange}>
+                  <GameInput type="select" name="select" id="cellSizeSelect" onChange={this.cellSizeOnChange}>
                     <option>10</option>
                     <option>20</option>
                     <option>25</option>
                     <option>50</option>
-                  </GameInput> */}
+                  </GameInput>
                 </Col>
-              </Row>
-             <button>Play</button>
+              </Row> */}
+
             </Col>
 
 
