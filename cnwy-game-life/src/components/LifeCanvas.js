@@ -1,25 +1,49 @@
 import React, { Component } from 'react';
-import { Row, Col, Label, Input, Button} from 'reactstrap';
+import { Row, Col, Label, Input, UncontrolledTooltip} from 'reactstrap';
 import styled from 'styled-components';
 import patterns from './Patterns';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlay, faPause, faStepForward, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faPlay)
+library.add(faPause)
+library.add(faSyncAlt)
+library.add(faStepForward)
 
 /**
  * Styled Components
  */
-const GameBtns = styled(Button)`
-  margin-right:10px;
-`
 
 const GridInput = styled(Input)`
   width:20px;
 `
 
 const GenDiv = styled.div`
-  margin-top:25px;
+  padding-top:6px;
 `
 
 const SelRow = styled(Row)`
   margin-top:25px;
+`
+
+const GameBtns = styled.div`
+  padding-top: 10px;
+  display:flex;
+  justify-content:space-evenly;
+`
+const CanvasFooter = styled(Row)`
+`
+const Canvas = styled.canvas`
+  margin-top:25px;
+  margin-left:20px;
+`
+
+const StyledFA = styled(FontAwesomeIcon)`
+  cursor:pointer;
+  :hover {
+    color:pink;
+  }
 `
 
 //Globals
@@ -432,7 +456,7 @@ class LifeCanvas extends Component {
     // this.setState({continueAnimation:true})
   }
 
-  stopGame = () => {
+  pauseGame = () => {
     this.continueAnimation = false;
     // this.setState({continueAnimation:false})
   }
@@ -606,15 +630,32 @@ class LifeCanvas extends Component {
           </SelRow>
 
         </div>
-        <GenDiv>Generation: {this.state.generation}</GenDiv>
-        <canvas ref="canvas" id="canvas" width={this.state.gridSize} height={this.state.gridSize} onClick={this.getCanvasXYcoordFromMouseClick}/>
-        <div>
-          <GameBtns onClick={this.startGame}>Start</GameBtns>
-          <GameBtns onClick={this.stopGame}>Stop</GameBtns>
-          <GameBtns onClick={this.restartGame}>Restart</GameBtns>
-          <GameBtns onClick={this.stepGame}>Step</GameBtns>
-          <GameBtns onClick={this.pauseGame}>Pause</GameBtns>
-        </div>
+        
+        <Canvas ref="canvas" id="canvas" width={this.state.gridSize} height={this.state.gridSize} onClick={this.getCanvasXYcoordFromMouseClick}/>
+        
+        <CanvasFooter>
+          <Col sm='1'>
+          </Col>
+          <Col sm='5'>
+            <GenDiv>Generation: {this.state.generation}</GenDiv>
+          </Col>
+
+          <Col sm='6'>
+            <GameBtns>
+              <StyledFA icon="play" id="utt-start" onClick={this.startGame}/>
+              {/* <UncontrolledTooltip placement="top" target="utt-start"> Start Game </UncontrolledTooltip> */}
+
+              <StyledFA icon="pause" id="utt-pause" onClick={this.pauseGame}/>
+              {/* <UncontrolledTooltip placement="top" target="utt-pause"> Pause Game </UncontrolledTooltip> */}
+              
+              <StyledFA icon="step-forward" id="utt-step" onClick={this.stepGame}/>
+              <UncontrolledTooltip placement="top" target="utt-step"> Step Game </UncontrolledTooltip>
+              
+              <StyledFA icon="sync-alt" id="utt-restart" onClick={this.restartGame}/>
+              <UncontrolledTooltip placement="top" target="utt-restart"> Restart Game </UncontrolledTooltip>
+            </GameBtns>
+          </Col>
+        </CanvasFooter>
       </div>
     );
   }
