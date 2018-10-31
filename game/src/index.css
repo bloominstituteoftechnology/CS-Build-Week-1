@@ -1,3 +1,18 @@
+@font-face {
+  font-family: 'DIN2014-Demi';
+  src: url('./fonts/din2014-demi.woff') format('woff'); 
+}
+
+@font-face {
+  font-family: 'DIN2014-Regular';
+  src: url('./fonts/din2014-regular.woff') format('woff'); 
+}
+
+@font-face {
+  font-family: 'DIN2014-Light';
+  src: url('./fonts/din2014-light.woff') format('woff'); 
+}
+
 /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
@@ -343,6 +358,7 @@ template {
 html {
   box-sizing: border-box;
   font-size: 62.5%;
+  font-family: 'DIN2014-Regular', 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   background-color: #000;
 }
 

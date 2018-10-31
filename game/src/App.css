@@ -17,3 +17,47 @@
   background-color: #fff;
   z-index: 0;
 }
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  top: 700px;
+  left: 160px; 
+  width: 580px;
+  height: 45px;
+  text-transform: uppercase;
+  color: #999;
+}
+
+.controls__button-container {
+  flex: 1;
+}
+
+.controls__button {
+  margin: 0;
+  padding: 0 15px 0 0;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  color: #fff;
+  opacity: .7;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: .3s opacity linear;
+}
+
+.controls__button:hover {
+  opacity: 1;
+}
+
+.controls__divider {
+  margin: 0 20px 0 5px;
+  color: #555;
+}
+
+.controls__generation {
+  font-size: 1.4rem;
+  user-select: none;
+}
