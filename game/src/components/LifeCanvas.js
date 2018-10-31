@@ -199,7 +199,7 @@ class LifeCanvas extends React.Component {
   };
 
   handleClick = e => {
-    if (!this.state.running) {
+    if (!this.state.isRunning) {
       const canvas = this.refs.canvas;
       const ctx = canvas.getContext("2d");
       const rect = canvas.getBoundingClientRect();
