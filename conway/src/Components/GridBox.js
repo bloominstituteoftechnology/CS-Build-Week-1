@@ -12,7 +12,6 @@ const Container = styled.div`
 class GridBox extends Component {
     constructor(props) {
         super(props);
-        console.log(`PROPS: ${this.props.status}`)
         this.state = {
         }
     }

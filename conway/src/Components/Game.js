@@ -16,7 +16,7 @@ const Header = styled.h2`
 `;
 
 const ButtonContainer = styled.div`
-    width: 330px;
+    width: 200px;
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
@@ -35,26 +35,26 @@ class Game extends Component {
         super();
         this.state = {
             generation: 0,
-            clear: false
+            clear: false,
+            running: false
         }
     }
 
 
     gameOfLife() {
-
+        console.log("the GameOfLife has started...")
         this.setState({generation: this.state.generation + 1});
     }
 
-    playButton() {
-        this.gameOfLife();
-    }
-
-    pauseButton() {
-
-    }
-
-    stopButton() {
-
+    runSimulation = () => {
+        this.setState({running: !this.state.running});
+        if (this.state.running === false) {
+            document.getElementById("playStopButton").innerHTML = "Play";
+        } else {
+            console.log("The game is running...");
+            document.getElementById("playStopButton").innerHTML = "Stop";
+            this.gameOfLife();
+        }
     }
 
     clearButton = () => {
@@ -68,9 +68,7 @@ class Game extends Component {
                 <Header>Generation: {this.state.generation}</Header>
                 <GameBox clear={this.state.clear} clearButton={this.clearButton}/>
                 <ButtonContainer>
-                    <Button>Play</Button>
-                    <Button>Pause</Button>
-                    <Button>Stop</Button>
+                    <Button id="playStopButton" onClick={this.runSimulation}>Play</Button>
                     <Button onClick={this.clearButton}>Clear</Button>
                 </ButtonContainer>
             </Container>

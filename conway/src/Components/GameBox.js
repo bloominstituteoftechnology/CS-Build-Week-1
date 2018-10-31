@@ -23,13 +23,16 @@ class GameBox extends Component  {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.clear == true && prevProps != this.props) {
+        if (this.props.clear === true && prevProps !== this.props) {
             let clearedCells = [];
             for (let i=0; i<225; i++) {
                 clearedCells.push(0);
             }
             this.setState({cells: clearedCells});
             this.props.clearButton();
+        }
+        if (this.props.running === true && prevProps !== this.props) {
+
         }
     }
 

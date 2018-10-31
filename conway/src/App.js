@@ -14,7 +14,7 @@ const Content = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 1000px;
+  width: 800px;
 `;
 
 const AboutSection = styled.div`
