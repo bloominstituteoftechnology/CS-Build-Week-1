@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Grid from './Grid';
 import './components.css';
 
-const width = 400;
-const height = 400;
+// const width = 400;
+// const height = 400;
 
 class Display extends Component {
     /**
@@ -13,12 +13,11 @@ class Display extends Component {
         super();
 
         this.continueAnimation = true;
-        this.speed = 100;
         this.rows = 30;
         this.cols = 30;
         this.state = {
             generation: 0,
-            gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false))
+            grid: Array(this.rows).fill().map(() => Array(this.cols).fill(false))
         }
     }
 
@@ -52,22 +51,32 @@ class Display extends Component {
         // TODO animate stuff
     }
 
+    handleClick = (row, col) => {
+        let grid = arrayClone(this.state.grid);
+        grid[row][col] = !grid[row][col];
+        this.setState({ grid })
+    }
+
     /**
      * Render the canvas
      */
     render() {
         return (
             <div>
-                <canvas ref="canvas" width={width} height={height} />
+                {/* <canvas ref="canvas" width={width} height={height} /> */}
                 <Grid
                     grid={this.state.grid}
                     rows={this.rows}
                     cols={this.cols}
-                    selectBox={this.selectBox}
+                    handleClick={this.handleClick}
                 />
             </div>
         );
     }
+}
+
+function arrayClone(arr) {
+    return JSON.parse(JSON.stringify(arr));
 }
 
 export default Display;

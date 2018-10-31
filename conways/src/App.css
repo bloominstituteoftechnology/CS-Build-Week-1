@@ -54,7 +54,9 @@
 .playB{
     padding: 10px;
     border-radius: 9px;
+    margin: 5% 20%;
 }
 .thirtyPer {
-    width: 30%;
+    width: 150px;
+    margin-left: 200px;
 }
