@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button} from 'reactstrap';
+import { Row, Col, Label, Input, Button} from 'reactstrap';
 import styled from 'styled-components';
 
 
@@ -10,8 +10,16 @@ const GameBtns = styled(Button)`
   margin-right:10px;
 `
 
+const GridInput = styled(Input)`
+  width:20px;
+`
+
 const GenDiv = styled.div`
-  margin-top:50px;
+  margin-top:25px;
+`
+
+const CellSizeSelRow = styled(Row)`
+  margin-top:25px;
 `
 
 let prevTimestamp = null;
@@ -456,6 +464,20 @@ class LifeCanvas extends Component {
     // this.setState({continueAnimation:false})
   }
 
+  /**
+   * Handles the changing of the cell size selector
+   * 
+   * @param e event = change event
+   * @return void
+   */
+  cellSelOnChangeHandler = (e) => {
+    var options = e.target.options;
+    for (var i = 0, l = options.length; i < l; i++) {
+      if (options[i].selected) {
+        this.setState({cellSize:Number(options[i].value)}, this.initializeCanvas)
+      }
+    }
+  }
 
   /**
    * Rendering
@@ -463,6 +485,26 @@ class LifeCanvas extends Component {
   render() {
     return (
       <div>
+        <div>
+          
+          <CellSizeSelRow>
+            <Col sm="3">
+              <Label for="cellSizeSel">Select Cell Size:</Label>
+            </Col>
+            <Col sm="3">
+              <GridInput ref="cellSel" type="select" name="select" id="cellSizeSel" bsSize="sm" onChange={this.cellSelOnChangeHandler}>
+                <option>10</option>
+                <option>20</option>
+                <option>25</option>
+                <option>50</option>
+                <option>100</option>
+              </GridInput>
+            </Col>
+            <Col sm="6">
+            </Col>
+          </CellSizeSelRow>
+
+        </div>
         <GenDiv>Generation: {this.state.generation}</GenDiv>
         <canvas ref="canvas" id="canvas" width={this.state.gridSize} height={this.state.gridSize} onClick={this.getCanvasXYcoordFromMouseClick}/>
         <div>
