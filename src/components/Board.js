@@ -91,8 +91,8 @@ class Board extends React.Component {
       this.timeoutHandler = null;
     }
   };
-  handleIntervalChange = event => {
-    this.setState({ interval: event.target.value });
+  handleIntervalChange = speed => {
+    this.setState({ interval: speed });
   };
 
   calculateNeighbors(board, x, y) {
@@ -355,19 +355,44 @@ class Board extends React.Component {
                 Speed
               </a>
 
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a
+                  onClick={() => this.handleIntervalChange(300)}
+                  className="dropdown-item"
+                  href="#"
+                >
                   300 (default)
                 </a>
-                <a class="dropdown-item" href="#">
+                <a onClick={() => this.handleIntervalChange(50)} className="dropdown-item" href="#">
+                  50
+                </a>
+                <a
+                  onClick={() => this.handleIntervalChange(100)}
+                  className="dropdown-item"
+                  href="#"
+                >
                   100
                 </a>
-
-                <a class="dropdown-item" href="#">
+                <a
+                  onClick={() => this.handleIntervalChange(500)}
+                  className="dropdown-item"
+                  href="#"
+                >
                   500
                 </a>
-                <a class="dropdown-item" href="#">
+                <a
+                  onClick={() => this.handleIntervalChange(1000)}
+                  className="dropdown-item"
+                  href="#"
+                >
                   1000
+                </a>
+                <a
+                  onClick={() => this.handleIntervalChange(2000)}
+                  className="dropdown-item"
+                  href="#"
+                >
+                  2000
                 </a>
               </div>
             </div>
