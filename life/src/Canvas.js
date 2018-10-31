@@ -24,12 +24,18 @@ class Canvas extends Component {
         let canvas = this.refs.canvas;
         let ctx = canvas.getContext('2d');
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
+        let cells = this.life.fetchCells();
 
         for (let height = 0; height < canvas.height; height++) {
             for (let width = 0; width < canvas.width; width++) {
                 let index = (height * canvas.width + width) * 4;
 
+                let lifeStatus = cells[height][width];
+                let color = lifeStatus === 0 ? 0x00 : 0xff;
+
+                imageData.data[index + 0] = color;
+                imageData.data[index + 1] = color;
+                imageData.data[index + 2] = color;
                 imageData.data[index + 3] = '0xff';
             }
         }
