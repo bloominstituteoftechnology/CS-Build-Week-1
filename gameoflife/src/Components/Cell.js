@@ -6,6 +6,9 @@ const Square = Styled.div`
     height: 18px;
     width: 18px;
     border: 1px solid black;
+    :hover {
+        background-color: #99ff33;
+    }
     
 `;
 

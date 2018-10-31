@@ -2,9 +2,22 @@ import React, { Component } from 'react';
 import './App.css';
 import Grid from "./Components/Grid";
 import Styled from 'styled-components';
+import Rules from "./Components/Rules";
+import About from "./Components/About";
+import { ButtonToolbar, MenuItem, DropdownButton } from 'react-bootstrap';
 
 const Container = Styled.div`
   display: flex;
+  justify-content: space-between;
+`;
+
+const Gameboard = Styled.div `
+  display: flex;
+  margin: 50px 250px 0 0;
+`;
+
+const Head = Styled.h2 `
+  text-align: center;
 `;
 
 const Button = Styled.button`
@@ -17,6 +30,23 @@ const ButtonContainer = Styled.div`
   flex-direction: column;
 `;
 
+const Sidebar = Styled.div `
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: orange;
+  width: 20%;
+  
+`;
+
+const Window = Styled.div `
+  display: flex;
+  flex-direction: column;
+`;
+
+
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -25,7 +55,9 @@ class App extends Component {
     this.cols = 20;
     this.state = {
       currentGen: 0,
-      gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false))
+      gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false)),
+      displayRules: false,
+      displayAbout: false
     }
   }
 
@@ -35,7 +67,13 @@ class App extends Component {
 		this.setState({gridFull: grid});
   }
 
+  toggleRules = () => {
+    this.setState({displayRules: !this.state.displayRules})
+  }
 
+  toggleAbout = () => {
+    this.setState({displayAbout: !this.state.displayAbout})
+  }
 
   seedGrid = () => {
     let grid = arrayClone(this.state.gridFull);
@@ -66,7 +104,7 @@ class App extends Component {
 		    if (i < this.rows - 1 && j > 0) if (g[i + 1][j - 1]) count++;
 		    if (i < this.rows - 1 && j < this.cols - 1) if (g[i + 1][j + 1]) count++;
 		    if (g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
-		    if (!g[i][j] && count === 3) g2[i][j] = true;
+        if (!g[i][j] && count === 3) g2[i][j] = true;
       }
     }
     this.setState({gridFull: g2, currentGen: this.state.currentGen+1});
@@ -95,24 +133,40 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h2>Game of Life</h2>
-        </header>
+      <Window >
+        <div style={{height: '100px', backgroundColor: 'orange'}}>
+        <Head>Game of Life</Head>
+        </div>
         <Container>
-          <Grid clearGrid={this.clearGrid}  
-            cols={this.cols} 
-            rows={this.rows}
-            gridFull={this.state.gridFull}
-            selectBox={this.selectBox}/>
+          <Sidebar>
           <ButtonContainer>
+            <Button onClick={this.toggleRules}>
+						  Rules
+              {this.state.displayRules ? <Rules toggleRules={this.toggleRules}/> : null}
+					  </Button>
+            <Button onClick={this.toggleAbout}>
+              About
+              {this.state.displayAbout ? <About toggleAbout={this.toggleAbout}/> : null}
+            </Button>
+            </ButtonContainer>
             <div>Current: {this.state.currentGen}</div>
-            <Button onClick={this.startGame}>Start</Button>
-            <Button onClick={this.stopGame}>Stop</Button>
-            <Button onClick={this.clearGrid}>Clear</Button>
-          </ButtonContainer>
+            <ButtonContainer>
+              <Button onClick={this.startGame}>Start</Button>
+              <Button onClick={this.stopGame}>Stop</Button>
+              <Button onClick={this.clearGrid}>Clear</Button>
+            </ButtonContainer>
+          </Sidebar>
+          
+
+          <Gameboard>
+            <Grid clearGrid={this.clearGrid}  
+              cols={this.cols} 
+              rows={this.rows}
+              gridFull={this.state.gridFull}
+              selectBox={this.selectBox}/>
+          </Gameboard>
         </Container>
-      </div>
+      </Window>
     );
   }
 
