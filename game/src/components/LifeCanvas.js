@@ -18,34 +18,105 @@ class LifeCanvas extends React.Component {
     currentGen: [],
     nextGen: [],
     isRunning: false,
-    iteration: 0
+    iteration: 0,
+    config: "clear"
   };
 
   componentDidMount() {
-    this.initGame();
+    const config = this.state.config;
+    this.initGame(config);
   }
 
-  initGame = () => {
+  initGame = config => {
     const board = [];
     const ctx = this.refs.canvas.getContext("2d");
 
     for (let row = 0; row < this.rows; row++) {
       board[row] = [];
       for (let col = 0; col < this.cols; col++) {
-        const cellState =
-          (row === 0 && col === 1) ||
-          (row === 1 && col === 2) ||
-          (row === 2 && col === 0) ||
-          (row === 2 && col === 1) ||
-          (row === 2 && col === 2)
-            ? "black"
-            : "white";
-
-        const life = new Life(cellState, true, ctx, row, col, this.size);
-        life.draw();
+        const life = new Life("white", ctx, row, col, this.size);
         board[row][col] = life;
       }
     }
+
+    if (config === "glider") {
+      board[0][1].currentState = "black";
+      board[1][2].currentState = "black";
+      board[2][0].currentState = "black";
+      board[2][1].currentState = "black";
+      board[2][2].currentState = "black";
+    } else if (config === "exploder") {
+      board[18][37].currentState = "black";
+      board[19][37].currentState = "black";
+      board[20][37].currentState = "black";
+      board[21][37].currentState = "black";
+      board[22][37].currentState = "black";
+      board[18][39].currentState = "black";
+      board[22][39].currentState = "black";
+      board[18][41].currentState = "black";
+      board[19][41].currentState = "black";
+      board[20][41].currentState = "black";
+      board[21][41].currentState = "black";
+      board[22][41].currentState = "black";
+    } else if (config === "ggun") {
+      board[10][20].currentState = "black";
+      board[10][21].currentState = "black";
+      board[11][20].currentState = "black";
+      board[11][21].currentState = "black";
+
+      board[11][28].currentState = "black";
+      board[12][28].currentState = "black";
+      board[10][29].currentState = "black";
+      board[12][29].currentState = "black";
+      board[10][30].currentState = "black";
+      board[11][30].currentState = "black";
+
+      board[12][36].currentState = "black";
+      board[13][36].currentState = "black";
+      board[14][36].currentState = "black";
+      board[12][37].currentState = "black";
+      board[13][38].currentState = "black";
+
+      board[9][42].currentState = "black";
+      board[10][42].currentState = "black";
+      board[8][43].currentState = "black";
+      board[10][43].currentState = "black";
+      board[8][44].currentState = "black";
+      board[9][44].currentState = "black";
+
+      board[20][44].currentState = "black";
+      board[21][44].currentState = "black";
+      board[20][45].currentState = "black";
+      board[22][45].currentState = "black";
+      board[20][46].currentState = "black";
+
+      board[8][54].currentState = "black";
+      board[9][54].currentState = "black";
+      board[8][55].currentState = "black";
+      board[9][55].currentState = "black";
+
+      board[15][55].currentState = "black";
+      board[16][55].currentState = "black";
+      board[17][55].currentState = "black";
+      board[15][56].currentState = "black";
+      board[16][57].currentState = "black";
+    } else if (config === "random") {
+      for (let row = 0; row < this.rows; row++) {
+        for (let col = 0; col < this.cols; col++) {
+          const rand = Math.random();
+          if (rand < 0.3) {
+            board[row][col].currentState = "black";
+          }
+        }
+      }
+    }
+
+    for (let row = 0; row < this.rows; row++) {
+      for (let col = 0; col < this.cols; col++) {
+        board[row][col].draw();
+      }
+    }
+
     this.setState({ currentGen: board });
   };
 
@@ -101,11 +172,12 @@ class LifeCanvas extends React.Component {
           }
         }
 
-        const life = new Life(newCellState, true, ctx, row, col, this.size);
+        const life = new Life(newCellState, ctx, row, col, this.size);
         nextGen[row][col] = life;
         nextGen[row][col].draw();
       }
     }
+
     if (!this.state.isRunning) {
       this.setState({
         currentGen: nextGen,
@@ -115,11 +187,12 @@ class LifeCanvas extends React.Component {
       this.setState(
         { currentGen: nextGen, iteration: this.state.iteration + 1 },
         () => {
-          setTimeout(() => {
-            if (this.state.isRunning) {
-              this.raf = window.requestAnimationFrame(this.drawGrid);
-            }
-          }, 100);
+          if (this.state.isRunning) {
+            this.raf = requestAnimationFrame(this.drawGrid);
+          }
+          // setTimeout(() => {
+
+          // }, 0.5);
         }
       );
     }
@@ -147,6 +220,12 @@ class LifeCanvas extends React.Component {
     }
   };
 
+  handleChange = e => {
+    this.setState({ config: e.target.value }, () => {
+      this.initGame(this.state.config);
+    });
+  };
+
   runGame = () => {
     if (!this.state.isRunning) {
       this.raf = requestAnimationFrame(this.drawGrid);
@@ -164,12 +243,14 @@ class LifeCanvas extends React.Component {
   resetGame = () => {
     cancelAnimationFrame(this.raf);
     this.setState({ isRunning: false, iteration: 0 }, () => {
-      this.initGame();
+      this.initGame(this.state.config);
     });
   };
 
   step = () => {
-    this.drawGrid();
+    if (!this.state.isRunning) {
+      this.drawGrid();
+    }
   };
 
   render() {
@@ -184,9 +265,25 @@ class LifeCanvas extends React.Component {
           />
         </div>
         <div>
-          <h3>Iteration: {this.state.iteration}</h3>
+          <h3 style={{ marginTop: "10px" }}>
+            Iteration: {this.state.iteration}
+          </h3>
         </div>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            width: "500px",
+            margin: "0 auto 100px"
+          }}
+        >
+          <select value={this.state.config} onChange={this.handleChange}>
+            <option value="clear">Clear</option>
+            <option value="glider">Glider</option>
+            <option value="exploder">Exploder</option>
+            <option value="ggun">Gospel Glider Gun</option>
+            <option value="random">Random</option>
+          </select>
           <button onClick={this.step}>Step</button>
           <button onClick={this.runGame}>Start</button>
           <button onClick={this.stopGame}>Stop</button>
