@@ -30,3 +30,9 @@
     margin-top: 20px;
     margin-left: 22%;
 }
+@media only screen and (max-width: 600px){
+    .slider {
+        margin-left: 50%;
+        width: 100%;
+    }
+}

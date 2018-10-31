@@ -23,7 +23,13 @@
 }
 
 @media only screen and (max-width: 600px){
+  .App {
+    border: none;
+  }
+  .main-ctn{
+    flex-flow: column nowrap;
+  }
   .rules-ctn {
-    display:none;
+    width: 100%;
   }
 }
