@@ -40,10 +40,12 @@ class Game extends Component {
             even : [],
          },
          isRunning: false,
-         squareSize : 20,
+         squareSize : 15,
          
+         generation : 0,
       }
       this.container = React.createRef();
+      this.timer = null;
    }
 
    componentDidMount() {
@@ -78,9 +80,9 @@ class Game extends Component {
       }
       const newGrids = this.state.Grids;
       newGrids[this.state.curGrid] = gameGrid
-      newGrids[this.state.nextGrid] = Object.assign({}, gameGrid)
-      this.setState({Grids: newGrids, TotalNodesX, TotalNodesY})
-      this.canvasApp()
+      newGrids[this.state.nextGrid] = Object.assign([], gameGrid)
+      this.setState({Grids: newGrids, TotalNodesX, TotalNodesY, })
+      requestAnimationFrame(() => this.canvasApp())
    }
 
 
@@ -88,7 +90,6 @@ class Game extends Component {
       var myCanvas = document.getElementById('myCanvas');
       if(!myCanvas) return
       var ctx = myCanvas.getContext('2d');
-    
     
       const Width = this.state.squareSize * this.state.TotalNodesX;
       const Height = this.state.squareSize * this.state.TotalNodesY;
@@ -115,14 +116,14 @@ class Game extends Component {
     
         ctx.moveTo(x, y);
         ctx.lineTo(w, y);
-    
+        ctx.strokeStyle="black";
         ctx.stroke();
         // draw horizontal lines
         while (y < h) {
           y = y + this.state.squareSize;
           ctx.moveTo(x, y);
           ctx.lineTo(w, y);
-    
+         ctx.strokeStyle="black";
           ctx.stroke();
     
           // unsure what this is
@@ -149,42 +150,71 @@ class Game extends Component {
           // xy+=10;
         }
 
-        if(this.state.isRunning) this.incrementGameLoop();
+        if(this.state.isRunning) this.incrementGameLoop()
 
          // draw a box (each square is this.state.squareSizepx wide and )
          this.state.Grids[this.state.curGrid].forEach((verticalArr, i) => {
             verticalArr.forEach((node, j) => {
                if(node.isAlive){
+                  ctx.beginPath()
                   ctx.rect(node.x, node.y, this.state.squareSize,this.state.squareSize)
+                  ctx.fillStyle = "black"
+                  ctx.fill();
+               }else{
+                  ctx.beginPath()
+                  ctx.rect(node.x+1, node.y+1, this.state.squareSize-2,this.state.squareSize-2)
+                  ctx.fillStyle = "white"
+                  ctx.fill();
                }
             })
          })
          
-            ctx.fillStyle = "black";
-            ctx.fill();
+            // ctx.fillStyle = "black";
+            // ctx.fill();
       }
-    
       drawScreen();
+      if(this.state.isRunning){
+         this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, 10)
+      }
+      
     }
 
     incrementGameLoop = () => {
-      const nextGrid = this.state.Grids[this.state.curGrid];
+      let  newGrid = Object.assign([], this.state.Grids[this.state.nextGrid])
+
       this.state.Grids[this.state.curGrid].forEach((verticalArr, i) => {
          verticalArr.forEach((node, j) => {
-            if(node.isAlive){
-               this.lifeAlgorithm(nextGrid, i, j)
-            }
+
+             newGrid = this.lifeAlgorithm(this.state.Grids[this.state.curGrid], newGrid, i, j)
 
          })
       })
+
+      const Grids = this.state.Grids;
+      let curGrid = this.state.curGrid;
+      let nextGrid = this.state.nextGrid;
+      Grids[curGrid] = newGrid;
+      Grids[nextGrid] = newGrid;
+      if(curGrid === 'even'){
+        curGrid = 'odd';
+        nextGrid = 'even'
+      }else{
+        curGrid = 'even';
+        nextGrid = 'odd'
+      }
+      this.setState({Grids, curGrid, nextGrid, generation: this.state.generation + 1})
     }
 
-   lifeAlgorithm = (grid, i , j) => {
+   lifeAlgorithm = (screenGrid, newGrid, i , j) => {
      //get for neighbors and run 4 rules of life
+
+     // screenGrid is where all nodes are checked (and what is currently displayed on screen)
+     //nextGrid is where all changes are made
+     const curNode = newGrid[i][j]
+
       const getNeighbors = () => {
-        console.log(grid)
          const neighborsObj = {};
-         const curNode = grid[i][j];
+         const curNode = screenGrid[i][j];
          
          let curNeighbor = 1;
          while(curNeighbor < 9){
@@ -192,51 +222,61 @@ class Game extends Component {
            let newJ = j;
             switch(curNeighbor){
               case 1: newJ--;
-                      if(!grid[newI][newJ]) newJ = grid[newI].length - 1
+                      if(!screenGrid[newI][newJ]) newJ = screenGrid[newI].length - 1
                       break;
               case 2: newI++;
-                      if(!grid[newI]) newI = 0;
+                      if(!screenGrid[newI]) newI = 0;
                       newJ--;
-                      if(!grid[newI][newJ]) newJ = grid[newI].length - 1
+                      if(!screenGrid[newI][newJ]) newJ = screenGrid[newI].length - 1
                       break;
               case 3: newI++;
-                      if(!grid[newI]) newI = 0;
+                      if(!screenGrid[newI]) newI = 0;
                       break;
               case 4: newI++;
-                      if(!grid[newI]) newI = 0;
+                      if(!screenGrid[newI]) newI = 0;
                       newJ++;
-                      if(!grid[newI][newJ]) newJ = 0;
+                      if(!screenGrid[newI][newJ]) newJ = 0;
                       break;
               case 5: newJ++;
-                      if(!grid[newI][newJ]) newJ = 0;
+                      if(!screenGrid[newI][newJ]) newJ = 0;
                       break;
               case 6: newI--;
-                      if(!grid[newI]) newI = grid.length - 1
+                      if(!screenGrid[newI]) newI = screenGrid.length - 1
                       newJ++;
-                      if(!grid[newI][newJ]) newJ = 0;
+                      if(!screenGrid[newI][newJ]) newJ = 0;
                       break;
               case 7: newI--;
-                      if(!grid[newI]) newI = grid.length - 1
+                      if(!screenGrid[newI]) newI = screenGrid.length - 1
                       break;
               case 8: newI--;
-                      if(!grid[newI]) newI = grid.length - 1
+                      if(!screenGrid[newI]) newI = screenGrid.length - 1
                       newJ--;
-                      if(!grid[newI][newJ]) newJ = grid[newI].length - 1
+                      if(!screenGrid[newI][newJ]) newJ = screenGrid[newI].length - 1
             }
 
-            neighborsObj[curNeighbor] = grid[newI][newJ]
+            neighborsObj[curNeighbor] = Object.assign({},screenGrid[newI][newJ])
 
            curNeighbor++;
          }//end while
 
-         console.log(neighborsObj)
          return neighborsObj;
       }
 
       const neighbors = getNeighbors();
 
+      //count the living neighbors
+      let numAlive = 0;
+      Object.keys(neighbors).forEach(key => {
+        const node = neighbors[key]
+        if(node.isAlive) numAlive += 1;
+      })
 
-
+      if(numAlive < 2 && curNode.isAlive) curNode.isAlive = false;
+      else if(!curNode.isAlive && numAlive === 3) curNode.isAlive = true;
+      else if(numAlive > 3 && curNode.isAlive) curNode.isAlive = false;
+      else if(curNode.isAlive && numAlive > 1) curNode.isAlive = true;
+      
+      return newGrid;
    }
 
     handleGridClick = event => {
@@ -270,15 +310,53 @@ class Game extends Component {
    }
 
    startStopGame = () => {
+      const startNow = !this.state.isRunning
       this.setState({ isRunning: !this.state.isRunning})
+      if(startNow) this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, 10)
+      else clearTimeout(this.timer)
    }
+
+   resetGame = () => {
+      this.setState({isRunning: false, generation: 0})
+
+      const gridToReset = this.state.Grids[this.state.curGrid]
+
+      gridToReset.forEach((verticalArr, i) => {
+         verticalArr.forEach((node, j) => {
+            node.isAlive = false;
+         })
+      })
+      const Grids = this.state.Grids;
+      Grids[this.state.curGrid] = gridToReset;
+      this.setState({Grids})
+      this.canvasApp();
+   }
+
+   randomizeGame = () => {
+      this.setState({isRunning: false, generation: 0})
+
+      const gridToReset = this.state.Grids[this.state.curGrid]
+
+      gridToReset.forEach((verticalArr, i) => {
+         verticalArr.forEach((node, j) => {
+            node.isAlive = false;
+            const roll = Math.round(Math.random()*10);
+            if (roll > 8) node.isAlive = true;
+         })
+      })
+      const Grids = this.state.Grids;
+      Grids[this.state.curGrid] = gridToReset;
+      this.setState({Grids})
+      this.canvasApp();
+   }
+
 
   render() {
      const {classes} = this.props
+     if(!this.state.isRunning) this.timer = null;
       return (
          <div className={classes.gameContainer} ref={this.container}>
             <canvas id="myCanvas" width='0' height='0' onClick={this.handleGridClick} onWheel={this.handleWheel} />
-            {this.canvasApp()}
 
             <div className={classes.gameControls}>
 
@@ -286,7 +364,6 @@ class Game extends Component {
                   disabled
                   id="outlined-uncontrolled"
                   label="Generation"
-                  defaultValue="0"
                   // className={classes.TextField}
                   margin="normal"
                   variant="outlined"
@@ -296,10 +373,20 @@ class Game extends Component {
                <Button onClick={this.startStopGame}
                //FIX THIS: convert this to an IconButton with the MUI play/pause icon
                >
-                  Start/Stop Game
+                  Start/Stop
                </Button>
                   
-               
+               <Button onClick={this.resetGame}
+               //FIX THIS: convert this to an IconButton with the MUI play/pause icon
+               >
+                  Reset
+               </Button>
+
+               <Button onClick={this.randomizeGame}
+               //FIX THIS: convert this to an IconButton with the MUI play/pause icon
+               >
+                  Randomize
+               </Button>
             </div>
 
          </div>
