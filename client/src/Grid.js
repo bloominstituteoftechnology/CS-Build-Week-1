@@ -71,11 +71,11 @@ class Grid extends React.Component {
 		    let neighbours = 0; // initialize neighbours
 
           if (x > 0) if (firstBuffer[x-1][y]) neighbours++; // left
-          if (x > 0 && y < this.columns - 1) if (firstBuffer[x-1][y+1]) neighbours++; // diagonal up and left
-          if (y < 33 - 1) if (firstBuffer[x][y+1]) neighbours++; // up
-          if (x < 18 - 1 && y < 33 - 1) if (firstBuffer[x+1][y+1]) neighbours++; // diagonal up and right
-          if (x < 18 - 1) if (firstBuffer[x+1][y]) neighbours++; // right
-          if (x < 18 - 1 && y > 0) if (firstBuffer[x+1][y-1]) neighbours++; // diagonal down and right
+          if (x > 0 && y < this.state.columns - 1) if (firstBuffer[x-1][y+1]) neighbours++; // diagonal up and left
+          if (y < this.state.columns - 1) if (firstBuffer[x][y+1]) neighbours++; // up
+          if (x < this.state.rows - 1 && y < this.state.columns - 1) if (firstBuffer[x+1][y+1]) neighbours++; // diagonal up and right
+          if (x < this.state.rows - 1) if (firstBuffer[x+1][y]) neighbours++; // right
+          if (x < this.state.rows - 1 && y > 0) if (firstBuffer[x+1][y-1]) neighbours++; // diagonal down and right
           if (y > 0) if (firstBuffer[x][y-1]) neighbours++; // down
           if (x > 0 && y > 0) if (firstBuffer[x-1][y-1]) neighbours++; // diagonal down left
 
