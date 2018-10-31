@@ -51,7 +51,6 @@ class LifeCanvas extends React.Component {
         const cells = this.state.life.getCells();
         const cellSize = this.state.life.getCellSize();
 
-
         context.lineWidth = 1;
         context.fillStyle = "#7e7e7e";
         context.fillRect(0, 0, canvas.width, canvas.height);
@@ -102,6 +101,11 @@ class LifeCanvas extends React.Component {
         }
     }
 
+    randomize = () => {
+        this.state.life.randomize();
+        this.drawCanvas();
+    }
+
     clear = () => {
         this.state.life.clearCells();
         this.drawCanvas();
@@ -117,7 +121,13 @@ class LifeCanvas extends React.Component {
             <div className='canvas-container'>
                 <LifeCanvasHeader />
                 <canvas onClick={this.toggleLife} id='canvas' ref="canvas" />
-                <LifeCanvasOptions continue={this.state.continueAnimation} start={this.start} next={this.next} clear={this.clear} />
+                <LifeCanvasOptions
+                    continue={this.state.continueAnimation}
+                    randomize={this.randomize}
+                    start={this.start}
+                    next={this.next}
+                    clear={this.clear}
+                />
             </div>
         );
     }

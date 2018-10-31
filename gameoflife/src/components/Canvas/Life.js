@@ -41,6 +41,14 @@ class Life {
         }
     }
 
+    randomize() {
+        this.cells[this.buffer].forEach(cell => {
+            if (Math.random() >= 0.5) {
+                cell.alive = !cell.alive;
+            }
+        });
+    }
+
     step() {
         let cells = this.cells[this.buffer];
         let cellsBuffer = this.cells[this.buffer === 0 ? 1 : 0];
