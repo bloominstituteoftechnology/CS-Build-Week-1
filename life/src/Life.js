@@ -22,9 +22,22 @@ class Life {
         this.clear();
     }
 
+    fetchCells() {
+        return this.cells[this.currentIndex];
+    }
+
     clear() {
         for (let height = 0; height < this.height; height++) {
             this.cells[this.currentIndex][height].fill(0);
+        }
+    }
+
+    getRandomCells() {
+        for (let height = 0; height < this.height; height++) {
+            for (let width = 0; width < this.width; width++) {
+                this.cells[this.currentIndex][height][width] =
+                    (Math.random() * 2) | 0;
+            }
         }
     }
 }
