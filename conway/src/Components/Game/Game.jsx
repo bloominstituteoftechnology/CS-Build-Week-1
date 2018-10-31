@@ -42,6 +42,7 @@ class Game extends Component {
          isRunning: false,
          squareSize : 15,
          generation : 0,
+         gameSpeed : 10,
       }
       this.container = React.createRef();
       this.timer = null;
@@ -172,7 +173,7 @@ class Game extends Component {
       }
       drawScreen();
       if(this.state.isRunning){
-         this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, .01)
+         this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, this.state.GameSpeed)
       }
       
     }
@@ -209,7 +210,7 @@ class Game extends Component {
 
      const screenGrid = this.state.Grids[this.state.curGrid]
      const newGrid = this.state.Grids[this.state.nextGrid]
-     console.log(screenGrid == newGrid)
+
      // screenGrid is where all nodes are checked (and what is currently displayed on screen)
      //nextGrid is where all changes are made
 
@@ -311,11 +312,11 @@ class Game extends Component {
 
                return newNeighborsObj
             }
-            console.log(screenGrid == newGrid)
-            console.log(neighborsObj)
-            console.log(newGetNeighbors(i,j))
-            console.log(screenGrid[this.state.x][this.state.y])
-            console.log(newGrid[this.state.x][this.state.y])
+            // console.log(screenGrid == newGrid)
+            // console.log(neighborsObj)
+            // console.log(newGetNeighbors(i,j))
+            // console.log(screenGrid[this.state.x][this.state.y])
+            // console.log(newGrid[this.state.x][this.state.y])
          } 
 
          return neighborsObj;
@@ -373,7 +374,7 @@ class Game extends Component {
 
       this.setState({ isRunning: !this.state.isRunning, generation: 0})
 
-      if(startNow) this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, 10)
+      if(startNow) this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, this.state.GameSpeed)
       else clearTimeout(this.timer)
    }
 
@@ -486,12 +487,10 @@ class Game extends Component {
                       if(!newGrid[newI][newJ]) newJ = newGrid[newI].length - 1
             }
 
-            neighborsObj[curNeighbor] = Object.assign({},newGrid[newI][newJ])
+            neighborsObj[curNeighbor] = Object.assign({}, newGrid[newI][newJ])
 
            curNeighbor++;
          }//end while
-
-            console.log(neighborsObj)
 
          return neighborsObj;
       }
