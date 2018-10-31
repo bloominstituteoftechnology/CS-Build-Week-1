@@ -1,38 +1,80 @@
+.App-title {
+  color: white;
+  border: 3px solid white;
+  background: purple;
+  padding-left: 550px;
+  width: 1425px;
+  margin: 10px 25px 25px 0px;
+}
+
+
+
+.grid-container {
+  display: flex;
+}
+
 .grid {
     position: relative;
   /*  margin: 0 auto;*/
-    background-color: pink;
+ /*   background-color: darkpink;*/
     background-image:
-        linear-gradient(#333 1px, transparent 1px),
-        linear-gradient(90deg, #333 1px, transparent 1px);
+        linear-gradient(#000 3px, transparent 3px),
+        linear-gradient(90deg, #000 3px, transparent 3px);
+    display: flex;
+    border: 3px solid #000;
 
 }
+
+
 
 .Cell {
-    background: #000;
+    background: purple;
     position: absolute;
 }
-
+.button-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
 
 .button {
-    height: 20px;
-    width: 60px;
-    border-radius: 5px;
+    height: 40px;
+    width: 90px;
+    border-radius: 20px;
+    border: 2.5px solid black;
     margin-left: 12px;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
-
-.button {
-  height: 20px;
-  width: 50px;
-  border-radius: 5px;
-
-}
 
 .button1 {
   height: 20px;
   width: 75px;
   border-radius: 5px;
+}
 
+.rules-container {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid black;
+  height: 300px;
+  width: 485px;
+  margin-left: 40px;
+  background: purple;
+  color: white;
+/*  margin: auto;*/
+}
+
+.rules-title {
+  display: flex;
+  /*margin-left: 100px;*/
+  margin: auto;
+}
+
+.rules {
+  display: flex;
+  margin: auto;
+  /*margin-left: 75px;*/
+  margin-bottom: 75px;
 }

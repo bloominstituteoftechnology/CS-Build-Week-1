@@ -3,7 +3,7 @@ import Cell from './Cell';
 import '../App.css';
 
 
-const Square = 30;
+const Square = 32;
 const WIDTH = 800;
 const HEIGHT = 600;
 
@@ -79,7 +79,7 @@ class Grid extends React.Component {
     render() {
         const { cells } = this.state;
         return (
-            <div>
+            <div className="grid-container">
                 <div className="grid"
                     style={{ width: WIDTH, height: HEIGHT, backgroundSize: `${Square}px ${Square}px`}}
                     onClick={this.clickHandler}
@@ -91,13 +91,26 @@ class Grid extends React.Component {
                 </div>
 
                 <div className="button-controls">
-                        <button className="button1">Play/Pause</button>
+                        <button className="button">Play/Pause</button>
                         <button className="button">Stop</button>
 
                     <button className="button">Randomized</button>
                     <button className="button">Clear</button>
                 </div>
+            <div className="rules-container">
+                <div className="rules-title">
+                    <h1 className="rules-title1">The Rules of the Game</h1>
+                </div>
+                <div className="rules">
+                    <ul>
+                        <li>Rule #1 - Any alive cell that is touching less than two alive neighbors dies.</li>
+                        <li>Rule #2 - Any alive cell touching four or more alive neighbors dies.</li>
+                        <li>Rule #3 - Any alive cell touching two or three alive neighbors does nothing.</li>
+                        <li>Rule #4 - Any dead cell touching exactly three alive neighbors becomes alive.</li>
+                    </ul>
+                </div>
             </div>
+        </div>
         );
     }
 }
