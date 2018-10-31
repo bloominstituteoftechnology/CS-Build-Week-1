@@ -72,7 +72,7 @@ Write an algorithm that:
 
 ### Custom Features
 Implment at least 3 of the following features:
-- [ ] Create a few sample cell configurations that users can load and run 
+- [x] Create a few sample cell configurations that users can load and run 
 - [ ] Add an option that creates a random cell configuration that users can run
 - [ ] Add additional cell properties, like color or size, and incorporate them into your visualization
 - [x] Allow users to specify the speed of the simulation
