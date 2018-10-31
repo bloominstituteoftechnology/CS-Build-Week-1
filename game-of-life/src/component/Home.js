@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Game from './Game';
 
 const pizza = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, repudiandae maxime fuga nisi.';
 
@@ -10,14 +11,14 @@ class Home extends Component {
                     <header>                    
                         <h1>Conway's Game of Life</h1>
                     </header>
-                    <div className="content">
+                    <main className="content">
                         <section className="left">
                             <h3>Generation: `{'${}'}`</h3>
-                            <canvas className="game">
+                            <div className="wrapper-game">
 
-                                {/* <Game /> */}
+                                <Game />
                                 
-                            </canvas>
+                            </div>
                             <span className="control">
                                 <button>Play</button>                        
                                 <button>Pause</button>                      
@@ -54,7 +55,7 @@ class Home extends Component {
                             <h3> Rules: </h3>
                             <li>{pizza}</li> <li>{pizza}</li> <li>{pizza}</li> <li>{pizza}</li> <li>{pizza}</li>
                         </section>
-                    </div>                     
+                    </main>                     
                     <footer>
                         <h2>About this Algorithm</h2>
                         <br/>                        
