@@ -32,6 +32,7 @@ class Game extends Component {
     interval: 100,
     isRunning: false,
     generation: 0,
+    addGen: 0,
   }
 
   makeEmptyBoard() {
@@ -162,8 +163,22 @@ class Game extends Component {
     this.setState({ cells: this.makeCells(), generation });
   }
 
+  handleAddGen = event => {
+    this.setState({ addGen: event.target.value });
+  }
+
+  addGenerations = (event, n) => {
+    event.preventDefault();
+    let generation = this.state.generation;
+    for (let i = 0; i < n; i++) {
+      this.runIteration(true);
+      ++generation;
+      this.setState({ generation })
+    }
+  }
+
   render() {
-    const { cells, generation, isRunning } = this.state;
+    const { cells, generation, addGen, isRunning } = this.state;
     return (
       <div>
         <div className='board'
@@ -184,6 +199,10 @@ class Game extends Component {
           <button className='button' onClick={this.handleRandom}>Random</button>
           <button className='button' onClick={() => this.runIteration(true)}>>>></button>
           <button className='button' onClick={this.handleClear}>Clear</button>
+          <form>
+            Add Generations: <input onChange={this.handleAddGen} />
+            <button className='button' onClick={(event) => this.addGenerations(event, addGen)}>Add</button>
+          </form>
           <p>Generation: {generation}</p>
         </div>
       </div>
