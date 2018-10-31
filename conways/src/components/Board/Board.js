@@ -41,8 +41,6 @@ class Board extends Component {
         return alive;
     }
 
-
-
     //Checks if game is active, if not then it toggles cell from dead to alive(false to true)
     toggleClick = index => {
         if (this.state.clickEnabled) {
@@ -63,41 +61,44 @@ class Board extends Component {
             return true;
         }
     }
-    nextGen = (oldMatrix) => {
+    nextGen = (currMatrix) => {
         let newMatrix = [];
         for (let i = 0; i < 15; ++i) {
             newMatrix[i] = [];
             for (let j = 0; j < 15; ++j) {
                 let neighborCount = 0;
-                if (this.findIndex(oldMatrix[i][j].i - 1, oldMatrix[i][j].j + 1) && oldMatrix[i - 1][j + 1].alive) {
+                if (this.findIndex(currMatrix[i][j].i - 1, currMatrix[i][j].j + 1) && currMatrix[i - 1][j + 1].alive === true) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(oldMatrix[i][j].i - 1, oldMatrix[i][j].j) && oldMatrix[i - 1][j].alive) {
+                if (this.findIndex(currMatrix[i][j].i - 1, currMatrix[i][j].j) && currMatrix[i - 1][j].alive === true) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(oldMatrix[i][j].i - 1, oldMatrix[i][j].j - 1) && oldMatrix[i - 1][j - 1].alive) {
+                if (this.findIndex(currMatrix[i][j].i - 1, currMatrix[i][j].j - 1) && currMatrix[i - 1][j - 1].alive === true) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(oldMatrix[i][j].i, oldMatrix[i][j].j - 1) && oldMatrix[i][j - 1].alive) {
+                if (this.findIndex(currMatrix[i][j].i, currMatrix[i][j].j - 1) && currMatrix[i][j - 1].alive === true) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(oldMatrix[i][j].i + 1, oldMatrix[i][j].j - 1) && oldMatrix[i + 1][j - 1].alive) {
+                if (this.findIndex(currMatrix[i][j].i + 1, currMatrix[i][j].j - 1) && currMatrix[i + 1][j - 1].alive === true) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(oldMatrix[i][j].i + 1, oldMatrix[i][j].j) && oldMatrix[i + 1][j].alive) {
+                if (this.findIndex(currMatrix[i][j].i + 1, currMatrix[i][j].j) && currMatrix[i + 1][j].alive === true) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(oldMatrix[i][j].i + 1, oldMatrix[i][j].j + 1) && oldMatrix[i + 1][j + 1].alive) {
+                if (this.findIndex(currMatrix[i][j].i + 1, currMatrix[i][j].j + 1) && currMatrix[i + 1][j + 1].alive === true) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(oldMatrix[i][j].i, oldMatrix[i][j].j + 1) && oldMatrix[i][j + 1].alive) {
+                if (this.findIndex(currMatrix[i][j].i, currMatrix[i][j].j + 1) && currMatrix[i][j + 1].alive === true) {
                     neighborCount += 1;
                 }
-                if (neighborCount === 2 || neighborCount === 3) {
-                    newMatrix[i][j] = { i: oldMatrix[i][j].i, j: oldMatrix[i][j].j, alive: true };
+                if (currMatrix[i][j].alive && neighborCount >= 2 && neighborCount <= 3) {
+                        newMatrix[i][j] = { i: currMatrix[i][j].i, j: currMatrix[i][j].j, alive: true };
+                }
+                else if (!currMatrix[i][j].alive && neighborCount === 3) {
+                    newMatrix[i][j] = { i: currMatrix[i][j].i, j: currMatrix[i][j].j, alive: true };
                 }
                 else {
-                    newMatrix[i][j] = { i: oldMatrix[i][j].i, j: oldMatrix[i][j].j, alive: false };
+                    newMatrix[i][j] = { i: currMatrix[i][j].i, j: currMatrix[i][j].j, alive: false };
                 }
             }
         }
