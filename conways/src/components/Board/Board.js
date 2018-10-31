@@ -53,14 +53,14 @@ class Board extends Component {
         }
     }
     //Checks if index is valid
-    indexValidation = (currMatrix, i, j) => {
+    indexCheck = (currMatrix, i, j) => {
         if (i < 0 || i > 14 || j < 0 || j > 14) {
             return null;
         }
         else if (currMatrix[i][j].alive) {
             return true;
         }
-        else {
+        else{
             return null;
         }
     }
@@ -70,28 +70,28 @@ class Board extends Component {
             newMatrix[i] = [];
             for (let j = 0; j < 15; ++j) {
                 let neighborCount = 0;
-                if (this.indexValidation(currMatrix, currMatrix[i][j].i - 1, currMatrix[i][j].j + 1)) {
+                if (this.indexCheck(currMatrix, currMatrix[i][j].i - 1, currMatrix[i][j].j + 1)) {
                     neighborCount += 1;
                 }
-                if (this.indexValidation(currMatrix, currMatrix[i][j].i - 1, currMatrix[i][j].j)) {
+                if (this.indexCheck(currMatrix, currMatrix[i][j].i - 1, currMatrix[i][j].j)) {
                     neighborCount += 1;
                 }
-                if (this.indexValidation(currMatrix, currMatrix[i][j].i - 1, currMatrix[i][j].j - 1)) {
+                if (this.indexCheck(currMatrix, currMatrix[i][j].i - 1, currMatrix[i][j].j - 1)) {
                     neighborCount += 1;
                 }
-                if (this.indexValidation(currMatrix, currMatrix[i][j].i, currMatrix[i][j].j - 1)) {
+                if (this.indexCheck(currMatrix, currMatrix[i][j].i, currMatrix[i][j].j - 1)) {
                     neighborCount += 1;
                 }
-                if (this.indexValidation(currMatrix, currMatrix[i][j].i + 1, currMatrix[i][j].j - 1)) {
+                if (this.indexCheck(currMatrix, currMatrix[i][j].i + 1, currMatrix[i][j].j - 1)) {
                     neighborCount += 1;
                 }
-                if (this.indexValidation(currMatrix, currMatrix[i][j].i + 1, currMatrix[i][j].j)) {
+                if (this.indexCheck(currMatrix, currMatrix[i][j].i + 1, currMatrix[i][j].j)) {
                     neighborCount += 1;
                 }
-                if (this.indexValidation(currMatrix, currMatrix[i][j].i + 1, currMatrix[i][j].j + 1)) {
+                if (this.indexCheck(currMatrix, currMatrix[i][j].i + 1, currMatrix[i][j].j + 1)) {
                     neighborCount += 1;
                 }
-                if (this.indexValidation(currMatrix, currMatrix[i][j].i, currMatrix[i][j].j + 1)) {
+                if (this.indexCheck(currMatrix, currMatrix[i][j].i, currMatrix[i][j].j + 1)) {
                     neighborCount += 1;
                 }
                 if (currMatrix[i][j].alive && neighborCount >= 2 && neighborCount <= 3) {
