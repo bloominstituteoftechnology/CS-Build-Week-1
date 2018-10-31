@@ -36,24 +36,35 @@ class Game extends Component {
         this.state = {
             generation: 0,
             clear: false,
-            running: false
+            running: false,
+            gameOfLife: false,
+            interval: null
         }
     }
 
 
-    gameOfLife() {
-        console.log("the GameOfLife has started...")
-        this.setState({generation: this.state.generation + 1});
+    gameOfLife(running) {
+        this.setState({gameOfLife: !this.state.gameOfLife});
+
+        if (running === true) {
+            let interval = setInterval(() => {this.setState({generation: this.state.generation + 1})}, 1000);
+            this.setState({interval})
+        }
+        if (running === false) {
+            clearInterval(this.state.interval);
+        }
     }
+
 
     runSimulation = () => {
         this.setState({running: !this.state.running});
         if (this.state.running === false) {
-            document.getElementById("playStopButton").innerHTML = "Play";
-        } else {
-            console.log("The game is running...");
+            this.gameOfLife(true);
             document.getElementById("playStopButton").innerHTML = "Stop";
-            this.gameOfLife();
+        } else {
+            this.gameOfLife(false);
+            document.getElementById("playStopButton").innerHTML = "Play";
+            this.setState({generation: 0});
         }
     }
 
@@ -66,7 +77,7 @@ class Game extends Component {
         return ( 
             <Container>
                 <Header>Generation: {this.state.generation}</Header>
-                <GameBox clear={this.state.clear} clearButton={this.clearButton}/>
+                <GameBox clear={this.state.clear} gameOfLife={this.state.gameOfLife} clearButton={this.clearButton}/>
                 <ButtonContainer>
                     <Button id="playStopButton" onClick={this.runSimulation}>Play</Button>
                     <Button onClick={this.clearButton}>Clear</Button>

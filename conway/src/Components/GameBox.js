@@ -31,8 +31,34 @@ class GameBox extends Component  {
             this.setState({cells: clearedCells});
             this.props.clearButton();
         }
-        if (this.props.running === true && prevProps !== this.props) {
-
+        console.log(`GAMEOFLIFE: ${this.props.gameOfLife}`)
+        if (this.props.gameOfLife === true && prevProps !== this.props) {
+            let newCells = [];
+            for (let i = 0; i < this.state.cells.length; i++) {
+                let neighbors = this.getNeighbors(i);
+                let activeNeighbors = 0;
+                for (let i = 0; i < neighbors.length; i++) {
+                    if (0 <= neighbors[i] <= 225) {
+                        if (this.state.cells[i] === 1) {
+                            activeNeighbors += 1;
+                        }
+                    }
+                }
+                if (this.state.cells[i] === 1) {
+                    if (2 <= activeNeighbors.length <= 3) {
+                        newCells.push(1);
+                    } else {
+                        newCells.push(0);
+                    }
+                } else {
+                    if (activeNeighbors.length === 3) {
+                        newCells.push(1);
+                    } else {
+                        newCells.push(0)
+                    }
+                }
+            }
+            this.setState({cells: newCells});
         }
     }
 
@@ -48,15 +74,15 @@ class GameBox extends Component  {
         })
     }
 
-    getCoordinates(index) {
-        const y = Math.floor(index / 15);
-        const x = index % 15;
-        return (x, y);
-    }
+    // getCoordinates(index) {
+    //     const y = Math.floor(index / 15);
+    //     const x = index % 15;
+    //     return (x, y);
+    // }
 
-    getIndex(x, y) {
-        return (15 * y) + x;
-    }
+    // getIndex(x, y) {
+    //     return (15 * y) + x;
+    // }
 
     getNeighbors(index) {
         let top = index - 15;
