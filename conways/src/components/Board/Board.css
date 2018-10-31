@@ -20,3 +20,11 @@
 .main-btn {
     width: 75px;
 }
+
+.slider {
+    width: 20%;
+    float: left;
+    margin-top: 20px;
+    margin-left: 7%;
+    
+}

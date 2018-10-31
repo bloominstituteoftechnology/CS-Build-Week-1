@@ -8,6 +8,8 @@ class Board extends Component {
         this.state = {
             clickEnabled: true,
             matrix: [],
+            generation: 0,
+            speed: 1000
         }
     }
 
@@ -23,7 +25,7 @@ class Board extends Component {
                 matrix[i][j] = { i, j, alive: false };
             }
         }
-        this.setState({ matrix });
+        this.setState({ matrix, generation: 0 });
     }
 
     //Searches through entire matrix array and returns an array of all active cells
@@ -39,10 +41,7 @@ class Board extends Component {
         return alive;
     }
 
-    //Finds matrices at specific indices
-    findIndex = (i, j) => {
-        return this.state.matrix[i][j];
-    }
+
 
     //Checks if game is active, if not then it toggles cell from dead to alive(false to true)
     toggleClick = index => {
@@ -50,74 +49,90 @@ class Board extends Component {
             let matrix = this.state.matrix.slice();
             matrix[index.i][index.j].alive = !matrix[index.i][index.j].alive;
 
-            this.setState({ matrix })
+            this.setState({ matrix });
 
-            console.log("Clicked Index", this.findIndex(index.i, index.j));
+            console.log("Clicked Index", matrix[index.i][index.j]);
         }
     }
-
-    //Passes in matrices at specific index and changes alive property
-    toggleAlive = matrices => {
-        matrices.alive = !matrices.alive;
-        return matrices;
+    //Checks if index is valid
+    findIndex = (i, j) => {
+        if (i < 0 || i > 14 || j < 0 || j > 14) {
+            return null;
+        }
+        else {
+            return true;
+        }
     }
-
-    //Sets board to default
-    clearButton = () => {
-        this.setBoard();
-    }
-    neighborCheck = (aliveArr) => {
+    nextGen = (oldMatrix) => {
         let newMatrix = [];
         for (let i = 0; i < 15; ++i) {
             newMatrix[i] = [];
             for (let j = 0; j < 15; ++j) {
                 let neighborCount = 0;
-
-                if (aliveArr[i][j].i + 1 <= 14 && aliveArr[i][j].j + 1 <= 14 && aliveArr[i + 1][j + 1].alive) {
+                if (this.findIndex(oldMatrix[i][j].i - 1, oldMatrix[i][j].j + 1) && oldMatrix[i - 1][j + 1].alive) {
                     neighborCount += 1;
                 }
-                if (aliveArr[i][j].j - 1 >= 0 && aliveArr[i][j - 1].alive) {
+                if (this.findIndex(oldMatrix[i][j].i - 1, oldMatrix[i][j].j) && oldMatrix[i - 1][j].alive) {
                     neighborCount += 1;
                 }
-                if (aliveArr[i][j].j + 1 <= 14 && aliveArr[i][j + 1].alive) {
+                if (this.findIndex(oldMatrix[i][j].i - 1, oldMatrix[i][j].j - 1) && oldMatrix[i - 1][j - 1].alive) {
                     neighborCount += 1;
                 }
-                if (aliveArr[i][j].i - 1 >= 0 && aliveArr[i - 1][j].alive) {
+                if (this.findIndex(oldMatrix[i][j].i, oldMatrix[i][j].j - 1) && oldMatrix[i][j - 1].alive) {
                     neighborCount += 1;
                 }
-                if (aliveArr[i][j].i + 1 <= 14 && aliveArr[i + 1][j].alive) {
+                if (this.findIndex(oldMatrix[i][j].i + 1, oldMatrix[i][j].j - 1) && oldMatrix[i + 1][j - 1].alive) {
                     neighborCount += 1;
                 }
-                if (aliveArr[i][j].i + 1 <= 14 && aliveArr[i][j].j - 1 >= 0 && aliveArr[i + 1][j - 1].alive) {
+                if (this.findIndex(oldMatrix[i][j].i + 1, oldMatrix[i][j].j) && oldMatrix[i + 1][j].alive) {
                     neighborCount += 1;
                 }
-                if (aliveArr[i][j].i - 1 >= 0 && aliveArr[i][j].j - 1 >= 0 && aliveArr[i - 1][j - 1].alive) {
+                if (this.findIndex(oldMatrix[i][j].i + 1, oldMatrix[i][j].j + 1) && oldMatrix[i + 1][j + 1].alive) {
                     neighborCount += 1;
                 }
-                if (aliveArr[i][j].i - 1 >= 0 && aliveArr[i][j].j + 1 <= 14 && aliveArr[i - 1][j + 1].alive) {
+                if (this.findIndex(oldMatrix[i][j].i, oldMatrix[i][j].j + 1) && oldMatrix[i][j + 1].alive) {
                     neighborCount += 1;
                 }
                 if (neighborCount === 2 || neighborCount === 3) {
-                    newMatrix[i][j] = { i: aliveArr[i][j].i, j: aliveArr[i][j].j, alive: true };
+                    newMatrix[i][j] = { i: oldMatrix[i][j].i, j: oldMatrix[i][j].j, alive: true };
                 }
                 else {
-                    newMatrix[i][j] = { i: aliveArr[i][j].i, j: aliveArr[i][j].j, alive: false };
+                    newMatrix[i][j] = { i: oldMatrix[i][j].i, j: oldMatrix[i][j].j, alive: false };
                 }
             }
         }
         return newMatrix;
     }
-    //TODO 
-    playButton = () => {
-        let matrixDupe = this.state.matrix.slice();
-        let matrix = this.neighborCheck(matrixDupe);
 
-        this.setState({ matrix });
+    speedChange = (e) => {
+        this.setState({ speed: e.target.value });
+    }
+
+    playButton = () => {
+        this.interval = setInterval(() => {
+            let matrix = this.state.matrix.slice();
+            let generation = this.state.generation;
+            matrix = this.nextGen(matrix);
+            generation++;
+
+            this.setState({ matrix, generation });
+        }, this.state.speed);
+
+    }
+
+    pauseButton = () => {
+        clearInterval(this.interval);
+    }
+
+    clearButton = () => {
+        clearInterval(this.interval);
+        this.setBoard();
     }
 
     render() {
         return (
             <div className="interface-ctn">
+                <p align="left">Generation # {this.state.generation}</p>
                 <div className="board">
                     {
                         this.state.matrix.map(cell => {
@@ -131,9 +146,17 @@ class Board extends Component {
                 </div>
                 <div className="btn-ctn">
                     <button className="main-btn" onClick={() => this.playButton()}>Play</button>
-                    <button className="main-btn">Pause</button>
+                    <button className="main-btn" onClick={() => this.pauseButton()}>Pause</button>
                     <button className="main-btn" onClick={() => this.clearButton()}>Clear</button>
                 </div>
+                <input
+                    type="range"
+                    min="100"
+                    max="1000"
+                    value={this.state.speed}
+                    className="slider"
+                    onChange={this.speedChange}
+                />
             </div>
         )
     }
