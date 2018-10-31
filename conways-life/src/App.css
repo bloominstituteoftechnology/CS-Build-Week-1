@@ -38,7 +38,7 @@
 
 .grid {
   width: 800px;
-  height: 800px;
+  height: 500px;
   margin: auto;
 }
 
@@ -53,4 +53,59 @@
 
 .node.active {
   background: #ff0505;
+}
+
+.button-container {
+  border: 1px solid black;
+  margin: auto;
+  margin-bottom: 40px;
+  margin-right: 40px;
+  margin-left: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  justify-content: space-evenly;
+  padding: 20px;
+}
+
+.button {
+  border: 1px solid rgb(177, 80, 63);
+  border-radius: 4px;
+  background: #ffffff;
+  color: #0dae8e;
+  font-size: 36px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  font-variant: normal;
+  cursor: pointer;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.button:hover {
+  background-color: #4CAF50;
+  color: white;
 }

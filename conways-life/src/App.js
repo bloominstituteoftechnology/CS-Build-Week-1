@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Grid from './components/Grid'
+import Buttons from './components/Buttons'
 import './App.css';
 
 class App extends Component {
@@ -10,6 +11,7 @@ class App extends Component {
         Game of Life
         <br /><br />
         <Grid />
+        <Buttons />
       </div>
     );
   }
