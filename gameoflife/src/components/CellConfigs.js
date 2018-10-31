@@ -9,7 +9,7 @@ const CellConfigs = () => {
       {
         config1: [
           {
-            cellClass: "box on",
+            cellClass: "box off",
             key: '0_0',
             cellId: '0_0',
             row: 0,
@@ -41,9 +41,7 @@ const CellConfigs = () => {
     ]
   }
 
-  return (
-    <CellConfigs />
-  );
+  return data;
 
 }
 

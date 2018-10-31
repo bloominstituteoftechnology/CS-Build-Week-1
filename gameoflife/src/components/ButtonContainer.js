@@ -35,7 +35,7 @@ const ButtonContainer = props => {
       }
       <Button 
         styles="btn btn-outline-dark mx-2 my-2 px-5"
-        onClick={props.config1} 
+        onClick={props.handleConfig1} 
         text="Config1" 
       /> 
     </div>

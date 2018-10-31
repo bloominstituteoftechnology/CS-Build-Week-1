@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import CellConfigs from './CellConfigs';
 
 class Cell extends React.Component {
 	selectCell = () => {
@@ -7,6 +8,7 @@ class Cell extends React.Component {
 	}
 
 	render() {
+    //console.log("CellConfigs ")
 		return (
 			<div
 				className={`${this.props.cellClass} cell`}

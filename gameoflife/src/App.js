@@ -13,14 +13,14 @@ class App extends Component {
       generation: 0,
       speed: 500,
       gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false)),
-      configs: {
-        config1: false
-      }
+      config1: false,
     }
   }
 
-  config1 = () => {
-    this.setState
+  handleConfig1 = () => {
+    this.setState({
+      config1: true
+    })
   }
 
   arrayClone = arr => {
@@ -93,6 +93,7 @@ class App extends Component {
   }
     
   render() {
+    console.log("config1 state: ", this.state.config1)
     return (
       <div className="App">
         <header className="App-header">
@@ -105,6 +106,7 @@ class App extends Component {
           rows={this.rows}
           cols={this.cols}
           selectCell={this.selectCell}
+          config1State={this.state.config1}
         />
         <ButtonContainer 
           playButton={this.playButton}
@@ -113,6 +115,7 @@ class App extends Component {
           increaseSpeed={this.increaseSpeed}
           decreaseSpeed={this.decreaseSpeed}
           speed={this.state.speed}
+          handleConfig1={this.handleConfig1}
         />
       </div>
     );
