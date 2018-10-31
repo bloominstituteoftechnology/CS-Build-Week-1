@@ -18,7 +18,7 @@ const GenDiv = styled.div`
   margin-top:25px;
 `
 
-const CellSizeSelRow = styled(Row)`
+const SelRow = styled(Row)`
   margin-top:25px;
 `
 
@@ -26,7 +26,7 @@ const CellSizeSelRow = styled(Row)`
 let prevTimestamp = null;
 let cellColorDead = 'white'; //must be white for now
 let cellColorAlive = 'black'; //must be black for now
-let cellBorderColor = 'blue';
+let cellBorderColor = 'pink';
 
 /**
  * LifeCanvas component
@@ -82,29 +82,7 @@ class LifeCanvas extends Component {
       generation:0,
       gameBufferA: Array(Math.pow(this.state.gridSize/this.state.cellSize,2)).fill(false), 
       gameBufferB: Array(Math.pow(this.state.gridSize/this.state.cellSize,2)).fill(false)
-    })
-
-    let canvas = this.refs.canvas; 
-    const ctx = canvas.getContext('2d');
-    
-    //Fill the ctx with a black box:
-    ctx.fillRect(0,0,this.state.gridSize,this.state.gridSize);
-    
-    //Fill a single Rect:
-    let sqEdgeLength = this.state.cellSize;
-
-    //Fill Matrix with Squares:
-    for (let i = 0; i<this.state.gridSize/sqEdgeLength; i++){
-      for (let j = 0; j<this.state.gridSize/sqEdgeLength; j++){
-      ctx.beginPath();
-      ctx.rect(i*sqEdgeLength, j*sqEdgeLength, sqEdgeLength, sqEdgeLength);
-      ctx.fillStyle = cellColorDead;
-      ctx.fill();
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = cellBorderColor;
-      ctx.stroke();
-      }
-    }
+    }, () => this.updateCanvas(this.state.gameBufferA))
   }
 
 
@@ -486,7 +464,12 @@ class LifeCanvas extends Component {
     }
   }
 
-
+  /**
+   * Handles the changing of the fps
+   * 
+   * @param e event = change event
+   * @return void
+   */
   fpsOnChangeHandler = (e) => {
     let options = e.target.options;
     for (let i = 0, l = options.length; i < l; i++) {
@@ -496,6 +479,80 @@ class LifeCanvas extends Component {
       }
     }
   }
+  
+  /**
+   * Select an initial Pattern
+   * 
+   * @param e event = change event
+   * @return void
+   */
+  initPatternOnChangeHandler = (e) => {
+
+    //Calcuate the number of cells per row
+    let cellsPerRow = this.state.gridSize/this.state.cellSize;
+    
+    //Empty Game Buffer (all falses)
+    let gameBufferE = Array(Math.pow(this.state.gridSize/this.state.cellSize,2)).fill(false);
+
+    //Copy gameBufferA
+    let gameBufferA = [...this.state.gameBufferA]
+
+    let options = e.target.options;
+    for (let i = 0, l = options.length; i < l; i++) {
+      if (options[i].selected){
+
+        switch(options[i].value) {
+          case 'Glider':
+            //Set the EmptyBuffer to the BufferA
+            gameBufferA = gameBufferE;
+
+            //Update state and update canvas
+            this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
+            
+            //Update cells for this pattern
+            gameBufferA[1 + 0*cellsPerRow] = true;
+            gameBufferA[2 + 1*cellsPerRow] = true;
+            gameBufferA[0 + 2*cellsPerRow] = true;
+            gameBufferA[1 + 2*cellsPerRow] = true;
+            gameBufferA[2 + 2*cellsPerRow] = true;
+            
+            //Update state and update canvas
+            this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
+            break;
+            
+          case 'Blinker':
+            //Set the EmptyBuffer to the BufferA
+            gameBufferA = gameBufferE;
+            
+            //Update state and update canvas
+            this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
+            
+            //Update cells for this pattern
+            gameBufferA[1 + 1*cellsPerRow] = true;
+            gameBufferA[2 + 1*cellsPerRow] = true;
+            gameBufferA[3 + 1*cellsPerRow] = true;
+            
+            //Update state and update canvas
+            this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
+
+            break;
+          case 'R-pentomino':
+            break;
+          case 'Vertical Line Full':
+            break;
+          case 'Vertical 1/2':
+            break;
+          case 'Horizontal Line Full':
+            break;
+          case 'Horizantal 1/2':
+            break;
+          default:
+        }
+      }
+    }
+  }
+  
+
   /**
    * Rendering
    */
@@ -504,7 +561,7 @@ class LifeCanvas extends Component {
       <div>
         <div>
           
-          <CellSizeSelRow>
+          <SelRow>
             <Col sm="3">
               <Label for="cellSizeSel">Select Cell Size:</Label>
             </Col>
@@ -532,7 +589,25 @@ class LifeCanvas extends Component {
             </Col>
             <Col sm="1">
             </Col>
-          </CellSizeSelRow>
+          </SelRow>
+
+          <SelRow>
+            <Col sm="3">
+              <Label for="initPattern">Select Pattern:</Label>
+            </Col>
+            <Col sm="4">
+              <GridInput ref="cellSel" type="select" name="select" id="initPattern" bsSize="sm" onChange={this.initPatternOnChangeHandler}>
+                <option>No Pattern</option>
+                <option>Glider</option>
+                <option>Blinker</option>
+                <option>R-pentomino</option>
+                <option>Vertical Line Full</option>
+                <option>Vertical 1/2</option>
+                <option>Horizontal Line Full</option>
+                <option>Horizantal 1/2</option>
+              </GridInput>
+            </Col>
+          </SelRow>
 
         </div>
         <GenDiv>Generation: {this.state.generation}</GenDiv>
