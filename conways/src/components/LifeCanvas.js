@@ -57,7 +57,7 @@ class LifeCanvas extends Component{
     this.drawGraph(rows, cols);
   }
 
-  drawGraph = (rowsIn, colsIn) => {
+  drawGraph = (rowsIn = this.state.rows, colsIn = this.state.cols) => {
        
     let rows = rowsIn;
     let cols = colsIn;
@@ -99,10 +99,10 @@ class LifeCanvas extends Component{
     
   }
 
-  componentDidUpdate(nextProps){
+  componentWillUpdate(nextProps){
     // If we receive a new number of cols or rows from App
     if (nextProps.rows !== this.state.rows || nextProps.cols !== this.state.cols) {
-        this.setState({ rows: nextProps.rows, cols : nextProps.cols, cellBoundaries : [], filledCells : [], life : new Life(nextProps.rows, nextProps.cols)});
+        this.setState({ rows: nextProps.rows, cols : nextProps.cols, cellBoundaries : [], filledCells : [], life : new Life(nextProps.rows, nextProps.cols)}, this.drawGraph);
     }
   } 
 
