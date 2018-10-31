@@ -8,6 +8,7 @@ class LifeCanvas extends React.Component {
         super(props);
 
         this.state = {
+            currentGeneration: 0,
             life: null,
             continueAnimation: false,
             prevTimestamp: null
@@ -34,13 +35,15 @@ class LifeCanvas extends React.Component {
     onAnimFrame(timestamp) {
         requestAnimationFrame(timestamp => { this.onAnimFrame(timestamp); });
 
-        timestamp = Math.floor(timestamp / 1000);
+        timestamp = Math.floor(timestamp / 500);
 
         if (timestamp !== this.state.prevTimestamp) {
             if (this.state.continueAnimation) {
+                this.setState({ currentGeneration: this.state.currentGeneration + 1 });
                 this.state.life.step();
             }
-            this.setState({ prevTimestamp: timestamp, clicked: false });
+
+            this.setState({ prevTimestamp: timestamp });
             this.drawCanvas();
         }
     }
@@ -87,6 +90,7 @@ class LifeCanvas extends React.Component {
             let x = Math.floor((event.clientX - rect.left) / size);
             let y = Math.floor((event.clientY - rect.top) / size);
 
+            this.setState({ currentGeneration: 0 });
             this.state.life.toggleCell(x, y);
             this.drawCanvas();
         }
@@ -102,16 +106,19 @@ class LifeCanvas extends React.Component {
     }
 
     randomize = () => {
+        this.setState({ currentGeneration: 0 });
         this.state.life.randomize();
         this.drawCanvas();
     }
 
     clear = () => {
+        this.setState({ continueAnimation: false, currentGeneration: 0 });
         this.state.life.clearCells();
         this.drawCanvas();
     }
 
     next = () => {
+        this.setState({ currentGeneration: this.state.currentGeneration + 1 });
         this.state.life.step();
         this.drawCanvas();
     }
@@ -123,6 +130,7 @@ class LifeCanvas extends React.Component {
                 <canvas onClick={this.toggleLife} id='canvas' ref="canvas" />
                 <LifeCanvasOptions
                     continue={this.state.continueAnimation}
+                    generation={this.state.currentGeneration}
                     randomize={this.randomize}
                     start={this.start}
                     next={this.next}
