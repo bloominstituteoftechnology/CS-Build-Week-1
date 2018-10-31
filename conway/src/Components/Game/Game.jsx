@@ -33,15 +33,31 @@ class Game extends Component {
       this.state = {
          TotalNodesX: 0,
          TotalNodesY: 0,
-         curGrid: 'odd',
-         nextGrid: 'even',
+         curGrid: 'Grid',
+         nextGrid: 'NextGrid',
          Grid: [],
+         NextGrid: [],
          isRunning: false,
-         squareSize : 15,
+         squareSize : 10,
          generation : 0,
       }
       this.container = React.createRef();
       this.timer = null;
+   }
+
+   toggleGrid = () => {
+      let curGrid = this.state.curGrid;
+      let nextGrid = this.state.nextGrid;
+
+      if(curGrid === 'Grid'){
+         curGrid = 'NextGrid'
+         nextGrid = 'Grid'
+      }else{
+         curGrid = 'Grid'
+         nextGrid = 'NextGrid'
+      }
+
+      this.setState({curGrid})
    }
 
    componentDidMount() {
@@ -58,7 +74,7 @@ class Game extends Component {
       TotalNodesX = Math.round(Math.floor(TotalNodesX / this.state.squareSize));
       TotalNodesY = Math.round(Math.floor(TotalNodesY / this.state.squareSize));
 
-      const gameGrid = [];
+      const firstGrid = [];
 
       let curX = 0;
       let curY = 0;
@@ -72,9 +88,27 @@ class Game extends Component {
             newArr.push({x: curX, y: curY, isAlive: false, coordX: i, coordY: j})
          }
       
-         gameGrid.push(newArr)
+         firstGrid.push(newArr)
       }
-      this.setState({Grid: gameGrid, TotalNodesX, TotalNodesY, })
+
+      const secondGrid = [];
+
+       curX = 0;
+       curY = 0;
+      for (let i = 0; i < TotalNodesX; i++){
+         if(i !== 0) curX += this.state.squareSize;
+         const newArr = [];
+      
+         for(let j = 0; j < TotalNodesY; j++){
+            if(j === 0) curY = 0;
+            else curY += this.state.squareSize;
+            newArr.push({x: curX, y: curY, isAlive: false, coordX: i, coordY: j})
+         }
+      
+         secondGrid.push(newArr)
+      }
+
+      this.setState({Grid: firstGrid, NextGrid: secondGrid, TotalNodesX, TotalNodesY, })
       requestAnimationFrame(() => this.canvasApp())
    }
 
@@ -113,16 +147,11 @@ class Game extends Component {
         ctx.stroke();
         // draw horizontal lines
         while (y < h) {
-          y = y + this.state.squareSize;
-          ctx.moveTo(x, y);
-          ctx.lineTo(w, y);
-         ctx.strokeStyle="black";
-          ctx.stroke();
-    
-          // unsure what this is
-          // ctx.font = "1px Calibri";
-          // ctx.fillText(xy, x, y);
-          // xy += 10;
+           y = y + this.state.squareSize;
+           ctx.moveTo(x, y);
+           ctx.lineTo(w, y);
+           ctx.strokeStyle="black";
+           ctx.stroke();
         }
     
         //draw vertical lines
@@ -132,21 +161,18 @@ class Game extends Component {
         ctx.lineTo(x, h);
         ctx.stroke();
         while (x < w) {
-          x = x + this.state.squareSize;
-          ctx.moveTo(x, y);
-          ctx.lineTo(x, h);
-          ctx.stroke();
-    
-    
-          // ctx.font = "1px Calibri";
-          // ctx.fillText(xy,x,10);
-          // xy+=10;
+           x = x + this.state.squareSize;
+           ctx.moveTo(x, y);
+           ctx.lineTo(x, h);
+           ctx.stroke();
         }
 
-        if(this.state.isRunning) this.incrementGameLoop()
+         if(this.state.isRunning){
+            this.incrementGameLoop()
+         }
 
          // draw a box (each square is this.state.squareSizepx wide and )
-         this.state.Grid.forEach((verticalArr, i) => {
+         this.state[this.state.curGrid].forEach((verticalArr, i) => {
             verticalArr.forEach((node, j) => {
                if(node.isAlive){
                   ctx.beginPath()
@@ -168,102 +194,120 @@ class Game extends Component {
          this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, .01)
       }
       
-    }
 
-    incrementGameLoop = () => {
-      let newGrid = Object.assign([],this.state.Grid)
-      console.log(newGrid)
-      this.state.Grid.forEach((verticalArr, i) => {
+    }//end canvasApp
+
+   incrementGameLoop = () => {
+      let newGrid = []
+      this.state[this.state.curGrid].forEach((verticalArr, i) => {
+         const yAxisArr = [];
          verticalArr.forEach((node, j) => {
-
-             newGrid = this.lifeAlgorithm(newGrid, i, j)
-
+            yAxisArr.push(Object.assign({}, node))
          })
+         newGrid.push(yAxisArr)
       })
-      console.log(newGrid)
-      this.setState({Grid: newGrid, generation: this.state.generation + 1})
-    }
 
-   lifeAlgorithm = (newGrid, i , j) => {
+      newGrid = this.lifeAlgorithm(newGrid)
+
+      const lastGrid = this.state[this.state.curGrid]
+
+      //swap before state swap so this looks backwards right now
+      // this.toggleGrid()
+
+
+      this.setState({Grid: newGrid, NextGrid: lastGrid, generation: this.state.generation + 1})
+   }
+
+   lifeAlgorithm = (newGrid) => {
      //get neighbors and run 4 rules of life
 
-     const screenGrid = this.state.Grid
-
-     console.log(screenGrid == newGrid)
      // screenGrid is where all nodes are checked (and what is currently displayed on screen)
      //nextGrid is where all changes are made
+     const screenGrid = this.state.Grid
 
-      const getNeighbors = (i, j) => {
-         const neighborsObj = {};
-         const curNode = screenGrid[i][j];
-         
-         let curNeighbor = 1;
-         while(curNeighbor < 9){
-           let newI = i;
-           let newJ = j;
-            switch(curNeighbor){
-              case 1: newJ--;
-                      if(!screenGrid[newI][newJ]) newJ = screenGrid[newI].length - 1
-                      break;
-              case 2: newI++;
-                      if(!screenGrid[newI]) newI = 0;
-                      newJ--;
-                      if(!screenGrid[newI][newJ]) newJ = screenGrid[newI].length - 1
-                      break;
-              case 3: newI++;
-                      if(!screenGrid[newI]) newI = 0;
-                      break;
-              case 4: newI++;
-                      if(!screenGrid[newI]) newI = 0;
-                      newJ++;
-                      if(!screenGrid[newI][newJ]) newJ = 0;
-                      break;
-              case 5: newJ++;
-                      if(!screenGrid[newI][newJ]) newJ = 0;
-                      break;
-              case 6: newI--;
-                      if(!screenGrid[newI]) newI = screenGrid.length - 1
-                      newJ++;
-                      if(!screenGrid[newI][newJ]) newJ = 0;
-                      break;
-              case 7: newI--;
-                      if(!screenGrid[newI]) newI = screenGrid.length - 1
-                      break;
-              case 8: newI--;
-                      if(!screenGrid[newI]) newI = screenGrid.length - 1
-                      newJ--;
-                      if(!screenGrid[newI][newJ]) newJ = screenGrid[newI].length - 1
-            }
+      this.state.Grid.forEach((verticalArr, i) => {
+         verticalArr.forEach((node, j) => {
+            const neighbors = this.getNeighbors(screenGrid, i,j);
 
-            neighborsObj[curNeighbor] = Object.assign({},screenGrid[newI][newJ])
+            //count the living neighbors
+            let numAlive = 0;
+            const nearAlive = []
+            Object.keys(neighbors).forEach(key => {
+            const node = neighbors[key]
+            if(node.isAlive) {
+               numAlive += 1;
+               // console.log({num: key, curNodeX: i, curNodeY: j, aliveX: node.coordX, aliveY: node.coordY})
+            } else nearAlive.push({num:key, curNodeX: node.coordX, curNodeY: node.coordY })
+            })
 
-           curNeighbor++;
-         }//end while
+            const curNode = newGrid[i][j]
+            // if(numAlive > 0 && curNode.isAlive) console.log({x: curNode.coordX, y: curNode.coordY})
+            if( newGrid[i][j].isAlive && numAlive < 2 ) newGrid[i][j].isAlive = false; //Any live cell with fewer than two live neighbours dies (referred to as underpopulation or exposure[1]).
+            else if( !newGrid[i][j].isAlive && numAlive === 3 ) newGrid[i][j].isAlive = true; //Any dead cell with exactly three live neighbours will come to life.
+            else if( numAlive > 3 && newGrid[i][j].isAlive ) newGrid[i][j].isAlive = false; //Any live cell with more than three live neighbours dies (referred to as overpopulation or overcrowding).
+            else if( newGrid[i][j].isAlive && (numAlive >= 2 && numAlive <= 3)  ) newGrid[i][j].isAlive = true; //Any live cell with two or three live neighbours lives, unchanged, to the next generation.
 
-         if(this.state.x && this.state.y && this.state.x ==i && this.state.y == j){
-            console.log(neighborsObj)
-            console.log(screenGrid[this.state.x][this.state.y])
-            console.log(newGrid[this.state.x][this.state.y])
-         } 
-
-         return neighborsObj;
-      }
-
-      const neighbors = getNeighbors(i,j);
-
-      //count the living neighbors
-      let numAlive = 0;
-      Object.keys(neighbors).forEach(key => {
-        const node = neighbors[key]
-        if(node.isAlive) numAlive += 1;
-      })
-
-      if( newGrid[i][j].isAlive && numAlive < 2 ) newGrid[i][j].isAlive = false; //Any live cell with fewer than two live neighbours dies (referred to as underpopulation or exposure[1]).
-      else if( !newGrid[i][j].isAlive && numAlive === 3 ) newGrid[i][j].isAlive = true; //Any dead cell with exactly three live neighbours will come to life.
-      else if( numAlive > 3 && newGrid[i][j].isAlive ) newGrid[i][j].isAlive = false; //Any live cell with more than three live neighbours dies (referred to as overpopulation or overcrowding).
-      else if( newGrid[i][j].isAlive && (numAlive >= 2 && numAlive <= 3)  ) newGrid[i][j].isAlive = true; //Any live cell with two or three live neighbours lives, unchanged, to the next generation.
+         })
+      })//finshed grid check
+      
       
       return newGrid;
+   }
+
+   getNeighbors = (grid, i, j) => {
+      const neighborsObj = {};
+      const curNode = grid[i][j];
+      
+      let curNeighbor = 1;
+      while(curNeighbor < 9){
+        let newI = i;
+        let newJ = j;
+         switch(curNeighbor){
+           case 1: newJ--;
+                   if(!grid[newI][newJ]) newJ = grid[newI].length - 1
+                   break;
+           case 2: newI++;
+                   if(!grid[newI]) newI = 0;
+                   newJ--;
+                   if(!grid[newI][newJ]) newJ = grid[newI].length - 1
+                   break;
+           case 3: newI++;
+                   if(!grid[newI]) newI = 0;
+                   break;
+           case 4: newI++;
+                   if(!grid[newI]) newI = 0;
+                   newJ++;
+                   if(!grid[newI][newJ]) newJ = 0;
+                   break;
+           case 5: newJ++;
+                   if(!grid[newI][newJ]) newJ = 0;
+                   break;
+           case 6: newI--;
+                   if(!grid[newI]) newI = grid.length - 1
+                   newJ++;
+                   if(!grid[newI][newJ]) newJ = 0;
+                   break;
+           case 7: newI--;
+                   if(!grid[newI]) newI = grid.length - 1
+                   break;
+           case 8: newI--;
+                   if(!grid[newI]) newI = grid.length - 1
+                   newJ--;
+                   if(!grid[newI][newJ]) newJ = grid[newI].length - 1
+         }
+
+         // if(i === 0 && j === 0)console.log(`num:${Object.keys(neighborsObj).length + 1} i:${newI} j:${newJ} liveNodeX:${i} j:${j}`)
+
+         neighborsObj[curNeighbor] = Object.assign({}, grid[newI][newJ])
+
+        curNeighbor++;
+      }//end while
+
+      // if(this.state.x && this.state.y && this.state.x ==i && this.state.y == j){
+      //    console.log(neighborsObj)
+      // } 
+
+      return neighborsObj;
    }
 
     handleGridClick = event => {
@@ -281,6 +325,7 @@ class Game extends Component {
          
          if(curGrid[nodeNumberX] && curGrid[nodeNumberX][nodeNumberY]){
             curGrid[nodeNumberX][nodeNumberY].isAlive = !curGrid[nodeNumberX][nodeNumberY].isAlive
+            console.log(`clicked: x:${curGrid[nodeNumberX][nodeNumberY].coordX}, y: ${curGrid[nodeNumberX][nodeNumberY].coordY}`)
          }
 
          this.setState({Grid: curGrid})
@@ -339,7 +384,7 @@ class Game extends Component {
       this.resetGame();
 
       //get start node
-      const firstX = Math.round(this.state.TotalNodesX / 2)
+      const firstX = Math.round((this.state.TotalNodesX / 2) - this.state.TotalNodesX / 4)
       const firstY = Math.round(this.state.TotalNodesY / 2)
       let x = firstX
       let y = firstY
@@ -367,58 +412,8 @@ class Game extends Component {
       this.canvasApp()
 
       //FIX: this is testing conway rules error
-      const getNeighbors = () => {
-         const neighborsObj = {};
-         const curNode = newGrid[firstX][firstY];
-         
-         let curNeighbor = 1;
-         while(curNeighbor < 9){
-           let newI = firstX;
-           let newJ = firstY;
-            switch(curNeighbor){
-              case 1: newJ--;
-                      if(!newGrid[newI][newJ]) newJ = newGrid[newI].length - 1
-                      break;
-              case 2: newI++;
-                      if(!newGrid[newI]) newI = 0;
-                      newJ--;
-                      if(!newGrid[newI][newJ]) newJ = newGrid[newI].length - 1
-                      break;
-              case 3: newI++;
-                      if(!newGrid[newI]) newI = 0;
-                      break;
-              case 4: newI++;
-                      if(!newGrid[newI]) newI = 0;
-                      newJ++;
-                      if(!newGrid[newI][newJ]) newJ = 0;
-                      break;
-              case 5: newJ++;
-                      if(!newGrid[newI][newJ]) newJ = 0;
-                      break;
-              case 6: newI--;
-                      if(!newGrid[newI]) newI = newGrid.length - 1
-                      newJ++;
-                      if(!newGrid[newI][newJ]) newJ = 0;
-                      break;
-              case 7: newI--;
-                      if(!newGrid[newI]) newI = newGrid.length - 1
-                      break;
-              case 8: newI--;
-                      if(!newGrid[newI]) newI = newGrid.length - 1
-                      newJ--;
-                      if(!newGrid[newI][newJ]) newJ = newGrid[newI].length - 1
-            }
-
-            neighborsObj[curNeighbor] = Object.assign({},newGrid[newI][newJ])
-
-           curNeighbor++;
-         }//end while
-
-            console.log(neighborsObj)
-
-         return neighborsObj;
-      }
-      getNeighbors();
+      console.log('After Acorn init: ')
+      console.log(this.getNeighbors(newGrid, firstX, firstY))
    }
 
    stepThroughGame = () => {
