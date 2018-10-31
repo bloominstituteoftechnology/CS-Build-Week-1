@@ -1,0 +1,62 @@
+/* Header Styles */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+  width: 448px;
+  background: #FC7A57;
+  border: 1px solid #5E5B52;
+}
+.header .title {
+  width: 100%;
+  padding: .5rem;
+  margin-top: .25rem;
+  font-size: 1.5rem;
+  color: #504d46;
+}
+.header .button {
+  width: 8.75%;
+  margin: .75rem 2%;
+  border: 1px solid #18A7B5;
+  border-radius: 15px;
+  padding: .5rem;
+  background: #18A7B5;
+  cursor: pointer;
+  box-shadow: 0 4px #7a7a7a;
+  color: white;
+  font-size: .60rem;
+}
+.header .button:active {
+  background: #008080;
+  box-shadow: 0 2px #7a7a7a;
+  transform: translateY(2px);
+}
+.header .icon {
+  width: 11.5%;
+  height: 2.5rem;
+  margin: .5rem 3%;
+  border: 1px solid #18A7B5;
+  border-radius: 15px;
+  padding: 0 .5rem;
+  background: #18A7B5;
+  cursor: pointer;
+  box-shadow: 0 4px #7a7a7a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: .70rem;
+}
+.header .icon:active {
+  background: #008080;
+  box-shadow: 0 2px #7a7a7a;
+  transform: translateY(2px);
+}
+.header .label {
+  width: 35%;
+  font-size: .75rem;
+  margin-bottom: .5rem;
+  color: #504d46;
+}

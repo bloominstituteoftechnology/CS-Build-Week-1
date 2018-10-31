@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Cell from './Cell';
+import '../styles/Board.css';
 
 class Board extends Component {
   constructor(props) {
@@ -48,9 +49,9 @@ class Board extends Component {
       
       return cell
     })
-    // this.props.handleGen();
-
+    
     this.setState({ cells })
+    this.props.handleGen();
   }
   // Used to check if a cell is alive
   isAlive = (row, col) => {
