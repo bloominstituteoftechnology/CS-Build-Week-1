@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactTimeout from 'react-timeout';
+import Rules from './Rules';
 import Slider from 'rc-slider';
 import presets from './presets';
 import 'rc-slider/assets/index.css';
@@ -145,35 +146,43 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="grid-container">
-          {this.state.grid.map((row, rowIndex) => {
-            return <div key={rowIndex}
-                        className="row">{row.map((cell, cellIndex) => {
-              return <div key={cellIndex}
-                          className={cell ? "living-cell" : "dead-cell"}
-                          onClick={!this.state.isRunning ?
-                                   () => this.toggleCell(rowIndex, cellIndex) :
-                                   null}
-                     >{cell}</div>;
-            })}</div>;
-          })}
+        <h1>Conway's Game of Life</h1>
+        <div className="grid-presets-and-rules-container">
+          <div className="grid-container">
+            {this.state.grid.map((row, rowIndex) => {
+              return <div key={rowIndex}
+                          className="row">{row.map((cell, cellIndex) => {
+                return <div key={cellIndex}
+                            className={cell ? "living-cell" : "dead-cell"}
+                            onClick={!this.state.isRunning ?
+                                     () => this.toggleCell(rowIndex, cellIndex) :
+                                     null}
+                       >{cell}</div>;
+              })}</div>;
+            })}
+          </div>
+          <div className="presets-container">
+            <button onClick={() => this.loadPreset("small exploder")}>
+              small exploder
+            </button>
+            <button onClick={() => this.loadPreset("exploder")}>
+              exploder
+            </button>
+            <button onClick={() => this.loadPreset("nine cell row")}>
+              nine cell row
+            </button>
+            <button onClick={() => this.loadPreset("tumbler")}>
+              tumbler
+            </button>
+          </div>
+          <Rules />
         </div>
-        <button onClick={this.startSimulation}>start</button>
-        <button onClick={this.stopSimulation}>stop</button>
-        <button onClick={this.advanceOneIteration}>next</button>
-        <button onClick={this.resetGrid}>reset</button>
-        <button onClick={() => this.loadPreset("small exploder")}>
-          small exploder
-        </button>
-        <button onClick={() => this.loadPreset("exploder")}>
-          exploder
-        </button>
-        <button onClick={() => this.loadPreset("nine cell row")}>
-          nine cell row
-        </button>
-        <button onClick={() => this.loadPreset("tumbler")}>
-          tumbler
-        </button>
+        <div className="controls-container">
+          <button onClick={this.startSimulation}>start</button>
+          <button onClick={this.stopSimulation}>stop</button>
+          <button onClick={this.advanceOneIteration}>next</button>
+          <button onClick={this.resetGrid}>reset</button>
+        </div>
         <div className="slider-container">
           <Slider min={-1000}
                   max={-100}
