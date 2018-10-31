@@ -12,11 +12,11 @@ export default class Life {
     this.ctx.beginPath();
     let x = this.col * this.size;
     let y = this.row * this.size;
-    this.ctx.rect(x, y, this.size, this.size);
-    this.ctx.stroke();
-    if (this.currentState === "black") {
-      this.ctx.fillStyle = "black";
-      this.ctx.fill();
-    }
+    // this.ctx.rect(x, y, this.size, this.size);
+    // this.ctx.stroke();
+    this.ctx.fillStyle = this.currentState;
+    this.ctx.fillRect(x, y, this.size, this.size);
+    this.ctx.strokeStyle = "lightgray";
+    this.ctx.strokeRect(x, y, this.size, this.size);
   }
 }
