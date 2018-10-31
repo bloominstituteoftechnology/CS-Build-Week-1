@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import LifeCanvas from './components/LifeCanvas';
 import GameInfo from './components/GameInfo';
 import IncrementDecrement from './components/IncrementDecrement';
+import Rules from './components/Rules';
 import './App.css';
 
 class App extends Component {
@@ -31,6 +32,7 @@ class App extends Component {
       <div className="App">
         <LifeCanvas rows={this.state.rows} cols={this.state.cols}/>
         <GameInfo />
+        <Rules />
         <IncrementDecrement clickHandler={this.incrementOrDecrement} rows={this.state.rows} cols={this.state.cols} />
       </div>
     );

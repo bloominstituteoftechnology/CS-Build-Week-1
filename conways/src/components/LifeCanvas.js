@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import Life from "./Life";
 
-const waitTime = 500;
-
 const CanvasWindow = styled.canvas`
     border: 2px solid black;
 `
@@ -21,6 +19,7 @@ class LifeCanvas extends Component{
       canvas : '',
       c : '',
       counter: 0,
+      waitTime : 500,
     }
   }
 
@@ -73,20 +72,27 @@ class LifeCanvas extends Component{
 
   componentDidUpdate(nextProps){
     if (nextProps.rows !== this.state.rows || nextProps.cols !== this.state.cols) {
-        this.setState({ rows: nextProps.rows, cols : nextProps.cols, cellBoundaries : [], filledCells : [] }, () => {
-            console.log("this.state.rows LifeCanvas: ", this.state.rows)
-        });
-        console.log("this.state.rows LifeCanvas  2: ", this.state.rows)
-        this.drawGraph(nextProps.rows, nextProps.cols);
+        this.setState({ rows: nextProps.rows, cols : nextProps.cols, cellBoundaries : [], filledCells : [], life : new Life(nextProps.rows, nextProps.cols)});
       }
     } 
+
+  updateRowsCols = () => {
+    this.drawGraph(this.state.rows, this.state.cols);
+  }
 
   clearCell = (c, cell, index) => {
     c.fillStyle = "white";
     c.fillRect(cell.left, cell.top, cell.width, cell.height);
     c.rect(cell.left, cell.top, cell.width, cell.height)    // Draw rect to retain borders
     c.stroke();
-    this.setState({ filledCells : this.state.filledCells.filter(num => num !== index)})
+    // let filledCells = this.state.filledCells.filter(num => num !== index);
+    // console.log("filledCells in clearCell: ", filledCells);
+
+    // this.setState({ filledCells : filledCells });
+  }
+
+  resetFilledCells = () => {
+      this.setState({ filledCells : [] });
   }
 
   fillCell = (c, cell, index) => {
@@ -137,17 +143,20 @@ class LifeCanvas extends Component{
 
   // filledCells is a list of indices, use this to get boundaries from cellBoundaries and clear all cells
   clearCells = (e) => {
+
       // Dont allow if running
       if(this.state.running && e){
           return
       }
-      if(!this.state.running){
-          this.setState({ counter : 0 });
-      }
-      let c = this.refs.canvas.getContext("2d");
+      if(!this.state.running && e){
 
-      this.state.filledCells.forEach(cell => this.clearCell(c, this.state.cellBoundaries[cell], cell))
-      
+          this.setState({ counter : 0 });
+          this.resetFilledCells();
+      }
+
+      let c = this.state.c;
+      let filledCells = this.state.filledCells;
+      filledCells.forEach(cell => this.clearCell(c, this.state.cellBoundaries[cell], cell))
   }
 
   playGame = () => {
@@ -166,6 +175,8 @@ class LifeCanvas extends Component{
         
         this.setState({ counter : this.state.counter + 1 });
         this.clearCells();
+        this.resetFilledCells();
+
 
         for (let i = 0; i < filledCells.length; i++) {
         
@@ -177,7 +188,7 @@ class LifeCanvas extends Component{
         requestAnimationFrame(() => {
             this.playGame();
         })
-    }, waitTime);
+    }, this.state.waitTime);
   }
 
   // Calls playOrStop to start, waits, then calls it again to only pass one round
@@ -188,7 +199,7 @@ class LifeCanvas extends Component{
     this.playOrStop();
     setTimeout(() => {
         this.playOrStop();
-    }, waitTime - 200);
+    }, this.state.waitTime - 200);
     
     
   }
@@ -220,6 +231,7 @@ class LifeCanvas extends Component{
         <button onClick={this.clearCells}>Clear Game</button>
         <button onClick={this.nextRound}>Next Round</button>
         <button onClick={this.random}>Random Configuration</button>
+        <button onClick={this.updateRowsCols}>Update Rows/Cols</button>
       </div>
     );
   }
