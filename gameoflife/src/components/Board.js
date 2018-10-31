@@ -179,19 +179,20 @@ class Board extends React.Component {
     event.preventDefault();
     this.setState({ isClickable: !this.state.isClickable });
   };
-  handleReset = event => {
-    event.preventDefault();
+  handleReset = () => {
     console.log("handle reset called");
     this.board = this.generateBoard();
     this.setState({ cells: this.generateCells() });
   };
   handlePresets = config => {
+    this.handleReset();
     switch (config) {
       case "block":
         this.board[11][11] = !this.board[11][11];
         this.board[11][12] = !this.board[11][12];
         this.board[12][11] = !this.board[12][11];
         this.board[12][12] = !this.board[12][12];
+        break;
       case "beehive":
         this.board[12][10] = !this.board[12][10];
         this.board[11][11] = !this.board[11][11];
@@ -199,6 +200,7 @@ class Board extends React.Component {
         this.board[12][13] = !this.board[12][13];
         this.board[13][12] = !this.board[13][12];
         this.board[13][11] = !this.board[13][11];
+        break;
       case "pentadecathlon":
         this.board[9][11] = !this.board[9][11];
         this.board[10][11] = !this.board[10][11];
@@ -222,6 +224,7 @@ class Board extends React.Component {
         this.board[14][13] = !this.board[14][13];
         this.board[15][13] = !this.board[15][13];
         this.board[16][13] = !this.board[16][13];
+        break;
       case "toad":
         this.board[10][11] = !this.board[10][11];
         this.board[10][12] = !this.board[10][12];
@@ -229,12 +232,14 @@ class Board extends React.Component {
         this.board[11][12] = !this.board[11][12];
         this.board[11][11] = !this.board[11][11];
         this.board[11][10] = !this.board[11][10];
+        break;
       case "glider":
         this.board[9][10] = !this.board[9][10];
         this.board[10][11] = !this.board[10][11];
         this.board[11][11] = !this.board[11][11];
         this.board[11][10] = !this.board[11][10];
         this.board[11][9] = !this.board[11][9];
+        break;
       case "spaceship":
         this.board[9][19] = !this.board[9][19];
         this.board[11][19] = !this.board[11][19];
@@ -245,6 +250,7 @@ class Board extends React.Component {
         this.board[11][15] = !this.board[11][15];
         this.board[10][15] = !this.board[10][15];
         this.board[9][16] = !this.board[9][16];
+        break;
     }
     this.setState({ cells: this.generateCells() });
   };
@@ -272,64 +278,63 @@ class Board extends React.Component {
             <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
           ))}
         </div>
-        <div className="dropdown">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Presets
-          </button>
-          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a className="dropdown-item" href="#" onClick={() => this.handlePresets("block")}>
-              Block
-            </a>
-            <a className="dropdown-item" href="#" onClick={() => this.handlePresets("beehive")}>
-              Beehive
-            </a>
-            <a
-              className="dropdown-item"
-              href="#"
-              onClick={() => this.handlePresets("pentadecathlon")}
+        <div className="below-grid">
+          <div className="dropdown">
+            <button
+              className="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
             >
-              Pentadecathlon
-            </a>
-            <a className="dropdown-item" href="#" onClick={() => this.handlePresets("toad")}>
-              Toad
-            </a>
-            <a className="dropdown-item" href="#" onClick={() => this.handlePresets("glider")}>
-              Glider
-            </a>
-            <a className="dropdown-item" href="#" onClick={() => this.handlePresets("spaceship")}>
-              LW Spaceship
-            </a>
+              Presets
+            </button>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a className="dropdown-item" href="#" onClick={() => this.handlePresets("block")}>
+                Block
+              </a>
+              <a className="dropdown-item" href="#" onClick={() => this.handlePresets("beehive")}>
+                Beehive
+              </a>
+              <a
+                className="dropdown-item"
+                href="#"
+                onClick={() => this.handlePresets("pentadecathlon")}
+              >
+                Pentadecathlon
+              </a>
+              <a className="dropdown-item" href="#" onClick={() => this.handlePresets("toad")}>
+                Toad
+              </a>
+              <a className="dropdown-item" href="#" onClick={() => this.handlePresets("glider")}>
+                Glider
+              </a>
+              <a className="dropdown-item" href="#" onClick={() => this.handlePresets("spaceship")}>
+                LW Spaceship
+              </a>
+            </div>
           </div>
+          <button onClick={this.clickIteration}>Click Iteration</button>
+          <p>Iterations: {count}</p>
+          <div className="controls">
+            Interval Speed{" "}
+            <input value={this.state.interval} onChange={this.handleIntervalChange} />{" "}
+            {this.state.isPlaying ? (
+              <button className="button" onClick={this.stopGame}>
+                Stop
+              </button>
+            ) : (
+              <button className="button" onClick={this.runGame}>
+                Run
+              </button>
+            )}
+          </div>
+          <button onClick={this.toggleClickable}>
+            Toggle clickable: {this.state.isClickable ? <span>Yes</span> : <span>No</span>}
+          </button>
+          <button onClick={this.handleReset}>Reset</button>
         </div>
-        <form>
-          <input placeholder="Change grid size to" onChange={this.handleChange} />
-          <button onClick={this.handleResize}>Change</button>
-        </form>
-        <button onClick={this.clickIteration}>Click Iteration</button>
-        <p>Iterations: {count}</p>
-        <div className="controls">
-          Interval Speed <input value={this.state.interval} onChange={this.handleIntervalChange} />{" "}
-          {this.state.isPlaying ? (
-            <button className="button" onClick={this.stopGame}>
-              Stop
-            </button>
-          ) : (
-            <button className="button" onClick={this.runGame}>
-              Run
-            </button>
-          )}
-        </div>
-        <button onClick={this.toggleClickable}>
-          Toggle clickable: {this.state.isClickable ? <span>Yes</span> : <span>No</span>}
-        </button>
-        <button onClick={this.handleReset}>Reset</button>
       </div>
     );
   }
