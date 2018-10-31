@@ -31,6 +31,9 @@
     margin-left: 22%;
 }
 @media only screen and (max-width: 600px){
+    .interface-ctn {
+        margin-left: 15px;
+    }
     .slider {
         margin-left: 50%;
         width: 100%;
