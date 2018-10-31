@@ -45,10 +45,11 @@ class Board extends Component {
       } else {
         if(neighbors === 3) return 1
       }
-
+      
       return cell
     })
-    this.props.handleGen()
+    // this.props.handleGen();
+
     this.setState({ cells })
   }
   // Used to check if a cell is alive
@@ -70,13 +71,16 @@ class Board extends Component {
       this.props.handleClear()
     }
     // Starts/stops the game from running(Invokes updateCells)
-    let interval = 0;
+    let celInt = 0;
+    // let genInt = 0;
     if (this.props.running === true) {
-      interval = setTimeout(this.updateCells, 1000)
-      // Start generation counter
-      // this.props.handleGen()
+      celInt = setTimeout(this.updateCells, this.props.speed)
+      // genInt = setTimeout(this.props.handleGen, 1000)
     }
-    if (this.props.running === false) {clearTimeout(interval)}
+    if (this.props.running === false) {
+      clearTimeout(celInt)
+      // clearTimeout(genInt)
+    }
   }
   // Creates cell components for render
   createCells = () => {
