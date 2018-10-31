@@ -12,8 +12,8 @@ class LifeCanvas extends Component{
   constructor(props){
     super(props)
     this.state = {
-      numRows : this.props.rows,
-      numCols : this.props.cols,
+      rows : this.props.rows,
+      cols : this.props.cols,
       cellBoundaries : [],
       filledCells: [],
       running : false,
@@ -25,19 +25,31 @@ class LifeCanvas extends Component{
   }
 
   componentDidMount() {
-    
-    let numRows = this.state.numRows;
-    let numCols = this.state.numCols;
+    let rows = this.props.rows
+    let cols = this.props.cols;
+
+    this.drawGraph(rows, cols);
+  }
+
+  drawGraph = (rowsIn, colsIn) => {
+       
+    let rows = rowsIn;
+    let cols = colsIn;
 
     let canvas = this.refs.canvas;
-
-    let squareWidth = canvas.width / numCols;
-    let squareHeight = canvas.height / numRows;
-    
     let c = canvas.getContext("2d");
 
-    for (let i = 0; i < numRows; ++i) {
-        for (let j = 0; j < numCols; ++j) {
+    // Clear canvas, cellBoundaries, filledCells and life for resetting rows and cols
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.beginPath();
+
+    let squareWidth = canvas.width / cols;
+    let squareHeight = canvas.height / rows;
+    
+    let boundaries = [];
+
+    for (let i = 0; i < rows; ++i) {
+        for (let j = 0; j < cols; ++j) {
             c.rect(j * squareWidth, i * squareHeight, squareWidth, squareHeight)
             c.stroke();
             let coords = {
@@ -46,7 +58,6 @@ class LifeCanvas extends Component{
                 left :j * squareWidth,
                 width : squareWidth
             }
-            let boundaries = this.state.cellBoundaries;
             boundaries.push(coords); 
             this.setState({ cellBoundaries : boundaries})
         }
@@ -59,6 +70,16 @@ class LifeCanvas extends Component{
     })
     
   }
+
+  componentDidUpdate(nextProps){
+    if (nextProps.rows !== this.state.rows || nextProps.cols !== this.state.cols) {
+        this.setState({ rows: nextProps.rows, cols : nextProps.cols, cellBoundaries : [], filledCells : [] }, () => {
+            console.log("this.state.rows LifeCanvas: ", this.state.rows)
+        });
+        console.log("this.state.rows LifeCanvas  2: ", this.state.rows)
+        this.drawGraph(nextProps.rows, nextProps.cols);
+      }
+    } 
 
   clearCell = (c, cell, index) => {
     c.fillStyle = "white";
@@ -176,7 +197,7 @@ class LifeCanvas extends Component{
 
     this.clearCells();
 
-    let range = (this.state.numRows * this.state.numCols) - 1;
+    let range = (this.state.rows * this.state.cols) - 1;
     let numHits = (Math.floor(Math.random() * range) + 1) / 2;  // Divide by two to lower hits
     let hit;
     let hitSet = new Set();                                     // Avoid duplicate values

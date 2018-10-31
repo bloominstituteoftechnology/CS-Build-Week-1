@@ -12,9 +12,10 @@ class Life {
     }
 
     getCells = () => {
+
         let buffer = this.buffers[this.currentBuffer];
-        console.log("Current Buffer: ", buffer)
         return buffer;
+        
     }
 
     calculateAliveNeighbors = (index, buffer) => {
