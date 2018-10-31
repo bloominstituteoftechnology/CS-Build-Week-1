@@ -12,6 +12,12 @@
     margin: 0 9.6px;
 }
 
+.canvas-options-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .canvas-options-form input {
     min-width: 20px;
     background: #999999;
@@ -42,6 +48,15 @@
 
 .canvas-options-form input:-moz-placeholder {
     color: black;
+}
+
+.canvas-options-input {
+    margin: 0 10px;
+}
+
+.canvas-options-input-range {
+    width: 75px;
+    margin: 0 10px;
 }
 
 .canvas-header {

@@ -27,13 +27,7 @@ class Life {
         return this.cellSize;
     }
 
-    // setDimensions(width, height) {
-    //     this.width = width;
-    //     this.height = height;
-    // }
-
     toggleCell(x, y) {
-
         const index = (Math.ceil(this.cellHeight) * x) + y;
         const cell = this.cells[this.buffer][index];
         cell.alive = !cell.alive;

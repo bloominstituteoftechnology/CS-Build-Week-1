@@ -9,6 +9,7 @@ class LifeCanvas extends React.Component {
 
         this.state = {
             currentGeneration: 0,
+            speed: 0,
             life: null,
             continueAnimation: false,
             prevTimestamp: null
@@ -35,7 +36,7 @@ class LifeCanvas extends React.Component {
     onAnimFrame(timestamp) {
         requestAnimationFrame(timestamp => { this.onAnimFrame(timestamp); });
 
-        timestamp = Math.floor(timestamp / 500);
+        timestamp = Math.floor(timestamp / (1001 - this.state.speed));
 
         if (timestamp !== this.state.prevTimestamp) {
             if (this.state.continueAnimation) {
@@ -134,6 +135,10 @@ class LifeCanvas extends React.Component {
         }
     }
 
+    setSpeed = speed => {
+        this.setState({ speed });
+    }
+
     render() {
         return (
             <div className='canvas-container'>
@@ -142,6 +147,7 @@ class LifeCanvas extends React.Component {
                 <LifeCanvasOptions
                     continue={this.state.continueAnimation}
                     generation={this.state.currentGeneration}
+                    setSpeed={this.setSpeed}
                     calculate={this.calculate}
                     randomize={this.randomize}
                     start={this.start}
