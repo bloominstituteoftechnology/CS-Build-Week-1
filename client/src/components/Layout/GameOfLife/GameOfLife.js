@@ -12,7 +12,7 @@ class GameOfLife extends React.Component {
       rows: 30,
       columns: 40,
       cells: [],
-      speed: 100,
+      speed: 1,
       isPlaying: false,
       generation: 0
     };
@@ -89,6 +89,16 @@ class GameOfLife extends React.Component {
     this.setState({ cells: this.fillCells(), generation: 0 });
   };
 
+  handleRandom = () => {
+    for (let y = 0; y < this.rows; y++) {
+      for (let x = 0; x < this.columns; x++) {
+        this.grid[y][x] = Math.random() >= 0.5;
+      }
+    }
+
+    this.setState({ cells: this.fillCells() });
+  };
+
   handleSpeed = event => {
     this.setState({ speed: event.target.value });
   };
@@ -114,7 +124,6 @@ class GameOfLife extends React.Component {
     }
 
     this.grid = generation;
-    // this.setState({ cells: this.fillCells() });
     this.setState(state => ({
       cells: this.fillCells(),
       generation: state.generation + 1
@@ -122,7 +131,7 @@ class GameOfLife extends React.Component {
 
     this.speedHandler = window.setTimeout(() => {
       this.nextGeneration();
-    }, this.state.speed);
+    }, this.state.speed * 1000);
   }
 
   applyRules(grid, x, y) {
@@ -178,11 +187,20 @@ class GameOfLife extends React.Component {
             <button onClick={this.startGame}>Start</button>
           )}
           <button onClick={this.handleClear}>Clear</button>
+          <button onClick={this.handleRandom}>Random</button>
           Speed: <input
             value={this.state.speed}
             onChange={this.handleSpeed}
           />{" "}
-          milliseconds
+          {/* <input
+            type="range"
+            min="1"
+            max="10"
+            value={this.state.speed}
+            class="slider"
+            onChange={this.handleSpeed}
+          /> */}
+          <p>{(this.state.speed * 1000) ^ -1}</p>
         </div>
       </div>
     );
