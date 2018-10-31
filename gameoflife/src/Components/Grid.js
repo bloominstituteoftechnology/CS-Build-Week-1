@@ -5,41 +5,39 @@ import Cell from "./Cell";
 const GridBox = Styled.div`
     display: flex;
     flex-wrap: wrap;
-    height: 800px;
-    width: 800px;
     border: 2px solid black;
 `;
 
 class Grid extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            cells: []
-        }
-    }
+	render() {
+		const width = (this.props.cols * 20);
+		var rowsArr = [];
 
-    getInitialState =() => {
-        let c = [];
-        for(let i=0; i < 2500; i++) {
-            c.push(<Cell key={i} id={i} clearGrid={this.props.clearGrid} clear={this.props.clear}/>)
-        }
-        this.setState({cells: c});
-    }
+		var boxClass = "";
+		for (var i = 0; i < this.props.rows; i++) {
+			for (var j = 0; j < this.props.cols; j++) {
+				let boxId = i + "_" + j;
 
-    componentDidMount() {
-        this.getInitialState();
-    }
-        
-    render() {
-   
-        return (
-            <GridBox>
-                {this.state.cells.map(cell => {
-                    return <Cell/>
-                })}
-            </GridBox>
-        )        
-    }
+				boxClass = this.props.gridFull[i][j] ? "alive" : "dead";
+				rowsArr.push(
+					<Cell
+						cellClass={boxClass}
+						key={boxId}
+						boxId={boxId}
+						row={i}
+						col={j}
+						selectBox={this.props.selectBox}
+					/>
+				);
+			}
+		}
+
+		return (
+			<GridBox style={{width: width}}>
+				{rowsArr}
+			</GridBox>
+		);
+	}
 }
 
 export default Grid;

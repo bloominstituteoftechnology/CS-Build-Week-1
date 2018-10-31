@@ -30,3 +30,11 @@
     transform: rotate(360deg);
   }
 }
+
+.alive {
+  background-color: orange
+}
+
+.dead {
+  background-color: lightgrey
+}

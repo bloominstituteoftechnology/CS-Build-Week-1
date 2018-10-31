@@ -1,9 +1,10 @@
 import React from "react";
 import Styled from "styled-components";
+import "./Cell.css";
 
 const Square = Styled.div`
-    height: 14px;
-    width: 14px;
+    height: 18px;
+    width: 18px;
     border: 1px solid black;
     
 `;
@@ -13,23 +14,20 @@ class Cell extends React.Component {
         super(props);
         this.state = {
             alive: false,
-            dead: true
+            dead: true,
         }
     }
 
     toggleCell = () => {
-        this.setState({alive: !this.state.alive, dead: !this.state.dead})
+        this.props.selectBox(this.props.row, this.props.col);
     }
 
-    componentDidMount() {
-        if(this.props.clear) {
-            this.setState({alive: false, dead: true})
-        }
-    }
 
+;
     render(){
-        return (
-            <Square style={{backgroundColor: this.state.alive ? 'orange' : 'gray'}} onClick={this.toggleCell}/>
+        let cellClass = this.props.cellClass
+        return ( 
+            <Square className={this.props.cellClass} onClick={this.toggleCell} id={this.props.id}/>
         )
     }
 }
