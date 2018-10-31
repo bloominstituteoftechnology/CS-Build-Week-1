@@ -3,8 +3,8 @@ import "./Board.css";
 import Cell from "./Cell";
 
 let cell_size = 30;
-let board_width = 720;
-let board_height = 720;
+let board_width = 840;
+let board_height = 840;
 let rows = board_height / cell_size; // This gives us the number of rows that will be in our board.
 let columns = board_width / cell_size;
 let count = 0;
@@ -19,8 +19,7 @@ class Board extends React.Component {
       isClickable: false,
       isAlive: false,
       interval: 300,
-      isPlaying: false,
-      count: 0
+      isPlaying: false
     };
   }
   getElementOffset() {
@@ -111,9 +110,6 @@ class Board extends React.Component {
 
     return neighbors;
   }
-  countIterations = event => {
-    let count = this.state.count;
-  };
 
   runIteration() {
     let emptyBoard = this.generateBoard();
@@ -180,6 +176,7 @@ class Board extends React.Component {
     this.setState({ isClickable: !this.state.isClickable });
   };
   handleReset = () => {
+    count = 0;
     console.log("handle reset called");
     this.board = this.generateBoard();
     this.setState({ cells: this.generateCells() });
@@ -279,7 +276,7 @@ class Board extends React.Component {
           ))}
         </div>
         <div className="below-grid">
-          <div className="dropdown">
+          <div className="presets dropdown">
             <button
               className="btn btn-secondary dropdown-toggle"
               type="button"
@@ -315,25 +312,40 @@ class Board extends React.Component {
               </a>
             </div>
           </div>
-          <button onClick={this.clickIteration}>Click Iteration</button>
-          <p>Iterations: {count}</p>
-          <div className="controls">
-            Interval Speed{" "}
-            <input value={this.state.interval} onChange={this.handleIntervalChange} />{" "}
+          <div className="start">
             {this.state.isPlaying ? (
-              <button className="button" onClick={this.stopGame}>
+              <button type="button" className="btn btn-danger" onClick={this.stopGame}>
                 Stop
               </button>
             ) : (
-              <button className="button" onClick={this.runGame}>
-                Run
+              <button type="button" className="btn btn-success" onClick={this.runGame}>
+                Run Game
               </button>
             )}
           </div>
-          <button onClick={this.toggleClickable}>
-            Toggle clickable: {this.state.isClickable ? <span>Yes</span> : <span>No</span>}
+          <button
+            type="button"
+            className="btn btn-primary manual-click"
+            onClick={this.clickIteration}
+          >
+            Manual
           </button>
-          <button onClick={this.handleReset}>Reset</button>
+          <button
+            type="button"
+            className="btn btn-secondary toggle-click"
+            onClick={this.toggleClickable}
+          >
+            Clickable? {this.state.isClickable ? <span>Yes</span> : <span>No</span>}
+          </button>
+          <button type="button" className="btn btn-warning reset" onClick={this.handleReset}>
+            Reset
+          </button>
+          <div className="control-interval controls">
+            Interval Speed{" "}
+            <input value={this.state.interval} onChange={this.handleIntervalChange} />{" "}
+          </div>
+
+          <div className="count-iterations">Iterations: {count}</div>
         </div>
       </div>
     );

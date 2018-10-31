@@ -11,3 +11,13 @@
   background: black;
   position: absolute;
 }
+
+.below-grid {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  height: 38px;
+  margin-top: 20px;
+}
