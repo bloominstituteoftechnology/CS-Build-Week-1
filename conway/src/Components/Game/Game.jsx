@@ -316,7 +316,6 @@ class Game extends Component {
             console.log(newGetNeighbors(i,j))
             console.log(screenGrid[this.state.x][this.state.y])
             console.log(newGrid[this.state.x][this.state.y])
-            debugger
          } 
 
          return neighborsObj;
