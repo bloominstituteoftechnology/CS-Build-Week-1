@@ -26,6 +26,7 @@ class Board extends React.Component {
   getElementOffset() {
     const rect = this.clickedGrids.getBoundingClientRect();
     const doc = document.documentElement;
+    console.log("doc is: ", doc);
     return {
       x: rect.left + window.pageXOffset - doc.clientLeft,
       y: rect.top + window.pageYOffset - doc.clientTop
@@ -178,7 +179,12 @@ class Board extends React.Component {
     event.preventDefault();
     this.setState({ isClickable: !this.state.isClickable });
   };
-  handleReset = event => {};
+  handleReset = event => {
+    event.preventDefault();
+    console.log("handle reset called");
+    this.board = this.generateBoard();
+    this.setState({ cells: this.generateCells() });
+  };
 
   render() {
     if (this.state.isPlaying) {
