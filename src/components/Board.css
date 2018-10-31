@@ -14,10 +14,26 @@
 
 .below-grid {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  margin-left: 25.2%;
+  margin-right: 25%;
 }
 
 button {
   height: 38px;
   margin-top: 20px;
+  margin-right: 4px;
+}
+
+.left {
+  display: flex;
+}
+
+.right {
+  display: flex;
+}
+
+.dropdown-right {
+  margin-top: 20px;
+  margin-right: 4px;
 }

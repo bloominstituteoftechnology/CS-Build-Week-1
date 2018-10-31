@@ -276,76 +276,116 @@ class Board extends React.Component {
           ))}
         </div>
         <div className="below-grid">
-          <div className="presets dropdown">
-            <button
-              className="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Presets
-            </button>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a className="dropdown-item" href="#" onClick={() => this.handlePresets("block")}>
-                Block
-              </a>
-              <a className="dropdown-item" href="#" onClick={() => this.handlePresets("beehive")}>
-                Beehive
-              </a>
-              <a
-                className="dropdown-item"
-                href="#"
-                onClick={() => this.handlePresets("pentadecathlon")}
+          <div className="left">
+            <div className="presets dropdown">
+              <button
+                className="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
               >
-                Pentadecathlon
-              </a>
-              <a className="dropdown-item" href="#" onClick={() => this.handlePresets("toad")}>
-                Toad
-              </a>
-              <a className="dropdown-item" href="#" onClick={() => this.handlePresets("glider")}>
-                Glider
-              </a>
-              <a className="dropdown-item" href="#" onClick={() => this.handlePresets("spaceship")}>
-                LW Spaceship
-              </a>
+                Presets
+              </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a className="dropdown-item" href="#" onClick={() => this.handlePresets("block")}>
+                  Block
+                </a>
+                <a className="dropdown-item" href="#" onClick={() => this.handlePresets("beehive")}>
+                  Beehive
+                </a>
+                <div class="dropdown-divider" />
+                <a
+                  className="dropdown-item"
+                  href="#"
+                  onClick={() => this.handlePresets("pentadecathlon")}
+                >
+                  Pentadecathlon
+                </a>
+                <a className="dropdown-item" href="#" onClick={() => this.handlePresets("toad")}>
+                  Toad
+                </a>
+                <div class="dropdown-divider" />
+                <a className="dropdown-item" href="#" onClick={() => this.handlePresets("glider")}>
+                  Glider
+                </a>
+                <a
+                  className="dropdown-item"
+                  href="#"
+                  onClick={() => this.handlePresets("spaceship")}
+                >
+                  LW Spaceship
+                </a>
+              </div>
             </div>
+            <div className="start">
+              {this.state.isPlaying ? (
+                <button type="button" className="btn btn-danger" onClick={this.stopGame}>
+                  Stop
+                </button>
+              ) : (
+                <button type="button" className="btn btn-success" onClick={this.runGame}>
+                  Run Game
+                </button>
+              )}
+            </div>
+            <button
+              type="button"
+              className="btn btn-primary manual-click"
+              onClick={this.clickIteration}
+            >
+              Manual
+            </button>
           </div>
-          <div className="start">
-            {this.state.isPlaying ? (
-              <button type="button" className="btn btn-danger" onClick={this.stopGame}>
-                Stop
-              </button>
-            ) : (
-              <button type="button" className="btn btn-success" onClick={this.runGame}>
-                Run Game
-              </button>
-            )}
+          <div className="middle">
+            <div className="count-iterations">Iterations: {count}</div>
           </div>
-          <button
-            type="button"
-            className="btn btn-primary manual-click"
-            onClick={this.clickIteration}
-          >
-            Manual
-          </button>
-          <button
-            type="button"
-            className="btn btn-secondary toggle-click"
-            onClick={this.toggleClickable}
-          >
-            Clickable? {this.state.isClickable ? <span>Yes</span> : <span>No</span>}
-          </button>
-          <button type="button" className="btn btn-warning reset" onClick={this.handleReset}>
-            Reset
-          </button>
-          <div className="control-interval controls">
+          <div className="right">
+            <div class="dropdown dropdown-right">
+              <a
+                class="btn btn-secondary dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Speed
+              </a>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">
+                  300 (default)
+                </a>
+                <a class="dropdown-item" href="#">
+                  100
+                </a>
+
+                <a class="dropdown-item" href="#">
+                  500
+                </a>
+                <a class="dropdown-item" href="#">
+                  1000
+                </a>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="btn btn-info toggle-click"
+              onClick={this.toggleClickable}
+            >
+              Clickable: {this.state.isClickable ? <span>Yes</span> : <span>No</span>}
+            </button>
+            <button type="button" className="btn btn-warning reset" onClick={this.handleReset}>
+              Reset
+            </button>
+            {/*<div className="control-interval controls">
             Interval Speed{" "}
             <input value={this.state.interval} onChange={this.handleIntervalChange} />{" "}
+            </div>*/}
           </div>
-
-          <div className="count-iterations">Iterations: {count}</div>
         </div>
       </div>
     );
