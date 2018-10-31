@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Grid from "../Grid";
 import Buttons from "../Buttons";
 import "./Home.css";
+import CustomNav from "../CustomNav";
 
 class Home extends Component {
   constructor() {
@@ -120,6 +121,7 @@ class Home extends Component {
   render() {
     return (
       <div>
+        <CustomNav />
         <h1>The Game of Life</h1>
 
         <Grid
