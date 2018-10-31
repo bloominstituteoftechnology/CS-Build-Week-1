@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Life from './Life';
 import './App.css';
 
 class Canvas extends Component {
@@ -6,6 +7,8 @@ class Canvas extends Component {
     constructor(props) {
         super(props);
 
+        this.life = new Life(props.width, props.height);
+        this.life.getRandomCells();
         this.gameOn = true;
     }
 
