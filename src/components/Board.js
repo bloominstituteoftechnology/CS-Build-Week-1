@@ -357,42 +357,35 @@ class Board extends React.Component {
 
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <a
-                  onClick={() => this.handleIntervalChange(300)}
+                  onClick={() => this.handleIntervalChange(2000)}
                   className="dropdown-item"
                   href="#"
                 >
-                  300 (default)
-                </a>
-                <a onClick={() => this.handleIntervalChange(50)} className="dropdown-item" href="#">
-                  50
-                </a>
-                <a
-                  onClick={() => this.handleIntervalChange(100)}
-                  className="dropdown-item"
-                  href="#"
-                >
-                  100
-                </a>
-                <a
-                  onClick={() => this.handleIntervalChange(500)}
-                  className="dropdown-item"
-                  href="#"
-                >
-                  500
+                  1
                 </a>
                 <a
                   onClick={() => this.handleIntervalChange(1000)}
                   className="dropdown-item"
                   href="#"
                 >
-                  1000
+                  2
                 </a>
                 <a
-                  onClick={() => this.handleIntervalChange(2000)}
+                  onClick={() => this.handleIntervalChange(300)}
                   className="dropdown-item"
                   href="#"
                 >
-                  2000
+                  3 (default)
+                </a>
+                <a
+                  onClick={() => this.handleIntervalChange(100)}
+                  className="dropdown-item"
+                  href="#"
+                >
+                  4
+                </a>
+                <a onClick={() => this.handleIntervalChange(50)} className="dropdown-item" href="#">
+                  5
                 </a>
               </div>
             </div>
