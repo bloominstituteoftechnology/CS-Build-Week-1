@@ -43,6 +43,7 @@ class LifeCanvas extends Component {
       cellSize: 0,
       gameBufferA: [],
       gameBufferB: [],
+      fps: 2
     }
   }
   
@@ -51,7 +52,8 @@ class LifeCanvas extends Component {
       gridSize: 500,
       cellSize: 10,
       gameBufferA: Array(Math.pow(500/10,2)).fill(false), 
-      gameBufferB: Array(Math.pow(500/10,2)).fill(false)
+      gameBufferB: Array(Math.pow(500/10,2)).fill(false),
+      fps: 2
     })
   }
 
@@ -318,10 +320,10 @@ class LifeCanvas extends Component {
     
     // Request another animation frame for the future
     if (this.continueAnimation) {
-      requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
+      setTimeout(()=>{
+        requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
+      }, 1000/this.state.fps)
     }
-    // requestAnimationFrame(this.onAnimFrame); //No control on animation
-    
     
     // If we haven't yet stored the previous time, fake it
     if (prevTimestamp === null) {
@@ -441,6 +443,7 @@ class LifeCanvas extends Component {
    * 
    */
   startGame = () => {
+    // setTimeout(() => requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); }), 200)
     requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
     this.continueAnimation = true;
     // this.setState({continueAnimation:true})
@@ -471,14 +474,25 @@ class LifeCanvas extends Component {
    * @return void
    */
   cellSelOnChangeHandler = (e) => {
-    var options = e.target.options;
-    for (var i = 0, l = options.length; i < l; i++) {
+    let options = e.target.options;
+    for (let i = 0, l = options.length; i < l; i++) {
       if (options[i].selected) {
-        this.setState({cellSize:Number(options[i].value)}, this.initializeCanvas)
+        let cellSize = Number(options[i].value.split(" ")[0]);
+        this.setState({cellSize}, this.initializeCanvas)
       }
     }
   }
 
+
+  fpsOnChangeHandler = (e) => {
+    let options = e.target.options;
+    for (let i = 0, l = options.length; i < l; i++) {
+      if (options[i].selected) {
+        let fps = Number(options[i].value);
+        this.setState({fps})
+      }
+    }
+  }
   /**
    * Rendering
    */
@@ -493,14 +507,27 @@ class LifeCanvas extends Component {
             </Col>
             <Col sm="3">
               <GridInput ref="cellSel" type="select" name="select" id="cellSizeSel" bsSize="sm" onChange={this.cellSelOnChangeHandler}>
-                <option>10</option>
-                <option>20</option>
-                <option>25</option>
-                <option>50</option>
-                <option>100</option>
+                <option>10 px</option>
+                <option>20 px</option>
+                <option>25 px</option>
+                <option>50 px</option>
+                <option>100 px</option>
               </GridInput>
             </Col>
-            <Col sm="6">
+            <Col sm="3">
+              <Label for="framesPerSecSel">Select FPS:</Label>
+            </Col>
+            <Col sm="2">
+              <GridInput ref="cellSel" type="select" name="select" id="framesPerSecSel" bsSize="sm" onChange={this.fpsOnChangeHandler}>
+                <option>2</option>
+                <option>5</option>
+                <option>10</option>
+                <option>15</option>
+                <option>30</option>
+                <option>60</option>
+              </GridInput>
+            </Col>
+            <Col sm="1">
             </Col>
           </CellSizeSelRow>
 
