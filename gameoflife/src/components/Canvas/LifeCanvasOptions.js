@@ -12,7 +12,6 @@ class LifeCanvasOptions extends React.Component {
     }
 
     handleInput = event => {
-        console.log(event.target.validity.valid);
         this.setState({ input: event.target.validity.valid ? Number(event.target.value) : this.props.generation });
     }
 
@@ -31,7 +30,7 @@ class LifeCanvasOptions extends React.Component {
 
                 <form className='canvas-options-form'>
                     <AutosizeInput type='text' pattern="[0-9]*" onChange={this.handleInput} value={this.state.input} placeholder={this.props.generation} />
-                    <input type='submit' onClick={this.calculate} hidden />
+                    <input type='submit' onClick={this.calculate} style={{ width: "0px", height: "0px", opacity: "0" }} />
                 </form>
 
             </div>
