@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactTimeout from 'react-timeout';
-import Rules from './Rules';
 import Slider from 'rc-slider';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faStop, faForward, faTimes } from '@fortawesome/free-solid-svg-icons';
 import presets from './presets';
 import 'rc-slider/assets/index.css';
 import './App.css';
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay,
+         faStop,
+         faForward,
+         faTimes } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlay, faStop, faForward, faTimes);
 
@@ -171,30 +174,38 @@ class App extends React.Component {
           <div className="panel-container">
             <div className="controls-container">
               <div className="controls-top-row">
-                <div className="control-wrapper" onClick={this.startSimulation}>
+                <div className="control-wrapper"
+                     onClick={this.startSimulation}>
                   <FontAwesomeIcon icon="play" size="2x" />
                 </div>
-                <div className="control-wrapper" onClick={this.stopSimulation}>
+                <div className="control-wrapper"
+                     onClick={this.stopSimulation}>
                   <FontAwesomeIcon icon="stop" size="2x" />
                 </div>
-                <div className="preset-wrapper" onClick={() => this.loadPreset("small exploder")}>
+                <div className="preset-wrapper"
+                     onClick={() => this.loadPreset("small exploder")}>
                   1
                 </div>
-                <div className="preset-wrapper" onClick={() => this.loadPreset("exploder")}>
+                <div className="preset-wrapper"
+                     onClick={() => this.loadPreset("exploder")}>
                   2
                 </div>
               </div>
               <div className="controls-bottom-row">
-                <div className="control-wrapper" onClick={this.advanceOneIteration}>
+                <div className="control-wrapper"
+                     onClick={this.advanceOneIteration}>
                   <FontAwesomeIcon icon="forward" size="2x" />
                 </div>
-                <div className="control-wrapper" onClick={this.resetGrid}>
+                <div className="control-wrapper"
+                     onClick={this.resetGrid}>
                   <FontAwesomeIcon icon="times" size="2x" />
                 </div>
-                <div className="preset-wrapper" onClick={() => this.loadPreset("nine cell row")}>
+                <div className="preset-wrapper"
+                     onClick={() => this.loadPreset("nine cell row")}>
                   3
                 </div>
-                <div className="preset-wrapper" onClick={() => this.loadPreset("tumbler")}>
+                <div className="preset-wrapper"
+                     onClick={() => this.loadPreset("tumbler")}>
                   4
                 </div>
               </div>
@@ -205,7 +216,8 @@ class App extends React.Component {
                       value={this.state.sliderValue}
                       onChange={this.onSliderChange}
                       onAfterChange={this.onAfterChange}
-                      trackStyle={{ backgroundColor: 'blue', borderRadius: 0, height: 5 }}
+                      trackStyle={{ backgroundColor: 'blue',
+                                    borderRadius: 0, height: 5 }}
                       handleStyle={{
                         border: '2px solid black',
                         borderColor: 'black',
@@ -217,12 +229,18 @@ class App extends React.Component {
                         marginTop: -9,
                         backgroundColor: 'white',
                       }}
-                      railStyle={{ backgroundColor: 'gray', borderRadius: 0, height: 5 }}/>
+                      railStyle={{ backgroundColor: 'gray',
+                                   borderRadius: 0, height: 5 }}/>
             </div>
             <div className="iteration-count">{this.state.iterationCount}</div>
           </div>
         </div>
-        {/* <Rules /> */}
+        <div className="link-wrapper">
+          <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
+             target="_blank" rel="noopener noreferrer">
+            more info
+          </a>
+        </div>
       </div>
     );
   }
