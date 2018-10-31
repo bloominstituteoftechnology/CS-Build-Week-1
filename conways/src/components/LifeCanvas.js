@@ -20,6 +20,7 @@ class LifeCanvas extends Component{
       c : '',
       counter: 0,
       waitTime : 500,
+      jumpTo : 0,
     }
   }
 
@@ -71,24 +72,29 @@ class LifeCanvas extends Component{
   }
 
   componentDidUpdate(nextProps){
+    // If we receive a new number of cols or rows from App
     if (nextProps.rows !== this.state.rows || nextProps.cols !== this.state.cols) {
         this.setState({ rows: nextProps.rows, cols : nextProps.cols, cellBoundaries : [], filledCells : [], life : new Life(nextProps.rows, nextProps.cols)});
-      }
-    } 
+    }
+  } 
+
+
+
 
   updateRowsCols = () => {
-    this.drawGraph(this.state.rows, this.state.cols);
+        this.drawGraph(this.state.rows, this.state.cols);
   }
 
-  clearCell = (c, cell, index) => {
+  clearCell = (c, cell, index, singleCell = false) => {
     c.fillStyle = "white";
     c.fillRect(cell.left, cell.top, cell.width, cell.height);
     c.rect(cell.left, cell.top, cell.width, cell.height)    // Draw rect to retain borders
     c.stroke();
-    // let filledCells = this.state.filledCells.filter(num => num !== index);
-    // console.log("filledCells in clearCell: ", filledCells);
+    if(singleCell){ // Update state if only removing single cell via click
+        let filledCells = this.state.filledCells.filter(cell => cell !== index);
+        this.setState({ filledCells : filledCells });
+    }
 
-    // this.setState({ filledCells : filledCells });
   }
 
   resetFilledCells = () => {
@@ -120,7 +126,7 @@ class LifeCanvas extends Component{
     this.state.cellBoundaries.forEach((cell, index) => {
         if (y > cell.top && y < cell.top + cell.height && x > cell.left && x < cell.left + cell.width) {
             if(this.state.filledCells.includes(index)){
-                this.clearCell(c, cell, index);
+                this.clearCell(c, cell, index, true);
             }else{
                 this.fillCell(c, cell, index);
             }
@@ -222,10 +228,35 @@ class LifeCanvas extends Component{
 
   }
 
+  jumpTo = (e) => {
+      e.preventDefault();
+
+      let jumpTo = this.state.jumpTo;
+
+      if(jumpTo > this.state.counter){
+          for(let i=0; i < jumpTo - 1; i++){
+              this.state.life.update()
+          }
+          this.setState({ counter : this.state.counter + (jumpTo - this.state.counter) });
+          this.nextRound();
+      }
+  }
+
+  inputHandler = (e) => {
+    this.setState({ [e.target.name] : [e.target.value] })
+  }
+
   render() {
     return (
       <div ref="outer">
         <CanvasWindow ref="canvas" width={300} height={300}/>
+        <form onSubmit={this.jumpTo}>
+            <label>
+                Jump to State
+                <input name={"jumpTo"} type="text" value={this.state.jumpTo} onChange={this.inputHandler}/>  
+            </label>
+            <button>Submit</button>
+        </form>
         <span>Round #: {this.state.counter}</span>
         <button onClick={this.playOrStop}>{this.state.running ? "Pause Game" : "Play Game"}</button>
         <button onClick={this.clearCells}>Clear Game</button>
