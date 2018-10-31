@@ -1,25 +1,30 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Grid from './Grid'
+
 
 class App extends Component {
+  constructor() {
+    super();
+    this.rows = 30;
+    this.cols = 50;
+
+    this.state = {
+      generation: 0,
+      gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false))
+    }
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1>Conway's Game of Life</h1>
+        <h2>Generations: {this.state.generation}</h2>
+        <Grid 
+          gridFull={this.state.gridFull}
+          rows={this.rows}
+          cols={this.cols}
+        />
       </div>
     );
   }
