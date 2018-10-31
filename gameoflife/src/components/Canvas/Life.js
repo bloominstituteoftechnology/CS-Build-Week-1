@@ -6,8 +6,8 @@ class Life {
         this.cellSize = 10;
         this.cells = [[], []];
 
-        this.cellWidth = Math.floor(this.width / this.cellSize);
-        this.cellHeight = Math.floor(this.height / this.cellSize);
+        this.cellWidth = this.width / this.cellSize;
+        this.cellHeight = this.height / this.cellSize;
 
         for (let x = 0; x < this.cellWidth; x++) {
             for (let y = 0; y < this.cellHeight; y++) {
@@ -27,8 +27,14 @@ class Life {
         return this.cellSize;
     }
 
+    // setDimensions(width, height) {
+    //     this.width = width;
+    //     this.height = height;
+    // }
+
     toggleCell(x, y) {
-        const index = (this.cellHeight * x) + y;
+
+        const index = (Math.ceil(this.cellHeight) * x) + y;
         const cell = this.cells[this.buffer][index];
         cell.alive = !cell.alive;
     }
@@ -58,8 +64,8 @@ class Life {
     step() {
         let cells = this.cells[this.buffer];
         let cellsBuffer = this.cells[this.buffer === 0 ? 1 : 0];
-        let cellWidth = this.cellWidth;
-        let cellHeight = this.cellHeight;
+        let cellWidth = Math.ceil(this.cellWidth);
+        let cellHeight = Math.ceil(this.cellHeight);
 
         for (let i = 0; i < cells.length; i++) {
             let neighbors = 0;

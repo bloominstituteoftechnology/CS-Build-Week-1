@@ -29,7 +29,7 @@ class LifeCanvasOptions extends React.Component {
                 <button onClick={this.props.next}>Next</button>
 
                 <form className='canvas-options-form'>
-                    <AutosizeInput type='text' pattern="[0-9]*" onChange={this.handleInput} value={this.state.input} placeholder={this.props.generation} />
+                    <AutosizeInput type='text' pattern="[0-9]*" onChange={this.handleInput} value={this.state.input} placeholder={String(this.props.generation)} />
                     <input type='submit' onClick={this.calculate} style={{ width: "0px", height: "0px", opacity: "0" }} />
                 </form>
 
