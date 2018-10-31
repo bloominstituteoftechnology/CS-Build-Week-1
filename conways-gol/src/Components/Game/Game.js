@@ -183,7 +183,7 @@ class Game extends Component {
       <div>
         <div className='board'
         style={{ width: width, height: height, backgroundSize: `${cellSize}px ${cellSize}px` }}
-        onClick={ this.handleClick }
+        onClick={ this.state.isRunning ? null : this.handleClick }
         ref={ (n) => { this.boardRef = n }}>
         {cells.map(cell => (
           <Cell x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`} />
