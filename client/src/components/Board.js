@@ -22,6 +22,7 @@ class Board extends Component {
       case 'small_exploder': for (let i=0; i<presets.small_exploder.length; i++) {cells[presets.small_exploder[i]] = 1;} break;
       case 'exploder': for (let i=0; i<presets.exploder.length; i++) {cells[presets.exploder[i]] = 1;} break;
       case 'spaceship': for (let i=0; i<presets.spaceship.length; i++) {cells[presets.spaceship[i]] = 1;} break;
+      case 'random': for (let i=0; i<presets.random.length; i++) {cells[presets.random[i]] = 1;} break;
       default: break;
     }
     this.setState({ cells });

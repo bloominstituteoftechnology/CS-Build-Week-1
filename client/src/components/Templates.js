@@ -9,6 +9,7 @@ const Templates = (props) => {
       <div className="button" onClick={() => props.handleTemplate('small_exploder')}>Small Exploder</div>
       <div className="button" onClick={() => props.handleTemplate('exploder')}>Exploder</div>
       <div className="button" onClick={() => props.handleTemplate('spaceship')}>Spaceship</div>
+      <div className="button" onClick={() => props.handleTemplate('random')}>Random</div>
     </div>
   );
 }
