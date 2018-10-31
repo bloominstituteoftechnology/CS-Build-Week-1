@@ -31,6 +31,10 @@
   }
   .rules-ctn {
     width: 100%;
+    margin-top: 0px;
+  }
+  .rule-item {
+    margin-top: 10px;
   }
   .rules-ctn h4 {
     margin-left: -40px;
