@@ -17,7 +17,7 @@ class Home extends Component {
                             <div className="wrapper-game">
 
                                 <Game />
-                                
+
                             </div>
                             <span className="control">
                                 <button>Play</button>                        
