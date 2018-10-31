@@ -343,6 +343,7 @@ template {
 html {
   box-sizing: border-box;
   font-size: 62.5%;
+  background-color: #000;
 }
 
 body {
@@ -351,4 +352,14 @@ body {
 
 *, *:before, *:after {
   box-sizing: inherit;
+}
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background: url(./images/bg.jpg) no-repeat center center fixed; 
+  background-size: cover;
 }
