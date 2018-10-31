@@ -84,7 +84,7 @@ class Game extends Component {
 
   runGame = () => {
     this.setState({ isRunning: true });
-    this.runIteration();
+    this.runIteration(false);
   }
 
   stopGame = () => {
@@ -95,7 +95,7 @@ class Game extends Component {
     }
   }
 
-  runIteration() {
+  runIteration = manual => {
     let generation = this.state.generation;
     let newBoard = this.makeEmptyBoard();
 
@@ -120,9 +120,11 @@ class Game extends Component {
     ++generation;
     this.setState({ cells: this.makeCells(), generation })
 
-    this.timeoutHandler = window.setTimeout(() => {
-      this.runIteration();
-    }, this.state.interval);
+    if (!manual) {
+      this.timeoutHandler = window.setTimeout(() => {
+        this.runIteration();
+      }, this.state.interval);
+    }
   }
 
   calculateNeighbors(board, x, y) {
@@ -180,6 +182,7 @@ class Game extends Component {
             <button className='button' onClick={this.runGame}>Run</button>
           )}
           <button className='button' onClick={this.handleRandom}>Random</button>
+          <button className='button' onClick={() => this.runIteration(true)}>>>></button>
           <button className='button' onClick={this.handleClear}>Clear</button>
           <p>Generation: {generation}</p>
         </div>
