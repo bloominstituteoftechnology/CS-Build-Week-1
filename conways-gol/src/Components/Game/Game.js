@@ -41,7 +41,6 @@ class Game extends Component {
         board[y][x] = false;
       }
     }
-    console.log(`BOARD: ${board}`);
     return board;
   }
 
@@ -54,14 +53,12 @@ class Game extends Component {
         }
       }
     }
-    console.log(`CELLS: ${cells}`);
     return cells;
   }
 
   getElementOffset() {
     const rect = this.boardRef.getBoundingClientRect();
     const doc = document.documentElement;
-    console.log(`RECT: ${rect}`, `DOC: ${doc}`, `X: ${(rect.left + window.pageXOffset) - doc.clientLeft}`, `Y: ${(rect.top + window.pageYOffset) - doc.clientTop}`)
     return {
       x: (rect.left + window.pageXOffset) - doc.clientLeft,
       y: (rect.top + window.pageYOffset) - doc.clientTop,
@@ -79,7 +76,8 @@ class Game extends Component {
     if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows) {
       this.board[y][x] = !this.board[y][x];
     }
-
+    console.log(this.board);
+    console.log(this.makeCells());
     this.setState({ cells: this.makeCells() });
   }
 
@@ -97,7 +95,6 @@ class Game extends Component {
   }
 
   runIteration() {
-    console.log('running iteration');
     let newBoard = this.makeEmptyBoard();
 
     for (let y = 0; y < this.rows; y++) {
@@ -137,12 +134,20 @@ class Game extends Component {
         neighbors++
       }
     }
-    console.log(`NEIGHBORS: ${neighbors}`);
     return neighbors;
   }
 
   handleIntervalChange = event => {
     this.setState({ interval: event.target.value })
+  }
+
+  handleRandom = () => {
+    for (let y = 0; y < this.rows; y++) {
+      for (let x = 0; x < this.cols; x++) {
+        this.board[y][x] = (Math.random() >= 0.5);
+      }
+    }
+    this.setState({ cells: this.makeCells() });
   }
 
   handleClear = () => {
@@ -169,6 +174,7 @@ class Game extends Component {
           ) : (
             <button className='button' onClick={this.runGame}>Run</button>
           )}
+          <button className='button' onClick={this.handleRandom}>Random</button>
           <button className='button' onClick={this.handleClear}>Clear</button>
         </div>
       </div>

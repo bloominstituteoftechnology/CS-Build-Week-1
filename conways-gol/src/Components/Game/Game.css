@@ -1,6 +1,5 @@
 .board {
   position: relative;
-  margin: 0 auto;
   background-color: #416cad;
   background-image:
     linear-gradient(#333 1px, transparent 1px),
