@@ -1,10 +1,65 @@
 import React, { Component } from 'react';
+import Cell from './Cell';
 
 class GameBoard extends Component {
     constructor() {
         super();
         this.state = {
-            running: 0,
+            gameIsRunning: false,
+            generationNumber: 0,
+            gridHeight: 10,
+            gridWidth: 10,
+            cellStates: [],
+        }
+    }
+    
+    generateBoard = (e, gridHeight, gridWidth) => {
+        const gridHeight = this.state.gridHeight;
+        const gridWidth = this.state.gridWidth;
+
+        let gridRow = [];
+        for (let i = 0; i < gridWidth; i++) {
+            gridRow.push(0);
+        };
+
+        let cellStates = [];
+        for (let i = 0; i < gridHeight; i++) {
+            cellStates.push(gridRow);
+        };
+
+        this.setState({cellStates: cellStates});
+
+        for (let i = 0; i < gridHeight; i++) {
+            for (let j = 0; j < gridWidth; j++) {
+                return (
+                    <Cell 
+                        rowPosition = {i}
+                        columnPosition = {j}
+                    />
+                )
+            }
+        }
+    }
+
+
+    
+    get_cell_position = () => {
+        const board_length = this.state.board.length;
+        // console.log("board length: ", board_length);
+        for (let i = 0; i < board_length; i++) {
+            for (let j = 0; j < board_length; j++) {
+                // this.count_live_neighbors(i,j);
+                console.log("Cell position: ", [j,i], "Live neighbor count :", this.count_live_neighbors(i,j));
+            }
+        }
+    }
+}
+
+class GameBoard extends Component {
+    constructor() {
+        super();
+        this.state = {
+            game_is_running: false,
             generationNumber: 0,
             board: [
                 [0, 0, 0, 0, 0],
