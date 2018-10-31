@@ -61,7 +61,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid black;
+  border: 1px solid gray;
   height: 482px;
 }
 
@@ -90,7 +90,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+  border: 1px solid gray;
 }
 
 .preset-wrapper {
@@ -101,7 +101,7 @@ button {
   justify-content: center;
   align-items: center;
   font-size: 50px;
-  border: 1px solid black;
+  border: 1px solid gray;
 }
 
 .row {
@@ -132,11 +132,11 @@ button {
   padding: 0px 20px 0px 20px;
   width: 100%;
   height: 62px;
-  border: 1px solid black;
+  border: 1px solid gray;
 }
 
 .iteration-count {
-  border: 1px solid black;
+  border: 1px solid gray;
   box-sizing: border-box;
   padding: 0 15px 0 15px;
   width: 100%;
