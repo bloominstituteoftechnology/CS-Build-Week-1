@@ -11,6 +11,8 @@ import {
   Navbar,
   NavItem
 } from "react-bootstrap";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import About from "./components/About";
 
 class Box extends React.Component {
   selectBox = () => {
@@ -221,41 +223,30 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
-        <Navbar inverse>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="#home">Game of Life</a>
-            </Navbar.Brand>
-          </Navbar.Header>
-          <Nav>
-            <NavItem eventKey={1} href="#">
-              About
-            </NavItem>
-            <NavItem eventKey={2} href="#">
-              Rules
-            </NavItem>
-          </Nav>
-        </Navbar>
-        <h1>The Game of Life</h1>
+      <Router>
+        <div>
+          <Route path="/about" component={About} />
 
-        <Grid
-          gridFull={this.state.gridFull}
-          rows={this.rows}
-          cols={this.cols}
-          selectBox={this.selectBox}
-        />
-        <Buttons
-          playButton={this.playButton}
-          stopButton={this.stopButton}
-          slow={this.slow}
-          fast={this.fast}
-          clear={this.clear}
-          seed={this.seed}
-          gridSize={this.gridSize}
-        />
-        <h2>Generations: {this.state.generation}</h2>
-      </div>
+          <h1>The Game of Life</h1>
+
+          <Grid
+            gridFull={this.state.gridFull}
+            rows={this.rows}
+            cols={this.cols}
+            selectBox={this.selectBox}
+          />
+          <Buttons
+            playButton={this.playButton}
+            stopButton={this.stopButton}
+            slow={this.slow}
+            fast={this.fast}
+            clear={this.clear}
+            seed={this.seed}
+            gridSize={this.gridSize}
+          />
+          <h2>Generations: {this.state.generation}</h2>
+        </div>
+      </Router>
     );
   }
 }
