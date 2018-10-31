@@ -123,6 +123,17 @@ class LifeCanvas extends React.Component {
         this.drawCanvas();
     }
 
+    calculate = gen => {
+        if (gen < this.state.currentGeneration) {
+            alert('Cannot go backwards!');
+        } else {
+            const generation = gen - this.state.currentGeneration;
+            this.state.life.calculateGeneration(generation);
+            this.drawCanvas();
+            this.setState({ currentGeneration: gen });
+        }
+    }
+
     render() {
         return (
             <div className='canvas-container'>
@@ -131,6 +142,7 @@ class LifeCanvas extends React.Component {
                 <LifeCanvasOptions
                     continue={this.state.continueAnimation}
                     generation={this.state.currentGeneration}
+                    calculate={this.calculate}
                     randomize={this.randomize}
                     start={this.start}
                     next={this.next}

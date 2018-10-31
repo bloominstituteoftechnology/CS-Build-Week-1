@@ -12,6 +12,38 @@
     margin: 0 9.6px;
 }
 
+.canvas-options-form input {
+    min-width: 20px;
+    background: #999999;
+    border: none;
+    text-align: center;
+    font-size: 15px;
+}
+
+.canvas-options-form input:focus {
+    outline: none;
+}
+
+.canvas-options-form input::placeholder {
+    color: black;
+}
+
+.canvas-options-form input::-moz-placeholder {
+    color: black;
+}
+
+.canvas-options-form input::-webkit-input-placeholder {
+    color: black;
+}
+
+.canvas-options-form input:-ms-input-placeholder {
+    color: black;
+}
+
+.canvas-options-form input:-moz-placeholder {
+    color: black;
+}
+
 .canvas-header {
     max-height: 100px;
     height: 100px;

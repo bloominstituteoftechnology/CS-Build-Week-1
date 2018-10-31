@@ -1,16 +1,42 @@
 import React from 'react';
 import './canvas.css';
+import AutosizeInput from 'react-input-autosize';
 
-const LifeCanvasOptions = props => {
-    return (
-        <div className='canvas-options'>
-            <button onClick={props.clear}>Clear</button>
-            <button onClick={props.randomize}>Randomize</button>
-            <button onClick={props.start}>{props.continue ? 'Stop' : 'Start'}</button>
-            <button onClick={props.next}>Next</button>
-            <p>{props.generation}</p>
-        </div>
-    );
+class LifeCanvasOptions extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            input: ''
+        }
+    }
+
+    handleInput = event => {
+        console.log(event.target.validity.valid);
+        this.setState({ input: event.target.validity.valid ? Number(event.target.value) : this.props.generation });
+    }
+
+    calculate = () => {
+        this.props.calculate(this.state.input);
+        this.setState({ input: '' });
+    }
+
+    render() {
+        return (
+            <div className='canvas-options' onSubmit={event => event.preventDefault()} >
+                <button onClick={this.props.clear}>Clear</button>
+                <button onClick={this.props.randomize}>Randomize</button>
+                <button onClick={this.props.start}>{this.props.continue ? 'Stop' : 'Start'}</button>
+                <button onClick={this.props.next}>Next</button>
+
+                <form className='canvas-options-form'>
+                    <AutosizeInput type='text' pattern="[0-9]*" onChange={this.handleInput} value={this.state.input} placeholder={this.props.generation} />
+                    <input type='submit' onClick={this.calculate} hidden />
+                </form>
+
+            </div>
+        );
+    }
 }
 
 export default LifeCanvasOptions;

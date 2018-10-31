@@ -34,11 +34,11 @@ class Life {
     }
 
     clearCells() {
-        for (let i = 0; i < this.cells[this.buffer].length; i++) {
-            if (this.cells[this.buffer][i].alive) {
-                this.cells[this.buffer][i].alive = false;
+        this.cells[this.buffer].forEach(cell => {
+            if (cell.alive) {
+                cell.alive = !cell.alive;
             }
-        }
+        });
     }
 
     randomize() {
@@ -47,6 +47,12 @@ class Life {
                 cell.alive = !cell.alive;
             }
         });
+    }
+
+    calculateGeneration(gen) {
+        for (let i = 0; i < gen; i++) {
+            this.step();
+        }
     }
 
     step() {
