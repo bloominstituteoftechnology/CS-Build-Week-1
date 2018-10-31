@@ -10,15 +10,15 @@ class CustomNav extends Component {
         <Navbar inverse>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#home">Game of Life</a>
+              <Link to="/">Game of Life</Link>
             </Navbar.Brand>
           </Navbar.Header>
           <Nav>
-            <NavItem eventKey={1} href="#">
-              About
+            <NavItem eventKey={1}>
+              <Link to="/about">About</Link>
             </NavItem>
-            <NavItem eventKey={2} href="#">
-              Rules
+            <NavItem eventKey={2}>
+              <Link to="/rules">Rules</Link>
             </NavItem>
           </Nav>
         </Navbar>
