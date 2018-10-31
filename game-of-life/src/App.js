@@ -146,7 +146,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <h1>Conway's Game of Life</h1>
+        <h1>{"Conway's Game of Life"}</h1>
         <div className="grid-controls-presets-container">
           <div className="grid-slider-iteration-count-container">
             <div className="grid-container">
