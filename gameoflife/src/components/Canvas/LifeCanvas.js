@@ -51,13 +51,33 @@ class LifeCanvas extends React.Component {
         const cells = this.state.life.getCells();
         const cellSize = this.state.life.getCellSize();
 
-        for (let i = 0; i < cells.length; i++) {
-            context.lineWidth = 1;
-            context.fillStyle = cells[i].alive ? "#FFFF00" : "#7E7E7E";
-            context.fillRect(cellSize * cells[i].coords[0], cellSize * cells[i].coords[1], cellSize, cellSize);
-            context.strokeStyle = "#999999";
-            context.strokeRect(cellSize * cells[i].coords[0], cellSize * cells[i].coords[1], cellSize, cellSize);
+
+        context.lineWidth = 1;
+        context.fillStyle = "#7e7e7e";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.strokeStyle = "#999999";
+
+        for (let i = 0; i < canvas.width; i += cellSize) {
+            context.beginPath();
+            context.moveTo(i + 0.5, 0);
+            context.lineTo(i + 0.5, canvas.height);
+            context.stroke();
         }
+
+        for (let i = 0; i < canvas.height; i += cellSize) {
+            context.beginPath();
+            context.moveTo(0, i + 0.5);
+            context.lineTo(canvas.width, i + 0.5);
+            context.stroke();
+        }
+
+        context.fillStyle = "yellow";
+
+        cells.forEach(cell => {
+            if (cell.alive) {
+                context.fillRect(cell.coords[0] * cellSize + 1, cell.coords[1] * cellSize + 1, cellSize - 1, cellSize - 1);
+            }
+        });
     }
 
     toggleLife = event => {
