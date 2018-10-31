@@ -76,9 +76,9 @@ Implment at least 3 of the following features:
 - [ ] Add an option that creates a random cell configuration that users can run
 - [ ] Add additional cell properties, like color or size, and incorporate them into your visualization
 - [ ] Allow users to specify the speed of the simulation
-- [ ] Provide functionality to manually step through simulation, as opposed to animating automatically
-- [ ] Allow users to change the dimension of the grid being displayed
-- [ ] Instead of "killing" cells that move off the edge of the screen, create a wrap-around display
+- [x] Provide functionality to manually step through simulation, as opposed to animating automatically
+- [x] Allow users to change the dimension of the grid being displayed
+- [x] Instead of "killing" cells that move off the edge of the screen, create a wrap-around display
 - [ ] Given a specific generation, calculate the configuration of cells at that point in time, and jump to that state, bypassing animation
 - [ ] If you have an idea for a custom feature on this list, run it by your PM or instructor
 
