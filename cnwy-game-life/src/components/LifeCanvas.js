@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Label, Input, Button} from 'reactstrap';
 import styled from 'styled-components';
-
+import patterns from './Patterns';
 
 /**
  * Styled Components
@@ -312,14 +312,14 @@ class LifeCanvas extends Component {
     }
     
     // Compute how long it took between frames
-    const elapsed = timestamp - prevTimestamp
+    // const elapsed = timestamp - prevTimestamp
     
     // Remember this for next frame
     prevTimestamp = timestamp;
-    console.log(`Current time: ${timestamp} ms, frame time: ${elapsed} ms`);
+    // console.log(`Current time: ${timestamp} ms, frame time: ${elapsed} ms`);
     
     
-    console.log("Cuurent State: ",this.state.gameBufferA);
+    // console.log("Cuurent State: ",this.state.gameBufferA);
     
     //Calculate the next Gen from BufferA and place into BufferB
     this.setState({
@@ -366,6 +366,7 @@ class LifeCanvas extends Component {
       ctx.stroke();
     })
   }
+
 
   /**
    * Calculate the next Generation
@@ -419,6 +420,7 @@ class LifeCanvas extends Component {
     return nextBuffer;
   }
 
+
   /**
    * Game Controllers
    * 
@@ -448,6 +450,7 @@ class LifeCanvas extends Component {
     // this.setState({continueAnimation:false})
   }
 
+
   /**
    * Handles the changing of the cell size selector
    * 
@@ -463,6 +466,7 @@ class LifeCanvas extends Component {
       }
     }
   }
+
 
   /**
    * Handles the changing of the fps
@@ -480,78 +484,72 @@ class LifeCanvas extends Component {
     }
   }
   
+
   /**
-   * Select an initial Pattern
+   * Select an initial Pattern on Change handler
+   * The selected option will call the initPattern()
    * 
    * @param e event = change event
    * @return void
    */
   initPatternOnChangeHandler = (e) => {
 
-    //Calcuate the number of cells per row
-    let cellsPerRow = this.state.gridSize/this.state.cellSize;
-    
-    //Empty Game Buffer (all falses)
-    let gameBufferE = Array(Math.pow(this.state.gridSize/this.state.cellSize,2)).fill(false);
-
-    //Copy gameBufferA
-    let gameBufferA = [...this.state.gameBufferA]
-
     let options = e.target.options;
     for (let i = 0, l = options.length; i < l; i++) {
       if (options[i].selected){
-
-        switch(options[i].value) {
-          case 'Glider':
-            //Set the EmptyBuffer to the BufferA
-            gameBufferA = gameBufferE;
-
-            //Update state and update canvas
-            this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
-            
-            //Update cells for this pattern
-            gameBufferA[1 + 0*cellsPerRow] = true;
-            gameBufferA[2 + 1*cellsPerRow] = true;
-            gameBufferA[0 + 2*cellsPerRow] = true;
-            gameBufferA[1 + 2*cellsPerRow] = true;
-            gameBufferA[2 + 2*cellsPerRow] = true;
-            
-            //Update state and update canvas
-            this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
-            break;
-            
-          case 'Blinker':
-            //Set the EmptyBuffer to the BufferA
-            gameBufferA = gameBufferE;
-            
-            //Update state and update canvas
-            this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
-            
-            //Update cells for this pattern
-            gameBufferA[1 + 1*cellsPerRow] = true;
-            gameBufferA[2 + 1*cellsPerRow] = true;
-            gameBufferA[3 + 1*cellsPerRow] = true;
-            
-            //Update state and update canvas
-            this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
-
-            break;
-          case 'R-pentomino':
-            break;
-          case 'Vertical Line Full':
-            break;
-          case 'Vertical 1/2':
-            break;
-          case 'Horizontal Line Full':
-            break;
-          case 'Horizantal 1/2':
-            break;
-          default:
+        this.initPattern(options[i].value) 
         }
+      }
+    }
+
+
+  /**
+   * Initialize Pattern
+   * 
+   * @param patternStr = a string representing the pattern
+   * @return void
+   */
+  initPattern = (patternStr) => {
+        //Calcuate the number of cells per row
+        let cellsPerRow = this.state.gridSize/this.state.cellSize;
+            
+        //Calculate the middle Row/Col
+        let mid = Math.round(cellsPerRow/2);
+            
+        //Set the Empty Game Buffer (all falses)
+        let gameBufferE = Array(Math.pow(this.state.gridSize/this.state.cellSize,2)).fill(false);
+            
+        //Set the Empty Buffer to the BufferA
+        let gameBufferA = [...gameBufferE];
+            
+            //Update state and update canvas
+            this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
+            
+        //Check if pattern string exists (imported from Patterns.js)
+        if (patterns[patternStr]){
+            
+          //Loop through the array of (x,y) values and set them to true:
+          patterns[patternStr].forEach( cv => {  
+            gameBufferA[cv[0] + cv[1]*cellsPerRow] = true;
+          })
+        }else {
+          if (patternStr === "Vertical Line"){
+
+            for (let i=0; i<cellsPerRow; i++){
+              gameBufferA[mid + i*cellsPerRow] = true;
+            }
+        }
+          else if (patternStr === "Horizontal Line"){  
+            for (let i=0; i<cellsPerRow; i++){
+              gameBufferA[i + mid*cellsPerRow] = true;
       }
     }
   }
   
+        //Update state and update canvas
+        this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
+    
+  }
 
   /**
    * Rendering
@@ -601,10 +599,8 @@ class LifeCanvas extends Component {
                 <option>Glider</option>
                 <option>Blinker</option>
                 <option>R-pentomino</option>
-                <option>Vertical Line Full</option>
-                <option>Vertical 1/2</option>
-                <option>Horizontal Line Full</option>
-                <option>Horizantal 1/2</option>
+                <option>Vertical Line</option>
+                <option>Horizontal Line</option>
               </GridInput>
             </Col>
           </SelRow>
