@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Cell from './Cell';
+import presets from '../preset';
 import '../styles/Board.css';
 
 class Board extends Component {
@@ -15,9 +16,14 @@ class Board extends Component {
   }
   setupBoard = () => {
     var cells = [];
-    for (let i=0; i<900; i++) {
-      cells.push(0)
-    } 
+    for (let i=0; i<900; i++) {cells.push(0)}
+    switch(this.props.template) {
+      case 'glider': for (let i=0; i<presets.glider.length; i++) {cells[presets.glider[i]] = 1;} break;
+      case 'small_exploder': for (let i=0; i<presets.small_exploder.length; i++) {cells[presets.small_exploder[i]] = 1;} break;
+      case 'exploder': for (let i=0; i<presets.exploder.length; i++) {cells[presets.exploder[i]] = 1;} break;
+      case 'spaceship': for (let i=0; i<presets.spaceship.length; i++) {cells[presets.spaceship[i]] = 1;} break;
+      default: break;
+    }
     this.setState({ cells });
   }
   // Calculates neighbors and returns next state
@@ -51,7 +57,7 @@ class Board extends Component {
     })
     
     this.setState({ cells })
-    this.props.handleGen();
+    // this.props.handleGen();
   }
   // Used to check if a cell is alive
   isAlive = (row, col) => {
@@ -67,21 +73,18 @@ class Board extends Component {
   }
   componentDidUpdate(previousProps) {
     // Checks if clear has been clicked
-    if (this.props.clear === true && previousProps !== this.state.props) {
+    if (this.props.clear === true && previousProps !== this.props) {
       this.setupBoard()
       this.props.handleClear()
     }
+    if (this.props.template !== '' && previousProps !== this.props) {
+      this.setupBoard();
+      this.props.handleStopTem();
+    }
     // Starts/stops the game from running(Invokes updateCells)
     let celInt = 0;
-    // let genInt = 0;
-    if (this.props.running === true) {
-      celInt = setTimeout(this.updateCells, this.props.speed)
-      // genInt = setTimeout(this.props.handleGen, 1000)
-    }
-    if (this.props.running === false) {
-      clearTimeout(celInt)
-      // clearTimeout(genInt)
-    }
+    if (this.props.running === true) {celInt = setTimeout(this.updateCells, this.props.speed) }
+    if (this.props.running === false) {clearTimeout(celInt)}
   }
   // Creates cell components for render
   createCells = () => {
