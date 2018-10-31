@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import Controls from './Controls';
+import Cell from './Cell';
+import {GridContainer, GridStyle, LabelStyling} from '../theme/css';
 
 export default class Grid extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            size: [15, 15],
-            isRunning: false,
+            size: [15, 15]
         }
     }
 
@@ -15,7 +17,7 @@ export default class Grid extends Component {
 
         for(let i = 0; i < this.state.size[0]; i++) {
             for(let j = 0; j < this.state.size[1]; j++) {
-                cellRow.push()
+                cellRow.push(<Cell key={[i,j]} />);
             }
             cellColumn.push(<div key={i}>{cellRow}</div>)
             cellRow = [];
@@ -26,7 +28,8 @@ export default class Grid extends Component {
 
     render() {
         return(
-        <div>
+        <GridContainer>
+        <LabelStyling>
         <label>
             Rows:
             <input type="text" value={this.state.size[1]} onChange={this.handleRow}/>
@@ -35,7 +38,10 @@ export default class Grid extends Component {
             Columns:
             <input type="text" value={this.state.size[0]} onChange={this.handleColumn}/>
         </label>
-        </div>
+        </LabelStyling>
+        <GridStyle>{this.gridSize()}</GridStyle>
+        <Controls/>
+        </GridContainer>
         )
     }
 }
