@@ -15,6 +15,12 @@ class App extends Component {
     }
   }
 
+  selectBox = (row, col) => {
+    let gridCopy = arrayClone(this.state.gridFull);
+    gridCopy[row][col] = !gridCopy[row][col];
+    this.setState({gridFull: gridCopy})
+  }
+
   render() {
     return (
       <div className="App">
@@ -24,10 +30,15 @@ class App extends Component {
           gridFull={this.state.gridFull}
           rows={this.rows}
           cols={this.cols}
+          selectBox={this.selectBox}
         />
       </div>
     );
   }
+}
+
+function arrayClone(arr) {
+  return JSON.parse(JSON.stringify(arr));
 }
 
 export default App;
