@@ -16,7 +16,7 @@ class App extends Component {
           </div>
           <div className="rules-ctn">
             <ol>
-              <h5>Rules:</h5>
+              <h4>Rules:</h4>
               <li className="rule-item">Any live cell with fewer than two live neighbors dies, as if by underpopulation.</li>
               <li className="rule-item">Any live cell with two or three live neighbors lives on to the next generation.</li>
               <li className="rule-item">Any live cell with more than three live neighbors dies, as if by overpopulation.</li>

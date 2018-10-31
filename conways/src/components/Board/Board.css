@@ -6,7 +6,6 @@
 }
 
 .board {
-    margin-top:10px;
     display:flex;
 	width:330px;
     flex-flow: row wrap;
@@ -14,19 +13,20 @@
 }
 
 .btn-ctn {
-    margin-top: 10px;
+    margin-top: 20px;
     width: 330px;
     display: flex;
     justify-content: space-between;
 }
 .main-btn {
-    width: 75px;
+    width: 100px;
+    border-radius: 12px;
+    outline: none;
 }
 
 .slider {
     width: 30%;
-    float: left;
+    float: center;
     margin-top: 20px;
     margin-left: 22%;
-    
 }
