@@ -30,20 +30,24 @@ class App extends Component {
 
   playButton = () => {
 		clearInterval(this.intervalId);
-		this.intervalId = setInterval(this.play, this.speed);
+		this.intervalId = setInterval(this.play, this.state.speed);
   }
   
   pauseButton = () => {
 		clearInterval(this.intervalId);
   }
 
-  changeSpeed = (speed) => {
-    if (speed === 'increase') {
-      this.setState({
-        
-      })
-    }
-	}
+  increaseSpeed = () => {
+    this.setState({
+      speed: this.state.speed + 100
+    })
+  }
+  
+  decreaseSpeed = () => {
+    this.setState({
+      speed: this.state.speed - 100
+    })
+  }
 
   clearButton = () => {
     var grid = Array(this.rows)
@@ -75,7 +79,6 @@ class App extends Component {
 		    if (!g[i][j] && count === 3) g2[i][j] = true;
 		  }
     }
-
 		this.setState({
 		  gridFull: g2,
 		  generation: this.state.generation + 1
@@ -89,7 +92,7 @@ class App extends Component {
           <h3>Conway's Game of Life</h3>
         </header>
         <h3 className="center">Generations: {this.state.generation}</h3>
-        <h3 className="center">Speed Per Generation: {this.state.generation} seconds</h3>
+        <h3 className="center">Speed Per Generation: {this.state.speed} ms</h3>
         <Grid
           gridFull={this.state.gridFull}
           rows={this.rows}
@@ -100,6 +103,8 @@ class App extends Component {
           playButton={this.playButton}
           pauseButton={this.pauseButton}
           clearButton={this.clearButton}
+          increaseSpeed={this.increaseSpeed}
+          decreaseSpeed={this.decreaseSpeed}
         />
       </div>
     );
