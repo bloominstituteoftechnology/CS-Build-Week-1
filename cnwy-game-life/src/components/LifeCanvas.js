@@ -22,8 +22,11 @@ const CellSizeSelRow = styled(Row)`
   margin-top:25px;
 `
 
+//Globals
 let prevTimestamp = null;
-
+let cellColorDead = 'white'; //must be white for now
+let cellColorAlive = 'black'; //must be black for now
+let cellBorderColor = 'blue';
 
 /**
  * LifeCanvas component
@@ -95,10 +98,10 @@ class LifeCanvas extends Component {
       for (let j = 0; j<this.state.gridSize/sqEdgeLength; j++){
       ctx.beginPath();
       ctx.rect(i*sqEdgeLength, j*sqEdgeLength, sqEdgeLength, sqEdgeLength);
-      ctx.fillStyle = 'white';
+      ctx.fillStyle = cellColorDead;
       ctx.fill();
       ctx.lineWidth = 1;
-      ctx.strokeStyle = 'grey';
+      ctx.strokeStyle = cellBorderColor;
       ctx.stroke();
       }
     }
@@ -137,7 +140,7 @@ class LifeCanvas extends Component {
     //Toggle the appropriate cell in BufferA:
     this.initializeBufferA(clickedCellIndex);
 
-    //Set the pixel to black
+    //Set the pixel to cellColorAlive
     // this.setPixel(canvas, canvasCoord.x, canvasCoord.y);
 
   }
@@ -209,10 +212,10 @@ class LifeCanvas extends Component {
 
     ctx.beginPath();
     ctx.rect(xMult*this.state.cellSize, yMult*this.state.cellSize, this.state.cellSize, this.state.cellSize);
-    ctx.fillStyle = (pixelRGBA[0] === 255 && pixelRGBA[1] === 255 && pixelRGBA[1] === 255) ? 'black' : 'white';
+    ctx.fillStyle = (pixelRGBA[0] === 255 && pixelRGBA[1] === 255 && pixelRGBA[1] === 255) ? cellColorAlive : cellColorDead;
     ctx.fill();
     ctx.lineWidth = 1;
-    ctx.strokeStyle = 'grey';
+    ctx.strokeStyle = cellBorderColor;
     ctx.stroke();
 
     return clickedCellIndex;
@@ -378,10 +381,10 @@ class LifeCanvas extends Component {
       
       ctx.beginPath();
       ctx.rect(xMult * this.state.cellSize, yMult*this.state.cellSize, this.state.cellSize, this.state.cellSize);
-      ctx.fillStyle = cv ? 'black' : 'white';
+      ctx.fillStyle = cv ? cellColorAlive : cellColorDead;
       ctx.fill();
       ctx.lineWidth = 1;
-      ctx.strokeStyle = 'grey';
+      ctx.strokeStyle = cellBorderColor;
       ctx.stroke();
     })
   }
