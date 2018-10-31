@@ -41,6 +41,7 @@ class Game extends Component {
         board[y][x] = false;
       }
     }
+    console.log(`BOARD: ${board}`);
     return board;
   }
 
@@ -53,13 +54,14 @@ class Game extends Component {
         }
       }
     }
+    console.log(`CELLS: ${cells}`);
     return cells;
   }
 
   getElementOffset() {
     const rect = this.boardRef.getBoundingClientRect();
     const doc = document.documentElement;
-
+    console.log(`RECT: ${rect}`, `DOC: ${doc}`, `X: ${(rect.left + window.pageXOffset) - doc.clientLeft}`, `Y: ${(rect.top + window.pageYOffset) - doc.clientTop}`)
     return {
       x: (rect.left + window.pageXOffset) - doc.clientLeft,
       y: (rect.top + window.pageYOffset) - doc.clientTop,
@@ -123,29 +125,29 @@ class Game extends Component {
     }, this.state.interval);
   }
 
-    /**
-     * Calculate the number of neighbors at point (x, y)
-     * @param {Array} board 
-     * @param {int} x 
-     * @param {int} y 
-     */
-    calculateNeighbors(board, x, y) {
-      let neighbors = 0;
-      const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
-      for (let i = 0; i < dirs.length; i++) {
-        const dir = dirs[i];
-        let y1 = y + dir[0];
-        let x1 = x + dir[1];
+  calculateNeighbors(board, x, y) {
+    let neighbors = 0;
+    const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
+    for (let i = 0; i < dirs.length; i++) {
+      const dir = dirs[i];
+      let y1 = y + dir[0];
+      let x1 = x + dir[1];
 
-        if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
-          neighbors++
-        }
+      if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
+        neighbors++
       }
-      return neighbors;
     }
+    console.log(`NEIGHBORS: ${neighbors}`);
+    return neighbors;
+  }
 
   handleIntervalChange = event => {
     this.setState({ interval: event.target.value })
+  }
+
+  handleClear = () => {
+    this.board = this.makeEmptyBoard();
+    this.setState({ cells: this.makeCells() });
   }
 
   render() {
@@ -167,6 +169,7 @@ class Game extends Component {
           ) : (
             <button className='button' onClick={this.runGame}>Run</button>
           )}
+          <button className='button' onClick={this.handleClear}>Clear</button>
         </div>
       </div>
     )
