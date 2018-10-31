@@ -221,7 +221,7 @@ class LifeCanvas extends React.Component {
   };
 
   handleChange = e => {
-    this.setState({ config: e.target.value }, () => {
+    this.setState({ config: e.target.value, iteration: 0 }, () => {
       this.initGame(this.state.config);
     });
   };
@@ -274,7 +274,7 @@ class LifeCanvas extends React.Component {
             display: "flex",
             justifyContent: "space-around",
             width: "500px",
-            margin: "0 auto 100px"
+            margin: "30px auto"
           }}
         >
           <select value={this.state.config} onChange={this.handleChange}>
@@ -288,6 +288,27 @@ class LifeCanvas extends React.Component {
           <button onClick={this.runGame}>Start</button>
           <button onClick={this.stopGame}>Stop</button>
           <button onClick={this.resetGame}>Reset</button>
+        </div>
+        <div
+          style={{
+            margin: "auto",
+            width: "600px"
+          }}
+        >
+          <h2>The Rules</h2>
+          <ul style={{ textAlign: "left", listStyleType: "None" }}>
+            <h4>For a cell that is alive(black):</h4>
+            <li>Each cell with one or no neighbors dies, as if by solitude.</li>
+            <li>
+              Each cell with four or more neighbors dies, as if by
+              overpopulation.
+            </li>
+            <li>Each cell with two or three neighbors survives.</li>
+          </ul>
+          <ul style={{ textAlign: "left", listStyleType: "None" }}>
+            <h4>For a cell that is dead(white):</h4>
+            <li>Each cell with three neighbors becomes populated.</li>
+          </ul>
         </div>
       </React.Fragment>
     );
