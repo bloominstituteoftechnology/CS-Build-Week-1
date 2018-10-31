@@ -185,6 +185,69 @@ class Board extends React.Component {
     this.board = this.generateBoard();
     this.setState({ cells: this.generateCells() });
   };
+  handlePresets = config => {
+    switch (config) {
+      case "block":
+        this.board[11][11] = !this.board[11][11];
+        this.board[11][12] = !this.board[11][12];
+        this.board[12][11] = !this.board[12][11];
+        this.board[12][12] = !this.board[12][12];
+      case "beehive":
+        this.board[12][10] = !this.board[12][10];
+        this.board[11][11] = !this.board[11][11];
+        this.board[11][12] = !this.board[11][12];
+        this.board[12][13] = !this.board[12][13];
+        this.board[13][12] = !this.board[13][12];
+        this.board[13][11] = !this.board[13][11];
+      case "pentadecathlon":
+        this.board[9][11] = !this.board[9][11];
+        this.board[10][11] = !this.board[10][11];
+        this.board[11][11] = !this.board[11][11];
+        this.board[12][11] = !this.board[12][11];
+        this.board[13][11] = !this.board[13][11];
+        this.board[14][11] = !this.board[14][11];
+        this.board[15][11] = !this.board[15][11];
+        this.board[16][11] = !this.board[16][11];
+        this.board[9][12] = !this.board[9][12];
+        this.board[11][12] = !this.board[11][12];
+        this.board[12][12] = !this.board[12][12];
+        this.board[13][12] = !this.board[13][12];
+        this.board[14][12] = !this.board[14][12];
+        this.board[16][12] = !this.board[16][12];
+        this.board[9][13] = !this.board[9][13];
+        this.board[10][13] = !this.board[10][13];
+        this.board[11][13] = !this.board[11][13];
+        this.board[12][13] = !this.board[12][13];
+        this.board[13][13] = !this.board[13][13];
+        this.board[14][13] = !this.board[14][13];
+        this.board[15][13] = !this.board[15][13];
+        this.board[16][13] = !this.board[16][13];
+      case "toad":
+        this.board[10][11] = !this.board[10][11];
+        this.board[10][12] = !this.board[10][12];
+        this.board[10][13] = !this.board[10][13];
+        this.board[11][12] = !this.board[11][12];
+        this.board[11][11] = !this.board[11][11];
+        this.board[11][10] = !this.board[11][10];
+      case "glider":
+        this.board[9][10] = !this.board[9][10];
+        this.board[10][11] = !this.board[10][11];
+        this.board[11][11] = !this.board[11][11];
+        this.board[11][10] = !this.board[11][10];
+        this.board[11][9] = !this.board[11][9];
+      case "spaceship":
+        this.board[9][19] = !this.board[9][19];
+        this.board[11][19] = !this.board[11][19];
+        this.board[12][18] = !this.board[12][18];
+        this.board[12][17] = !this.board[12][17];
+        this.board[12][16] = !this.board[12][16];
+        this.board[12][15] = !this.board[12][15];
+        this.board[11][15] = !this.board[11][15];
+        this.board[10][15] = !this.board[10][15];
+        this.board[9][16] = !this.board[9][16];
+    }
+    this.setState({ cells: this.generateCells() });
+  };
 
   render() {
     if (this.state.isPlaying) {
@@ -221,20 +284,27 @@ class Board extends React.Component {
             Presets
           </button>
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a className="dropdown-item" href="#">
+            <a className="dropdown-item" href="#" onClick={() => this.handlePresets("block")}>
               Block
             </a>
-            <a className="dropdown-item" href="#">
+            <a className="dropdown-item" href="#" onClick={() => this.handlePresets("beehive")}>
               Beehive
             </a>
-            <a className="dropdown-item" href="#">
-              Loaf
+            <a
+              className="dropdown-item"
+              href="#"
+              onClick={() => this.handlePresets("pentadecathlon")}
+            >
+              Pentadecathlon
             </a>
-            <a className="dropdown-item" href="#">
-              Boat
+            <a className="dropdown-item" href="#" onClick={() => this.handlePresets("toad")}>
+              Toad
             </a>
-            <a className="dropdown-item" href="#">
-              Tub
+            <a className="dropdown-item" href="#" onClick={() => this.handlePresets("glider")}>
+              Glider
+            </a>
+            <a className="dropdown-item" href="#" onClick={() => this.handlePresets("spaceship")}>
+              LW Spaceship
             </a>
           </div>
         </div>
