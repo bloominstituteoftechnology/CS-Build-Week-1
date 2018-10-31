@@ -5,7 +5,8 @@ export default class Controls extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      temp: []
+      timer: undefined,
+      generationNumber: 0
     };
   }
 
@@ -13,23 +14,23 @@ export default class Controls extends Component {
     return (
       <div className="controls">
         <div className="controls__button-container">
-          <button className="controls__button">
+          <button id="playButton" className="controls__button">
             <FontAwesomeIcon icon="play" />
           </button>
-          <button className="controls__button">
+          <button id="stopButton" className="controls__button">
             <FontAwesomeIcon icon="stop" />
           </button>
-          <button className="controls__button">
+          <button id="stepButton" className="controls__button">
             <FontAwesomeIcon icon="step-forward" />
           </button>
-          <button className="controls__button">
+          <button id="clearButton" className="controls__button">
             <FontAwesomeIcon icon="eraser" />
           </button>
-          <button className="controls__button">
+          <button id="randomButton" className="controls__button">
             <FontAwesomeIcon icon="question" />
           </button>
         </div>
-        <div className="controls__generation"><span className="controls__generation-number">0</span> Generation</div>
+        <div className="controls__generation"><span className="controls__generation-number">{this.props.generationNumber}</span> Generation</div>
       </div>
     );
   }

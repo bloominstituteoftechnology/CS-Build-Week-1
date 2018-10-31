@@ -8,11 +8,22 @@ import './App.css';
 library.add([faPlay, faStop, faStepForward, faEraser, faQuestion])
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      timer: undefined,
+      generationNumber: 0
+    };
+  }
+
+  componentDidMount = () => {
+  }
+
   render() {
     return (
       <div className="app">
         <Game />
-        <Controls />
+        <Controls generationNumber={this.state.generationNumber} />
       </div>
     );
   }
