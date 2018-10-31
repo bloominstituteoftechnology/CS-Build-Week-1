@@ -25,7 +25,6 @@ class Cell extends React.Component {
 
 ;
     render(){
-        let cellClass = this.props.cellClass
         return ( 
             <Square className={this.props.cellClass} onClick={this.toggleCell} id={this.props.id}/>
         )
