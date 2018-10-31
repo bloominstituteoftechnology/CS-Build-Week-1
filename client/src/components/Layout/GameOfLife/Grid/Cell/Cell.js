@@ -9,7 +9,7 @@ export default class Cell extends React.Component {
           top: `${20 * this.props.y + 1}px`,
           width: `${20 - 1}px`,
           height: `${20 - 1}px`,
-          background: `#00FF00`,
+          background: `${this.props.color || "#00FF00"}`,
           position: `absolute`
         }}
       />

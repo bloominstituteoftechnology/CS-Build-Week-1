@@ -14,7 +14,9 @@ class GameOfLife extends React.Component {
       cells: [],
       speed: 1000,
       isPlaying: false,
-      generation: 0
+      generation: 0,
+      cellColor: "#00FF00",
+      gridColor: "#000"
     };
   }
 
@@ -99,6 +101,14 @@ class GameOfLife extends React.Component {
     this.setState({ cells: this.fillCells() });
   };
 
+  handleCellColor = event => {
+    this.setState({ cellColor: event.target.value });
+  };
+
+  handleGridColor = event => {
+    this.setState({ gridColor: event.target.value });
+  };
+
   handleSpeed = event => {
     this.setState({ speed: event.target.value });
   };
@@ -175,9 +185,15 @@ class GameOfLife extends React.Component {
           ref={g => {
             this.gridRef = g;
           }}
+          color={this.state.gridColor}
         >
           {this.state.cells.map(cell => (
-            <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
+            <Cell
+              x={cell.x}
+              y={cell.y}
+              key={`${cell.x},${cell.y}`}
+              color={this.state.cellColor}
+            />
           ))}
         </Grid>
         <div>
@@ -196,7 +212,19 @@ class GameOfLife extends React.Component {
             class="slider"
             onChange={this.handleSpeed}
           />
-          <p>{this.state.speed / 100} generation(s) per second</p>
+          {this.state.speed / 100} generation(s) per second
+          <p>Cell color:</p>
+          <input
+            type="color"
+            value={this.state.cellColor}
+            onChange={this.handleCellColor}
+          />
+          <p>Grid color:</p>
+          <input
+            type="color"
+            value={this.state.gridColor}
+            onChange={this.handleGridColor}
+          />
         </div>
       </div>
     );
