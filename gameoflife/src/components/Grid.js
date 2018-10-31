@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './index.css';
 import Cell from './Cell';
+import CellConfigs from './CellConfigs';
 
 class Grid extends Component {
 	render() {
@@ -10,8 +11,9 @@ class Grid extends Component {
 		for (var i = 0; i < this.props.rows; i++) {
 			for (var j = 0; j < this.props.cols; j++) {
 				let cellId = i + "_" + j;
-
-				cellClass = this.props.gridFull[i][j] ? "box on" : "box off";
+        console.log("cellId: ", cellId)
+        cellClass = this.props.gridFull[i][j] ? "box on" : "box off";
+        console.log("cellClass: ", cellClass)
 				rowsArr.push(
 					<Cell
 						cellClass={cellClass}
@@ -24,7 +26,7 @@ class Grid extends Component {
 				);
 			}
 		}
-
+    console.log('CellCongigs', CellConfigs)
 		return (
 			<div className="grid">
 				{rowsArr}

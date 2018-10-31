@@ -13,7 +13,14 @@ class App extends Component {
       generation: 0,
       speed: 500,
       gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false)),
+      configs: {
+        config1: false
+      }
     }
+  }
+
+  config1 = () => {
+    this.setState
   }
 
   arrayClone = arr => {
