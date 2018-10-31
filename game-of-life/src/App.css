@@ -13,8 +13,15 @@ body {
   margin: 0 auto;
 }
 
+header {
+  margin: 40px 0 50px 0;
+  display: flex;
+  justify-content: center;
+}
+
 h1 {
   margin: 0 auto;
+  text-decoration: underline;
 }
 
 h2 {
@@ -23,6 +30,9 @@ h2 {
 
 button {
   outline: none;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
 }
 
 .grid-controls-presets-container {
@@ -37,8 +47,6 @@ button {
 }
 
 .grid-container {
-  /*width: 332px;
-  height: 332px;*/
   box-sizing: border-box;
   border: 1px solid gray;
 }
@@ -46,13 +54,54 @@ button {
 .rules-container {
   display: flex;
   flex-direction: column;
-  /*width: 300px;*/
 }
 
-.presets-container {
+.panel-container {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  width: 300px;
+  justify-content: space-between;
+  border: 1px solid black;
+  height: 482px;
+}
+
+.controls-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.controls-top-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.controls-bottom-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.control-wrapper {
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.preset-wrapper {
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  border: 1px solid black;
 }
 
 .row {
@@ -75,19 +124,22 @@ button {
   background: black;
 }
 
-.controls-container {
-  display: flex;
-  flex-direction: column;
-}
-
 .slider-container {
-  width: 482px;
-  margin: 15px 0 15px 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 20px 0px 20px;
+  width: 100%;
+  height: 62px;
+  border: 1px solid black;
 }
 
 .iteration-count {
+  border: 1px solid black;
+  box-sizing: border-box;
+  padding: 0 15px 0 15px;
   width: 100%;
-  text-align: center;
-  margin: 0 0 15px 0;
-  font-size: 20px;
+  text-align: right;
+  font-size: 150px;
 }

@@ -2,9 +2,14 @@ import React from 'react';
 import ReactTimeout from 'react-timeout';
 import Rules from './Rules';
 import Slider from 'rc-slider';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faStop, faForward, faTimes } from '@fortawesome/free-solid-svg-icons';
 import presets from './presets';
 import 'rc-slider/assets/index.css';
 import './App.css';
+
+library.add(faPlay, faStop, faForward, faTimes);
 
 const oneGridSide = 15;
 
@@ -133,9 +138,7 @@ class App extends React.Component {
       });
       this.setState({ grid: grid,
                       isRunning: false,
-                      iterationCount: 0,
-                      sliderValue: -550,
-                      refreshRate: 550 });
+                      iterationCount: 0 });
     };
   }
 
@@ -146,7 +149,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <h1>{"Conway's Game of Life"}</h1>
+        <header>
+          <h1>{"Conway's Game of Life"}</h1>
+        </header>
         <div className="grid-controls-presets-container">
           <div className="grid-slider-iteration-count-container">
             <div className="grid-container">
@@ -162,47 +167,59 @@ class App extends React.Component {
                 })}</div>;
               })}
             </div>
+          </div>
+          <div className="panel-container">
+            <div className="controls-container">
+              <div className="controls-top-row">
+                <div className="control-wrapper" onClick={this.startSimulation}>
+                  <FontAwesomeIcon icon="play" size="2x" />
+                </div>
+                <div className="control-wrapper" onClick={this.stopSimulation}>
+                  <FontAwesomeIcon icon="stop" size="2x" />
+                </div>
+                <div className="preset-wrapper" onClick={() => this.loadPreset("small exploder")}>
+                  1
+                </div>
+                <div className="preset-wrapper" onClick={() => this.loadPreset("exploder")}>
+                  2
+                </div>
+              </div>
+              <div className="controls-bottom-row">
+                <div className="control-wrapper" onClick={this.advanceOneIteration}>
+                  <FontAwesomeIcon icon="forward" size="2x" />
+                </div>
+                <div className="control-wrapper" onClick={this.resetGrid}>
+                  <FontAwesomeIcon icon="times" size="2x" />
+                </div>
+                <div className="preset-wrapper" onClick={() => this.loadPreset("nine cell row")}>
+                  3
+                </div>
+                <div className="preset-wrapper" onClick={() => this.loadPreset("tumbler")}>
+                  4
+                </div>
+              </div>
+            </div>
             <div className="slider-container">
               <Slider min={-1000}
                       max={-100}
                       value={this.state.sliderValue}
                       onChange={this.onSliderChange}
                       onAfterChange={this.onAfterChange}
-                      trackStyle={{ backgroundColor: 'black', borderRadius: 0, height: 5 }}
+                      trackStyle={{ backgroundColor: 'blue', borderRadius: 0, height: 5 }}
                       handleStyle={{
-                        border: 'none',
-                        borderColor: 'none',
+                        border: '2px solid black',
+                        borderColor: 'black',
                         outline: 'none',
                         boxShadow: 'none',
-                        // height: 28,
-                        // width: 28,
-                        // marginLeft: -14,
-                        // marginTop: -9,
-                        backgroundColor: 'black',
+                        height: 20,
+                        width: 20,
+                        marginLeft: -14,
+                        marginTop: -9,
+                        backgroundColor: 'white',
                       }}
                       railStyle={{ backgroundColor: 'gray', borderRadius: 0, height: 5 }}/>
             </div>
-            <div className="iteration-count">iterations: {this.state.iterationCount}</div>
-          </div>
-          <div className="controls-container">
-            <button onClick={this.startSimulation}>start</button>
-            <button onClick={this.stopSimulation}>stop</button>
-            <button onClick={this.advanceOneIteration}>next</button>
-            <button onClick={this.resetGrid}>reset</button>
-          </div>
-          <div className="presets-container">
-            <button onClick={() => this.loadPreset("small exploder")}>
-              small exploder
-            </button>
-            <button onClick={() => this.loadPreset("exploder")}>
-              exploder
-            </button>
-            <button onClick={() => this.loadPreset("nine cell row")}>
-              nine cell row
-            </button>
-            <button onClick={() => this.loadPreset("tumbler")}>
-              tumbler
-            </button>
+            <div className="iteration-count">{this.state.iterationCount}</div>
           </div>
         </div>
         {/* <Rules /> */}
