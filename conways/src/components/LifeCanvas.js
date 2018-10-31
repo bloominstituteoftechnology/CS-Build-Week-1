@@ -122,7 +122,7 @@ class LifeCanvas extends Component{
       this.state.filledCells.forEach(cell => this.clearCell(c, this.state.cellBoundaries[cell], cell))
   }
 
-  playGame = () => {
+  playGame = (singleRound = false) => {
 
     let c = this.state.c;
 
@@ -130,9 +130,9 @@ class LifeCanvas extends Component{
         return;
     }
     
-    let filledCells = this.state.life.getCells();
+    this.state.life.update();
     let cellBoundaries = this.state.cellBoundaries;
-
+    let filledCells = this.state.life.getCells();
 
     if(JSON.stringify(filledCells.sort()) !== JSON.stringify(this.state.filledCells.sort())){
         
@@ -144,15 +144,27 @@ class LifeCanvas extends Component{
         }
     }
 
-    this.state.life.update();
+    console.log("SingleRound?: ", singleRound);
+    if(singleRound === true){
+        return;
+    }
 
     setTimeout(() => {
         requestAnimationFrame(() => {
             this.playGame();
         })
-    }, 1000);
+    }, 500);
 
 
+    
+  }
+
+  nextRound = () => {
+    this.playOrStop();
+    setTimeout(() => {
+        this.playOrStop();
+    }, 200);
+    
     
   }
 
@@ -162,6 +174,7 @@ class LifeCanvas extends Component{
         <CanvasWindow ref="canvas" width={300} height={300}/>
         <button onClick={this.playOrStop}>{this.state.running ? "Pause Game" : "Play Game"}</button>
         <button onClick={this.clearCells}>Clear Game</button>
+        <button onClick={this.nextRound}>Next Round</button>
       </div>
     );
   }
