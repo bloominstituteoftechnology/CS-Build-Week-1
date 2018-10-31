@@ -48,7 +48,7 @@ class App extends React.Component {
 
     this.advanceOneIteration = e => {
       e.preventDefault();
-      if (this.state.isRunning) { return; }
+      if (this.state.isRunning || this.state.iterationCount === 0) { return; }
       this.createNextIteration();
     };
 
@@ -147,19 +147,48 @@ class App extends React.Component {
     return (
       <div className="container">
         <h1>Conway's Game of Life</h1>
-        <div className="grid-presets-and-rules-container">
-          <div className="grid-container">
-            {this.state.grid.map((row, rowIndex) => {
-              return <div key={rowIndex}
-                          className="row">{row.map((cell, cellIndex) => {
-                return <div key={cellIndex}
-                            className={cell ? "living-cell" : "dead-cell"}
-                            onClick={!this.state.isRunning ?
-                                     () => this.toggleCell(rowIndex, cellIndex) :
-                                     null}
-                       >{cell}</div>;
-              })}</div>;
-            })}
+        <div className="grid-controls-presets-container">
+          <div className="grid-slider-iteration-count-container">
+            <div className="grid-container">
+              {this.state.grid.map((row, rowIndex) => {
+                return <div key={rowIndex}
+                            className="row">{row.map((cell, cellIndex) => {
+                  return <div key={cellIndex}
+                              className={cell ? "living-cell" : "dead-cell"}
+                              onClick={!this.state.isRunning ?
+                                       () => this.toggleCell(rowIndex, cellIndex) :
+                                       null}
+                         >{cell}</div>;
+                })}</div>;
+              })}
+            </div>
+            <div className="slider-container">
+              <Slider min={-1000}
+                      max={-100}
+                      value={this.state.sliderValue}
+                      onChange={this.onSliderChange}
+                      onAfterChange={this.onAfterChange}
+                      trackStyle={{ backgroundColor: 'black', borderRadius: 0, height: 5 }}
+                      handleStyle={{
+                        border: 'none',
+                        borderColor: 'none',
+                        outline: 'none',
+                        boxShadow: 'none',
+                        // height: 28,
+                        // width: 28,
+                        // marginLeft: -14,
+                        // marginTop: -9,
+                        backgroundColor: 'black',
+                      }}
+                      railStyle={{ backgroundColor: 'gray', borderRadius: 0, height: 5 }}/>
+            </div>
+            <div className="iteration-count">iterations: {this.state.iterationCount}</div>
+          </div>
+          <div className="controls-container">
+            <button onClick={this.startSimulation}>start</button>
+            <button onClick={this.stopSimulation}>stop</button>
+            <button onClick={this.advanceOneIteration}>next</button>
+            <button onClick={this.resetGrid}>reset</button>
           </div>
           <div className="presets-container">
             <button onClick={() => this.loadPreset("small exploder")}>
@@ -175,22 +204,8 @@ class App extends React.Component {
               tumbler
             </button>
           </div>
-          <Rules />
         </div>
-        <div className="controls-container">
-          <button onClick={this.startSimulation}>start</button>
-          <button onClick={this.stopSimulation}>stop</button>
-          <button onClick={this.advanceOneIteration}>next</button>
-          <button onClick={this.resetGrid}>reset</button>
-        </div>
-        <div className="slider-container">
-          <Slider min={-1000}
-                  max={-100}
-                  value={this.state.sliderValue}
-                  onChange={this.onSliderChange}
-                  onAfterChange={this.onAfterChange}/>
-        </div>
-        <div>iterations: {this.state.iterationCount}</div>
+        {/* <Rules /> */}
       </div>
     );
   }

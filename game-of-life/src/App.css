@@ -21,27 +21,32 @@ h2 {
   margin: 0 auto;
 }
 
-/*button {
-  width: 50px;
-}*/
+button {
+  outline: none;
+}
 
-.grid-presets-and-rules-container {
+.grid-controls-presets-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.grid-slider-iteration-count-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .grid-container {
   /*width: 332px;
   height: 332px;*/
   box-sizing: border-box;
-  border: 1px solid black;
+  border: 1px solid gray;
 }
 
 .rules-container {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  /*width: 300px;*/
 }
 
 .presets-container {
@@ -60,21 +65,29 @@ h2 {
 .dead-cell {
   width: 30px;
   height: 30px;
-  border: 1px solid black;
+  border: 1px solid gray;
 }
 
 .living-cell {
   width: 30px;
   height: 30px;
-  border: 1px solid black;
+  border: 1px solid gray;
   background: black;
 }
 
 .controls-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .slider-container {
-  width: 332px;
+  width: 482px;
+  margin: 15px 0 15px 0;
+}
+
+.iteration-count {
+  width: 100%;
+  text-align: center;
+  margin: 0 0 15px 0;
+  font-size: 20px;
 }
