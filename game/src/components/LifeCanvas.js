@@ -17,7 +17,8 @@ class LifeCanvas extends React.Component {
   state = {
     currentGen: [],
     nextGen: [],
-    isRunning: false
+    isRunning: false,
+    iteration: 0
   };
 
   componentDidMount() {
@@ -105,13 +106,23 @@ class LifeCanvas extends React.Component {
         nextGen[row][col].draw();
       }
     }
-    this.setState({ currentGen: nextGen }, () => {
-      setTimeout(() => {
-        if (this.state.isRunning) {
-          this.raf = window.requestAnimationFrame(this.drawGrid);
+    if (!this.state.isRunning) {
+      this.setState({
+        currentGen: nextGen,
+        iteration: this.state.iteration + 1
+      });
+    } else {
+      this.setState(
+        { currentGen: nextGen, iteration: this.state.iteration + 1 },
+        () => {
+          setTimeout(() => {
+            if (this.state.isRunning) {
+              this.raf = window.requestAnimationFrame(this.drawGrid);
+            }
+          }, 100);
         }
-      }, 100);
-    });
+      );
+    }
   };
 
   handleClick = e => {
@@ -152,9 +163,13 @@ class LifeCanvas extends React.Component {
 
   resetGame = () => {
     cancelAnimationFrame(this.raf);
-    this.setState({ isRunning: false }, () => {
+    this.setState({ isRunning: false, iteration: 0 }, () => {
       this.initGame();
     });
+  };
+
+  step = () => {
+    this.drawGrid();
   };
 
   render() {
@@ -168,9 +183,15 @@ class LifeCanvas extends React.Component {
             onClick={this.handleClick}
           />
         </div>
-        <button onClick={this.runGame}>Start</button>
-        <button onClick={this.stopGame}>Stop</button>
-        <button onClick={this.resetGame}>Reset</button>
+        <div>
+          <h3>Iteration: {this.state.iteration}</h3>
+        </div>
+        <div>
+          <button onClick={this.step}>Step</button>
+          <button onClick={this.runGame}>Start</button>
+          <button onClick={this.stopGame}>Stop</button>
+          <button onClick={this.resetGame}>Reset</button>
+        </div>
       </React.Fragment>
     );
   }
