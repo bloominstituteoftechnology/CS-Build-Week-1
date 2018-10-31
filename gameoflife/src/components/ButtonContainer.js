@@ -4,7 +4,6 @@ import './index.css';
 
 
 const ButtonContainer = props => {
-  console.log(props)
   return (
     <div className="center">
         <Button 
@@ -28,11 +27,14 @@ const ButtonContainer = props => {
           onClick={props.increaseSpeed} 
           text="Increase" 
         />
-        <Button 
-          styles="btn btn-outline-dark mx-2 my-2 px-5" 
-          onClick={props.decreaseSpeed} 
-          text="Decrease" 
-        />
+  
+        {props.speed !== 0 && 
+          <Button 
+            styles="btn btn-outline-dark mx-2 my-2 px-5" 
+            onClick={props.decreaseSpeed} 
+            text="Decrease" 
+          />   
+        }
     </div>
   )
 }

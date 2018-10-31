@@ -105,6 +105,7 @@ class App extends Component {
           clearButton={this.clearButton}
           increaseSpeed={this.increaseSpeed}
           decreaseSpeed={this.decreaseSpeed}
+          speed={this.state.speed}
         />
       </div>
     );
