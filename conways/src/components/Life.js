@@ -1,33 +1,26 @@
-import React from 'react';
-
-
-class Life{
+class Life {
     constructor(rows, cols){
-        
+
         this.buffers = [[], []]
-        this.state = {
-            currentBuffer : 0,
-            backBuffer: 1,
-            numRows : rows,
-            numCols : cols,
-        }
+        this.currentBuffer = 0;
+        this.backBuffer = 1;
+        this.numRows = rows;
+        this.numCols = cols;
 
         this.getCells = this.getCells.bind(this)
 
     }
 
     getCells = () => {
-        let buffer = this.buffers[this.state.currentBuffer];
-        // reverse current and backbuffer
-        this.setState({ currentBuffer : this.state.currentBuffer === 1 ? 0 : 1, backBuffer : this.state.backBuffer === 1 ? 0 : 1 })
-
+        let buffer = this.buffers[this.currentBuffer];
+        console.log("Current Buffer: ", buffer)
         return buffer;
     }
 
     calculateAliveNeighbors = (index, buffer) => {
 
-        let rows = this.state.numRows;
-        let cols = this.state.numCols;
+        let rows = this.numRows;
+        let cols = this.numCols;
         let neighbors = 0;
     
         let x = index % cols;
@@ -105,30 +98,34 @@ class Life{
 
         if(buffer.includes(index)){                                 // We have a live cell index
             if(neighbors === 2 || neighbors === 3){                // Any live cell with 2 or 3 neighbors lives on
-                this.buffers[this.state.backBuffer].append(index);
+                this.buffers[this.backBuffer].push(index);
             }
         }else{                                                      // We have a dead cell index
             if(neighbors === 3){                                    // Any dead cell with exactly 3 neighbors lives on
-                this.buffers[this.state.backBuffer].append(index);
+                this.buffers[this.backBuffer].push(index);
             }
         }
     }
 
     update = () => {
 
-        this.buffers[this.state.backBuffer] = []; // Empty our back buffer
+        this.buffers[this.backBuffer] = []; // Empty our back buffer
 
-        let buffer = this.buffers[this.state.currentBuffer];
+        let buffer = this.buffers[this.currentBuffer];
         
-        for (let i = 0; i < this.state.numRows * this.state.numCols; i++) {
+        for (let i = 0; i < this.numRows * this.numCols; i++) {
             let neighbors = this.calculateAliveNeighbors(i, buffer)
             this.deadOrAlive(i, neighbors, buffer);
         }
 
+        // reverse current and backbuffer
+        this.currentBuffer = this.currentBuffer === 1 ? 0 : 1;
+        this.backBuffer = this.backBuffer === 1 ? 0 : 1;
+
     }
 
     setCells = (bufferIn) => {
-        this.buffers[this.state.currentBuffer] = bufferIn;
+        this.buffers[this.currentBuffer] = bufferIn;
     }
 
 }

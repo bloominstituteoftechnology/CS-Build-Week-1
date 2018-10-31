@@ -100,7 +100,8 @@ class LifeCanvas extends Component{
 
 
   playOrStop = () => {
-    this.state.life.setCells(this.state.filledCells);
+    console.log("Filled Cells: ", this.state.filledCells.sort());
+    this.state.life.setCells(this.state.filledCells.sort());
     this.setState({ running: !this.state.running }, () => {
         if (this.state.running) {
           requestAnimationFrame(() => {
@@ -144,9 +145,14 @@ class LifeCanvas extends Component{
     }
 
     this.state.life.update();
-    requestAnimationFrame(() => {
-        this.playGame();
-    })
+
+    setTimeout(() => {
+        requestAnimationFrame(() => {
+            this.playGame();
+        })
+    }, 1000);
+
+
     
   }
 
