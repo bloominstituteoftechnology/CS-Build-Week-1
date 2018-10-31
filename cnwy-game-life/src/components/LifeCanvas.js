@@ -70,7 +70,9 @@ class LifeCanvas extends Component {
       cellSize: 0,
       gameBufferA: [],
       gameBufferB: [],
-      fps: 2
+      fps: 2,
+      gameRunning:false,
+      activePattern:''
     }
   }
   
@@ -80,7 +82,9 @@ class LifeCanvas extends Component {
       cellSize: 10,
       gameBufferA: Array(Math.pow(500/10,2)).fill(false), 
       gameBufferB: Array(Math.pow(500/10,2)).fill(false),
-      fps: 2
+      fps: 2,
+      gameRunning:false,
+      activePattern:'No Pattern'
     })
   }
 
@@ -91,7 +95,6 @@ class LifeCanvas extends Component {
   componentWillUnmount() {
     // Stop animating
     this.continueAnimation = false;
-    // this.setState({continueAnimation:false})
   }
 
 
@@ -450,28 +453,40 @@ class LifeCanvas extends Component {
    * 
    */
   startGame = () => {
-    // setTimeout(() => requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); }), 200)
-    requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
-    this.continueAnimation = true;
-    // this.setState({continueAnimation:true})
+    let gameRunning = true;
+    this.setState({gameRunning}, () => {
+      requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
+      this.continueAnimation = true;
+    })
+
   }
 
-  pauseGame = () => {
-    this.continueAnimation = false;
-    // this.setState({continueAnimation:false})
+  pauseGame = () => {    
+    let gameRunning = false;
+    this.setState({gameRunning}, () => {
+      this.continueAnimation = false;
+    })
+
   }
   
   restartGame = () => {
     this.continueAnimation = false;
-    this.initializeCanvas();
     
-    // this.setState({continueAnimation:false}, ()=>this.initializeCanvas());
+    let gameRunning = false;
+    let generation = 0
+    this.setState({gameRunning, generation}, () => {
+      this.initPattern(this.state.activePattern)
+    })
+
+    
   }
 
   stepGame = () => {
-    requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
-    this.continueAnimation = false;
-    // this.setState({continueAnimation:false})
+    let gameRunning = false;
+    this.setState({gameRunning}, () => {
+      requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
+      this.continueAnimation = false;
+    })
   }
 
 
@@ -521,7 +536,15 @@ class LifeCanvas extends Component {
     let options = e.target.options;
     for (let i = 0, l = options.length; i < l; i++) {
       if (options[i].selected){
-        this.initPattern(options[i].value) 
+        //Get a reference to selected pattern:
+        let activePattern = options[i].value;
+        
+        //Set it as the active pattern as state var:
+        this.setState({activePattern}, ()=> {
+          
+          //Initialize the pattern to the canvas:
+          this.initPattern(options[i].value) 
+        })
         }
       }
     }
@@ -642,10 +665,13 @@ class LifeCanvas extends Component {
 
           <Col sm='6'>
             <GameBtns>
-              <StyledFA icon="play" id="utt-start" onClick={this.startGame}/>
+
+              {this.state.gameRunning ? <StyledFA icon="pause" id="utt-pause" onClick={this.pauseGame}/> : <StyledFA icon="play" id="utt-start" onClick={this.startGame}/>}
+              
+              {/* <StyledFA icon="play" id="utt-start" onClick={this.startGame}/> */}
               {/* <UncontrolledTooltip placement="top" target="utt-start"> Start Game </UncontrolledTooltip> */}
 
-              <StyledFA icon="pause" id="utt-pause" onClick={this.pauseGame}/>
+              {/* <StyledFA icon="pause" id="utt-pause" onClick={this.pauseGame}/> */}
               {/* <UncontrolledTooltip placement="top" target="utt-pause"> Pause Game </UncontrolledTooltip> */}
               
               <StyledFA icon="step-forward" id="utt-step" onClick={this.stepGame}/>
