@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { toggleAlive } from '../actions/';
+import { currentState } from '../actions/';
 
+import Control from './control';
 import Cell from './cell';
 
+console.log(Control);
 class Board extends Component {
   render(){
     return(
@@ -12,12 +14,13 @@ class Board extends Component {
         <table>
           <tbody>
             {this.props.board.map((row,i) =>
-              <tr key={i}> {row.map((cell, j) =>
+              <tr key={i}>{row.map((cell, j) =>
                 <Cell
                   key={j}
                   alive={cell.status}
                   newBorn={cell.newBorn}
-                  handleClick={() => this.props.toggleAlive(i,j)} 
+                  running={Control.props.playState.isRunning ? cell.running : ''}
+                  handleClick={() => this.props.currentState(i,j)} 
                 />)}
               </tr>)}
           </tbody>
@@ -32,7 +35,7 @@ const mapStateToProps = ({ board }) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return { toggleAlive: (x,y) => dispatch(toggleAlive(x,y)) }
+  return { currentState: (x,y) => dispatch(currentState(x,y)) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

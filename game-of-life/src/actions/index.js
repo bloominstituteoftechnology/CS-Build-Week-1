@@ -1,4 +1,4 @@
-export function toggleAlive(x,y) {
+export function currentState(x,y) {
   return {
     type: 'TOGGLE_ALIVE',
     x,

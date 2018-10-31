@@ -81,11 +81,11 @@ table {
 }
 
 .alive {
-  background: #FF5400;
+  background: #00EEFF;
 }
 
 .new-born {
-  background: #FFBF00;
+  background: #0095FF;
 }
 
 td:hover:not(.alive):not(.new-born){

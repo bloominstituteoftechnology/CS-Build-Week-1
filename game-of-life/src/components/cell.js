@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default ({alive, newBorn, handleClick}) =>
-  (
+export default ({alive, newBorn, running, handleClick}) =>
+(
     <td
-      onClick={handleClick}
-      className={`${alive ? 'alive' : ''} ${newBorn ? 'new-born': ''}`}
+        onClick={running ? '' : handleClick }
+        className={`${alive ? 'alive' : 'dead'} ${newBorn ? 'new-born': ''}`}
       // TODO: Write ternary or other conditional statement to prevent cell from being clicked during the playing of the game.
       >
     </td>
