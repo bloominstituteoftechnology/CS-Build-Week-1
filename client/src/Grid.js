@@ -10,7 +10,7 @@ class Grid extends React.Component {
     cells: [],
     grid: [],
     generation: 0,
-    interval: 100,
+    interval: 200,
     isRunning: false,
     rows: 18,
     columns: 33
@@ -104,7 +104,7 @@ class Grid extends React.Component {
   randomGame = () => {
     for (let y = 0; y < this.state.rows; y++) {
         for (let x = 0; x < this.state.columns; x++) {
-            this.state.grid[y][x] = (Math.random() < 0.2);
+            this.state.grid[y][x] = (Math.random() < 0.33);
         }
     }
     this.setState({ cells: this.fillCells() });
@@ -115,7 +115,16 @@ class Grid extends React.Component {
     window.location.reload();
   }
 
+  fast = () => {
+      this.setState({ interval: 100});
+  }
+
+  slow = () => {
+      this.setState({ interval: 400});
+  }
+
   render() {
+    console.log(this.state.interval);
     return (
       <div>
         <p>Generations: {this.state.generation}</p>
@@ -131,6 +140,8 @@ class Grid extends React.Component {
         <button onClick={this.playGame}>Play</button>
         <button onClick={this.pauseGame}>Pause</button>
         <button onClick={this.nextIteration}>Next</button>
+        <button onClick={this.fast}>Fast</button>
+        <button onClick={this.slow}>Slow</button>
         <button onClick={this.randomGame}>Random</button>
         <button onClick={this.clearGame}>Clear</button>
       </div>
