@@ -5,7 +5,7 @@ class Cell extends Component {
         super(props);
         this.state = {
             life_status: 0,
-            neighbor_count:0,
+            live_neighbor_count:0,
         }
     }
 
