@@ -16,6 +16,21 @@ class Game extends React.Component {
     cells: [],
   }
   
+  handleClick = (event) => {
+    const elemOffset = this.getElementOffset();
+    const offsetX = event.clientX - elemOffset.x;
+    const offsetY = event.clentY - elemOffset.y;
+
+    const x = Math.floor(offsetX / CELL_SIZE);
+    const y = Math.floor(offsetY / CELL_SIZE);
+
+    if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows) {
+      this.board[y][x] = !this.board[y][x]
+    }
+    
+    this.setState({ cells: this.addCells() });
+  }
+
   getElementOffset = () => {
     const rect = this.boardRef.getBoundingClientRect();
     const doc = document.documentElement;
