@@ -67,51 +67,52 @@ class Board extends Component {
         this.setBoard();
     }
     neighborCheck = (aliveArr) => {
-        let neighborCount = 0;
-        let matrix = this.state.matrix.slice();
+        let newMatrix = [];
+        for (let i = 0; i < 15; ++i) {
+            newMatrix[i] = [];
+            for (let j = 0; j < 15; ++j) {
+                let neighborCount = 0;
 
-        if (aliveArr.i + 1 <= 14 && aliveArr.j + 1 <= 14 && matrix[aliveArr.i + 1][aliveArr.j + 1].alive) {
-            neighborCount += 1;
+                if (aliveArr[i][j].i + 1 <= 14 && aliveArr[i][j].j + 1 <= 14 && aliveArr[i + 1][j + 1].alive) {
+                    neighborCount += 1;
+                }
+                if (aliveArr[i][j].j - 1 >= 0 && aliveArr[i][j - 1].alive) {
+                    neighborCount += 1;
+                }
+                if (aliveArr[i][j].j + 1 <= 14 && aliveArr[i][j + 1].alive) {
+                    neighborCount += 1;
+                }
+                if (aliveArr[i][j].i - 1 >= 0 && aliveArr[i - 1][j].alive) {
+                    neighborCount += 1;
+                }
+                if (aliveArr[i][j].i + 1 <= 14 && aliveArr[i + 1][j].alive) {
+                    neighborCount += 1;
+                }
+                if (aliveArr[i][j].i + 1 <= 14 && aliveArr[i][j].j - 1 >= 0 && aliveArr[i + 1][j - 1].alive) {
+                    neighborCount += 1;
+                }
+                if (aliveArr[i][j].i - 1 >= 0 && aliveArr[i][j].j - 1 >= 0 && aliveArr[i - 1][j - 1].alive) {
+                    neighborCount += 1;
+                }
+                if (aliveArr[i][j].i - 1 >= 0 && aliveArr[i][j].j + 1 <= 14 && aliveArr[i - 1][j + 1].alive) {
+                    neighborCount += 1;
+                }
+                if (neighborCount === 2 || neighborCount === 3) {
+                    newMatrix[i][j] = { i: aliveArr[i][j].i, j: aliveArr[i][j].j, alive: true };
+                }
+                else {
+                    newMatrix[i][j] = { i: aliveArr[i][j].i, j: aliveArr[i][j].j, alive: false };
+                }
+            }
         }
-        if (aliveArr.j - 1 >= 0 && matrix[aliveArr.i][aliveArr.j - 1].alive) {
-            neighborCount += 1;
-        }
-        if (aliveArr.j + 1 <= 14 && matrix[aliveArr.i][aliveArr.j + 1].alive) {
-            neighborCount += 1;
-        }
-        if (aliveArr.i - 1 >= 0  && matrix[aliveArr.i - 1][aliveArr.j].alive) {
-            neighborCount += 1;
-        }
-        if (aliveArr.i + 1 <= 14 && matrix[aliveArr.i + 1][aliveArr.j].alive) {
-            neighborCount += 1;
-        }
-        if (aliveArr.i + 1 <= 14 && aliveArr.j - 1 >= 0  && matrix[aliveArr.i + 1][aliveArr.j - 1].alive) {
-            neighborCount += 1;
-        }
-        if (aliveArr.i - 1 >= 0  && aliveArr.j - 1 >= 0 && matrix[aliveArr.i - 1][aliveArr.j - 1].alive) {
-            neighborCount += 1;
-        }
-        if (aliveArr.i - 1 >= 0 && aliveArr.j + 1 <= 14 && matrix[aliveArr.i - 1][aliveArr.j + 1].alive) {
-            neighborCount += 1;
-        }
-
-        if (neighborCount === 2 || neighborCount === 3) {
-        }
-        else {
-            matrix[aliveArr.i][aliveArr.j].alive = false;
-        }
-
-        this.setState({ matrix });
+        return newMatrix;
     }
     //TODO 
     playButton = () => {
-        let alive = this.findAlive();
+        let matrixDupe = this.state.matrix.slice();
+        let matrix = this.neighborCheck(matrixDupe);
 
-        for (let i = 0; i < alive.length; ++i) {
-            this.neighborCheck(alive[i]);
-        }
-
-        console.log(this.findAlive());
+        this.setState({ matrix });
     }
 
     render() {
