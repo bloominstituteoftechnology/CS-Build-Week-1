@@ -32,4 +32,7 @@
   .rules-ctn {
     width: 100%;
   }
+  .rules-ctn h4 {
+    margin-left: -40px;
+  }
 }
