@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import Life from "./Life";
 
-
+const waitTime = 500;
 
 const CanvasWindow = styled.canvas`
     border: 2px solid black;
@@ -20,6 +20,7 @@ class LifeCanvas extends Component{
       life : new Life(this.props.rows, this.props.cols),
       canvas : '',
       c : '',
+      counter: 0,
     }
   }
 
@@ -72,7 +73,9 @@ class LifeCanvas extends Component{
     c.fillRect(cell.left, cell.top, cell.width, cell.height);
     c.rect(cell.left, cell.top, cell.width, cell.height)    // Draw rect to retain borders
     c.stroke();
-    this.setState({ filledCells : [...this.state.filledCells, index]})
+    let filledCells = this.state.filledCells;
+    filledCells.push(index);
+    this.setState({ filledCells : filledCells })
   }
 
 
@@ -81,8 +84,8 @@ class LifeCanvas extends Component{
     if(this.state.running){
         return;
     }
-    let canvas = this.refs.canvas;
-    let c = canvas.getContext("2d");
+    let canvas = this.state.canvas;
+    let c = this.state.c;
 
     let y = event.clientY - canvas.offsetTop;
     let x = event.clientX - canvas.offsetLeft;
@@ -100,7 +103,7 @@ class LifeCanvas extends Component{
 
 
   playOrStop = () => {
-    console.log("Filled Cells: ", this.state.filledCells.sort());
+
     this.state.life.setCells(this.state.filledCells.sort());
     this.setState({ running: !this.state.running }, () => {
         if (this.state.running) {
@@ -117,12 +120,16 @@ class LifeCanvas extends Component{
       if(this.state.running && e){
           return
       }
+      if(!this.state.running){
+          this.setState({ counter : 0 });
+      }
       let c = this.refs.canvas.getContext("2d");
 
       this.state.filledCells.forEach(cell => this.clearCell(c, this.state.cellBoundaries[cell], cell))
+      
   }
 
-  playGame = (singleRound = false) => {
+  playGame = () => {
 
     let c = this.state.c;
 
@@ -132,10 +139,11 @@ class LifeCanvas extends Component{
     
     this.state.life.update();
     let cellBoundaries = this.state.cellBoundaries;
-    let filledCells = this.state.life.getCells();
+    let filledCells = this.state.life.getCells().sort();
 
-    if(JSON.stringify(filledCells.sort()) !== JSON.stringify(this.state.filledCells.sort())){
+    if(JSON.stringify(filledCells) !== JSON.stringify(this.state.filledCells)){
         
+        this.setState({ counter : this.state.counter + 1 });
         this.clearCells();
 
         for (let i = 0; i < filledCells.length; i++) {
@@ -144,37 +152,53 @@ class LifeCanvas extends Component{
         }
     }
 
-    console.log("SingleRound?: ", singleRound);
-    if(singleRound === true){
-        return;
-    }
-
     setTimeout(() => {
         requestAnimationFrame(() => {
             this.playGame();
         })
-    }, 500);
-
-
-    
+    }, waitTime);
   }
 
+  // Calls playOrStop to start, waits, then calls it again to only pass one round
   nextRound = () => {
+    if(this.state.running){
+        return;
+    }
     this.playOrStop();
     setTimeout(() => {
         this.playOrStop();
-    }, 200);
+    }, waitTime - 200);
     
     
+  }
+
+  random = () => {
+
+    this.clearCells();
+
+    let range = (this.state.numRows * this.state.numCols) - 1;
+    let numHits = (Math.floor(Math.random() * range) + 1) / 2;  // Divide by two to lower hits
+    let hit;
+    let hitSet = new Set();                                     // Avoid duplicate values
+
+    for(let i=0; i < numHits; i++){
+        hit = Math.floor(Math.random() * range) + 1;
+        hitSet.add(hit);
+    }
+
+    hitSet.forEach(hit => this.fillCell(this.state.c, this.state.cellBoundaries[hit], hit));
+
   }
 
   render() {
     return (
       <div ref="outer">
         <CanvasWindow ref="canvas" width={300} height={300}/>
+        <span>Round #: {this.state.counter}</span>
         <button onClick={this.playOrStop}>{this.state.running ? "Pause Game" : "Play Game"}</button>
         <button onClick={this.clearCells}>Clear Game</button>
         <button onClick={this.nextRound}>Next Round</button>
+        <button onClick={this.random}>Random Configuration</button>
       </div>
     );
   }
