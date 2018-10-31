@@ -1,4 +1,17 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+
+
+const IncDec = styled.div`
+    display: flex;
+    flex-flow: row nowrap;
+`
+
+const Selector = styled.div`
+    display: flex;
+    flex-flow: row nowrap;
+`
+
 
 class IncrementDecrement extends Component {
     constructor(props){
@@ -24,22 +37,24 @@ class IncrementDecrement extends Component {
 
     render(){
         return (
-            <div>
-                <div>
+            <IncDec>
+                <Selector>
+                    Rows
                     <input type="text" readOnly value={this.state.rows}/>
                     <div>
                         <button name={"rows_plus"} onClick={this.handleClick}>+</button>
                         <button name={"rows_minus"} onClick={this.handleClick}>-</button>
                     </div>
-                </div>
-                <div>
+                </Selector>
+                <Selector>
+                    Columns
                     <input type="text" readOnly value={this.state.cols}/>
                     <div>
                         <button name={"cols_plus"} onClick={this.handleClick}>+</button>
                         <button name={"cols_minus"} onClick={this.handleClick}>-</button>
                     </div>
-                </div>
-            </div>
+                </Selector>
+            </IncDec>
         );
     }
 }

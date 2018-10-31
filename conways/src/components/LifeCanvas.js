@@ -2,8 +2,34 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import Life from "./Life";
 
+const Container = styled.div`
+    display: flex;
+    flex-flow: row nowrap;
+`
+
+const Col1 = styled.div`
+    display: flex;
+    flex-flow: column nowrap;
+`
 const CanvasWindow = styled.canvas`
     border: 2px solid black;
+`
+
+const Buttons = styled.div`
+    display: flex;
+    flex-flow: column nowrap;
+`
+
+const Button = styled.button`
+    padding: 2%;
+    margin: 3%
+    border-radius: 5%;
+    display: table;
+`
+
+const UpdateRowsCols = styled.button`
+    position: absolute;
+    bottom: 2%;
 `
 
 class LifeCanvas extends Component{
@@ -50,7 +76,9 @@ class LifeCanvas extends Component{
 
     for (let i = 0; i < rows; ++i) {
         for (let j = 0; j < cols; ++j) {
-            c.rect(j * squareWidth, i * squareHeight, squareWidth, squareHeight)
+            c.fillStyle = 'rgba(52, 187, 229, 0.1)';
+            c.fillRect(j * squareWidth, i * squareHeight, squareWidth, squareHeight);
+            c.rect(j * squareWidth, i * squareHeight, squareWidth, squareHeight);
             c.stroke();
             let coords = {
                 top : i * squareHeight,
@@ -59,7 +87,7 @@ class LifeCanvas extends Component{
                 width : squareWidth
             }
             boundaries.push(coords); 
-            this.setState({ cellBoundaries : boundaries})
+            this.setState({ cellBoundaries : boundaries});
         }
     }
 
@@ -86,8 +114,9 @@ class LifeCanvas extends Component{
   }
 
   clearCell = (c, cell, index, singleCell = false) => {
-    c.fillStyle = "white";
-    c.fillRect(cell.left, cell.top, cell.width, cell.height);
+    c.fillStyle = 'rgba(52, 187, 229, 0.1)';
+    c.clearRect(cell.left, cell.top, cell.width, cell.height);
+    // c.fillRect(cell.left, cell.top, cell.width, cell.height);
     c.rect(cell.left, cell.top, cell.width, cell.height)    // Draw rect to retain borders
     c.stroke();
     if(singleCell){ // Update state if only removing single cell via click
@@ -102,7 +131,7 @@ class LifeCanvas extends Component{
   }
 
   fillCell = (c, cell, index) => {
-    c.fillStyle = "red";
+    c.fillStyle = 'rgba(0,0,0,0.7)';
     c.fillRect(cell.left, cell.top, cell.width, cell.height);
     c.rect(cell.left, cell.top, cell.width, cell.height)    // Draw rect to retain borders
     c.stroke();
@@ -248,22 +277,31 @@ class LifeCanvas extends Component{
 
   render() {
     return (
-      <div ref="outer">
-        <CanvasWindow ref="canvas" width={300} height={300}/>
-        <form onSubmit={this.jumpTo}>
-            <label>
-                Jump to State
-                <input name={"jumpTo"} type="text" value={this.state.jumpTo} onChange={this.inputHandler}/>  
-            </label>
-            <button>Submit</button>
-        </form>
-        <span>Round #: {this.state.counter}</span>
-        <button onClick={this.playOrStop}>{this.state.running ? "Pause Game" : "Play Game"}</button>
-        <button onClick={this.clearCells}>Clear Game</button>
-        <button onClick={this.nextRound}>Next Round</button>
-        <button onClick={this.random}>Random Configuration</button>
-        <button onClick={this.updateRowsCols}>Update Rows/Cols</button>
-      </div>
+      <Container ref="outer">
+        <Col1>
+            <CanvasWindow ref="canvas" width={300} height={300}/>
+            <span>Round #: {this.state.counter}</span>
+            <form onSubmit={this.jumpTo}>
+                <label>
+                    Jump to State
+                    <input name={"jumpTo"} type="text" value={this.state.jumpTo} onChange={this.inputHandler}/>  
+                </label>
+                <button>Submit</button>
+            </form>
+        </Col1>
+
+
+        <Buttons>
+            <Button onClick={this.playOrStop}>{this.state.running ? "Pause Game" : "Play Game"}</Button>
+            <Button onClick={this.clearCells}>Clear Game</Button>
+            <Button onClick={this.nextRound}>Next Round</Button>
+            <Button onClick={this.random}>Random Configuration</Button>
+        </Buttons>
+
+        <UpdateRowsCols onClick={this.updateRowsCols}>Update Rows/Cols</UpdateRowsCols>
+
+
+      </Container>
     );
   }
 }
