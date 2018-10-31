@@ -53,12 +53,15 @@ class Board extends Component {
         }
     }
     //Checks if index is valid
-    findIndex = (i, j) => {
+    indexValidation = (currMatrix, i, j) => {
         if (i < 0 || i > 14 || j < 0 || j > 14) {
             return null;
         }
-        else {
+        else if (currMatrix[i][j].alive) {
             return true;
+        }
+        else {
+            return null;
         }
     }
     nextGen = (currMatrix) => {
@@ -67,28 +70,28 @@ class Board extends Component {
             newMatrix[i] = [];
             for (let j = 0; j < 15; ++j) {
                 let neighborCount = 0;
-                if (this.findIndex(currMatrix[i][j].i - 1, currMatrix[i][j].j + 1) && currMatrix[i - 1][j + 1].alive) {
+                if (this.indexValidation(currMatrix, currMatrix[i][j].i - 1, currMatrix[i][j].j + 1)) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(currMatrix[i][j].i - 1, currMatrix[i][j].j) && currMatrix[i - 1][j].alive) {
+                if (this.indexValidation(currMatrix, currMatrix[i][j].i - 1, currMatrix[i][j].j)) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(currMatrix[i][j].i - 1, currMatrix[i][j].j - 1) && currMatrix[i - 1][j - 1].alive) {
+                if (this.indexValidation(currMatrix, currMatrix[i][j].i - 1, currMatrix[i][j].j - 1)) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(currMatrix[i][j].i, currMatrix[i][j].j - 1) && currMatrix[i][j - 1].alive) {
+                if (this.indexValidation(currMatrix, currMatrix[i][j].i, currMatrix[i][j].j - 1)) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(currMatrix[i][j].i + 1, currMatrix[i][j].j - 1) && currMatrix[i + 1][j - 1].alive) {
+                if (this.indexValidation(currMatrix, currMatrix[i][j].i + 1, currMatrix[i][j].j - 1)) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(currMatrix[i][j].i + 1, currMatrix[i][j].j) && currMatrix[i + 1][j].alive) {
+                if (this.indexValidation(currMatrix, currMatrix[i][j].i + 1, currMatrix[i][j].j)) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(currMatrix[i][j].i + 1, currMatrix[i][j].j + 1) && currMatrix[i + 1][j + 1].alive) {
+                if (this.indexValidation(currMatrix, currMatrix[i][j].i + 1, currMatrix[i][j].j + 1)) {
                     neighborCount += 1;
                 }
-                if (this.findIndex(currMatrix[i][j].i, currMatrix[i][j].j + 1) && currMatrix[i][j + 1].alive) {
+                if (this.indexValidation(currMatrix, currMatrix[i][j].i, currMatrix[i][j].j + 1)) {
                     neighborCount += 1;
                 }
                 if (currMatrix[i][j].alive && neighborCount >= 2 && neighborCount <= 3) {
@@ -123,7 +126,7 @@ class Board extends Component {
 
     pauseButton = () => {
         clearInterval(this.interval);
-        this.setState({clickEnabled: true})
+        this.setState({ clickEnabled: true })
     }
 
     clearButton = () => {
@@ -135,31 +138,31 @@ class Board extends Component {
         return (
             <div className="interface-ctn">
 
-                    <p align="left">Generation # {this.state.generation}</p>
-                    <div className="board">
-                        {
-                            this.state.matrix.map(cell => {
-                                return (
-                                    cell.map((cell) => {
-                                        return (<Cell key={cell.i + cell.j} index={cell} clickEnabled={this.state.clickEnabled} toggleClick={this.toggleClick} />);
-                                    })
-                                );
-                            })
-                        }
-                    </div>
-                    <div className="btn-ctn">
-                        <button className="main-btn" onClick={() => this.playButton()}>Play</button>
-                        <button className="main-btn" onClick={() => this.pauseButton()}>Pause</button>
-                        <button className="main-btn" onClick={() => this.clearButton()}>Clear</button>
-                    </div>
-                    <input
-                        type="range"
-                        min="100"
-                        max="1000"
-                        value={this.state.speed}
-                        className="slider"
-                        onChange={this.speedChange}
-                    />
+                <p align="left">Generation # {this.state.generation}</p>
+                <div className="board">
+                    {
+                        this.state.matrix.map(cell => {
+                            return (
+                                cell.map((cell) => {
+                                    return (<Cell key={cell.i + cell.j} index={cell} clickEnabled={this.state.clickEnabled} toggleClick={this.toggleClick} />);
+                                })
+                            );
+                        })
+                    }
+                </div>
+                <div className="btn-ctn">
+                    <button className="main-btn" onClick={() => this.playButton()}>Play</button>
+                    <button className="main-btn" onClick={() => this.pauseButton()}>Pause</button>
+                    <button className="main-btn" onClick={() => this.clearButton()}>Clear</button>
+                </div>
+                <input
+                    type="range"
+                    min="100"
+                    max="1000"
+                    value={this.state.speed}
+                    className="slider"
+                    onChange={this.speedChange}
+                />
             </div>
         )
     }
