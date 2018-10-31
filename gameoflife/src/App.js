@@ -92,7 +92,7 @@ class App extends Component {
           <h3>Conway's Game of Life</h3>
         </header>
         <h3 className="center">Generations: {this.state.generation}</h3>
-        <h3 className="center">Speed Per Generation: {this.state.speed} ms</h3>
+        <h3 className="center">Time Per Generation: {this.state.speed} ms</h3>
         <Grid
           gridFull={this.state.gridFull}
           rows={this.rows}

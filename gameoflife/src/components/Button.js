@@ -7,7 +7,6 @@ const Button = (props) => {
     <button 
       className={props.styles} 
       onClick={props.onClick} 
-      // "disabled"
     >
       {props.text}
     </button>
