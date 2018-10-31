@@ -55,6 +55,7 @@ class Game extends Component {
         }
       }
     }
+    console.log(cells);
     return cells;
   }
 
@@ -79,7 +80,7 @@ class Game extends Component {
       this.board[y][x] = !this.board[y][x];
     }
     console.log(this.board);
-    console.log(this.makeCells());
+    // console.log(this.makeCells());
     this.setState({ cells: this.makeCells() });
   }
 
@@ -158,6 +159,7 @@ class Game extends Component {
   }
 
   handleClear = () => {
+    this.stopGame();
     let generation = 0;
     this.board = this.makeEmptyBoard();
     this.setState({ cells: this.makeCells(), generation });
@@ -174,6 +176,23 @@ class Game extends Component {
       this.runIteration(true);
       ++generation;
       this.setState({ generation })
+    }
+  }
+
+  handlePreset = config => {
+    switch (config) {
+      case 'glider':
+        const cells = [
+          {x: 1, y: 0},
+          {x: 2, y: 1},
+          {x: 0, y: 2},
+          {x: 1, y: 2},
+          {x: 2, y: 2}
+        ];
+        this.setState({ cells });
+        break;
+      default:
+        break;
     }
   }
 
@@ -204,6 +223,7 @@ class Game extends Component {
             <button className='button' onClick={(event) => this.addGenerations(event, addGen)}>Add</button>
           </form>
           <p>Generation: {generation}</p>
+          <button className='button' onClick={() => this.handlePreset('glider')}>Glider</button>
         </div>
       </div>
     )
