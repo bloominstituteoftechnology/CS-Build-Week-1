@@ -75,6 +75,10 @@ class Grid extends React.Component {
         this.setState({ cells: this.gameSquare() });
     }
 
+    clickHandlerClear = () => {
+        this.board = this.gameBoard();
+        this.setState({ cells: this.gameSquare() });
+    }
 
     render() {
         const { cells } = this.state;
@@ -95,7 +99,7 @@ class Grid extends React.Component {
                         <button className="button">Stop</button>
 
                     <button className="button">Randomized</button>
-                    <button className="button">Clear</button>
+                    <button className="button" onClick={this.clickHandlerClear}>Clear</button>
                 </div>
             <div className="rules-container">
                 <div className="rules-title">

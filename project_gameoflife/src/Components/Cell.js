@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 
-const Square = 30;
+const Square = 32;
 
 class Cell extends React.Component {
 
