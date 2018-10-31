@@ -12,11 +12,11 @@ body {
 }
 
 .off {
-  background-color: lightgray;
+  background-color: white;
 }
 
 .on {
-  background-color: green;
+  background-color: blue;
 }
 
 .box:hover {
@@ -50,4 +50,21 @@ h4 {
 
 h4 {
   margin-top: 0px;
+}
+
+a {
+  color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
+}
+
+.navbar-inverse .navbar-brand {
+  color: white;
+}
+
+.navbar-inverse {
+  background-color: blue;
+  border-color: blue;
 }
