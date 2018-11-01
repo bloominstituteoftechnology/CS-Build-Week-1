@@ -28,12 +28,22 @@ class Life {
     }
 
     pasteCells(x, y, name) {
+        let cellWidth = Math.ceil(this.cellWidth);
+        let cellHeight = Math.ceil(this.cellHeight);
+
+        let NORTH = (cellHeight + y - 1) % cellHeight;
+        let SOUTH = (cellHeight + y + 1) % cellHeight;
+
+        let EAST = (cellWidth + x + 1) % cellWidth;
+        let WEST = (cellWidth + x - 1) % cellWidth;
+
         let cells = {
-            glider: [[x, y - 1], [x, y + 1], [x + 1, y], [x + 1, y + 1], [x - 1, y + 1]],
-            spaceship: [[x - 2, y + 1], [x - 2, y - 1], [x + 1, y + 1], [x + 2, y], [x + 2, y - 1], [x + 2, y - 2], [x + 1, y - 2], [x, y - 2], [x - 1, y - 2]],
-            tumbler: [[x + 1, y], [x + 1, y - 1], [x + 1, y - 2], [x + 1, y - 3], [x + 1, y - 4], [x + 2, y - 3], [x + 2, y - 4], [x + 2, y + 1], [x + 3, y],
-            [x + 3, y + 1], [x + 3, y - 1], [x - 1, y], [x - 1, y - 1], [x - 1, y - 2], [x - 1, y - 3], [x - 1, y - 4], [x - 2, y - 3], [x - 2, y - 4], [x - 2, y + 1],
-            [x - 3, y], [x - 3, y + 1], [x - 3, y - 1]]
+            glider: [[x, NORTH], [x, SOUTH], [EAST, y], [EAST, SOUTH], [WEST, SOUTH]],
+            spaceship: [[WEST - 1, SOUTH], [WEST - 1, NORTH], [EAST, SOUTH], [EAST + 1, y], [EAST + 1, NORTH], [EAST + 1, NORTH - 1], [EAST, NORTH - 1],
+            [x, NORTH - 1], [WEST, NORTH - 1]],
+            tumbler: [[EAST, y], [EAST, NORTH], [EAST, NORTH - 1], [EAST, NORTH - 2], [EAST, NORTH - 3], [EAST + 1, NORTH - 2], [EAST + 1, NORTH - 3],
+            [EAST + 1, SOUTH], [EAST + 2, y], [EAST + 2, SOUTH], [EAST + 2, NORTH], [WEST, y], [WEST, NORTH], [WEST, NORTH - 1], [WEST, NORTH - 2],
+            [WEST, NORTH - 3], [WEST - 1, NORTH - 2], [WEST - 1, NORTH - 3], [WEST - 1, SOUTH], [WEST - 2, y], [WEST - 2, SOUTH], [WEST - 2, NORTH]]
         };
 
         for (let i = 0; i < cells[name].length; i++) {
