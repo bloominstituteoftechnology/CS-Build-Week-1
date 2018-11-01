@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, } from '@material-ui/core/styles';
 import  TextField  from '@material-ui/core/TextField';
 import  Button  from '@material-ui/core/Button';
-import  IconButton  from '@material-ui/core/IconButton';
-
+import {AppBar, Toolbar, Typography, IconButton, InputLabel, List, MenuItem, Drawer, Divider, FormControl, Select, Input, FormHelperText } from '@material-ui/core';
 //start drawing a grid with squareSizepx squares (starting at 0,0)
 
 // grid nodes are {x: 0, y:0, xz:squareSize, yz:squareSize}
@@ -23,8 +22,35 @@ const styles = {
       marginTop: '20px',
       display: 'flex',
       justifyContent: 'center'
-   }
- };
+   },
+   generationField: {
+      // color: 'black',
+      // '&:before': {
+      //     borderColor: 'black',
+      // },
+      // '&:after': {
+      //     borderColor: 'black',
+      // },
+      // '&:disabled': {
+      //    color: 'black',
+      // }
+   },
+   select: {
+      // color: 'white',
+      // '&:before': {
+      //     borderColor: 'white',
+      // },
+      // '&:after': {
+      //     borderColor: 'white',
+      // }
+  },
+   formControl: {
+      // margin: theme.spacing.unit,
+      // minWidth: 120,
+      color: 'white',
+      marginRight: '20px',
+   },
+};
 
 class Game extends Component {
 
@@ -38,8 +64,9 @@ class Game extends Component {
          Grid: [],
          NextGrid: [],
          isRunning: false,
-         squareSize : 10,
+         squareSize : 13,
          generation : 0,
+         presets: '',
       }
       this.container = React.createRef();
       this.timer = null;
@@ -342,14 +369,14 @@ class Game extends Component {
    startStopGame = () => {
       const startNow = !this.state.isRunning
 
-      this.setState({ isRunning: !this.state.isRunning, generation: 0})
+      this.setState({ isRunning: !this.state.isRunning, })
 
       if(startNow) this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, 10)
       else clearTimeout(this.timer)
    }
 
    resetGame = () => {
-      this.setState({isRunning: false, generation: 0})
+      this.setState({isRunning: false, generation: 0, presets: ''})
 
       const gridToReset = this.state.Grid
 
@@ -410,16 +437,19 @@ class Game extends Component {
       newGrid[x][y].isAlive = true;
 
       this.canvasApp()
-
-      //FIX: this is testing conway rules error
-      console.log('After Acorn init: ')
-      console.log(this.getNeighbors(newGrid, firstX, firstY))
    }
 
    stepThroughGame = () => {
       this.incrementGameLoop()
       this.canvasApp();
    }
+
+
+   handleChange = event => {
+      this.setState({ [event.target.name]: event.target.value });
+      if(event.target.value === 'Acorn') this.makeAcorn();
+      else if (event.target.value === 'Random') this.randomizeGame()
+    };
 
    render() {
       const {classes} = this.props
@@ -431,10 +461,10 @@ class Game extends Component {
             <div className={classes.gameControls}>
 
                <TextField
-                  disabled
+                  readOnly
                   id="outlined-uncontrolled"
                   label="Generation"
-                  // className={classes.TextField}
+                  className={classes.generationField}
                   margin="normal"
                   variant="outlined"
                   value={this.state.generation}
@@ -458,18 +488,25 @@ class Game extends Component {
                   Reset
                </Button>
 
-               <Button onClick={this.randomizeGame}
-               //FIX THIS: convert this to an IconButton with the MUI play/pause icon
-               >
-                  Randomize
-               </Button>
+               <FormControl id='console' className={this.props.classes.formControl} color={'inherit'}>
+               <InputLabel htmlFor="presets-helper">Presets</InputLabel>
+                  <Select
+                     value={this.state.presets}
+                     onChange={this.handleChange}
+                     input={<Input name="presets" id="presets-helper" />}
+                     className={this.props.classes.select}
+                  >
+                     <MenuItem color={'inherit'} value={'Acorn'}>
+                        <em>Acorn</em>
+                     </MenuItem>
+                     <MenuItem color={'inherit'}  value={'Random'}>
+                        <em>Random</em>
+                     </MenuItem>
+                     
 
-               <Button onClick={this.makeAcorn}
-               //FIX THIS: convert this to an IconButton with the MUI play/pause icon
-               >
-                  ACORN
-               </Button>
-
+                  </Select>
+                  <FormHelperText className={this.props.classes.select}>Select a layout</FormHelperText>
+               </FormControl>
             </div>
 
          </div>
