@@ -5,33 +5,53 @@ const CELL_SIZE = 20;
 const WIDTH = 800;
 const HEIGHT = 600;
 
+class Cell extends React.Component {
+
+  render() {
+    const { x, y } = this.props;
+    return (
+      <div 
+        className="Cell" 
+        style={{
+          left: `${CELL_SIZE * x + 1}px`,
+          top: `${CELL_SIZE * y + 1}px`,
+          width: `${CELL_SIZE - 1}px`,
+          height: `${CELL_SIZE - 1}px`,
+        }} 
+      />
+    );
+  }
+}
+
 class Game extends React.Component {
+
   constructor() {
     super();
     this.rows = HEIGHT / CELL_SIZE;
     this.cols = WIDTH / CELL_SIZE;
+
     this.board = this.clearBoard();
   }
+
   state = {
     cells: [],
+    isRunning: false,
+    interval: 100,
   }
-  
-  handleClick = (event) => {
-    const elemOffset = this.getElementOffset();
-    const offsetX = event.clientX - elemOffset.x;
-    const offsetY = event.clentY - elemOffset.y;
 
-    const x = Math.floor(offsetX / CELL_SIZE);
-    const y = Math.floor(offsetY / CELL_SIZE);
-
-    if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows) {
-      this.board[y][x] = !this.board[y][x]
+  clearBoard() {
+    let board = [];
+    for (let y = 0; y < this.rows; y++) {
+      board[y] = [];
+      for (let x = 0; x < this.cols; x++) {
+        board[y][x] = false;
+      }
     }
-    
-    this.setState({ cells: this.addCells() });
+
+    return board;
   }
 
-  getElementOffset = () => {
+  getElementOffset() {
     const rect = this.boardRef.getBoundingClientRect();
     const doc = document.documentElement;
 
@@ -41,30 +61,37 @@ class Game extends React.Component {
     };
   }
 
-  clearBoard = () => {
-    const board = [];
-    for (let y = 0; y < this.rows; y++) {
-      board[y] = [];
-      for (let x = 0; x < this.cols; x++) {
-        board[y][x] = false;
-      }
-    }
-    return board;
-  }
-
-  addCells = () => {
-    const cells = [];
+  addCells() {
+    let cells = [];
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.cols; x++) {
-        if (this.board[x][y]) {
+        if (this.board[y][x]) {
           cells.push({ x, y });
         }
       }
     }
-    return cells;  
+
+    return cells;
   }
- 
+
+  handleClick = (event) => {
+
+    const elemOffset = this.getElementOffset();
+    const offsetX = event.clientX - elemOffset.x;
+    const offsetY = event.clientY - elemOffset.y;
+    
+    const x = Math.floor(offsetX / CELL_SIZE);
+    const y = Math.floor(offsetY / CELL_SIZE);
+    if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows) {
+      this.board[y][x] = !this.board[y][x];
+    }
+
+    this.setState({ cells: this.addCells() });
+  }
+
+
   render() {
+    const { cells } = this.state;
     return( 
       <div>
         <div 
@@ -77,6 +104,15 @@ class Game extends React.Component {
           onClick={this.handleClick}
           ref={(n) => { this.boardRef = n; }}
         >
+          {
+            cells.map(cell => (
+              <Cell 
+                x={cell.x}
+                y={cell.y}
+                key={`${cell.x}, ${cell.y}`} 
+              />
+            ))
+          }
         </div>
       </div>
     );
