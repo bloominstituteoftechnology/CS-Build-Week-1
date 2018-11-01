@@ -6,27 +6,27 @@ export default class Generate {
         this.deadCells = new Map();
     }
 
-    getGeneration() {
+    getGeneration = () => {
         return this.generation
     }
 
-    getLiveCells() {
+    getLiveCells = () => {
         return this.liveCells
     }
 
-    addCell(position) {
+    addCell = (position) => {
         this.liveCells.set(position.x + "," + position.y, {x: position.x, y: position.y})
     }
 
-    removeCell(position) {
+    removeCell = (position) => {
         this.liveCells.delete(position)
     }
 
-    isCellAlive(position) {
+    isCellAlive = (position) => {
         return this.liveCells.has(position);
     }
 
-    storeCell(position) {
+    storeCell = (position) => {
         if(this.isCellAlive(position.x +"," + position.y)) {
             this.removeCell(position.x +"," + position.y)
         } else {
@@ -36,7 +36,7 @@ export default class Generate {
         return new Generate(this.generation, this.liveCells)
     }
 
-    addGeneration() {
+    addGeneration = () => {
         this.liveCells.forEach((item) => {
             this.calculateLiveCellsNeighbors(item)
         })
@@ -50,7 +50,7 @@ export default class Generate {
         return new Generate(this.generation, this.nextGeneration)
     }
 
-    calculateLiveCellsNeighbors(position) {
+    calculateLiveCellsNeighbors = (position) => {
         let liveNeighbors = 0;
 
         for(let i = position.x - 1; i <= position.x + 1; i++) {
@@ -70,20 +70,20 @@ export default class Generate {
         }
     }
 
-    calculateDeadCellsNeighbors(position) {
+    calculateDeadCellsNeighbors = (position) => {
         let liveNeighbors = 0;
 
         for(let i = position.x - 1; i <= position.x + 1; i++) {
             for(let j = position.y - 1; j <= position.y + 1; j++) {
-                if (i === position.x && j === position.y) {
+                if (i === position.x && j === position.y)
                     continue
-                }
 
                 if (this.isCellAlive(i +"," + j)) {
                     liveNeighbors++
                 }
             }
         }
-
+    if(liveNeighbors === 3)
+        this.nextGeneration.set(position.x +"," + position.y, {x: position.x, y: position.y});
     }
 }

@@ -14,7 +14,7 @@ export default class Grid extends Component {
         }
     }
 
-    gridSize() {
+    gridSize = () => {
         let cellColumn = [];
         let cellRow = [];
 
@@ -87,7 +87,7 @@ export default class Grid extends Component {
         })
     }
 
-    storeCell(position) {
+    storeCell = (position) => {
         if(!this.state.isRunning) {
             this.setState({
                 Generate: this.state.Generate.storeCell(position)
@@ -108,6 +108,7 @@ export default class Grid extends Component {
             <input type="text" value={this.state.size[0]} onChange={this.handleColumn}/>
         </label>
         </LabelStyling>
+        <div getGeneration={this.props.generation}>Generation</div>
         <GridStyle>{this.gridSize()}</GridStyle>
         <Controls start={this.start} stop={this.stop}/>
         </GridContainer>

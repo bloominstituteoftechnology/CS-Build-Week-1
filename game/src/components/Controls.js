@@ -8,8 +8,8 @@ const Controls = props => {
     return(
     <ControlsWrapper>
     <img src={pause} alt="pause button"></img>
-    <img onClick={this.props.start} src={play} alt="play button"></img>
-    <img onClick={this.props.stop} src={stop} alt="stop button"></img>
+    <img onClick={this.props.start} src={play} alt="play button"/>
+    <img onClick={this.props.stop} src={stop} alt="stop button"/>
     </ControlsWrapper>)
 }
 
