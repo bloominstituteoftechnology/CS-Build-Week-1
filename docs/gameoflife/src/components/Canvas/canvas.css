@@ -68,7 +68,7 @@
     height: 100px;
     width: 100vw;
 
-    background: url('/gameoflife.png') no-repeat, url('/gameoflife-bg.png') repeat-x;
+    background: url('https://dirupt.github.io/Conways-Life/gameoflife.png') no-repeat, url('https://dirupt.github.io/Conways-Life/gameoflife-bg.png') repeat-x;
     background-size: contain;
 
     border-bottom: 3px solid #2A4E97;
