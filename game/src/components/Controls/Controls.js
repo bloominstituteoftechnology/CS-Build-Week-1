@@ -5,10 +5,19 @@ export default class Controls extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timer: undefined,
-      generationNumber: 0
+      timer: undefined
     };
   }
+
+  onStepClick = e => {
+    this.props.step();
+    console.log('step click');
+  };
+
+  onPlayStopClick = e => {
+    this.props.playStop();
+    console.log('play/stop click');
+  };
 
   onClearClick = e => {
     this.props.clear();
@@ -24,10 +33,10 @@ export default class Controls extends Component {
     return (
       <div className="controls">
         <div className="controls__button-container">
-          <ControlsButton icon="stop" isHidden={true} onButtonClick={this.onClearClick} />
-          <ControlsButton icon="step-forward" isHidden={false} onButtonClick={this.onClearClick} />
-          <ControlsButton icon="eraser" isHidden={false} onButtonClick={this.onClearClick} />
-          <ControlsButton icon="question" isHidden={false} onButtonClick={this.onRandomizeClick} />
+          <ControlsButton icon="stop" onButtonClick={this.onPlayStopClick} isShowingPlay={this.props.isShowingPlay} />
+          <ControlsButton icon="step-forward" onButtonClick={this.onStepClick} isShowingPlay={this.props.isShowingPlay} />
+          <ControlsButton icon="eraser" onButtonClick={this.onClearClick} isShowingPlay={this.props.isShowingPlay} />
+          <ControlsButton icon="question" onButtonClick={this.onRandomizeClick} isShowingPlay={this.props.isShowingPlay} />
         </div>
         <div className="controls__generation"><span className="controls__generation-number">{this.props.generationNumber}</span> Generation</div>
       </div>

@@ -49,12 +49,10 @@ export default class Game extends Component {
   }
 
   componentDidUpdate = prevProps => {
-    console.log('componentDidUpdate');
     this.drawCanvas();
   }
 
   componentDidMount = () => {
-    console.log('componentDidMount');
     this.drawCanvas();
     this.props.randomize();
   }

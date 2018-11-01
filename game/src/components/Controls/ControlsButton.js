@@ -6,8 +6,7 @@ export default class ControlsButton extends Component {
     super(props);
 
     this.state = {
-      icon: this.props.icon,
-      isShowingPlay: false
+      icon: this.props.icon
     };
   }
 
@@ -15,14 +14,25 @@ export default class ControlsButton extends Component {
     e.preventDefault();
     this.props.onButtonClick();
     if (this.state.icon === 'play' || this.state.icon === 'stop') {
-      if (this.state.isShowingPlay) {
-        this.setState({icon: 'stop', isShowingPlay: false});
+      if (this.props.isShowingPlay) {
+        this.setState({icon: 'play'});
       } else {
-        this.setState({icon: 'play', isShowingPlay: true});
+        this.setState({icon: 'stop'});
       }
     }
-    console.log('button click');
   };
+
+  componentWillUpdate = newProps => {
+    if(newProps.isShowingPlay !== this.props.isShowingPlay) {
+      if (this.state.icon === 'play' || this.state.icon === 'stop') {
+        if (this.props.isShowingPlay) {
+          this.setState({icon: 'play'});
+        } else {
+          this.setState({icon: 'stop'});
+        }
+      }
+    }
+  }
 
   render() {
     let icon;
