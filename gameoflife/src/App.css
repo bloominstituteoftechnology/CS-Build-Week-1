@@ -11,13 +11,21 @@
   margin-bottom: -1px;
   }
 
+.off {
+  background-color: lightgray;
+}
+
 .on {
   background-color: rgb(0, 29, 82);
+}
+  
+.box:hover { 
+  background: rgb(90, 87, 255);
 }
 
 .grid {
   width: 150px;
   line-height: 0;
   margin: auto;
-  margin-top: 20px;
+  margin-top: 0px;
 }
