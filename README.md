@@ -90,7 +90,7 @@ Implment at least 3 of the following features:
 - [x] On the main entry point of the application, include a separate section or link to another page / screen that describes the two main rules (birth & death) of Conway’s “Game of Life”
 
 #### About this Algorithm
-- [ ]  On the main entry point of the application, include a separate section or link to another page / screen that describes more about Conway’s “Game of Life”, such as whether or not it is Turing Complete or the history of this cellular automaton
+- [x]  On the main entry point of the application, include a separate section or link to another page / screen that describes more about Conway’s “Game of Life”, such as whether or not it is Turing Complete or the history of this cellular automaton
 
 ### Deployment
 - [x] Deploy your app using a tool like [GitHub Pages or Heroku](resources/deployment)
