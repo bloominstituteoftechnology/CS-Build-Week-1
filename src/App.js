@@ -9,7 +9,7 @@ import G from './G';
 class App extends Component {
   constructor() {
     super();
-    this.speed = 100
+    this.speed = 300
     this.rows = 30
     this.cols = 50
     this.state = {
@@ -40,13 +40,61 @@ class App extends Component {
           }
         }
       }
+      
       this.setState({
         gridFull: gridCopy
+
       });
     }
+    x = () => {
+      let gridCopy = arrayClone(this.state.gridFull);
+      for(let i = 0; i < this.rows; i++) {
+        for(let j = 0; j<this.cols; j++) {
+          
+            gridCopy[12][25] = true;
+            gridCopy[12][20] = true;
+            gridCopy[11][26] = true;
+            gridCopy[11][19] = true;
+            gridCopy[10][27] = true;
+            gridCopy[10][18] = true;
+            gridCopy[18][26] = true;
+            gridCopy[13][21] = true;
+            gridCopy[13][24] = true;
+            gridCopy[14][23] = true;
+            gridCopy[15][22] = true;
+            gridCopy[16][21] = true;
+            gridCopy[17][20] = true;
+            gridCopy[14][22] = true;
+            gridCopy[15][23] = true;
+            gridCopy[16][24] = true;
+            gridCopy[17][25] = true;
+            gridCopy[19][27] = true;
+            gridCopy[19][18] = true;
+
+            gridCopy[19][32] = true;
+            gridCopy[19][34] = true;
+            gridCopy[18][34] = true;
+            gridCopy[17][36] = true;
+            gridCopy[16][36] = true;
+            gridCopy[15][36] = true;
+            gridCopy[16][38] = true;
+            gridCopy[14][38] = true;
+            gridCopy[15][39] = true;
+            gridCopy[15][38] = true;
+            
+          }
+        }
+      
+      this.setState({
+        gridFull: gridCopy
+
+      });
+    }
+
     g15 = () =>{
       this.cols= 15;
       this.rows=15;
+      this.handleClearBtn();
     } 
     
     handlePlayBtn = () => {
@@ -104,14 +152,15 @@ class App extends Component {
     // Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
     
     componentDidMount(){
-      this.random();
-      this.handlePlayBtn();
+      this.x();
+      // this.handlePlayBtn();
     }
     
     
   render() {
     return (
       <div>
+        <h1>Game of Life</h1>
         <h2>Gens: {this.state.gen}</h2>
         
         <G 

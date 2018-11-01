@@ -47,6 +47,7 @@ class App extends Component {
     g15 = () =>{
       this.cols= 15;
       this.rows=15;
+      this.handleClearBtn();
     } 
     
     handlePlayBtn = () => {
@@ -112,6 +113,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <h1>Game of Life</h1>
         <h2>Gens: {this.state.gen}</h2>
         
         <G 
