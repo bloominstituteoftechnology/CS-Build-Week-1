@@ -1,5 +1,6 @@
 import React from "react";
-import { Row, Button, Input } from "reactstrap";
+import { Row, Button, ButtonGroup, Input } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Grid from "./Grid/Grid";
 import Cell from "./Grid/Cell/Cell";
 import Rules from "./Rules/Rules";
@@ -91,6 +92,7 @@ class GameOfLife extends React.Component {
   handleClear = () => {
     this.grid = this.clearGrid();
     this.setState({ cells: this.fillCells(), generation: 0 });
+    this.stopGame();
   };
 
   handleRandom = () => {
@@ -203,13 +205,23 @@ class GameOfLife extends React.Component {
           </Grid>
         </div>
         <div>
-          {this.state.isPlaying ? (
-            <Button onClick={this.stopGame}>Pause</Button>
-          ) : (
-            <Button onClick={this.startGame}>Play</Button>
-          )}
-          <Button onClick={this.handleClear}>Stop</Button>
-          <Button onClick={this.handleRandom}>Random</Button>
+          <ButtonGroup>
+            {this.state.isPlaying ? (
+              <Button onClick={this.stopGame} size="lg">
+                <FontAwesomeIcon icon="pause" /> Pause
+              </Button>
+            ) : (
+              <Button onClick={this.startGame} size="lg">
+                <FontAwesomeIcon icon="play" /> Play
+              </Button>
+            )}
+            <Button onClick={this.handleClear} color="danger" size="lg">
+              <FontAwesomeIcon icon="stop" /> Stop
+            </Button>
+            <Button onClick={this.handleRandom} size="lg">
+              <FontAwesomeIcon icon="random" /> Random
+            </Button>
+          </ButtonGroup>
           <Input
             type="range"
             min="100"
