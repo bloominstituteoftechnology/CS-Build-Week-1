@@ -59,6 +59,10 @@ class CellGrid extends Component {
     }
 
     randomCells() {
+        this.liveCells.forEach((item) => {
+            this.removeDeadCell(item.x + ' , ' + item.y);
+        })
+        
         for (let i = 0; i < this.state.size[0]; i++) {
             for (let j = 0; j < this.state.size[1]; j++){
                 let random = Math.floor((Math.random() * 100) + 1);
