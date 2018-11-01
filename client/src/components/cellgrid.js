@@ -19,7 +19,7 @@ class CellGrid extends Component {
 
 
     addLiveCell(position) {
-        this.liveCells.set(position.x + ' , ' + position.y, {x: position.x, y: position.y});
+        this.liveCells.set(position.x + ' , ' + position.y, { x: position.x, y: position.y });
     }
 
     removeDeadCell(position) {
@@ -34,61 +34,61 @@ class CellGrid extends Component {
         return this.buffer.has(position);
     }
 
-    liveNeighbors(position){
+    liveNeighbors(position) {
         let liveNeighbors = 0;
 
-        for(let i = position.x - 1; i <= position.x + 1; i++){
-            for(let j = position.y - 1; j <= position.y + 1; j++){
+        for (let i = position.x - 1; i <= position.x + 1; i++) {
+            for (let j = position.y - 1; j <= position.y + 1; j++) {
 
-                if(i === position.x && j === position.y)
+                if (i === position.x && j === position.y)
                     continue;
 
-                if(this.isCellAlive(i + ' , ' + j)){
+                if (this.isCellAlive(i + ' , ' + j)) {
                     liveNeighbors++;
                 }
-                    
-                
+
+
                 else
-                    this.deadCells.set(i + ' , ' + j, {x: i, y: j});
+                    this.deadCells.set(i + ' , ' + j, { x: i, y: j });
             }
         }
 
-        if((liveNeighbors === 2 || liveNeighbors === 3))
-            this.buffer.set(position.x + ' , ' + position.y, {x: position.x, y: position.y});
+        if ((liveNeighbors === 2 || liveNeighbors === 3))
+            this.buffer.set(position.x + ' , ' + position.y, { x: position.x, y: position.y });
 
     }
 
-    randomDead(){
+    randomDead() {
 
     }
 
     deadNeighbors(position) {
         let liveNeighbors = 0;
 
-        for(let i = position.x - 1; i <= position.x + 1; i++){
-            for(let j = position.y - 1; j <= position.y + 1; j++){
+        for (let i = position.x - 1; i <= position.x + 1; i++) {
+            for (let j = position.y - 1; j <= position.y + 1; j++) {
 
-                if(i === position.x && j === position.y)
+                if (i === position.x && j === position.y)
                     continue;
 
-                if(this.isCellAlive(i + ' , ' + j))
+                if (this.isCellAlive(i + ' , ' + j))
                     liveNeighbors++;
             }
         }
 
-        if((liveNeighbors === 3))
-            this.buffer.set(position.x + ' , ' + position.y, {x: position.x, y: position.y});
+        if ((liveNeighbors === 3))
+            this.buffer.set(position.x + ' , ' + position.y, { x: position.x, y: position.y });
     }
 
     storeCell(position) {
-        if(this.isCellAlive(position.x + ' , ' + position.y)) {
-             this.removeDeadCell(position.x + ' , ' + position.y);
+        if (this.isCellAlive(position.x + ' , ' + position.y)) {
+            this.removeDeadCell(position.x + ' , ' + position.y);
         }
-        
+
         else
-        this.addLiveCell(position);
-        this.setState({cellCount: position});
-    
+            this.addLiveCell(position);
+        this.setState({ cellCount: position });
+
 
     }
 
@@ -107,16 +107,16 @@ class CellGrid extends Component {
 
         let generationplus = this.state.generation;
         generationplus++;
-        this.setState({generation: generationplus});
+        this.setState({ generation: generationplus });
 
     }
 
     startSimulation() {
-        if(this.state.simActive)
+        if (this.state.simActive)
             return;
-        this.setState({simActive: true}, () => this.runSimulation());
-        
-        
+        this.setState({ simActive: true }, () => this.runSimulation());
+
+
     }
 
     runSimulation() {
@@ -127,9 +127,9 @@ class CellGrid extends Component {
     }
 
     stopSimulation() {
-        if(!this.state.simActive)
+        if (!this.state.simActive)
             return;
-        this.setState({simActive: false});
+        this.setState({ simActive: false });
         clearTimeout(this.timeout);
     }
 
@@ -137,14 +137,14 @@ class CellGrid extends Component {
         let newGrid = [];
         let cellRow = [];
 
-        for(let i = 0; i < this.state.size[0]; i++) {
+        for (let i = 0; i < this.state.size[0]; i++) {
             for (let j = 0; j < this.state.size[1]; j++) {
-                if(this.isCellAlive(i + ' , ' + j)){
-                    cellRow.push(<Cell key={[i, j]} position={{x : i, y : j}} storeCell={this.storeCell.bind(this)} isAlive={true} />);
+                if (this.isCellAlive(i + ' , ' + j)) {
+                    cellRow.push(<Cell key={[i, j]} position={{ x: i, y: j }} storeCell={this.storeCell.bind(this)} isAlive={true} />);
                 }
                 else
-                    cellRow.push(<Cell key={[i, j]} position={{x : i, y : j}} storeCell={this.storeCell.bind(this)} isAlive={false} />);
-            }   
+                    cellRow.push(<Cell key={[i, j]} position={{ x: i, y: j }} storeCell={this.storeCell.bind(this)} isAlive={false} />);
+            }
             newGrid.push(<div className="row" key={i}>{cellRow}</div>)
             cellRow = [];
         }
@@ -153,14 +153,20 @@ class CellGrid extends Component {
 
 
     render() {
-        return <div> <div className="grid-container">{this.renderGrid()}</div>
-                <button onClick={() => this.startSimulation()}>Start Simulation </button>
-                <button onClick={() => this.stopSimulation()}>Stop</button>
-               </div>
-        
+        return <div className="app-container"> 
+                <div className="grid-container">
+                        {this.renderGrid()}
+                    </div>
+                <div className="controls-container">
+                    <button onClick={() => this.startSimulation()}>Start Simulation </button>
+                    <button onClick={() => this.stopSimulation()}>Stop</button>
+                    <h3> Generation: {this.state.generation} </h3>
+                </div>
+        </div>
+
     }
 
-    
+
 }
 
 export default CellGrid;
