@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { currentState } from '../actions/';
 
 import Cell from './cell';
-import Control from './control';
 
 class Board extends Component {
   render(){
