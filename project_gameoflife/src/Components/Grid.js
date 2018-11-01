@@ -76,19 +76,20 @@ class Grid extends React.Component {
 
     runCoordinates() {
         let newBoard = this.gameBoard();
-
+        //loop through all cells
         for (let y = 0; y < this.rows; y++) {
             for (let x = 0; x < this.cols; x++) {
                 let connections = this.makeConnections(this.board, x, y);
+                //Implement rules of game
                 if (this.board[y][x]) {
                     if (connections === 2 || connections === 3) {
-                        newBoard[y][x] = true;
+                        newBoard[y][x] = true;  //cells live
                     } else {
-                        newBoard[y][x] = false;
+                        newBoard[y][x] = false; //cells die
                     }
                 } else {
                     if (!this.board[y][x] && connections === 3) {
-                        newBoard[y][x] = true;
+                        newBoard[y][x] = true; //new cell is born
                     }
                 }
             }
@@ -101,11 +102,12 @@ class Grid extends React.Component {
     makeConnections(board, x, y) {
         let connections = 0;
         const gridCoordinates = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
+        //loop through rows and columns to find neighbors
         for (let i = 0; i < gridCoordinates.length; i++) {
             const coordinate = gridCoordinates[i];
             let y1 = y + coordinate[0];
             let x1 = x + coordinate[1];
-
+            //loop thorough and find connecting neighbors
             if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
                 connections++;
             }
