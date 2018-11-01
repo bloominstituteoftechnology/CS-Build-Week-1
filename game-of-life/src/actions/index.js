@@ -37,3 +37,21 @@ export function clear() {
     type: 'CLEAR',
   };
 }
+
+export function resizeSmall() {
+  return {
+    type: 'RESIZE_SMALL',
+  };
+}
+
+export function resizeMedium() {
+  return {
+    type: 'RESIZE_MEDIUM',
+  };
+}
+
+export function resizeLarge() {
+  return {
+    type: 'RESIZE_LARGE',
+  };
+}

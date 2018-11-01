@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 
 import { currentState } from '../actions/';
 
-import Control from './control';
 import Cell from './cell';
 
-console.log(Control);
 class Board extends Component {
   render(){
     return(
-      <div>
+      <div className="board">
         <table>
           <tbody>
             {this.props.board.map((row,i) =>
@@ -19,7 +17,6 @@ class Board extends Component {
                   key={j}
                   alive={cell.status}
                   newBorn={cell.newBorn}
-                  running={Control.props.playState.isRunning ? cell.running : ''}
                   handleClick={() => this.props.currentState(i,j)} 
                 />)}
               </tr>)}

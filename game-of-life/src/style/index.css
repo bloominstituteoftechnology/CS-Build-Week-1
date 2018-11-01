@@ -92,10 +92,18 @@ td:hover:not(.alive):not(.new-born){
   background: #DDD;
 }
 
+/* Board Styles */
+
+.board {
+  display: flex;
+  justify-content: center;
+}
+
 /* Controls and button styles */
 
 .controls{
-  float: left;
+  display: flex;
+  justify-content: center;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -119,7 +127,8 @@ td:hover:not(.alive):not(.new-born){
 }
 
 .button-group {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
 }
 
 .button-group .button {
@@ -138,4 +147,14 @@ td:hover:not(.alive):not(.new-born){
 
 .counter {
   float: right;
+  /* display: flex;
+  justify-content: flex-end;
+  z-index: 2; */
+}
+
+.learn {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+  font-size: 1rem;
 }

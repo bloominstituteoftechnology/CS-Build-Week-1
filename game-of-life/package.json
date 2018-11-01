@@ -2,6 +2,7 @@
   "name": "game-of-life",
   "version": "0.1.0",
   "private": true,
+  "main": "index.js",
   "dependencies": {
     "babel-preset-stage-1": "^6.24.1",
     "lodash": "^4.17.11",

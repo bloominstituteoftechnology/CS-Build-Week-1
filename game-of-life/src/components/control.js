@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { makeRandomGrid, tick, startPlaying, stopPlaying, clear } from '../actions/';
+import { makeRandomGrid, tick, startPlaying, stopPlaying, clear, resizeSmall, resizeMedium, resizeLarge } from '../actions/';
 
 import Button from './button';
 
 class Control extends Component {
   componentDidMount(){
     this.props.random();
-    this.togglePlay();
+    // this.togglePlay();
   }
+  
   render(){
     return (
       <div className="controls">
@@ -33,6 +34,27 @@ class Control extends Component {
             icon={'fa fa-step-forward'}
             title={'Step Forward +1'}
           />
+          <br/><br/>
+          <div className="button-group">
+          <Button
+            className="button"
+            handleClick={() => this.props.resizeSmall()}
+            icon={'fa fa-th-large'}
+            title={'Small'}
+            />
+          <Button
+            className="button"
+            handleClick={() => this.props.resizeMedium()}
+            icon={'fa fa-th-large'}
+            title={'Medium'}
+            />
+          <Button
+            className="button"
+            handleClick={() => this.props.resizeLarge()}
+            icon={'fa fa-th-large'}
+            title={'Large'}
+            />
+          </div>
         </div>
       </div>
     );
@@ -53,6 +75,27 @@ class Control extends Component {
     }
       this.props.clear();
   }
+  resizeSmall(){
+    if (this.props.playState.isRunning) {
+      clearInterval(this.props.playState.timerId);
+      this.props.stopPlaying();
+    }
+    this.props.resizeSmall();
+  }
+  resizeMedium(){
+    if (this.props.playState.isRunning) {
+      clearInterval(this.props.playState.timerId);
+      this.props.stopPlaying();
+    }
+    this.props.resizeMedium();
+  }
+  resizeLarge(){
+    if (this.props.playState.isRunning) {
+      clearInterval(this.props.playState.timerId);
+      this.props.stopPlaying();
+    }
+    this.props.resizeLarge();
+  }
 }
 
 
@@ -66,7 +109,10 @@ const mapDispatchToProps = (dispatch) => {
     tick: () => dispatch(tick()),
     startPlaying: (timerId) => dispatch(startPlaying(timerId)),
     stopPlaying: () => dispatch(stopPlaying()),
-    clear: () => dispatch(clear())
+    clear: () => dispatch(clear()),
+    resizeSmall: () => dispatch(resizeSmall()),
+    resizeMedium: () => dispatch(resizeMedium()),
+    resizeLarge: () => dispatch(resizeLarge())
   };
 }
 

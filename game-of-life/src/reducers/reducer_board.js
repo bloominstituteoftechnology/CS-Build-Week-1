@@ -1,7 +1,7 @@
 import * as grid from '../bin/grid';
 
-const GRID_HEIGHT = 25;
-const GRID_WIDTH = 40;
+let GRID_HEIGHT = 40;
+let GRID_WIDTH = 40;
 const initialGrid = grid.makeGrid(GRID_HEIGHT,GRID_WIDTH);
 
 export default (state = initialGrid, action) => {
@@ -12,6 +12,18 @@ export default (state = initialGrid, action) => {
       cell.status = !cell.status;
       cell.newBorn = !cell.newBorn;
       return board;
+    case 'RESIZE_SMALL':
+      GRID_HEIGHT = 15;
+      GRID_WIDTH = 15;
+      return grid.makeGrid(GRID_HEIGHT, GRID_WIDTH, false);
+    case 'RESIZE_MEDIUM':
+      GRID_HEIGHT = 25;
+      GRID_WIDTH = 25;
+      return grid.makeGrid(GRID_HEIGHT, GRID_WIDTH, false);
+    case 'RESIZE_LARGE':
+      GRID_HEIGHT = 40;
+      GRID_WIDTH = 40;
+      return grid.makeGrid(GRID_HEIGHT, GRID_WIDTH, false);
     case 'MAKE_RANDOM':
       //true param requests a random grid from makeGrid method
       return grid.makeGrid(GRID_HEIGHT, GRID_WIDTH, true);

@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
     case 'STOP':
       return {
         timerId: null,
-        isRuninng: false
+        isRunning: false
       };
     default:
       return state;
