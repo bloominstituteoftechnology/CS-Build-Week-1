@@ -3,64 +3,90 @@ import React, { Component } from 'react';
 export default class Game extends Component {
   constructor(props) {
     super(props);
+    
+    this.CANVAS_SIZE = 580;
+    this.NUM_CELLS = 58;
+    this.CELL_SIZE = 10;
+    this.GRID_COLOR = '#dfdfdf';
+
     this.state = {
-      canvas: undefined,
-      ctx: undefined,
-      grid: undefined,
-      canvasSize: 580,
-      numCells: 58,
-      cellDimensions: 10, 
-      gridColor: '#dfdfdf'
+      grid: this.getGrid()
     };
   }
 
   drawCanvas = () => {
-    const canvas = document.getElementById('game');
-    const ctx = canvas.getContext('2d');
-    const grid = new Array(this.state.numCells);
-    let x, y;
+    const canvas = this.refs.game;
+    const ctx = this.refs.game.getContext('2d');
+    const grid = this.state.grid.slice();
 
+    if (canvas) {
+      canvas.width = canvas.height = this.CANVAS_SIZE;
+      ctx.strokeStyle = ctx.fillStyle = this.GRID_COLOR;
+      
+      for (let x = 0.5; x < this.NUM_CELLS * this.CELL_SIZE; x += this.CELL_SIZE) {
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, this.NUM_CELLS * this.CELL_SIZE);
+      }
+
+      for (let y = 0.5; y < this.NUM_CELLS * this.CELL_SIZE; y += this.CELL_SIZE) {
+        ctx.moveTo(0, y);
+        ctx.lineTo(this.NUM_CELLS * this.CELL_SIZE, y);
+      }
+      ctx.stroke();
+      
+      for (let x = 0; x < grid.length; x++) {
+        for (let y = 0; y < grid[x].length; y++) {
+          if (grid[x][y]) {
+            ctx.fillRect(x * this.CELL_SIZE + 1, 
+              y * this.CELL_SIZE + 1,
+              this.CELL_SIZE - 1,
+              this.CELL_SIZE - 1);
+          }
+        }
+      }
+
+    }
+  }
+
+  randomize = () => {
+    let grid = this.state.grid.slice();
     for (let x = 0; x < grid.length; x++) {
-      grid[x] = new Array(this.state.numCells);
       for (let y = 0; y < grid[x].length; y++) {
+        grid[x][y] = Math.random() < 0.3;
+      }
+    }
+    this.setState({grid: grid});
+    this.drawCanvas();
+    console.log('randomized');
+  }
+
+  getGrid = () => {
+    const grid = [];
+
+    for (let x = 0; x < this.NUM_CELLS; x++) {
+      grid[x] = [];
+      for (let y = 0; y < this.NUM_CELLS; y++) {
         grid[x][y] = false;
       }
     }
 
-    canvas.width = canvas.height = this.state.canvasSize;
-		ctx.strokeStyle = ctx.fillStyle = this.state.gridColor;
-		
-		for (x = 0.5; x < this.state.numCells * this.state.cellDimensions; x += this.state.cellDimensions) {
-		  ctx.moveTo(x, 0);
-		  ctx.lineTo(x, this.state.numCells * this.state.cellDimensions);
-		}
+    return grid;
+  }
 
-		for (y = 0.5; y < this.state.numCells * this.state.cellDimensions; y += this.state.cellDimensions) {
-		  ctx.moveTo(0, y);
-		  ctx.lineTo(this.state.numCells * this.state.cellDimensions, y);
-		}
-		ctx.stroke();
-		
-		for (x = 0; x < grid.length; x++) {
-			for (y = 0; y < grid[x].length; y++) {
-				if (grid[x][y]) {
-          ctx.fillRect(x * this.state.cellDimensions + 1, 
-            y * this.state.cellDimensions + 1,
-            this.state.cellDimensions - 1,
-            this.state.cellDimensions - 1);
-				}
-			}
-    }
-    
+  componentWillUpdate = (nextProps, nextState) => {
+    console.log('componentWillUpdate');
+    this.drawCanvas();
   }
 
   componentDidMount = () => {
+    console.log('componentDidMount');
     this.drawCanvas();
+    this.randomize();
   }
 
   render() {
     return (
-      <canvas id="game" className="game"></canvas>
+      <canvas ref="game" className="game"></canvas>
     );
   }
 }
