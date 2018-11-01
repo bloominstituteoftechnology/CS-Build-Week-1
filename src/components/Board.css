@@ -1,0 +1,72 @@
+.Board {
+  position: relative;
+  margin: 0 auto;
+  background-color: white;
+  background-image: linear-gradient(0deg, #333 1px, transparent 1px),
+    linear-gradient(90deg, #333 1px, transparent 1px);
+  border: 1px solid black;
+}
+
+.Cell {
+  background: black;
+  position: absolute;
+}
+
+.below-grid {
+  display: flex;
+  justify-content: space-around;
+  margin-left: 31%;
+  margin-right: 31%;
+}
+
+button {
+  height: 38px;
+  margin-top: 20px;
+  margin-right: 6px;
+}
+
+.left {
+  display: flex;
+}
+
+.right {
+  display: flex;
+}
+
+.dropdown-right {
+  margin-top: 20px;
+  margin-right: 6px;
+}
+
+.navigation .navbar {
+  background-color: #5f788a;
+  color: #fff;
+}
+
+.navbar {
+  padding-left: 32%;
+  margin-bottom: 20px;
+}
+
+.navbar-brand {
+  color: #fff;
+}
+
+.navbar-nav li a {
+  color: #fff;
+}
+
+.navbar-nav li a:hover {
+  color: blue;
+}
+
+@media screen and (max-width: 1550px) {
+  .below-grid {
+    margin-left: 26%;
+    margin-right: 26%;
+  }
+
+  .navbar {
+    padding-left: 24%;
+  }
+}
