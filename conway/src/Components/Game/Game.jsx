@@ -77,7 +77,7 @@ class Game extends Component {
          Grid: [],
          NextGrid: [],
          isRunning: false,
-         gridSize : 13,
+         gridSize : 12,
          generation : 0,
          preset: "",
          gameSpeed: 500,
@@ -462,6 +462,8 @@ class Game extends Component {
    handlePresetChange = event => {
       if(event.target.value === 'Acorn') this.makeAcorn();
       else if (event.target.value === 'Random') this.randomizeGame()
+      else if (event.target.value === 'Glider') this.makeGlider()
+      else if (event.target.value === 'Gosper') this.makeGosper();
 
       this.setState({ preset: event.target.value });
    };
@@ -483,6 +485,146 @@ class Game extends Component {
    handleSlider = (event, value) => {
       this.setState({gameSpeed: value})
    }
+
+   makeGlider = () => {
+    this.resetGame();
+
+    //get start node
+    const firstX = Math.round((this.state.TotalNodesX / 2) - this.state.TotalNodesX / 4)
+    const firstY = Math.round(this.state.TotalNodesY / 2)
+    let x = firstX
+    let y = firstY
+
+    this.setState({x, y})//use to debug conway rule error with neighbors (maybe double buffer grid error)
+
+    const newGrid = this.state.Grid
+
+    newGrid[x][y].isAlive = true;
+    x++
+    newGrid[x][y].isAlive = true;
+    y -= 2;
+    newGrid[x][y].isAlive = true;
+    x++;
+    y++;
+    newGrid[x][y].isAlive = true;
+    y++;
+    newGrid[x][y].isAlive = true;
+
+    this.canvasApp()
+   }
+
+   makeGosper = () => {
+    this.resetGame();
+
+    //get start node
+    const firstX = 1
+    const firstY = 8
+    let x = firstX
+    let y = firstY
+
+    this.setState({x, y})//use to debug conway rule error with neighbors (maybe double buffer grid error)
+
+    const newGrid = this.state.Grid
+    //first 4square
+    newGrid[x][y].isAlive = true;
+    y++
+    newGrid[x][y].isAlive = true;
+    x++
+    newGrid[x][y].isAlive = true;
+    y--;
+    newGrid[x][y].isAlive = true;
+
+    //donut
+    x+=7;
+    y++;
+    newGrid[x][y].isAlive = true;
+    y++;
+    newGrid[x][y].isAlive = true;
+    x++;
+    newGrid[x][y].isAlive = true;
+    y-=2;
+    newGrid[x][y].isAlive = true;
+    x++;
+    newGrid[x][y].isAlive = true;
+    y++;
+    newGrid[x][y].isAlive = true;
+
+    //glider
+    x+=6;
+    y++;
+    newGrid[x][y].isAlive = true;
+    y++;
+    newGrid[x][y].isAlive = true;
+    y++;
+    newGrid[x][y].isAlive = true;
+    x++;
+    y-=2;
+    newGrid[x][y].isAlive = true;
+    x++;
+    y++;
+    newGrid[x][y].isAlive = true;
+
+
+    //donut
+    y-=4;
+    x+=4
+    newGrid[x][y].isAlive = true;
+    y++;
+    newGrid[x][y].isAlive = true;
+    x++;
+    newGrid[x][y].isAlive = true;
+    y-=2;
+    newGrid[x][y].isAlive = true;
+    x++;
+    newGrid[x][y].isAlive = true;
+    y++;
+    newGrid[x][y].isAlive = true;
+
+    //glider
+    y+=11;
+    newGrid[x][y].isAlive = true;
+    y++;
+    newGrid[x][y].isAlive = true;
+    y++;
+    x++;
+    newGrid[x][y].isAlive = true;
+    y-=2;
+    newGrid[x][y].isAlive = true;
+    x++;
+    newGrid[x][y].isAlive = true;
+
+    //glider
+    x+=9;
+    y-=3;
+    newGrid[x][y].isAlive = true;
+    y--;
+    newGrid[x][y].isAlive = true;
+    y--;
+    newGrid[x][y].isAlive = true;
+    x++;
+    newGrid[x][y].isAlive = true;
+    x++;
+    y++;
+    newGrid[x][y].isAlive = true;
+
+    //square
+
+
+
+    y-=7
+    x-=2
+    newGrid[x][y].isAlive = true;
+    y--;
+    newGrid[x][y].isAlive = true;
+    x--;
+    newGrid[x][y].isAlive = true;
+    y++;
+    newGrid[x][y].isAlive = true;
+
+
+    this.canvasApp()
+   }
+   
 
    render() {
       const {classes} = this.props
@@ -607,6 +749,14 @@ class Game extends Component {
 
                         <MenuItem value='Acorn'>
                            Acorn
+                        </MenuItem>
+
+                        <MenuItem value='Glider'>
+                           Glider
+                        </MenuItem>
+
+                        <MenuItem value='Gosper'>
+                           Gosper Glider Gun
                         </MenuItem>
 
                      </Select>
