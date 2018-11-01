@@ -24,13 +24,18 @@ class Canvas extends Component {
         let canvas = this.refs.canvas;
         let ctx = canvas.getContext('2d');
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        
         let cells = this.life.fetchCells();
+
+        // console.log(cells)
+
 
         for (let height = 0; height < canvas.height; height++) {
             for (let width = 0; width < canvas.width; width++) {
                 let index = (height * canvas.width + width) * 4;
 
                 let lifeStatus = cells[height][width];
+                // console.log(lifeStatus)
                 let color = lifeStatus === 0 ? 0x00 : 0xff;
 
                 imageData.data[index + 0] = color;
@@ -41,6 +46,7 @@ class Canvas extends Component {
         }
 
         ctx.putImageData(imageData, 0, 0);
+        this.life.move();
 
         if (this.gameOn) {
             requestAnimationFrame(() => {
@@ -66,20 +72,23 @@ class Canvas extends Component {
         this.life.clear();
     };
 
+   
+
 
     render() {
         return (
-            <div className='canvas'>
+            <div>
                 <canvas
+                    className="canvas"
                     ref="canvas"
                     width={this.props.width}
                     height={this.props.height}
                 />
                 <div className='buttons'>
-                    <button onClick={this.handleRandom}>Random</button>
-                    <button onClick={this.handleStop}>Pause</button>
-                    <button onClick={this.handleStart}>Start</button>
-                    <button onClick={this.handleClear}>Clear</button>
+
+                    <button onClick={this.stop}>Pause</button>
+                    <button onClick={this.start}>Start</button>
+                    <button onClick={this.clear}>Clear</button>
                 </div>
 
             </div>

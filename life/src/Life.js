@@ -30,7 +30,7 @@ class Life {
         for (let height = 0; height < this.height; height++) {
             for (let width = 0; width < this.width; width++) {
                 this.cells[this.currentIndex][height][width] =
-                    (Math.random() * 9) | 0;
+                    (Math.random() * 5) | 0;
             }
         }
     }
