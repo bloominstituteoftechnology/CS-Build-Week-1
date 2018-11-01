@@ -27,6 +27,22 @@ class Life {
         return this.cellSize;
     }
 
+    pasteCells(x, y, name) {
+        let cells = {
+            glider: [[x, y - 1], [x, y + 1], [x + 1, y], [x + 1, y + 1], [x - 1, y + 1]],
+            spaceship: [[x - 2, y + 1], [x - 2, y - 1], [x + 1, y + 1], [x + 2, y], [x + 2, y - 1], [x + 2, y - 2], [x + 1, y - 2], [x, y - 2], [x - 1, y - 2]],
+            tumbler: [[x + 1, y], [x + 1, y - 1], [x + 1, y - 2], [x + 1, y - 3], [x + 1, y - 4], [x + 2, y - 3], [x + 2, y - 4], [x + 2, y + 1], [x + 3, y],
+            [x + 3, y + 1], [x + 3, y - 1], [x - 1, y], [x - 1, y - 1], [x - 1, y - 2], [x - 1, y - 3], [x - 1, y - 4], [x - 2, y - 3], [x - 2, y - 4], [x - 2, y + 1],
+            [x - 3, y], [x - 3, y + 1], [x - 3, y - 1]]
+        };
+
+        for (let i = 0; i < cells[name].length; i++) {
+            const index = (Math.ceil(this.cellHeight) * cells[name][i][0]) + cells[name][i][1];
+            const cell = this.cells[this.buffer][index];
+            cell.alive = true;
+        }
+    }
+
     toggleCell(x, y) {
         const index = (Math.ceil(this.cellHeight) * x) + y;
         const cell = this.cells[this.buffer][index];
@@ -68,42 +84,34 @@ class Life {
 
             // North
             if (y > 0 && cells[i - 1].alive) {
-                // console.log('NORTH ' + cells[i - 1].coords);
                 neighbors++;
             }
             // North-West
             if (y > 0 && x > 0 && cells[i - cellHeight - 1].alive) {
-                // console.log('NORTH-WEST ' + cells[i - cellHeight - 1].coords);
                 neighbors++;
             }
             // North-East
             if (y > 0 && x < cellWidth - 1 && cells[i + cellHeight - 1].alive) {
-                // console.log('NORTH-EAST ' + cells[(i + cellHeight) - 1].coords);
                 neighbors++;
             }
             // South
             if (y < cellHeight - 1 && cells[i + 1].alive) {
-                // console.log('SOUTH ' + cells[i + 1].coords);
                 neighbors++;
             }
             // South-West
             if (y < cellHeight - 1 && x > 0 && cells[i + 1 - cellHeight].alive) {
-                // console.log('SOUTH-WEST ' + cells[i + 1 - cellHeight].coords);
                 neighbors++;
             }
             // South-East
             if (y < cellHeight - 1 && x < cellWidth - 1 && cells[i + 1 + cellHeight].alive) {
-                // console.log('SOUTH-EAST ' + cells[i + 1 + cellHeight].coords);
                 neighbors++;
             }
             // West
             if (x > 0 && cells[i - cellHeight].alive) {
-                // console.log('WEST ' + cells[i - cellHeight].coords);
                 neighbors++;
             }
             // East
             if (x < cellWidth - 1 && cells[i + cellHeight].alive) {
-                // console.log('EAST ' + cells[i + cellHeight].coords);
                 neighbors++;
             }
 

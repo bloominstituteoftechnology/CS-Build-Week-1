@@ -12,7 +12,8 @@ class LifeCanvas extends React.Component {
             speed: 0,
             life: null,
             continueAnimation: false,
-            prevTimestamp: null
+            prevTimestamp: null,
+            paste: ''
         }
     }
 
@@ -97,6 +98,21 @@ class LifeCanvas extends React.Component {
         }
     }
 
+    pasteCells = event => {
+        const rect = this.refs.canvas.getBoundingClientRect();
+        const size = this.state.life.getCellSize();
+
+        let x = Math.floor((event.clientX - rect.left) / size);
+        let y = Math.floor((event.clientY - rect.top) / size);
+
+        this.state.life.pasteCells(x, y, this.state.paste);
+        this.drawCanvas();
+    }
+
+    setPaste = name => {
+        this.setState({ paste: name });
+    }
+
     start = () => {
         if (this.state.continueAnimation) {
             this.setState({ continueAnimation: false });
@@ -143,10 +159,12 @@ class LifeCanvas extends React.Component {
         return (
             <div className='canvas-container'>
                 <LifeCanvasHeader />
-                <canvas onClick={this.toggleLife} id='canvas' ref="canvas" />
+                <canvas onClick={this.state.paste ? this.pasteCells : this.toggleLife} id='canvas' ref="canvas" />
                 <LifeCanvasOptions
                     continue={this.state.continueAnimation}
                     generation={this.state.currentGeneration}
+                    paste={this.state.paste}
+                    setPaste={this.setPaste}
                     setSpeed={this.setSpeed}
                     calculate={this.calculate}
                     randomize={this.randomize}

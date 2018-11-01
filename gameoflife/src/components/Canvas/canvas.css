@@ -8,6 +8,10 @@
     align-items: center;
 }
 
+.canvas-options canvas {
+    margin: 15px;
+}
+
 .canvas-options button {
     margin: 0 9.6px;
 }
