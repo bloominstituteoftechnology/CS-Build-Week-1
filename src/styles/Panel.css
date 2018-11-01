@@ -1,0 +1,36 @@
+/* Panel Styles */
+.Panel {
+  width: 448px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FC7A57;
+  border: 1px solid #5E5B52;
+}
+.Panel span {
+  width: 20%;
+  text-align: center;
+  color: #5E5B52;
+  font-size: .75rem;
+  font-weight: bolder;
+  margin: auto, 0;
+}
+.Panel .button {
+  width: 24%;
+  margin: 2% 2%;
+  border: 1px solid #18A7B5;
+  border-radius: 15px;
+  padding: .5rem 0;
+  background: #18A7B5;
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 5px #7a7a7a;
+  font-size: .70rem;
+  font-weight: bold;
+}
+.Panel .button:active {
+  background: #008080;
+  box-shadow: 0 1px #7a7a7a;
+  transform: translateY(4px);
+}

@@ -1,0 +1,34 @@
+/* Templates Styles */
+.Templates {
+  width: 448px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  background: #FC7A57;
+  border: 1px solid #5E5B52;
+}
+.Templates .title {
+  font-size: .75rem;
+  color: #5E5B52;
+  font-weight: bold;
+  margin-top: .5rem;
+  width: 100%;
+}
+.Templates .button {
+  width: 17%;
+  margin: 2% 1%;
+  border: 1px solid #18A7B5;
+  border-radius: 15px;
+  padding: .5rem 0;
+  background: #18A7B5;
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 5px #7a7a7a;
+}
+.Templates .button:active {
+  background: #008080;
+  box-shadow: 0 1px #7a7a7a;
+  transform: translateY(4px);
+}

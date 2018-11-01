@@ -1,0 +1,16 @@
+/* Cell Styles */
+.cell {
+  width: 14px;
+  height: 14px;
+  background: #5E5B52;
+  border-right: 1px solid gray;
+  border-bottom: 1px solid gray;
+  display: block;
+  float: left;
+}
+.cell:hover {
+  background: rgb(75, 72, 65);
+}
+.cell.active {
+  background: #F7CB2E;
+}
