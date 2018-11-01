@@ -103,9 +103,9 @@ class LifeCanvas extends Component {
   componentWillMount(){
     this.setState({
       gridSize: 500,
-      cellSize: 10,
-      gameBufferA: Array(Math.pow(500/10,2)).fill(false), 
-      gameBufferB: Array(Math.pow(500/10,2)).fill(false),
+      cellSize: 5,
+      gameBufferA: Array(Math.pow(500/5,2)).fill(false), 
+      gameBufferB: Array(Math.pow(500/5,2)).fill(false),
       fps: 60,
       gameRunning:false,
       activePattern:'No Pattern'
@@ -658,6 +658,7 @@ class LifeCanvas extends Component {
             <div>
               <Label for="cellSizeSel">Select Cell Size:</Label>
               <GridInput ref="cellSel" type="select" name="select" id="cellSizeSel" bsSize="sm" onChange={this.cellSelOnChangeHandler}>
+                <option>5 px</option>
                 <option>10 px</option>
                 <option>20 px</option>
                 <option>25 px</option>
@@ -675,9 +676,9 @@ class LifeCanvas extends Component {
                 <option>Vertical Line</option>
                 <option>Horizontal Line</option>
                 {this.state.cellSize <= 25 ? <option>Pulsar</option> : null}
-                {this.state.cellSize === 10 ? <option>Heart</option> : null}
-                {this.state.cellSize === 10 ? <option>Gosper Glider Gun</option> : null}
-                {this.state.cellSize === 10 ? <option>Random</option> : null}
+                {this.state.cellSize < 20 ? <option>Heart</option> : null}
+                {this.state.cellSize < 20 ? <option>Gosper Glider Gun</option> : null}
+                {this.state.cellSize < 20 ? <option>Random</option> : null}
               </GridInput>
             </div>
           </SelRow>
