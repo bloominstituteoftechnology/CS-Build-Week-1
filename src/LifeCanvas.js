@@ -183,6 +183,10 @@ class LifeCanvas extends Component{
     let y = event.clientY - canvas.offsetTop;
     let x = event.clientX - canvas.offsetLeft;
 
+    console.log("event.clientY", event.clientY, "event.clientX", event.clientX, "canvas.offsetTop", canvas.offsetTop, "canvas.offsetLeft", canvas.offsetLeft)
+    console.log("window.clientY", window.clientY, "window.clientX", window.clientX)
+    
+
     this.state.cellBoundaries.forEach((cell, index) => {
         if (y > cell.top && y < cell.top + cell.height && x > cell.left && x < cell.left + cell.width) {
             if(this.state.filledCells.includes(index)){
