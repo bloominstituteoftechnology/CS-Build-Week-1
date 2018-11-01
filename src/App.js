@@ -129,7 +129,7 @@ class App extends Component {
         fast={this.fast}
         g15={this.g15}
         />
-      </div> 
+      </div>
     );
   }
 }
