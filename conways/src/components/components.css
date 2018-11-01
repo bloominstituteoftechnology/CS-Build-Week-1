@@ -20,3 +20,10 @@
   .cell:hover {
     background-color: gray;
   }
+  .rulesArea {
+      width: 30%;
+      font-size: 1.3rem;
+  }
+  .wikilink {
+      color: white;
+  }
