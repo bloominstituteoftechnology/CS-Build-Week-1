@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Cell from './Cell';
 
 export default class Game extends Component {
   constructor(props) {
@@ -36,7 +37,8 @@ export default class Game extends Component {
       
       for (let x = 0; x < grid.length; x++) {
         for (let y = 0; y < grid[x].length; y++) {
-          if (grid[x][y]) {
+          const cell = grid[x][y];
+          if (cell.isAlive) {
             ctx.fillRect(x * this.CELL_SIZE + 1, 
               y * this.CELL_SIZE + 1,
               this.CELL_SIZE - 1,
@@ -52,7 +54,11 @@ export default class Game extends Component {
     let grid = this.state.grid.slice();
     for (let x = 0; x < grid.length; x++) {
       for (let y = 0; y < grid[x].length; y++) {
-        grid[x][y] = Math.random() < 0.3;
+        let cell = new Cell();
+        if (Math.random() < 0.44) {
+          cell.create();
+        } 
+        grid[x][y] = cell;
       }
     }
     this.setState({grid: grid});
