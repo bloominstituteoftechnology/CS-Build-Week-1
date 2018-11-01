@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { withStyles, } from '@material-ui/core/styles';
 import  TextField  from '@material-ui/core/TextField';
 import  Button  from '@material-ui/core/Button';
-import {AppBar, Toolbar, Typography, IconButton, InputLabel, List, MenuItem, Drawer, Divider, FormControl, Select, Input, FormHelperText } from '@material-ui/core';
+import {Typography, IconButton, InputLabel, List, MenuItem, FormControl, Select, Input, FormHelperText, } from '@material-ui/core';
 import PlayArrow from '@material-ui/icons/PlayArrow'
 import Pause from '@material-ui/icons/Pause'
 import RepeatOne from '@material-ui/icons/RepeatOne'
+import Slider from '@material-ui/lab/Slider';
+import Restore from '@material-ui/icons/Restore'
 //start drawing a grid with squareSizepx squares (starting at 0,0)
 
 // grid nodes are {x: 0, y:0, xz:squareSize, yz:squareSize}
@@ -23,20 +25,12 @@ const styles = theme => ({
    },
    gameControls: {
       display: 'flex',
-      justifyContent: 'center'
+      width:'100%',
+      justifyContent: 'space-between',
    },
    generationField: {
       width: '175px'
    },
-   select: {
-      // color: 'white',
-      // '&:before': {
-      //     borderColor: 'white',
-      // },
-      // '&:after': {
-      //     borderColor: 'white',
-      // }
-  },
    formControl: {
       // margin: theme.spacing.unit,
       // minWidth: 120,
@@ -49,7 +43,23 @@ const styles = theme => ({
    iconButton: {
       marginBottom: '0px',
       paddingBotton: '0px'
-   }
+   },
+   slider: {
+      padding: '22px 0px',
+    },
+    sliderContainer: {
+      width: '400px',
+    },
+   select: {
+      // color: 'white',
+      // '&:before': {
+      //     borderColor: 'white',
+      // },
+      // '&:after': {
+      //     borderColor: 'white',
+      // }
+  },
+
 })
 
 class Game extends Component {
@@ -66,7 +76,8 @@ class Game extends Component {
          isRunning: false,
          squareSize : 13,
          generation : 0,
-         presets: '',
+         preset: "",
+         gameSpeed: 500,
       }
       this.container = React.createRef();
       this.timer = null;
@@ -170,14 +181,14 @@ class Game extends Component {
     
         ctx.moveTo(x, y);
         ctx.lineTo(w, y);
-        ctx.strokeStyle="black";
+        ctx.strokeStyle="grey";
         ctx.stroke();
         // draw horizontal lines
         while (y < h) {
            y = y + this.state.squareSize;
            ctx.moveTo(x, y);
            ctx.lineTo(w, y);
-           ctx.strokeStyle="black";
+           ctx.strokeStyle="grey";
            ctx.stroke();
         }
     
@@ -218,7 +229,7 @@ class Game extends Component {
       }
       drawScreen();
       if(this.state.isRunning){
-         this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, .01)
+         this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, 100 - this.state.gameSpeed)
       }
       
 
@@ -371,12 +382,12 @@ class Game extends Component {
 
       this.setState({ isRunning: !this.state.isRunning, })
 
-      if(startNow) this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, 10)
+      if(startNow) this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, 100 - this.state.gameSpeed)
       else clearTimeout(this.timer)
    }
 
    resetGame = () => {
-      this.setState({isRunning: false, generation: 0, presets: ''})
+      this.setState({isRunning: false, generation: 0, preset: ''})
 
       const gridToReset = this.state.Grid
 
@@ -444,22 +455,41 @@ class Game extends Component {
       this.canvasApp();
    }
 
-
-   handleChange = event => {
-      this.setState({ [event.target.name]: event.target.value });
+   handlePresetChange = event => {
       if(event.target.value === 'Acorn') this.makeAcorn();
       else if (event.target.value === 'Random') this.randomizeGame()
-    };
+
+      this.setState({ preset: event.target.value });
+   };
+
+   handleGridSizeChange = event => {
+
+      this.setState({ squareSize: event.target.value });
+   };
+
+
+   handleSlider = (event, value) => {
+      this.setState({gameSpeed: value})
+   }
 
    render() {
       const {classes} = this.props
       if(!this.state.isRunning) this.timer = null;
+
       return (
          <div className={classes.gameContainer} ref={this.container}>
             <canvas id="myCanvas" width='0' height='0' onClick={this.handleGridClick} onWheel={this.handleWheel} />
 
             <hr style={{width: '100%', marginTop: '20px'}}></hr>
-
+            <div className={classes.sliderContainer}>
+               <Typography id="label">Game Speed</Typography>
+               <Slider
+                  classes={{ container: classes.slider }}
+                  value={this.state.gameSpeed}
+                  aria-labelledby="label"
+                  onChange={this.handleSlider}
+               />
+            </div>
             <div className={classes.gameControls}>
 
                <TextField
@@ -473,9 +503,7 @@ class Game extends Component {
                />
                {this.state.isRunning ? 
                   <div className={classes.buttonContainer}>
-                     <IconButton onClick={this.startStopGame} color='primary' className={classes.iconButton}
-                     //FIX THIS: convert this to an IconIconButton with the MUI play/pause icon
-                     >
+                     <IconButton onClick={this.startStopGame} color='primary' className={classes.iconButton}>
                         <Pause/>
                      </IconButton>
 
@@ -485,9 +513,7 @@ class Game extends Component {
                   </div>
                   :
                   <div className={classes.buttonContainer}>
-                     <IconButton onClick={this.startStopGame} color='primary' className={classes.iconButton}
-                     //FIX THIS: convert this to an IconIconButton with the MUI play/pause icon
-                     >
+                     <IconButton onClick={this.startStopGame} color='primary' className={classes.iconButton}>
                         <PlayArrow/>
                      </IconButton>
 
@@ -496,11 +522,9 @@ class Game extends Component {
                      </Typography>
                   </div>
                }
-                  
+
                   <div className={classes.buttonContainer}>
-                     <IconButton onClick={this.stepThroughGame} color='secondary'
-                     //FIX THIS: convert this to an IconIconButton with the MUI play/pause icon
-                     >
+                     <IconButton onClick={this.stepThroughGame} color='secondary'>
                         <RepeatOne/>
                      </IconButton>
                      <Typography variant="caption" gutterBottom align="center">
@@ -508,31 +532,65 @@ class Game extends Component {
                      </Typography>
                   </div>
                   
-                     <Button onClick={this.resetGame} 
-                     //FIX THIS: convert this to an IconButton with the MUI play/pause icon
-                     >
+                  <div className={classes.buttonContainer}>
+                     <IconButton onClick={this.resetGame}>
+                        <Restore/>
+                     </IconButton>
+                     <Typography variant="caption" gutterBottom align="center">
                         Reset
-                     </Button>
-                  
-               <FormControl id='console' className={this.props.classes.formControl} color={'inherit'}>
-               <InputLabel htmlFor="presets-helper">Presets</InputLabel>
-                  <Select
-                     value={this.state.presets}
-                     onChange={this.handleChange}
-                     input={<Input name="presets" id="presets-helper" />}
-                     className={this.props.classes.select}
-                  >
-                     <MenuItem  value={'Acorn'}>
-                        <em>Acorn</em>
-                     </MenuItem>
-                     <MenuItem   value={'Random'}>
-                        <em>Random</em>
-                     </MenuItem>
-                     
+                     </Typography>
+                  </div>
 
-                  </Select>
-                  <FormHelperText className={this.props.classes.select}>Select a layout</FormHelperText>
+               <FormControl id='presets' className={this.props.classes.formControl} color={'inherit'}>
+                  <InputLabel htmlFor="preset-helper">Presets</InputLabel>
+                     <Select
+                        value={this.state.preset}
+                        onChange={this.handlePresetChange}
+                        input={<Input name="preset" id="preset-helper" />}
+                        className={this.props.classes.select}
+                     >
+
+                        <MenuItem value='Random'>
+                           Random
+                        </MenuItem>
+
+                        <MenuItem value='Acorn'>
+                           Acorn
+                        </MenuItem>
+
+                     </Select>
+                     <FormHelperText className={this.props.classes.select}>Select a layout</FormHelperText>
                </FormControl>
+
+               <FormControl id='GridPicker' className={this.props.classes.formControl} color={'inherit'}>
+                  <InputLabel htmlFor="preset-helper">Presets</InputLabel>
+                     <Select
+                        value={this.state.gameSpeed}
+                        onChange={this.handleChange}
+                        input={<Input name="preset" id="preset-helper" />}
+                        className={this.props.classes.select}
+                     >
+
+                        <MenuItem value={.01}>
+                           Fastest
+                        </MenuItem>
+
+                        <MenuItem value={100}>
+                           Fast
+                        </MenuItem>
+
+                        <MenuItem value={250}>
+                           Slow
+                        </MenuItem>
+
+                        <MenuItem value={500}>
+                           Slowest
+                        </MenuItem>
+
+                     </Select>
+                     <FormHelperText className={this.props.classes.select}>Select a layout</FormHelperText>
+               </FormControl>
+               
             </div>
 
          </div>
