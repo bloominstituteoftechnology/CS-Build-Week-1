@@ -79,13 +79,9 @@ class Game extends Component {
          isRunning: false,
          gridSize : 13,
          generation : 0,
-<<<<<<< HEAD
-         gameSpeed : 10,
-=======
          preset: "",
          gameSpeed: 500,
          gridSizeString: '',
->>>>>>> singleBufferTest
       }
       this.container = React.createRef();
       this.timer = null;
@@ -236,11 +232,7 @@ class Game extends Component {
       }
       drawScreen();
       if(this.state.isRunning){
-<<<<<<< HEAD
-         this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, this.state.GameSpeed)
-=======
          this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, 100 - this.state.gameSpeed)
->>>>>>> singleBufferTest
       }
       
 
@@ -270,12 +262,6 @@ class Game extends Component {
    lifeAlgorithm = (newGrid) => {
      //get neighbors and run 4 rules of life
 
-<<<<<<< HEAD
-     const screenGrid = this.state.Grids[this.state.curGrid]
-     const newGrid = this.state.Grids[this.state.nextGrid]
-
-=======
->>>>>>> singleBufferTest
      // screenGrid is where all nodes are checked (and what is currently displayed on screen)
      //nextGrid is where all changes are made
      const screenGrid = this.state.Grid
@@ -306,22 +292,6 @@ class Game extends Component {
       })//finshed grid check
       
       
-<<<<<<< HEAD
-                 curNeighbor++;
-               }//end while
-
-               return newNeighborsObj
-            }
-            // console.log(screenGrid == newGrid)
-            // console.log(neighborsObj)
-            // console.log(newGetNeighbors(i,j))
-            // console.log(screenGrid[this.state.x][this.state.y])
-            // console.log(newGrid[this.state.x][this.state.y])
-         } 
-
-         return neighborsObj;
-      }
-=======
       return newGrid;
    }
 
@@ -366,7 +336,6 @@ class Game extends Component {
                    newJ--;
                    if(!grid[newI][newJ]) newJ = grid[newI].length - 1
          }
->>>>>>> singleBufferTest
 
          // if(i === 0 && j === 0)console.log(`num:${Object.keys(neighborsObj).length + 1} i:${newI} j:${newJ} liveNodeX:${i} j:${j}`)
 
@@ -416,11 +385,7 @@ class Game extends Component {
 
       this.setState({ isRunning: !this.state.isRunning, })
 
-<<<<<<< HEAD
-      if(startNow) this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, this.state.GameSpeed)
-=======
       if(startNow) this.timer = setTimeout(() => {requestAnimationFrame(() => this.canvasApp())}, 100 - this.state.gameSpeed)
->>>>>>> singleBufferTest
       else clearTimeout(this.timer)
    }
 
@@ -487,61 +452,6 @@ class Game extends Component {
       newGrid[x][y].isAlive = true;
 
       this.canvasApp()
-<<<<<<< HEAD
-
-      //FIX: this is testing conway rules error
-      const getNeighbors = () => {
-         const neighborsObj = {};
-         const curNode = newGrid[firstX][firstY];
-         
-         let curNeighbor = 1;
-         while(curNeighbor < 9){
-           let newI = firstX;
-           let newJ = firstY;
-            switch(curNeighbor){
-              case 1: newJ--;
-                      if(!newGrid[newI][newJ]) newJ = newGrid[newI].length - 1
-                      break;
-              case 2: newI++;
-                      if(!newGrid[newI]) newI = 0;
-                      newJ--;
-                      if(!newGrid[newI][newJ]) newJ = newGrid[newI].length - 1
-                      break;
-              case 3: newI++;
-                      if(!newGrid[newI]) newI = 0;
-                      break;
-              case 4: newI++;
-                      if(!newGrid[newI]) newI = 0;
-                      newJ++;
-                      if(!newGrid[newI][newJ]) newJ = 0;
-                      break;
-              case 5: newJ++;
-                      if(!newGrid[newI][newJ]) newJ = 0;
-                      break;
-              case 6: newI--;
-                      if(!newGrid[newI]) newI = newGrid.length - 1
-                      newJ++;
-                      if(!newGrid[newI][newJ]) newJ = 0;
-                      break;
-              case 7: newI--;
-                      if(!newGrid[newI]) newI = newGrid.length - 1
-                      break;
-              case 8: newI--;
-                      if(!newGrid[newI]) newI = newGrid.length - 1
-                      newJ--;
-                      if(!newGrid[newI][newJ]) newJ = newGrid[newI].length - 1
-            }
-
-            neighborsObj[curNeighbor] = Object.assign({}, newGrid[newI][newJ])
-
-           curNeighbor++;
-         }//end while
-
-         return neighborsObj;
-      }
-      getNeighbors();
-=======
->>>>>>> singleBufferTest
    }
 
    stepThroughGame = () => {

@@ -29,7 +29,7 @@ class Home extends Component {
        <div>
         <CardContent>
           <Typography variant="h5"> About  </Typography>
-          <Typography variant="body"> 1. Any live cell with fewer than two live neighbors dies, as if by underpopulation. </Typography>
+          <Typography variant="body1"> 1. Any live cell with fewer than two live neighbors dies, as if by underpopulation. </Typography>
 
         </CardContent>
       </div>

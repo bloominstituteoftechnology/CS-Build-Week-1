@@ -29,10 +29,10 @@ class Home extends Component {
        <div>
         <CardContent>
           <Typography variant="h5"> Rules  </Typography>
-          <Typography variant="body"> 1. Any live cell with fewer than two live neighbors dies, as if by underpopulation. </Typography>
-          <Typography variant="body"> 2. Any live cell with two or three live neighbors lives on to the next generation. </Typography>
-          <Typography variant="body"> 3. Any live cell with more than three live neighbors dies, as if by overpopulation. </Typography>
-          <Typography variant="body"> 4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction. </Typography>
+          <Typography variant="body1"> 1. Any live cell with fewer than two live neighbors dies, as if by underpopulation. </Typography>
+          <Typography variant="body1"> 2. Any live cell with two or three live neighbors lives on to the next generation. </Typography>
+          <Typography variant="body1"> 3. Any live cell with more than three live neighbors dies, as if by overpopulation. </Typography>
+          <Typography variant="body1"> 4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction. </Typography>
         </CardContent>
       </div>
     );
