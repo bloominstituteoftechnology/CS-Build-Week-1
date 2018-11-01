@@ -58,8 +58,15 @@ class CellGrid extends Component {
 
     }
 
-    randomDead() {
-
+    randomCells() {
+        for (let i = 0; i < this.state.size[0]; i++) {
+            for (let j = 0; j < this.state.size[1]; j++){
+                let random = Math.floor((Math.random() * 100) + 1);
+                if(random > 80)
+                 this.addLiveCell({x: i, y: j});
+            }
+        }
+        this.setState({cellChange: -1});
     }
 
     deadNeighbors(position) {
@@ -172,6 +179,7 @@ class CellGrid extends Component {
                     <button onClick={() => this.startSimulation()}>Start Simulation </button>
                     <button onClick={() => this.stopSimulation()}>Stop</button>
                     <button onClick={() => this.clearGrid()}> Clear Grid</button>
+                    <button onClick={() => this.randomCells()}> Randomize </button>
                     <h3> Generation: {this.state.generation} </h3>
                 </div>
         </div>
