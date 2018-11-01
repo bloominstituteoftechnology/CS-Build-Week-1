@@ -23,29 +23,39 @@ const ControlButton = styled.button`
     width: 10rem;
     background: none;
     border: none;
-    border-right: 3px solid ${colors.darkGrey};
+    border-left: 3px solid ${ colors.darkGrey };
+    border-right: 3px solid ${ colors.darkBlack };
+    border-bottom: 3px solid ${ colors.darkBlack };
     &:last-child {
         border-right: none;
+    }
+    &:active {
+        background: ${ colors.darkBlack };
     }
 `;
 
 const Icon = styled.img`
     height: 80%;
     width: 80%;
+    pointer-events: none;
 `;
-class ControlsContainer extends Component {
-    state = {  }
-    render() { 
+const ControlsContainer = (props) => {
         return (
             <ControlsWrapper>
                 <ControlButton><Icon src = {zoomInIcon} /></ControlButton>
                 <ControlButton><Icon src = {zoomOutIcon} /></ControlButton>
-                <ControlButton><Icon src = {playIcon} /></ControlButton>
+                <ControlButton
+                onClick={() => {
+                    props.toggleState("playActive");
+                }}
+                ><Icon src = {props.playActive ? pauseIcon : playIcon} /></ControlButton>
                 <ControlButton><Icon src = {stopIcon} /></ControlButton>
-                <ControlButton><Icon src = {menuIcon} /></ControlButton>
+                <ControlButton 
+                onClick={() => {
+                    props.toggleState("menuActive");
+                    }}><Icon src = {menuIcon} /></ControlButton>
             </ControlsWrapper>
         );
-    }
 }
  
 export default ControlsContainer;
