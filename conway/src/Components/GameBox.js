@@ -33,33 +33,40 @@ class GameBox extends Component  {
         }
         console.log(`GAMEOFLIFE: ${this.props.gameOfLife}`)
         if (this.props.gameOfLife === true && prevProps !== this.props) {
-            let newCells = [];
-            for (let i = 0; i < this.state.cells.length; i++) {
-                let neighbors = this.getNeighbors(i);
-                let activeNeighbors = 0;
-                for (let i = 0; i < neighbors.length; i++) {
-                    if (0 <= neighbors[i] <= 225) {
-                        if (this.state.cells[i] === 1) {
-                            activeNeighbors += 1;
-                        }
-                    }
-                }
-                if (this.state.cells[i] === 1) {
-                    if (2 <= activeNeighbors.length <= 3) {
-                        newCells.push(1);
-                    } else {
-                        newCells.push(0);
-                    }
-                } else {
-                    if (activeNeighbors.length === 3) {
-                        newCells.push(1);
-                    } else {
-                        newCells.push(0)
+            let newCells = this.updateCells();
+            this.setState({cells: newCells});
+        }
+    }
+
+    updateCells() {
+        console.log('I am in the algorithm!!')
+        let newCells = [];
+        for (let i = 0; i < this.state.cells.length; i++) {
+            let neighbors = this.getNeighbors(i);
+            let activeNeighbors = 0;
+            for (let i = 0; i < neighbors.length; i++) {
+                if (0 <= neighbors[i] <= 225) {
+                    if (this.state.cells[neighbors[i]] === 1) {
+                        activeNeighbors += 1;
                     }
                 }
             }
-            this.setState({cells: newCells});
+            if (this.state.cells[i] === 1) {
+                if (2 <= activeNeighbors.length <= 3) {
+                    newCells.push(1);
+                } else {
+                    newCells.push(0);
+                }
+            } else if (this.state.cells[i] === 0) {
+                if (activeNeighbors.length === 3) {
+                    newCells.push(1);
+                } else {
+                    newCells.push(0)
+                }
+            }
         }
+        console.log(`new Cells: ${newCells}`)
+        return newCells;
     }
 
     toggleCell = (id) => {
