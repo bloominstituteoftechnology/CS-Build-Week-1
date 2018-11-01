@@ -141,6 +141,8 @@ class Main extends React.Component {
             <h3>2. Any live cell with two or three live neighbours lives on to the next generation.</h3>
             <h3>3. Any live cell with more than three live neightbours dies, as if by overpopulation.</h3>
             <h3>4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reprodution.</h3>
+            <h2>History</h2>
+            <h3>The Game of life is a cellular automation devised by the British mathematician John Conway. The game is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. One interacts whith the game of life by creating an initial configuration and observing how it evolves.</h3>
             </div>
         );
     }

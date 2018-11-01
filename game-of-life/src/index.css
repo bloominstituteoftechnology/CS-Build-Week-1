@@ -16,7 +16,7 @@ body {
   }
 
 .off {
-  background-color: lightgray;
+  background-color: rgba(211, 211, 211, 0.577);
 }
 
 .off:link,
