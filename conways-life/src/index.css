@@ -5,7 +5,7 @@ body {
   font-size: 40px;
   font-weight: bold;
   font-variant: small-caps;
-  background: url(https://78.media.tumblr.com/ba237c32bec4018693e06b3bb443490e/tumblr_n70t6vfHv21r2geqjo1_500.gif?resize=320:*) no-repeat center center fixed;
+  background: url(https://s3.amazonaws.com/playbackmediatest/previews/2016/09/22025559/Refracted_Light_Still_10_prod.jpg) no-repeat center center fixed;
   background-size: cover;
   text-shadow:
 		-1px -1px 0 #000,
@@ -29,7 +29,7 @@ body {
 }
 
 .on {
-  background-color: red;
+  background-color: rgb(39, 98, 226);
 }
   
 .box:hover { 

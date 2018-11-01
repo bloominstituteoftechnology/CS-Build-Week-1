@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { MenuItem, DropdownButton } from 'reactstrap';
 
 class Box extends React.Component {
 	selectBox = () => {
@@ -23,10 +22,12 @@ class Grid extends React.Component {
 	render() {
 		const width = (this.props.cols * 14);
 		var rowsArr = [];
+
 		var boxClass = "";
 		for (var i = 0; i < this.props.rows; i++) {
 			for (var j = 0; j < this.props.cols; j++) {
 				let boxId = i + "_" + j;
+
 				boxClass = this.props.gridFull[i][j] ? "box on" : "box off";
 				rowsArr.push(
 					<Box
@@ -58,24 +59,24 @@ class Buttons extends React.Component {
 	render() {
 		return (
 			<div className="button-container">
-        <button className="button" onClick={this.props.playButton}>
-          Play
-        </button>
-        <button className="button" onClick={this.props.pauseButton}>
-          Pause
-        </button>
-        <button className="button" onClick={this.props.clear}>
-          Clear
-        </button>
-        <button className="button" onClick={this.props.slow}>
-          Slow
-        </button>
-        <button className="button" onClick={this.props.fast}>
-          Fast
-        </button>
-        <button className="button" onClick={this.props.seed}>
-          Seed
-        </button>
+					<button className="button" onClick={this.props.playButton}><span>
+						Play
+          </span></button>
+					<button className="button" onClick={this.props.pauseButton}><span>
+					  Pause
+          </span></button>
+					<button className="button" onClick={this.props.clear}><span>
+					  Clear
+          </span></button>
+					<button className="button" onClick={this.props.slow}><span>
+					  Slow
+          </span></button>
+					<button className="button" onClick={this.props.fast}><span>
+					  Fast
+          </span></button>
+					<button className="button" onClick={this.props.seed}><span>
+					  Seed
+          </span></button>
 			</div>
 			)
 	}
@@ -84,7 +85,7 @@ class Buttons extends React.Component {
 class Main extends React.Component {
 	constructor() {
 		super();
-		this.speed = 100;
+		this.speed = 250;
 		this.rows = 30;
 		this.cols = 50;
 
@@ -131,7 +132,7 @@ class Main extends React.Component {
 	}
 
 	fast = () => {
-		this.speed = 100;
+		this.speed = 250;
 		this.playButton();
 	}
 
@@ -141,24 +142,6 @@ class Main extends React.Component {
 			gridFull: grid,
 			generation: 0
 		});
-	}
-
-	gridSize = (size) => {
-		switch (size) {
-			case "1":
-				this.cols = 20;
-				this.rows = 10;
-			break;
-			case "2":
-				this.cols = 50;
-				this.rows = 30;
-			break;
-			default:
-				this.cols = 70;
-				this.rows = 50;
-		}
-		this.clear();
-
 	}
 
 	play = () => {
@@ -210,7 +193,6 @@ class Main extends React.Component {
         fast={this.fast}
         clear={this.clear}
         seed={this.seed}
-        gridSize={this.gridSize}
         />
 				<h2>Generations: {this.state.generation}</h2>
 			</div>
