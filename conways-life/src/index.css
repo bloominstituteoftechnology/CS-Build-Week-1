@@ -1,0 +1,89 @@
+body {
+  /* background-image: url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/squares.png)  */
+  background-image: url('./gol-bkg.jpg')
+}
+  
+.box {
+  display: inline-block;       
+  border: 1px solid black;
+  width: 15px;
+  height: 15px;
+  margin-left: -1px;
+  margin-bottom: -1px;
+  }
+
+.off {
+  background-color: lightgray;
+}
+
+.on {
+  background-color: firebrick;
+}
+  
+.box:hover { 
+  background: #00CCFF;
+}
+
+.center {
+  margin: auto;
+  display: table;
+  margin-top: 10px;
+}
+
+.grid {
+  width: 150px;
+  line-height: 0;
+  margin: auto;
+  box-shadow: 0px 0px 20px white;
+  margin-top: 20px;
+}
+  
+h1, h2, h3, h4 {
+  color: white;
+  margin: auto;
+  text-align: center;
+  width: 50%;
+  margin-top: 10px;
+}
+
+h4 {
+  margin-top: 0px;
+}
+
+.nav-links {
+  color: red;
+  font-size: 32px;
+  text-shadow:
+		-1px -1px 0 #FFF,
+		1px -1px 0 #FFF,
+		-1px 1px 0 #FFF,
+		1px 1px 0 #FFF;
+}
+
+.grid-replace {
+  color: black;
+  text-shadow:
+		-1px -1px 0 #FFF,
+		1px -1px 0 #FFF,
+		-1px 1px 0 #FFF,
+		1px 1px 0 #FFF;
+}
+
+.welcome-info {
+  color: black;
+  text-shadow:
+		-1px -1px 0 #FFF,
+		1px -1px 0 #FFF,
+		-1px 1px 0 #FFF,
+		1px 1px 0 #FFF;
+}
+
+.rules {
+  color: red;
+  font-size: 32px;
+  text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+}
