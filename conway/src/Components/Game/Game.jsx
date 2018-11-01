@@ -3,13 +3,16 @@ import { withStyles, } from '@material-ui/core/styles';
 import  TextField  from '@material-ui/core/TextField';
 import  Button  from '@material-ui/core/Button';
 import {AppBar, Toolbar, Typography, IconButton, InputLabel, List, MenuItem, Drawer, Divider, FormControl, Select, Input, FormHelperText } from '@material-ui/core';
+import PlayArrow from '@material-ui/icons/PlayArrow'
+import Pause from '@material-ui/icons/Pause'
+import RepeatOne from '@material-ui/icons/RepeatOne'
 //start drawing a grid with squareSizepx squares (starting at 0,0)
 
 // grid nodes are {x: 0, y:0, xz:squareSize, yz:squareSize}
 
 // const gridOdd = [TotalNodesX][TotalNodesY];
 
-const styles = {
+const styles = theme => ({
    gameContainer: {
      display: 'flex',
      justifyContent: 'center',
@@ -19,21 +22,11 @@ const styles = {
      generation: 0,
    },
    gameControls: {
-      marginTop: '20px',
       display: 'flex',
       justifyContent: 'center'
    },
    generationField: {
-      // color: 'black',
-      // '&:before': {
-      //     borderColor: 'black',
-      // },
-      // '&:after': {
-      //     borderColor: 'black',
-      // },
-      // '&:disabled': {
-      //    color: 'black',
-      // }
+      width: '175px'
    },
    select: {
       // color: 'white',
@@ -50,7 +43,14 @@ const styles = {
       color: 'white',
       marginRight: '20px',
    },
-};
+   buttonContainer: {
+      marginTop: '5px'
+   },
+   iconButton: {
+      marginBottom: '0px',
+      paddingBotton: '0px'
+   }
+})
 
 class Game extends Component {
 
@@ -458,6 +458,8 @@ class Game extends Component {
          <div className={classes.gameContainer} ref={this.container}>
             <canvas id="myCanvas" width='0' height='0' onClick={this.handleGridClick} onWheel={this.handleWheel} />
 
+            <hr style={{width: '100%', marginTop: '20px'}}></hr>
+
             <div className={classes.gameControls}>
 
                <TextField
@@ -469,25 +471,49 @@ class Game extends Component {
                   variant="outlined"
                   value={this.state.generation}
                />
-              
-               <Button onClick={this.startStopGame}
-               //FIX THIS: convert this to an IconButton with the MUI play/pause icon
-               >
-                  Start/Stop
-               </Button>
+               {this.state.isRunning ? 
+                  <div className={classes.buttonContainer}>
+                     <IconButton onClick={this.startStopGame} color='primary' className={classes.iconButton}
+                     //FIX THIS: convert this to an IconIconButton with the MUI play/pause icon
+                     >
+                        <Pause/>
+                     </IconButton>
+
+                     <Typography variant="caption" gutterBottom align="center">
+                        Pause
+                     </Typography>
+                  </div>
+                  :
+                  <div className={classes.buttonContainer}>
+                     <IconButton onClick={this.startStopGame} color='primary' className={classes.iconButton}
+                     //FIX THIS: convert this to an IconIconButton with the MUI play/pause icon
+                     >
+                        <PlayArrow/>
+                     </IconButton>
+
+                     <Typography variant="caption" gutterBottom align="center">
+                        Play
+                     </Typography>
+                  </div>
+               }
                   
-               <Button onClick={this.stepThroughGame}
-               //FIX THIS: convert this to an IconButton with the MUI play/pause icon
-               >
-                  Step
-               </Button>
-
-               <Button onClick={this.resetGame}
-               //FIX THIS: convert this to an IconButton with the MUI play/pause icon
-               >
-                  Reset
-               </Button>
-
+                  <div className={classes.buttonContainer}>
+                     <IconButton onClick={this.stepThroughGame} color='secondary'
+                     //FIX THIS: convert this to an IconIconButton with the MUI play/pause icon
+                     >
+                        <RepeatOne/>
+                     </IconButton>
+                     <Typography variant="caption" gutterBottom align="center">
+                        Step
+                     </Typography>
+                  </div>
+                  
+                     <Button onClick={this.resetGame} 
+                     //FIX THIS: convert this to an IconButton with the MUI play/pause icon
+                     >
+                        Reset
+                     </Button>
+                  
                <FormControl id='console' className={this.props.classes.formControl} color={'inherit'}>
                <InputLabel htmlFor="presets-helper">Presets</InputLabel>
                   <Select
@@ -496,10 +522,10 @@ class Game extends Component {
                      input={<Input name="presets" id="presets-helper" />}
                      className={this.props.classes.select}
                   >
-                     <MenuItem color={'inherit'} value={'Acorn'}>
+                     <MenuItem  value={'Acorn'}>
                         <em>Acorn</em>
                      </MenuItem>
-                     <MenuItem color={'inherit'}  value={'Random'}>
+                     <MenuItem   value={'Random'}>
                         <em>Random</em>
                      </MenuItem>
                      
