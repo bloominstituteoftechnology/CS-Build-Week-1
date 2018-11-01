@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import './App.css';
 import img from './img/galaxy.jpg';
 
+
 const Container = styled.div`
   display: flex;
   flex-flow: row nowrap;
@@ -21,9 +22,14 @@ const Container = styled.div`
 const StyledIncrementDecrement = styled.div`
   position: absolute;
   top: 5%;
-  left: 5%;
-  background-image: linear-gradient(to right, rgba(52, 187, 229, 0.18), rgba(139, 189, 184, 0.96));
+  left: 34%;
+  background-image: linear-gradient(to right, rgba(52, 187, 229, 0.4), rgba(139, 189, 184, 0.96));
   padding: 1%;
+`
+
+const Canvas = styled.div`
+  position: absolute;
+  z-index: 1;
 `
 
 class App extends Component {
@@ -51,12 +57,15 @@ class App extends Component {
   render() {
     return (
       <Container className="App">
-        <GameInfo />
-        <LifeCanvas rows={this.state.rows} cols={this.state.cols}/>
+        <Canvas>
+          <LifeCanvas rows={this.state.rows} cols={this.state.cols}/>
+        </Canvas>
         <StyledIncrementDecrement> 
           <IncrementDecrement clickHandler={this.incrementOrDecrement} rows={this.state.rows} cols={this.state.cols} />
         </StyledIncrementDecrement>
+        <GameInfo />
         <Rules />
+
       </Container>
     );
   }

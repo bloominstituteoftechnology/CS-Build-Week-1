@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import Life from "./Life";
+import img from '../img/metal.jpeg';
 
 const Container = styled.div`
     display: flex;
     flex-flow: row nowrap;
+    justify-content: center;
+    width: 100%;
 `
 
 const Col1 = styled.div`
@@ -18,18 +21,49 @@ const CanvasWindow = styled.canvas`
 const Buttons = styled.div`
     display: flex;
     flex-flow: column nowrap;
+    justify-content: space-between;
+    position: absolute;
+    left: -34%;
+    width: 24%;
+    height: 473px;
+    background-image: url(${img});
+    background-size: cover;
+    border: 10px solid black;
+    border-radius: 5%;
+    padding: 1%;
+    
 `
 
 const Button = styled.button`
-    padding: 2%;
+    padding: 5%;
     margin: 3%
+    // margin-top: 20%;
     border-radius: 5%;
     display: table;
+    background: grey;
+    border: 8px solid black;
+    border-radius: 5%;
+
+    box-shadow: 5px 5px black;
+    font-family: 'Kanit', sans-serif;
+    
+
+    &:hover {
+        background-image: radial-gradient( rgba(254,19,4,0.98), rgba(254,98,13,0.5));
+    }
+
+    &:active {
+        background-color: #3e8e41;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+      }
 `
 
-const UpdateRowsCols = styled.button`
+const JumpTo = styled.div`
+    background-image: linear-gradient(to right, rgba(52, 187, 229, 0.4), rgba(139, 189, 184, 0.96));
     position: absolute;
-    bottom: 2%;
+    bottom: 1%;
+    padding: 2%
 `
 
 class LifeCanvas extends Component{
@@ -105,13 +139,6 @@ class LifeCanvas extends Component{
         this.setState({ rows: nextProps.rows, cols : nextProps.cols, cellBoundaries : [], filledCells : [], life : new Life(nextProps.rows, nextProps.cols)}, this.drawGraph);
     }
   } 
-
-
-
-
-  updateRowsCols = () => {
-        this.drawGraph(this.state.rows, this.state.cols);
-  }
 
   clearCell = (c, cell, index, singleCell = false) => {
     c.fillStyle = 'rgba(52, 187, 229, 0.1)';
@@ -277,29 +304,28 @@ class LifeCanvas extends Component{
 
   render() {
     return (
-      <Container ref="outer">
-        <Col1>
-            <CanvasWindow ref="canvas" width={300} height={300}/>
-            <span>Round #: {this.state.counter}</span>
-            <form onSubmit={this.jumpTo}>
-                <label>
-                    Jump to State
-                    <input name={"jumpTo"} type="text" value={this.state.jumpTo} onChange={this.inputHandler}/>  
-                </label>
-                <button>Submit</button>
-            </form>
-        </Col1>
-
-
-        <Buttons>
+      <Container>
+      <Buttons>
             <Button onClick={this.playOrStop}>{this.state.running ? "Pause Game" : "Play Game"}</Button>
             <Button onClick={this.clearCells}>Clear Game</Button>
             <Button onClick={this.nextRound}>Next Round</Button>
             <Button onClick={this.random}>Random Configuration</Button>
         </Buttons>
 
-        <UpdateRowsCols onClick={this.updateRowsCols}>Update Rows/Cols</UpdateRowsCols>
+        <Col1>
+            <CanvasWindow ref="canvas" width={800} height={500}/>
+            <JumpTo>
+                <span>Round #: {this.state.counter}</span>
+                <form onSubmit={this.jumpTo}>
+                    <label>
+                        Jump to State
+                        <input name={"jumpTo"} type="text" value={this.state.jumpTo} onChange={this.inputHandler}/>  
+                    </label>
+                    <button>Submit</button>
+                </form>
+            </JumpTo>
 
+        </Col1>
 
       </Container>
     );
