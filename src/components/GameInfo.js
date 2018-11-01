@@ -34,7 +34,7 @@ const Background = styled.div`
     padding: 3% 7%;
     position: absolute;
     right: 1%;
-    top: 13%;
+    top: 33%;
     width: 2%;
     height: 2%;
 `
