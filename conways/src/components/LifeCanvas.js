@@ -62,8 +62,12 @@ const Button = styled.button`
 const JumpTo = styled.div`
     background-image: linear-gradient(to right, rgba(52, 187, 229, 0.4), rgba(139, 189, 184, 0.96));
     position: absolute;
-    bottom: 1%;
-    padding: 2%
+    position: absolute;
+    bottom: -19%;
+    padding: 2%;
+    right: 21%;
+    width: 49%; 
+    font-family: 'Kanit', sans-serif;
 `
 
 class LifeCanvas extends Component{
@@ -318,7 +322,7 @@ class LifeCanvas extends Component{
                 <span>Round #: {this.state.counter}</span>
                 <form onSubmit={this.jumpTo}>
                     <label>
-                        Jump to State
+                        Jump to State: &nbsp;
                         <input name={"jumpTo"} type="text" value={this.state.jumpTo} onChange={this.inputHandler}/>  
                     </label>
                     <button>Submit</button>
