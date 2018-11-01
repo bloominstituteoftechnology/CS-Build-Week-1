@@ -691,7 +691,9 @@ class LifeCanvas extends Component {
                 {/* {this.state.fps === 2 ? <SpeedFA active icon="male" onClick={()=>this.setFPS(2)}/> : <SpeedFA icon="male" onClick={()=>this.setFPS(2)}/> }
                 {this.state.fps === 5 ? <SpeedFA active icon="walking" onClick={()=>this.setFPS(5)}/> : <SpeedFA icon="walking" onClick={()=>this.setFPS(5)}/>}
               {this.state.fps === 60 ? <SpeedFA active icon="running" onClick={()=>this.setFPS(60)}/> : <SpeedFA icon="running" onClick={()=>this.setFPS(60)}/> } */}
+              <FontAwesomeIcon icon="walking" />
               <SpeedSlider type="range" id="gameSpeed" onChange={this.gameSpeedOnChangeHandler} step="25" max="50"/>            
+              <FontAwesomeIcon icon="running" />
             </GameBtns>
               
             <GameBtns>
