@@ -8,14 +8,11 @@ import Rules from "./components/Rules";
 class App extends Component {
   constructor() {
     super();
-    this.speed = 100;
     this.size = 10;
     this.width = 150;
     this.height = 150;
     this.cols = this.width / this.size;
     this.rows = this.height / this.size;
-    // this.cols = 15;
-    // this.rows = 15;
 
     this.state = {
       gen: 0,
@@ -30,7 +27,6 @@ class App extends Component {
   selectCell = (row, col) => {
     if (this.state.paused) {
       let gridCopy = arrayClone(this.state.grid);
-      // let gridCopy = this.state.grid;
       gridCopy[row][col] = +!gridCopy[row][col];
       this.setState({ grid: gridCopy });
     }
@@ -38,7 +34,6 @@ class App extends Component {
 
   seed = () => {
     let gridCopy = arrayClone(this.state.grid);
-    // let gridCopy = this.state.grid;
 
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
@@ -95,48 +90,28 @@ class App extends Component {
     this.setState({ speed: e.target.value });
   }
 
-  // countN = (grid, x, y) => {
-  //   let sum = 0;
-  //   for (let i = -1; i <= 1; i++) {
-  //     for (let j = -1; j <= 1; j++) {
-  //       let row = (y + j + this.rows) % this.rows;
-  //       let col = (x + i + this.cols) % this.cols;
-  //       sum += grid[row][col];
-  //     }
-  //   }
-  //   sum -= grid[x][y];
+  countN = (grid, x, y) => {
+    let sum = 0;
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        let row = (x + i + this.rows) % this.rows;
+        let col = (y + j + this.cols) % this.cols;
+        sum += grid[row][col];
+      }
+    }
 
-  //   return sum;
-  // }
+    sum -= grid[x][y];
+    return sum;
+  }
 
   runSim = () => {
     let grid = this.state.grid;
     let nextGrid = arrayClone(this.state.grid);
-    // let nextGrid = this.state.grid;
 
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
         let state = grid[i][j];
-        let count = 0;
-        // let neighbors = this.countN(grid, i, j);
-
-        if (i > 0 && grid[i - 1][j]) count++;
-		    if ((i > 0 && j > 0) && grid[i - 1][j - 1]) count++;
-        if (i > 0 && j < this.cols - 1) {
-          if (grid[i - 1][j + 1]) count++;
-        }
-		    if (j < this.cols - 1 && grid[i][j + 1]) count++;
-        if (j > 0 && grid[i][j - 1]) count++;
-        if (i < this.rows - 1 && grid[i + 1][j]) count++;
-        if (i < this.rows - 1 && j > 0) {
-          if (grid[i + 1][j - 1]) count++;
-        }
-		    if (i < this.rows - 1 && j < this.cols - 1) {
-          if (grid[i + 1][j + 1]) count++;
-        }
-        
-		    // if (grid[i][j] && (count < 2 || count > 3)) nextGrid[i][j] = 0;
-        // if (!grid[i][j] && count === 3) nextGrid[i][j] = 1;
+        let count = this.countN(grid, i, j);
 
         if (state === 0 && count === 3) {
           nextGrid[i][j] = 1;
