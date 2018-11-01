@@ -37,6 +37,7 @@ class Game extends React.Component {
     cells: [],
     isRunning: false,
     interval: 100,
+    genCount: 0,
   }
 
   runGame = () => {
@@ -73,7 +74,10 @@ class Game extends React.Component {
       }
     }
     this.board = newBoard;
-    this.setState({ cells: this.addCells() })
+   // this.setState({ cells: this.addCells() });
+    this.setState((prevState) => (
+      { genCount: prevState.genCount + 1, cells: this.addCells() }
+    ))
 
     this.timeoutHandler = window.setTimeout(() => {
       this.runIteration();
@@ -176,6 +180,7 @@ class Game extends React.Component {
             <button className="button" onClick={this.stopGame}>Stop</button> : 
             <button className="button" onClick={this.runGame}>Run</button>
         }
+        <h2>Generation: {this.state.genCount}</h2>
       </div>
     );
   }
