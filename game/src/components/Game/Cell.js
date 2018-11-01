@@ -10,7 +10,10 @@ export default class Cell {
   }
 
   setRandomAlpha = () => {
-    const randomAlpha = Math.random();
+    let randomAlpha = Math.random();
+    if (randomAlpha < .3) {
+      randomAlpha = .3;
+    }
     this.color = `rgba(199, 0, 37, ${randomAlpha})`;
   }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Game from './components/Game';
 import Cell from './components/Game/Cell';
 import Controls from './components/Controls';
+import InfoOverlay from './components/InfoOverlay';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlay, faStop, faStepForward, faEraser, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import './App.css';
@@ -14,7 +15,7 @@ class App extends Component {
     this.NUM_CELLS = 58;
     this.CANVAS_SIZE = 580;
     this.CELL_SIZE = 10;
-    this.GRID_COLOR = '#dfdfdf';
+    this.GRID_COLOR = '#FF9251';
     this.GENERATION_RATE = 50;
     this.state = {
       generationInterval: undefined,
@@ -184,6 +185,7 @@ class App extends Component {
       <div ref="app" className="app">
         <Game grid={this.state.grid} numCells={this.NUM_CELLS} canvasSize={this.CANVAS_SIZE} cellSize={this.CELL_SIZE} gridColor={this.GRID_COLOR} randomize={this.randomize} onGameClick={this.onGameClick} />
         <Controls step={this.step} clear={this.clear} playStop={this.playStop} randomize={this.randomize} isShowingPlay={this.state.isShowingPlay} generationNumber={this.state.generationNumber} />
+        <InfoOverlay />
       </div>
     );
   }
