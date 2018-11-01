@@ -27,24 +27,18 @@ class Home extends Component {
                         <button className='presetBut'>Preset 3</button>
                         <button className='presetBut'>Preset 4</button>
                     </Col>
-                    <Col xs="7">
+                    <Col xs="7" className="rulesArea">
                         <ul>
-                            <li>some content</li>
-                            <li>some content</li>
-                            <li>some content</li>
-                            <li>some content</li>
-                            <li>some content</li>
-                            <li>some content</li>
-                            <li>some content</li>
-                            <li>some content</li>
+                            <li>If the cell is alive and has 2 or 3 neighbors, then it remains alive. Else it dies.</li>
+                            <li>If the cell is dead and has exactly 3 neighbors, then it comes to life. Else if remains dead.</li>
                         </ul>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs="3" className='thirtyPer displayFlex'>
-                        <button className='playB'>Play</button>
+                        {/* <button className='playB'>Play</button>
                         <button className='playB'>Pause</button>
-                        <button className='playB'>Stop</button>
+                        <button className='playB'>Stop</button> */}
                     </Col>
                     <Col xs="9"></Col>
                 </Row>
@@ -52,7 +46,10 @@ class Home extends Component {
                     <Col><h3>About this Algorithm:</h3></Col>
                 </Row>
                 <Row>
-                    <Col>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Col>
+                    <Col><quote>The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970.
+
+The game is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. One interacts with the Game of Life by creating an initial configuration and observing how it evolves, or, for advanced players, by creating patterns with particular properties.</quote>
+                        <p><a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" className='wikilink'>wikipedia</a></p></Col>
                 </Row>
 
             </Container>
