@@ -25,7 +25,7 @@
   justify-content: flex-start;
   position: absolute;
   top: 700px;
-  left: 160px; 
+  left: 120px;
   width: 580px;
   height: 45px;
   text-transform: uppercase;
@@ -156,11 +156,17 @@
 
 .info-overlay-content p {
   padding: 0 25px 0 0;
+  font-family: 'DIN2014-Light';
+  line-height: 2.3rem;
 }
 
 .info-overlay-content h2 {
   text-transform: uppercase;
   color: #c70025;
+}
+
+.info-overlay-content .emphasis {
+  font-family: 'DIN2014-Demi';
 }
 
 .info-overlay-content__about, .info-overlay-content__rules {
