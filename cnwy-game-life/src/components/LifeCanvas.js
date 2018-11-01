@@ -673,6 +673,10 @@ class LifeCanvas extends Component {
                 <option>R-pentomino</option>
                 <option>Vertical Line</option>
                 <option>Horizontal Line</option>
+                {this.state.cellSize <= 25 ? <option>Pulsar</option> : null}
+                {this.state.cellSize === 10 ? <option>Heart</option> : null}
+                {this.state.cellSize === 10 ? <option>Gosper Glider Gun</option> : null}
+                {this.state.cellSize === 10 ? <option>Random</option> : null}
               </GridInput>
             </Col>
           </SelRow>
