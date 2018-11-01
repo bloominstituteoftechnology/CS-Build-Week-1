@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Label, Input, UncontrolledTooltip} from 'reactstrap';
+import { Label, Input, UncontrolledTooltip} from 'reactstrap';
 import styled from 'styled-components';
 import patterns from './Patterns';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -22,13 +22,16 @@ const GridInput = styled(Input)`
   width:20px;
 `
 
+
 const GenDiv = styled.div`
   padding-top:6px;
   width:24%;
 `
 
-const SelRow = styled(Row)`
+const SelRow = styled.div`
   margin-top:25px;
+  display:flex;
+  justify-content:space-evenly;
 `
 
 const GameBtns = styled.div`
@@ -65,6 +68,7 @@ const SpeedSlider = styled.input`
   }
 
 `
+
 
 //Globals
 let prevTimestamp = null;
@@ -647,10 +651,8 @@ class LifeCanvas extends Component {
         <div>
           
           <SelRow>
-            <Col sm="3">
+            <div>
               <Label for="cellSizeSel">Select Cell Size:</Label>
-            </Col>
-            <Col sm="4">
               <GridInput ref="cellSel" type="select" name="select" id="cellSizeSel" bsSize="sm" onChange={this.cellSelOnChangeHandler}>
                 <option>10 px</option>
                 <option>20 px</option>
@@ -658,16 +660,11 @@ class LifeCanvas extends Component {
                 <option>50 px</option>
                 <option>100 px</option>
               </GridInput>
-            </Col>
-          </SelRow>
-
-          <SelRow>
-            <Col sm="3">
+            </div>
+            <div>
               <Label for="initPattern">Select Pattern:</Label>
-            </Col>
-            <Col sm="4">
               <GridInput ref="cellSel" type="select" name="select" id="initPattern" bsSize="sm" onChange={this.initPatternOnChangeHandler}>
-                <option>No Pattern</option>
+                <option>-----  No Pattern  -----</option>
                 <option>Glider</option>
                 <option>Blinker</option>
                 <option>R-pentomino</option>
@@ -678,7 +675,7 @@ class LifeCanvas extends Component {
                 {this.state.cellSize === 10 ? <option>Gosper Glider Gun</option> : null}
                 {this.state.cellSize === 10 ? <option>Random</option> : null}
               </GridInput>
-            </Col>
+            </div>
           </SelRow>
 
         </div>
