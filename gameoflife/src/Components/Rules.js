@@ -41,6 +41,7 @@ const Modal = Styled.div`
     align-items: center;
     text-align: left;
     width: 80%;
+    height: auto;
 `;
 
 const Button = Styled.button`

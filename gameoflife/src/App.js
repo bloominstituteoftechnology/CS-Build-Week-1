@@ -4,7 +4,8 @@ import Grid from "./Components/Grid";
 import Styled from 'styled-components';
 import Rules from "./Components/Rules";
 import About from "./Components/About";
-import { ButtonToolbar, MenuItem, DropdownButton } from 'react-bootstrap';
+import { MenuItem, DropdownButton } from 'react-bootstrap';
+import Head from './Components/Head';
 
 const Container = Styled.div`
   display: flex;
@@ -16,8 +17,10 @@ const Gameboard = Styled.div `
   margin: 50px 250px 0 0;
 `;
 
-const Head = Styled.h2 `
+const Header = Styled.h2 `
   text-align: center;
+  font-family: 'VT323', monospace;
+  font-size: 48px;
 `;
 
 const Button = Styled.button`
@@ -35,9 +38,8 @@ const Sidebar = Styled.div `
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  background-color: orange;
   width: 20%;
-  
+  margin: 50px 0 0 200px;
 `;
 
 const Window = Styled.div `
@@ -48,8 +50,8 @@ const Window = Styled.div `
 
 
 class App extends Component {
-  constructor(props){
-    super(props);
+  constructor(){
+    super();
     this.speed = 100;
     this.rows = 20;
     this.cols = 20;
@@ -98,31 +100,28 @@ class App extends Component {
     for(let i = 0; i < this.rows; i++) {
       for(let j=0; j< this.cols; j++) {
         let count = 0;
-        if (i > 0) if(g[i-1][j]) count++;
-        if (i > 0) if (g[i - 1][j]) count++;
-		    if (i > 0 && j > 0) if (g[i - 1][j - 1]) count++;
-		    if (i > 0 && j < this.cols - 1) if (g[i - 1][j + 1]) count++;
-		    if (j < this.cols - 1) if (g[i][j + 1]) count++;
-		    if (j > 0) if (g[i][j - 1]) count++;
-		    if (i < this.rows - 1) if (g[i + 1][j]) count++;
-		    if (i < this.rows - 1 && j > 0) if (g[i + 1][j - 1]) count++;
-		    if (i < this.rows - 1 && j < this.cols - 1) if (g[i + 1][j + 1]) count++;
-		    if (g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
-        if (!g[i][j] && count === 3) g2[i][j] = true;
+            if (i > 0) if(g[i-1][j]) count++;
+            if (i > 0 && j > 0) if (g[i - 1][j - 1]) count++;
+            if (i > 0 && j < this.cols - 1) if (g[i - 1][j + 1]) count++;
+            if (j < this.cols - 1) if (g[i][j + 1]) count++;
+            if (j > 0) if (g[i][j - 1]) count++;
+            if (i < this.rows - 1) if (g[i + 1][j]) count++;
+            if (i < this.rows - 1 && j > 0) if (g[i + 1][j - 1]) count++;
+            if (i < this.rows - 1 && j < this.cols - 1) if (g[i + 1][j + 1]) count++;
+            if (g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
+            if (!g[i][j] && count === 3) g2[i][j] = true;
+          }
+        }
+        this.setState({gridFull: g2, currentGen: this.state.currentGen+1});
       }
-    }
-    this.setState({gridFull: g2, currentGen: this.state.currentGen+1});
-  }
 
   startGame = () => {
-    console.log("started!")
     clearInterval(this.intervalId);
     this.intervalId = setInterval(this.play, this.speed)
     this.play();
   }
 
   stopGame =() => {
-    console.log("stopped!")
     clearInterval(this.intervalId);
   }
 
@@ -166,7 +165,8 @@ class App extends Component {
     return (
       <Window >
         <div style={{height: '100px', backgroundColor: 'orange'}}>
-        <Head>Game of Life</Head>
+        <Header>Game of Life</Header>
+        <Head selectBox={this.selectBox}/>
         </div>
         <Container>
           <Sidebar>

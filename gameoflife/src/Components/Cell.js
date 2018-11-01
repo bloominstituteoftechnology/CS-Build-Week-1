@@ -3,8 +3,8 @@ import Styled from "styled-components";
 import "./Cell.css";
 
 const Square = Styled.div`
-    height: 18px;
-    width: 18px;
+    height: 19px;
+    width: 19px;
     border: 1px solid black;
     :hover {
         background-color: #99ff33;

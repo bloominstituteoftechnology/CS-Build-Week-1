@@ -5,12 +5,12 @@ import Cell from "./Cell";
 const GridBox = Styled.div`
     display: flex;
     flex-wrap: wrap;
-    border: 2px solid black;
+    
 `;
 
 class Grid extends React.Component {
 	render() {
-		const width = (this.props.cols * 20);
+		const width = (this.props.cols * 19);
 		var rowsArr = [];
 
 		var boxClass = "";
