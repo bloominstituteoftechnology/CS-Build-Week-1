@@ -7,5 +7,5 @@
 
 [build]
   base    = "game"
-  publish = "build"
+  publish = "game/build"
   command = "npm build"
