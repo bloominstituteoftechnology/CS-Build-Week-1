@@ -7,8 +7,7 @@ import { MenuItem, DropdownButton } from 'react-bootstrap';
 import Head from './Components/Head';
 
 const Container = Styled.div`
-  display: flex;
-  
+  display: flex; 
 `;
 
 const Gameboard = Styled.div `
@@ -40,7 +39,6 @@ const Sidebar_Outer = Styled.div `
   align-items: center;
   width: 20%;
   margin: 50px;
- 
 `;
 
 const Sidebar_Inner = Styled.div `
@@ -50,6 +48,7 @@ justify-content: space-around;
 align-items: center;
 position: absolute;
 top: 200px;
+height: 400px;
 `;
 
 const Window = Styled.div `
@@ -57,6 +56,10 @@ const Window = Styled.div `
   flex-direction: column;
 `;
 
+const Gens = Styled.div `
+  font-size: 24px;
+  font-weight: bold;
+`;
 
 
 class App extends Component {
@@ -72,25 +75,29 @@ class App extends Component {
       displayAbout: false
     }
   }
-
+  //selects individual cell
   selectBox = (row, col) => {
     let grid = arrayClone(this.state.gridFull);
     grid[row][col] = !grid[row][col];
 		this.setState({gridFull: grid});
   }
 
+  //toggles rules when button is clicked
   toggleRules = () => {
     this.setState({displayRules: !this.state.displayRules})
   }
 
+  //toggles about when button is clicked
   toggleAbout = () => {
     this.setState({displayAbout: !this.state.displayAbout})
   }
 
+  //adjusts size of grid
   handleSize = (evt) => {
     this.gridSize(evt);
   }
 
+  //fills in random cells on grid
   seedGrid = () => {
     let grid = arrayClone(this.state.gridFull);
     for(let i = 0; i < this.rows; i++) {
@@ -103,6 +110,7 @@ class App extends Component {
     this.setState({gridFull: grid});
   }
 
+  //animates grid according to rules
   play = () => {
     let g = this.state.gridFull;
     let g2 = arrayClone(this.state.gridFull);
@@ -120,11 +128,11 @@ class App extends Component {
             if (i < this.rows - 1 && j < this.cols - 1) if (g[i + 1][j + 1]) count++;
             if (g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
             if (!g[i][j] && count === 3) g2[i][j] = true;
-          }
-        }
-        this.setState({gridFull: g2, currentGen: this.state.currentGen+1});
       }
-
+    }
+    this.setState({gridFull: g2, currentGen: this.state.currentGen+1});
+  }
+   
   startGame = () => {
     clearInterval(this.intervalId);
     this.intervalId = setInterval(this.play, this.speed)
@@ -140,13 +148,15 @@ class App extends Component {
     this.setState({gridFull: grid, currentGen: 0})
   }
 
+  //decreases speed by half
   slowSpeed = () => {
-		this.speed = 500;
+		this.speed = this.speed * 2;
 		this.startGame();
   }
   
+  //doubles speed
   fastSpeed = () => {
-		this.speed = 60;
+		this.speed = this.speed / 2;
 		this.startGame();
 	}
 
@@ -187,7 +197,7 @@ class App extends Component {
               {this.state.displayAbout ? <About toggleAbout={this.toggleAbout}/> : null}
             </Button>
             </ButtonContainer>
-            <div>Current: {this.state.currentGen}</div>
+            <div><Gens>Current: {this.state.currentGen}</Gens></div>
             <ButtonContainer>					
               <Button onClick={this.startGame}>Start</Button>
               <Button onClick={this.stopGame}>Stop</Button>
