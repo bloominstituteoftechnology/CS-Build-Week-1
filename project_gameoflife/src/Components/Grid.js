@@ -149,15 +149,15 @@ class Grid extends React.Component {
                     {cells.map(cell => (
                         <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`}/>
                     ))}
-                </div>
 
                 <div className="button-controls">
 
                         <button className="button" onClick={this.playGame}>Play/Pause</button>
                         <button className="button" onClick={this.stopGame}>Stop</button>
 
-                    <button className="button">Randomized</button>
                     <button className="button" onClick={this.clickHandlerClear}>Clear</button>
+                    <button className="button">Randomized</button>
+                </div>
                 </div>
             <div className="rules-container">
                     <Link to="/"><p className="return-home-button">Back to Homepage</p></Link>

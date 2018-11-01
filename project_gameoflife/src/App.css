@@ -23,7 +23,10 @@
         linear-gradient(#000 3px, transparent 3px),
         linear-gradient(90deg, #000 3px, transparent 3px);
     display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     border: 3px solid #000;
+
 
 }
 
@@ -33,8 +36,9 @@
 }
 .button-controls {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-end;
+  margin-top: 1000px;
 }
 
 .button {
