@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from "react";
 import { createGlobalStyle } from "styled-components";
-import Canvas from "../components/Canvas";
+import Canvas from "./LifeCanvas/Canvas";
 import ControlsMenu from "../components/ControlsMenu/ControlsContainer";
 import HeaderPanel from "../components/PresetSection/HeaderPanel";
 import CarouselPanel from "../components/PresetSection/CarouselPanel";
