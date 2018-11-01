@@ -39,6 +39,14 @@ class Game extends React.Component {
     interval: 100,
   }
 
+  runGame = () => {
+    this.setState({ isRunning: false });
+  }
+
+  stopGame = () => {
+    this.setState({ isRunning: false });
+  }
+
   clearBoard() {
     let board = [];
     for (let y = 0; y < this.rows; y++) {
@@ -91,7 +99,7 @@ class Game extends React.Component {
 
 
   render() {
-    const { cells } = this.state;
+    const { cells, isRunning } = this.state;
     return( 
       <div>
         <div 
@@ -114,6 +122,11 @@ class Game extends React.Component {
             ))
           }
         </div>
+        {
+          isRunning ?
+            <button className="button" onClick={this.runGame}>Run</button> : 
+            <button className="button" onClick={this.stopGame}>Stop</button>
+        }
       </div>
     );
   }
