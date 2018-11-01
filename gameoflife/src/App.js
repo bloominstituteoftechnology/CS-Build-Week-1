@@ -53,19 +53,19 @@ class App extends Component {
         // Initialize neighbors
         let neighbors = 0;
         // Check each neighboring box and increase count for each live cell
-        // Top
-        if (j < this.cols - 1) if (grid1[i][j + 1]) neighbors++;
         // Right
+        if (j < this.cols - 1) if (grid1[i][j + 1]) neighbors++;
+        // Top
         if (i < this.rows - 1) if (grid1[i + 1][j]) neighbors++;
-        // Bottom
-        if (j > 0) if (grid1[i][j - 1]) neighbors++;
         // Left
+        if (j > 0) if (grid1[i][j - 1]) neighbors++;
+        // Bottom
         if (i > 0) if (grid1[i - 1][j]) neighbors++;
-        // Top-Left
+        // Bottom-Right
         if (i > 0 && j < this.cols - 1) if (grid1[i - 1][j + 1]) neighbors++;
         // Top-Right
         if (i < this.rows - 1 && j < this.cols - 1) if (grid1[i + 1][j + 1]) neighbors++;
-        // Bottom- Right
+        // Top-Left
         if (i < this.rows - 1 && j > 0) if (grid1[i + 1][j - 1]) neighbors++;
         // Bottom-Left 
         if (i > 0 && j > 0) if (grid1[i - 1][j - 1]) neighbors++;
