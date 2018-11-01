@@ -4,6 +4,7 @@
   margin: 0 auto;
   text-align: center;
 }
+/* Modal Styles */
 .App .modal {
   display: none;
   position: fixed;
