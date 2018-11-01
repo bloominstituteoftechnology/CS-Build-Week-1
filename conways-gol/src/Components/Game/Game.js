@@ -179,17 +179,81 @@ class Game extends Component {
     }
   }
 
+  presetBoard = preset => {
+    for (let i = 0; i < preset.length; i++) {
+      this.board[preset[i].y][preset[i].x] = true;
+    }
+  }
+
   handlePreset = config => {
+    // TODO: abstract configuration data to its own file
     switch (config) {
       case 'glider':
-        const cells = [
+        this.handleClear();
+        const glider = [
           {x: 1, y: 0},
           {x: 2, y: 1},
           {x: 0, y: 2},
           {x: 1, y: 2},
           {x: 2, y: 2}
         ];
-        this.setState({ cells });
+        this.presetBoard(glider);
+        this.setState({ cells: this.makeCells() });
+        break;
+      case 'pulsar':
+        this.handleClear();
+        const pulsar = [
+          {x: 14, y: 8},
+          {x: 15, y: 8},
+          {x: 16, y: 8},
+          {x: 20, y: 8},
+          {x: 21, y: 8},
+          {x: 22, y: 8},
+          {x: 12, y: 10},
+          {x: 17, y: 10},
+          {x: 19, y: 10},
+          {x: 24, y: 10},
+          {x: 12, y: 11},
+          {x: 17, y: 11},
+          {x: 19, y: 11},
+          {x: 24, y: 11},
+          {x: 12, y: 12},
+          {x: 17, y: 12},
+          {x: 19, y: 12},
+          {x: 24, y: 12},
+          {x: 14, y: 13},
+          {x: 15, y: 13},
+          {x: 16, y: 13},
+          {x: 20, y: 13},
+          {x: 21, y: 13},
+          {x: 22, y: 13},
+          {x: 14, y: 15},
+          {x: 15, y: 15},
+          {x: 16, y: 15},
+          {x: 20, y: 15},
+          {x: 21, y: 15},
+          {x: 22, y: 15},
+          {x: 12, y: 16},
+          {x: 17, y: 16},
+          {x: 19, y: 16},
+          {x: 24, y: 16},
+          {x: 12, y: 17},
+          {x: 17, y: 17},
+          {x: 19, y: 17},
+          {x: 24, y: 17},
+          {x: 12, y: 18},
+          {x: 17, y: 18},
+          {x: 19, y: 18},
+          {x: 24, y: 18},
+          {x: 14, y: 20},
+          {x: 15, y: 20},
+          {x: 16, y: 20},
+          {x: 20, y: 20},
+          {x: 21, y: 20},
+          {x: 22, y: 20}
+        ];
+        this.presetBoard(pulsar);
+        this.setState({ cells: this.makeCells() });
         break;
       default:
         break;
@@ -224,6 +288,7 @@ class Game extends Component {
           </form>
           <p>Generation: {generation}</p>
           <button className='button' onClick={() => this.handlePreset('glider')}>Glider</button>
+          <button className='button' onClick={() => this.handlePreset('pulsar')}>Pulsar</button>
         </div>
       </div>
     )

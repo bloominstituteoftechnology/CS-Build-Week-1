@@ -72,12 +72,12 @@ Write an algorithm that:
     - When loop completes:
       1. Swap current and next grids
       2. Repeat until simulation stopped
-- [ ] Breaks down above steps into appropriate sub-tasks implemented with helper functions to improve readability
+- [x] Breaks down above steps into appropriate sub-tasks implemented with helper functions to improve readability
 - [x] Uses double buffering to update grid with next generation.
 
 ### Custom Features
 Implment at least 3 of the following features:
-- [ ] Create a few sample cell configurations that users can load and run 
+- [x] Create a few sample cell configurations that users can load and run 
 - [x] Add an option that creates a random cell configuration that users can run
 - [x] Add additional cell properties, like color or size, and incorporate them into your visualization
 - [x] Allow users to specify the speed of the simulation
