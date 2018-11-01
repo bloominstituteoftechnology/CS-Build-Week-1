@@ -178,6 +178,13 @@ class App extends Component {
         fast={this.fast}
         g15={this.g15}
         />
+        <h3>Click a cell to make it live, click again to make it dead.</h3>
+        <h1>Rules</h1>
+        <h3>Any live cell with fewer than two live neighbors dies, as if by underpopulation.</h3>
+        <h3>Any live cell with two or three live neighbors lives on to the next generation.</h3>
+        <h3>Any live cell with more than three live neighbors dies, as if by overpopulation.</h3>
+        <h3>Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</h3>
+        
       </div>
     );
   }
