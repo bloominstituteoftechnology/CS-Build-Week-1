@@ -8,11 +8,8 @@ import Pause from '@material-ui/icons/Pause'
 import RepeatOne from '@material-ui/icons/RepeatOne'
 import Slider from '@material-ui/lab/Slider';
 import Restore from '@material-ui/icons/Restore'
-//start drawing a grid with squareSizepx squares (starting at 0,0)
 
-// grid nodes are {x: 0, y:0, xz:squareSize, yz:squareSize}
-
-// const gridOdd = [TotalNodesX][TotalNodesY];
+// grid nodes are {x: 0, y:0, xz:gridSize, yz:gridSize}
 
 const styles = theme => ({
    gameContainer: {
@@ -32,10 +29,7 @@ const styles = theme => ({
       width: '175px'
    },
    formControl: {
-      // margin: theme.spacing.unit,
-      // minWidth: 120,
-      color: 'white',
-      marginRight: '20px',
+       width: '120px',
    },
    buttonContainer: {
       marginTop: '5px'
@@ -44,12 +38,21 @@ const styles = theme => ({
       marginBottom: '0px',
       paddingBotton: '0px'
    },
+   sliderGridSizeContainer: {
+     display: 'flex',
+     justifyContent: 'center',
+    width: '100%',
+  },
    slider: {
       padding: '22px 0px',
+      width:'100%'
     },
-    sliderContainer: {
-      width: '400px',
+    gameSpeedContainer: {
+      width: '45%'
     },
+   gridSizeContainer: {
+      width: '45%'
+   },
    select: {
       // color: 'white',
       // '&:before': {
@@ -74,10 +77,11 @@ class Game extends Component {
          Grid: [],
          NextGrid: [],
          isRunning: false,
-         squareSize : 13,
+         gridSize : 13,
          generation : 0,
          preset: "",
          gameSpeed: 500,
+         gridSizeString: '',
       }
       this.container = React.createRef();
       this.timer = null;
@@ -99,65 +103,64 @@ class Game extends Component {
    }
 
    componentDidMount() {
-      console.log(this.container.current)
-      // const width = this.container.current.width;
-      // const height = this.container.current.height;
-
-      const width = 500;
-      const height = 500;
-
-      let TotalNodesX = width
-      let TotalNodesY = height
-
-      TotalNodesX = Math.round(Math.floor(TotalNodesX / this.state.squareSize));
-      TotalNodesY = Math.round(Math.floor(TotalNodesY / this.state.squareSize));
-
-      const firstGrid = [];
-
-      let curX = 0;
-      let curY = 0;
-      for (let i = 0; i < TotalNodesX; i++){
-         if(i !== 0) curX += this.state.squareSize;
-         const newArr = [];
-      
-         for(let j = 0; j < TotalNodesY; j++){
-            if(j === 0) curY = 0;
-            else curY += this.state.squareSize;
-            newArr.push({x: curX, y: curY, isAlive: false, coordX: i, coordY: j})
-         }
-      
-         firstGrid.push(newArr)
-      }
-
-      const secondGrid = [];
-
-       curX = 0;
-       curY = 0;
-      for (let i = 0; i < TotalNodesX; i++){
-         if(i !== 0) curX += this.state.squareSize;
-         const newArr = [];
-      
-         for(let j = 0; j < TotalNodesY; j++){
-            if(j === 0) curY = 0;
-            else curY += this.state.squareSize;
-            newArr.push({x: curX, y: curY, isAlive: false, coordX: i, coordY: j})
-         }
-      
-         secondGrid.push(newArr)
-      }
-
-      this.setState({Grid: firstGrid, NextGrid: secondGrid, TotalNodesX, TotalNodesY, })
-      requestAnimationFrame(() => this.canvasApp())
+     this.createGrid()
    }
 
+   createGrid = () => {
+    const width = this.props.componentWidth;
+    const height = this.props.componentHeight;
+
+    let TotalNodesX = width
+    let TotalNodesY = height
+
+    TotalNodesX = Math.round(Math.floor(TotalNodesX / this.state.gridSize));
+    TotalNodesY = Math.round(Math.floor(TotalNodesY / this.state.gridSize));
+
+    const firstGrid = [];
+
+    let curX = 0;
+    let curY = 0;
+    for (let i = 0; i < TotalNodesX; i++){
+       if(i !== 0) curX += this.state.gridSize;
+       const newArr = [];
+    
+       for(let j = 0; j < TotalNodesY; j++){
+          if(j === 0) curY = 0;
+          else curY += this.state.gridSize;
+          newArr.push({x: curX, y: curY, isAlive: false, coordX: i, coordY: j})
+       }
+    
+       firstGrid.push(newArr)
+    }
+
+    const secondGrid = [];
+
+     curX = 0;
+     curY = 0;
+    for (let i = 0; i < TotalNodesX; i++){
+       if(i !== 0) curX += this.state.gridSize;
+       const newArr = [];
+    
+       for(let j = 0; j < TotalNodesY; j++){
+          if(j === 0) curY = 0;
+          else curY += this.state.gridSize;
+          newArr.push({x: curX, y: curY, isAlive: false, coordX: i, coordY: j})
+       }
+    
+       secondGrid.push(newArr)
+    }
+
+    this.setState({Grid: firstGrid, NextGrid: secondGrid, TotalNodesX, TotalNodesY, })
+    requestAnimationFrame(() => this.canvasApp())
+   }
 
    canvasApp = () => {
       var myCanvas = document.getElementById('myCanvas');
       if(!myCanvas) return
       var ctx = myCanvas.getContext('2d');
     
-      const Width = this.state.squareSize * this.state.TotalNodesX;
-      const Height = this.state.squareSize * this.state.TotalNodesY;
+      const Width = this.state.gridSize * this.state.TotalNodesX;
+      const Height = this.state.gridSize * this.state.TotalNodesY;
     
       myCanvas.width = Width;
       myCanvas.height = Height;
@@ -166,8 +169,8 @@ class Game extends Component {
       const drawScreen = () => {
     
        //init grid square size
-        const dx = this.state.squareSize;
-        const dy = this.state.squareSize;
+        const dx = this.state.gridSize;
+        const dy = this.state.gridSize;
     
        
         var x = 0;
@@ -185,7 +188,7 @@ class Game extends Component {
         ctx.stroke();
         // draw horizontal lines
         while (y < h) {
-           y = y + this.state.squareSize;
+           y = y + this.state.gridSize;
            ctx.moveTo(x, y);
            ctx.lineTo(w, y);
            ctx.strokeStyle="grey";
@@ -199,7 +202,7 @@ class Game extends Component {
         ctx.lineTo(x, h);
         ctx.stroke();
         while (x < w) {
-           x = x + this.state.squareSize;
+           x = x + this.state.gridSize;
            ctx.moveTo(x, y);
            ctx.lineTo(x, h);
            ctx.stroke();
@@ -209,17 +212,17 @@ class Game extends Component {
             this.incrementGameLoop()
          }
 
-         // draw a box (each square is this.state.squareSizepx wide and )
+         // draw a box (each square is this.state.gridSizepx wide and )
          this.state[this.state.curGrid].forEach((verticalArr, i) => {
             verticalArr.forEach((node, j) => {
                if(node.isAlive){
                   ctx.beginPath()
-                  ctx.rect(node.x, node.y, this.state.squareSize,this.state.squareSize)
+                  ctx.rect(node.x, node.y, this.state.gridSize,this.state.gridSize)
                   ctx.fillStyle = "black"
                   ctx.fill();
                }else{
                   ctx.beginPath()
-                  ctx.rect(node.x+1, node.y+1, this.state.squareSize-2,this.state.squareSize-2)
+                  ctx.rect(node.x+1, node.y+1, this.state.gridSize-2,this.state.gridSize-2)
                   ctx.fillStyle = "white"
                   ctx.fill();
                }
@@ -356,8 +359,8 @@ class Game extends Component {
          let newX = event.clientX - rect.left;
          let newY = event.clientY - rect.top;
 
-         const nodeNumberX = Math.floor(newX / this.state.squareSize)
-         const nodeNumberY = Math.floor(newY / this.state.squareSize)
+         const nodeNumberX = Math.floor(newX / this.state.gridSize)
+         const nodeNumberY = Math.floor(newY / this.state.gridSize)
 
          const curGrid = this.state.Grid
          
@@ -369,7 +372,7 @@ class Game extends Component {
          this.setState({Grid: curGrid})
          this.canvasApp()
        }
-   }//end handleGridClick
+   }
 
    handleWheel = event => {
       if(event.deltaY > 0){
@@ -387,7 +390,7 @@ class Game extends Component {
    }
 
    resetGame = () => {
-      this.setState({isRunning: false, generation: 0, preset: ''})
+      this.setState({isRunning: false})
 
       const gridToReset = this.state.Grid
 
@@ -399,6 +402,7 @@ class Game extends Component {
 
       this.setState({Grids: gridToReset })
       this.canvasApp();
+      this.setState({ generation: 0, preset: ''})
    }
 
    randomizeGame = () => {
@@ -463,10 +467,18 @@ class Game extends Component {
    };
 
    handleGridSizeChange = event => {
-
-      this.setState({ squareSize: event.target.value });
+     this.resetGame()
+      console.log(event.target.value)
+      let size;
+      if(event.target.value === 'Largest') size = 25;
+      else if(event.target.value === 'Large') size = 20;
+      else if(event.target.value === 'Medium') size = 15;
+      else if(event.target.value === 'Small') size = 10;
+      else if(event.target.value === 'Smallest') size = 5;
+      console.log(size)
+      this.setState({ gridSize: size, gridSizeString: event.target.value });
+      this.createGrid();
    };
-
 
    handleSlider = (event, value) => {
       this.setState({gameSpeed: value})
@@ -481,15 +493,54 @@ class Game extends Component {
             <canvas id="myCanvas" width='0' height='0' onClick={this.handleGridClick} onWheel={this.handleWheel} />
 
             <hr style={{width: '100%', marginTop: '20px'}}></hr>
-            <div className={classes.sliderContainer}>
-               <Typography id="label">Game Speed</Typography>
-               <Slider
-                  classes={{ container: classes.slider }}
-                  value={this.state.gameSpeed}
-                  aria-labelledby="label"
-                  onChange={this.handleSlider}
-               />
+            <div className={classes.sliderGridSizeContainer}>
+
+              <div className={classes.gameSpeedContainer} >
+                <Typography id="label">Game Speed</Typography>
+                <Slider
+                    classes={{ container: classes.slider }}
+                    value={this.state.gameSpeed}
+                    aria-labelledby="label"
+                    onChange={this.handleSlider}
+                />
+              </div>
+
+              {/* <div className={classes.gridSizeContainer}>
+                <FormControl id='GridPicker' className={this.props.classes.formControl} color={'inherit'}>
+                  <InputLabel htmlFor="gridSize-helper">Grid Size</InputLabel>
+                     <Select
+                        value={this.state.gridSizeString}
+                        onChange={this.handleGridSizeChange}
+                        input={<Input name="gridSize" id="gridSize-helper" />}
+                        className={this.props.classes.select}
+                     >
+
+                        <MenuItem value={'Largest'}>
+                           Largest
+                        </MenuItem>
+
+                        <MenuItem value={'Large'}>
+                           Large
+                        </MenuItem>
+
+                        <MenuItem value={'Medium'}>
+                           Medium
+                        </MenuItem>
+
+                        <MenuItem value={'Small'}>
+                           Small
+                        </MenuItem>
+
+                        <MenuItem value={'Smallest'}>
+                           Smallest
+                        </MenuItem>
+
+                     </Select>
+                     <FormHelperText className={this.props.classes.select}>Select a layout</FormHelperText>
+                </FormControl>
+              </div> */}
             </div>
+
             <div className={classes.gameControls}>
 
                <TextField
@@ -556,35 +607,6 @@ class Game extends Component {
 
                         <MenuItem value='Acorn'>
                            Acorn
-                        </MenuItem>
-
-                     </Select>
-                     <FormHelperText className={this.props.classes.select}>Select a layout</FormHelperText>
-               </FormControl>
-
-               <FormControl id='GridPicker' className={this.props.classes.formControl} color={'inherit'}>
-                  <InputLabel htmlFor="preset-helper">Presets</InputLabel>
-                     <Select
-                        value={this.state.gameSpeed}
-                        onChange={this.handleChange}
-                        input={<Input name="preset" id="preset-helper" />}
-                        className={this.props.classes.select}
-                     >
-
-                        <MenuItem value={.01}>
-                           Fastest
-                        </MenuItem>
-
-                        <MenuItem value={100}>
-                           Fast
-                        </MenuItem>
-
-                        <MenuItem value={250}>
-                           Slow
-                        </MenuItem>
-
-                        <MenuItem value={500}>
-                           Slowest
                         </MenuItem>
 
                      </Select>
