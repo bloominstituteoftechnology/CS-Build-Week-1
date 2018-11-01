@@ -26,12 +26,23 @@ class ConThree extends React.Component {
       1000
     )
     const renderer = new THREE.WebGLRenderer({ antialias: true })
-    const geometry = new THREE.BoxGeometry(1, 1, 1)
+    const cubeGeometry = new THREE.BoxGeometry(1, 1, 1)
     const material = new THREE.MeshBasicMaterial({ color: '#433F81' })
-    const cube = new THREE.Mesh(geometry, material)
+    const cube = new THREE.Mesh(cubeGeometry, material)
+    const lineGeometry = new THREE.Geometry()
+    lineGeometry.vertices.push(new THREE.Vector3(-10, 0, 0));
+    lineGeometry.vertices.push(new THREE.Vector3(0, 10, 0));
+    lineGeometry.vertices.push(new THREE.Vector3(10, 0, 0));
+
+    const lineMaterial = new THREE.LineBasicMaterial({ color: 'red' });
+
+    const line = new THREE.Line(lineGeometry, lineMaterial);
+
+
 
     camera.position.z = 4
     scene.add(cube)
+    scene.add(line)
     renderer.setClearColor('#000000')
     renderer.setSize(width, height)
 
@@ -40,6 +51,7 @@ class ConThree extends React.Component {
     this.renderer = renderer
     this.material = material
     this.cube = cube
+    this.line = line
 
     this.mount.appendChild(this.renderer.domElement)
     this.start()

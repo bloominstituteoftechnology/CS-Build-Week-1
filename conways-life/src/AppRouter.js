@@ -11,10 +11,13 @@ const AppRouter = () => (
             <nav>
                 <ul>
                     <li>
-                        <Link to="/two">View 2D Simulation</Link>
+                        <Link to="/two" className="nav-links">View 2D Simulation</Link>
                     </li>
                     <li>
-                        <Link to="/three">View 3D Simulation</Link>
+                        <Link to="/three" className="nav-links">View 3D Simulation</Link>
+                    </li>
+                    <li>
+                        <Link to="/" className="nav-links">Back to Info Page</Link>
                     </li>
                 </ul>
             </nav>
