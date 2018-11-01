@@ -1,4 +1,4 @@
 [build]
   base = "cnwy-game-life"
   publish = "cnwy-game-life/build"
-  command = "npm build"
+  command = "npm run build"
