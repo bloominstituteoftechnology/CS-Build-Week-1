@@ -63,6 +63,12 @@ class Board extends Component {
   // Used to check if a cell is alive
   isAlive = (row, col) => {
     const length = Math.sqrt(this.state.cells.length);
+
+    if (row === -1) row = length - 1
+    if (row === length) row = 0
+    if (col === -1) col = length -1
+    if (col === length) col = 0
+
     const cell = (row*length)+col
     return this.state.cells[cell]
   }
