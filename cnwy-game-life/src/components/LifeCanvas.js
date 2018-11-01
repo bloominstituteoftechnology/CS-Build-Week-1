@@ -19,7 +19,7 @@ library.add(faRunning)
  */
 
 const GridInput = styled(Input)`
-  width:20px;
+  /* width:20px; */
 `
 
 
