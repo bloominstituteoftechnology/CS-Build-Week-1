@@ -41,10 +41,29 @@ class Game extends React.Component {
 
   runGame = () => {
     this.setState({ isRunning: false });
+    this.runIteration();
   }
 
   stopGame = () => {
     this.setState({ isRunning: false });
+  }
+
+  runIteration = () => {
+    console.log('running iteration');
+    const newBoard = this.clearBoard();
+
+    for (let y = 0; y < this.rows; y++) {
+      for (let x = 0; x < this.cols; x++) {
+        this.calculateNeighbors();
+      }
+    }
+
+    this.board = newBoard;
+    this.setState({ cells: this.addCells() })
+  }
+
+  calculateNeighbors = () => {
+    console.log('calculating neighbors');
   }
 
   clearBoard() {
@@ -124,8 +143,8 @@ class Game extends React.Component {
         </div>
         {
           isRunning ?
-            <button className="button" onClick={this.runGame}>Run</button> : 
-            <button className="button" onClick={this.stopGame}>Stop</button>
+            <button className="button" onClick={this.stopGame}>Stop</button> : 
+            <button className="button" onClick={this.runGame}>Run</button>
         }
       </div>
     );
