@@ -13,10 +13,11 @@ body {
   height: 15px;
   margin-left: -1px;
   margin-bottom: -1px;
+  border-radius: 2px;
   }
 
 .off {
-  background-color: rgba(211, 211, 211, 0.577);
+  background-color: rgba(211, 211, 211, 0.708);
 }
 
 .off:link,
@@ -73,6 +74,7 @@ body {
   margin: auto;
   box-shadow: 0px 0px 20px white;
   margin-top: 20px;
+  border-radius: 50%;
 }
   
 h1, h2, h3, h4 {
@@ -90,6 +92,7 @@ h4 {
   height: 40px;
   width: 90px;
   background: red;
+  border-radius: 8px; 
 }
 
 .button:link,
