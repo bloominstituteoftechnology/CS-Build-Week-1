@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import Grid from "./Components/Grid";
 import Styled from 'styled-components';
 import Rules from "./Components/Rules";
@@ -9,12 +8,13 @@ import Head from './Components/Head';
 
 const Container = Styled.div`
   display: flex;
-  justify-content: space-between;
+  
 `;
 
 const Gameboard = Styled.div `
   display: flex;
-  margin: 50px 250px 0 0;
+  margin: 50px;
+  left: 20px;
 `;
 
 const Header = Styled.h2 `
@@ -33,13 +33,23 @@ const ButtonContainer = Styled.div`
   flex-direction: column;
 `;
 
-const Sidebar = Styled.div `
+const Sidebar_Outer = Styled.div `
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   width: 20%;
-  margin: 50px 0 0 200px;
+  margin: 50px;
+ 
+`;
+
+const Sidebar_Inner = Styled.div `
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+align-items: center;
+position: absolute;
+top: 200px;
 `;
 
 const Window = Styled.div `
@@ -157,10 +167,6 @@ class App extends Component {
 		this.clearGrid();
   }
 
-  componentDidMount() {
-    //this.seedGrid();
-    //this.startGame();
-  }
   render() {
     return (
       <Window >
@@ -169,7 +175,8 @@ class App extends Component {
         <Head selectBox={this.selectBox}/>
         </div>
         <Container>
-          <Sidebar>
+          <Sidebar_Outer>
+          <Sidebar_Inner>
           <ButtonContainer>
             <Button onClick={this.toggleRules}>
 						  Rules
@@ -191,14 +198,15 @@ class App extends Component {
               <DropdownButton
 						    title="Grid Size"
 						    id="size-menu"
-						    onSelect={this.handleSize}
+                onSelect={this.handleSize}
 					    >
 						    <MenuItem eventKey="1">20x20</MenuItem>
 						    <MenuItem eventKey="2">30x30</MenuItem>
 						    <MenuItem eventKey="3">40x40</MenuItem>
 					  </DropdownButton>
             </ButtonContainer>
-          </Sidebar>
+            </Sidebar_Inner>
+          </Sidebar_Outer>
           
 
           <Gameboard>

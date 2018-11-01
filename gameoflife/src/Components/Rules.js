@@ -24,15 +24,16 @@ const TransBackground = Styled.div`
 `;
 
 const ModalContainer = Styled.div`
-    width: 70%;
-    height: 160px;
+    width: 60%;
+    height: 200px;
     border: 1px solid black;
     background: #FFFFFF;
-    margin: 200px auto;
+    margin: 150px auto;
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding: 15px;
     position: relative;
+    left: 100px;
 `;
 
 const Modal = Styled.div`
@@ -41,7 +42,7 @@ const Modal = Styled.div`
     align-items: center;
     text-align: left;
     width: 80%;
-    height: auto;
+    margin: 0;
 `;
 
 const Button = Styled.button`
@@ -63,7 +64,6 @@ const Rules = props => {
                         <li>Any live cell with more than three live neighbors dies, as if by overpopulation.</li>
                         <li>Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</li>
                     </ul>
-                    <Button onClick={props.toggleAbout}>Close</Button>
                 </Modal>
             </ModalContainer>
         </Background>

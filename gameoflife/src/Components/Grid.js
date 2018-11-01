@@ -5,7 +5,7 @@ import Cell from "./Cell";
 const GridBox = Styled.div`
     display: flex;
     flex-wrap: wrap;
-    
+    box-shadow: 6px 6px 29px -5px rgba(0,0,0,0.75);
 `;
 
 class Grid extends React.Component {

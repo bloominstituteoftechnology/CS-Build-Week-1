@@ -5,7 +5,6 @@ import Cell from "./Cell";
 const GridBox = Styled.div`
     display: flex;
     flex-wrap: wrap;
-    border: 2px solid black;
 `;
 
 class Head extends React.Component {
