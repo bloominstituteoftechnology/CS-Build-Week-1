@@ -11,7 +11,7 @@ class CellGrid extends Component {
         this.state = {
             size: [30, 30],
             generation: 0,
-            cellCount: 0,
+            cellChange: 0,
             interval: 100,
             simActive: false
         }
@@ -120,6 +120,8 @@ class CellGrid extends Component {
     }
 
     runSimulation() {
+        if(!this.state.simActive)
+            return;
         this.addBuffer();
         this.timeout = setTimeout(() => {
             this.runSimulation();
@@ -131,6 +133,15 @@ class CellGrid extends Component {
             return;
         this.setState({ simActive: false });
         clearTimeout(this.timeout);
+    }
+
+    clearGrid() {
+        this.liveCells.forEach((item) => {
+            this.removeDeadCell(item.x + ' , ' + item.y);
+        })
+
+        this.setState({generation: 0, simActive: false});
+
     }
 
     renderGrid() {
@@ -160,6 +171,7 @@ class CellGrid extends Component {
                 <div className="controls-container">
                     <button onClick={() => this.startSimulation()}>Start Simulation </button>
                     <button onClick={() => this.stopSimulation()}>Stop</button>
+                    <button onClick={() => this.clearGrid()}> Clear Grid</button>
                     <h3> Generation: {this.state.generation} </h3>
                 </div>
         </div>
