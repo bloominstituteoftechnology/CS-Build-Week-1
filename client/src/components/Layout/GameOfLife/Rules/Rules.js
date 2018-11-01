@@ -6,10 +6,12 @@ class Rules extends Component {
     const Alive = styled.strong`
       -webkit-text-stroke: 1px black;
       color: ${this.props.alive};
+      font-weight: bold;
     `;
     const Dead = styled.strong`
       -webkit-text-stroke: 1px black;
       color: ${this.props.dead};
+      font-weight: bold;
     `;
     return (
       <div>

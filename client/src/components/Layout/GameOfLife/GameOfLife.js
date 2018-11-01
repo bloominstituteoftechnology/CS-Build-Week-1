@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
+import { Row, Button, Input } from "reactstrap";
 import Grid from "./Grid/Grid";
 import Cell from "./Grid/Cell/Cell";
 import Rules from "./Rules/Rules";
@@ -11,8 +11,8 @@ class GameOfLife extends React.Component {
     this.columns = 40;
     this.grid = this.clearGrid();
     this.state = {
-      rows: 30,
-      columns: 40,
+      //   rows: 30,
+      //   columns: 40,
       cells: [],
       speed: 1000,
       isPlaying: false,
@@ -181,8 +181,10 @@ class GameOfLife extends React.Component {
   render() {
     return (
       <Row>
-        <Col m="9">
+        <Rules alive={this.state.cellColor} dead={this.state.gridColor} />
+        <div>
           <h2>Generation: {this.state.generation}</h2>
+
           <Grid
             onClick={this.handleClick}
             ref={g => {
@@ -199,40 +201,37 @@ class GameOfLife extends React.Component {
               />
             ))}
           </Grid>
-          <div>
-            {this.state.isPlaying ? (
-              <button onClick={this.stopGame}>Stop</button>
-            ) : (
-              <button onClick={this.startGame}>Start</button>
-            )}
-            <button onClick={this.handleClear}>Clear</button>
-            <button onClick={this.handleRandom}>Random</button>
-            <input
-              type="range"
-              min="100"
-              max="6000"
-              value={this.state.speed}
-              class="slider"
-              onChange={this.handleSpeed}
-            />
-            {this.state.speed / 100} generation(s) per second
-            <p>Cell color:</p>
-            <input
-              type="color"
-              value={this.state.cellColor}
-              onChange={this.handleCellColor}
-            />
-            <p>Grid color:</p>
-            <input
-              type="color"
-              value={this.state.gridColor}
-              onChange={this.handleGridColor}
-            />
-          </div>
-        </Col>
-        <Col m="3">
-          <Rules alive={this.state.cellColor} dead={this.state.gridColor} />
-        </Col>
+        </div>
+        <div>
+          {this.state.isPlaying ? (
+            <Button onClick={this.stopGame}>Pause</Button>
+          ) : (
+            <Button onClick={this.startGame}>Play</Button>
+          )}
+          <Button onClick={this.handleClear}>Stop</Button>
+          <Button onClick={this.handleRandom}>Random</Button>
+          <Input
+            type="range"
+            min="100"
+            max="6000"
+            value={this.state.speed}
+            class="slider"
+            onChange={this.handleSpeed}
+          />
+          {this.state.speed / 100} generation(s) per second
+          <p>Cell color:</p>
+          <Input
+            type="color"
+            value={this.state.cellColor}
+            onChange={this.handleCellColor}
+          />
+          <p>Grid color:</p>
+          <Input
+            type="color"
+            value={this.state.gridColor}
+            onChange={this.handleGridColor}
+          />
+        </div>
       </Row>
     );
   }
