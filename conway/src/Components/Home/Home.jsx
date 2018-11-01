@@ -38,9 +38,9 @@ class Home extends Component {
                 <Paper className={classes.topCard} >
                     <Game componentWidth={500}  componentHeight={500}  gridHeight={classes.topCard.height} gridWidth={classes.topCard.width}/>
                 </Paper>
-                
               </Grid>
-              <Grid item xs={5} s={6} m={12}>
+              
+              <Grid item xs={10} sm={9} md={4}>
                 <Paper className={classes.bottomCard} >
                     <Rules/>
                 </Paper>
