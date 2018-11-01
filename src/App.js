@@ -16,7 +16,6 @@ const Container = styled.div`
   background-image: url(${img});
   background-size: cover;
   // background-color: coral;
-  border: 2px solid red;
   height: 100%;
 `
 const StyledIncrementDecrement = styled.div`

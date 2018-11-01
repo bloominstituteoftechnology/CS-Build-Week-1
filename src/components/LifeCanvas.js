@@ -144,7 +144,7 @@ class LifeCanvas extends Component{
     }
   } 
 
-  clearCell = (c, cell, index, singleCell = false) => {
+  clearCell = (c, cell, index, singleCell=false) => {
     c.fillStyle = 'rgba(52, 187, 229, 0.1)';
     c.clearRect(cell.left, cell.top, cell.width, cell.height);
     // c.fillRect(cell.left, cell.top, cell.width, cell.height);
@@ -161,14 +161,17 @@ class LifeCanvas extends Component{
       this.setState({ filledCells : [] });
   }
 
-  fillCell = (c, cell, index) => {
+  fillCell = (c, cell, index, singleCell=false) => {
     c.fillStyle = 'rgba(0,0,0,0.7)';
     c.fillRect(cell.left, cell.top, cell.width, cell.height);
     c.rect(cell.left, cell.top, cell.width, cell.height)    // Draw rect to retain borders
     c.stroke();
-    let filledCells = this.state.filledCells;
-    filledCells.push(index);
-    this.setState({ filledCells : filledCells })
+    if(singleCell){
+        let filledCells = this.state.filledCells;
+        filledCells.push(index);
+        this.setState({ filledCells : filledCells })
+    }
+
   }
 
 
@@ -183,18 +186,14 @@ class LifeCanvas extends Component{
     let rect = canvas.getBoundingClientRect();
 
     let x = event.clientX - rect.left;
-    let y = event.clientY - rect.top;
-
-    console.log("event.clientY", event.clientY, "event.clientX", event.clientX, "canvas.offsetTop", canvas.offsetTop, "canvas.offsetLeft", canvas.offsetLeft)
-    console.log("window.clientY", window.clientY, "window.clientX", window.clientX)
-    
+    let y = event.clientY - rect.top;    
 
     this.state.cellBoundaries.forEach((cell, index) => {
         if (y > cell.top && y < cell.top + cell.height && x > cell.left && x < cell.left + cell.width) {
             if(this.state.filledCells.includes(index)){
                 this.clearCell(c, cell, index, true);
             }else{
-                this.fillCell(c, cell, index);
+                this.fillCell(c, cell, index, true);
             }
         }
     })
@@ -220,7 +219,7 @@ class LifeCanvas extends Component{
       if(this.state.running && e){
           return
       }
-      if(!this.state.running && e){
+      if(!this.state.running && e){     // If a user clicked the clear cells button while not running
 
           this.setState({ counter : 0 });
           this.resetFilledCells();
@@ -252,7 +251,7 @@ class LifeCanvas extends Component{
 
         for (let i = 0; i < filledCells.length; i++) {
         
-            this.fillCell(c, cellBoundaries[filledCells[i]], filledCells[i]);
+            this.fillCell(c, cellBoundaries[filledCells[i]], filledCells[i], true);
         }
     }
 
@@ -290,22 +289,34 @@ class LifeCanvas extends Component{
         hitSet.add(hit);
     }
 
-    hitSet.forEach(hit => this.fillCell(this.state.c, this.state.cellBoundaries[hit], hit));
+    hitSet.forEach(hit => this.fillCell(this.state.c, this.state.cellBoundaries[hit], hit, true));
 
   }
 
   jumpTo = (e) => {
       e.preventDefault();
 
-      let jumpTo = this.state.jumpTo;
+      let jumpTo = this.state.jumpTo[0];
 
-      if(jumpTo > this.state.counter){
-          for(let i=0; i < jumpTo - 1; i++){
-              this.state.life.update()
-          }
-          this.setState({ counter : this.state.counter + (jumpTo - this.state.counter) });
-          this.nextRound();
+
+      if(jumpTo <= this.state.counter){
+          return;
       }
+
+      this.state.life.setCells(this.state.filledCells.sort()); // Set all current cells on the board to be accounted for
+
+      this.clearCells();                                        // Clear out cells, as they will change
+
+      for(let i=0; i < jumpTo; i++){                            // Iterate through steps
+        this.state.life.update()
+      }
+      
+      let filledCellsIn = this.state.life.getCells();           // Get new cells
+        
+      this.setState({ counter : this.state.counter + (jumpTo - this.state.counter), filledCells : filledCellsIn });
+        
+      filledCellsIn.forEach(cell => this.fillCell(this.state.c, this.state.cellBoundaries[cell], cell));
+      
   }
 
   inputHandler = (e) => {
