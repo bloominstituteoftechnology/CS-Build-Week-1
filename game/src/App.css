@@ -15,6 +15,7 @@
   width: 580px;
   height: 580px;
   background-color: #fff;
+  cursor: pointer;
   z-index: 0;
 }
 

@@ -12,6 +12,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.NUM_CELLS = 58;
+    this.CANVAS_SIZE = 580;
+    this.CELL_SIZE = 10;
+    this.GRID_COLOR = '#dfdfdf';
     this.GENERATION_RATE = 50;
     this.state = {
       generationInterval: undefined,
@@ -154,14 +157,29 @@ class App extends Component {
     return isClear;
   }
 
+  onGameClick = (e, game) => {
+    let x = e.clientX - game.offsetLeft - this.refs.app.offsetLeft;
+    let y = e.clientY - game.offsetTop - this.refs.app.offsetTop;
+    x = Math.floor(x / this.CELL_SIZE);
+    y = Math.floor(y / this.CELL_SIZE);
+    this.toggleState(x, y);
+  };
+
+  toggleState = (cellX, cellY) => {
+    let grid = this.state.grid.slice();
+    let cell = grid[cellX][cellY];
+    cell.toggleState();
+    this.setState({grid: grid});
+	}
+
   componentDidMount = () => {
     this.play();
   }
 
   render() {
     return (
-      <div className="app">
-        <Game grid={this.state.grid} numCells={this.NUM_CELLS} randomize={this.randomize} />
+      <div ref="app" className="app">
+        <Game grid={this.state.grid} numCells={this.NUM_CELLS} canvasSize={this.CANVAS_SIZE} cellSize={this.CELL_SIZE} gridColor={this.GRID_COLOR} randomize={this.randomize} onGameClick={this.onGameClick} />
         <Controls step={this.step} clear={this.clear} playStop={this.playStop} randomize={this.randomize} isShowingPlay={this.state.isShowingPlay} generationNumber={this.state.generationNumber} />
       </div>
     );

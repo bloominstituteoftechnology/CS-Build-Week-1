@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-//import Cell from './Cell';
 
 export default class Game extends Component {
   constructor(props) {
     super(props);
-    this.CANVAS_SIZE = 580;
-    this.CELL_SIZE = 10;
-    this.GRID_COLOR = '#dfdfdf';
 
     this.state = {
       buttonCommand: null
@@ -20,17 +16,17 @@ export default class Game extends Component {
     const lineOffset = 0.5;
     const fillOffset = 1;
 
-    canvas.width = canvas.height = this.CANVAS_SIZE;
-    ctx.strokeStyle = ctx.fillStyle = this.GRID_COLOR;
+    canvas.width = canvas.height = this.props.canvasSize;
+    ctx.strokeStyle = ctx.fillStyle = this.props.gridColor;
     
-    for (let x = lineOffset; x < this.props.numCells * this.CELL_SIZE; x += this.CELL_SIZE) {
+    for (let x = lineOffset; x < this.props.numCells * this.props.cellSize; x += this.props.cellSize) {
       ctx.moveTo(x, 0);
-      ctx.lineTo(x, this.props.numCells * this.CELL_SIZE);
+      ctx.lineTo(x, this.props.numCells * this.props.cellSize);
     }
 
-    for (let y = lineOffset; y < this.props.numCells * this.CELL_SIZE; y += this.CELL_SIZE) {
+    for (let y = lineOffset; y < this.props.numCells * this.props.cellSize; y += this.props.cellSize) {
       ctx.moveTo(0, y);
-      ctx.lineTo(this.props.numCells * this.CELL_SIZE, y);
+      ctx.lineTo(this.props.numCells * this.props.cellSize, y);
     }
     ctx.stroke();
     
@@ -38,15 +34,21 @@ export default class Game extends Component {
       for (let y = 0; y < grid[x].length; y++) {
         const cell = grid[x][y];
         if (cell.isAlive) {
-          ctx.fillRect(x * this.CELL_SIZE + fillOffset, 
-            y * this.CELL_SIZE + fillOffset,
-            this.CELL_SIZE - fillOffset,
-            this.CELL_SIZE - fillOffset);
+          ctx.fillRect(x * this.props.cellSize + fillOffset, 
+            y * this.props.cellSize + fillOffset,
+            this.props.cellSize - fillOffset,
+            this.props.cellSize - fillOffset);
         }
       }
     }
 
   }
+
+  onGameClick = e => {
+    e.preventDefault();
+    this.props.onGameClick(e, this.refs.game);
+    console.log('game click');
+  };
 
   componentDidUpdate = prevProps => {
     this.drawCanvas();
@@ -59,7 +61,7 @@ export default class Game extends Component {
 
   render() {
     return (
-      <canvas ref="game" className="game"></canvas>
+      <canvas ref="game" className="game" onClick={e => this.onGameClick(e)}></canvas>
     );
   }
 }
