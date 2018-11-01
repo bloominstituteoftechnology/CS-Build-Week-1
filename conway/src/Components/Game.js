@@ -16,7 +16,7 @@ const Header = styled.h2`
 `;
 
 const ButtonContainer = styled.div`
-    width: 200px;
+    width: 300px;
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
@@ -38,7 +38,8 @@ class Game extends Component {
             clear: false,
             running: false,
             gameOfLife: false,
-            interval: null
+            interval: null,
+            randomize: false
         }
     }
 
@@ -72,14 +73,19 @@ class Game extends Component {
         this.setState({clear: !this.state.clear});
     }
 
+    randomButton = () => {
+        this.setState({randomize: !this.state.randomize});
+    }
+
 
     render() {
         return ( 
             <Container>
                 <Header>Generation: {this.state.generation}</Header>
-                <GameBox clear={this.state.clear} gameOfLife={this.state.gameOfLife} clearButton={this.clearButton}/>
+                <GameBox clear={this.state.clear} randomize={this.state.randomize} gameOfLife={this.state.gameOfLife} clearButton={this.clearButton} randomButton={this.randomButton}/>
                 <ButtonContainer>
                     <Button id="playStopButton" onClick={this.runSimulation}>Play</Button>
+                    <Button onClick={this.randomButton}>Random</Button>
                     <Button onClick={this.clearButton}>Clear</Button>
                 </ButtonContainer>
             </Container>

@@ -31,15 +31,17 @@ class GameBox extends Component  {
             this.setState({cells: clearedCells});
             this.props.clearButton();
         }
-        console.log(`GAMEOFLIFE: ${this.props.gameOfLife}`)
         if (this.props.gameOfLife === true && prevProps !== this.props) {
             let newCells = this.updateCells();
             this.setState({cells: newCells});
         }
+        if (this.props.randomize === true && prevProps !== this.props) {
+            this.setState({cells: Array.from({length: 225}, () => Math.floor(Math.random() * 2))});
+            this.props.randomButton();
+        }
     }
 
     updateCells() {
-        console.log('I am in the algorithm!!')
         let newCells = [];
         for (let i = 0; i < this.state.cells.length; i++) {
             let neighbors = this.getNeighbors(i);
@@ -53,24 +55,19 @@ class GameBox extends Component  {
             }
 
             if (this.state.cells[i] === 1) {
-                console.log(`ACTIVE NEIGHBORS: ${activeNeighbors} for ${i}`);
                 if (2 <= activeNeighbors && activeNeighbors <= 3) {
-                    console.log("CELL SURVIVES");
                     newCells.push(1);
                 } else {
-                    console.log("CELL DIES");
                     newCells.push(0);
                 }
             } else if (this.state.cells[i] === 0) {
                 if (activeNeighbors === 3) {
                     newCells.push(1);
-                    console.log("CELL IS BORN");
                 } else {
                     newCells.push(0)
                 }
             }
         }
-        console.log(`new Cells: ${newCells}`)
         return newCells;
     }
 
@@ -85,16 +82,6 @@ class GameBox extends Component  {
             return <GridBox status={cell} toggleCell={this.toggleCell} id={i}/>
         })
     }
-
-    // getCoordinates(index) {
-    //     const y = Math.floor(index / 15);
-    //     const x = index % 15;
-    //     return (x, y);
-    // }
-
-    // getIndex(x, y) {
-    //     return (15 * y) + x;
-    // }
 
     getNeighbors(index) {
         let top = index - 15;
