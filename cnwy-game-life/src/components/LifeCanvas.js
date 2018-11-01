@@ -4,12 +4,15 @@ import styled from 'styled-components';
 import patterns from './Patterns';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay, faPause, faStepForward, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPlay, faPause, faStepForward, faSyncAlt, faMale, faWalking, faRunning } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faPlay)
 library.add(faPause)
 library.add(faSyncAlt)
 library.add(faStepForward)
+library.add(faMale)
+library.add(faWalking)
+library.add(faRunning)
 
 /**
  * Styled Components
@@ -21,6 +24,7 @@ const GridInput = styled(Input)`
 
 const GenDiv = styled.div`
   padding-top:6px;
+  width:24%;
 `
 
 const SelRow = styled(Row)`
@@ -31,19 +35,35 @@ const GameBtns = styled.div`
   padding-top: 10px;
   display:flex;
   justify-content:space-evenly;
+  width:22%;
 `
-const CanvasFooter = styled(Row)`
+const CanvasFooter = styled.div`
+  display:flex;
+  justify-content:space-evenly;
+
 `
 const Canvas = styled.canvas`
   margin-top:25px;
   margin-left:20px;
 `
-
 const StyledFA = styled(FontAwesomeIcon)`
   cursor:pointer;
   :hover {
     color:pink;
   }
+`
+
+// const SpeedFA = styled(FontAwesomeIcon)`
+//   color:${props => props.active ? "pink" : "white"};
+// `
+
+const SpeedSlider = styled.input`
+  width:50px;
+  cursor:pointer;
+  :hover {
+    color:pink;
+  }
+
 `
 
 //Globals
@@ -70,7 +90,7 @@ class LifeCanvas extends Component {
       cellSize: 0,
       gameBufferA: [],
       gameBufferB: [],
-      fps: 2,
+      fps: 60,
       gameRunning:false,
       activePattern:''
     }
@@ -82,7 +102,7 @@ class LifeCanvas extends Component {
       cellSize: 10,
       gameBufferA: Array(Math.pow(500/10,2)).fill(false), 
       gameBufferB: Array(Math.pow(500/10,2)).fill(false),
-      fps: 2,
+      fps: 60,
       gameRunning:false,
       activePattern:'No Pattern'
     })
@@ -549,6 +569,26 @@ class LifeCanvas extends Component {
       }
     }
 
+   /**
+   * Set the FPS of the game
+   * 
+   * 
+   * @param fps number representing the FPS
+   * @return void
+   */
+  gameSpeedOnChangeHandler = (e) => {
+    console.log("changed slider")
+    console.log(e.target.value);
+    console.log(typeof (e.target.value));
+    let sliderVal = Number(e.target.value)
+    if (sliderVal === 0){
+      this.setState({fps:2})
+    }else if(sliderVal === 25){
+      this.setState({fps:5})
+    }else if (sliderVal === 50) {
+      this.setState({fps:60})
+    }
+  }
 
   /**
    * Initialize Pattern
@@ -557,44 +597,44 @@ class LifeCanvas extends Component {
    * @return void
    */
   initPattern = (patternStr) => {
-        //Calcuate the number of cells per row
-        let cellsPerRow = this.state.gridSize/this.state.cellSize;
-            
-        //Calculate the middle Row/Col
-        let mid = Math.round(cellsPerRow/2);
-            
-        //Set the Empty Game Buffer (all falses)
-        let gameBufferE = Array(Math.pow(this.state.gridSize/this.state.cellSize,2)).fill(false);
-            
-        //Set the Empty Buffer to the BufferA
-        let gameBufferA = [...gameBufferE];
-            
-            //Update state and update canvas
-            this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
-            
-        //Check if pattern string exists (imported from Patterns.js)
-        if (patterns[patternStr]){
-            
-          //Loop through the array of (x,y) values and set them to true:
-          patterns[patternStr].forEach( cv => {  
-            gameBufferA[cv[0] + cv[1]*cellsPerRow] = true;
-          })
-        }else {
-          if (patternStr === "Vertical Line"){
-
-            for (let i=0; i<cellsPerRow; i++){
-              gameBufferA[mid + i*cellsPerRow] = true;
-            }
-        }
-          else if (patternStr === "Horizontal Line"){  
-            for (let i=0; i<cellsPerRow; i++){
-              gameBufferA[i + mid*cellsPerRow] = true;
-      }
-    }
-  }
-  
+    //Calcuate the number of cells per row
+    let cellsPerRow = this.state.gridSize/this.state.cellSize;
+        
+    //Calculate the middle Row/Col
+    let mid = Math.round(cellsPerRow/2);
+        
+    //Set the Empty Game Buffer (all falses)
+    let gameBufferE = Array(Math.pow(this.state.gridSize/this.state.cellSize,2)).fill(false);
+        
+    //Set the Empty Buffer to the BufferA
+    let gameBufferA = [...gameBufferE];
+        
         //Update state and update canvas
         this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
+        
+    //Check if pattern string exists (imported from Patterns.js)
+    if (patterns[patternStr]){
+        
+      //Loop through the array of (x,y) values and set them to true:
+      patterns[patternStr].forEach( cv => {  
+        gameBufferA[cv[0] + cv[1]*cellsPerRow] = true;
+      })
+    }else {
+      if (patternStr === "Vertical Line"){
+
+        for (let i=0; i<cellsPerRow; i++){
+          gameBufferA[mid + i*cellsPerRow] = true;
+        }
+      }
+      else if (patternStr === "Horizontal Line"){  
+        for (let i=0; i<cellsPerRow; i++){
+          gameBufferA[i + mid*cellsPerRow] = true;
+        }
+      }
+    }
+
+    //Update state and update canvas
+    this.setState({gameBufferA}, () => this.updateCanvas(this.state.gameBufferA))
     
   }
 
@@ -610,7 +650,7 @@ class LifeCanvas extends Component {
             <Col sm="3">
               <Label for="cellSizeSel">Select Cell Size:</Label>
             </Col>
-            <Col sm="3">
+            <Col sm="4">
               <GridInput ref="cellSel" type="select" name="select" id="cellSizeSel" bsSize="sm" onChange={this.cellSelOnChangeHandler}>
                 <option>10 px</option>
                 <option>20 px</option>
@@ -618,21 +658,6 @@ class LifeCanvas extends Component {
                 <option>50 px</option>
                 <option>100 px</option>
               </GridInput>
-            </Col>
-            <Col sm="3">
-              <Label for="framesPerSecSel">Select FPS:</Label>
-            </Col>
-            <Col sm="2">
-              <GridInput ref="cellSel" type="select" name="select" id="framesPerSecSel" bsSize="sm" onChange={this.fpsOnChangeHandler}>
-                <option>2</option>
-                <option>5</option>
-                <option>10</option>
-                <option>15</option>
-                <option>30</option>
-                <option>60</option>
-              </GridInput>
-            </Col>
-            <Col sm="1">
             </Col>
           </SelRow>
 
@@ -657,22 +682,20 @@ class LifeCanvas extends Component {
         <Canvas ref="canvas" id="canvas" width={this.state.gridSize} height={this.state.gridSize} onClick={this.getCanvasXYcoordFromMouseClick}/>
         
         <CanvasFooter>
-          <Col sm='1'>
-          </Col>
-          <Col sm='5'>
-            <GenDiv>Generation: {this.state.generation}</GenDiv>
-          </Col>
+            <GenDiv>
+              Generation: {this.state.generation}
+            </GenDiv>
 
-          <Col sm='6'>
             <GameBtns>
-
-              {this.state.gameRunning ? <StyledFA icon="pause" id="utt-pause" onClick={this.pauseGame}/> : <StyledFA icon="play" id="utt-start" onClick={this.startGame}/>}
+                {/* {this.state.fps === 2 ? <SpeedFA active icon="male" onClick={()=>this.setFPS(2)}/> : <SpeedFA icon="male" onClick={()=>this.setFPS(2)}/> }
+                {this.state.fps === 5 ? <SpeedFA active icon="walking" onClick={()=>this.setFPS(5)}/> : <SpeedFA icon="walking" onClick={()=>this.setFPS(5)}/>}
+              {this.state.fps === 60 ? <SpeedFA active icon="running" onClick={()=>this.setFPS(60)}/> : <SpeedFA icon="running" onClick={()=>this.setFPS(60)}/> } */}
+              <SpeedSlider type="range" id="gameSpeed" onChange={this.gameSpeedOnChangeHandler} step="25" max="50"/>            
+            </GameBtns>
               
-              {/* <StyledFA icon="play" id="utt-start" onClick={this.startGame}/> */}
-              {/* <UncontrolledTooltip placement="top" target="utt-start"> Start Game </UncontrolledTooltip> */}
+            <GameBtns>
+              {this.state.gameRunning ? <StyledFA icon="pause" onClick={this.pauseGame}/> : <StyledFA icon="play" onClick={this.startGame}/>}
 
-              {/* <StyledFA icon="pause" id="utt-pause" onClick={this.pauseGame}/> */}
-              {/* <UncontrolledTooltip placement="top" target="utt-pause"> Pause Game </UncontrolledTooltip> */}
               
               <StyledFA icon="step-forward" id="utt-step" onClick={this.stepGame}/>
               <UncontrolledTooltip placement="top" target="utt-step"> Step Game </UncontrolledTooltip>
@@ -680,7 +703,7 @@ class LifeCanvas extends Component {
               <StyledFA icon="sync-alt" id="utt-restart" onClick={this.restartGame}/>
               <UncontrolledTooltip placement="top" target="utt-restart"> Restart Game </UncontrolledTooltip>
             </GameBtns>
-          </Col>
+  
         </CanvasFooter>
       </div>
     );
