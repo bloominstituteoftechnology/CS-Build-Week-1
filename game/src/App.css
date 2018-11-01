@@ -163,6 +163,7 @@
 .info-overlay-content h2 {
   text-transform: uppercase;
   color: #c70025;
+  margin: 2rem 0 2.4rem;
 }
 
 .info-overlay-content .emphasis {
