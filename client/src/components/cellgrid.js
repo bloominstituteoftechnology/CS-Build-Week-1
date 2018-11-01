@@ -157,6 +157,25 @@ class CellGrid extends Component {
             this.setState({interval: event.target.value});
     }
 
+    changeXhandler = (event) => {
+        event.preventDefault();
+        if(event.target.value <= 50){
+            let nuSize = this.state.size.slice();
+            nuSize[0] = event.target.value;
+            this.setState({size: nuSize});
+        }
+    }
+
+    changeYhandler = (event) => {
+        event.preventDefault();
+        if(event.target.value <= 50){
+            let nuSize = this.state.size.slice();
+            nuSize[1] = event.target.value;
+            this.setState({size: nuSize});
+        }
+
+    }
+
     renderGrid() {
         let newGrid = [];
         let cellRow = [];
@@ -192,6 +211,10 @@ class CellGrid extends Component {
                     <input className="input" type="text" value={this.state.interval} onChange={this.intervalHandler} />
                     ms
                     </h3>
+                    <h3> Size: 
+                    <input className="input" type="text" value={this.state.size[0]} onChange={this.changeXhandler}/> By
+                    <input className="input" type="text" value={this.state.size[1]} onChange={this.changeYhandler}/>
+                     </h3>
                     </div>
                 </div>
         </div>
