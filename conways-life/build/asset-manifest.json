@@ -1,0 +1,14 @@
+{
+  "main.css": "/static/css/main.9dfec77a.chunk.css",
+  "main.js": "/static/js/main.679cb031.chunk.js",
+  "main.js.map": "/static/js/main.679cb031.chunk.js.map",
+  "static/js/1.ee63573c.chunk.js": "/static/js/1.ee63573c.chunk.js",
+  "static/js/1.ee63573c.chunk.js.map": "/static/js/1.ee63573c.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.229c360f.js",
+  "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
+  "static/media/index.css": "/static/media/gol-bkg.556ff23a.jpg",
+  "static/css/main.9dfec77a.chunk.css.map": "/static/css/main.9dfec77a.chunk.css.map",
+  "index.html": "/index.html",
+  "precache-manifest.f787b780cebb1f9870beeefc0687389f.js": "/precache-manifest.f787b780cebb1f9870beeefc0687389f.js",
+  "service-worker.js": "/service-worker.js"
+}
