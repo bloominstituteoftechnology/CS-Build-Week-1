@@ -22,7 +22,7 @@ class App extends Component {
         <div className="info-container">
             <h1> Conway's Game of Life </h1>
             <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"> Link to wiki</a>
-            <p> </p>
+            <p> The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970.</p>
           </div>
       </div>
     );

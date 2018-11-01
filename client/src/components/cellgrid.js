@@ -201,20 +201,22 @@ class CellGrid extends Component {
                         {this.renderGrid()}
                     </div>
                 <div className="controls-container">
-                    <button onClick={() => this.startSimulation()}>Start Simulation </button>
-                    <button onClick={() => this.stopSimulation()}>Stop</button>
-                    <button onClick={() => this.clearGrid()}> Clear Grid</button>
-                    <button onClick={() => this.randomCells()}> Randomize </button>
-                    <div>
-                    <h3> Generation: {this.state.generation} </h3>
-                    <h3> Interval: 
+                    <div className="buttons-container">
+                        <button onClick={() => this.startSimulation()}>Start Simulation </button>
+                        <button onClick={() => this.stopSimulation()}>Stop</button>
+                        <button onClick={() => this.clearGrid()}> Clear Grid</button>
+                        <button onClick={() => this.randomCells()}> Randomize </button>
+                        </div>
+                    <div className="stats-container">
+                    <a> Generation: {this.state.generation} </a>
+                    <a> Interval: 
                     <input className="input" type="text" value={this.state.interval} onChange={this.intervalHandler} />
                     ms
-                    </h3>
-                    <h3> Size: 
-                    <input className="input" type="text" value={this.state.size[0]} onChange={this.changeXhandler}/> By
+                    </a>
+                    <a> Size: 
+                    <input className="input" type="text" value={this.state.size[0]} onChange={this.changeXhandler}/> x
                     <input className="input" type="text" value={this.state.size[1]} onChange={this.changeYhandler}/>
-                     </h3>
+                     </a>
                     </div>
                 </div>
         </div>
