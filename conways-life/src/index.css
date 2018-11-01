@@ -1,5 +1,6 @@
 body {
-  background-image: url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/squares.png) 
+  /* background-image: url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/squares.png)  */
+  background-image: url('./gol-bkg.jpg')
 }
   
 .box {
@@ -16,7 +17,7 @@ body {
 }
 
 .on {
-  background-color: green;
+  background-color: firebrick;
 }
   
 .box:hover { 
@@ -47,4 +48,42 @@ h1, h2, h3, h4 {
 
 h4 {
   margin-top: 0px;
+}
+
+.nav-links {
+  color: red;
+  font-size: 32px;
+  text-shadow:
+		-1px -1px 0 #FFF,
+		1px -1px 0 #FFF,
+		-1px 1px 0 #FFF,
+		1px 1px 0 #FFF;
+}
+
+.grid-replace {
+  color: black;
+  text-shadow:
+		-1px -1px 0 #FFF,
+		1px -1px 0 #FFF,
+		-1px 1px 0 #FFF,
+		1px 1px 0 #FFF;
+}
+
+.welcome-info {
+  color: black;
+  text-shadow:
+		-1px -1px 0 #FFF,
+		1px -1px 0 #FFF,
+		-1px 1px 0 #FFF,
+		1px 1px 0 #FFF;
+}
+
+.rules {
+  color: red;
+  font-size: 32px;
+  text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
 }
