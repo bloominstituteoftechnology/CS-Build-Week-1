@@ -27,7 +27,7 @@ class Control extends Component {
           <Button
             handleClick={() => this.togglePlay()}
             icon={this.props.playState.isRunning ? 'fa fa-pause' : 'fa fa-play' }
-            title={this.props.playState.isRunning ? 'Pause' : 'Play'}
+            title={this.props.playState.isRunning ? '' : ''}
           />
           <Button
             handleClick={() => this.props.tick()}

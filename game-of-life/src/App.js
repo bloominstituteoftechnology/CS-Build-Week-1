@@ -21,15 +21,15 @@ class App extends Component {
         <div>
           <Learn/>
         </div>
-        <Control 
-          running={this.state.running}
-          checkRunning={this.checkRunning}
-        />
         <Board 
           running={this.state.running}
           checkRunning={this.checkRunning}
         />
         <Counter />
+        <Control 
+          running={this.state.running}
+          checkRunning={this.checkRunning}
+        />
       </div>
     );
   }
