@@ -4,7 +4,7 @@ import './form.css';
 const Form = (props) => {
   return(
     <form className='form' onSubmit={props.updateGridDimension}>
-      Columns:
+      Colums:
     <input type="text" name="columns"/><br/>
       Rows:
     <input type="text" name="rows"/>

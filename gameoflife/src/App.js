@@ -7,10 +7,11 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
-      rows: 20,
-      cols: 20,
+      // rows: 20,
+      // cols: 20,
       strippedData: [],
-      generation: 0
+      generation: 0,
+
     }
   }
 
@@ -84,10 +85,29 @@ class App extends Component {
     .then(response =>{
       this.setState({game: response.data})
       this.parseData()
+      this.makeGridDataStruct()
     })
     .catch(err => console.log(err))
   }
 
+  makeGridDataStruct = () => {
+    let gridStruct = [];
+    for(let i = 0; i < this.state.cols; i++){
+      gridStruct[i] = [];
+      for (let j = 0; j < this.state.rows; j++)
+      gridStruct[i].push(0)
+    }
+    console.log(gridStruct)
+  }
+
+  getGridPos = (event) => {
+    let cellnumber = event.target.getAttribute('cellnumber');
+    let column = (cellnumber % this.state.rows);
+    let row = (cellnumber - column) / this.state.cols;
+    let cords = [row, column];
+    console.log(cellnumber)
+    console.log(cords)
+  }
   render() {
     return (
       <div className="App">
@@ -96,7 +116,7 @@ class App extends Component {
               this.intervalID = setInterval(this.colorCells, 350)}
             }>Click Me</div>
           <Form updateGridDimension={this.updateGridDimension}/>
-          <Board rows={this.state.rows} cols={this.state.cols}/>
+          <Board rows={this.state.rows} cols={this.state.cols} getGridPos={this.getGridPos}/>
       </div>
     );
   }
