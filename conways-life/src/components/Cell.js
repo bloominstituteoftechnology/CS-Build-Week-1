@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 
 class Cell extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isAlive: false,
+      neighbors: 0
+    }
+  }
+
   selectCell = () => {
     this.props.selectCell(this.props.row, this.props.col);
+    this.setState({ isAlive: !this.state.isAlive });
   };
 
   render() {

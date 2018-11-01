@@ -1,3 +1,37 @@
+.app-container {
+  width: 800px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  border: 1px solid black;
+}
+
+.header-container {
+  width: 800px;
+}
+
+.grid-container {
+  margin: auto;
+}
+
+.preset-container {
+  margin: auto 0;
+}
+
+.rules-container {
+  width: 200px;
+  margin: auto;
+}
+
+.about-container {
+  width: 700px;
+  margin: auto;
+}
+
+h1, h3 {
+  text-align: center;
+}
+
 .cell {
   display: inline-block;       
   border: 1px solid black;
@@ -26,6 +60,4 @@
   margin-top: 20px;
 }
 
-h1 {
-  text-align: center;
-}
+
