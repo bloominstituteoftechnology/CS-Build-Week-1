@@ -41,6 +41,21 @@ font-size: 26px;
 font-style: italic;
 border-radius: 5px;
 `
+const Learn = styled.button`
+cursor: pointer;
+text-decoration: none;
+width: 200px;
+height 60px;
+font-family: 'Chakra Petch', sans-serif;
+margin-left: 15px;
+font-size: 26px;
+font-style: italic;
+border-radius: 5px;
+background-color: #EF5656;
+border: none;
+
+
+`
 
 class Main extends Component {
 
@@ -63,8 +78,10 @@ class Main extends Component {
                    <a class="button hvr-skew-backward">
                 <Clear onClick={() => this.reloader()}> Clear Board</Clear>
                 </a>
-                
-            
+
+                <a target="_blank" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"class="button hvr-rotate">
+                <Learn > Learn More</Learn>
+            </a>
                 </Header>
 
             </Fatherdiv>
