@@ -62,8 +62,6 @@ class LifeCanvasOptions extends React.Component {
         this.drawButtons(context, coords, color);
     }
 
-
-
     handlePaste = name => {
         if (name === 'glider' && !this.state.glider) {
             this.drawGlider('yellow');
@@ -95,10 +93,10 @@ class LifeCanvasOptions extends React.Component {
     render() {
         return (
             <div className='canvas-options' onSubmit={event => event.preventDefault()} >
-                <button onClick={this.props.clear}>Clear</button>
-                <button onClick={this.props.randomize}>Randomize</button>
-                <button onClick={this.props.start}>{this.props.continue ? 'Stop' : 'Start'}</button>
-                <button onClick={this.props.next}>Next</button>
+                <i onClick={this.props.clear} className="fas fa-trash-alt"></i>
+                <i onClick={this.props.randomize} className="fas fa-question"></i>
+                <i onClick={this.props.start} className={this.props.continue ? "fas fa-stop" : "fas fa-play"}></i>
+                <i onClick={this.props.next} className="fas fa-arrow-right"></i>
 
                 <form className='canvas-options-form'>
                     <AutosizeInput className='canvas-options-input'
@@ -115,7 +113,6 @@ class LifeCanvasOptions extends React.Component {
                         max="1000"
                         step="10"
                         defaultValue="10"
-                        name='speed'
                         onChange={this.setSpeed} />
                     <input
                         type='submit'
