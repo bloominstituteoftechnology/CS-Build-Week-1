@@ -19,4 +19,9 @@ img {
 
 .intro-page p {
   font-size: 30px;
+  margin-left: 35px;
+}
+
+.intro-page .buttons {
+  margin-left: 35px;
 }
