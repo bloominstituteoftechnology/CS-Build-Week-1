@@ -7,8 +7,6 @@
   margin: 10px 25px 25px 0px;
 }
 
-
-
 .grid-container {
   display: flex;
 }
@@ -24,8 +22,6 @@
     border: 3px solid #000;
 
 }
-
-
 
 .Cell {
     background: purple;
@@ -46,7 +42,6 @@
     cursor: pointer;
     margin-bottom: 10px;
 }
-
 
 .button1 {
   height: 20px;

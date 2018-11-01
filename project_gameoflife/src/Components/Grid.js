@@ -22,6 +22,7 @@ class Grid extends React.Component {
 
     state = {
         cells: [],
+        isMoving: false,
 
     }
 
@@ -37,13 +38,13 @@ class Grid extends React.Component {
         return board;
     }
 
-    positioning() {
-        const rect = this.boardRef.getBoundingClientRect();
+    getPosition() {
+        const rectangle = this.boardRef.getBoundingClientRect();
         const doc = document.documentElement;
 
         return {
-            x: (rect.left + window.pageXOffset) - doc.clientLeft,
-            y: (rect.top + window.pageYOffset) - doc.clientTop,
+            x: (rectangle.left + window.pageXOffset) - doc.clientLeft,
+            y: (rectangle.top + window.pageYOffset) - doc.clientTop,
         };
     }
 
@@ -60,9 +61,62 @@ class Grid extends React.Component {
         return cells;
     }
 
-    clickHandler = (event) => {
+    playGame = () => {
+        this.setState({ isMoving: true });
+        this.runCoordinates();
+    }
 
-        const elemOffset = this.positioning();
+    stopGame = () => {
+        this.setState({ isMoving: false });
+        if (this.timeoutHandler) {
+            window.clearTimeout(this.timeoutHandler);
+            this.timeoutHandler = null;
+        }
+    }
+
+    runCoordinates() {
+        let newBoard = this.gameBoard();
+
+        for (let y = 0; y < this.rows; y++) {
+            for (let x = 0; x < this.cols; x++) {
+                let connections = this.makeConnections(this.board, x, y);
+                if (this.board[y][x]) {
+                    if (connections === 2 || connections === 3) {
+                        newBoard[y][x] = true;
+                    } else {
+                        newBoard[y][x] = false;
+                    }
+                } else {
+                    if (!this.board[y][x] && connections === 3) {
+                        newBoard[y][x] = true;
+                    }
+                }
+            }
+        }
+
+        this.board = newBoard;
+        this.setState({ cells: this.gameSquare() });
+    }
+
+    makeConnections(board, x, y) {
+        let connections = 0;
+        const gridCoordinates = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
+        for (let i = 0; i < gridCoordinates.length; i++) {
+            const coordinate = gridCoordinates[i];
+            let y1 = y + coordinate[0];
+            let x1 = x + coordinate[1];
+
+            if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
+                connections++;
+            }
+        }
+
+        return connections;
+    }
+
+
+    clickHandler = (event) => {
+        const elemOffset = this.getPosition();
         const offsetX = event.clientX - elemOffset.x;
         const offsetY = event.clientY - elemOffset.y;
 
@@ -82,7 +136,7 @@ class Grid extends React.Component {
     }
 
     render() {
-        const { cells } = this.state;
+        const { cells, isMoving } = this.state;
         return (
             <div className="grid-container">
                 <div className="grid"
@@ -96,8 +150,9 @@ class Grid extends React.Component {
                 </div>
 
                 <div className="button-controls">
-                        <button className="button">Play/Pause</button>
-                        <button className="button">Stop</button>
+
+                        <button className="button" onClick={this.playGame}>Play/Pause</button>
+                        <button className="button" onClick={this.stopGame}>Stop</button>
 
                     <button className="button">Randomized</button>
                     <button className="button" onClick={this.clickHandlerClear}>Clear</button>
