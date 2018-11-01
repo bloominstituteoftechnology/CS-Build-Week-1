@@ -634,6 +634,10 @@ class LifeCanvas extends Component {
         for (let i=0; i<cellsPerRow; i++){
           gameBufferA[i + mid*cellsPerRow] = true;
         }
+      }else if (patternStr === "Random"){
+          for (let i=0; i<gameBufferA.length; i++){
+            gameBufferA[i] = Math.random() >= 0.5;
+          }
       }
     }
 
