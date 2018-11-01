@@ -1,7 +1,17 @@
 export default class Cell {
-  constructor(isAlive = false, isClickable = false) {
-    this.isAlive = this.isAlive;
-    this.isClickable = this.isClickable;
+  constructor(isAlive = false, isClickable = false, color = 'rgba(199, 0, 37, 1)') {
+    this.isAlive = isAlive;
+    this.isClickable = isClickable;
+    this.color = color;
+  }
+
+  setRandomColor = () => {
+    this.color = `#${Math.floor(Math.random() * 0x1000000).toString(16).padStart(6, 0)}`;
+  }
+
+  setRandomAlpha = () => {
+    const randomAlpha = Math.random();
+    this.color = `rgba(199, 0, 37, ${randomAlpha})`;
   }
 
   create = () => {

@@ -34,6 +34,7 @@ export default class Game extends Component {
       for (let y = 0; y < grid[x].length; y++) {
         const cell = grid[x][y];
         if (cell.isAlive) {
+          ctx.fillStyle = cell.color;
           ctx.fillRect(x * this.props.cellSize + fillOffset, 
             y * this.props.cellSize + fillOffset,
             this.props.cellSize - fillOffset,

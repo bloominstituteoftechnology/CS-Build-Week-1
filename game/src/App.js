@@ -31,6 +31,7 @@ class App extends Component {
       grid[x] = [];
       for (let y = 0; y < this.NUM_CELLS; y++) {
         grid[x][y] = new Cell();
+        //grid[x][y].setRandomColor();
       }
     }
 
@@ -53,6 +54,7 @@ class App extends Component {
 			for (let y = 0; y < this.state.grid.length; y++) {
 				let neighbors = this.getNeighborCount(x, y);
         let cell = new Cell();
+        cell.color = this.state.grid[x][y].color;
         
 				if (this.state.grid[x][y].isAlive) {
 					if (neighbors === 2 || neighbors === 3) {
@@ -119,6 +121,7 @@ class App extends Component {
     for (let x = 0; x < grid.length; x++) {
       for (let y = 0; y < grid[x].length; y++) {
         let cell = new Cell();
+        cell.setRandomAlpha();
         if (Math.random() < randomizeLimit) {
           cell.create();
         } 
