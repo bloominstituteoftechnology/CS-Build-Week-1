@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import ControlsButton from './ControlsButton';
 
 export default class Controls extends Component {
   constructor(props) {
@@ -10,25 +10,25 @@ export default class Controls extends Component {
     };
   }
 
+  onClearClick = e => {
+    this.props.clear();
+    console.log('clear click');
+  };
+
+  onRandomizeClick = e => {
+    this.props.randomize();
+    console.log('randomize click');
+  };
+
   render() {
     return (
       <div className="controls">
         <div className="controls__button-container">
-          <button id="playButton" className="controls__button">
-            <FontAwesomeIcon icon="play" />
-          </button>
-          <button id="stopButton" className="controls__button">
-            <FontAwesomeIcon icon="stop" />
-          </button>
-          <button id="stepButton" className="controls__button">
-            <FontAwesomeIcon icon="step-forward" />
-          </button>
-          <button id="clearButton" className="controls__button">
-            <FontAwesomeIcon icon="eraser" />
-          </button>
-          <button id="randomButton" className="controls__button">
-            <FontAwesomeIcon icon="question" />
-          </button>
+          <ControlsButton icon="play" onButtonClick={this.onClearClick} />
+          <ControlsButton icon="stop" onButtonClick={this.onClearClick} />
+          <ControlsButton icon="step-forward" onButtonClick={this.onClearClick} />
+          <ControlsButton icon="eraser" onButtonClick={this.onClearClick} />
+          <ControlsButton icon="question" onButtonClick={this.onRandomizeClick} />
         </div>
         <div className="controls__generation"><span className="controls__generation-number">{this.props.generationNumber}</span> Generation</div>
       </div>
