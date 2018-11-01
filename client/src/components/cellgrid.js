@@ -151,6 +151,12 @@ class CellGrid extends Component {
 
     }
 
+    intervalHandler = (event) => {
+        event.preventDefault();
+        if(!this.state.simActive)
+            this.setState({interval: event.target.value});
+    }
+
     renderGrid() {
         let newGrid = [];
         let cellRow = [];
@@ -180,7 +186,13 @@ class CellGrid extends Component {
                     <button onClick={() => this.stopSimulation()}>Stop</button>
                     <button onClick={() => this.clearGrid()}> Clear Grid</button>
                     <button onClick={() => this.randomCells()}> Randomize </button>
+                    <div>
                     <h3> Generation: {this.state.generation} </h3>
+                    <h3> Interval: 
+                    <input className="input" type="text" value={this.state.interval} onChange={this.intervalHandler} />
+                    ms
+                    </h3>
+                    </div>
                 </div>
         </div>
 
