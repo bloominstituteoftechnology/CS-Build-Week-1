@@ -122,3 +122,5 @@ Implment at least 3 of the following features:
 
 
    ##TRELLO LINK: https://trello.com/b/5A9Q5WEO/game-of-life-project-emmeline
+
+   ##HEROKU LINK: https://em-gameoflife.herokuapp.com/

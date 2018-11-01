@@ -23,6 +23,7 @@ class Grid extends React.Component {
     state = {
         cells: [],
         isMoving: false,
+        interval: 200,
 
     }
 
@@ -97,6 +98,9 @@ class Grid extends React.Component {
 
         this.board = newBoard;
         this.setState({ cells: this.gameSquare() });
+        this.timeoutHandler = window.setTimeout(() => {
+      this.runCoordinates();
+    }, this.state.interval);
     }
 
     makeConnections(board, x, y) {
@@ -136,9 +140,12 @@ class Grid extends React.Component {
         this.board = this.gameBoard();
         this.setState({ cells: this.gameSquare() });
     }
+    handleIntervalChange = (event) => {
+    this.setState({ interval: event.target.value });
+  }
 
     render() {
-        const { cells, isMoving } = this.state;
+        const { cells, isMoving, interval } = this.state;
         return (
             <div className="grid-container">
                 <div className="grid"
@@ -150,14 +157,17 @@ class Grid extends React.Component {
                         <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`}/>
                     ))}
 
-                <div className="button-controls">
+                    <div className="button-controls">
+                    <div className="interval-box">
+                    Update every millisecond <input className="interval-box1" value={this.state.interval} onChange={this.handleIntervalChange} /></div>
+                    {isMoving ?
+                         <button className="button" onClick={this.stopGame}>Stop</button> :
+                        <button className="button" onClick={this.playGame}>Play/Stop</button> }
 
-                        <button className="button" onClick={this.playGame}>Play/Pause</button>
-                        <button className="button" onClick={this.stopGame}>Stop</button>
 
-                    <button className="button" onClick={this.clickHandlerClear}>Clear</button>
-                    <button className="button">Randomized</button>
-                </div>
+                        <button className="button" onClick={this.clickHandlerClear}>Clear</button>
+                        <button className="button">Randomized</button>
+                    </div>
                 </div>
             <div className="rules-container">
                     <Link to="/"><p className="return-home-button">Back to Homepage</p></Link>

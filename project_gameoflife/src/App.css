@@ -156,3 +156,11 @@ li {
   margin-bottom: -10px;
 }
 
+.interval-box {
+  margin-top: 15px;
+  color: lightgray;
+  /*width: 10px;*/
+}
+.interval-box1 {
+  width: 20px;
+}
