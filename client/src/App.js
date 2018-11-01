@@ -19,6 +19,7 @@ class App extends Component {
       }
     }
     
+    
     selectCell = (row, col) => {
       let gridCopy = arrayClone(this.state.gridFull);
       // let gridCopy = this.state.gridFull.slice();
@@ -43,10 +44,22 @@ class App extends Component {
         gridFull: gridCopy
       });
     }
+    g15 = () =>{
+      this.cols= 15;
+      this.rows=15;
+    } 
     
     handlePlayBtn = () => {
       clearInterval(this.intervalId)
       this.intervalId = setInterval(this.handlePlay, this.speed);
+    }
+    slow = () => {
+      this.speed = 1000;
+      this.handlePlayBtn()
+    }
+    fast = () => {
+      this.speed = 100;
+      this.handlePlayBtn()
     }
     handlePauseBtn = () => {
       clearInterval(this.intervalId)
@@ -90,28 +103,32 @@ class App extends Component {
     // Any live cell with more than three live neighbors dies, as if by overpopulation.
     // Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
     
-    // componentDidMount(){
-    //   this.random();
-    //   this.handlePlayBtn();
-    // }
+    componentDidMount(){
+      this.random();
+      this.handlePlayBtn();
+    }
     
     
   render() {
     return (
       <div>
-        <Buttons 
-        handlePlayBtn={this.handlePlayBtn}
-        handlePauseBtn={this.handlePauseBtn}
-        handleClearBtn={this.handleClearBtn}
-        random={this.random}
-        />
+        <h2>Gens: {this.state.gen}</h2>
+        
         <G 
         gridFull={this.state.gridFull}
         rows={this.rows}
         cols={this.cols}
         selectCell={this.selectCell}
         />
-        <h2>Gens: {this.state.gen}</h2>
+        <Buttons 
+        handlePlayBtn={this.handlePlayBtn}
+        handlePauseBtn={this.handlePauseBtn}
+        handleClearBtn={this.handleClearBtn}
+        random={this.random}
+        slow={this.slow}
+        fast={this.fast}
+        g15={this.g15}
+        />
       </div>
     );
   }

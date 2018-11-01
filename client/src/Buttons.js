@@ -21,6 +21,15 @@ class Buttons extends Component {
             <button onClick={this.props.handleClearBtn}>
             Clear
             </button>
+            <button onClick={this.props.slow}>
+            Slow
+            </button>
+            <button onClick={this.props.fast}>
+            Fast
+            </button>
+            <button onClick={this.props.g15}>
+            G15x15
+            </button>
         </div>
 
         </div>
