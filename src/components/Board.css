@@ -15,8 +15,8 @@
 .below-grid {
   display: flex;
   justify-content: space-around;
-  margin-left: 29%;
-  margin-right: 28.8%;
+  margin-left: 31%;
+  margin-right: 31%;
 }
 
 button {
@@ -44,7 +44,7 @@ button {
 }
 
 .navbar {
-  padding-left: 30.5%;
+  padding-left: 32%;
   margin-bottom: 20px;
 }
 
@@ -60,13 +60,13 @@ button {
   color: blue;
 }
 
-@media screen and (max-width: 1450px) {
+@media screen and (max-width: 1550px) {
   .below-grid {
-    margin-left: 21%;
-    margin-right: 21%;
+    margin-left: 26%;
+    margin-right: 26%;
   }
 
   .navbar {
-    padding-left: 23%;
+    padding-left: 24%;
   }
 }
