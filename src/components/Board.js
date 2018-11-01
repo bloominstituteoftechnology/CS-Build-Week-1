@@ -2,9 +2,9 @@ import React from "react";
 import "./Board.css";
 import Cell from "./Cell";
 
-let cell_size = 30;
-let board_width = 690;
-let board_height = 690;
+let cell_size = 20;
+let board_width = 680;
+let board_height = 560;
 let rows = board_height / cell_size; // This gives us the number of rows that will be in our board.
 let columns = board_width / cell_size;
 let count = 0;

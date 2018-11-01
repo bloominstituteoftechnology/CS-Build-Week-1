@@ -1,7 +1,7 @@
 import React from "react";
 import "./Cell.css";
 
-let cell_size = 30;
+let cell_size = 20;
 
 const Cell = props => {
   return (
