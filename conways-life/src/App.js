@@ -79,7 +79,7 @@ class App extends Component {
 
   handleRandom = (e) => {
     this.handleReset();
-    this.seed();
+    setTimeout(() => this.seed());
   }
 
   handlePreset = () => {
