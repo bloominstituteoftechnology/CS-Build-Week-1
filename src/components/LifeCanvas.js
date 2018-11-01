@@ -180,8 +180,10 @@ class LifeCanvas extends Component{
     let canvas = this.state.canvas;
     let c = this.state.c;
 
-    let y = event.clientY - canvas.offsetTop;
-    let x = event.clientX - canvas.offsetLeft;
+    let rect = canvas.getBoundingClientRect();
+
+    let x = event.clientX - rect.left;
+    let y = event.clientY - rect.top;
 
     console.log("event.clientY", event.clientY, "event.clientX", event.clientX, "canvas.offsetTop", canvas.offsetTop, "canvas.offsetLeft", canvas.offsetLeft)
     console.log("window.clientY", window.clientY, "window.clientX", window.clientX)
