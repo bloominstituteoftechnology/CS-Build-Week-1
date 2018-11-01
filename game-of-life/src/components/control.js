@@ -7,6 +7,7 @@ import Button from './button';
 class Control extends Component {
   componentDidMount(){
     this.props.random();
+    console.log(this.props.isRunning);
     // this.togglePlay();
   }
   
@@ -25,9 +26,12 @@ class Control extends Component {
             icon={'fa fa-undo'}
           />
           <Button
-            handleClick={() => this.togglePlay()}
+            handleClick={() => {
+            this.togglePlay()
+            this.props.running ? this.props.isRunning(false) : this.props.isRunning(true)
+            }}
             icon={this.props.playState.isRunning ? 'fa fa-pause' : 'fa fa-play' }
-            title={this.props.playState.isRunning ? '' : ''}
+            title={this.props.playState.isRunning ? 'Pause' : 'Play'}
           />
           <Button
             handleClick={() => this.props.tick()}

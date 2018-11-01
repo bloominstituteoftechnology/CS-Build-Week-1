@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { currentState } from '../actions/';
 
 import Cell from './cell';
+import Control from './control';
 
 class Board extends Component {
   render(){
@@ -17,7 +18,8 @@ class Board extends Component {
                   key={j}
                   alive={cell.status}
                   newBorn={cell.newBorn}
-                  handleClick={() => this.props.currentState(i,j)} 
+                  handleClick={() => this.props.currentState(i,j)}
+                  running={this.props.running}
                 />)}
               </tr>)}
           </tbody>

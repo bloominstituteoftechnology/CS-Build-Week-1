@@ -9,8 +9,15 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      running: '',
+      running: false,
     }
+  }
+
+  isRunning = (bool) => {
+    this.setState({
+      running: bool 
+    })
+    console.log(bool);
   }
 
   render() {
@@ -23,12 +30,11 @@ class App extends Component {
         </div>
         <Board 
           running={this.state.running}
-          checkRunning={this.checkRunning}
         />
         <Counter />
         <Control 
           running={this.state.running}
-          checkRunning={this.checkRunning}
+          isRunning={this.isRunning}
         />
       </div>
     );
