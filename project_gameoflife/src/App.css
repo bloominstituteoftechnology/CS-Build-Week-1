@@ -3,7 +3,7 @@
   border: 3px solid white;
   background: purple;
   padding-left: 550px;
-  width: 1425px;
+  width: 925px;
   margin: 10px 25px 25px 0px;
 }
 
@@ -60,6 +60,7 @@
   border: 3px solid black;
   height: 300px;
   width: 485px;
+  margin-top: 50px;
   margin-left: 40px;
   background: purple;
   color: white;
@@ -70,6 +71,10 @@
   display: flex;
   /*margin-left: 100px;*/
   margin: auto;
+}
+
+li {
+  padding-bottom: 15px;
 }
 
 .rules {
@@ -87,6 +92,40 @@
 .return-home-button {
   color: white;
   border: 3px solid gray;
-  margin-right: 20px;
-  margin-bottom: 200px;
+  background: gray;
+  margin-right: 200px;
+  margin-top: -50px;
+  height: 25px;
+  width: 150px;
 }
+.ready-button {
+  height: 90px;
+  width: 220px;
+  margin-left: 250px;
+  margin-top: 140px;
+  background: purple;
+  font-size: 60px;
+  color: white;
+  font-weight: bold;
+  border: 4px solid purple;
+  border-radius: 40px;
+
+}
+.img-blocks {
+  height: 30px;
+}
+
+.img-block {
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  width: 420px;
+
+  margin-top: 20px;
+}
+
+.img-title {
+  margin-top: 40px;
+  margin-bottom: -10px;
+}
+
