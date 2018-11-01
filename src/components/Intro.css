@@ -1,0 +1,22 @@
+.intro-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+img {
+  margin: 0 auto;
+}
+
+.intro-page .btn {
+  width: 120px;
+  margin: 0 auto;
+  margin-left: 5px;
+
+  border-radius: 10px;
+}
+
+.intro-page p {
+  font-size: 30px;
+}
