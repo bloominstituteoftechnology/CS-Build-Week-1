@@ -51,15 +51,20 @@ class GameBox extends Component  {
                     }
                 }
             }
+
             if (this.state.cells[i] === 1) {
-                if (2 <= activeNeighbors.length <= 3) {
+                console.log(`ACTIVE NEIGHBORS: ${activeNeighbors} for ${i}`);
+                if (2 <= activeNeighbors && activeNeighbors <= 3) {
+                    console.log("CELL SURVIVES");
                     newCells.push(1);
                 } else {
+                    console.log("CELL DIES");
                     newCells.push(0);
                 }
             } else if (this.state.cells[i] === 0) {
-                if (activeNeighbors.length === 3) {
+                if (activeNeighbors === 3) {
                     newCells.push(1);
+                    console.log("CELL IS BORN");
                 } else {
                     newCells.push(0)
                 }
