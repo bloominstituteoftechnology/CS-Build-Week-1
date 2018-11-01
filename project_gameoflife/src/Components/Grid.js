@@ -1,7 +1,7 @@
 import React from 'react';
 import Cell from './Cell';
 import '../App.css';
-
+import {Link } from 'react-router-dom';
 
 const Square = 32;
 const WIDTH = 800;
@@ -104,6 +104,7 @@ class Grid extends React.Component {
             <div className="rules-container">
                 <div className="rules-title">
                     <h1 className="rules-title1">The Rules of the Game</h1>
+                    <Link to="/"><p className="return-home-button">Back</p></Link>
                 </div>
                 <div className="rules">
                     <ul>
@@ -112,6 +113,8 @@ class Grid extends React.Component {
                         <li>Rule #3 - Any alive cell touching two or three alive neighbors does nothing.</li>
                         <li>Rule #4 - Any dead cell touching exactly three alive neighbors becomes alive.</li>
                     </ul>
+                     <div>
+                </div>
                 </div>
             </div>
         </div>
@@ -121,8 +124,4 @@ class Grid extends React.Component {
 
 
 export default Grid;
-
-
-
-
 

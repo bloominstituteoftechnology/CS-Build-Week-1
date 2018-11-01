@@ -78,3 +78,14 @@
   /*margin-left: 75px;*/
   margin-bottom: 75px;
 }
+
+.homepage {
+  color: white;
+}
+
+.return-home-button {
+  color: white;
+  border: 3px solid gray;
+  margin-right: 20px;
+  margin-bottom: 200px;
+}
