@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import Controls from './Controls';
 import Cell from './Cell';
+import Generate from './Generate';
 import {GridContainer, GridStyle, LabelStyling} from '../theme/css';
 
 export default class Grid extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            size: [15, 15]
+            Generate: new Generate(),
+            size: [15, 15],
+            isRunning: false
         }
     }
 
@@ -26,6 +29,72 @@ export default class Grid extends Component {
         return cellColumn;
     }
 
+    handleRow = (event) => {
+        if(!this.state.isRunning) {
+            let actualSize = this.state.size;
+            if(event.target.value < 15)
+                actualSize[1] = event.target.value;
+                else
+                actualSize[1] = 15;
+
+                this.setState({
+                    size: actualSize,
+                });
+
+                this.gridSize()
+            }
+    }
+
+    handleColumn = (event) => {
+        if(!this.state.isRunning) {
+            let actualSize = this.state.size;
+            if(event.target.value < 15)
+                actualSize[0] = event.target.value
+            else
+                actualSize[0] = 15
+            
+            this.setState({
+                size: actualSize
+            })
+
+            this.gridSize()
+        }
+    }
+
+    runGame = () => {
+        this.setState({
+            Generate: this.state.Generate.addGeneration()
+        })
+    }
+
+    start = () => {
+        if(!this.state.isRunning){
+            this.setState({
+                isRunning: true
+            }, () => {
+                this.intervalRef = setInterval(() => this.runGame(), 10);
+            })
+        }
+    }
+
+    stop = () => {
+        this.setState({
+            isRunning: false,
+        }, () => {
+            if(this.intervalRef) {
+                clearInterval(this.intervalRef)
+            }
+        })
+    }
+
+    storeCell(position) {
+        if(!this.state.isRunning) {
+            this.setState({
+                Generate: this.state.Generate.storeCell(position)
+            })
+        }
+    }
+
     render() {
         return(
         <GridContainer>
@@ -40,7 +109,7 @@ export default class Grid extends Component {
         </label>
         </LabelStyling>
         <GridStyle>{this.gridSize()}</GridStyle>
-        <Controls/>
+        <Controls start={this.start} stop={this.stop}/>
         </GridContainer>
         )
     }

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import {Cells} from '../theme/css';
+import {Cells, CellAlive, CellDead} from '../theme/css';
 
 class Cell extends Component {
     render() {
         return(
-        <Cells/>
+        <Cells onClick={() => this.props.storeCell(this.props.position)} className={this.props.live ? <CellAlive/> : <CellDead/>} />
         )
     }
 }

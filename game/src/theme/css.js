@@ -47,6 +47,21 @@ const LabelStyling = styled('div')`
     justify-content: space-evenly;
     margin-bottom: 20px;
 `
+// Dead
+const CellDead = styled('div')`
+    display: flex;
+    padding: 10px;
+    margin: 1px;
+    border: 1px solid black;
+`
 
+// Alive
+const CellAlive = styled('div')`
+    display: flex;
+    padding: 10px;
+    margin: 1px;
+    border: 1px solid black;
+    background-color: black;
+`
 
-export {ControlsWrapper, Cells, Main, GridContainer, GridStyle, LabelStyling};
+export {ControlsWrapper, Cells, CellAlive, CellDead, Main, GridContainer, GridStyle, LabelStyling};
