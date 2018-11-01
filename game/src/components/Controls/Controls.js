@@ -24,11 +24,10 @@ export default class Controls extends Component {
     return (
       <div className="controls">
         <div className="controls__button-container">
-          <ControlsButton icon="play" onButtonClick={this.onClearClick} />
-          <ControlsButton icon="stop" onButtonClick={this.onClearClick} />
-          <ControlsButton icon="step-forward" onButtonClick={this.onClearClick} />
-          <ControlsButton icon="eraser" onButtonClick={this.onClearClick} />
-          <ControlsButton icon="question" onButtonClick={this.onRandomizeClick} />
+          <ControlsButton icon="stop" isHidden={true} onButtonClick={this.onClearClick} />
+          <ControlsButton icon="step-forward" isHidden={false} onButtonClick={this.onClearClick} />
+          <ControlsButton icon="eraser" isHidden={false} onButtonClick={this.onClearClick} />
+          <ControlsButton icon="question" isHidden={false} onButtonClick={this.onRandomizeClick} />
         </div>
         <div className="controls__generation"><span className="controls__generation-number">{this.props.generationNumber}</span> Generation</div>
       </div>
