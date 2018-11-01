@@ -64,6 +64,13 @@ class Canvas extends Component {
         this.animFrame();
     };
 
+    
+    randomize = () => {
+        this.gameOn = true;
+        this.life.getRandomCells();
+        this.animFrame();
+    }
+    
     clear = () => {
         this.gameOn = false;
         this.refs.canvas
@@ -71,9 +78,6 @@ class Canvas extends Component {
             .clearRect(0, 0, this.props.width, this.props.height);
         this.life.clear();
     };
-
-   
-
 
     render() {
         return (
@@ -85,7 +89,7 @@ class Canvas extends Component {
                     height={this.props.height}
                 />
                 <div className='buttons'>
-
+                    <button onClick={this.randomize}>Random</button>
                     <button onClick={this.stop}>Pause</button>
                     <button onClick={this.start}>Start</button>
                     <button onClick={this.clear}>Clear</button>
