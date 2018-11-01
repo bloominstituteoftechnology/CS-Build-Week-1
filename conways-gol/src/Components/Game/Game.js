@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { glider, pulsar } from './presets';
+import { glider, pulsar, galaxy, pentadecathlon } from './presets';
 import { rule1, rule2, rule3, rule4, turing } from './about';
 
 import './Game.css';
@@ -151,6 +151,9 @@ class Game extends Component {
   }
 
   handleRandom = () => {
+    if (this.state.isRunning) {
+      this.stopGame();
+    }
     let generation = 0;
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.cols; x++) {
@@ -188,20 +191,24 @@ class Game extends Component {
   }
 
   handlePreset = config => {
+    this.handleClear();
     switch (config) {
       case 'glider':
-        this.handleClear();
         this.presetBoard(glider);
-        this.setState({ cells: this.makeCells() });
         break;
       case 'pulsar':
-        this.handleClear();
         this.presetBoard(pulsar);
-        this.setState({ cells: this.makeCells() });
+        break;
+      case 'galaxy':
+        this.presetBoard(galaxy);
+        break;
+      case 'pentadecathlon':
+        this.presetBoard(pentadecathlon);
         break;
       default:
         break;
     }
+    this.setState({ cells: this.makeCells() });
   }
 
   render() {
@@ -250,6 +257,8 @@ class Game extends Component {
           <p>Generation: {generation}</p>
           <button className='button' onClick={() => this.handlePreset('glider')}>Glider</button>
           <button className='button' onClick={() => this.handlePreset('pulsar')}>Pulsar</button>
+          <button className='button' onClick={() => this.handlePreset('galaxy')}>Galaxy</button>
+          <button className='button' onClick={() => this.handlePreset('pentadecathlon')}>Pentadecathlon</button>
         </div>
       </div>
     )
