@@ -18,18 +18,23 @@ class App extends Component {
   componentDidMount(){
     axios.get('http://www.raymondgrc.com/cgi-bin/helloworld.pl', {
       params: {
-        iterations: 100
+        iterations: 20,
+        rows: 20,
+        cols: 20
       }
     })
     .then(response =>{
       this.setState({game: response.data})
-      let strippedData = []
-      this.state.game.forEach((instance, index) => {
-        strippedData[index] = instance.join('');
-      })
-      this.setState({strippedData: strippedData})
+      this.parseData()
     })
     .catch(err => console.log(err))
+  }
+  parseData = () => {
+    let strippedData = []
+    this.state.game.forEach((instance, index) => {
+      strippedData[index] = instance.join('');
+    })
+    this.setState({strippedData: strippedData})
   }
 
   revertCells = () => {
@@ -50,24 +55,43 @@ class App extends Component {
       setTimeout(() => this.revertCells(), 250)
       this.setState({generation: this.state.generation + 1})
     }
-
+    if(this.state.generation === this.state.strippedData.length){
+      clearInterval(this.intervalID);
+      this.setState({generation: 0});
+    }
   }
 
   updateGridDimension = (event) =>{
+    clearInterval(this.intervalID);
     event.preventDefault();
     const data = new FormData(event.target);
     this.setState({
       rows: data.get('rows'),
-      cols: data.get('columns')
+      cols: data.get('columns'),
+      generation: 0
     });
 
     document.querySelector("html").style.setProperty("--rowNum", data.get('rows'));
     document.querySelector("html").style.setProperty("--colNum", data.get('columns'));
+
+    axios.get('http://www.raymondgrc.com/cgi-bin/helloworld.pl', {
+      params: {
+        iterations: 20,
+        rows: data.get('rows'),
+        cols: data.get('columns')
+      }
+    })
+    .then(response =>{
+      this.setState({game: response.data})
+      this.parseData()
+    })
+    .catch(err => console.log(err))
   }
+
   render() {
     return (
       <div className="App">
-          <div onClick={() => setInterval(this.colorCells, 350)}>Click Me</div>
+          <div onClick={() => this.intervalID = setInterval(this.colorCells, 350)}>Click Me</div>
           <Form updateGridDimension={this.updateGridDimension}/>
           <Board rows={this.state.rows} cols={this.state.cols}/>
       </div>
