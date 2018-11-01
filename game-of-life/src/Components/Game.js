@@ -54,7 +54,7 @@ class Game extends React.Component {
 
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.cols; x++) {
-        const neighbors = this.calculateNeighbors();
+        const neighbors = this.calculateNeighbors(this.board, x, y);
         if (this.board[y][x]) {
           if (neighbors === 2 || neighbors === 3) {
             newBoard[y][x] = true;
@@ -68,13 +68,24 @@ class Game extends React.Component {
         }
       }
     }
-
     this.board = newBoard;
     this.setState({ cells: this.addCells() })
   }
 
-  calculateNeighbors = () => {
+  calculateNeighbors = (board, x, y) => {
     console.log('calculating neighbors');
+    let neighbors = 0;
+    const dirs = [[-1, 1], [-1, 0], [-1, 1], [0,1], [1, 1], [1, 0], [1, -1], [0,-1]];
+    for (let i = 0; i < dirs.length; i++) {
+      const dir = dirs[i];
+      const y1 = y + dir[0];
+      const x1 = x + dir[1];
+      
+      if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
+        neighbors++;
+      }
+    }
+    return neighbors;
   }
 
   clearBoard() {
