@@ -57,14 +57,14 @@ class App extends Component {
         <div id="ruleModal" className="modal">
           <div className="modal-content">
             <span className="close" onClick={this.handleRuleClose}>&times;</span>
-            <h1>Game of life Rules:</h1>
+            <h1 className='title'>Game of life Rules:</h1>
             <ol>
               <li>1. Any LIVE cell with fewer than two live neighbors dies, as if by underpopulation.</li>
               <li>2. Any LIVE cell with two or three live neighbors lives on to the next generation.</li>
               <li>3. Any LIVE cell with more than three live neighbors dies, as if by overpopulation.</li>
               <li>4. Any DEAD cell with exactly three live neighbors becomes a live cell, as if by reproduction.</li>
             </ol>
-            <h1>Controls:</h1>
+            <h1 className='title'>Controls:</h1>
             <p>Choose a figure from the templates below or make your own by click on a cell. The start/stop button 
               advances the cells generation(based off an iteration of the rules). Game speed can be controlled from 
               the buttons in the panel below.
@@ -74,9 +74,16 @@ class App extends Component {
         <div id="algModal" className="modal">
           <div className="modal-content">
             <span className="close" onClick={this.handleAlgClose}>&times;</span>
-            <p>Describe more about Conway’s “Game of Life”, such as whether or not it is Turing Complete or the 
-              history of this cellular automaton. TODO
-            </p>
+            <h1 className='title'>About the Algorithm and Game</h1>
+            <p>The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician 
+              John Horton Conway in 1970. One interacts with the Game of Life by creating an initial configuration and 
+              observing how it evolves, or, for advanced players, by creating patterns with particular properties.</p>
+            <p>Conway's Game of Life has the power of a universal Turing machine meaning anything that can be computed 
+              algorithmically can be computed.</p>
+            <p>*Cellular Automata - one of a set of units in a mathematical model that have simple rules governing their 
+              replication and destruction. They are used to model complex systems composed of simple units such as living 
+              things or parallel processors.</p>
+            <a href="https://en.wikipedia.org/wiki/Conway's_Game_of_Life">Conway's Game of Life - Wikipedia</a>
           </div>
         </div>
       </div>
@@ -86,5 +93,4 @@ class App extends Component {
 
 export default App;
 
-// create modal for rules and algorithm desc
 // figure out the generation counter

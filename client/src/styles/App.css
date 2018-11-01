@@ -17,10 +17,23 @@
 }
 .App .modal-content {
   background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+.modal .title {
+  font-size: 1.25rem;
+  margin-bottom: .5rem;
+}
+.modal p {
+  font-size: .75rem;
+  margin: 0 28px 1rem 28px;
+  line-height: 175%;
+}
+.modal li {
+  font-size: .75rem;
+  margin: 0 28px 1rem 28px;
 }
 .App .close {
   color: #aaa;
