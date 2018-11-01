@@ -3,8 +3,8 @@ import "./Board.css";
 import Cell from "./Cell";
 
 let cell_size = 30;
-let board_width = 840;
-let board_height = 840;
+let board_width = 780;
+let board_height = 780;
 let rows = board_height / cell_size; // This gives us the number of rows that will be in our board.
 let columns = board_width / cell_size;
 let count = 0;
@@ -258,6 +258,38 @@ class Board extends React.Component {
     }
     return (
       <div>
+        <div className="navigation">
+          <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="#">
+              Cellular Automata
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon" />
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">
+                    Home <span class="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="https://ghoulish-broomstick-24706.herokuapp.com/">
+                    Learn More
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
         <div
           className="Board"
           style={{
@@ -275,6 +307,7 @@ class Board extends React.Component {
             <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
           ))}
         </div>
+
         <div className="below-grid">
           <div className="left">
             <div className="presets dropdown">
@@ -361,7 +394,7 @@ class Board extends React.Component {
                   className="dropdown-item"
                   href="#"
                 >
-                  1
+                  1 (slowest)
                 </a>
                 <a
                   onClick={() => this.handleIntervalChange(1000)}
@@ -385,7 +418,7 @@ class Board extends React.Component {
                   4
                 </a>
                 <a onClick={() => this.handleIntervalChange(50)} className="dropdown-item" href="#">
-                  5
+                  5 (fastest)
                 </a>
               </div>
             </div>

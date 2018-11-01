@@ -15,14 +15,14 @@
 .below-grid {
   display: flex;
   justify-content: space-around;
-  margin-left: 25.2%;
-  margin-right: 25%;
+  margin-left: 28%;
+  margin-right: 27.8%;
 }
 
 button {
   height: 38px;
   margin-top: 20px;
-  margin-right: 4px;
+  margin-right: 6px;
 }
 
 .left {
@@ -35,5 +35,27 @@ button {
 
 .dropdown-right {
   margin-top: 20px;
-  margin-right: 4px;
+  margin-right: 6px;
+}
+
+.navigation .navbar {
+  background-color: #5f788a;
+  color: #fff;
+}
+
+.navbar {
+  padding-left: 30%;
+  margin-bottom: 20px;
+}
+
+.navbar-brand {
+  color: #fff;
+}
+
+.navbar-nav li a {
+  color: #fff;
+}
+
+.navbar-nav li a:hover {
+  color: blue;
 }
