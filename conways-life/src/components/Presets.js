@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Presets = () => {
+const Presets = (props) => {
     return (
       <div>
           <div>
@@ -14,6 +14,13 @@ const Presets = () => {
           </div>
           <div>
               <button>Preset 4</button>
+          </div>
+          <div>
+              <input
+                name="speed"
+                value={props.speed}
+                onChange={props.handleSpeed}
+              />
           </div>
       </div>
     );

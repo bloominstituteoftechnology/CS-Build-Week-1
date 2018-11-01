@@ -22,7 +22,8 @@ class App extends Component {
       grid: Array(this.rows).fill(Array(this.cols).fill(0)),
       aliveCells: 0,
       playing: false,
-      paused: true
+      paused: true,
+      speed: 100
     }
   }
 
@@ -52,7 +53,7 @@ class App extends Component {
 
   handlePlay = () => {
     clearInterval(this.intervalId);
-    this.intervalId = setInterval(this.runSim, this.speed);
+    this.intervalId = setInterval(this.runSim, this.state.speed);
     this.setState({ playing: true, paused: false })
   }
 
@@ -82,22 +83,31 @@ class App extends Component {
   }
 
   handleRandom = (e) => {
-    
+    this.handleReset();
+    this.seed();
   }
 
-  countN = (grid, x, y) => {
-    let sum = 0;
-    for (let i = -1; i <= 1; i++) {
-      for (let j = -1; j <= 1; j++) {
-        let row = (y + j + this.rows) % this.rows;
-        let col = (x + i + this.cols) % this.cols;
-        sum += grid[row][col];
-      }
-    }
-    sum -= grid[x][y];
+  handlePreset = () => {
 
-    return sum;
   }
+
+  handleSpeed = (e) => {
+    this.setState({ speed: e.target.value });
+  }
+
+  // countN = (grid, x, y) => {
+  //   let sum = 0;
+  //   for (let i = -1; i <= 1; i++) {
+  //     for (let j = -1; j <= 1; j++) {
+  //       let row = (y + j + this.rows) % this.rows;
+  //       let col = (x + i + this.cols) % this.cols;
+  //       sum += grid[row][col];
+  //     }
+  //   }
+  //   sum -= grid[x][y];
+
+  //   return sum;
+  // }
 
   runSim = () => {
     let grid = this.state.grid;
@@ -145,7 +155,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // this.seed();
+    this.seed();
   }
 
   render() {
@@ -170,7 +180,11 @@ class App extends Component {
           <button onClick={this.handleRandom}>Random</button>
         </div>
         <div className="preset-container">
-          <Presets grid={this.state.grid} />
+          <Presets
+            grid={this.state.grid}
+            speed={this.state.speed}
+            handleSpeed={this.handleSpeed}
+          />
         </div>
         <div className="rules-container">
           <Rules />
