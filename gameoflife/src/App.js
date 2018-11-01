@@ -91,7 +91,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-          <div onClick={() => this.intervalID = setInterval(this.colorCells, 350)}>Click Me</div>
+          <div onClick={() => {
+              clearInterval(this.intervalID);
+              this.intervalID = setInterval(this.colorCells, 350)}
+            }>Click Me</div>
           <Form updateGridDimension={this.updateGridDimension}/>
           <Board rows={this.state.rows} cols={this.state.cols}/>
       </div>
