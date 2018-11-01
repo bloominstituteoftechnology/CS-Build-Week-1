@@ -105,7 +105,7 @@ class App extends Component {
     
     componentDidMount(){
       this.random();
-      this.handlePlayBtn();
+      // this.handlePlayBtn();
     }
     
     
