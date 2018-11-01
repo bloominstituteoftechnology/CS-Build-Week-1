@@ -14,7 +14,7 @@ const Algmodal = (props) => {
         <p>*Cellular Automata - one of a set of units in a mathematical model that have simple rules governing their 
           replication and destruction. They are used to model complex systems composed of simple units such as living 
           things or parallel processors.</p>
-        <a href="https://en.wikipedia.org/wiki/Conway's_Game_of_Life">Conway's Game of Life - Wikipedia</a>
+        <a href="https://en.wikipedia.org/wiki/Conway's_Game_of_Life" target="_blank">Conway's Game of Life - Wikipedia</a>
       </div>
     </div>
   );
