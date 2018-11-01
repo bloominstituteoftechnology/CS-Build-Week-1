@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { glider, pulsar } from './presets';
+import { rule1, rule2, rule3, rule4, turing } from './about';
+
 import './Game.css';
 
 const cellSize = 20;
@@ -80,7 +83,6 @@ class Game extends Component {
       this.board[y][x] = !this.board[y][x];
     }
     console.log(this.board);
-    // console.log(this.makeCells());
     this.setState({ cells: this.makeCells() });
   }
 
@@ -186,72 +188,14 @@ class Game extends Component {
   }
 
   handlePreset = config => {
-    // TODO: abstract configuration data to its own file
     switch (config) {
       case 'glider':
         this.handleClear();
-        const glider = [
-          {x: 1, y: 0},
-          {x: 2, y: 1},
-          {x: 0, y: 2},
-          {x: 1, y: 2},
-          {x: 2, y: 2}
-        ];
         this.presetBoard(glider);
         this.setState({ cells: this.makeCells() });
         break;
       case 'pulsar':
         this.handleClear();
-        const pulsar = [
-          {x: 14, y: 8},
-          {x: 15, y: 8},
-          {x: 16, y: 8},
-          {x: 20, y: 8},
-          {x: 21, y: 8},
-          {x: 22, y: 8},
-          {x: 12, y: 10},
-          {x: 17, y: 10},
-          {x: 19, y: 10},
-          {x: 24, y: 10},
-          {x: 12, y: 11},
-          {x: 17, y: 11},
-          {x: 19, y: 11},
-          {x: 24, y: 11},
-          {x: 12, y: 12},
-          {x: 17, y: 12},
-          {x: 19, y: 12},
-          {x: 24, y: 12},
-          {x: 14, y: 13},
-          {x: 15, y: 13},
-          {x: 16, y: 13},
-          {x: 20, y: 13},
-          {x: 21, y: 13},
-          {x: 22, y: 13},
-          {x: 14, y: 15},
-          {x: 15, y: 15},
-          {x: 16, y: 15},
-          {x: 20, y: 15},
-          {x: 21, y: 15},
-          {x: 22, y: 15},
-          {x: 12, y: 16},
-          {x: 17, y: 16},
-          {x: 19, y: 16},
-          {x: 24, y: 16},
-          {x: 12, y: 17},
-          {x: 17, y: 17},
-          {x: 19, y: 17},
-          {x: 24, y: 17},
-          {x: 12, y: 18},
-          {x: 17, y: 18},
-          {x: 19, y: 18},
-          {x: 24, y: 18},
-          {x: 14, y: 20},
-          {x: 15, y: 20},
-          {x: 16, y: 20},
-          {x: 20, y: 20},
-          {x: 21, y: 20},
-          {x: 22, y: 20}
-        ];
         this.presetBoard(pulsar);
         this.setState({ cells: this.makeCells() });
         break;
@@ -264,13 +208,30 @@ class Game extends Component {
     const { cells, generation, addGen, isRunning } = this.state;
     return (
       <div>
-        <div className='board'
-        style={{ width: width, height: height, backgroundSize: `${cellSize}px ${cellSize}px` }}
-        onClick={ this.state.isRunning ? null : this.handleClick }
-        ref={ (n) => { this.boardRef = n }}>
-        {cells.map(cell => (
-          <Cell x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`} />
-        ))}
+        <div className='board-rules'>
+          <div className='board'
+          style={{ width: width, height: height, backgroundSize: `${cellSize}px ${cellSize}px` }}
+          onClick={ this.state.isRunning ? null : this.handleClick }
+          ref={ (n) => { this.boardRef = n }}>
+          {cells.map(cell => (
+            <Cell x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`} />
+          ))}
+          </div>
+          <div className='about-rules'>
+            <div className='rules'>
+              <h1>Rules</h1>
+              <p>{rule1}</p>
+              <p>{rule2}</p>
+              <p>{rule3}</p>
+              <p>{rule4}</p>
+            </div>
+            <div className='about'>
+              <h1>Turing Completeness</h1>
+              <p>{turing}</p>
+              <a href="http://rendell-attic.org/gol/tm.htm">Check it out: http://rendell-attic.org/gol/tm.htm</a>
+            </div>
+          </div>
+         
         </div>
         <div className='controls'>
           Update every <input value={this.state.interval} onChange={this.handleIntervalChange} /> msec

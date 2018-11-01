@@ -87,7 +87,7 @@ Implment at least 3 of the following features:
 - [ ] If you have an idea for a custom feature on this list, run it by your PM or instructor
 
 #### Rules 
-- [ ] On the main entry point of the application, include a separate section or link to another page / screen that describes the two main rules (birth & death) of Conway’s “Game of Life”
+- [x] On the main entry point of the application, include a separate section or link to another page / screen that describes the two main rules (birth & death) of Conway’s “Game of Life”
 
 #### About this Algorithm
 - [ ]  On the main entry point of the application, include a separate section or link to another page / screen that describes more about Conway’s “Game of Life”, such as whether or not it is Turing Complete or the history of this cellular automaton
