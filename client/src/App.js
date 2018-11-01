@@ -12,9 +12,9 @@ class App extends Component {
       <div className="App">
         <div className="rules-container">
             <h1> Rules </h1>
-            <a> If a cell is alive and it has exactly 2 or 3 live neighbors, it stays alive.<br></br>
+            <a> If a cell is alive and it has exactly 2 or 3 live neighbors, it stays alive.<br></br><br></br>
               
-                If a cell is alive and it has less than 2 or 4+ live neighbors, it dies. <br></br>
+                If a cell is alive and it has less than 2 or 4+ live neighbors, it dies. <br></br><br></br>
                 
                 If a cell is dead and it has exactly 3 live neighbors, it comes to life. </a>
           </div>
