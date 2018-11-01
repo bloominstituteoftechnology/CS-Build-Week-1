@@ -75,6 +75,10 @@ class App extends Component {
     this.setState({displayAbout: !this.state.displayAbout})
   }
 
+  handleSize = (evt) => {
+    this.gridSize(evt);
+  }
+
   seedGrid = () => {
     let grid = arrayClone(this.state.gridFull);
     for(let i = 0; i < this.rows; i++) {
@@ -127,6 +131,33 @@ class App extends Component {
     this.setState({gridFull: grid, currentGen: 0})
   }
 
+  slowSpeed = () => {
+		this.speed = 500;
+		this.startGame();
+  }
+  
+  fastSpeed = () => {
+		this.speed = 60;
+		this.startGame();
+	}
+
+  gridSize = (size) => {
+    switch(size) {
+      case "1":
+				this.cols = 20;
+				this.rows = 20;
+			break;
+			case "2":
+				this.cols = 30;
+				this.rows = 30;
+			break;
+			default:
+				this.cols = 40;
+				this.rows = 40;
+		}
+		this.clearGrid();
+  }
+
   componentDidMount() {
     //this.seedGrid();
     //this.startGame();
@@ -150,10 +181,22 @@ class App extends Component {
             </Button>
             </ButtonContainer>
             <div>Current: {this.state.currentGen}</div>
-            <ButtonContainer>
+            <ButtonContainer>					
               <Button onClick={this.startGame}>Start</Button>
               <Button onClick={this.stopGame}>Stop</Button>
               <Button onClick={this.clearGrid}>Clear</Button>
+              <Button onClick={this.seedGrid}>Seed</Button>
+              <Button onClick={this.fastSpeed}>Faster</Button>
+              <Button onClick={this.slowSpeed}>Slower</Button>
+              <DropdownButton
+						    title="Grid Size"
+						    id="size-menu"
+						    onSelect={this.handleSize}
+					    >
+						    <MenuItem eventKey="1">20x20</MenuItem>
+						    <MenuItem eventKey="2">30x30</MenuItem>
+						    <MenuItem eventKey="3">40x40</MenuItem>
+					  </DropdownButton>
             </ButtonContainer>
           </Sidebar>
           
