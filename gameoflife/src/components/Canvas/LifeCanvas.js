@@ -24,6 +24,7 @@ class LifeCanvas extends React.Component {
 
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight - options[0].clientHeight - (header[0].clientHeight + 3);
+        canvas.addEventListener('mousedown', event => event.preventDefault());
 
         this.setState({ life: new Life(canvas.width, canvas.height) });
 
