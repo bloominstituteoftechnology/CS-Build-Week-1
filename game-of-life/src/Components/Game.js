@@ -38,11 +38,18 @@ class Game extends React.Component {
     isRunning: false,
     interval: 100,
     genCount: 0,
+    step: false,
   }
 
   runGame = () => {
-    this.setState({ isRunning: true });
+    this.setState({ isRunning: true, step: false });
     this.runIteration();
+  }
+
+  stepThruGame = () => {
+    this.setState({ isRunning: true, step: true });
+    this.runIteration();
+    this.setState({ isRunning: false });
   }
 
   stopGame = () => {
@@ -78,10 +85,13 @@ class Game extends React.Component {
     this.setState((prevState) => (
       { genCount: prevState.genCount + 1, cells: this.addCells(), }
     ))
-
-    this.timeoutHandler = window.setTimeout(() => {
-      this.runIteration();
-    }, (this.state.interval));
+    
+    if (!this.state.step) {
+      this.timeoutHandler = window.setTimeout(() => {
+        this.runIteration();
+      }, (this.state.interval));
+    }
+    
   }
 
 
@@ -200,6 +210,7 @@ class Game extends React.Component {
         }
         <button className="button" onClick={this.clearCells}>Reset</button>
         <button className="button" onClick={this.handleRandom}>Random</button>
+        <button className="button" onClick={this.stepThruGame}>Step</button>
         Update every 
         <input 
           value={this.state.interval} 
