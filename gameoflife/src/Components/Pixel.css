@@ -2,13 +2,19 @@
     border: 1px solid black;
     height: 15px;
     width: 15px;
-    background-color: white;
+    margin-left: -1px;
+    margin-top: -1px;
+    background-color: black;
 }
 
 .on{
-    color:aqua;
+    color:dimgray;
 }
 
 .off{
-    color:white;
+    color:black;
+}
+
+.Pixel:hover{
+    background: cadetblue;
 }

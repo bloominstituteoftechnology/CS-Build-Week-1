@@ -1,6 +1,9 @@
+body{
+  background-color: crimson;
+}
+
 .App {
   text-align: center;
-  background-color: gold;
   display: flex;
   flex-direction: column;
   align-items: center;

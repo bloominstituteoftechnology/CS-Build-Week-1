@@ -1,6 +1,6 @@
 .buttons {
-    width: 225px;
+    width: 300px;
     margin-top: 25px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }

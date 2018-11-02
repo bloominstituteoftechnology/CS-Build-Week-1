@@ -4,9 +4,7 @@ import './Buttons.css';
 class Buttons extends Component {
     constructor() {
         super();
-        this.state={
-            generations:0,
-        }
+        this.state={}
     }
 
     render() {
@@ -15,7 +13,7 @@ class Buttons extends Component {
                 <button> Start</button>
                 <button> Pause</button>
                 <button> Clear</button>
-                <span>Generations: {this.generations}</span>
+                <span>Generations: {this.state.generation}</span>
             </div>
         )
     }
