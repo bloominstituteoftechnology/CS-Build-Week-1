@@ -63,7 +63,7 @@ class App extends Component {
       <div className="App">
         <Content>
         <Title>Conway's Game of Life</Title>
-          <Game/>
+          <Game preset={this.state.preset}/>
           <PresetsContainer>
             <Button onClick={this.initPreset} value='1'>Preset 1</Button>
             <Button onClick={this.initPreset} value='2'>Preset 2</Button>
