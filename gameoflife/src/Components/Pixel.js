@@ -2,18 +2,17 @@ import React, {Component} from 'react';
 import './Pixel.css';
 
 class Pixel extends Component {
-    constructor() {
-        super();
-        this.state={}
+    selectBox = () => {
+        this.props.selectBox(this.props.row, this.props.columns);
     }
-
     render() {
         return (
-            <div>
-                <div className='Pixel'></div>
-        
-            </div>
-        )
+            <div
+                className= {this.props.boxClass}
+                id={this.props.id}
+                onClick={this.selectBox}
+            />
+        );
     }
 }
 

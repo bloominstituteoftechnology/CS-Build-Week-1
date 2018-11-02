@@ -5,11 +5,11 @@ import Pixel from './Pixel';
 class Grid extends Component {
     
     render(){
-        let width = this.props.columns=14;
-        let rowsArr = [];
-        let boxClass = '';
-        for (let i =0; i< this.props.rows; i++) {
-            for (let j= 0; j<this.props.columns; j++) {
+        const width = this.props.columns*16;
+        var rowsArr = [];
+        var boxClass = '';
+        for (var i =0; i< this.props.rows; i++) {
+            for (var j= 0; j<this.props.columns; j++) {
                 let boxId = i + '_'+ j;
 
                 boxClass = this.props.gridFull[i][j] ? 'box on' : 'box off';
@@ -22,13 +22,13 @@ class Grid extends Component {
                         columns={j}
                         selectBox={this.props.selectBox}
                     />
-                )
+                );
             }
         }
         return (
             <div className='Grid' style={{width: width}}>
-                {{rowsArr}}
-                <Pixel />
+                {rowsArr}
+                
             </div>
         )
     }

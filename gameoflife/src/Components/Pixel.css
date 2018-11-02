@@ -1,20 +1,21 @@
-.Pixel {
+.box {
+    display: inline-block;       
     border: 1px solid black;
-    height: 15px;
     width: 15px;
+    height: 15px;
     margin-left: -1px;
-    margin-top: -1px;
-    background-color: black;
-}
-
-.on{
-    color:dimgray;
-}
-
-.off{
-    color:black;
-}
-
-.Pixel:hover{
-    background: cadetblue;
-}
+    margin-bottom: -1px;
+    }
+  
+  .off {
+    background-color: rosybrown;
+  }
+  
+  .on {
+    background-color: cadetblue;
+  }
+    
+  .box:hover { 
+    background: lightgreen;
+  }
+  

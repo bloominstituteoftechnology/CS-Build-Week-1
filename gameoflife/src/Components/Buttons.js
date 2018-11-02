@@ -13,7 +13,6 @@ class Buttons extends Component {
                 <button> Start</button>
                 <button> Pause</button>
                 <button> Clear</button>
-                <span>Generations: {this.state.generation}</span>
             </div>
         )
     }
