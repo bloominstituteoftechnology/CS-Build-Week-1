@@ -1,5 +1,6 @@
 .Presets{
     margin-left: 25px;
+    margin-top: 80px; 
     display: flex;
     flex-direction: column;
     justify-content: space-around; 

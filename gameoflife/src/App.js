@@ -15,6 +15,38 @@ class App extends Component {
       gridFull: Array(this.rows).fill().map(()=> Array(this.columns).fill(false))
     }
   }
+
+  selectBox= (rows,columns) => {
+    let gridCopy= arrayClone(this.state.gridFull);
+    gridCopy[rows][columns] = !gridCopy[rows][columns];
+    this.setState({
+      gridFull:gridCopy
+    })
+  }
+
+  clear= () => {
+    var grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
+		this.setState({
+			gridFull: grid,
+			generation: 0
+		});
+  }
+
+  randomize= (clear) => {
+    //this.clear();
+    let gridCopy =arrayClone(this.state.gridFull);
+    for (let i =0; i<this.rows; i++) {
+      for (let j=0; j<this.columns; j++) {
+        if (Math.floor(Math.random()*4)===1) {
+          gridCopy[i][j]= true;
+        }
+      }
+    }
+    this.setState({
+      gridFull: gridCopy
+    });
+  }
+
   render() {
     return (
       <div className="App">
@@ -25,13 +57,21 @@ class App extends Component {
             columns={this.columns} 
             selectBox={this.selectBox}
           />
-          <Presets />
+          <Presets
+            randomize={this.randomize}
+          />
         </div>
-        <Buttons />
+        <Buttons 
+          clear=  {this.clear}
+        />
         <h2> Generations: {this.state.generation} </h2>
       </div>
     );
   }
+}
+
+function arrayClone(arr) {
+  return JSON.parse(JSON.stringify(arr));
 }
 
 export default App;

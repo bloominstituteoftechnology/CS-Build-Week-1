@@ -10,9 +10,9 @@ class Buttons extends Component {
     render() {
         return (
             <div className="buttons">
-                <button> Start</button>
-                <button> Pause</button>
-                <button> Clear</button>
+                <button onClick={this.props.start}> Start</button>
+                <button onClick={this.props.pause}> Pause</button>
+                <button onClick={this.props.clear}> Clear</button>
             </div>
         )
     }

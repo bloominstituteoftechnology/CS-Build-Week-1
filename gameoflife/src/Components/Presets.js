@@ -7,7 +7,7 @@ class Presets extends Component {
             <div className="Presets">
                 <button>Preset 1</button>
                 <button>Preset 2</button>
-                <button>Preset 3</button>
+                <button onClick={this.props.randomize}>Random</button>
             </div>
         )
     }
