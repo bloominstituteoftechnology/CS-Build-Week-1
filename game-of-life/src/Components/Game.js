@@ -159,6 +159,16 @@ class Game extends React.Component {
     this.setState({ interval: event.target.value })
   } 
 
+  handleRandom = () => {
+    console.log(this.board);
+    for (let y = 0; y < this.rows; y++) {
+      for (let x = 0; x < this.cols; x++) {
+       this.board[y][x] = (Math.random() >= 0.5);
+      }
+    }
+    this.runGame();
+  }
+
   render() {
     const { cells, isRunning } = this.state;
     return( 
@@ -189,6 +199,7 @@ class Game extends React.Component {
             <button className="button" onClick={this.runGame}>Run</button>
         }
         <button className="button" onClick={this.clearCells}>Reset</button>
+        <button className="button" onClick={this.handleRandom}>Random</button>
         Update every 
         <input 
           value={this.state.interval} 
