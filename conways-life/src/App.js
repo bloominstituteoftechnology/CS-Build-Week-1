@@ -69,11 +69,9 @@ class App extends Component {
 
   handleReset = () => {
     clearInterval(this.intervalId);
+    this.handleStop();
     this.setState({
-      gen: 0,
       grid: Array(this.rows).fill(Array(this.cols).fill(0)),
-      playing: false,
-      paused: true
     });
   }
 
