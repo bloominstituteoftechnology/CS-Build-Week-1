@@ -29,7 +29,11 @@ class Home extends Component {
        <div>
         <CardContent>
           <Typography variant="h5"> About  </Typography>
-          <Typography variant="body1"> 1. Any live cell with fewer than two live neighbors dies, as if by underpopulation. </Typography>
+          <Typography variant="body2"> In 1968, mathematician John Conway began formulating theories of cellular automata implementations that would meet John Von Neumann’s two general requirements for life. Conway chose 4 rules to create these 2d automata: </Typography>
+          <Typography variant='subtitle2'>1-	There should be no explosive growth.</Typography>
+          <Typography variant='subtitle2'>2-	There should exist small initial patterns with chaotic, unpredictable outcomes.</Typography>
+          <Typography variant='subtitle2'>3-	There should be potential for von Neumann universal constructors.</Typography>
+          <Typography variant='subtitle2'>4-	The rules should be as simple as possible, whilst adhering to the above constraints.</Typography>
 
         </CardContent>
       </div>

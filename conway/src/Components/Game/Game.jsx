@@ -82,6 +82,7 @@ class Game extends Component {
          preset: "",
          gameSpeed: 500,
          gridSizeString: '',
+         fps: 0,
       }
       this.container = React.createRef();
       this.timer = null;
