@@ -1,14 +1,18 @@
 {
+  "homepage":"http://mag16.github.io/Conways-Life",
   "name": "gameoflife",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "ajv": "^6.5.4",
     "react": "^16.6.0",
+    "react-bootstrap": "^0.32.4",
     "react-dom": "^16.6.0",
     "react-scripts": "2.0.5"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -24,6 +28,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "babel-cli": "^6.26.0",
+    "gh-pages": "^2.0.1"
   }
 }
