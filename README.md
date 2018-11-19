@@ -1,5 +1,8 @@
 https://trello.com/b/gn1Y1moZ/game-of-life-marco-guzman
 
+Deployment:
+https://mag16.github.io/Conways-Life/
+
 
 # Cellular Automata and Conway's "Game of Life"
 
