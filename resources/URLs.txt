@@ -1,3 +1,11 @@
+PR:
+https://github.com/ErikKimsey/Conways-Life
+
+Trello:
+https://trello.com/b/b41ewAGR/gameoflifeerikkimsey
+
+
+
 Double Buffering:
 HTML Canvas ----> https://www.tutorialspoint.com/Does-HTML5-Canvas-support-Double-Buffering 
 HTML Canvas ----> 
