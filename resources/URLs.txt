@@ -1,0 +1,9 @@
+Double Buffering:
+HTML Canvas ----> https://www.tutorialspoint.com/Does-HTML5-Canvas-support-Double-Buffering 
+HTML Canvas ----> 
+http://blog.bob.sh/2012/12/double-buffering-with-html-5-canvas.html
+HTML Canvas ----> 
+http://devbutze.blogspot.com/2014/02/html5-canvas-offscreen-rendering.html 
+
+https://www.youtube.com/watch?v=7cRRxlWRl8g
+https://gamedev.stackexchange.com/questions/157069/how-does-the-double-buffered-canvas-know-when-to-swap-the-buffer
