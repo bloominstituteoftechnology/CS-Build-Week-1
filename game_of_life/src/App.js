@@ -87,11 +87,13 @@ class App extends Component {
       renderBoard(){
         let newBoard = [];
         let cellRow = []; 
-
+        //loop through twice to the row and column sizes.
         for(let i = 0; i < this.state.size[0]; i++){
           for(let j = 0; j < this.state.size[1]; j++){
+            //push the cells into the board made.
             cellRow.push(<Cell key={[i, j]}/>);
           }
+          //create the new board
           newBoard.push(<div className="row" key={i}>{cellRow}</div>);
           cellRow = []; 
         }
