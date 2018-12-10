@@ -4,7 +4,8 @@ class LifeCanvas extends Component {
   state = {
     height: 750,
     width: 750,
-    square: 15
+    square: 15,
+    matrix: []
   };
 
   componentDidMount() {
@@ -28,6 +29,8 @@ class LifeCanvas extends Component {
       }
     }
     canvas.stroke();
+    const matrix = new Array(15).fill(0).map(() => new Array(15).fill(0));
+    this.setState({ matrix });
   };
 
   getCursorPosition = e => {
@@ -39,9 +42,10 @@ class LifeCanvas extends Component {
     let squareSize = this.state.height / this.state.square;
     let currentSquareX = Math.floor(x / squareSize);
     let currentSquareY = Math.floor(y / squareSize);
-    console.log(`X: ${currentSquareX}, Y: ${currentSquareY}`);
-    // could add logic here to fill with canvas, but i want to change the 2d array
-    // to reflect the change instead
+    // console.log(`X: ${currentSquareX}, Y: ${currentSquareY}`);
+    let matrix = this.state.matrix.slice(0);
+    matrix[currentSquareY][currentSquareX] ^= 1;
+    this.setState({ matrix });
   };
 
   render() {
