@@ -35,12 +35,14 @@ class App extends Component {
     const ctx = c.getContext("2d");
     const boxSize = 10
     //offset squares to make up for where the grid is on the page
-    const x = Math.floor(e.clientX / boxSize) * boxSize - 50
-    const y = Math.floor(e.clientY / boxSize) * boxSize - 80
-    ctx.fillStyle = "#DB7093";
-    ctx.fillRect(x, y, boxSize, boxSize);
-    console.log(x, y)
-    this.setState({[`${x}_${y}`]: "alive"});
+    //minus 1 px for border
+    const x = Math.floor(e.clientX / boxSize) * boxSize - 49
+    const y = Math.floor(e.clientY / boxSize) * boxSize - 79
+    ctx.fillStyle = this.state[`${x}_${y}`] === "alive" ? "#FFFFFF" : "#DB7093";
+    //minus 1 px for border
+    ctx.fillRect(x, y, 9, 9);
+    const cellStatus = this.state[`${x}_${y}`] === "alive" ? "dead" : "alive"
+    this.setState({[`${x}_${y}`]: cellStatus});
   }
 
   render() {
