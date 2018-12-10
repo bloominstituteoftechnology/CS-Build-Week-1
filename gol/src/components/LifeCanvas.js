@@ -41,6 +41,9 @@ class LifeCanvas extends Component {
   };
 
   getCursorPosition = e => {
+    if (this.state.start) {
+      return;
+    }
     let canvas = this.refs.canvas;
     let rect = canvas.getBoundingClientRect();
     let x = e.clientX - rect.left;
@@ -85,7 +88,7 @@ class LifeCanvas extends Component {
     if (this.state.intervalId) {
       clearInterval(this.state.intervalId);
     }
-    this.setState({ matrix, intervalId: null, iter: 0 }, () =>
+    this.setState({ matrix, intervalId: null, iter: 0, start: false }, () =>
       this.updateFullCanvas()
     );
   };
