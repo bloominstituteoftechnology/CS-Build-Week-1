@@ -3,9 +3,9 @@
     margin: 0 auto;
     background-color:black;
     background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px);
-  }
+}
   
 .cell {
-    background: gray;
+    background: red;
     position: absolute;
 }

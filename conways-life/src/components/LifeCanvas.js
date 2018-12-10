@@ -8,10 +8,10 @@ class Cell extends React.Component{
             <div 
                 className="cell"
                 style={{
-                    left: `${cellSize * x + 1}`,
-                    top: `${cellSize * y + 1}`,
-                    width: `${cellSize - 1}`,
-                    height: `${cellSize - 1}`,
+                    left: `${cellSize * x + 1}px`,
+                    top: `${cellSize * y + 1}px`,
+                    width: `${cellSize - 1}px`,
+                    height: `${cellSize - 1}px`,
                 }}
                 onClick={this.props.handleClick}
            />
@@ -114,7 +114,7 @@ class LifeCanvas extends React.Component{
                     height: this.state.height,
                     backgroundSize:`${this.state.cellSize}px ${this.state.cellSize}px`}}
                     onClick={this.handleClick}
-                    ref={(n) => {this.boardRef = n; }}>   
+                    ref={(n) => { this.boardRef = n; }}>   
                     {data.map(cell => (
                         <Cell cellSize={this.state.cellSize} x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`}/>
                     ))}
