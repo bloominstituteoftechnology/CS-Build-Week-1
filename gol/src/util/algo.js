@@ -1,4 +1,4 @@
-export default (gameOfLife = board => {
+function gameOfLife(board) {
   // code is refactored from my previous python code
   // will clean up by creating subfunctions and improve readability later
   const newBoard = board.slice(0);
@@ -12,12 +12,11 @@ export default (gameOfLife = board => {
       let endX = Math.min(i + 2, m);
       let startY = Math.max(0, j - 1);
       let endY = Math.min(j + 2, n);
-      for (k = startX; k < endX; k++) {
-        for (l = startY; l < endY; l++) {
+      for (let k = startX; k < endX; k++) {
+        for (let l = startY; l < endY; l++) {
           if (
-            k !== i &&
-            l !== j &&
-            (newBoard[i][j] === 1 || newBoard[i][j] === 2)
+            !(k === i && j === l) &&
+            (newBoard[k][l] === 1 || newBoard[k][l] === 2)
           ) {
             count += 1;
           }
@@ -40,4 +39,6 @@ export default (gameOfLife = board => {
     }
   }
   return newBoard;
-});
+}
+
+export default gameOfLife;

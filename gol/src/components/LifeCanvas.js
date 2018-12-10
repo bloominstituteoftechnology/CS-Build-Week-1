@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import gameOfLife from '../util/algo';
 
 class LifeCanvas extends Component {
   state = {
-    height: 750,
-    width: 750,
+    height: 500,
+    width: 500,
     square: 15,
-    matrix: []
+    matrix: [],
+    start: false
   };
 
   componentDidMount() {
@@ -71,14 +73,53 @@ class LifeCanvas extends Component {
     }
   };
 
+  clearCanvas = () => {
+    const matrix = new Array(15).fill(0).map(() => new Array(15).fill(0));
+    this.setState({ matrix });
+  };
+
+  computeNext = () => {
+    const matrix = gameOfLife(this.state.matrix);
+    this.setState({ matrix }, () => this.updateFullCanvas());
+  };
+
+  updateFullCanvas = () => {
+    let canvas = this.refs.canvas.getContext('2d');
+    let squareSize = this.state.height / this.state.square;
+    for (let i = 0; i < this.state.matrix.length; i++) {
+      for (let j = 0; j < this.state.matrix[0].length; j++) {
+        if (this.state.matrix[j][i] === 1) {
+          canvas.fillStyle = 'black';
+          canvas.fillRect(
+            i * squareSize + 1,
+            j * squareSize + 1,
+            squareSize - 2,
+            squareSize - 2
+          );
+        } else {
+          canvas.fillStyle = 'white';
+          canvas.fillRect(
+            i * squareSize + 1,
+            j * squareSize + 1,
+            squareSize - 2,
+            squareSize - 2
+          );
+        }
+      }
+    }
+  };
+
   render() {
     return (
-      <canvas
-        ref="canvas"
-        height={this.state.height}
-        width={this.state.width}
-        onClick={this.getCursorPosition}
-      />
+      <>
+        <canvas
+          ref="canvas"
+          height={this.state.height}
+          width={this.state.width}
+          onClick={this.getCursorPosition}
+        />
+        <button onClick={this.computeNext}>Next</button>
+      </>
     );
   }
 }
