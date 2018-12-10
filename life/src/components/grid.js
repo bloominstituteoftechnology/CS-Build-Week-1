@@ -35,12 +35,8 @@ export default class Grid extends Component {
         return(
             <GridDiv> 
                 {this.state.array.map(cube => {
-                    return <button 
-                                onClick={this.toggle} 
-                                key={cube.id} 
-                                active={cube.active}>{cube.id}</button>
+                    return <Cube onClick={this.toggle} id={cube.id} key={cube.id} active={cube.active} />
                 })}
-                <button onClick={this.toggle} />
             </GridDiv>
         )
     }

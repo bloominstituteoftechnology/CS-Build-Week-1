@@ -13,7 +13,7 @@ export default class Cube extends Component {
         console.log(this.props)
         return(
             <CubeDiv>
-                <div style={{background: this.props.active ? "white": null}}>{this.props.id}</div>
+                <div style={{background: this.props.active ? "orange": null}}>{this.props.id}</div>
                 
             </CubeDiv>
         )
