@@ -1,0 +1,16 @@
+.title {
+  text-align: center;
+}
+.board {
+  display: flex;
+}
+canvas {
+  margin-left: 50px;
+}
+.presets {
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 300;
+}

@@ -2,8 +2,20 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-
+  constructor() {
+    super();
+    this.state = {
+      grid: {}
+    }
+  }
   componentDidMount() {
+    const gridStateInit = {}
+    for(let i=0; i<=300; i+=10){
+      for(let j=0; j<=300; j+=10){
+        gridStateInit[`${i}_${j}`] = "dead"
+      }
+    }
+    this.setState({grid: gridStateInit})
     this.drawGrid()
   }
   drawGrid = () => {
@@ -24,16 +36,31 @@ class App extends Component {
     const c = this.refs.grid
     const ctx = c.getContext("2d");
     const boxSize = 10
+    const x = Math.floor(e.clientX / boxSize) * boxSize - 50
+    const y = Math.floor(e.clientY / boxSize) * boxSize - 80
     ctx.fillStyle = "#DB7093";
-    ctx.fillRect(Math.floor(e.clientX / boxSize) * boxSize,
-      Math.floor(e.clientY / boxSize) * boxSize,
-      boxSize, boxSize);
+    //offset fillRect squares to make up for where the grid is on the page
+    ctx.fillRect(x, y, boxSize, boxSize);
+    console.log(x, y)
+    this.setState({...this.state.grid, [`${x}_${y}`]: "alive"})
   }
 
   render() {
     return (
       <div className="App">
-        <canvas onClick={this.handleClick} ref="grid" width="500" height="500"/>
+        <h1 className="title">Conway's Game of Life</h1>
+        <div className="board">
+          <canvas onClick={this.handleClick} ref="grid" width="301" height="301"/>
+          <div className="presets">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+          </div>
+          <div>
+            <h2>Rules</h2>
+            <p>some stuff goes here later</p>
+          </div>
+        </div>
       </div>
     );
   }
