@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import gameOfLife from '../util/algo';
 import { Control, ControlButton } from './styles/Control';
+import { glider, blinker, randomBoard } from '../util/patterns';
 
 class LifeCanvas extends Component {
   state = {
@@ -128,8 +129,28 @@ class LifeCanvas extends Component {
   };
 
   startCanvas = () => {
-    let intervalId = setInterval(this.computeNext, 1000);
+    let intervalId = setInterval(this.computeNext, 500);
     this.setState({ start: true, intervalId });
+  };
+
+  presetHandler = e => {
+    let matrix;
+    switch (e.target.value) {
+      case 'glider':
+        matrix = glider(this.state.square);
+        this.setState({ matrix }, () => this.updateFullCanvas());
+        break;
+      case 'blinker':
+        matrix = blinker(this.state.square);
+        this.setState({ matrix }, () => this.updateFullCanvas());
+        break;
+      case 'random':
+        matrix = randomBoard(this.state.square);
+        this.setState({ matrix }, () => this.updateFullCanvas());
+        break;
+      default:
+        break;
+    }
   };
 
   render() {
@@ -148,6 +169,12 @@ class LifeCanvas extends Component {
             Clear
           </ControlButton>
           <p>Generation #{this.state.iter}</p>
+          <select onChange={this.presetHandler}>
+            <option value="none">None</option>
+            <option value="glider">Glider</option>
+            <option value="blinker">Blinker</option>
+            <option value="random">Random</option>
+          </select>
         </Control>
       </>
     );
