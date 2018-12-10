@@ -18,6 +18,7 @@ html {
 body {
     line-height: 1.4;
     font-size: 1.6rem;
+    margin: 0;
 }
 
 h1, h2, h3 {
