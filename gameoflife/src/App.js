@@ -16,7 +16,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-      <Canvas></Canvas>
+      <Canvas pixels={this.state.pixels}></Canvas>
       </div>
     );
   }
