@@ -37,7 +37,7 @@ export default class Grid extends Component {
         })
     }
 
-    get8surrounding = (target) => {
+    get8surrounding = (target, isActive=false) => {
         console.log(target)
         let surrounding = [];
         // console.log(surrounding)
@@ -52,8 +52,14 @@ export default class Grid extends Component {
         console.log(surrounding)
         let clean = [];
         surrounding.forEach(cube => {
-            if(cube > 0){
-                clean.push(cube)
+            if(cube > 0 && cube < 226){
+                if(isActive){
+                    if(cube.active === true){
+                        clean.push(cube)
+                    }
+                } else {
+                    clean.push(cube)
+                }
             }
             //something for left side
         })
@@ -81,6 +87,74 @@ export default class Grid extends Component {
         console.log(this.state)
     }
 
+    getActives(){
+        let newArr = [];
+        this.state.array.forEach(cube => {
+            if(cube.active === true){
+                newArr.push(cube)
+            }
+        })
+        return newArr;
+    }
+
+    buildNext = async (cubeNum) => {
+        console.log("build next", this.getSelected())
+        // console.log(this.state)
+        await this.setState({
+            nextArray: this.state.array
+        });
+        // console.log(this.state)
+        let nextGen = this.state.generations+1;
+        let questionables = [];
+        let actives = this.getActives();
+        actives.forEach(cube => {
+            let surrounding = this.get8surrounding(cube.id);
+            surrounding.forEach(neighbor => {
+                if(questionables.includes(neighbor)){
+                    //do nothing 
+                } else {
+                    questionables.push(neighbor);
+                }
+            })
+        })
+        console.log("questionables", questionables);
+        await questionables.forEach(cube => {
+            this.cubeNextTime(cube);
+        })
+        console.log(this.state)
+        await this.setState({
+            array: this.state.nextArray,
+            nextArray: [],
+            generations: nextGen
+        })
+        console.log(this.state)
+    }
+
+    cubeNextTime(cube){
+        //get neighbors
+        let activeNeighbors = this.get8surrounding(cube, true);
+        let newArr = this.state.nextArray;
+        if(cube.active){
+            //stay allive if 2 0r 3 neighbors
+            if(activeNeighbors.length == 2||3){
+                newArr[cube.id-1] = {id: cube.id, active: true}
+            } else {
+                //else die
+                newArr[cube.id-1] = {id: cube.id, active: false}
+            }
+        } else {
+            //switch to alive if 2 neighbors
+            if(activeNeighbors.lenght == 2){
+                newArr[cube.id-1] = {id: cube.id, active: true}
+            }
+            //else die
+        }
+        //assign cube number to next Array 
+        this.setState({
+            nextArray: newArr,
+        })
+    }
+
     clear(){
         let newArr = this.state.array;
         newArr.forEach(cube => {
@@ -90,6 +164,20 @@ export default class Grid extends Component {
             array: newArr,
             generations: 0,
         })
+    }
+
+    getSelected(){
+        let curr = [];
+        this.state.array.forEach(cube => {
+            if(cube.active === true){
+                curr.push(cube.id)
+            }
+        })
+        return curr
+    }
+
+    buildNext(){
+        
     }
 
     clickHandler = (e) => {
@@ -103,6 +191,7 @@ export default class Grid extends Component {
                 break;
             case "next":
                 console.log("next");
+                this.buildNext();
                 break;
             case "clear":
                 console.log("clear");
@@ -111,7 +200,7 @@ export default class Grid extends Component {
             default: 
                 // console.log("default");
                 console.log("toggle", e.target.name);
-                this.toggle8(e.target.name );
+                this.toggle(e.target.name);
         }
     }
 
