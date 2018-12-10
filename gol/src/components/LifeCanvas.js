@@ -30,12 +30,25 @@ class LifeCanvas extends Component {
     canvas.stroke();
   };
 
+  getCursorPosition = e => {
+    let canvas = this.refs.canvas;
+    let rect = canvas.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+    // console.log(`X: ${x}, Y: ${y}`);
+    let squareSize = this.state.height / this.state.square;
+    let currentSquareX = Math.floor(x / squareSize);
+    let currentSquareY = Math.floor(y / squareSize);
+    console.log(`X: ${currentSquareX}, Y: ${currentSquareY}`);
+  };
+
   render() {
     return (
       <canvas
         ref="canvas"
         height={this.state.height}
         width={this.state.width}
+        onClick={this.getCursorPosition}
       />
     );
   }
