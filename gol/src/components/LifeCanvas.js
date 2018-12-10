@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import gameOfLife from '../util/algo';
+import { Control, ControlButton } from './styles/Control';
 
 class LifeCanvas extends Component {
   state = {
@@ -133,10 +134,14 @@ class LifeCanvas extends Component {
           width={this.state.width}
           onClick={this.getCursorPosition}
         />
-        <button onClick={this.computeNext}>Next</button>
-        <button onClick={this.startCanvas}>Play</button>
-        <button onClick={this.clearCanvas}>Clear</button>
-        <p>Iteration: {this.state.iter}</p>
+        <Control>
+          <ControlButton onClick={this.computeNext}>Next</ControlButton>
+          <ControlButton onClick={this.startCanvas}>Play</ControlButton>
+          <ControlButton onClick={this.clearCanvas} last>
+            Clear
+          </ControlButton>
+          <p>Iteration: {this.state.iter}</p>
+        </Control>
       </>
     );
   }
