@@ -55,10 +55,18 @@ class LifeCanvas extends Component {
     if (this.state.matrix[currentSquareY][currentSquareX] === 1) {
       canvas.fillStyle = 'black';
       canvas.fillRect(
-        currentSquareX * squareSize,
-        currentSquareY * squareSize,
-        squareSize,
-        squareSize
+        currentSquareX * squareSize + 1,
+        currentSquareY * squareSize + 1,
+        squareSize - 2,
+        squareSize - 2
+      );
+    } else {
+      canvas.fillStyle = 'white';
+      canvas.fillRect(
+        currentSquareX * squareSize + 1,
+        currentSquareY * squareSize + 1,
+        squareSize - 2,
+        squareSize - 2
       );
     }
   };
