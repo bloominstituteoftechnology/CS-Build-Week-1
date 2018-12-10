@@ -39,5 +39,5 @@ a {
 export const StyledSection = styled.section`
     margin: 0 auto;
     padding: 5rem;
-    max-width: 1000px;
+    max-width: 920px;
 `
