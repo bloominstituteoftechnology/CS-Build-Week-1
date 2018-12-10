@@ -29,6 +29,16 @@ a {
     color: #5334F5;
     font-weight: 600;
 }
+ul {
+    padding: 0 1rem 2rem 1rem;
+    font-weight: 300;
+}
+li {
+    padding: 1rem 0;
+}
+p {
+    font-weight: 300;
+}
 
 .active {
     font-weight: 700;
