@@ -20,7 +20,7 @@ Over the course of this week, students will work on creating their own applicati
 - You are required to showcase progress with at least 1 commit a day.
   This will let your project manager know where you are and if you need
   help. This also allows the client to get progress reports from the
-  company in a real world setting.
+  company in a real world setting. 
 
 
 ## Trello Set Up:
