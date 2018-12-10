@@ -26,8 +26,14 @@ export default class Grid extends Component {
     }
 
     toggle = (e) => {
-        e.preventDefault();
-        console.log("click")
+
+        console.log("click", e.target.name)
+        let newArr = this.state.array;
+        let current = this.state.array[e.target.name -1].active;
+        newArr[e.target.name -1] = {id: +e.target.name, active: !current}
+        this.setState({
+            array: newArr
+        })
     }
 
     render(){
@@ -35,7 +41,7 @@ export default class Grid extends Component {
         return(
             <GridDiv> 
                 {this.state.array.map(cube => {
-                    return <Cube onClick={this.toggle} id={cube.id} key={cube.id} active={cube.active} />
+                    return <Cube toggle={this.toggle} name={cube.id} key={cube.id} active={cube.active} />
                 })}
             </GridDiv>
         )
