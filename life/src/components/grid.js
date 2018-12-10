@@ -7,6 +7,7 @@ export default class Grid extends Component {
         super(props)
         this.state = {
             array: [],
+            nextArray: [],
             generations: 0,
             width: 15,
         }
@@ -16,57 +17,68 @@ export default class Grid extends Component {
         let width = this.state.width;
         let newArr = [];
         for (let i = 1; i < width*width +1; i++){
-            if(i % 2 > 0){
+            // if(i % 2 > 0){
                 newArr.push({id: i, active: false})
-            } else {
-                newArr.push({id: i, active: true})
-            }
+            // } else {
+                // newArr.push({id: i, active: true})
+            // }
         }
         this.setState({
             array: newArr
         })
     }
 
-    toggle = (e) => {
+    toggle = (cubeNum) => {
+        let current = this.state.array[cubeNum-1].active;
         let newArr = this.state.array;
-        let current = this.state.array[e.target.name -1].active;
-        let nextGen = this.state.generations+1;
-        this.get8surrounding(e.target.name);
-        newArr[e.target.name -1] = {id: +e.target.name, active: !current}
+        newArr[cubeNum-1] = {id: +cubeNum, active: !current} 
         this.setState({
-            array: newArr,
-            generations: nextGen,
+            nextArray: newArr,
         })
-        
     }
 
     get8surrounding = (target) => {
+        console.log(target)
         let surrounding = [];
-        surrounding.push(+target+1)
-        surrounding.push(+target-1)
-        surrounding.push(+target-this.state.width)
+        // console.log(surrounding)
         surrounding.push(+target-this.state.width-1)
+        surrounding.push(+target-this.state.width)
         surrounding.push(+target-this.state.width+1)
-        surrounding.push(+target+this.state.width)
+        surrounding.push(+target-1)
+        surrounding.push(+target+1)
         surrounding.push(+target+this.state.width-1)
+        surrounding.push(+target+this.state.width)
         surrounding.push(+target+this.state.width+1)
         console.log(surrounding)
-        // return surrounding
+        let clean = [];
+        surrounding.forEach(cube => {
+            if(cube > 0){
+                clean.push(cube)
+            }
+            //something for left side
+        })
+        return clean
     }
 
-    toggle8 = (e) => {
-        let newArr = this.state.array;
-        let current = this.state.array[e.target.name -1].active;
+    toggle8 = async (cubeNum) => {
+        console.log(this.state)
+        await this.setState({
+            nextArray: this.state.array
+        });
+        console.log(this.state)
         let nextGen = this.state.generations+1;
-
-        newArr[e.target.name -1] = {id: +e.target.name, active: !current}
-        
-        
-        
-        this.setState({
-            array: newArr,
-            generations: nextGen,
+        let surr = this.get8surrounding(cubeNum);
+        console.log(surr)
+        await surr.forEach(cube => {
+            this.toggle(cube);
         })
+        console.log(this.state)
+        await this.setState({
+            array: this.state.nextArray,
+            nextArray: [],
+            generations: nextGen
+        })
+        console.log(this.state)
     }
 
     clear(){
@@ -80,7 +92,7 @@ export default class Grid extends Component {
         })
     }
 
-    clickHandler = (e) =>{
+    clickHandler = (e) => {
         e.preventDefault();
         switch(e.target.name){
             case "start":
@@ -97,9 +109,9 @@ export default class Grid extends Component {
                 this.clear();
                 break;
             default: 
-                console.log("default");
-                console.log("toggle");
-                this.toggle(e);
+                // console.log("default");
+                console.log("toggle", e.target.name);
+                this.toggle8(e.target.name );
         }
     }
 
