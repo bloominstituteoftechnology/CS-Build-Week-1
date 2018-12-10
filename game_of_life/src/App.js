@@ -73,7 +73,7 @@ class App extends Component {
         if(!this.state.running){
           let newSize = this.state.size; 
           if(event.target.value < 90){
-            newSize[0] = this.state.size;
+            newSize[0] = event.target.value;
           }else{
             newSize[0] = 90; 
           }
@@ -93,7 +93,7 @@ class App extends Component {
         if(!this.state.running){
           let newSize = this.state.size;
           if(event.target.value < 30){
-            newSize[1] = this.state.size;
+            newSize[1] = event.target.value;
           }else{
             newSize[1] = 20;
           }
