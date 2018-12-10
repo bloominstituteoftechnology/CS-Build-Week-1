@@ -7,7 +7,7 @@ class App extends Component {
     this.drawGrid()
   }
   drawGrid = () => {
-    const c = document.getElementById("grid");
+    const c = this.refs.grid
     const ctx = c.getContext("2d");
     for(let i=0; i<= 300; i+=10) {
       ctx.beginPath()
@@ -20,10 +20,20 @@ class App extends Component {
       ctx.stroke();
    }
   }
+  handleClick = (e) => {
+    const c = this.refs.grid
+    const ctx = c.getContext("2d");
+    const boxSize = 10
+    ctx.fillStyle = "#DB7093";
+    ctx.fillRect(Math.floor(e.clientX / boxSize) * boxSize,
+      Math.floor(e.clientY / boxSize) * boxSize,
+      boxSize, boxSize);
+  }
+
   render() {
     return (
       <div className="App">
-        <canvas id="grid"width="500" height="500"/>
+        <canvas onClick={this.handleClick} ref="grid" width="500" height="500"/>
       </div>
     );
   }
