@@ -45,7 +45,22 @@ class LifeCanvas extends Component {
     // console.log(`X: ${currentSquareX}, Y: ${currentSquareY}`);
     let matrix = this.state.matrix.slice(0);
     matrix[currentSquareY][currentSquareX] ^= 1;
-    this.setState({ matrix });
+    this.setState({ matrix }, () =>
+      this.updateSingleCanvas(currentSquareY, currentSquareX, squareSize)
+    );
+  };
+
+  updateSingleCanvas = (currentSquareY, currentSquareX, squareSize) => {
+    let canvas = this.refs.canvas.getContext('2d');
+    if (this.state.matrix[currentSquareY][currentSquareX] === 1) {
+      canvas.fillStyle = 'black';
+      canvas.fillRect(
+        currentSquareX * squareSize,
+        currentSquareY * squareSize,
+        squareSize,
+        squareSize
+      );
+    }
   };
 
   render() {
