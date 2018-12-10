@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Footer from './Footer';
 import Cell from './Cell';
 import '../App.css';
+import Header from './Header';
 
 class Grid extends Component {
     constructor(props) {
@@ -30,9 +31,10 @@ class Grid extends Component {
     render() { 
         return (
             <div className = 'gol-container'>
-                <div className = 'grid'>
-                    {this.createGrid()}
-                </div>
+                <Header />
+                    <div className = 'grid'>
+                        {this.createGrid()}
+                    </div>
                 <Footer />
             </div>
          );
