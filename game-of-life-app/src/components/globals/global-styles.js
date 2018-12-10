@@ -35,3 +35,9 @@ a {
     color: rgba(22, 23, 26, 1);
 }
 `
+
+export const StyledSection = styled.section`
+    margin: 0 auto;
+    padding: 5rem;
+    max-width: 1000px;
+`

@@ -14,7 +14,7 @@ class App extends Component {
       <div>
         <Header title="Conway's Game of Life" />
         <Switch>
-        <Route exact path="/" component={props => <Game  {...props} />} />
+        <Route exact path="/" render={props => <Game  {...props} />} />
         <Route exact path="/about" component={About} />
         <Route exact path="/colophon" component={Colophon} />
         <Route component={PageNotFound} />
