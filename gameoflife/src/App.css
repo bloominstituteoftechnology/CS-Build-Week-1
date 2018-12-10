@@ -1,0 +1,11 @@
+.App {
+  border: 1px solid #b7b7b7;
+  max-width: 890px;
+  display: flex;
+  margin: 60px auto;
+
+}
+
+.canvas {
+  border: 2px solid orange;
+}
