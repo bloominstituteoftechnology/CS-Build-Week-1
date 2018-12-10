@@ -7,7 +7,9 @@ class LifeCanvas extends Component {
     width: 500,
     square: 15,
     matrix: [],
-    start: false
+    start: false,
+    iter: 0,
+    intervalId: null
   };
 
   componentDidMount() {
@@ -75,12 +77,20 @@ class LifeCanvas extends Component {
 
   clearCanvas = () => {
     const matrix = new Array(15).fill(0).map(() => new Array(15).fill(0));
-    this.setState({ matrix });
+    if (this.state.intervalId) {
+      clearInterval(this.state.intervalId);
+    }
+    this.setState({ matrix, intervalId: null, iter: 0 }, () =>
+      this.updateFullCanvas()
+    );
   };
 
   computeNext = () => {
     const matrix = gameOfLife(this.state.matrix);
-    this.setState({ matrix }, () => this.updateFullCanvas());
+    this.setState(
+      prevState => ({ matrix, iter: prevState.iter + 1 }),
+      () => this.updateFullCanvas()
+    );
   };
 
   updateFullCanvas = () => {
@@ -109,6 +119,11 @@ class LifeCanvas extends Component {
     }
   };
 
+  startCanvas = () => {
+    let intervalId = setInterval(this.computeNext, 1000);
+    this.setState({ start: true, intervalId });
+  };
+
   render() {
     return (
       <>
@@ -119,6 +134,9 @@ class LifeCanvas extends Component {
           onClick={this.getCursorPosition}
         />
         <button onClick={this.computeNext}>Next</button>
+        <button onClick={this.startCanvas}>Play</button>
+        <button onClick={this.clearCanvas}>Clear</button>
+        <p>Iteration: {this.state.iter}</p>
       </>
     );
   }
