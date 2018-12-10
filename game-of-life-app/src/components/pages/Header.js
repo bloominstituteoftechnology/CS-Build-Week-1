@@ -69,6 +69,7 @@ const PageLink = styled(Link)`
 const HeaderLogoLink = styled(Link)`
   color: #1b1b1b;
   text-decoration: none;
+  font-weight: 800;
   font-size: 2.4rem;
   align-self: center;
 `;

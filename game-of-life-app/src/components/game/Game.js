@@ -22,7 +22,7 @@ class Game extends React.Component {
         <StyledSection>
           <GameContainer>
             <div>
-              <h2>Hello from game component. Put game grid here.</h2>
+              <p>Hello from game component. Put game grid here.</p>
             </div>
             <Rules />
           </GameContainer>
