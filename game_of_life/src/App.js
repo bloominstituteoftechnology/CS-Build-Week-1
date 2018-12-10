@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import styled from 'styled-components'; 
+import Cell from './Cell'; 
 
 const App_Holder = styled.div`
 border: 1px solid black; 
@@ -53,35 +54,79 @@ class App extends Component {
     super();
     this.state = {
       //-----i    j  i=Column j=Row  
-      size: [90, 20]
+      size: [90, 20],
+      running: false,
     }
-    // this.handleColumnChange = this.handleColumnChange.bind(this); 
-    // this.handleRowChange = this.handleRowChange.bind(this); 
+    this.handleColumnChange = this.handleColumnChange.bind(this);
+    this.handleRowChange = this.handleRowChange.bind(this);
+    this.startGame = this.startGame.bind(this);
+    this.stopGame = this.stopGame.bind(this);
+    this.renderBoard = this.renderBoard.bind(this);
   }
+
+      handleColumnChange(event){
+
+      };
+
+      handleRowChange(event){
+
+      };
+
+      startGame(){
+    
+      };
+
+      stopGame(){
+   
+      };
+
+      runGame(){
+
+      };
+
+      renderBoard(){
+        let newBoard = [];
+        let cellRow = []; 
+
+        for(let i = 0; i < this.state.size[0]; i++){
+          for(let j = 0; j < this.state.size[1]; j++){
+            cellRow.push(<Cell key={[i, j]}/>);
+          }
+          newBoard.push(<div className="row" key={i}>{cellRow}</div>);
+          cellRow = []; 
+        }
+        return newBoard; 
+      };
+
   render() {
     return (
       <App_Holder>
         <Header_container>
-          <Btn>Submit</Btn>
+          {/* <Btn>Submit</Btn> */}
             <Inner_Header>
               <Input 
               type = "number"
               placeholder = "Rows"
+              value = {this.state.size[1]}
+              onChange={this.handleRowChange}
               />
               <Input 
               type = "number"
               placeholder = "Columns"
+              value = {this.state.size[0]}
+              onChange = {this.handleColumnChange}
               />
             </Inner_Header>
             <Btn_container>
-              <Btn>Start</Btn>
-              <Btn>Stop</Btn>
+              <Btn onClick={this.startGame}>Start</Btn>
+              <Btn onClick={this.stopGame}>Stop</Btn>
             </Btn_container>
             <Header_text>
               <h3>Generations:</h3>
               </Header_text>
         </Header_container>
         <Board_Container>
+          {this.renderBoard()}
         </Board_Container>
       </App_Holder>
     );
