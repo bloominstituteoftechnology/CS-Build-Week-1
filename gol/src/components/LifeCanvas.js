@@ -20,6 +20,8 @@ class LifeCanvas extends Component {
 
   initializeCanvas = () => {
     let canvas = this.refs.canvas.getContext('2d');
+    canvas.beginPath();
+    canvas.clearRect(0, 0, canvas.canvas.width, canvas.canvas.height);
     canvas.fillStyle = 'white';
 
     const iter = this.state.height / this.state.square;
@@ -153,6 +155,12 @@ class LifeCanvas extends Component {
     }
   };
 
+  handleChange = e => {
+    this.setState({ [e.target.name]: Number(e.target.value) }, () =>
+      this.initializeCanvas()
+    );
+  };
+
   render() {
     return (
       <>
@@ -175,6 +183,16 @@ class LifeCanvas extends Component {
             <option value="blinker">Blinker</option>
             <option value="random">Random</option>
           </select>
+          <input
+            type="range"
+            id="size"
+            name="square"
+            min="15"
+            max="40"
+            onChange={this.handleChange}
+            value={this.state.square}
+          />
+          <label htmlFor="size">Square Count</label>
         </Control>
       </>
     );
