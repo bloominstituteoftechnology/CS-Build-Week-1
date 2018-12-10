@@ -1,7 +1,7 @@
 # Screen Buffers, Canvas, and RGB
 
 
-## The Screen Buffer
+## The Screen Buffer ##
 
 The *Screen Buffer* is a fancy way of saying "big array that holds pixel
 information". Screen buffers hold their data in a variety of different
