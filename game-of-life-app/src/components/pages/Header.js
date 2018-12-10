@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { GlobalStyle } from '../globals/global-styles'
+import { GlobalStyle } from "../globals/global-styles";
 
 const StyledLink = styled(Link)`
   color: #874ef4;
@@ -28,7 +28,7 @@ const HeaderBar = styled.div`
   margin: 0 auto;
   max-width: 1000px;
   @media (max-width: 800px) {
-    grid-template-columns: repeat(1, 1fr minmax(400px, 1fr))
+    grid-template-columns: repeat(1, 1fr minmax(400px, 1fr));
   }
   @media (max-width: 684px) {
     grid-template-columns: 1fr;
@@ -75,7 +75,7 @@ const HeaderLogoLink = styled(Link)`
 
 const Header = props => (
   <>
-  <GlobalStyle />
+    <GlobalStyle />
     <HeaderContainer>
       <HeaderBar>
         <HeaderLogoText>
