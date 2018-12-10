@@ -7,12 +7,13 @@ export default class Grid extends Component {
         super(props)
         this.state = {
             array: [],
-            generations: 0
+            generations: 0,
+            width: 15,
         }
     }
 
     componentDidMount(){
-        let width = 15;
+        let width = this.state.width;
         let newArr = [];
         for (let i = 1; i < width*width +1; i++){
             if(i % 2 > 0){
@@ -30,7 +31,38 @@ export default class Grid extends Component {
         let newArr = this.state.array;
         let current = this.state.array[e.target.name -1].active;
         let nextGen = this.state.generations+1;
+        this.get8surrounding(e.target.name);
         newArr[e.target.name -1] = {id: +e.target.name, active: !current}
+        this.setState({
+            array: newArr,
+            generations: nextGen,
+        })
+        
+    }
+
+    get8surrounding = (target) => {
+        let surrounding = [];
+        surrounding.push(+target+1)
+        surrounding.push(+target-1)
+        surrounding.push(+target-this.state.width)
+        surrounding.push(+target-this.state.width-1)
+        surrounding.push(+target-this.state.width+1)
+        surrounding.push(+target+this.state.width)
+        surrounding.push(+target+this.state.width-1)
+        surrounding.push(+target+this.state.width+1)
+        console.log(surrounding)
+        // return surrounding
+    }
+
+    toggle8 = (e) => {
+        let newArr = this.state.array;
+        let current = this.state.array[e.target.name -1].active;
+        let nextGen = this.state.generations+1;
+
+        newArr[e.target.name -1] = {id: +e.target.name, active: !current}
+        
+        
+        
         this.setState({
             array: newArr,
             generations: nextGen,
