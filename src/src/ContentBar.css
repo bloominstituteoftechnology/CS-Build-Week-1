@@ -1,0 +1,11 @@
+.top{
+display: flex;
+background: lightgray;
+height: 90px;
+}
+
+.bottom{
+display: flex;
+background: black;
+height: 90px;
+}
