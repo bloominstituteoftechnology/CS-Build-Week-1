@@ -34,6 +34,10 @@ Over the course of this week, students will work on creating their own applicati
 - [ ] Add your Trello URL to your project's README.md file. Commit the change, push it to your repository & submit a pull request
 
 
+## Trello
+https://trello.com/b/TxGFAqzq/gameoflife-alberto-preciado
+
+
 ## MVP Features:
 
 ### Preliminary Work
