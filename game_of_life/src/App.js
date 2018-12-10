@@ -40,8 +40,24 @@ const Header_text = styled.div`
 border: 1px solid yellow; 
 width: auto; 
 `
+const Board_Container = styled.div`
+border: 1px solid pink; 
+display: flex; 
+flex: 1; 
+justify-content: center; 
+padding: 0 60px; 
+`
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      //-----i    j  i=Column j=Row  
+      size: [90, 20]
+    }
+    // this.handleColumnChange = this.handleColumnChange.bind(this); 
+    // this.handleRowChange = this.handleRowChange.bind(this); 
+  }
   render() {
     return (
       <App_Holder>
@@ -65,6 +81,8 @@ class App extends Component {
               <h3>Generations:</h3>
               </Header_text>
         </Header_container>
+        <Board_Container>
+        </Board_Container>
       </App_Holder>
     );
   }
