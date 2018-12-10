@@ -10,7 +10,6 @@ export default class Cube extends Component {
     }  
 
     render(){
-        console.log(this.props)
         return(
             <CubeDiv onClick={this.props.toggle} name={this.props.name} style={{background: this.props.active ? "orange": null}}>
                 {this.props.name}

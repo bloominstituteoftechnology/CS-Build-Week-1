@@ -6,7 +6,8 @@ export default class Grid extends Component {
     constructor(props){
         super(props)
         this.state = {
-            array: []
+            array: [],
+            generations: 0
         }
     }
 
@@ -26,33 +27,38 @@ export default class Grid extends Component {
     }
 
     toggle = (e) => {
-
-        console.log("click", e.target.name)
         let newArr = this.state.array;
         let current = this.state.array[e.target.name -1].active;
+        let nextGen = this.state.generations+1;
         newArr[e.target.name -1] = {id: +e.target.name, active: !current}
         this.setState({
-            array: newArr
+            array: newArr,
+            generations: nextGen,
         })
     }
 
     render(){
-        console.log(this.state)
+        // console.log(this.state)
         return(
             <GridDiv> 
-                {this.state.array.map(cube => {
-                    return <Cube toggle={this.toggle} name={cube.id} key={cube.id} active={cube.active} />
-                })}
+                Generation: {this.state.generations}
+                <div className="cubesBin">
+                    {this.state.array.map(cube => {
+                        return <Cube toggle={this.toggle} name={cube.id} key={cube.id} active={cube.active} />
+                    })}
+                </div>
             </GridDiv>
         )
     }
 }
 
 const GridDiv = styled.div`
-    border: 1px solid blue;
-    box-sizing: border-box;
-    width: 392px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    .cubesBin{
+        border: 1px solid blue;
+        box-sizing: border-box;
+        width: 392px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
 `
