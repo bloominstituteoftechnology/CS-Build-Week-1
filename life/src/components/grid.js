@@ -37,14 +37,53 @@ export default class Grid extends Component {
         })
     }
 
+    clear(){
+        let newArr = this.state.array;
+        newArr.forEach(cube => {
+            cube.active = false;
+        })
+        this.setState({
+            array: newArr,
+            generations: 0,
+        })
+    }
+
+    clickHandler = (e) =>{
+        e.preventDefault();
+        switch(e.target.name){
+            case "start":
+                console.log("start");
+                break;
+            case "stop":
+                console.log("stop");
+                break;
+            case "next":
+                console.log("next");
+                break;
+            case "clear":
+                console.log("clear");
+                this.clear();
+                break;
+            default: 
+                console.log("default");
+                console.log("toggle");
+                this.toggle(e);
+        }
+    }
+
     render(){
-        // console.log(this.state)
         return(
             <GridDiv> 
                 Generation: {this.state.generations}
+                <div className="buttons">
+                    <button name="start" onClick={this.clickHandler}>start</button>
+                    <button name="stop" onClick={this.clickHandler}>stop</button>
+                    <button name="next" onClick={this.clickHandler}>next</button>
+                    <button name="clear" onClick={this.clickHandler}>clear</button>
+                </div>
                 <div className="cubesBin">
                     {this.state.array.map(cube => {
-                        return <Cube toggle={this.toggle} name={cube.id} key={cube.id} active={cube.active} />
+                        return <Cube clickHandler={this.clickHandler} name={cube.id} key={cube.id} active={cube.active} />
                     })}
                 </div>
             </GridDiv>
