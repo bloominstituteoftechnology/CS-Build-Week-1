@@ -14,6 +14,7 @@ Over the course of this week, students will work on creating their own applicati
 * [Student should be able to implement a visualization of Conway’s “Game of Life” using technologies related to their specific track](objectives/visualization)
 * [Student should be able to utilize “double buffering” to implement animations](objectives/double-buffer)
 
+Trello: https://trello.com/b/7d9i23Zd/gameoflife-andrew-mclaughlin
 
 ## Git Commits
 
