@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Cell_Container = styled.div`
 display: flex; 
 flex: 1; 
-padding: 10px; 
+padding: 5px; 
 margin: 1px; 
 border: 1px solid black; 
 `
