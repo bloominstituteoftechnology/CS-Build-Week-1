@@ -30,10 +30,7 @@ class Grid extends Component {
     render() { 
         return (
             <div className = 'gol-container'>
-            <Header 
-                rows = {this.state.gridSize[1]}
-                columns = {this.state.gridSize[0]}
-                />
+            <Header />
             <div className = 'grid'>
                 {this.createGrid()}
             </div>
