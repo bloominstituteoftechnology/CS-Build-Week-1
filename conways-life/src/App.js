@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import Grid from './components/Grid';
-import Rules from './components/Rules'
+import Rules from './components/Rules';
+import History from './components/History';
 import './App.css';
 
 class App extends Component {
@@ -10,7 +11,7 @@ class App extends Component {
         <h1>Conway's Game of Life</h1>
         {/* <Grid /> */}
         <Rules />
-        {/* <History /> */}
+        <History />
       </div>
     );
   }
