@@ -54,7 +54,7 @@ class App extends Component {
     super();
     this.state = {
       //-----i    j  i=Column j=Row  
-      size: [90, 20],
+      size: [90, 30],
       running: false,
     }
     this.handleColumnChange = this.handleColumnChange.bind(this);
@@ -65,11 +65,19 @@ class App extends Component {
   }
 
       handleColumnChange(event){
-
+        //if the game is running
+        //form a column that is according to the value of size
+        //if the column is less than 90
+        //then that will be the new size of the column
+        //if the column size is larger than 90 then default to 90.
       };
 
       handleRowChange(event){
-
+        //if the game is running
+        //form a row that is according to the value of size
+        //if the row is less than 20
+        //then that will be the new size of row
+        //if the row size is larger than 20 then default to 20.
       };
 
       startGame(){
@@ -93,7 +101,7 @@ class App extends Component {
             //push the cells into the board made.
             cellRow.push(<Cell key={[i, j]}/>);
           }
-          //create the new board
+          //create the new board 
           newBoard.push(<div className="row" key={i}>{cellRow}</div>);
           cellRow = []; 
         }
