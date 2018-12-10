@@ -9,20 +9,28 @@ class Grid extends Component {
         super(props);
         this.state = { 
             gridSize: [70, 30],
-            inGame: false,
+            runningGame: false,
          }
     }
 
     play = () => {
-
+        if (!this.state.runningGame) {
+            this.setState({
+                runningGame: true,
+            });
+        }
+        console.log("Play");
     }
 
     pause = () => {
-
+        console.log("Pause");
     }
 
     stop = () => {
-        
+        this.setState({
+            runningGame: false,
+        });
+        console.log("Stop");
     }
 
     createGrid = () => {
@@ -47,7 +55,11 @@ class Grid extends Component {
                     <div className = 'grid'>
                         {this.createGrid()}
                     </div>
-                <Footer />
+                <Footer 
+                    play = {this.play}
+                    pause = {this.pause}
+                    stop = {this.stop}
+                />
             </div>
          );
     }

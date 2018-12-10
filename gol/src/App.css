@@ -2,12 +2,22 @@
   text-align: center;
 }
 
-.cell {
+.cell-dead {
   display: flex;
   flex: 1;
   padding: 10px;
   margin: 1px;
   border: 1px solid black;
+  background: white;
+}
+
+.cell-alive {
+  display: flex;
+  flex: 1;
+  padding: 10px;
+  margin: 1px;
+  border: 1px solid black;
+  background: black;
 }
 
 .grid {
