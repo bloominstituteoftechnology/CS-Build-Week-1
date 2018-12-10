@@ -4,8 +4,7 @@ import ReactDOM from 'react-dom';
 class Square extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isOn: false
-    }
+    this.isOn = false;
+    this.liveneighbors = 0;
   }
 }
