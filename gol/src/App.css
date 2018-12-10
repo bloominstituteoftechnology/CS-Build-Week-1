@@ -1,3 +1,17 @@
 .App {
   text-align: center;
 }
+
+.cell {
+  display: flex;
+  flex: 1;
+  padding: 10px;
+  margin: 1px;
+  border: 1px solid black;
+}
+
+.grid {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
