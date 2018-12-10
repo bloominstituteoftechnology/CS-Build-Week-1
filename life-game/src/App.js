@@ -6,7 +6,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div>Conway's Game of Life</div>
+        <h1>Conway's Game of Life</h1>
         <GameBoard/>
       </div>
     );

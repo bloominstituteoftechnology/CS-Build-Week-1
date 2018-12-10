@@ -30,9 +30,22 @@ class GameBoard extends React.Component{
    componentDidMount(){
       this.drawCanvas();
   }
+
+  handleClick = (e) => {
+    const can = this.refs.canvas
+    const context = can.getContext("2d");
+    const squareSize = 50
+    context.fillStyle = "blue";
+    context.fillRect(Math.floor(e.clientX / squareSize) * squareSize,
+      Math.floor(e.clientY / squareSize) * squareSize,
+      squareSize,
+      squareSize);
+  }
+
   render(){
       return(
           <canvas 
+              onClick={this.handleClick}
               ref="canvas"
               height={this.state.height}
               width={this.state.width}
