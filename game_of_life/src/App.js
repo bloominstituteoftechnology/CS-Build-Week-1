@@ -70,6 +70,18 @@ class App extends Component {
         //if the column is less than 90
         //then that will be the new size of the column
         //if the column size is larger than 90 then default to 90.
+        if(!this.state.running){
+          let newSize = this.state.size; 
+          if(event.target.value < 90){
+            newSize[0] = this.state.size;
+          }else{
+            newSize[0] = 90; 
+          }
+          this.setState({
+            size: newSize,
+          });
+          this.renderBoard(); 
+        }
       };
 
       handleRowChange(event){
@@ -78,19 +90,39 @@ class App extends Component {
         //if the row is less than 20
         //then that will be the new size of row
         //if the row size is larger than 20 then default to 20.
+        if(!this.state.running){
+          let newSize = this.state.size;
+          if(event.target.value < 30){
+            newSize[1] = this.state.size;
+          }else{
+            newSize[1] = 20;
+          }
+          this.setState({
+            size: newSize,
+          });
+          this.renderBoard();
+        }
       };
 
       startGame(){
         //if the game is running
         //set the state of running to true
+        if(!this.state.running){
+          this.setState({
+            running: true, 
+          })
+        }
       };
 
       stopGame(){
         //if the game is running
         //set the state of running to false
       };
-      
+
       renderBoard(){
+        //two empty arrays
+        //one for a new board 
+        //and another for the individual rows
         let newBoard = [];
         let cellRow = []; 
         //loop through twice to the row and column sizes.
