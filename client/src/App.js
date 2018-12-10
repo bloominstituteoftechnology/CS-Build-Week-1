@@ -24,6 +24,10 @@ class App extends Component {
     count : 0, 
     matrixUsing : [], 
   };
+
+  componentWillMount () {
+    this.setMatrixUp(); 
+  }
   increaseCount () {
     this.setState({count : this.state.count + 1}); 
   }
@@ -49,10 +53,11 @@ class App extends Component {
 
   render() {
     const matrix = this.state.matrixUsing.slice(); 
+    console.log(matrix); 
 
     return (<div className="container"> 
       
-      {matrix.map(hash => <div key = {hash.actual_number} className = {hash.value === 0 ? "offDiv" : "onDiv"} > </div> )}
+      {matrix.map(hash => <div key = {hash.actual_number} className = {hash.value === 0 ? "offDiv" : "onDiv"} >ADD</div> )}
       
     
     </div>);
