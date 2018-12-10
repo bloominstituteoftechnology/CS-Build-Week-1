@@ -40,6 +40,8 @@ class LifeCanvas extends Component {
     let currentSquareX = Math.floor(x / squareSize);
     let currentSquareY = Math.floor(y / squareSize);
     console.log(`X: ${currentSquareX}, Y: ${currentSquareY}`);
+    // could add logic here to fill with canvas, but i want to change the 2d array
+    // to reflect the change instead
   };
 
   render() {
