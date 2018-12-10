@@ -107,16 +107,19 @@ class App extends Component {
       startGame(){
         //if the game is running
         //set the state of running to true
-        if(!this.state.running){
           this.setState({
             running: true, 
           })
-        }
       };
 
       stopGame(){
         //if the game is running
         //set the state of running to false
+        if(!this.state.running){
+          this.setState({
+            running: false,
+          })
+        }
       };
 
       renderBoard(){
