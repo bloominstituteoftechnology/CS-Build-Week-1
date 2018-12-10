@@ -34,7 +34,9 @@ class LifeCanvas extends Component {
       }
     }
     canvas.stroke();
-    const matrix = new Array(15).fill(0).map(() => new Array(15).fill(0));
+    const matrix = new Array(this.state.square)
+      .fill(0)
+      .map(() => new Array(this.state.square).fill(0));
     this.setState({ matrix });
   };
 
@@ -77,7 +79,9 @@ class LifeCanvas extends Component {
   };
 
   clearCanvas = () => {
-    const matrix = new Array(15).fill(0).map(() => new Array(15).fill(0));
+    const matrix = new Array(this.state.square)
+      .fill(0)
+      .map(() => new Array(this.state.square).fill(0));
     if (this.state.intervalId) {
       clearInterval(this.state.intervalId);
     }
