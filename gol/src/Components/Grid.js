@@ -13,6 +13,18 @@ class Grid extends Component {
          }
     }
 
+    play = () => {
+
+    }
+
+    pause = () => {
+
+    }
+
+    stop = () => {
+        
+    }
+
     createGrid = () => {
         let newGrid = [];
         let row = [];
