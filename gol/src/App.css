@@ -4,15 +4,11 @@
   width: 100vw;
 }
 
-.screen{
+.screen {
   display: grid;
   height: 60vh;
   width: 60vh;
   border: 3px black solid;
- grid-gap: 2px;
- padding:2px;
-
+  grid-gap: 2px;
+  padding: 2px;
 }
-
-
-
