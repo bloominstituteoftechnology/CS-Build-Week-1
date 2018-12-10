@@ -41,24 +41,24 @@ export default class Grid extends Component {
         console.log(target)
         let surrounding = [];
         // console.log(surrounding)
-        surrounding.push(+target-this.state.width-1)
-        surrounding.push(+target-this.state.width)
-        surrounding.push(+target-this.state.width+1)
-        surrounding.push(+target-1)
-        surrounding.push(+target+1)
-        surrounding.push(+target+this.state.width-1)
-        surrounding.push(+target+this.state.width)
-        surrounding.push(+target+this.state.width+1)
-        console.log(surrounding)
+        surrounding.push(+target.id-this.state.width-1)
+        surrounding.push(+target.id-this.state.width)
+        surrounding.push(+target.id-this.state.width+1)
+        surrounding.push(+target.id-1)
+        surrounding.push(+target.id+1)
+        surrounding.push(+target.id+this.state.width-1)
+        surrounding.push(+target.id+this.state.width)
+        surrounding.push(+target.id+this.state.width+1)
+        console.log(surrounding, "surrounding")
         let clean = [];
-        surrounding.forEach(cube => {
-            if(cube > 0 && cube < 226){
+        surrounding.forEach(cube_id => {
+            if(cube_id> 0 && cube_id < 226){
                 if(isActive){
-                    if(cube.active === true){
-                        clean.push(cube)
+                    if(this.state.array[cube_id-1].active === true){
+                        clean.push(this.state.array[cube_id-1])
                     }
                 } else {
-                    clean.push(cube)
+                    clean.push(this.state.array[cube_id-1])
                 }
             }
             //something for left side
@@ -67,18 +67,18 @@ export default class Grid extends Component {
     }
 
     toggle8 = async (cubeNum) => {
-        console.log(this.state)
+        // console.log(this.state)
         await this.setState({
             nextArray: this.state.array
         });
-        console.log(this.state)
+        // console.log(this.state)
         let nextGen = this.state.generations+1;
         let surr = this.get8surrounding(cubeNum);
-        console.log(surr)
+        // console.log(surr)
         await surr.forEach(cube => {
             this.toggle(cube);
         })
-        console.log(this.state)
+        // console.log(this.state)
         await this.setState({
             array: this.state.nextArray,
             nextArray: [],
@@ -94,6 +94,7 @@ export default class Grid extends Component {
                 newArr.push(cube)
             }
         })
+        console.log(newArr)
         return newArr;
     }
 
@@ -107,18 +108,23 @@ export default class Grid extends Component {
         let nextGen = this.state.generations+1;
         let questionables = [];
         let actives = this.getActives();
+        questionables = actives;
+        console.log("actives", actives)
         actives.forEach(cube => {
-            let surrounding = this.get8surrounding(cube.id);
+            let surrounding = this.get8surrounding(cube);
+            console.log(surrounding, "surr")
             surrounding.forEach(neighbor => {
-                if(questionables.includes(neighbor)){
-                    //do nothing 
-                } else {
+                console.log(neighbor, "neighbor")
+                // if(questionables.includes(neighbor)){
+                //     //do nothing 
+                // } else {
                     questionables.push(neighbor);
-                }
+                // }
             })
         })
         console.log("questionables", questionables);
         await questionables.forEach(cube => {
+            console.log("?s forloop", cube)
             this.cubeNextTime(cube);
         })
         console.log(this.state)
@@ -134,18 +140,23 @@ export default class Grid extends Component {
         //get neighbors
         let activeNeighbors = this.get8surrounding(cube, true);
         let newArr = this.state.nextArray;
+        console.log(cube)
         if(cube.active){
             //stay allive if 2 0r 3 neighbors
-            if(activeNeighbors.length == 2||3){
+            console.log(cube.id, "is active and so are ",activeNeighbors.length," neighbores")
+            if(1 < activeNeighbors.length && activeNeighbors.length < 4){
                 newArr[cube.id-1] = {id: cube.id, active: true}
+                console.log("so in the next arr", newArr[cube.id-1] , "will be ",{id: cube.id, active: true})
             } else {
                 //else die
                 newArr[cube.id-1] = {id: cube.id, active: false}
             }
         } else {
             //switch to alive if 2 neighbors
-            if(activeNeighbors.lenght == 2){
-                newArr[cube.id-1] = {id: cube.id, active: true}
+            console.log(cube.id, "is dead but",activeNeighbors.length," neighbores are alive")
+            if(activeNeighbors.lenght == 3){
+                newArr[cube.id-1] = {id: cube.id-1, active: true}
+                console.log("so in the next arr", newArr[cube.id-1] , "will be ",{id: cube.id, active: true})
             }
             //else die
         }
@@ -174,10 +185,6 @@ export default class Grid extends Component {
             }
         })
         return curr
-    }
-
-    buildNext(){
-        
     }
 
     clickHandler = (e) => {
