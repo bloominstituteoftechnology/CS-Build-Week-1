@@ -5,17 +5,15 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      grid: {}
     }
   }
   componentDidMount() {
     const gridStateInit = {}
     for(let i=0; i<=300; i+=10){
       for(let j=0; j<=300; j+=10){
-        gridStateInit[`${i}_${j}`] = "dead"
+        this.setState({[`${i}_${j}`]: "dead"})
       }
     }
-    this.setState({grid: gridStateInit})
     this.drawGrid()
   }
   drawGrid = () => {
@@ -36,13 +34,13 @@ class App extends Component {
     const c = this.refs.grid
     const ctx = c.getContext("2d");
     const boxSize = 10
+    //offset squares to make up for where the grid is on the page
     const x = Math.floor(e.clientX / boxSize) * boxSize - 50
     const y = Math.floor(e.clientY / boxSize) * boxSize - 80
     ctx.fillStyle = "#DB7093";
-    //offset fillRect squares to make up for where the grid is on the page
     ctx.fillRect(x, y, boxSize, boxSize);
     console.log(x, y)
-    this.setState({...this.state.grid, [`${x}_${y}`]: "alive"})
+    this.setState({[`${x}_${y}`]: "alive"});
   }
 
   render() {
