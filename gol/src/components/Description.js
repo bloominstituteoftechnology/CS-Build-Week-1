@@ -33,10 +33,13 @@ const Description = () => (
       </ListComponent>
     </List>
     <Paragraph>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi expedita
-      architecto ducimus cumque magni distinctio voluptate soluta. Quos
-      reiciendis quasi totam, nam delectus necessitatibus itaque quia nulla illo
-      rem repudiandae?
+      Conway's Game of Life is a cellular automaton, designed to take an initial
+      configuration and create unique outputs (generations) depending on the
+      current state. The aforementioned rules determine whether a cell is alive
+      (black) or dead (white). Given enough resources, the Game of Life is
+      Turing complete. Cellular automata has been used in research and has many
+      practical applications, and it is all possible thanks to the four simple
+      rules above.
     </Paragraph>
   </DescriptionContainer>
 );

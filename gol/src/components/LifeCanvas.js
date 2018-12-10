@@ -147,7 +147,7 @@ class LifeCanvas extends Component {
           <ControlButton onClick={this.clearCanvas} last>
             Clear
           </ControlButton>
-          <p>Iteration: {this.state.iter}</p>
+          <p>Generation #{this.state.iter}</p>
         </Control>
       </>
     );
