@@ -20,6 +20,7 @@ class Game extends React.Component {
     drawBoard = () => {
         const canvas = this.refs.canvas;
         const context = canvas.getContext('2d');
+        const rect = canvas.getBoundingClientRect();
 
         for (let x = 0.5; x < 1911; x +=10) {
             context.moveTo(x, 0);
@@ -37,8 +38,8 @@ class Game extends React.Component {
         canvas.addEventListener('click', function(event) {
             // context.fillStyle = "yellow";
             // context.fillRect(event.pageX - (event.pageX % 10) - 9, event.pageY - (event.pageY % 10) - 79, 9, 9);
-            let yCoord = Number((Math.ceil(event.pageY / 10))) - 1;
-            let xCoord = Number((Math.ceil(event.pageX / 10))) - 1;
+            let xCoord = Number((Math.ceil((event.pageX - rect.left) / 10))) - 1;
+            let yCoord = Number((Math.ceil((event.pageY - rect.top) / 10))) - 1;
             console.log("xCoord: ", xCoord);
             console.log("pageX:", event.pageX);
             console.log("yCoord: ", yCoord);
@@ -61,10 +62,10 @@ class Game extends React.Component {
             for (let j = 0; j < 190; j++) {
                 if (this.state.array1[i][j]) {
                     context.fillStyle = "yellow";
-                    context.fillRect(i * 10 + 1, j * 10 + 1, 9, 9);
+                    context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
                 } else {
                     context.fillStyle = "dodgerblue";
-                    context.fillRect(i * 10 + 1, j * 10 + 1, 9, 9);
+                    context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
                 }
             }
         }
@@ -86,10 +87,10 @@ class Game extends React.Component {
             for (let j = 0; j < 190; j++) {
                 if (this.state.array1[i][j]) {
                     context.fillStyle = "yellow";
-                    context.fillRect(i * 10 + 1, j * 10 + 1, 9, 9);
+                    context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
                 } else {
                     context.fillStyle = "dodgerblue";
-                    context.fillRect(i * 10 + 1, j * 10 + 1, 9, 9);
+                    context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
                 }
             }
         }
