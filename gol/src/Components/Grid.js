@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Header from './Header';
+import Footer from './Footer';
 import Cell from './Cell';
 import '../App.css';
 
@@ -30,10 +30,10 @@ class Grid extends Component {
     render() { 
         return (
             <div className = 'gol-container'>
-            <Header />
-            <div className = 'grid'>
-                {this.createGrid()}
-            </div>
+                <div className = 'grid'>
+                    {this.createGrid()}
+                </div>
+                <Footer />
             </div>
          );
     }
