@@ -2,12 +2,12 @@ import React, { Component } from "react";
 
 const ContentBar = () => {
     return ( 
-        <div>
+        <div class="flex">
             <div class="col-md-12 top">
-                content
+                <span>content</span>
             </div>
             <div class="col-md-12 bottom">
-                content
+                <span>content</span>
             </div>
         </div>
      );
