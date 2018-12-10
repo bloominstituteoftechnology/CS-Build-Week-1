@@ -81,17 +81,15 @@ class App extends Component {
       };
 
       startGame(){
-    
+        //if the game is running
+        //set the state of running to true
       };
 
       stopGame(){
-   
+        //if the game is running
+        //set the state of running to false
       };
-
-      runGame(){
-
-      };
-
+      
       renderBoard(){
         let newBoard = [];
         let cellRow = []; 
