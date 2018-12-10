@@ -38,9 +38,8 @@ class App extends Component {
 
     Object.entries(this.state.matrix).forEach(entry => {
       for (let x of entry[1]){
-        console.log(`|${x}|`);
         temp_hash.row = entry[0]; 
-        temp_hash.position_in_row = this.state.count % 15;
+        temp_hash.position_in_row = this.state.count % 14;
 
         temp_hash.actual_number = this.state.count; 
         temp_hash.value = x; 
@@ -49,15 +48,29 @@ class App extends Component {
       }
     });
     this.setState({matrixUsing}); 
+    this.setState({count : 0 }); //reset count 
+  }
+
+  turnOnOrOff = (row, position_in_row, value) => {
+      //Just add 1 to the % of 2  it will provide 0 or 1. The conditional is already set up on the div to set the div to the correct class based off the value
+      console.log("Getting into the function.");
+      console.log(row, position_in_row, value); 
+      console.log("above is the paramaters for the function"); 
+      const matrix = this.state.matrix; 
+      console.log(matrix[row][position_in_row]); 
+      matrix[row][position_in_row] = matrix[row][position_in_row] === 0 ? 1 : 0; 
+      this.setState({matrix}); 
+      
+      
   }
 
   render() {
     const matrix = this.state.matrixUsing.slice(); 
-    console.log(matrix); 
+    console.log(this.state.matrix); 
 
     return (<div className="container"> 
       
-      {matrix.map(hash => <div key = {hash.actual_number} className = {hash.value === 0 ? "offDiv" : "onDiv"} >ADD</div> )}
+      {matrix.map(hash => <div key = {hash.actual_number} onClick = {() => this.turnOnOrOff(hash.row, hash.position_in_row, hash.value)} className = {this.state.matrix[hash.row][hash.position_in_row] === 0 ? "offDiv" : "onDiv"} >ADD</div> )}
       
     
     </div>);
