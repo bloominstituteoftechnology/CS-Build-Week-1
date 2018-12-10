@@ -41,3 +41,8 @@ export const StyledSection = styled.section`
     padding: 5rem;
     max-width: 920px;
 `
+
+export const CustomHR = styled.hr`
+    color: #eee;
+    border: .5px solid #eee;
+`
