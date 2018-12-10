@@ -1,0 +1,30 @@
+.Game {
+  position: relative;
+  margin: 0 auto;
+  background-color: #000;
+  background-image:
+    linear-gradient(#333 1px, transparent 1px),
+    linear-gradient(90deg, #333 1px, transparent 1px);
+}
+
+.Controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+}
+
+.Controls p {
+  margin-left: 4%;
+  margin-right: 4%;
+}
+
+.Presets {
+  display: flex;
+  justify-content: center;
+  margin-top: 3%;
+}
+
+.Presets p {
+  margin-left: 4%;
+  margin-right: 4%;
+}

@@ -1,0 +1,10 @@
+.info-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.info-container p {
+  margin-right: 3%;
+  margin-left: 3%;
+}
