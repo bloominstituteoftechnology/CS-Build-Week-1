@@ -68,6 +68,23 @@ class App extends Component {
     this.setState({ grid });
   };
 
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async gameLoop() {
+    while (this.state.play === 1) {
+      await this.sleep(2000);
+      console.log("hi");
+    }
+  }
+
+  componentDidUpdate() {
+    this.gameLoop()    
+  }
+  
+  
+
   playing = () => {
     if (this.state.play === 0) {
       return <button onClick={this.toggleState}>Play</button>;
@@ -90,10 +107,12 @@ class App extends Component {
   };
 
   clear = () => {
-      const newGrid = [...Array(25)].map(e => Array(25).fill(0));
-      this.setState({grid : newGrid})
-    
-  }
+    const newGrid = [...Array(25)].map(e => Array(25).fill(0));
+    this.setState({ grid: newGrid });
+    if (this.state.play === 1) {
+      this.setState({ play: 0 });
+    }
+  };
 
   render() {
     return (
@@ -105,7 +124,7 @@ class App extends Component {
           )}
         </GridWrapper>
         {this.playing()}
-        <button onClick={this.clear} >Clear</button>
+        <button onClick={this.clear}>Clear</button>
       </AppContainer>
     );
   }
