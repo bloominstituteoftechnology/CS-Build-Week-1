@@ -36,7 +36,7 @@ class GameBoard extends React.Component{
     const context = can.getContext("2d");
     const pos = this.refs.canvas.getBoundingClientRect()
     const squareSize = 20
-    context.fillStyle = "blue";
+    context.fillStyle = "black";
     context.fillRect(e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
       e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
       squareSize,
@@ -49,9 +49,10 @@ class GameBoard extends React.Component{
               onClick={this.handleClick}
               ref="canvas"
               height={this.state.height}
-              width={this.state.width}
-          />
-      )
+              width={this.state.width} 
+              /> 
+ 
+      );
   }
 }
   export default GameBoard;

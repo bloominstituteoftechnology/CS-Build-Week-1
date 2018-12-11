@@ -7,7 +7,16 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Conway's Game of Life</h1>
+
         <GameBoard/>
+
+        <div className = 'buttons'>
+        <button>play</button>
+        <button>stop</button>
+        <button>clear</button>
+        </div>
+        <div>Game Rules:</div>
+
       </div>
     );
   }
