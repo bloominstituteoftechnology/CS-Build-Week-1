@@ -18,25 +18,22 @@ function sketch (p){
   let parentW = document.querySelector(".sketch-container").clientWidth;
   let parentH = document.querySelector(".sketch-container").clientHeight;
   let gridArr = [[]];
+  let cellFill = "#cc527a";
 
   p.preload = () => {};
 
   const createCells = () => {
-    
     for (let i=0; i<cols; i++){
         gridArr[i] = [];
         for(let j=0; j<rows; j++){
-          gridArr[i][j] = new Cell();
+          gridArr[i][j] = new Cell(p, i, j, cellFill);
         }
     }
-    console.log("GRIDARR >>> ", gridArr);
   };
   
   p.setup = () => {
     p.pixelDensity(1);
     p.createCanvas(parentW,parentH);
-    console.log(new Cell());
-    
     createCells();
   };
 
@@ -44,9 +41,7 @@ function sketch (p){
     p.background("#e8175d");
     for(let i=0; i<cols; i++){
       for(let j=0; j<rows; j++){
-        p.noStroke();
-        p.rect(i*w, j*w, w-1, h-1);
-        p.fill("#cc527a");
+        gridArr[i][j].createRect();
       }
     }
   };
