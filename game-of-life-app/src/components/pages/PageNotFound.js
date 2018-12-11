@@ -1,10 +1,13 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 import { StyledSection } from "../globals/global-styles";
+import {StyledLink} from './Header'
 
 export const PageNotFound = () => (
   <>
-    <StyledSection>
-      <h3>404! Nothing to see here <span>💀</span></h3>
+    <StyledSection center>
+      <h1>404 <span>💀</span></h1>
+      <StyledLink to='/'>Click here to return to the homepage.</StyledLink>
     </StyledSection>
   </>
 );
