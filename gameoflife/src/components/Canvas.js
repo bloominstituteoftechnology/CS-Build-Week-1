@@ -45,7 +45,7 @@ export default class Canvas extends Component {
     }
 
     function fillSquare(ctx, x, y){
-      ctx.fillStyle = "gray"
+      ctx.fillStyle = "blue"
       ctx.fillRect(x,y,8,8);
     }
 
@@ -53,31 +53,29 @@ export default class Canvas extends Component {
     fillSquare(ctx, mousePos.x, mousePos.y);
 
 
-    // function getPixel(imageData, x, y) {
-    //   const w = imageData.width; // Conveniently the width is here
-    //   const h = imageData.height;
+    function getPixel(imageData, x, y) {
+      const w = imageData.width; // Conveniently the width is here
+      const h = imageData.height;
   
-    //   if (x < 0 || x >= w || y < 0 || y >= h) {
-    //       // Out of bounds
-    //       return null;
-    //   }
+      if (mousePos.x < 0 || mousePos.x >= w || mousePos.y < 0 || mousePos.y >= h) {
+          // Out of bounds
+          return null;
+      }
   
-    //   // Compute index within the array
-    //   const index = (w * y + x) * 4;
-    //   console.log("index", index);
+      // Compute index within the array
+      const index = (w * mousePos.y + mousePos.x) * 4;
+      console.log("index", index);
   
-    //   // Return a copy of the R, G, B, and A elements
-    //   return imageData.data.slice(index, index + 4);
-    // }
+      // Return a copy of the R, G, B, and A elements
+      return imageData.data.slice(index, index + 4);
+    }
 
-    // const canvas = this.refs.canvas;
-    // const ctx = canvas.getContext("2d");
-    // const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    // const pixelRGBA = getPixel(imageData, x, y);
-    // ctx.fillRect(x, y, 10, 10);
+    const pixelRGBA = getPixel(imageData, mousePos.x, mousePos.y);
+
     
-    // console.log(pixelRGBA);
+    console.log(pixelRGBA);
   }
 
 
