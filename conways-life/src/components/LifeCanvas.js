@@ -66,19 +66,19 @@ class LifeCanvas extends React.Component{
 
     initializeBoard = () => {
         let board = [];
-        for(let y = 0; y < this.rows; y++){
-            board[y] = [];
-            for (let x = 0; x < this.cols; x++){
-                board[y][x] = false;
+        for(let x = 0; x < this.rows; x++){
+            board[x] = [];
+            for (let y = 0; y < this.cols; y++){
+                board[x][y] = false;
             }
         }
         return board;
     }
     makeCells = () => {
         let cells = [];
-        for (let y = 0; y < this.rows; y++) {
-            for (let x = 0; x < this.cols; x++) {
-                if (this.board[y][x]) {
+        for (let x = 0; x < this.rows; x++) {
+            for (let y = 0; y < this.cols; y++) {
+                if (this.board[x][y]) {
                     cells.push({ x, y });
                 }
             }
@@ -103,8 +103,8 @@ class LifeCanvas extends React.Component{
             const x = Math.floor(offsetX/this.state.cellSize);
             const y = Math.floor(offsetY/this.state.cellSize);
 
-            if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows){
-                this.board[y][x] = !this.board[y][x];
+            if (x >= 0 && x <= this.rows && y >= 0 && y <= this.cols){
+                this.board[x][y] = !this.board[x][y];
             }
 
             this.setState({ cells: this.makeCells()});
@@ -115,10 +115,10 @@ class LifeCanvas extends React.Component{
         const validNeighbors = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
         for (let i = 0; i < validNeighbors.length; i++){
             var validNeighbor = validNeighbors[i];
-            let y1 = y + validNeighbor[0];
-            let x1 = x + validNeighbor[1];
+            let x1 = x + validNeighbor[0];
+            let y1 = y + validNeighbor[1];
 
-            if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]){
+            if (x1 >= 0 && x1 < this.rows && y1 >= 0 && y1 < this.cols && board[x1][y1]){
                 neighbors++;
             }
         }
@@ -134,20 +134,20 @@ class LifeCanvas extends React.Component{
         let newGame = this.initializeBoard();
 
         //plots the next board
-        for (let y = 0; y < this.rows; y++){
-            for (let x = 0; x < this.cols; x++){
+        for (let x = 0; x < this.rows; x++){
+            for (let y = 0; y < this.cols; y++){
                 let neighbors = this.checkNeighbors(this.board, x, y);
-                if (this.board[y][x]){
+                if (this.board[x][y]){
                     //covers rule # 1,2,3
                     if (neighbors === 2 || neighbors === 3){
-                        newGame[y][x] = true;
+                        newGame[x][y] = true;
                     } else {
-                        newGame[y][x] = false;
+                        newGame[x][y] = false;
                     }
                 } else {
                     //covers rule # 4
-                    if (!this.board[y][x] && neighbors === 3){
-                        newGame[y][x] = true;
+                    if (!this.board[x][y] && neighbors === 3){
+                        newGame[x][y] = true;
                     }
                 }
             }
@@ -180,10 +180,10 @@ class LifeCanvas extends React.Component{
         let count = 0;
         for (let i = 0; i < this.state.random; i++){
             while (count < this.state.random) {
-                let x = (Math.floor(Math.random()*15));
-                let y = (Math.floor(Math.random()*15));
-                if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows && !this.board[y][x] && count < this.state.random){
-                    this.board[y][x] = true;
+                let x = (Math.floor(Math.random()*15)+1);
+                let y = (Math.floor(Math.random()*15)+1);
+                if (x >= 0 && x < this.rows && y >= 0 && y < this.cols && !this.board[x][y] && count < this.state.random){
+                    this.board[x][y] = true;
                     count++
                 }
             }
