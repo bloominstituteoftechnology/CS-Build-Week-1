@@ -27,6 +27,8 @@ export default class Canvas extends Component {
       ctx.lineTo(500, y)
       ctx.stroke();
     }
+    
+    ctx.closePath();
   }
 
   componentDidUpdate() {
@@ -49,12 +51,10 @@ export default class Canvas extends Component {
     function fillSquare(ctx, x, y){
       ctx.fillStyle = "blue";
       ctx.fillRect(x,y,8,8);
-      console.log("fill x and y", x, y)
     }
 
     function emptySquare(ctx, x, y) {
       ctx.clearRect(x,y,8,8);
-      console.log("empty x and y", x, y)
     }
 
     function getPixel(imageData, x, y) {
@@ -68,7 +68,6 @@ export default class Canvas extends Component {
 
       // Compute index within the array
       const index = (w * mousePos.y + mousePos.x) * 4;
-      console.log("index", index);
   
       // Return a copy of the R, G, B, and A elements
       return imageData.data.slice(index, index + 4);
@@ -78,7 +77,7 @@ export default class Canvas extends Component {
     const pixelRGBA = getPixel(imageData, mousePos.x, mousePos.y);
     
     if(pixelRGBA[2] === 255) {
-      emptySquare(ctx, mousePos.x, mousePos,y);
+      emptySquare(ctx, mousePos.x, mousePos.y);
     } else {
       console.log("fillsquare running");
       fillSquare(ctx, mousePos.x, mousePos.y);
