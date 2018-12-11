@@ -7,6 +7,7 @@ class GridDisplay extends Component {
         super(props);
         this.state = {
             grid: [],
+            timer: 0,
             cols: 15,
             rows: 15
         }
@@ -57,7 +58,7 @@ class GridDisplay extends Component {
     computeNextGrid = () => {
         const prevGrid = this.state.grid.slice();
         let nextGrid = prevGrid.slice();
-        
+
         for (let i = 0; i < this.state.cols; i++) {
             for (let j = 0; j < this.state.rows; j++) {
               let cellState = prevGrid[i][j].value;
@@ -101,6 +102,16 @@ class GridDisplay extends Component {
         this.setState({ grid: arr });
     }
 
+    toggleAnimation = () => {
+        if (this.state.timer === 0) {
+            let timer = setInterval(this.computeNextGrid, 500);
+            this.setState({timer: timer});
+        } else {
+            clearInterval(this.state.timer);
+            this.setState({timer: 0});
+        }
+    }
+
     render() {
             return (
             <div className="mainContainer">
@@ -118,7 +129,7 @@ class GridDisplay extends Component {
                 <Buttons
                     randomGrid={this.randomGrid}
                     clearGrid={this.clearGrid}
-                    computeNextGrid={this.computeNextGrid}/>
+                    toggleAnimation={this.toggleAnimation}/>
             </div>
           );
         }
