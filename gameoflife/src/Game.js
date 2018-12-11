@@ -2,8 +2,8 @@ import React from "react";
 import "./Game.css";
 
 const CELL_SIZE = 35;
-const WIDTH = 800;
-const HEIGHT = 600;
+const WIDTH = 835;
+const HEIGHT = 630;
 
 //rendering cells to the board
 class Cell extends React.Component {
@@ -110,7 +110,22 @@ class Game extends React.Component {
     console.log("running");
     let newBoard = this.createEmptyBoard();
 
-    //TODOL add logic rules!!
+    for (let y = 0; y < this.rows; y++) {
+      for (let x = 0; x < this.cols; x++) {
+        let neighbors = this.calculateNeighbors(this.board, x, y);
+        if (this.board[y][x]) {
+          if (neighbors === 2 || neighbors === 3) {
+            newBoard[y][x] = true;
+          } else {
+            newBoard[y][x] = false;
+          }
+        } else {
+          if (!this.board[y][x] && neighbors === 3) {
+            newBoard[y][x] = true;
+          }
+        }
+      }
+    }
 
     this.board = newBoard;
     this.setState({ cells: this.makeCells() });
@@ -160,6 +175,12 @@ class Game extends React.Component {
     this.setState({ interval: e.target.value });
   };
 
+  //clear board
+  handleClearBoard = () => {
+      this.board = this.createEmptyBoard();
+      this.setState({ cells:this.makeCells() });
+  }
+
   render() {
     const { cells } = this.state;
     return (
@@ -196,6 +217,7 @@ class Game extends React.Component {
               Run
             </button>
           )}
+            <button className="button" onClick={this.handleClearBoard}>Clear</button>
         </div>
       </div>
     );
