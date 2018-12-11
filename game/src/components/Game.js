@@ -6,6 +6,7 @@ import {matrix3} from './matrix3';
 
 let myReq;
 let myInt;
+let speed = 1000;
 
 class Game extends React.Component {
     constructor(props) {
@@ -14,7 +15,8 @@ class Game extends React.Component {
             array1: matrix1,
             continueAnimating: false,
             cycle: 'A',
-            buttonTag: 'Start'
+            buttonTag: 'Start',
+            speed: 1000
         }
     }
 
@@ -96,7 +98,7 @@ class Game extends React.Component {
     onAnimFrame = (timestamp) => {
         if (this.state.cycle === 'A') {
             if (this.state.continueAnimating === true) {
-                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 250)});
+                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, speed)});
                 
                 const canvas = this.refs.canvas;
                 const context = canvas.getContext('2d');
@@ -128,7 +130,7 @@ class Game extends React.Component {
                             prevCol = 189;
                         }
                         let nextCol = j + 1;
-                        if (nextCol === 189) {
+                        if (nextCol === 190) {
                             nextCol = 0;
                         }
 
@@ -184,7 +186,7 @@ class Game extends React.Component {
             }
         } else {
             if (this.state.continueAnimating === true) {
-                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 250)});
+                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, speed)});
             
                 const canvas = this.refs.canvas;
                 const context = canvas.getContext('2d');
@@ -216,7 +218,7 @@ class Game extends React.Component {
                             prevCol = 189;
                         }
                         let nextCol = j + 1;
-                        if (nextCol === 189) {
+                        if (nextCol === 190) {
                             nextCol = 0;
                         }
 
@@ -280,7 +282,7 @@ class Game extends React.Component {
             clearInterval(myInt);
         } else {
             this.setState({continueAnimating: true});
-            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 250)});
+            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, speed)});
         }
         if (this.state.buttonTag === 'Start') {
             this.setState({buttonTag: 'Stop'});
@@ -297,12 +299,29 @@ class Game extends React.Component {
         this.setState({array1: matrix1});
     }
 
+    changeSpeed = (newSpeed) => {
+        speed = newSpeed;
+        this.setState(function() {
+            return {speed: speed}
+        });
+        console.log("Speed: ", this.state.speed);
+        clearInterval(myInt);
+        cancelAnimationFrame(myReq);
+        if (this.state.continueAnimating) {
+            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, speed)});
+        }
+    }
+
     render() {
         return (
             <div>
                 <canvas ref="canvas" id="gameCanvas" width="1911" height="801" />
                 <button onClick={this.toggleButton}>{this.state.buttonTag}</button>
                 <button onClick={this.clearGrid}>Clear</button>
+                Speed:
+                <button onClick={() => this.changeSpeed(2000)}>></button>
+                <button onClick={() => this.changeSpeed(1000)}>>></button>
+                <button onClick={() => this.changeSpeed(500)}>>>></button>
             </div>
         );
     }
