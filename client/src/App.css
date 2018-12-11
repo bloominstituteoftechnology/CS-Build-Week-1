@@ -22,21 +22,25 @@
   color: #61dafb;
 }
 .container {
-  width: 750px; 
+  width: 330px; 
+  border: 3px solid blue; 
+  display: flex; 
+  flex-wrap: wrap;
 }
 
 .gridDiv {
-  width: 50px;
-}
-
-.onDiv {
-  background: yellow; 
+  width: 20px;
   border : 1px solid black; 
 }
 
+.onDiv {
+  background: black; 
+  color: black; 
+}
+
 .offDiv {
-  background: blue; 
-  border : 1px solid white; 
+  background:white; 
+  color: white;
 }
 
 

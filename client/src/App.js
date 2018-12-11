@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Container, Row, Col } from "reactstrap";
 import "./App.css";
 
 class App extends Component {
@@ -21,50 +21,78 @@ class App extends Component {
       13: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       14: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     },
-    
-    matrixUsing : [], 
+
+    matrixUsing: []
   };
 
-  componentWillMount () {
-    this.setMatrixUp(); 
+  componentWillMount() {
+    this.setMatrixUp();
   }
 
-  setMatrixUp () {
-    const matrixUsing = []; 
-    let count = 0
+  setMatrixUp() {
+    const matrixUsing = [];
+    let count = 0;
     Object.entries(this.state.matrix).forEach(entry => {
-      
-      for (let x of entry[1]){
-        const temp_hash = {row: 0, position_in_row: 0, actual_number : 0};
-        temp_hash.row = Number(entry[0]); 
+      for (let x of entry[1]) {
+        const temp_hash = { row: 0, position_in_row: 0, actual_number: 0, value : "  "};
+        temp_hash.row = Number(entry[0]);
         temp_hash.position_in_row = count % 15;
-        temp_hash.actual_number = count; 
-        matrixUsing.push(temp_hash); 
-        count++; 
+        temp_hash.actual_number = count;
+        matrixUsing.push(temp_hash);
+        count++;
       }
     });
-    console.log(matrixUsing.length); 
+    console.log(matrixUsing.length);
     console.log(matrixUsing);
-    this.setState({matrixUsing}); 
-    
+    this.setState({ matrixUsing });
   }
 
   turnOnOrOff = (row, position_in_row) => {
-      //Just add 1 to the % of 2  it will provide 0 or 1. The conditional is already set up on the div to set the div to the correct class based off the value
-      const matrix = this.state.matrix; 
-      matrix[row][position_in_row] = matrix[row][position_in_row] === 0 ? 1 : 0; 
-      this.setState({matrix}); 
-  }
+    //Just add 1 to the % of 2  it will provide 0 or 1. The conditional is already set up on the div to set the div to the correct class based off the value
+    const matrix = this.state.matrix;
+    matrix[row][position_in_row] = matrix[row][position_in_row] === 0 ? 1 : 0;
+    this.setState({ matrix });
+  };
 
   render() {
-    const matrix = this.state.matrixUsing.slice(); 
+    const matrix = this.state.matrixUsing.slice();
 
-    return (<div className="container"> 
-      
-      {matrix.map((hash, id) => <div key = {id} onClick = {() => this.turnOnOrOff(hash.row, hash.position_in_row)} className = {this.state.matrix[hash.row][hash.position_in_row] === 0 ? "offDiv gridDiv" : "onDiv gridDiv"} >{hash.position_in_row}</div> )}
-      
-    
-    </div>);
+    return (
+      <div className="container">
+        {matrix.map((hash, id) => (
+          <div
+            key={id}
+            onClick={() => this.turnOnOrOff(hash.row, hash.position_in_row)}
+            className={
+              this.state.matrix[hash.row][hash.position_in_row] === 0
+                ? "offDiv gridDiv"
+                : "onDiv gridDiv"
+            }
+          >
+            {hash.position_in_row}
+          </div>
+        ))}
+
+        <div>
+          <div>
+            <button>Start</button>{" "}
+          </div>
+          <div>
+            <button>Stop</button>
+          </div>
+          <div>
+            <button>Pause</button>
+          </div>
+          <div>
+            <button>Clear</button>
+          </div>
+          <div>
+            <button>Presets</button>{" "}
+          </div>
+        </div>
+        
+      </div>
+      );
   }
 }
 
