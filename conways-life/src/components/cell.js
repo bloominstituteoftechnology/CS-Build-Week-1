@@ -1,27 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './cell.css';
 
-export default class Cell extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isAlive: this.props.isAlive,
-      isClickable: this.props.isClickable
-    };
-  }
+const Cell = props => {
+  return (
+    <div
+      style={{
+        backgroundColor: props.isAlive ? 'yellow' : 'white',
+        cursor: props.isClickable ? 'pointer' : 'not-allowed'
+      }}
+      className="cell"
+      onClick={() => props.cellClickHandler(props.id)}
+    />
+  );
+};
 
-  clickHandler = event => {
-    console.log('click: ' + this.state.isAlive);
-    this.setState({ isAlive: !this.state.isAlive });
-  };
-
-  render() {
-    return (
-      <div
-        style={{ backgroundColor: this.state.isAlive ? 'yellow' : 'white' }}
-        className="cell"
-        onClick={this.clickHandler}
-      />
-    );
-  }
-}
+export default Cell;
