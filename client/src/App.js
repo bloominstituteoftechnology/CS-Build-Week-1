@@ -139,6 +139,16 @@ class App extends Component {
     this.setState({if_one_color : color});
   }
 
+  findDeadNeighbors = (position) => {
+    //find  neighbors of the dead cell  to use the rules on. 
+  }
+
+  findLiveNeighbors = (position) => {
+    //find neighbors of the live cell to use the rules on. 
+  }
+
+  find
+
   render() {
     console.log(this.state.if_zero_color);
     
