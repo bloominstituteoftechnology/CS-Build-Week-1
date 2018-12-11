@@ -41,6 +41,9 @@ class GameBoard extends React.Component{
       e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
       squareSize,
       squareSize);
+      let cellState = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
+      console.log(this.state[`${cellState}`]);
+      this.setState({[`${cellState}`]: "alive"});
   }
 
   unselectSquare = (e) => {
