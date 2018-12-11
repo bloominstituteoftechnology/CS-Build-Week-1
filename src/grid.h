@@ -5,7 +5,7 @@
 typedef struct grid {
     int *x;
     int *y;
-    struct cell *newCell;
+    struct cell *origin;
 };
 
 #endif

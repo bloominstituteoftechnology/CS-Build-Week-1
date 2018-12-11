@@ -17,3 +17,4 @@ struct grid *alloc_grid(int x, int y) {
 void free_grid(struct grid *target) {
     free(target);
 }
+
