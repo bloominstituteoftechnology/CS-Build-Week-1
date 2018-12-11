@@ -16,7 +16,7 @@ handleClick = () =>{
     render() { 
         return ( 
             <div>
-            <button onClick={this.handleClick}>
+            <button onClick={this.handleClick} class="button">
             {this.state.isToggleOn ? 'Start' : 'Stop'}
             </button>
             </div>
