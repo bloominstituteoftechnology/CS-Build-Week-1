@@ -32,7 +32,7 @@ class Grid extends Component{
         const grid=canvas.getBoundingClientRect();
         const x=e.clientX-grid.left;
         const y=e.clientY-grid.top;
-        console.log(x,y);
+        this.toggleState(x,y);
     }
     createGrid(){
         const grid=[];
@@ -44,13 +44,19 @@ class Grid extends Component{
         }
         this.setState({grid:grid},()=>console.log(this.state.grid));
     }
-    toggleState(){
-        
+    toggleState(x,y){
+        const grid=this.state.grid.slice();
+        const x_index=Math.floor(x/25);
+        const y_index=Math.floor(y/25);
+        const grid_item=Object.assign({},this.state.grid[y_index][x_index]);
+        grid_item.currentState===0 ? grid_item.currentState=1 : grid_item.currentState=0;
+        grid[y_index][x_index]=grid_item;
+        this.setState({grid:grid},()=>console.log(this.state.grid));
     }
     render(){
         return (
             <canvas ref="canvas" onClick={(e)=>this.getPosition(e)}>
-                
+                {this.state.grid.map((e)=>e.map((e,i)=><Cell key={i} toggle={this.getPosition}></Cell>))}
             </canvas>
         );
     }
