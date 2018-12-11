@@ -4,8 +4,8 @@ class GameBoard extends React.Component{
   constructor(props){
       super(props);
       this.state = {
-          height: 750,
-          width: 750,
+          height: 300,
+          width: 300,
           cells: 15
       }
   }
@@ -34,10 +34,11 @@ class GameBoard extends React.Component{
   handleClick = (e) => {
     const can = this.refs.canvas
     const context = can.getContext("2d");
-    const squareSize = 50
+    const pos = this.refs.canvas.getBoundingClientRect()
+    const squareSize = 20
     context.fillStyle = "blue";
-    context.fillRect(Math.floor(e.clientX / squareSize) * squareSize,
-      Math.floor(e.clientY / squareSize) * squareSize,
+    context.fillRect(e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
+      e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
       squareSize,
       squareSize);
   }
