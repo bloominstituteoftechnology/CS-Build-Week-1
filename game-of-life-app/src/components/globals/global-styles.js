@@ -26,8 +26,10 @@ h1, h2, h3 {
 }
 
 a {
-    color: #5334F5;
-    font-weight: 600;
+    color: #05f;
+    font-weight: 300;
+    padding-left: .6rem;
+    text-decoration: none;
 }
 
 ul {
@@ -41,6 +43,7 @@ li {
 
 p {
     font-weight: 300;
+    padding: .8rem 0;
 }
 
 .active {
@@ -57,10 +60,10 @@ export const StyledSection = styled.section`
   h1 {
     font-size: 6rem;
     text-align: center;
-    padding: 2.4rem 0 2rem 0;
+    padding: 2.4rem 0 1.2rem 0;
     @media (max-width: 684px) {
-      font-size: 2.4rem;
-      padding: 1rem 0 2rem 0;
+      font-size: 3.2rem;
+      padding: 1rem 0 .8rem 0;
     }
   }
 `;
