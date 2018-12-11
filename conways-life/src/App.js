@@ -9,7 +9,8 @@ class App extends Component {
       totalCells: 400,
       grid: [],
       isClickable: true,
-      currGen: 0 // current generation of cells
+      currGen: 0, // current generation of cells
+      intervalId: null
     };
   }
 
@@ -47,16 +48,16 @@ class App extends Component {
     for (let i = 0; i < this.state.totalCells; i++) {
       if (grid[i].leftEdge) {
         neighbors = [i - 20, i - 19, i + 1, i + 21, i + 20];
-        neighbors.forEach(index => {
-          if (index >= 0 && index < this.state.totalCells) {
-            grid[i].neighbors.push(index);
+        neighbors.forEach(value => {
+          if (value >= 0 && value < this.state.totalCells) {
+            grid[i].neighbors.push(value);
           }
         });
       } else if (grid[i].rightEdge) {
         neighbors = [i + 20, i + 19, i - 1, i - 21, i - 20];
-        neighbors.forEach(index => {
-          if (index >= 0 && index < this.state.totalCells) {
-            grid[i].neighbors.push(index);
+        neighbors.forEach(value => {
+          if (value >= 0 && value < this.state.totalCells) {
+            grid[i].neighbors.push(value);
           }
         });
       } else {
@@ -70,9 +71,9 @@ class App extends Component {
           i - 1,
           i - 21
         ];
-        neighbors.forEach(index => {
-          if (index >= 0 && index < this.state.totalCells) {
-            grid[i].neighbors.push(index);
+        neighbors.forEach(value => {
+          if (value >= 0 && value < this.state.totalCells) {
+            grid[i].neighbors.push(value);
           }
         });
       }
@@ -96,26 +97,82 @@ class App extends Component {
     }
   };
 
-  gridResetHandler = () => {
-    let grid = [];
+  calculateNextGen = () => {
+    let grid = this.state.grid.slice();
+    let activeNeighbors = 0;
+    console.log(this.state);
+    console.log(this.state.grid);
+    console.log(grid);
     for (let i = 0; i < this.state.totalCells; i++) {
-      grid.push({ isAlive: false });
+      activeNeighbors = 0;
+
+      for (let j = 0; j < this.state.grid[i].neighbors.length; j++) {
+        console.log(
+          'cell: ' +
+            i +
+            'isAlive ' +
+            this.state.grid[i].isAlive +
+            ' neighbor: ' +
+            this.state.grid[i].neighbors[j] +
+            ' active: ' +
+            this.state.grid[this.state.grid[i].neighbors[j]].isAlive
+        );
+        if (this.state.grid[this.state.grid[i].neighbors[j]].isAlive) {
+          activeNeighbors++;
+        }
+      }
+
+      if (
+        this.state.grid[i].isAlive &&
+        (activeNeighbors !== 2 && activeNeighbors !== 3)
+      ) {
+        //console.log(i + ' ' + activeNeighbors);
+        grid[i].isAlive = false;
+      } else if (!this.state.grid[i].isAlive && activeNeighbors === 3) {
+        grid[i].isAlive = true;
+      }
+    }
+    console.log(this.state);
+    this.setState({ grid: grid, currGen: this.state.currGen + 1 });
+  };
+
+  playSimulation = () => {
+    let intervalId = setInterval(this.calculateNextGen, 2000);
+    console.log('play');
+    this.setState({
+      intervalId: intervalId,
+      isClickable: false
+    });
+  };
+
+  gridResetHandler = () => {
+    clearInterval(this.state.intervalId);
+    let grid = this.state.grid.slice();
+
+    for (let i = 0; i < this.state.totalCells; i++) {
+      grid[i].isAlive = false;
     }
 
-    this.setState({ grid: grid });
+    this.setState({
+      grid: grid,
+      currGen: 0,
+      isClickable: true,
+      intervalId: null
+    });
   };
 
   render() {
+    console.log(this.state);
     return (
       <div className="App">
         <div className="container">
           <header>Conway's Game of Life</header>
           <h2>Generation #{this.state.currGen}</h2>
           <div className="grid">
-            {this.state.grid.map((cell, index) => (
+            {this.state.grid.map((cell, value) => (
               <Cell
-                key={index}
-                id={index}
+                key={value}
+                id={value}
                 isAlive={cell.isAlive}
                 isClickable={this.state.isClickable}
                 cellClickHandler={this.cellClickHandler}
@@ -123,7 +180,7 @@ class App extends Component {
             ))}
           </div>
           <div className="btns">
-            <button>Play</button>
+            <button onClick={this.playSimulation}>Play</button>
             <button>Pause</button>
             <button onClick={this.gridResetHandler}>Reset</button>
           </div>
