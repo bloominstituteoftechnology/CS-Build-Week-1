@@ -70,7 +70,6 @@ class Grid extends Component {
             newGrid.push(<div className = "row" key = {i}>{row}</div>);
             row = [];
         }
-
         return newGrid;
     }
 
