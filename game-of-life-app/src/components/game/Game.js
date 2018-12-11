@@ -34,7 +34,7 @@ class Game extends React.Component {
         <StyledSection>
           <GameContainer>
             <GameGrid>
-              <GenerationText>Generation: </GenerationText>
+              <GenerationText>🌀 Generation: </GenerationText>
               <CustomHR />
             </GameGrid>
             <Rules />
