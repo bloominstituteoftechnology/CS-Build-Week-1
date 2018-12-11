@@ -51,15 +51,17 @@ class Game extends React.Component {
         context.stroke();
 
         canvas.addEventListener('click', function(event) {
-            let xCoord = Number((Math.ceil((event.pageX - rect.left) / 10))) - 1;
-            let yCoord = Number((Math.ceil((event.pageY - rect.top) / 10))) - 1;
-            console.log("xCoord: ", xCoord);
-            console.log("pageX:", event.pageX);
-            console.log("yCoord: ", yCoord);
-            console.log("pageY:", event.pageY);
-            matrix2[yCoord][xCoord] = matrix2[yCoord][xCoord] === 1 ? 0 : 1;
-            this.setState({array1: matrix2});
-        }.bind(this));
+            if (!this.state.continueAnimating) {
+                let xCoord = Number((Math.ceil((event.pageX - rect.left) / 10))) - 1;
+                let yCoord = Number((Math.ceil((event.pageY - rect.top) / 10))) - 1;
+                console.log("xCoord: ", xCoord);
+                console.log("pageX:", event.pageX);
+                console.log("yCoord: ", yCoord);
+                console.log("pageY:", event.pageY);
+                matrix2[yCoord][xCoord] = matrix2[yCoord][xCoord] === 1 ? 0 : 1;
+                this.setState({array1: matrix2});
+                }
+            }.bind(this));
 
         // for (let i = 0; i < 80; i++) {
         //     for (let j = 0; j < 190; j++) {
@@ -239,13 +241,13 @@ class Game extends React.Component {
                         }
 
                         // toggle state based on neighbors
-                        if (matrix3[i][j] && count < 2) {
+                        if (matrix3[i][j] && (count < 2)) {
                             matrix2[i][j] = 0;
                         } else if (matrix3[i][j] && (count === 2 || count === 3)) {
                             matrix2[i][j] = 1;
-                        } else if (matrix3[i][j] && count > 3) {
+                        } else if (matrix3[i][j] && (count > 3)) {
                             matrix2[i][j] = 0;
-                        } else if (!matrix3[i][j] && count === 3) {
+                        } else if (!matrix3[i][j] && (count === 3)) {
                             matrix2[i][j] = 1;
                         }
                     }
