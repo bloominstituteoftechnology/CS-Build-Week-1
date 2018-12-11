@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 
 class LifeCanvas extends Component {
     
+    componentDidMount() {
+        this.draw()
+    }
 
 
-    function draw() {
+     draw = () => {
         var canvas = document.getElementById('canvas');
         if (canvas.getContext) {
           var ctx = canvas.getContext('2d');
