@@ -5,6 +5,20 @@ const cellHeight = 20;
 const width = 800;
 const height = 600;
 
+class Cell extends React.Component {
+    render() {
+        const { x, y } = this.props;
+        return (
+            <div className="Cell" style={{
+                left: `${cellHeight * x + 1}px`,
+                top: `${cellHeight * y + 1}px`,
+                width: `${cellHeight - 1}px`,
+                height: `${cellHeight - 1}px`,
+            }} />
+        );
+    }
+}
+
 class Game extends React.Component {
     constructor() {
         super();
@@ -36,7 +50,28 @@ class Game extends React.Component {
         }
         return cells;
     }
+    getElementOffset() {
+        const rect = this.boardRef.getBoundingClientRect();
+        const doc = document.documentElement;
+        return {
+            x: (rect.left + window.pageXOffset) - doc.clientLeft,
+            y: (rect.top + window.pageYOffset) - doc.clientTop,
+        };
+    }
+    handleClick = (event) => {
+        const elemOffset = this.getElementOffset();
+        const offsetX = event.clientX - elemOffset.x;
+        const offsetY = event.clientY - elemOffset.y;
+
+        const x = Math.floor(offsetX / cellHeight);
+        const y = Math.floor(offsetY / cellHeight);
+        if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows) {
+            this.board[y][x] = !this.board[y][x];
+        }
+        this.setState({ cells: this.makeCells() });
+    }
     render() {
+        const { cells } = this.state;
         return (
             <div>
                 <div className="Game"
@@ -44,6 +79,10 @@ class Game extends React.Component {
                     backgroundSize: `${cellHeight}px ${cellHeight}px` }}
                     onClick={this.handleClick}
                     ref={(n) => { this.boardRef = n; }}>
+                    {cells.map(cell => (
+                        <Cell x={cell.x} y={cell.y}
+                            key={`${cell.x},${cell.y}`} />
+                    ))}
                 </div>
                 <div className="Controls">
                     <p>start</p>
