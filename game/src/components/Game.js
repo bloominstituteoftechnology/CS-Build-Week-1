@@ -2,6 +2,10 @@ import React from 'react';
 import {matrix2} from './matrix2';
 import {matrix3} from './matrix3';
 
+
+let myReq;
+let myInt;
+
 class Game extends React.Component {
     constructor(props) {
         super(props);
@@ -15,11 +19,13 @@ class Game extends React.Component {
 
     componentDidMount = () => {
         this.drawBoard();
-        requestAnimationFrame((timestamp) => {this.onAnimFrame(timestamp)});
+        // requestAnimationFrame((timestamp) => {this.onAnimFrame(timestamp)});
     }
 
     componentDidUpdate = () => {
-        this.toggleSquares();
+        if (!this.state.continueAnimating) {
+            this.toggleSquares();
+        }
     }
 
     componentWillUnmount = () => {
@@ -72,7 +78,7 @@ class Game extends React.Component {
         const canvas = this.refs.canvas;
         const context = canvas.getContext('2d');
         for (let i = 0; i < 80; i++) {
-            for (let j = 0; j < 190; j++) {
+            for (let j = 0; j <= 190; j++) {
                 if (this.state.array1[i][j]) {
                     context.fillStyle = "yellow";
                     context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
@@ -86,172 +92,180 @@ class Game extends React.Component {
 
     onAnimFrame = (timestamp) => {
         if (this.state.cycle === 'A') {
-            if (this.state.continueAnimating) {
-                requestAnimationFrame((timestamp) => {setInterval(() => {this.onAnimFrame(timestamp)}, 500)});
-            }
-            const canvas = this.refs.canvas;
-            const context = canvas.getContext('2d');
-            for (let i = 0; i < 80; i++) {
-                for (let j = 0; j < 190; j++) {
-                    if (this.state.array1[i][j]) {
-                        context.fillStyle = "yellow";
-                        context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
-                    } else {
-                        context.fillStyle = "dodgerblue";
-                        context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
+            if (this.state.continueAnimating === true) {
+                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 250)});
+                
+                const canvas = this.refs.canvas;
+                const context = canvas.getContext('2d');
+                for (let i = 0; i < 80; i++) {
+                    for (let j = 0; j <= 190; j++) {
+                        if (this.state.array1[i][j]) {
+                            context.fillStyle = "yellow";
+                            context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
+                        } else {
+                            context.fillStyle = "dodgerblue";
+                            context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
+                        }
                     }
                 }
-            }
-            // set the next buffer
-            for (let i = 0; i < 80; i++) {
-                for (let j = 0; j < 190; j++) {
-                    // wrap around
-                    let prevRow = i - 1;
-                    if (prevRow === -1) {
-                        prevRow = 79;
-                    }
-                    let nextRow = i + 1;
-                    if (nextRow === 80) {
-                        nextRow = 0
-                    }
-                    let prevCol = j - 1;
-                    if (prevCol === -1) {
-                        prevCol = 189;
-                    }
-                    let nextCol = j + 1;
-                    if (nextCol === 189) {
-                        nextCol = 0;
-                    }
+                // set the next buffer
+                for (let i = 0; i < 80; i++) {
+                    for (let j = 0; j <= 190; j++) {
+                        // wrap around
+                        let prevRow = i - 1;
+                        if (prevRow === -1) {
+                            prevRow = 79;
+                        }
+                        let nextRow = i + 1;
+                        if (nextRow === 80) {
+                            nextRow = 0
+                        }
+                        let prevCol = j - 1;
+                        if (prevCol === -1) {
+                            prevCol = 189;
+                        }
+                        let nextCol = j + 1;
+                        if (nextCol === 189) {
+                            nextCol = 0;
+                        }
 
-                    // count living neighbors
-                    let count = 0;
-                    if (matrix2[prevRow][prevCol]) {
-                        count++;
-                    }
-                    if (matrix2[prevRow][j]) {
-                        count++;
-                    }
-                    if (matrix2[prevRow][nextCol]) {
-                        count++;
-                    }
-                    if (matrix2[i][prevCol]) {
-                        count++;
-                    }
-                    if (matrix2[i][nextCol]) {
-                        count++;
-                    }
-                    if (matrix2[nextRow][prevCol]) {
-                        count++;
-                    }
-                    if (matrix2[nextRow][j]) {
-                        count++;
-                    }
-                    if (matrix2[nextRow][nextCol]) {
-                        count++;
-                    }
+                        // count living neighbors
+                        let count = 0;
+                        if (matrix2[prevRow][prevCol]) {
+                            count++;
+                        }
+                        if (matrix2[prevRow][j]) {
+                            count++;
+                        }
+                        if (matrix2[prevRow][nextCol]) {
+                            count++;
+                        }
+                        if (matrix2[i][prevCol]) {
+                            count++;
+                        }
+                        if (matrix2[i][nextCol]) {
+                            count++;
+                        }
+                        if (matrix2[nextRow][prevCol]) {
+                            count++;
+                        }
+                        if (matrix2[nextRow][j]) {
+                            count++;
+                        }
+                        if (matrix2[nextRow][nextCol]) {
+                            count++;
+                        }
 
-                    // toggle state based on neighbors
-                    if (matrix2[i][j] && count < 2) {
-                        matrix3[i][j] = 0;
-                    } else if (matrix2[i][j] && (count === 2 || count === 3)) {
-                        matrix3[i][j] = 1;
-                    } else if (matrix2[i][j] && count > 3) {
-                        matrix3[i][j] = 0;
-                    } else if (!matrix2[i][j] && count === 3) {
-                        matrix3[i][j] = 1;
+                        // toggle state based on neighbors
+                        if (matrix2[i][j] && count < 2) {
+                            matrix3[i][j] = 0;
+                        } else if (matrix2[i][j] && (count === 2 || count === 3)) {
+                            matrix3[i][j] = 1;
+                        } else if (matrix2[i][j] && count > 3) {
+                            matrix3[i][j] = 0;
+                        } else if (!matrix2[i][j] && count === 3) {
+                            matrix3[i][j] = 1;
+                        }
                     }
                 }
+                this.setState({array1: matrix3});
+                this.setState({cycle: 'B'});
+            } else {
+                cancelAnimationFrame(myReq);
             }
-            this.setState({array1: matrix3});
-            this.setState({cycle: 'B'});
         } else {
-            if (this.state.continueAnimating) {
-                requestAnimationFrame((timestamp) => {setInterval(() => {this.onAnimFrame(timestamp)}, 500)});
-            }
-            const canvas = this.refs.canvas;
-            const context = canvas.getContext('2d');
-            for (let i = 0; i < 80; i++) {
-                for (let j = 0; j < 190; j++) {
-                    if (this.state.array1[i][j]) {
-                        context.fillStyle = "yellow";
-                        context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
-                    } else {
-                        context.fillStyle = "dodgerblue";
-                        context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
+            if (this.state.continueAnimating === true) {
+                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 250)});
+            
+                const canvas = this.refs.canvas;
+                const context = canvas.getContext('2d');
+                for (let i = 0; i < 80; i++) {
+                    for (let j = 0; j <= 190; j++) {
+                        if (this.state.array1[i][j]) {
+                            context.fillStyle = "yellow";
+                            context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
+                        } else {
+                            context.fillStyle = "dodgerblue";
+                            context.fillRect(j * 10 + 1, i * 10 + 1, 9, 9);
+                        }
                     }
                 }
-            }
-            // set the next buffer
-            for (let i = 0; i < 80; i++) {
-                for (let j = 0; j < 190; j++) {
-                    // wrap around
-                    let prevRow = i - 1;
-                    if (prevRow === -1) {
-                        prevRow = 79;
-                    }
-                    let nextRow = i + 1;
-                    if (nextRow === 80) {
-                        nextRow = 0
-                    }
-                    let prevCol = j - 1;
-                    if (prevCol === -1) {
-                        prevCol = 189;
-                    }
-                    let nextCol = j + 1;
-                    if (nextCol === 189) {
-                        nextCol = 0;
-                    }
+                // set the next buffer
+                for (let i = 0; i < 80; i++) {
+                    for (let j = 0; j <= 190; j++) {
+                        // wrap around
+                        let prevRow = i - 1;
+                        if (prevRow === -1) {
+                            prevRow = 79;
+                        }
+                        let nextRow = i + 1;
+                        if (nextRow === 80) {
+                            nextRow = 0
+                        }
+                        let prevCol = j - 1;
+                        if (prevCol === -1) {
+                            prevCol = 189;
+                        }
+                        let nextCol = j + 1;
+                        if (nextCol === 189) {
+                            nextCol = 0;
+                        }
 
-                    // count living neighbors
-                    let count = 0;
-                    if (matrix3[prevRow][prevCol]) {
-                        count++;
-                    }
-                    if (matrix3[prevRow][j]) {
-                        count++;
-                    }
-                    if (matrix3[prevRow][nextCol]) {
-                        count++;
-                    }
-                    if (matrix3[i][prevCol]) {
-                        count++;
-                    }
-                    if (matrix3[i][nextCol]) {
-                        count++;
-                    }
-                    if (matrix3[nextRow][prevCol]) {
-                        count++;
-                    }
-                    if (matrix3[nextRow][j]) {
-                        count++;
-                    }
-                    if (matrix3[nextRow][nextCol]) {
-                        count++;
-                    }
+                        // count living neighbors
+                        let count = 0;
+                        if (matrix3[prevRow][prevCol]) {
+                            count++;
+                        }
+                        if (matrix3[prevRow][j]) {
+                            count++;
+                        }
+                        if (matrix3[prevRow][nextCol]) {
+                            count++;
+                        }
+                        if (matrix3[i][prevCol]) {
+                            count++;
+                        }
+                        if (matrix3[i][nextCol]) {
+                            count++;
+                        }
+                        if (matrix3[nextRow][prevCol]) {
+                            count++;
+                        }
+                        if (matrix3[nextRow][j]) {
+                            count++;
+                        }
+                        if (matrix3[nextRow][nextCol]) {
+                            count++;
+                        }
 
-                    // toggle state based on neighbors
-                    if (matrix3[i][j] && count < 2) {
-                        matrix2[i][j] = 0;
-                    } else if (matrix3[i][j] && (count === 2 || count === 3)) {
-                        matrix2[i][j] = 1;
-                    } else if (matrix3[i][j] && count > 3) {
-                        matrix2[i][j] = 0;
-                    } else if (!matrix3[i][j] && count === 3) {
-                        matrix2[i][j] = 1;
+                        // toggle state based on neighbors
+                        if (matrix3[i][j] && count < 2) {
+                            matrix2[i][j] = 0;
+                        } else if (matrix3[i][j] && (count === 2 || count === 3)) {
+                            matrix2[i][j] = 1;
+                        } else if (matrix3[i][j] && count > 3) {
+                            matrix2[i][j] = 0;
+                        } else if (!matrix3[i][j] && count === 3) {
+                            matrix2[i][j] = 1;
+                        }
                     }
                 }
+                this.setState({array1: matrix2});
+                this.setState({cycle: 'A'});
+            } else {
+                cancelAnimationFrame(myReq);
             }
-            this.setState({array1: matrix2});
-            this.setState({cycle: 'A'});
         }
     }
 
     toggleButton = () => {
-        if (this.state.continueAnimating) {
+        if (this.state.continueAnimating === true) {
             this.setState({continueAnimating: false});
+            cancelAnimationFrame(myReq);
+            clearInterval(myInt);
         } else {
             this.setState({continueAnimating: true});
-            requestAnimationFrame((timestamp) => {this.onAnimFrame(timestamp)});
+            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 250)});
         }
         if (this.state.buttonTag === 'Start') {
             this.setState({buttonTag: 'Stop'});
@@ -259,7 +273,7 @@ class Game extends React.Component {
             this.setState({buttonTag: 'Start'});
         }
     }
- 
+
     render() {
         return (
             <div>
