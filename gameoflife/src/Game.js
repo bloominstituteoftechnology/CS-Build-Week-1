@@ -177,9 +177,19 @@ class Game extends React.Component {
 
   //clear board
   handleClearBoard = () => {
-      this.board = this.createEmptyBoard();
-      this.setState({ cells:this.makeCells() });
-  }
+    this.board = this.createEmptyBoard();
+    this.setState({ cells: this.makeCells() });
+  };
+
+  //generate a random pattern
+  handleRandom = () => {
+    for (let y = 0; y < this.rows; y++) {
+      for (let x = 0; x < this.cols; x++) {
+        this.board[y][x] = Math.random() >= 0.5;
+      }
+    }
+    this.setState({ cells: this.makeCells() });
+  };
 
   render() {
     const { cells } = this.state;
@@ -217,7 +227,12 @@ class Game extends React.Component {
               Run
             </button>
           )}
-            <button className="button" onClick={this.handleClearBoard}>Clear</button>
+          <button className="button" onClick={this.handleRandom}>
+            Generate Random
+          </button>
+          <button className="button" onClick={this.handleClearBoard}>
+            Clear
+          </button>
         </div>
       </div>
     );
