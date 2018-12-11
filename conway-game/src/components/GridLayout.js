@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Box from "./GridBox";
+import ActionButtons from "./ActionButtons";
 
 class GridLayout extends Component {
   constructor() {
@@ -7,7 +8,8 @@ class GridLayout extends Component {
     this.state = {
       gridRows: 15,
       gridColumns: 15,
-      gridBoxArr: []
+      gridBoxArr: [], 
+      isRunning: false
     };
     // 15 by 15 grid each a box that is set to false for alive for a starting grid
   }
@@ -27,12 +29,25 @@ class GridLayout extends Component {
     });
   };
 
+  startRunning = () => {
+      this.setState({
+          isRunning: true
+      })
+  }
+
+  pauseRunning = () => {
+      this.setState({
+          isRunning: false
+      })
+  }
+
   render() {
     return (
       <div className="grid">
         {this.state.gridBoxArr.map(box => {
-          return <Box id={box.id} />;
+          return <Box runningGame = {this.state.isRunning} id={box.id} />;
         })}
+        <ActionButtons start = {this.startRunning} pause = {this.pauseRunning} />
       </div>
     );
   }
