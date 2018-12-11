@@ -72,9 +72,12 @@ class Game extends React.Component {
     return cells;
   }
 
-  //   retrieves click position, makes it
-  //   relative and calculates columns and rows being clicked.
-  //   state is then reversed.
+  /**
+   * retrieves click position, makes it
+   * relative and calculates columns and rows being clicked.
+   * state is then reversed.
+   */
+
   clickHandler = e => {
     const elemOffset = this.getElementOffset();
     const offsetX = e.clientX - elemOffset.x;
@@ -98,24 +101,59 @@ class Game extends React.Component {
   stopGame = () => {
     this.setState({ isRunning: false });
     if (this.timeoutHandler) {
-        window.clearTimeout(this.timeoutHandler);
-        this.timeoutHandler = null;
+      window.clearTimeout(this.timeoutHandler);
+      this.timeoutHandler = null;
     }
   };
 
   runIteration() {
-      console.log('running')
-      let newBoard = this.createEmptyBoard();
+    console.log("running");
+    let newBoard = this.createEmptyBoard();
 
-      //TODOL add logic rules!!
+    //TODOL add logic rules!!
 
-      this.board = newBoard;
-      this.setState({ cells: this.makeCells() });
+    this.board = newBoard;
+    this.setState({ cells: this.makeCells() });
 
-      this.timeoutHandler = window.setTimeout(() => {
-          this.runIteration();
-      }, this.state.interval);
+    this.timeoutHandler = window.setTimeout(() => {
+      this.runIteration();
+    }, this.state.interval);
+  }
 
+  /**
+   * this will calculate the number of neighbors at point (x, y)
+   * @param {Array} board
+   * @param {int} x
+   * @param {int} y
+   */
+  calculateNeighbors(board, x, y) {
+    let neighbors = 0;
+    const dirs = [
+      [-1, -1],
+      [-1, 0],
+      [-1, 1],
+      [0, 1],
+      [1, 1],
+      [1, 0],
+      [1, -1],
+      [0, -1]
+    ];
+    for (let i = 0; i < dirs.length; i++) {
+      const dir = dirs[i];
+      let y1 = y + dir[0];
+      let x1 = x + dir[1];
+
+      if (
+        x1 >= 0 &&
+        x1 < this.cols &&
+        y1 >= 0 &&
+        y1 < this.rows &&
+        board[y1][x1]
+      ) {
+        neighbors++;
+      }
+    }
+    return neighbors;
   }
 
   handleIntervalChange = e => {
