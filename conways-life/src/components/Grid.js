@@ -4,8 +4,16 @@ export default class Grid extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentState: false,
 
         };
+    }
+
+    handleClick = (e) => {
+        const canvas = this.refs.canvas;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = "black";
+        ctx.fillRect(Math.floor(e.offsetX / 20) * 20, Math.floor(e.offsetY / 20) *20, 20, 20);
     }
 
     componentDidMount() {
@@ -13,6 +21,7 @@ export default class Grid extends Component {
         const ctx = canvas.getContext('2d');
         ctx.canvas.width = 400;
         ctx.canvas.height = 400;
+        canvas.addEventListener('click', this.handleClick);
 
         for(let x = 0; x <= 400; x+=20){
             for(let y = 0; y<= 400; y+=20){
