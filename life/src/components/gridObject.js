@@ -34,6 +34,7 @@ export default class GridObject extends Component {
             array: nextArray,
             nexObj: nextObj,
             allFalse: nextObj,
+            generations: 0,
         })
     }
 
@@ -62,11 +63,11 @@ export default class GridObject extends Component {
         let selected = this.getSelected();
         console.log(selected, "selected");
         let questionables = this.getQuestionables(selected);
-        console.log(questionables, "questionables");
+        // console.log(questionables, "questionables");
         questionables.forEach(num => {
             this.cubeNextTick(num);
         })
-console.log(this.state.nexObj, 'nexobj in buildnext')
+// console.log(this.state.nexObj, 'nexobj in buildnext')
         this.setState({
             curObj: this.state.nexObj,
             nexObj: this.state.allFalse,
@@ -84,6 +85,7 @@ console.log(this.state.nexObj, 'nexobj in buildnext')
                 this.state.nexObj[num] = false;
             }
         } else {//is dead
+
             if(activeNeighbors === 3){
                 this.state.nexObj[num] = true;
             } else {
