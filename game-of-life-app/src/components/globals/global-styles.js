@@ -54,11 +54,11 @@ p {
 
 export const StyledSection = styled.section`
   margin: 0 auto;
-  padding: 9.2rem 3.2rem 3.2rem 3.2rem;
+  padding: 9.6rem 3.2rem 3.2rem 3.2rem;
   text-align: ${props => (props.center ? "center" : "left")};
   max-width: 920px;
   @media (max-width: 684px) {
-      padding-top: 12.4rem;
+      padding-top: 13.8rem;
   }
   h1 {
     font-size: 6rem;

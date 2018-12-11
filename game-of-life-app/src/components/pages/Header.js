@@ -82,7 +82,7 @@ const Header = props => (
     <HeaderContainer>
       <HeaderBar>
         <HeaderLogoText>
-          <HeaderLogoLink to="/">🏁{props.title}</HeaderLogoLink>
+          <HeaderLogoLink to="/">🏁 {props.title}</HeaderLogoLink>
         </HeaderLogoText>
         <LinkGroup>
           <PageLink to="/" exact activeClassName="active">
