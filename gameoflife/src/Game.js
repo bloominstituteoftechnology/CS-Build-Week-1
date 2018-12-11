@@ -201,10 +201,10 @@ class Game extends React.Component {
                 <button className="button" onClick={this.stopGame}>Stop</button>:
                 <button className="button" onClick={this.runGame}>Run</button>
             }
-            <h3>Generation: {this.state.genCount}</h3>
             <button className="button" onClick={this.handleRandom}>Random</button>
             <button className="button" onClick={this.stepthroughGame}>Step</button>
             <button className="button" onClick={this.handleClear}>Clear</button>
+            <h4>Generation: {this.state.genCount}</h4>
             </div>
             <div className = "Rules">
             <h4>Game Rules</h4>

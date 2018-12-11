@@ -21,9 +21,12 @@
     cursor: pointer;
     border-radius: 50%;
 }
-
+ol {
+margin: 0 auto;
+width: 700px;
+}
 .Rules {
-    border-top: 1px solid black;
+    border-top: 2px dotted purple;
     font-family: 'Coda', cursive;
     font-size: 20px;
     text-align: left;
@@ -31,7 +34,7 @@
 }
 
 .About {
-    border-top: 1px solid black;
+    border-top: 2px dotted purple;
     font-family: 'Coda', cursive;
     font-size: 20px;
 }
