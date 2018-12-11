@@ -124,13 +124,26 @@ export default class LifeCanvas extends Component {
   }
 
   tick = () => {
-    draw();
-    update();
-    nextgen();
-    requestAnimationFrame(tick);
+    while (continueAnimation) {
+      draw();
+      update();
+      nextgen();
+      requestAnimationFrame(tick);
+    }
   }
 
   componentDidMount() {
+    const canv = this.refs.canvas;
+    const lft = canv.offsetLeft;
+    const top = canv.offsetTop;
+    let cells = this.state.cells;
+    canv.addEventListener('click', function(e) => {
+      const x = e.pageX - lft;
+      const y = e.pageY = top;
+      cells.forEach(cell => {
+        if (x > cell.x && x < cell.x+10 && y <)
+      })
+    })
     requestAnimationFrame(tick);
   }
 
