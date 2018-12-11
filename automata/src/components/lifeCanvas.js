@@ -10,6 +10,8 @@ class Canvas extends Component {
         const ctx = canvas.getContext('2d');
         ctx.canvas.width = 300;
         ctx.canvas.height = 300;
+        // ctx.lineWidth = .1;
+        // ctx.beginPath();
         for (let x=0; x<=300; x+= 20) {
             for (let y=0; y<=300; y+= 20) {
                 ctx.moveTo(x, 0);
