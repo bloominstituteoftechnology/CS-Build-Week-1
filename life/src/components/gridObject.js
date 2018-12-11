@@ -6,7 +6,6 @@ export default class GridObject extends Component {
     constructor(props){
         super(props)
         this.state = {
-            nextObject: {},
             generations: 0,
             width: 15,
             length: this.width*this.width,
@@ -24,12 +23,15 @@ export default class GridObject extends Component {
         let width = this.state.width;
         let initObj = {}
         let falseObj = {}
+        let nexObj = {};
         let i;
         let nextArray = [];
         for (i = 0; i < width*width; i++){
             initObj[i] = false;
             falseObj[i] = false;
             nextArray[i] = i;
+            nexObj[i] = false;
+
         }
         // console.log(nextObj)
         this.setState({
@@ -65,28 +67,36 @@ export default class GridObject extends Component {
         console.log(selected, "selected");
         let questionables = this.getQuestionables(selected);
         // console.log(questionables, "questionables");
-        questionables.forEach(num => {
+        await questionables.forEach(num => {
             this.cubeNextTick(num);
         })
-        console.log("\n\n-------buildnext----------\n\n")
+        let allFalse = {}
+        allFalse = this.state.allFalse;
+        console.log("\n\n-------buildnext 1----------\n\n", this.state)
         this.setState({
             curObj: this.state.nexObj,
+            nexObj: allFalse,
             generations: this.state.generations+1,
         })
+        console.log("\n\n-------buildnext 2----------\n\n", this.state)
     }
+
     //#4 goes through every object in the questionables array
     cubeNextTick(num){
-        let activeNeighbors = this.countNeighbors(num);
-        console.log(num, this.state.curObj, activeNeighbors, "inside cubeNextTick")
+        console.log("num", num)
+        let activeNeighbors = 0;
+        activeNeighbors = this.countNeighbors(num);
+        console.log("active neighbors", activeNeighbors)
+        console.log(this.state.curObj,"inside cubeNextTick")
         if(this.state.curObj[num] === true){//is alive
             if(activeNeighbors === 2 || activeNeighbors === 3){
-                let newNexObj = this.state.nextObject;
+                let newNexObj = this.state.nexObj;
                 newNexObj[num] = true;
                 this.setState({
                     nexObj: newNexObj
                 })
             } else {
-                let newNexObj = this.state.nextObject;
+                let newNexObj = this.state.nexObj;
                 newNexObj[num] = false;
                 this.setState({
                     nexObj: newNexObj
@@ -94,7 +104,8 @@ export default class GridObject extends Component {
             }
         } else {//is dead
             if(activeNeighbors === 3) { 
-                let newNexObj = this.state.nextObject;
+                console.log(num, "has 3 neighbors")
+                let newNexObj = this.state.nexObj;
                 newNexObj[num] = true;
                 this.setState({
                     nexObj: newNexObj
