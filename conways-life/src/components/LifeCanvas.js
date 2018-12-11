@@ -6,13 +6,13 @@ import 'bootstrap/dist/css/bootstrap.css';
 import ReactDOM from 'react-dom';
 
 const Rules = styled.div`
-    font-size: 1.2rem;
-    font-weight: 900;
-    color: blue;
+    font-size: 1rem;
+    font-weight: 800;
     position: absolute;
-    width: 350px;
+    width: 250px;
     top: 75px;
-    right: 75px;
+    right: 0px;
+    outline: none;
 `;
 
 const Input = styled.input`
@@ -61,7 +61,8 @@ class LifeCanvas extends React.Component{
             isRunning: false,
             generation: 0,
             random: 20,
-            dropdownOpen: false,
+            dropGridSize: false,
+            dropGameRules: false,
         }
         this.board = this.initializeBoard();
     }
@@ -201,10 +202,15 @@ class LifeCanvas extends React.Component{
     handleChange = e => {
         this.setState({[e.target.name]: e.target.value});
     }
-    toggle = () => {
+    toggleGridSize = () => {
         this.setState( prevState => ({
-            dropdownOpen: !prevState.dropdownOpen
+            dropGridSize: !prevState.dropGridSize
         }))
+    }
+    toggleGameRules = () => {
+        this.setState({
+            dropGameRules: !this.state.dropGameRules
+        })
     }
     handleBoardSize = e => {
         e.preventDefault();
@@ -231,11 +237,12 @@ class LifeCanvas extends React.Component{
             })
         }
     }
-
     render(){
         return(
             <div>
                 <h1>GAME OF LIFE</h1>
+                <div style={{color:"red", fontWeight:"800"}}>Generation # {this.state.generation}</div>
+
                 <div>
                     <div    
                         className="board"
@@ -250,11 +257,17 @@ class LifeCanvas extends React.Component{
                         ))}
                     </div>
                     <Rules>
-                        <h2>Game of Life Rules</h2>
-                        <p>1. Any live cell with fewer than two live neighbors dies, as if caused by under population.</p>
-                        <p>2. Any live cell with two or three live neighbors lives on to the next generation.</p>
-                        <p>3. Any live cell with more than three live neighbors dies, as if by overpopulation.</p>
-                        <p>4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</p>
+                        <Dropdown direction="left" isOpen={this.state.dropGameRules} toggle={this.toggleGameRules}>
+                            <DropdownToggle caret style={{background:"black", color: "red", outline:"none", fontSize:"1.2rem", fontWeight:"800"}}>Game of Life Rules</DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem>
+                                    <p>1. Any live cell with fewer than two live neighbors dies, as if caused by under population.</p>
+                                    <p>2. Any live cell with two or three live neighbors lives on to the next generation.</p>
+                                    <p>3. Any live cell with more than three live neighbors dies, as if by overpopulation.</p>
+                                    <p>4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</p>
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
                     </Rules>
                 </div>
      
@@ -271,17 +284,16 @@ class LifeCanvas extends React.Component{
                         <span># of Random Cells <Input onChange={this.handleChange} name='random' value={this.state.random} /></span>
                         <Button onClick={this.randomize}>Generate</Button>
                     </div>
-                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} >
+                    <Dropdown direction="up" isOpen={this.state.dropGridSize} toggle={this.toggleGridSize}>
                         <DropdownToggle caret style={{background:"black", color: "red", outline:"none", fontSize:"1.2rem", fontWeight:"800"}}>Change Grid Size</DropdownToggle>
                         <DropdownMenu>
-                            <DropdownItem onClick={this.handleBoardSize} name='small'>Small (15x15)</DropdownItem>
-                            <DropdownItem onClick={this.handleBoardSize} name='medium'>Medium (22x22)</DropdownItem>
-                            <DropdownItem onClick={this.handleBoardSize} name='large'>Large (30x30)</DropdownItem>
+                            <DropdownItem onClick={this.handleBoardSize} style={{background: "black", color: "red", fontWeight: "700"}} name='small'>Small (15x15)</DropdownItem>
+                            <DropdownItem onClick={this.handleBoardSize} style={{background: "black", color: "red", fontWeight: "700"}} name='medium'>Medium (22x22)</DropdownItem>
+                            <DropdownItem onClick={this.handleBoardSize} style={{background: "black", color: "red", fontWeight: "700"}} name='large'>Large (30x30)</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                 </div>
 
-                <div>Generation # {this.state.generation}</div>
             </div>
         )
     }
