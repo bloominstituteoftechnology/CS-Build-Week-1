@@ -33,7 +33,7 @@ class Game extends React.Component {
   state = {
     cells: [],
     interval: 100,
-    isRunning: false
+    isRunning: false,
   };
 
   //create the empty board
@@ -92,15 +92,15 @@ class Game extends React.Component {
   //HELPER FUNCTIONS
   runGame = () => {
     this.setState({ isRunning: true });
-  }
+  };
 
   stopGame = () => {
-      this.setState({ isRunning: false});
+    this.setState({ isRunning: false });
   }
 
-  handleIntervalChange = (e) => {
-      this.setState({interval: e.target.value});
-  }
+  handleIntervalChange = e => {
+    this.setState({ interval: e.target.value });
+  };
 
   render() {
     const { cells } = this.state;
@@ -122,6 +122,18 @@ class Game extends React.Component {
             <Cell x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`} />
           ))}
         </div>
+      <div className="controls">
+      Update every <input value={this.state.interval}
+              onChange={this.handleIntervalChange} /> milliseconds
+          {this.state.isRunning ?
+            <button className="button"
+              onClick={this.stopGame}>Stop</button> :
+            <button className="button"
+              onClick={this.runGame}>Run</button>
+          }
+      </div>
+
+
       </div>
     );
   }
