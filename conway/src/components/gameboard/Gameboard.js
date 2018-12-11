@@ -4,7 +4,10 @@ class Gameboard extends Component {
   state = {
     canvasSize: 500,
     squareSize: 15,
-    gameState: []
+    gameState: [],
+    playing: false,
+    timer: 1000,
+    timerID: null
   };
 
   componentDidMount() {
@@ -18,7 +21,12 @@ class Gameboard extends Component {
           .fill(false)
           .map(() => (Math.floor(Math.random() * 2) === 0 ? true : false))
       );
-    this.setState({ gameState: startState }, () => this.drawBoard());
+    this.setState({ gameState: startState }, () => this.kickoff());
+  }
+
+  kickoff = () => {
+    this.drawBoard();
+    this.toggleGame();
   }
 
   drawBoard = () => {
@@ -37,16 +45,59 @@ class Gameboard extends Component {
     }
   };
 
+  calculateNextLife = () => {
+    const neighbors = new Array(8).fill(0);
+    const newState = this.state.gameState.slice();
+    const squareSize = this.state.squareSize;
+    for (let i = 0; i < squareSize; i++) {
+      for (let j = 0; j < squareSize; j++) {
+        neighbors[0] = i + 1 < squareSize && this.state.gameState[j][i + 1] ? 1 : 0;
+        neighbors[1] = i + 1 < squareSize && j + 1 < squareSize && this.state.gameState[j + 1][i + 1] ? 1 : 0;
+        neighbors[2] = j + 1 < squareSize && this.state.gameState[j + 1][i] ? 1 : 0;
+        neighbors[3] = i - 1 > -1 && j + 1 < squareSize && this.state.gameState[j + 1][i - 1] ? 1 : 0;
+        neighbors[4] = i - 1 > -1 && this.state.gameState[j][i - 1] ? 1 : 0;
+        neighbors[5] = i - 1 > -1 && j - 1 > -1 && this.state.gameState[j - 1][i - 1] ? 1 : 0;
+        neighbors[6] = j - 1 > -1 && this.state.gameState[j - 1][i] ? 1 : 0;
+        neighbors[7] = i + 1 < squareSize && j - 1 > -1 && this.state.gameState[j - 1][i + 1] ? 1 : 0;
+        const tileState = neighbors.reduce((total, i) => (total += i));
+        if (newState[j][i]) {
+          if (tileState < 2 || tileState > 3) {
+            newState[j][i] = false;
+          }
+        } else {
+          if (tileState === 3) {
+            newState[j][i] = true;
+          }
+        }
+      }
+    }
+    this.setState({ gameState: newState }, () => this.drawBoard());
+  };
+
+  toggleGame = () => {
+    if (this.state.playing) {
+      this.setState({ playing: false, timerID: false });
+    } else {
+      const timerID = setInterval(this.calculateNextLife, this.state.timer);
+      this.setState({
+        playing: true,
+        timerID
+      });
+    }
+  };
+
   handleClick = event => {
-    const canvas = this.refs.canvas;
-    const rect = canvas.getBoundingClientRect();
-    const tileSize = this.state.canvasSize / this.state.squareSize;
-    const x = Math.floor((event.clientX - rect.left) / tileSize);
-    const y = Math.floor((event.clientY - rect.top) / tileSize);
-    const gameState = this.state.gameState.slice();
-    gameState[y][x] = !gameState[y][x];
-    this.setState({ gameState }, () => this.drawBoard());
-  }
+    if (!this.state.playing) {
+      const canvas = this.refs.canvas;
+      const rect = canvas.getBoundingClientRect();
+      const tileSize = this.state.canvasSize / this.state.squareSize;
+      const x = Math.floor((event.clientX - rect.left) / tileSize);
+      const y = Math.floor((event.clientY - rect.top) / tileSize);
+      const gameState = this.state.gameState.slice();
+      gameState[y][x] = !gameState[y][x];
+      this.setState({ gameState }, () => this.drawBoard());
+    }
+  };
 
   render() {
     return (
