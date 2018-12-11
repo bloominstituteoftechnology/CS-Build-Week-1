@@ -15,7 +15,7 @@ const RulesTitle = styled.h2`
 
 export const Rules = () => (
   <RulesContainer>
-    <RulesTitle>📜 Rules</RulesTitle>
+    <RulesTitle>📃 Rules</RulesTitle>
     <CustomHR />
     <p>
       In the Game of Life, these rules examine each cell of the grid. For each
@@ -24,12 +24,12 @@ export const Rules = () => (
     </p>
     <ul>
       <li>
-        If a cell is <em>alive</em> and it has exactly 2 or 3 neighbors, it{" "}
-        <em>stays alive.</em>
+      If the cell is alive <em>and</em> has 2 or 3 neighbors, then it remains
+  alive. Else it dies.
       </li>
       <li>
-        If a cell is <em>dead</em> and it has exactly 3 live neighbors, it{" "}
-        <em>comes to life.</em>
+      If the cell is dead <em>and</em> has exactly 3 neighbors, then it comes to
+  life. Else if remains dead.
       </li>
     </ul>
   </RulesContainer>
