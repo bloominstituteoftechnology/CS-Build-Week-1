@@ -53,11 +53,11 @@ class LifeCanvas extends React.Component{
             height: 600,
             width: 600,
             cellSize: 40,
-            data: [],
+            cells: [],
             interval: 500,
             isRunning: false,
             generation: 0,
-            random: 10,
+            random: 20,
         }
         this.rows = this.state.height/this.state.cellSize;
         this.cols = this.state.width/this.state.cellSize;
@@ -74,7 +74,7 @@ class LifeCanvas extends React.Component{
         }
         return board;
     }
-    makeCells() {
+    makeCells = () => {
         let cells = [];
         for (let y = 0; y < this.rows; y++) {
             for (let x = 0; x < this.cols; x++) {
@@ -95,7 +95,7 @@ class LifeCanvas extends React.Component{
         }
     }
     handleClick = e => {
-        if(!this.state.isRunning){
+        if (!this.state.isRunning) {
             const offset = this.getOffset();
             const offsetX = e.clientX - offset.x;
             const offsetY = e.clientY - offset.y;
@@ -107,7 +107,7 @@ class LifeCanvas extends React.Component{
                 this.board[y][x] = !this.board[y][x];
             }
 
-            this.setState({ data: this.makeCells()});
+            this.setState({ cells: this.makeCells()});
         }
     }
     checkNeighbors = (board, x, y) => {
@@ -125,8 +125,10 @@ class LifeCanvas extends React.Component{
         return neighbors;
     }
     runGameOfLife = () => {
-        this.setState({isRunning: true});
-        this.runCycle();
+        if (this.state.cells.length > 0){
+            this.setState({isRunning: true});
+            this.runCycle();
+        }
     }
     runCycle = () => {
         let newGame = this.initializeBoard();
@@ -152,7 +154,7 @@ class LifeCanvas extends React.Component{
         }
 
         this.board = newGame;
-        this.setState({data: this.makeCells()});
+        this.setState({cells: this.makeCells()});
         this.timeoutHandler = window.setTimeout(() => {this.runCycle();}, this.state.interval);
         this.setState(prevState => ({
             generation: prevState.generation + 1
@@ -170,7 +172,20 @@ class LifeCanvas extends React.Component{
         //make new board first
         this.board = this.initializeBoard();
         //initialize cells
-        this.setState({data: this.makeCells(), generation:0});
+        this.setState({cells: this.makeCells(), generation:0});
+    }
+    randomize = e => {
+        e.preventDefault();
+        this.board = this.initializeBoard();
+        for (let i = 0; i <= this.state.random; i++){
+            let x = (Math.floor(Math.random()*15));
+            let y = (Math.floor(Math.random()*15));
+            if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows && !this.board[y][x]){
+                this.board[y][x] = true;
+            }
+        }
+
+        this.setState({cells: this.makeCells()});
     }
     handleChange = e => {
         this.setState({[e.target.name]: e.target.value});
@@ -188,8 +203,8 @@ class LifeCanvas extends React.Component{
                             backgroundSize:`${this.state.cellSize}px ${this.state.cellSize}px`}}
                         onClick={this.handleClick}
                         ref={(n) => { this.boardRef = n; }}>   
-                        {this.state.data.map(cell => (
-                            <Cell cellSize={this.state.cellSize} x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`}/>
+                        {this.state.cells.map(cell => (
+                            <Cell cellSize={this.state.cellSize} x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`}/>
                         ))}
                     </div>
                     <Rules>
@@ -216,3 +231,29 @@ class LifeCanvas extends React.Component{
 }
 
 export default LifeCanvas;
+
+
+//smiley face
+// 0: {x: 3, y: 4}
+// 1: {x: 11, y: 4}
+// 2: {x: 2, y: 5}
+// 3: {x: 4, y: 5}
+// 4: {x: 10, y: 5}
+// 5: {x: 12, y: 5}
+// 6: {x: 1, y: 6}
+// 7: {x: 5, y: 6}
+// 8: {x: 9, y: 6}
+// 9: {x: 13, y: 6}
+// 10: {x: 1, y: 10}
+// 11: {x: 13, y: 10}
+// 12: {x: 2, y: 11}
+// 13: {x: 12, y: 11}
+// 14: {x: 3, y: 12}
+// 15: {x: 11, y: 12}
+// 16: {x: 4, y: 13}
+// 17: {x: 5, y: 13}
+// 18: {x: 6, y: 13}
+// 19: {x: 7, y: 13}
+// 20: {x: 8, y: 13}
+// 21: {x: 9, y: 13}
+// 22: {x: 10, y: 13}
