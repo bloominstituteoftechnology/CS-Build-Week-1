@@ -5,7 +5,7 @@ const Details = () => {
   return (
     <div className="details-container">
       <div className="rules-container">
-        <h1>Game of Life's Four Rules</h1>
+        <h2>Game of Life's Four Rules</h2>
         <ol>
           <li>
             1. Any live cell with fewer than two live neighbors dies, as if by

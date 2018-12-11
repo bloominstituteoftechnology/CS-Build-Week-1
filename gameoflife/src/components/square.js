@@ -6,8 +6,8 @@ class Square extends Component {
   };
   render() {
     return (
-    <div className="sqaure-container">S </div>)
-    ;
+    <div className="sqaure">S </div>
+    );
   }
 }
 
