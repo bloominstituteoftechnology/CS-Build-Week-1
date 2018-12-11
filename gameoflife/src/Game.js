@@ -41,6 +41,8 @@ class Game extends React.Component {
     }
 
     clickHandler = (e) => {
+        //retrieves click position, makes it relative and calculates columns and rows being clicked.
+        //state is then reversed.
         const elemOffset = this.getElementOffset();
         const offsetX = e.clientX - elemOffset.x;
         const offsetY = e.clientY - elemOffset.y;
