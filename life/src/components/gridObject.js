@@ -32,8 +32,22 @@ export default class GridObject extends Component {
             curObj: nextObj,
             length: i,
             array: nextArray,
+            nexObj: nextObj,
+            allFalse: nextObj,
         })
     }
+
+    // initNextObj(){
+    //     let width = this.state.width;
+    //     let nextObj = {}
+    //     let i;
+    //     for (i = 0; i < width*width; i++){
+    //         nextObj[i] = false;
+    //     }
+    //     this.setState({
+    //         nextObj: nextObj,
+    //     })
+    // }
 
     toggle = (cubeNum) => {
         let nextObj = this.state.curObj
@@ -44,10 +58,58 @@ export default class GridObject extends Component {
     }
 
     buildNext(){
+        // this.initNextObj()
         let selected = this.getSelected();
         console.log(selected, "selected");
         let questionables = this.getQuestionables(selected);
         console.log(questionables, "questionables");
+        questionables.forEach(num => {
+            this.cubeNextTick(num);
+        })
+console.log(this.state.nexObj, 'nexobj in buildnext')
+        this.setState({
+            curObj: this.state.nexObj,
+            nexObj: this.state.allFalse,
+            generations: this.state.generations+1,
+        })
+    }
+
+    cubeNextTick(num){
+        let activeNeighbors = this.countNeighbors(num);
+        // console.log(num, this.state.nexObj, activeNeighbors, "inside cubeNextTick")
+        if(this.state.curObj[num] === true){//is alive
+            if(activeNeighbors === 2 || activeNeighbors ===3){
+                this.state.nexObj[num] = true;
+            } else {
+                this.state.nexObj[num] = false;
+            }
+        } else {//is dead
+            if(activeNeighbors === 3){
+                this.state.nexObj[num] = true;
+            } else {
+                //do nothing
+            }
+        }
+    }
+
+    countNeighbors(num){
+        let surrounding = [];
+        surrounding.push(this.state.curObj[num-this.state.width-1]);
+        surrounding.push(this.state.curObj[num-this.state.width]);
+        surrounding.push(this.state.curObj[num-this.state.width+1]);
+        surrounding.push(this.state.curObj[num-1]);
+        surrounding.push(this.state.curObj[num+1]);
+        surrounding.push(this.state.curObj[num+this.state.width-1]);
+        surrounding.push(this.state.curObj[num+this.state.width]);
+        surrounding.push(this.state.curObj[num+this.state.width+1]);
+        let count = 0;
+        surrounding.forEach(bool => {
+            if(bool == true){
+                count = count +1;
+            }
+
+        })
+        return count;
     }
 
     getSelected(){
@@ -85,9 +147,7 @@ export default class GridObject extends Component {
             } else {
                 qArray.push(num)
             }
-            
         }
-
     }
 
     clickHandler = (e) => {
