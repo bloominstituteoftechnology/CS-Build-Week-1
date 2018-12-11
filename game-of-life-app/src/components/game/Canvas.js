@@ -17,7 +17,7 @@ const CellGrid = styled.div`
 `;
 
 const ControlButton = styled.button`
-  padding: .8rem 1.6rem;
+  padding: 0.8rem 1.6rem;
   margin: 1.2rem 1.6rem 0 0;
   background: white;
   border: 1px solid #eee;
@@ -32,10 +32,10 @@ const ControlButton = styled.button`
 `;
 
 const Label = styled.label`
-  padding: .8rem .4rem;
+  padding: 0.8rem 0.4rem;
   font-weight: 700;
   font-size: 1.2rem;
-`
+`;
 
 class Canvas extends React.Component {
   state = {
@@ -44,7 +44,7 @@ class Canvas extends React.Component {
     isClickable: true,
     generation: 0,
     paused: false,
-    preset: 'none'
+    preset: "none"
   };
 
   componentDidMount() {
@@ -59,33 +59,31 @@ class Canvas extends React.Component {
     if (this.state.isClickable) {
       this.setState(prevState => {
         return {
-          gridArr: prevState.gridArr.map(cell => {
-            if (cell.id === id) {
-              cell.isLiving = !cell.isLiving;
-              return cell;
-            } else {
-              return cell;
-            }
-          })
+          gridArr: prevState.gridArr.map(cell =>
+            cell.id === id ? (cell.isLiving = !cell.isLiving && cell) : cell
+          )
         };
       });
     }
   };
 
   handleChange = event => {
-    const {name, value, type, checked} = event.target
-        type === "checkbox" ? this.setState({ [name]: checked }) : this.setState({ [name]: value })
-  }
+    const { name, value, type, checked } = event.target;
+    type === "checkbox"
+      ? this.setState({ [name]: checked })
+      : this.setState({ [name]: value });
+  };
   handleStartGame = () => {
+    const { generation } = this.state;
     this.setState({
       isClickable: false,
-      generation: this.state.generation,
+      generation: generation,
       paused: false
     });
     this.generationCounter = setInterval(
       () =>
         this.setState({
-          generation: this.state.generation + 1
+          generation: generation + 1
         }),
       1000
     );
@@ -106,7 +104,6 @@ class Canvas extends React.Component {
   };
 
   render() {
-    console.log(this.state.gridArr);
     return (
       <>
         <GenerationText>🌀 Generation: {this.state.generation}</GenerationText>
@@ -126,11 +123,15 @@ class Canvas extends React.Component {
         <ControlButton onClick={this.handlePauseGame}>⏸ Pause</ControlButton>
         <ControlButton onClick={this.handleResetGame}>🔄 Reset</ControlButton>
         <Label>Preset</Label>
-        <select value={this.state.preset} onChange={this.handleChange} name="preset">
-                    <option value="none">None</option>
-                    <option value="glider">Glider</option>
-                    <option value="random">Random</option>
-                    <option value="blinker">Blinker</option>
+        <select
+          value={this.state.preset}
+          onChange={this.handleChange}
+          name="preset"
+        >
+          <option value="none">None</option>
+          <option value="glider">Glider</option>
+          <option value="random">Random</option>
+          <option value="blinker">Blinker</option>
         </select>
       </>
     );
