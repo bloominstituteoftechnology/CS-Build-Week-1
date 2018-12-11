@@ -89,21 +89,23 @@ class App extends Component {
     }
   };
 
+  clear = () => {
+      const newGrid = [...Array(25)].map(e => Array(25).fill(0));
+      this.setState({grid : newGrid})
+    
+  }
+
   render() {
     return (
       <AppContainer>
         <h1>Game of Life</h1>
         <GridWrapper>
           {this.state.grid.map((nested, y) =>
-            nested.map(
-              (element, x) => this.gridSetup(x, y, element)
-              //* <Grid onClick={()=> ? }  ()=>this.toggleActive(x,y)  : null} data={element} grid={this.state.grid} /> */}
-              //<Grid onClick={()=>this.toggleActive(x,y)} data={element} grid={this.state.grid}></Grid> // this refers to the individual cell, yeah? yea
-            )
+            nested.map((element, x) => this.gridSetup(x, y, element))
           )}
         </GridWrapper>
         {this.playing()}
-        <button>Clear</button>
+        <button onClick={this.clear} >Clear</button>
       </AppContainer>
     );
   }
