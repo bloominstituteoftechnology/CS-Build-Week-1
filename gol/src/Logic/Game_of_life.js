@@ -14,10 +14,10 @@ class Game_of_life {
     iteration() {
         this.aliveOrganizms.forEach((cell) => {
             this.liveCellsCount(cell);
-        });
+        })
         this.deadCells.forEach((cell) => {
             this.deadCellsCount(cell);
-        });
+        })
         this.generation ++;
 
         return new Game_of_life(this.nextIteration, this.generation);
@@ -71,7 +71,7 @@ class Game_of_life {
                 if (this.aliveCells(i + "," + j)) {
                     nextdoorCells ++;
                 } else {
-                    this.deadCells.set(i + "," + j);
+                    this.deadCells.set(i + "," + j, {x: i, y: j});
                 }
             }
         }
@@ -102,7 +102,6 @@ class Game_of_life {
             this.nextIteration.set(coordinates.x + "," + coordinates.y, {x: coordinates.x, y: coordinates.y});
         }
     }
-
 }
  
 export default Game_of_life;

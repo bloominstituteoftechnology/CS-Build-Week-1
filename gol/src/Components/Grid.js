@@ -12,6 +12,7 @@ class Grid extends Component {
             gridSize: [30, 30],
             runningGame: false,
             game_of_life: new Game_of_life(),
+            interval: 100,
          }         
     }
 
@@ -20,9 +21,10 @@ class Grid extends Component {
         if (!this.state.runningGame) {
             this.setState({
                 runningGame: true,
-            }, () => this.startTheShow());
-        }
+            }, () => { this.intervalTimer = setInterval(() => this.startTheShow(), this.state.interval);
+        })
         console.log("Play");
+        }
     }
 
     pause = () => {
@@ -32,6 +34,10 @@ class Grid extends Component {
     stop = () => {
         this.setState({
             runningGame: false,
+        }, () => {
+            if (this.intervalTimer) {
+                clearInterval(this.intervalTimer);
+            }
         });
         console.log("Stop");
     }
