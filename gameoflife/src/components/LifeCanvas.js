@@ -25,19 +25,22 @@ class LifeCanvas extends Component {
     let canvas = this.refs.canvas;
     let context = canvas.getContext("2d");
     let boxSize = 20;
+    let fix = canvas.getBoundingClientRect();
 
-    context.fillStyle = "black";
+    context.fillStyle = "grey";
 
     context.fillRect(
-      Math.floor(e.clientX / boxSize) * boxSize,
-      Math.floor(e.clientY / boxSize) * boxSize,
+      Math.floor((e.clientX - fix.x) / boxSize) * boxSize,
+      Math.floor((e.clientY - fix.y) / boxSize) * boxSize,
       boxSize,
       boxSize
     );
   };
 
   render() {
-    return <canvas ref="canvas" width={400} height={400} />;
+    return (
+      <canvas ref="canvas" onClick={this.fillCell} width={400} height={400} />
+    );
   }
 }
 
