@@ -37,7 +37,7 @@ class App extends Component {
     }
     Object.entries(matrix).forEach(entry => {
       for (let x of entry[1]) {
-        const temp_hash = { row: 0, position_in_row: 0, actual_number: 0, value : "  "};
+        const temp_hash = { row: 0, position_in_row: 0, actual_number: 0, color : this.state.if_zero_color};
         temp_hash.row = Number(entry[0]);
         temp_hash.position_in_row = count % 15;
         temp_hash.actual_number = count;
@@ -54,6 +54,7 @@ class App extends Component {
   turnOnOrOff = (row, position_in_row) => {
     //Just add 1 to the % of 2  it will provide 0 or 1. The conditional is already set up on the div to set the div to the correct class based off the value
     const matrix = this.state.matrix;
+    // matrix[row][position_in_row] = matrix[row][position_in_row] === 0 ? this.state.if_one_color: this.state.if_zero_color;
     matrix[row][position_in_row] = matrix[row][position_in_row] === 0 ? 1 : 0;
     this.setState({ matrix });
   };
@@ -99,7 +100,17 @@ class App extends Component {
     //This will pause the game if it is currently running. 
   }
 
+  handleColorChangeIfZero = (color) => {
+    this.setState({if_zero_color : color});
+  }
+
+  handleColorChangeIfOne = (color) => {
+    this.setState({if_one_color : color});
+  }
+
   render() {
+    console.log(this.state.if_zero_color);
+    
     const matrix = this.state.matrixUsing.slice();
 
     return (
@@ -111,6 +122,7 @@ class App extends Component {
           <div
             key={id}
             onClick={() => this.turnOnOrOff(hash.row, hash.position_in_row)}
+            style = {{background: this.state.matrix[hash.row][hash.position_in_row] === 0 ? this.state.if_zero_color : this.state.if_one_color, color: this.state.matrix[hash.row][hash.position_in_row] === 0 ? this.state.if_zero_color : this.state.if_one_color}}
             className={
               this.state.matrix[hash.row][hash.position_in_row] === 0
                 ? "offDiv gridDiv"
@@ -139,15 +151,42 @@ class App extends Component {
           </div>
           
           <div className = "slidecontainer">
-            <h5>Row Size {this.state.row_count}</h5>
-            <input type="text" name = "row_count" value = {this.state.row_count} onChange = {this.handleChangeRow}/>
+            <h5>Row Count {this.state.row_count}</h5>
             <input type = "range" min ="15" max = "30" value = {this.state.row_count} className = "slider" id = "myRange" name = "row_count" onChange = {this.handleChangeRow}/>
-            <h5>Col Size {this.state.col_count}</h5>
-            <input type="text" name ="col_count" value = {this.state.col_count} onChange = {this.handleChangeColumn}/>
+            <h5>Col Count {this.state.col_count}</h5>
             <input type = "range" min ="15" max = "30" value = {this.state.col_count} className = "slider" id = "myRange" name = "col_count" onChange = {this.handleChangeColumn}/>
             <br/>
+            <h5>Color 0: {this.state.if_zero_color}</h5>
+            <div className = "colorChoices">
+              <div className ="divcolor white" onClick = {() => this.handleColorChangeIfZero("white")}>w</div>
+              <div className ="divcolor black" onClick = {() => this.handleColorChangeIfZero("black")}>b</div>
+              <div className ="divcolor blue" onClick = {() => this.handleColorChangeIfZero("blue")}>bl</div>
+              <div className ="divcolor green" onClick = {() => this.handleColorChangeIfZero("green")}>g</div>
+              <div className ="divcolor orange" onClick = {() => this.handleColorChangeIfZero("orange")}>o</div>
+              <div className ="divcolor purple" onClick = {() => this.handleColorChangeIfZero("purple")}>pu</div>
+              <div className ="divcolor pink" onClick = {() => this.handleColorChangeIfZero("pink")}>pk</div>
+              <div className ="divcolor yellow" onClick = {() => this.handleColorChangeIfZero("yellow")}>y</div>
+              
+            </div>
+            <h5>Color 1: {this.state.if_one_color}</h5>
+            <div className = "colorChoices">
+              <div className ="divcolor white" onClick = {() => this.handleColorChangeIfOne("white")}>w</div>
+              <div className ="divcolor black" onClick = {() => this.handleColorChangeIfOne("black")}>b</div>
+              <div className ="divcolor blue" onClick = {() => this.handleColorChangeIfOne("blue")}>bl</div>
+              <div className ="divcolor green" onClick = {() => this.handleColorChangeIfOne("green")}>g</div>
+              <div className ="divcolor orange" onClick = {() => this.handleColorChangeIfOne("orange")}>o</div>
+              <div className ="divcolor purple" onClick = {() => this.handleColorChangeIfOne("purple")}>p</div>
+              <div className ="divcolor pink" onClick = {() => this.handleColorChangeIfOne("pink")}>pk</div>
+              <div className ="divcolor yellow" onClick = {() => this.handleColorChangeIfOne("yellow")}>y</div>
+            </div>
+
             <button onClick = {this.updateRowCol}>Update Grid</button>
           </div>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
         </div>
         
       </div>

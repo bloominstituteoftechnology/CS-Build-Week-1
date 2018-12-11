@@ -83,6 +83,53 @@
   cursor: pointer; /* Cursor on hover */
 }
 
+.colorChoices {
+  display: flex; 
+  /* background: gold;  */
+}
+.divColor {
+  width: 22px; 
+  height: 22px; 
+  border: 1px solid gold;
+  margin-right: 7px;
+}
+
+.divColor:hover {
+  cursor: pointer;
+}
+.white {
+  background: white;
+  color: white;
+}
+.black {
+  background: black;
+  color: black; 
+}
+.blue {
+  background: blue;
+  color: blue;  
+}
+.green {
+  background: green;
+  color: green; 
+}
+.orange {
+  background: orange;
+  color: orange;  
+}
+.purple {
+  background: purple;
+  color: purple;
+}
+.pink {
+  background: pink;
+  color: pink; 
+}
+.yellow {
+  background: yellow;
+  color: yellow;  
+}
+
 
 
 
