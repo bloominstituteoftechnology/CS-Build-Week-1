@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 // pages
 import Header from "./components/pages/Header";
 import About from "./components/pages/About";
-import Colophon from "./components/pages/Colophon";
+import Credits from "./components/pages/Credits";
 import { PageNotFound } from "./components/pages/PageNotFound";
 import Game from "./components/game/Game";
 
@@ -16,7 +16,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" render={props => <Game {...props} />} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/colophon" component={Colophon} />
+          <Route exact path="/credits" component={Credits} />
           <Route component={PageNotFound} />
         </Switch>
       </div>

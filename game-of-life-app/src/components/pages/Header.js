@@ -89,8 +89,8 @@ const Header = props => (
           <PageLink to="/about" exact>
             About
           </PageLink>
-          <PageLink to="/colophon" exact>
-            Colophon
+          <PageLink to="/credits" exact>
+            Credits
           </PageLink>
         </LinkGroup>
       </HeaderBar>

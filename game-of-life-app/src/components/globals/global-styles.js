@@ -30,7 +30,7 @@ a {
     font-weight: 600;
 }
 ul {
-    padding: 0 1rem 2rem 1rem;
+    padding: 0 1rem 2rem 2rem;
     font-weight: 300;
 }
 li {
@@ -50,6 +50,15 @@ export const StyledSection = styled.section`
     margin: 0 auto;
     padding: 5rem;
     max-width: 920px;
+    h1 {
+        font-size: 4rem;
+        text-align: center;
+        padding: 2rem 0 4rem 0;
+        @media(max-width: 684px) {
+            font-size: 2.4rem;
+            padding: 1rem 0 2rem 0;
+        }
+    }
 `
 
 export const CustomHR = styled.hr`
