@@ -49,6 +49,10 @@ class Life extends React.Component {
             height: HEIGHT,
             backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`
           }}
+          onClick={this.handleClick}
+          ref={n => {
+            this.boardRef = n;
+          }}
         />
       </div>
     );
