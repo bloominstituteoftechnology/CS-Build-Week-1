@@ -11,14 +11,14 @@ class App extends Component {
     running:false,
     nextGrid:[],
     afterNextGrid:[],
-    intervalID = 0
+    intervalID : 0
     
     };
   }
   newGrid = ()=>{
     let freshGrid = [];
     for (let index = 0; index < (this.state.x*this.state.y) ; index++) {
-      freshGrid.push({alive:false, color:'#fffff',isClickable:false})
+      freshGrid.push({alive:false, color:'#fffff',isClickable:true})
     }
     this.setState({
       curGrid:freshGrid
@@ -31,16 +31,17 @@ class App extends Component {
     if(!cellID < this.state.x){
       touchs[0] = true;
     }
-    if(!cellID > this.state.grid.length -this.state.x){
+    if(!cellID > this.state.curGrid.length -this.state.x){
       touchs[2] = true;
     }
     if(!cellID < this.state.y){
       touchs[1] = true;
     }
-    if(!cellID > this.state.grid.length -this.state.y){
+    if(!cellID > this.state.curGrid.length -this.state.y){
       touchs[3] = true;
     }
-    if(touchs[0] === true){
+    debugger
+    if(touchs[0] === false){
       holdingArr.push(gridArr[cellID -this.x].alive)
       if(touchs[1]===false){
         holdingArr.push(gridArr[cellID -this.x +1 ].alive)
@@ -49,7 +50,7 @@ class App extends Component {
         holdingArr.push(gridArr[cellID -this.x -1 ].alive)
       }
     }
-    if(touchs[2] === true){
+    if(touchs[2] === false){
       holdingArr.push(gridArr[cellID +this.x].alive)
       if(touchs[1]===false){
         holdingArr.push(gridArr[cellID +this.x +1 ].alive)
@@ -74,8 +75,8 @@ class App extends Component {
     return false;
   }
   arrayCalc = (arr)=>{
-    return arr.map((e,i)=>{
-      return {alive:this.determineLife(i,arr), color:e.color,isClickable:false}
+    return arr.map((e,i,a)=>{
+      return {alive:this.determineLife(i,a), color:e.color,isClickable:false}
     })
   }
   gameLoop = ()=>{
@@ -96,18 +97,47 @@ class App extends Component {
   }
   stop = ()=>{
     clearInterval(this.state.intervalID);
+    this.setState({
+      running: false
+    })
+    
   }
   newSim = ()=>{
-    this.newGrid();
-    this.waitTime();
+    this.setState({
+      running: true,
+      nextGrid:this.arrayCalc(this.state.curGrid)
+    },()=>{
+      this.waitTime();
+    })
   }
+  setGrid =()=>{
+    this.newGrid();
+  
+  }
+  toggleCell =(e)=>{
+    let newArr = [...this.state.curGrid];
+    newArr[e.target.id].alive = !newArr[e.target.id].alive;
+    if(newArr[e.target.id].alive){
+      newArr[e.target.id].color = "#000000";
+    }
+    else{
+      newArr[e.target.id].color = "#ffffff";
+
+    }
+    this.setState({
+      curGrid : newArr
+    })
+  } 
   componentDidMount(){
     this.newGrid();
   }
   render() {
     return (
       <div className="App">
-       <Grid pixels={this.state.curGrid} x={this.state.x} y ={this.state.y}/>
+       <Grid pixels={this.state.curGrid} x={this.state.x} y ={this.state.y} clickHandle={this.toggleCell}/>
+       <button onClick={this.newSim}>Start</button>
+
+       <button onClick={this.stop}>Stop</button>
       </div>
     );
   }
