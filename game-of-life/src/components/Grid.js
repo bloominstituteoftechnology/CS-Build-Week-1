@@ -38,7 +38,7 @@ class Grid extends Component {
                         grid: this.props.grid})
     }
     toggleState = (e) => {
-        if(this.state.activated == 0) {
+        if(this.state.activated === 0) {
             this.setState({activated: 1})
             
         } else {

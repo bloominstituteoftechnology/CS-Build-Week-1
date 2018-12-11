@@ -12,6 +12,7 @@ import styled from "styled-components";
 const AppContainer = styled.div`
   background-color: black;
   height: 100vh;
+  min-height: 500px;
   width: 100%;
   background-color: black;
   margin-top:  -22px;
@@ -54,19 +55,31 @@ class App extends Component {
     // ]
   };
   toggleState = (e) => {
-    if(this.state.play == 0) {
+    if(this.state.play === 0) {
         this.setState({play: 1})
     } else {
         this.setState({play: 0})
     }
 }
 
-  playing() {
-  if (this.state.play == 0) {
-    return <button onclick={this.toggleState}>Play</button>
+toggleActive = (element) => {
+  let grid = [...this.state.grid];
+  if (grid[element] === 0) {
+
+    grid[element] = 1;
+  } else {
+    grid[element] = 0;
   }
-  return <button onclick={this.toggleState}>Pause</button>
+  this.setState({grid})
 }
+
+
+  playing = () => {
+    if (this.state.play === 0) {
+      return <button onClick={this.toggleState}>Play</button>
+    }
+    return <button onClick={this.toggleState}>Pause</button>
+  }
 
   render() {
     return (
@@ -76,7 +89,7 @@ class App extends Component {
           {this.state.grid.map(nested =>
             nested.map(element => (
                 
-                <Grid data={element} grid={this.state.grid}/>
+                <Grid onClick={() => this.toggleActive(nested)} data={element} grid={this.state.grid} /> // this refers to the individual cell, yeah? yea
             ))
           )}
         </GridWrapper>
