@@ -11,7 +11,9 @@ class App extends Component {
     row_count: 15,//default
     col_count: 15,//default
 
-    width: "330px", 
+    width: "330px",
+    if_one_color : "black",
+    if_zero_color: "white",  
   };
 
   componentWillMount() {
@@ -136,11 +138,13 @@ class App extends Component {
             <button>Presets</button>{" "}
           </div>
           
-          <div>
-            <h5>Row Size</h5>
+          <div className = "slidecontainer">
+            <h5>Row Size {this.state.row_count}</h5>
             <input type="text" name = "row_count" value = {this.state.row_count} onChange = {this.handleChangeRow}/>
-            <h5>Col Size</h5>
+            <input type = "range" min ="15" max = "30" value = {this.state.row_count} className = "slider" id = "myRange" name = "row_count" onChange = {this.handleChangeRow}/>
+            <h5>Col Size {this.state.col_count}</h5>
             <input type="text" name ="col_count" value = {this.state.col_count} onChange = {this.handleChangeColumn}/>
+            <input type = "range" min ="15" max = "30" value = {this.state.col_count} className = "slider" id = "myRange" name = "col_count" onChange = {this.handleChangeColumn}/>
             <br/>
             <button onClick = {this.updateRowCol}>Update Grid</button>
           </div>
