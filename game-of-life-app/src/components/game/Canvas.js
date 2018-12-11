@@ -74,16 +74,15 @@ class Canvas extends React.Component {
       : this.setState({ [name]: value });
   };
   handleStartGame = () => {
-    const { generation } = this.state;
     this.setState({
       isClickable: false,
-      generation: generation,
+      generation: this.state.generation,
       paused: false
     });
     this.generationCounter = setInterval(
       () =>
         this.setState({
-          generation: generation + 1
+          generation: this.state.generation + 1
         }),
       1000
     );
