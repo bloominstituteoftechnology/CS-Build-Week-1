@@ -31,7 +31,7 @@ class Game extends React.Component {
     state = {
         cells: [],
         isRunning: false,
-        interval: 1000,
+        interval: 100,
         genCount: 0,
     }
 
@@ -119,12 +119,12 @@ class Game extends React.Component {
         this.board = newBoard;
       
         this.setState((prevState) => (
-            {genCount: prevState.genCount + 1, cells: this.makeCells()}
+            {genCount: prevState.genCount + 1, cells: this.makeCells(),}
         ))
 
         this.timeoutHandler = window.setTimeout(() => {
             this.runIteration();
-        },this.state.interval);
+        },(this.state.interval));
     }
 
    /**
