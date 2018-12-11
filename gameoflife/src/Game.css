@@ -29,3 +29,9 @@
     text-align: left;
 
 }
+
+.About {
+    border-top: 1px solid black;
+    font-family: 'Coda', cursive;
+    font-size: 20px;
+}
