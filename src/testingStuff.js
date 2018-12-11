@@ -17,7 +17,6 @@ class Node {
 
 
 // init 16x16 grid
-
 var currentNodeHolder = ['nada'];
 var nextNodeHolder = [];
 
