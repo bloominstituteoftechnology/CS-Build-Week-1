@@ -12,7 +12,7 @@ class App extends Component {
           <div className="game-title">Game of Life by Vance Leon</div>
           <Details />
         </div>
-        
+
         <GridContainer />
       </div>
     );

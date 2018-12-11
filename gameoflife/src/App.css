@@ -95,8 +95,8 @@ table {
 
 .grid-container {
   margin: 20px auto;
-  width: 250px;
-  height: 250px; 
+  width: 500px;
+  height: 500px; 
   background-color: #F5F5F5;
   display: flex;
   justify-content: center;
@@ -105,9 +105,10 @@ table {
 }
 
 .square {
-  height: 15px;
   width: 15px;
-  border: .5px solid black;
+  height: 15px;
+  border: 1px solid black;
+  flex-wrap: wrap;
 }
 
 
