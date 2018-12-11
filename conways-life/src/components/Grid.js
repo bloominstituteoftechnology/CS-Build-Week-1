@@ -4,7 +4,7 @@ export default class Grid extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentState: false,
+            currentState: 'white',
 
         };
     }
@@ -12,7 +12,17 @@ export default class Grid extends Component {
     handleClick = (e) => {
         const canvas = this.refs.canvas;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = "black";
+        if(this.state.currentState === 'white'){
+            this.setState(state => ({
+                currentState: 'black'
+            }))
+        }
+        else if(this.state.currentState === 'black'){
+            this.setState(state => ({
+                currentState: 'white'
+            }))
+        }
+        ctx.fillStyle = this.state.currentState;
         ctx.fillRect(Math.floor(e.offsetX / 20) * 20, Math.floor(e.offsetY / 20) *20, 20, 20);
     }
 
