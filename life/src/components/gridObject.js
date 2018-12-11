@@ -10,56 +10,67 @@ export default class GridObject extends Component {
             generations: 0,
             width: 15,
             length: this.width*this.width,
-            array: []
+            array: [],
+            allFalse: {}
         }
     }
 
     componentDidMount(){
-        this.clear();
+        this.init();
     }
 
-    clear(){
+    init(){
+        console.log("INIT\n\n\n\n\n\nppppppppppppp\n\n\n")
         let width = this.state.width;
-        let nextObj = {}
+        let initObj = {}
+        let falseObj = {}
         let i;
         let nextArray = [];
         for (i = 0; i < width*width; i++){
-            nextObj[i] = false;
+            initObj[i] = false;
+            falseObj[i] = false;
             nextArray[i] = i;
         }
         // console.log(nextObj)
         this.setState({
-            curObj: nextObj,
+            curObj: initObj,
             length: i,
             array: nextArray,
-            nexObj: nextObj,
-            allFalse: nextObj,
+            nexObj: initObj,
             generations: 0,
+            allFalse: falseObj
         })
     }
 
     toggle = (cubeNum) => {
-        let nextObj = this.state.curObj
-        nextObj[cubeNum] = true;
+        console.log("toggle1", this.state.allFalse[0])
+        let monkey = {};
+        monkey = this.state.curObj
+        console.log("toggle1", this.state.allFalse[0])
+        let curr = null;
+        curr = this.state.curObj[cubeNum];
+        monkey[cubeNum] = !curr;
+        console.log("toggle2", this.state.allFalse[0])
         this.setState({
-            curObj: nextObj
+            curObj: monkey
         })
+        console.log("toggle3", this.state.allFalse[0])
     }
 
     //#1
     async buildNext(){
         // this.initNextObj()
-        let selected = this.getSelected();
+        let selected = 0;
+        selected = this.getSelected();
         console.log(selected, "selected");
         let questionables = this.getQuestionables(selected);
         // console.log(questionables, "questionables");
-        await questionables.forEach(num => {
+        questionables.forEach(num => {
             this.cubeNextTick(num);
         })
         console.log("\n\n-------buildnext----------\n\n")
         this.setState({
             curObj: this.state.nexObj,
-            nexObj: this.state.allFalse,
             generations: this.state.generations+1,
         })
     }
@@ -82,7 +93,7 @@ export default class GridObject extends Component {
                 })
             }
         } else {//is dead
-            if(activeNeighbors === 3){
+            if(activeNeighbors === 3) { 
                 let newNexObj = this.state.nextObject;
                 newNexObj[num] = true;
                 this.setState({
@@ -105,15 +116,11 @@ export default class GridObject extends Component {
         surrounding.push(this.state.curObj[num+this.state.width]);
         surrounding.push(this.state.curObj[num+this.state.width+1]);
         let count = 0;
-        console.log(count, "countNeighbors1")
         surrounding.forEach(bool => {
             if(bool == true){
                 count = count +1;
-                console.log(count, "countNeighbors2")
             }
-            
         })
-        console.log(count, "countNeighbors3")
         return count;
     }
     //#2
@@ -170,12 +177,13 @@ export default class GridObject extends Component {
                 break;
             case "clear":
                 console.log("clear");
-                this.clear();
+                this.init();
                 break;
             default: 
                 // console.log("default");
                 console.log("toggle", e.target.name);
                 this.toggle(e.target.name);
+                break;
         }
     }
 
