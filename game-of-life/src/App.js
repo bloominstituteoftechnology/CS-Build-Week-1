@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import Grid from "./components/Grid"
+import Grid from "./components/Grid";
+import Play from "./components/Play";
+import Pause from "./components/Pause";
+
 import "./App.css"; 
 
 import styled from "styled-components";
@@ -22,7 +25,7 @@ display: flex;
 width: 500px;
 flex-wrap: wrap;
 box-sizing: border-box;
-
+margin-bottom: 2px;
 
 `
 
@@ -30,7 +33,8 @@ box-sizing: border-box;
 
 class App extends Component {
   state = {
-      grid: [...Array(25)].map(e => Array(25).fill(0))
+      grid: [...Array(25)].map(e => Array(25).fill(0)),
+      play: 0
     // grid: [
     //   [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -49,6 +53,21 @@ class App extends Component {
     //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     // ]
   };
+  toggleState = (e) => {
+    if(this.state.play == 0) {
+        this.setState({play: 1})
+    } else {
+        this.setState({play: 0})
+    }
+}
+
+  playing() {
+  if (this.state.play == 0) {
+    return <button onclick={this.toggleState}>Play</button>
+  }
+  return <button onclick={this.toggleState}>Pause</button>
+}
+
   render() {
     return (
       <AppContainer>
@@ -56,12 +75,14 @@ class App extends Component {
         <GridWrapper>
           {this.state.grid.map(nested =>
             nested.map(element => (
-              
-                <Grid data={element} />
-              
+                
+                <Grid data={element} grid={this.state.grid}/>
             ))
           )}
         </GridWrapper>
+        
+        {this.playing()}
+        <button>Clear</button>
       </AppContainer>
     );
   }

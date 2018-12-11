@@ -5,7 +5,8 @@ background-color: black;
 width: 20px;
 height: 20px;
 box-sizing: border-box;
-border: 1px dashed rgb(0, 255, 255);
+border: .5px dashed rgb(54, 192, 84);
+border-radius: 45%;
 }
 
 .Block_On {

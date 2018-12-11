@@ -29,14 +29,18 @@ import styled from "styled-components";
 class Grid extends Component {
     constructor(props) {
         super(props);
-        this.state = { activated: 0 }
+        this.state = { activated: 0,
+                       grid: []     
+        }
     }
     componentDidMount() {
-        this.setState({activated: this.props.data})
+        this.setState({activated: this.props.data,
+                        grid: this.props.grid})
     }
     toggleState = (e) => {
         if(this.state.activated == 0) {
             this.setState({activated: 1})
+            
         } else {
             this.setState({activated: 0})
         }
