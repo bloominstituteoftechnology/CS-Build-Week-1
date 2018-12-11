@@ -23,7 +23,7 @@ class GridDisplay extends Component {
         }
         for (let i = 0; i < this.state.cols; i++) {
             for (let j = 0; j < this.state.rows; j++) {
-                arr[i][j] = Math.round(Math.random()); //new Cell(i, j)
+                arr[i][j] = Math.round(Math.random()); //random 0 or 1
             }
         } 
         this.setState({ grid: arr });
@@ -35,7 +35,6 @@ class GridDisplay extends Component {
                 {this.state.grid.map(row => 
                     row.map((cell, index) => 
                        <Cell key={index} cell={cell}/>
-                
                 ))}
             </div>
           );

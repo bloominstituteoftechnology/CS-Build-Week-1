@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Cell = props => {
-    return (
-        <div className="cell">
-            {props.cell}
-        </div>
-      )
+class Cell extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: props.cell,
+        }
+    }
+
+    handleToggle() {
+        if (this.state.value === 1) {
+            this.setState({value: 0});
+        } else {
+            this.setState({value: 1});
+        }
+    }
+
+    render() {
+        return (
+            <div className="cell"
+                onClick={() => this.handleToggle()}
+                style={ this.state.value === 1 ? { background: "blue" } : null }>
+            </div>
+          );
+        }
 }
 
 export default Cell;
