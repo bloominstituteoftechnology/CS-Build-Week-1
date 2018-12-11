@@ -1,4 +1,5 @@
 import React from 'react';
+import {matrix1} from './matrix1';
 import {matrix2} from './matrix2';
 import {matrix3} from './matrix3';
 
@@ -10,7 +11,7 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            array1: matrix2,
+            array1: matrix1,
             continueAnimating: false,
             cycle: 'A',
             buttonTag: 'Start'
@@ -159,14 +160,20 @@ class Game extends React.Component {
                         }
 
                         // toggle state based on neighbors
-                        if (matrix2[i][j] && count < 2) {
+                        if ((matrix2[i][j] === 1) && (count < 2)) {
                             matrix3[i][j] = 0;
-                        } else if (matrix2[i][j] && (count === 2 || count === 3)) {
+                            console.log(matrix2[i][j], count);
+                        } else if ((matrix2[i][j] === 1) && (count === 2 || count === 3)) {
                             matrix3[i][j] = 1;
-                        } else if (matrix2[i][j] && count > 3) {
+                            console.log(matrix2[i][j], count);
+                        } else if ((matrix2[i][j] === 1) && (count > 3)) {
                             matrix3[i][j] = 0;
-                        } else if (!matrix2[i][j] && count === 3) {
+                            console.log(matrix2[i][j], count);
+                        } else if ((matrix2[i][j] === 0) && (count === 3)) {
                             matrix3[i][j] = 1;
+                            console.log(matrix2[i][j], count);
+                        } else if ((matrix2[i][j] === 0) && (count !== 3)) {
+                            matrix3[i][j] = 0;
                         }
                     }
                 }
@@ -241,14 +248,20 @@ class Game extends React.Component {
                         }
 
                         // toggle state based on neighbors
-                        if (matrix3[i][j] && (count < 2)) {
+                        if ((matrix3[i][j] === 1) && (count < 2)) {
                             matrix2[i][j] = 0;
-                        } else if (matrix3[i][j] && (count === 2 || count === 3)) {
+                            console.log(matrix3[i][j], count);
+                        } else if ((matrix3[i][j] === 1) && (count === 2 || count === 3)) {
                             matrix2[i][j] = 1;
-                        } else if (matrix3[i][j] && (count > 3)) {
+                            console.log(matrix3[i][j], count);
+                        } else if ((matrix3[i][j] === 1) && (count > 3)) {
                             matrix2[i][j] = 0;
-                        } else if (!matrix3[i][j] && (count === 3)) {
+                            console.log(matrix3[i][j], count);
+                        } else if ((matrix3[i][j] === 0) && (count === 3)) {
                             matrix2[i][j] = 1;
+                            console.log(matrix3[i][j], count);
+                        } else if ((matrix3[i][j] === 0) && (count !== 3)) {
+                            matrix2[i][j] = 0;
                         }
                     }
                 }
@@ -276,11 +289,20 @@ class Game extends React.Component {
         }
     }
 
+    clearGrid = () => {
+        for (let i = 0; i < 80; i++) {
+            matrix2[i] = matrix1[i].slice();
+            matrix3[i] = matrix1[i].slice();
+        }
+        this.setState({array1: matrix1});
+    }
+
     render() {
         return (
             <div>
                 <canvas ref="canvas" id="gameCanvas" width="1911" height="801" />
                 <button onClick={this.toggleButton}>{this.state.buttonTag}</button>
+                <button onClick={this.clearGrid}>Clear</button>
             </div>
         );
     }
