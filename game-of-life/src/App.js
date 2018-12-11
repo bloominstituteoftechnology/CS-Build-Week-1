@@ -9,13 +9,24 @@ import styled from "styled-components";
 const AppContainer = styled.div`
   background-color: black;
   margin: 8%;
-  width: 1125px;
+  width: 100%;
   height: 1125px;
 `;
 
+const GridWrapper = styled.div`
+display: flex;
+width: 20%;
+flex-wrap: wrap;
+box-sizing: border-box;
+
+
+`
+
+
+
 class App extends Component {
   state = {
-    gridsize: [
+    grid: [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -37,16 +48,15 @@ class App extends Component {
     return (
       <div>
         <h1>Game of Life</h1>
-        <div>
-          {this.state.gridsize.map(nested =>
+        <GridWrapper>
+          {this.state.grid.map(nested =>
             nested.map(element => (
-              <div>
+              
                 <Grid data={element} />
-              </div>
+              
             ))
           )}
-          ;
-        </div>
+        </GridWrapper>
       </div>
     );
   }
