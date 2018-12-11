@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import p5 from 'p5';
 import P5Wrapper from '../P5Wrapper/P5Wrapper';
 import sketch from './GridSketch';
+import './styles/gridcomponent.scss';
 
 class Grid extends Component {
   constructor(props){
@@ -11,11 +12,14 @@ class Grid extends Component {
     }
   }
 
-  
+  componentDidMount(){
+    console.log(sketch);
+    
+  }
 
   render(){
     return(
-      <div>
+      <div className="sketch-container">
         <P5Wrapper sketch={this.state.sketchy}/>
       </div>
     )

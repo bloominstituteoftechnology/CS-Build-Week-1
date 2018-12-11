@@ -34,6 +34,7 @@ React + P5:
 https://medium.com/front-end-hacking/the-building-of-threadd-react-three-js-p5-js-fc988e687686
 https://github.com/NeroCor/react-p5-wrapper
 https://github.com/slin12/react-p5-wrapper
+https://forum.processing.org/two/discussion/26322/using-react-with-p5-js-es6-support <-- (02/2018)
 https://github.com/atorov/fractal-tree-simulator/blob/master/src/components/P5Wrapper/sketch.js <-- (02/2018)
 
 P5 + ES6:
