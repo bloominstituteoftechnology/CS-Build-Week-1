@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Box from './GridBox';
 
 class GridLayout extends Component{
     constructor(){
@@ -19,7 +20,7 @@ class GridLayout extends Component{
         const boxArr = []
         const boxes = this.state.gridRows * this.state.gridColumns; 
         for(let i = 0; i < boxes; i++){
-            boxArr.push({gridNumber: i, alive: false})
+            boxArr.push({id: i})
         }
         this.setState({
             gridBoxArr: boxArr
@@ -31,8 +32,7 @@ class GridLayout extends Component{
             <div className = "grid">
                 {this.state.gridBoxArr.map(box => {
                     return (
-                        <div key = {box.gridNumber} className = "box">
-                        </div>
+                        <Box id = {box.id} />
                     )
                 })}
             </div>
