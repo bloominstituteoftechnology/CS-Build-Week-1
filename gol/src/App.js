@@ -28,62 +28,73 @@ class App extends Component {
     let holdingArr = [];
     //top right bottom left
     let touchs = [false,false,false,false];
-    if(!cellID < this.state.x){
+    if(cellID < this.state.x){
       touchs[0] = true;
     }
-    if(!cellID > this.state.curGrid.length -this.state.x){
+    if(cellID >= (this.state.curGrid.length -this.state.x)){
       touchs[2] = true;
     }
-    if(!cellID < this.state.y){
+    if((cellID +1 ) % this.state.y === 0){
       touchs[1] = true;
     }
-    if(!cellID > this.state.curGrid.length -this.state.y){
+    if(cellID % this.state.y  ===0){
       touchs[3] = true;
     }
-    debugger
-    if(touchs[0] === false){
-      holdingArr.push(gridArr[cellID -this.x].alive)
-      if(touchs[1]===false){
-        holdingArr.push(gridArr[cellID -this.x +1 ].alive)
+    
+    if(!touchs[0] ){
+      holdingArr.push(gridArr[cellID -this.state.x].alive)
+      if(!touchs[1]){
+        holdingArr.push(gridArr[cellID -this.state.x+1 ].alive)
       }
-      if(touchs[3]===false){
-        holdingArr.push(gridArr[cellID -this.x -1 ].alive)
-      }
-    }
-    if(touchs[2] === false){
-      holdingArr.push(gridArr[cellID +this.x].alive)
-      if(touchs[1]===false){
-        holdingArr.push(gridArr[cellID +this.x +1 ].alive)
-      }
-      if(touchs[3]===false){
-        holdingArr.push(gridArr[cellID +this.x -1 ].alive)
+      if(!touchs[3]){
+        holdingArr.push(gridArr[cellID -this.state.x -1 ].alive)
       }
     }
-    if(touchs[1] === true){
+    if(!touchs[2]){
+      holdingArr.push(gridArr[cellID +this.state.x].alive)
+      if(!touchs[1]){
+        holdingArr.push(gridArr[cellID +this.state.x +1 ].alive)
+      }
+      if(!touchs[3]){
+        holdingArr.push(gridArr[cellID +this.state.x -1 ].alive)
+      }
+    }
+    if(!touchs[1] ){
       holdingArr.push(gridArr[cellID + 1].alive)
     }
-    if(touchs[3] === true){
+    if(!touchs[3] ){
       holdingArr.push(gridArr[cellID -1].alive)
     }
     const cellcount = holdingArr.filter(i=>i===true).length;
     if(cellcount === 3){
       return true;
     }
-    if(cellcount === 2 && !gridArr[cellID]){
+    if(cellcount === 2 && gridArr[cellID].alive){
       return true
     }
     return false;
   }
   arrayCalc = (arr)=>{
     return arr.map((e,i,a)=>{
-      return {alive:this.determineLife(i,a), color:e.color,isClickable:false}
+      const isAlive = this.determineLife(i,a);
+      const color = isAlive ? "#000000":"#ffffff";
+      return {alive:isAlive, color:color,isClickable:e.isClickable}
+    })
+  }
+  toggleClick =()=>{
+    this.setState({
+      curGrid: this.state.curGrid.map(e=>{
+        e.clickHandle=true;
+        return e;
+      })
     })
   }
   gameLoop = ()=>{
+    const newArr = this.arrayCalc(this.state.afterNextGrid);
       this.setState({
-        curGrid: this.state.nextGrid,
-        nextGrid:this.state.afterNextGrid,
-        afterNextGrid:this.arrayCalc(this.state.nextGrid)
+        curGrid: [...this.state.nextGrid],
+        nextGrid:[...this.state.afterNextGrid],
+        afterNextGrid:newArr
       })
      
   }
@@ -103,9 +114,13 @@ class App extends Component {
     
   }
   newSim = ()=>{
+    const newArr = this.arrayCalc(this.state.curGrid);
+    const lastArr = this.arrayCalc(newArr);
     this.setState({
       running: true,
-      nextGrid:this.arrayCalc(this.state.curGrid)
+      nextGrid:newArr,
+      afterNextGrid:lastArr
+
     },()=>{
       this.waitTime();
     })
