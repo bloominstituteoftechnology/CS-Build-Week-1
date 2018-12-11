@@ -29,7 +29,7 @@ class Grid extends Component {
          const boxSize = 40;
          const boxes = Math.floor(200/boxSize);
          canvas.addEventListener('click', handleClick);
-         canvas.addEventListener('mousemove', handleClick);
+        //  canvas.addEventListener('mousemove', handleClick);
 
          function drawBox(){
              ctx.beginPath();
