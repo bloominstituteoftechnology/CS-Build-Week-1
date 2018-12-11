@@ -6,14 +6,41 @@ class Grid extends Component {
     super(props);
     this.state = {
       cell_size: 20,
-      grid_width: 15,
-      grid_height: 15,
+      grid_width_cells: 25,
+      grid_height_cells: 25,
       grid: []
     };
   }
-
   componentDidMount() {
-    this.grid_init(this.state.grid_width, this.state.grid_height);
+    let size = this.state.cell_size;
+    let height = this.state.grid_height_cells*size;
+    let width = this.state.grid_width_cells*size;
+    
+    //set grid array size and set all values to false
+    this.grid_init(this.state.grid_width_cells, this.state.grid_height_cells);
+
+    //render the canvas
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+    
+    ctx.lineWidth = 1;
+    ctx.strokeRect(0, 0, width, height);
+
+    for (var y = size; y < height; y += size) {
+      ctx.moveTo(0, y);
+      ctx.lineTo(height, y);
+    }
+
+    for (var x = size; x < width; x += size) {
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, width);
+    }
+
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+    console.log(height);
+    console.log(width);
   }
 
   //initialize the grid with the proper height and width and all false values.
@@ -29,7 +56,6 @@ class Grid extends Component {
       grid: grid
     });
   }
-
   //create a new grid based on the game rules being applied to the current grid, then setting the new grid to the current grid in state.
   new_grid() {
     const grid = this.state.grid;
@@ -75,34 +101,21 @@ class Grid extends Component {
     }
   }
 
-  render_grid() {
-    const newGrid = [];
-    let cellRow = [];
-    for (let y = 0; y < this.state.grid_height; y++) {
-      for (let x = 0; x < this.state.grid_widt; x++) {
-        cellRow.push(<Cell key={[y, x]} />);
-      }
-      newGrid.push(
-        <div className="row" key={y}>
-          {cellRow}
-        </div>
-      );
-      cellRow = [];
-    }
-    return newGrid;
+  draw_cell(cell) {
+
   }
 
   render() {
-    return <div className="gridContainer">{this.render_grid()}</div>;
+    return (
+      <div className="gridContainer">
+        <canvas id="canvas" width={(this.state.grid_width_cells*this.state.cell_size)} height={(this.state.grid_height_cells*this.state.cell_size)} />
+      </div>
+    );
   }
 }
-
 export default Grid;
-
 class Cell extends Component {
-    render() { 
-        return ( 
-            <div className="cellContainer"></div>
-        );
-    }
+  render() {
+    return <div className="cellContainer" />;
+  }
 }
