@@ -1,41 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 
-//play button function to start game 
-// playButton = () => {
-//   cleartInterval(this.intervalId);
-//   this.intervalId = setInterval(this.play);
-// }
-
-// pauseButton = () => {
-//   clearInterval(this.intervalId);
-// }
-
-
-
-//main function for making the game work
-/*
-1. Any live cell with fewer than two live neighbors dies
-2. Any live cell with two or three live neighbors lives on to the next generation
-3. Any live cell with more than three live neighbors dies
-4. Any dead cell with exactly three live neighbors becomes a live cell
-*/
-
-// play = () => {
-//   let g = this.state.gridFull;
-//   let g2 = arrayClone(this.state.gridFull);
-
-//   // loop over each row and then each column within the row
-//   for (let i = 0; i < this.rows; i++) {
-//     for (let j = 0; j < this.cols; j ++){
-//       let count = 0; // the count keeps track of the number of adjacent live cells
-//       if (i > 0) if (g[i-1][j]) count++; 
-//     }
-//   }
-
-// }
-
-
 class Box extends Component {
   // arrow function to select a box by row and column
   selectBox = () => {
@@ -99,13 +64,13 @@ class Controls extends Component{
   render () {
     return(
       <div className = "buttons">
-      <button className = "play-button">
+      <button className = "play-button" onClick = {this.props.playButton}>
         Play
       </button>
-      <button className = "pause-button">
+      <button className = "pause-button" onClick = {this.props.pauseButton}>
         Pause
       </button>
-      <button className = "clear-button">
+      <button className = "clear-button" onClick = {this.props.clearButton}>
         Clear
       </button>
       </div>
@@ -142,6 +107,88 @@ class App extends Component {
     });
   }
 
+
+  //play button function to start game 
+playButton = () => {
+  clearInterval(this.intervalId);
+  this.intervalId = setInterval(this.play);
+}
+
+pauseButton = () => {
+  clearInterval(this.intervalId);
+}
+
+clear = () => {
+  let grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
+  this.setState({
+    gridFull: grid,
+    generation: 0
+  });
+}
+ 
+//main function for making the game work
+/*
+1. Any live cell with fewer than two live neighbors dies
+2. Any live cell with two or three live neighbors lives on to the next generation
+3. Any live cell with more than three live neighbors dies
+4. Any dead cell with exactly three live neighbors becomes a live cell
+*/
+
+play = () => {
+  let g = this.state.gridFull;
+  let g2 = arrayClone(this.state.gridFull);
+
+  // loop over each row and then each column within the row
+  for (let i = 0; i < this.rows; i++) {
+    for (let j = 0; j < this.cols; j ++){
+      let count = 0; // the count keeps track of the number of adjacent live cells
+      /* 
+        i is the row
+        i-1 is the row above i
+        i+1 is the row below i
+        j is the column
+        j-1 is the column to the left
+        j+1 is the column to the right
+        we can access a cell with i,j and there are 8 cells around cell i,j
+        top [i-1][j]
+        top-right-corner [i-1][j+1]
+        right-side [i][j+1]
+        bottom-right-corner [i+1][j+1]
+        bottom [i+1][j]
+        bottom-left-corner [i+1][j-1]
+        left-side [i][j-1]
+        top-left-corner [i-1][j-1]
+
+        We are have to apply thr rules carefully to cells that are not in the top(i=0)/bottom(i = this.rows-1) rows
+        and not in the left(j=0)/right(j=this.cols-1) columns
+        */
+      //if we are not at the top row, add to count if cell at top is full
+      if (i > 0) if (g[i-1][j]) count++; 
+      //if we are not at the top-left-corner, add to count if cell at top-left-corner is full 
+      if (i > 0 && j > 0) if (g[i-1][j-1]) count++; 
+      //if we are not at the top-right-corner, add to count if cell at top-right-corner is full
+      if (i > 0 && j > this.cols - 1) if (g[i-1][j+1]) count++;
+      //if we are not at the far right column, add to the count if the cell to the right is full
+      if (j < this.cols-1) if (g[i][j+1]) count++;
+      //if we are not at the far left column, add to the count if the cell to the left is full
+      if (j > 0) if (g[i][j-1]) count++;
+      //if we are not in the bottom row, add to the count if the cell below is full
+      if (i < this.rows - 1) if (g[i+1][j]) count++;
+      //if we are not in the bottom left corner, add to the count if the cell in bottom left corner is full
+      if (i < this.rows - 1 && j > 0) if (g[i+1][j-1]) count++;
+      //if we are not in the bottom right corner, add to the count if cell in bottom right corner is full
+      if (i < this.rows - 1 && j < this.cols - 1) if (g[i+1]) count++;
+      //apply the rules of the game based on the count of filled adjacent cells
+      if (g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
+      if(!g[i][j] && count === 3) g2[i][j] = true;
+    } 
+  }
+  this.setState({
+    gridFull: g2,
+    generation: this.state.generation + 1
+  });
+}
+
   render(){
 
     return (
@@ -151,9 +198,9 @@ class App extends Component {
           Conway's Game Of Life
         </h1>
         <Controls 
-          // playButton = {this.playButton}
-          // pauseButton = {this.pauseButton}
-          // clearButton = {this.clearButton}
+          playButton = {this.playButton}
+          pauseButton = {this.pauseButton}
+          clearButton = {this.clear}
         />
         <h4>
           Generations: {this.state.generation}
