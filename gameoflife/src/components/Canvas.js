@@ -10,7 +10,6 @@ export default class Canvas extends Component {
         x: 0, 
         y: 0,
         start: 0,
-        test: "",
     }
   }
 
@@ -69,6 +68,8 @@ export default class Canvas extends Component {
     let mousePosX = mousePos.x;
     let mousePosY = mousePos.y; 
 
+    console.log("mouse x and y", mousePosX, mousePosY);
+
     function getPixel(imageData, x, y) {
       const w = imageData.width; 
       const h = imageData.height;
@@ -91,18 +92,14 @@ export default class Canvas extends Component {
 
   onClickStart = (e) => {
     this.setState({start: 1});
-    this.setState({test: "tested"});    
   }
 
   onClickStop = (e) => {
     this.setState({start: 0});
-    console.log("stopped", this.state.start)
   }
 
 
-  componentDidUpdate() {
-    console.log("component did update start state",this.state.start)
-  
+  componentDidUpdate() {  
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
 
@@ -142,35 +139,37 @@ export default class Canvas extends Component {
               if(neighbor1[2] === 255) {
                 count = count +1; 
               }
-            } else if(neighbor2 !== null) {
+            } if(neighbor2 !== null) {
               if(neighbor2[2] === 255) {
                 count = count +1; 
               } 
-            } else if(neighbor3 !== null) {
+            } if(neighbor3 !== null) {
               if(neighbor3[2] === 255) {
                 count = count +1; 
               }
-            } else if(neighbor4 !== null) {
+            } if(neighbor4 !== null) {
               if(neighbor4[2] === 255) {
                 count = count +1; 
               } 
-            } else if(neighbor5 !== null) {
+            } if(neighbor5 !== null) {
               if(neighbor5[2] === 255) {
                 count = count +1; 
               } 
-            } else if(neighbor6 !== null) {
+            } if(neighbor6 !== null) {
               if(neighbor6[2] === 255) {
                 count = count +1; 
               } 
-            } else if(neighbor7 !== null) {
+            } if(neighbor7 !== null) {
               if(neighbor7[2] === 255) {
                 count = count +1; 
               } 
-            } else if(neighbor8 !== null) {
+            } if(neighbor8 !== null) {
               if(neighbor8[2] === 255) {
                 count = count +1; 
               } 
             }
+
+            console.log("x, y, count", xCheck, yCheck, count);
 
             if(count < 2 || count > 3) {
               nextGenDies.push({'x': xCheck, 'y': yCheck});
@@ -192,31 +191,31 @@ export default class Canvas extends Component {
                 if(neighbor11[2] === 255) {
                   count2 = count2 +1; 
                 }
-              } else if(neighbor22 !== null) {
+              } if(neighbor22 !== null) {
                 if(neighbor22[2] === 255) {
                   count2 = count2 +1; 
                 } 
-              } else if(neighbor33 !== null) {
+              } if(neighbor33 !== null) {
                 if(neighbor33[2] === 255) {
                   count2 = count2 +1; 
                 }
-              } else if(neighbor44 !== null) {
+              } if(neighbor44 !== null) {
                 if(neighbor44[2] === 255) {
                   count2 = count2 +1; 
                 } 
-              } else if(neighbor55 !== null) {
+              } if(neighbor55 !== null) {
                 if(neighbor55[2] === 255) {
                   count2 = count2 +1; 
                 } 
-              } else if(neighbor66 !== null) {
+              } if(neighbor66 !== null) {
                 if(neighbor66[2] === 255) {
                   count2 = count2 +1; 
                 } 
-              } else if(neighbor77 !== null) {
+              } if(neighbor77 !== null) {
                 if(neighbor77[2] === 255) {
                   count2 = count2 +1; 
                 } 
-              } else if(neighbor88 !== null) {
+              } if(neighbor88 !== null) {
                 if(neighbor88[2] === 255) {
                   count2 = count2 +1; 
                 } 
@@ -232,6 +231,10 @@ export default class Canvas extends Component {
       }
       console.log("nextgenDies",nextGenDies);
       console.log("nextgenLives", nextGenLives);
+
+      fucntion nextGeneration(nextGenDies, nextGenLives) {
+        
+      }
     }
   
 
