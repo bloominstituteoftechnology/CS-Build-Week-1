@@ -55,10 +55,16 @@ class GameBoard extends React.Component{
       squareSize);
 }
 
-
+clearGrid = (e) => {
+  const can = this.refs.canvas
+  const context = can.getContext("2d");
+  context.clearRect(0,0,can.width,can.height)
+  this.drawCanvas()
+}
 
   render(){
       return(
+        <>
           <canvas 
               onClick={this.handleClick}
               onDoubleClick={this.unselectSquare}
@@ -66,8 +72,13 @@ class GameBoard extends React.Component{
               height={this.state.height}
               width={this.state.width} 
               /> 
-              
- 
+              <div className = 'buttons'>
+              <button>play</button>
+              <button>stop</button>
+              <button onClick={this.clearGrid}>clear</button>
+              </div>
+              <div>Game Rules:</div>
+            </>
       );
   }
 }
