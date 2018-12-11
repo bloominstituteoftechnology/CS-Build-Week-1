@@ -43,14 +43,28 @@ class GameBoard extends React.Component{
       squareSize);
   }
 
+  unselectSquare = (e) => {
+    const can = this.refs.canvas
+    const context = can.getContext("2d");
+    const pos = can.getBoundingClientRect()
+    const squareSize = 20
+    context.fillStyle = "white";
+    context.fillRect(e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
+      e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
+      squareSize,
+      squareSize);
+}
+
   render(){
       return(
           <canvas 
               onClick={this.handleClick}
+              onDoubleClick={this.unselectSquare}
               ref="canvas"
               height={this.state.height}
               width={this.state.width} 
               /> 
+              
  
       );
   }
