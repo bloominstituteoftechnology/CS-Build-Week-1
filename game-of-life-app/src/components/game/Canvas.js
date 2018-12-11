@@ -16,6 +16,21 @@ const CellGrid = styled.div`
   grid-gap: 0;
 `;
 
+const ControlButton = styled.button`
+  padding: 1.2rem 3.2rem;
+  margin: 1.2rem 1.6rem 0 0;
+  background: white;
+  border: 1px solid #eee;
+  font-size: 1.6rem;
+  font-weight: 700;
+  outline: none;
+  border-radius: 4rem;
+  &:focus {
+    background: #05f;
+    color: white;
+  }
+`
+
 class Canvas extends React.Component {
   state = {
     cells: 400,
@@ -51,7 +66,7 @@ class Canvas extends React.Component {
     console.log(this.state.gridArr)
     return (
       <>
-        <GenerationText>🌀 Generation: </GenerationText>
+        <GenerationText>🌀 Generation: {this.state.generation}</GenerationText>
         <CustomHR />
         <CellGrid>
           {this.state.gridArr.map((cell, index) => (
@@ -59,9 +74,9 @@ class Canvas extends React.Component {
           ))}
         </CellGrid>
         <CustomHR />
-        <button>play</button>
-        <button>pause</button>
-        <button>reset</button>
+        <ControlButton>Play</ControlButton>
+        <ControlButton>Pause</ControlButton>
+        <ControlButton>Reset</ControlButton>
       </>
     );
   }
