@@ -53,10 +53,21 @@ class Grid extends Component{
         grid[y_index][x_index]=grid_item;
         this.setState({grid:grid},()=>console.log(this.state.grid));
     }
+    changeClickState=()=>{
+        const grid=this.state.grid.slice();
+        for (let i=0; i<15;i++) {
+            for (let j=0; j<15; j++) {
+                const grid_item=Object.assign({},grid[i][j]);
+                grid_item.isClickable=!grid_item.isClickable;
+                grid[i][j]=grid_item;
+            }
+        } 
+        this.setState({grid:grid},()=>console.log(this.state.grid));
+    }
     render(){
         return (
             <canvas ref="canvas" onClick={(e)=>this.getPosition(e)}>
-                {this.state.grid.map((e)=>e.map((e,i)=><Cell key={i} toggle={this.getPosition}></Cell>))}
+                {this.state.grid.map((e)=>e.map((e,i)=><Cell key={i}></Cell>))}
             </canvas>
         );
     }

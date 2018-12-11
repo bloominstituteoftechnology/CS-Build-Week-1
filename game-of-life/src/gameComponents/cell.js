@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Cell=(props)=>{
-    return <div className='cell' onClick={(e)=>props.getPosition(e)}></div>
+const Cell=()=>{
+    return <div className='cell'></div>
 }
 export default Cell;
