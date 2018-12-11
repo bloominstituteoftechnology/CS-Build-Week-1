@@ -51,7 +51,12 @@ class Grid extends Component{
         const grid_item=Object.assign({},this.state.grid[y_index][x_index]);
         grid_item.currentState===0 ? grid_item.currentState=1 : grid_item.currentState=0;
         grid[y_index][x_index]=grid_item;
-        this.setState({grid:grid},()=>console.log(this.state.grid));
+        this.setState({grid:grid},()=>this.fillsquares(x_index,y_index));
+    }
+    fillsquares=(x,y)=>{
+        const ctx = this.refs.canvas.getContext('2d');
+        ctx.fillStyle='#232b2b';
+        ctx.fillRect(x*25, y*25, 25, 25);
     }
     changeClickState=()=>{
         const grid=this.state.grid.slice();
