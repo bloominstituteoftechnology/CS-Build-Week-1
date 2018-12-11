@@ -17,11 +17,11 @@ const CellGrid = styled.div`
 `;
 
 const ControlButton = styled.button`
-  padding: 1.2rem 3.2rem;
+  padding: .8rem 1.6rem;
   margin: 1.2rem 1.6rem 0 0;
   background: white;
   border: 1px solid #eee;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   font-weight: 700;
   outline: none;
   border-radius: 4rem;
@@ -31,6 +31,12 @@ const ControlButton = styled.button`
   }
 `;
 
+const Label = styled.label`
+  padding: .8rem .4rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+`
+
 class Canvas extends React.Component {
   state = {
     cells: 400,
@@ -38,6 +44,7 @@ class Canvas extends React.Component {
     isClickable: true,
     generation: 0,
     paused: false,
+    preset: 'none'
   };
 
   componentDidMount() {
@@ -65,28 +72,39 @@ class Canvas extends React.Component {
     }
   };
 
+  handleChange = event => {
+    const {name, value, type, checked} = event.target
+        type === "checkbox" ? this.setState({ [name]: checked }) : this.setState({ [name]: value })
+  }
   handleStartGame = () => {
-      this.setState({
-        isClickable: false,
-        generation: this.state.generation,
-        paused: false
-      })
-      this.generationCounter = setInterval(() => this.setState({
-        generation: this.state.generation + 1
-      }), 1000)
-  }
-  handlePauseGame = () => {
-  }
+    this.setState({
+      isClickable: false,
+      generation: this.state.generation,
+      paused: false
+    });
+    this.generationCounter = setInterval(
+      () =>
+        this.setState({
+          generation: this.state.generation + 1
+        }),
+      1000
+    );
+  };
+
+  // Todo
+  handlePauseGame = () => {};
 
   handleResetGame = () => {
     this.setState({
-      gridArr: this.state.gridArr.map(cell => cell.isLiving ? !cell.isLiving : cell),
-      isClickable:true,
+      gridArr: this.state.gridArr.map(cell =>
+        cell.isLiving ? !cell.isLiving : cell
+      ),
+      isClickable: true,
       generation: 0
+    });
+    clearInterval(this.generationCounter);
+  };
 
-    })
-    clearInterval(this.generationCounter)
-  }
   render() {
     console.log(this.state.gridArr);
     return (
@@ -104,9 +122,16 @@ class Canvas extends React.Component {
           ))}
         </CellGrid>
         <CustomHR />
-        <ControlButton onClick={this.handleStartGame}>▶️Play</ControlButton>
-        <ControlButton onClick={this.handlePauseGame}>⏸Pause</ControlButton>
-        <ControlButton onClick={this.handleResetGame}>🔄Reset</ControlButton>
+        <ControlButton onClick={this.handleStartGame}>▶️ Play</ControlButton>
+        <ControlButton onClick={this.handlePauseGame}>⏸ Pause</ControlButton>
+        <ControlButton onClick={this.handleResetGame}>🔄 Reset</ControlButton>
+        <Label>Preset</Label>
+        <select value={this.state.preset} onChange={this.handleChange} name="preset">
+                    <option value="none">None</option>
+                    <option value="glider">Glider</option>
+                    <option value="random">Random</option>
+                    <option value="blinker">Blinker</option>
+        </select>
       </>
     );
   }
