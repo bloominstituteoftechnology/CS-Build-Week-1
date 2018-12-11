@@ -11,9 +11,7 @@ class App extends Component {
     }
   }
 
-  nextgen = () => {
-    this.setState({ generation: this.state.generation+1 })
-  }
+
 
 
   render() {

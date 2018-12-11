@@ -1,6 +1,23 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+
+class Cell {
+  constructor(clickable, living, xcoord, ycoord) {
+    this.clickable = clickable;
+    this.living = living;
+    this.xcoord = xcoord;
+    this.ycoord = ycoord;
+  }
+  toggle = () => {
+    if (this.living == 0) {
+      this.living = 1;
+    } else {
+      this.living = 0;
+    }
+  }
+}
+
 const rows = 50;
 const cols = 50;
 let arr = [];
@@ -9,11 +26,10 @@ for (let i=0; i<rows; i++) {
 }
 for (let j=0; j<rows; j++) {
   for (let k=0; k<cols; k++) {
-    arr[j][k] = 0;
+    arr[j][k] = new Cell(true, 0, 10*j, 10*k);
   }
 }
-
-class LifeCanvas extends Component {
+export default class LifeCanvas extends Component {
   constructor(props) {
     super(props);
     this.cellsize = 10;
@@ -21,8 +37,13 @@ class LifeCanvas extends Component {
     this.width = 500;
     this.state = {
       continueAnimation: true,
-      cells: arr
+      cells: arr,
+      generation: 0
     }
+  }
+
+  nextgen = () => {
+    this.setState({ generation: this.state.generation+1 })
   }
 
   draw = () => {
@@ -58,53 +79,54 @@ class LifeCanvas extends Component {
     for (let j=0; j<this.height/this.cellsize; j++) {
       for (let k=0; k<this.width/this.cellsize; k++) {
         let liveneighbors = 0;
-        liveneighbors += this.state.cells[j-1][k-1];
-        liveneighbors += this.state.cells[j-1][k];
-        liveneighbors += this.state.cells[j-1][k+1];
-        liveneighbors += this.state.cells[j][k-1];
-        liveneighbors += this.state.cells[j][k+1];
-        liveneighbors += this.state.cells[j+1][k-1];
-        liveneighbors += this.state.cells[j+1][k];
-        liveneighbors += this.state.cells[j+1][k+1];
-        if (this.state.cells[j][k] == 0) {
+        liveneighbors += this.state.cells[j-1][k-1].living;
+        liveneighbors += this.state.cells[j-1][k].living;
+        liveneighbors += this.state.cells[j-1][k+1].living;
+        liveneighbors += this.state.cells[j][k-1].living;
+        liveneighbors += this.state.cells[j][k+1].living;
+        liveneighbors += this.state.cells[j+1][k-1].living;
+        liveneighbors += this.state.cells[j+1][k].living;
+        liveneighbors += this.state.cells[j+1][k+1].living;
+        if (this.state.cells[j][k].living == 0) {
           switch (liveneighbors) {
             case 3:
-              mirrorCells[j][k] = 1;
+              mirrorCells[j][k].toggle();
               break;
             default:
-              mirrorCells[j][k] = 0;
+              mirrorCells[j][k].living = 0;
           }
-        } else if (this.state.cells[j][k] == 1) {
+        } else if (this.state.cells[j][k].living == 1) {
           switch (liveneighbors) {
             case 0:
             case 1:
-              mirrorCells[j][k] = 0;
+              mirrorCells[j][k].toggle();
               break;
             case 2:
             case 3:
-              mirrorCells[j][k] = 1;
+              mirrorCells[j][k].living = 1;
               break;
             case 4:
             case 5:
             case 6:
             case 7:
             case 8:
-              mirrorCells[j][k] = 0;
+              mirrorCells[j][k].toggle();
               break;
             default:
-              mirrorCells[j][k] = 0;
+              mirrorCells[j][k].living = 0;
           }
         } else {
           console.log("Something went wrong in your update function!")
         }
       }
     }
+    this.setState({ cells: mirrorCells })
   }
 
   tick = () => {
     draw();
     update();
-    this.props.nextgen();
+    nextgen();
     requestAnimationFrame(tick);
   }
 
