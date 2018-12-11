@@ -1,6 +1,41 @@
 import React, { Component } from 'react';
 import './App.css';
 
+//play button function to start game 
+// playButton = () => {
+//   cleartInterval(this.intervalId);
+//   this.intervalId = setInterval(this.play);
+// }
+
+// pauseButton = () => {
+//   clearInterval(this.intervalId);
+// }
+
+
+
+//main function for making the game work
+/*
+1. Any live cell with fewer than two live neighbors dies
+2. Any live cell with two or three live neighbors lives on to the next generation
+3. Any live cell with more than three live neighbors dies
+4. Any dead cell with exactly three live neighbors becomes a live cell
+*/
+
+// play = () => {
+//   let g = this.state.gridFull;
+//   let g2 = arrayClone(this.state.gridFull);
+
+//   // loop over each row and then each column within the row
+//   for (let i = 0; i < this.rows; i++) {
+//     for (let j = 0; j < this.cols; j ++){
+//       let count = 0; // the count keeps track of the number of adjacent live cells
+//       if (i > 0) if (g[i-1][j]) count++; 
+//     }
+//   }
+
+// }
+
+
 class Box extends Component {
   // arrow function to select a box by row and column
   selectBox = () => {
@@ -60,6 +95,24 @@ class Grid extends Component{
   }
 }
 
+class Controls extends Component{
+  render () {
+    return(
+      <div className = "buttons">
+      <button className = "play-button">
+        Play
+      </button>
+      <button className = "pause-button">
+        Pause
+      </button>
+      <button className = "clear-button">
+        Clear
+      </button>
+      </div>
+    );
+  }
+}
+
 class App extends Component {
   constructor() {
     super();
@@ -97,6 +150,11 @@ class App extends Component {
         <h1>
           Conway's Game Of Life
         </h1>
+        <Controls 
+          // playButton = {this.playButton}
+          // pauseButton = {this.pauseButton}
+          // clearButton = {this.clearButton}
+        />
         <h4>
           Generations: {this.state.generation}
         </h4>
