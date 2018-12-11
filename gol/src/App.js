@@ -6,22 +6,26 @@ class App extends Component {
   constructor(props) {
     super(props); 
     this.state = { curGrid: [],
-    x: 5,
-    y: 5,
+    x: 15,
+    y: 15,
     running:false,
     nextGrid:[],
     afterNextGrid:[],
-    intervalID : 0
+    intervalID : 0,
+    gen:1
     
     };
   }
   newGrid = ()=>{
     let freshGrid = [];
     for (let index = 0; index < (this.state.x*this.state.y) ; index++) {
-      freshGrid.push({alive:false, color:'#fffff',isClickable:true})
+      freshGrid.push({alive:false, color:'#ffffff',isClickable:true})
     }
     this.setState({
-      curGrid:freshGrid
+      curGrid:freshGrid,
+      nextGrid:freshGrid,
+      afterNextGrid:freshGrid,
+      gen:1
     })
   }
   determineLife = (cellID,gridArr)=>{
@@ -84,17 +88,19 @@ class App extends Component {
   toggleClick =()=>{
     this.setState({
       curGrid: this.state.curGrid.map(e=>{
-        e.clickHandle=true;
+        e.isClickable=!e.isClickable;
         return e;
       })
     })
   }
   gameLoop = ()=>{
     const newArr = this.arrayCalc(this.state.afterNextGrid);
+    let plusOne = this.state.gen+1;
       this.setState({
         curGrid: [...this.state.nextGrid],
         nextGrid:[...this.state.afterNextGrid],
-        afterNextGrid:newArr
+        afterNextGrid:newArr,
+        gen:plusOne
       })
      
   }
@@ -106,28 +112,31 @@ class App extends Component {
       intervalID: interval,
     });
   }
-  stop = ()=>{
+  stopSim = ()=>{
     clearInterval(this.state.intervalID);
+    this.toggleClick();
     this.setState({
       running: false
     })
-    
+  }
+  reset = ()=>{
+    this.newGrid();
   }
   newSim = ()=>{
+    this.toggleClick();
     const newArr = this.arrayCalc(this.state.curGrid);
     const lastArr = this.arrayCalc(newArr);
     this.setState({
       running: true,
       nextGrid:newArr,
       afterNextGrid:lastArr
-
     },()=>{
       this.waitTime();
     })
   }
   setGrid =()=>{
     this.newGrid();
-  
+    
   }
   toggleCell =(e)=>{
     let newArr = [...this.state.curGrid];
@@ -152,7 +161,10 @@ class App extends Component {
        <Grid pixels={this.state.curGrid} x={this.state.x} y ={this.state.y} clickHandle={this.toggleCell}/>
        <button onClick={this.newSim}>Start</button>
 
-       <button onClick={this.stop}>Stop</button>
+       <button onClick={this.stopSim}>Stop</button>
+       <button onClick={this.reset}>Reset</button>
+
+        <div className="gen">Current Gen is:{this.state.gen}</div>
       </div>
     );
   }
