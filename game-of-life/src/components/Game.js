@@ -7,7 +7,9 @@ class Game extends React.Component {
         this.state = {
             grid: [],
             isRunning: false,
-            iterationCount: 0
+            iterationCount: 0,
+            cellColor: 'black',
+            gridColor: 'white'
         };
 
         this.startGame = event => {
@@ -21,7 +23,9 @@ class Game extends React.Component {
 
         this.stopGame = event => {
             event.preventDefault();
-            if (!this.state.isRunning) { return; }
+            if (!this.state.isRunning) {
+                return;
+            }
             window.clearTimeout(this.timeout);
             this.setState({ isRunning: false });
         };
@@ -94,11 +98,17 @@ class Game extends React.Component {
             this.setState({ grid: grid });
         };
 
-        this.clearGrid = e => {
-            e.preventDefault();
+        this.clearGrid = event => {
+            event.preventDefault();
             let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
             this.setState({ grid: grid, isRunning: false, iterationCount: 0 });
             window.clearTimeout(this.timeout);
+        };
+        this.handleCellColorChange = event => {
+            this.setState({ cellColor: event.target.value });
+        };
+        this.handleGridColorChange = event => {
+            this.setState({ gridColor: event.target.value });
         };
     }
 
@@ -110,12 +120,21 @@ class Game extends React.Component {
     render() {
         return (
             <div className="container">
-                <div className="grid-container">
+                <div>{this.state.iterationCount} generations</div>
+                <div className="grid-container" style={{ backgroundColor: this.state.gridColor }}>
                     {this.state.grid.map((row, rowIndex) => {
                         return <div key={rowIndex}
                             className="row">{row.map((cell, cellIndex) => {
-                                return <div key={cellIndex}
-                                    className={cell ? "live-cell" : "dead-cell"}
+                                if(cell) {
+                                    return <div key={cellIndex}
+                                        className="live-cell"
+                                        style={{backgroundColor: this.state.cellColor}}
+                                        onClick={!this.state.isRunning ?
+                                            () => this.toggleCell(rowIndex, cellIndex) : null}
+                                    >{cell}</div>;   
+                                } else return <div key={cellIndex}
+                                    className="dead-cell"
+                                    style={{ backgroundColor: this.state.gridColor }}
                                     onClick={!this.state.isRunning ?
                                         () => this.toggleCell(rowIndex, cellIndex) :
                                         null}
@@ -128,11 +147,37 @@ class Game extends React.Component {
                     <p onClick={this.stopGame}>stop</p>
                     <p onClick={this.clearGrid}>clear</p>
                     <p onClick={this.advanceOneStep}>next</p>
-                    <div>{this.state.iterationCount} generations</div>
                 </div>
                 <div className="options">
                     <p>patterns</p>
-                    <p>colors</p>
+                    <label>grid color: </label>
+                    <select value={this.state.value} onChange={this.handleGridColorChange}>
+                        <option value="white">White</option>
+                        <option value="#0074D9">Blue</option>
+                        <option value="#7FDBFF">Aqua</option>
+                        <option value="#39CCCC">Teal</option>
+                        <option value="#2ECC40">Green</option>
+                        <option value="#FFDC00">Yellow</option>
+                        <option value="#FF851B">Orange</option>
+                        <option value="#FF4136">Red</option>
+                        <option value="#B10DC9">Purple</option>
+                        <option value="#85144b">Maroon</option>
+                        <option value="#AAAAAA">Gray</option>
+                    </select>
+                    <label>cell color: </label>
+                    <select value={this.state.value} onChange={this.handleCellColorChange}>
+                        <option value="black">Black</option>
+                        <option value="#0074D9">Blue</option>
+                        <option value="#7FDBFF">Aqua</option>
+                        <option value="#39CCCC">Teal</option>
+                        <option value="#2ECC40">Green</option>
+                        <option value="#FFDC00">Yellow</option>
+                        <option value="#FF851B">Orange</option>
+                        <option value="#FF4136">Red</option>
+                        <option value="#B10DC9">Purple</option>
+                        <option value="#85144b">Maroon</option>
+                        <option value="#AAAAAA">Gray</option>
+                    </select>
                 </div>
             </div>
         );
