@@ -55,6 +55,8 @@ class GameBoard extends React.Component{
       squareSize);
 }
 
+
+
   render(){
       return(
           <canvas 
