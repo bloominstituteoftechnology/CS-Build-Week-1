@@ -10,7 +10,7 @@ dark gray: #363636
 
 class Cell {
   constructor(p, i, j, fill){
-    this.active = 1;
+    this.active = false;
     this.id = null;
     this.x = i;
     this.y = j;
@@ -20,19 +20,23 @@ class Cell {
     this.activeFill = "#cc527a";
     this.inactiveFill = "#d11554";
   }
+
+  toggleActive = () => {
+    this.active = (this.active == false) ? true : false;
+  }
   
   clicked = (x,y) => {
     if(x >= this.x*this.width && x < this.x*this.width+20){
       if(y >= this.y * this.width+20 && y < this.y * this.width+40){
-        this.active = this.active == 0 ? 1 : 0;
+        this.toggleActive();
       }
     }
   }
 
   setFill = () => {
-    if(this.active == 0){
+    if(this.active == true){
       this.fill = this.activeFill;
-    } else if (this.active == 1) {
+    } else if (this.active == false) {
       this.fill = this.inactiveFill;
     }
     return this.fill;

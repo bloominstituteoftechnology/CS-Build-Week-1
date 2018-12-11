@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import p5 from 'p5';
 import P5Wrapper from '../P5Wrapper/P5Wrapper';
 import sketch from './GridSketch';
 import './styles/gridcomponent.scss';

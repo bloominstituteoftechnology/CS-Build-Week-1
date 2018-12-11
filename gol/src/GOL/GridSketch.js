@@ -67,7 +67,7 @@ function sketch (p){
   }
 
   const blastEm = () => {
-    isBlasting = (isBlasting == false) ? true : false;
+    isBlasting = !isBlasting;
   }
 
   const clearEm = () => {
