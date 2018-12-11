@@ -30,34 +30,17 @@ export default class Canvas extends Component {
       ctx.lineTo(500, y)
       ctx.stroke();
     }
-    
     ctx.closePath();
   }
 
   
   mouseDown = (e) => {
+    e.preventDefault();
     this.setState({x: e.screenX, y: e.screenY});
+    setTimeout(() => {this.cellChange();}, 50);
   }
 
-  onClickStart = (e) => {
-    console.log("click start");
-
-    this.setState({start: 1});
-    this.setState({test: "tested"});
-    console.log("this.state.start", this.state.start)
-    console.log("this.state.test", this.state.test)
-    
-  }
-
-  onClickStop = (e) => {
-
-    this.setState({start: 0});
-    console.log("stopped", this.state.start)
-  }
-
-
-  componentDidUpdate() {
-    console.log("component did update")
+  cellChange = () => {
     let x = this.state.x; 
     let y = this.state.y-100; 
     
@@ -104,8 +87,41 @@ export default class Canvas extends Component {
     } else {
       fillSquare(ctx, mousePosX, mousePosY);
     }
-    console.log("mouse x, y", mousePosX, mousePosY);
-    
+  }
+
+  onClickStart = (e) => {
+    this.setState({start: 1});
+    this.setState({test: "tested"});    
+  }
+
+  onClickStop = (e) => {
+    this.setState({start: 0});
+    console.log("stopped", this.state.start)
+  }
+
+
+  componentDidUpdate() {
+    console.log("component did update start state",this.state.start)
+  
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext("2d");
+
+    function getPixel(imageData, x, y) {
+      const w = imageData.width; 
+      const h = imageData.height;
+      if (x < 0 || x >= w || y < 0 || y >= h) {
+          return null;
+      }
+      const index = (w * y + x) * 4;
+      return imageData.data.slice(index, index + 4);
+    }
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+       
+
+    let nextGenDies = [];
+    let nextGenLives = [];
+
     if(this.state.start === 1) {
       for(let xCheck = 1; xCheck <= 492; xCheck += 10) {
         for(let yCheck = 1; yCheck <= 492; yCheck += 10) {
@@ -157,8 +173,8 @@ export default class Canvas extends Component {
             }
 
             if(count < 2 || count > 3) {
-              emptySquare(ctx, xCheck, yCheck); 
-            } 
+              nextGenDies.push({'x': xCheck, 'y': yCheck});
+            }
 
             } else {
               let neighbor11 = getPixel(imageData, xCheck-10 ,yCheck-10);
@@ -207,13 +223,15 @@ export default class Canvas extends Component {
               }
 
               if(count2 === 3) {
-                fillSquare(ctx, xCheck, yCheck);
+                nextGenLives.push({'x': xCheck, 'y': yCheck});
               }
               
             }
           } 
         }
       }
+      console.log("nextgenDies",nextGenDies);
+      console.log("nextgenLives", nextGenLives);
     }
   
 
@@ -228,7 +246,7 @@ export default class Canvas extends Component {
               ref="canvas" 
               width={500}
               height={500}
-              onMouseDown={this.mouseDown}
+              onClick={this.mouseDown}
           />
       </div>
       <div>
