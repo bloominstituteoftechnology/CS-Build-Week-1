@@ -44,14 +44,18 @@ export default class Canvas extends Component {
       };
     }
 
+    var mousePos = getSquare(canvas, x, y);
+
     function fillSquare(ctx, x, y){
-      ctx.fillStyle = "blue"
+      ctx.fillStyle = "blue";
       ctx.fillRect(x,y,8,8);
+      console.log("fill x and y", x, y)
     }
 
-    var mousePos = getSquare(canvas, x, y);
-    fillSquare(ctx, mousePos.x, mousePos.y);
-
+    function emptySquare(ctx, x, y) {
+      ctx.clearRect(x,y,8,8);
+      console.log("empty x and y", x, y)
+    }
 
     function getPixel(imageData, x, y) {
       const w = imageData.width; // Conveniently the width is here
@@ -61,7 +65,7 @@ export default class Canvas extends Component {
           // Out of bounds
           return null;
       }
-  
+
       // Compute index within the array
       const index = (w * mousePos.y + mousePos.x) * 4;
       console.log("index", index);
@@ -71,11 +75,14 @@ export default class Canvas extends Component {
     }
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
     const pixelRGBA = getPixel(imageData, mousePos.x, mousePos.y);
-
     
-    console.log(pixelRGBA);
+    if(pixelRGBA[2] === 255) {
+      emptySquare(ctx, mousePos.x, mousePos,y);
+    } else {
+      console.log("fillsquare running");
+      fillSquare(ctx, mousePos.x, mousePos.y);
+    }
   }
 
 
