@@ -1,8 +1,12 @@
 
 class Game_of_life {
-    constructor(aliveOrganizms = new Map()){
-        
+    constructor(aliveOrganizms = new Map(), generation = 0){
         this.aliveOrganizms = aliveOrganizms;
+        this.generation = generation;
+    }
+
+    generate() {
+        return this.generation;
     }
 
     alive() {
@@ -38,6 +42,11 @@ class Game_of_life {
     // Any live cell with two or three live neighbors lives on to the next generation.
     // Any live cell with more than three live neighbors dies, as if by overpopulation.
     // Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
+
+    // Need to check for any live nextdoor cells
+
+    // Need to check for any dead nextdoor cells
+
 }
  
 export default Game_of_life;

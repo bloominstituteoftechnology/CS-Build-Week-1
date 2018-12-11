@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Header = () => {
+const Header = (props) => {
     return ( 
         <div className = 'header'>
-            <h1>Generation: /*will be something here to generate*/</h1>
+            <h1>Generation: {props.generation}</h1>
         </div>
      );
 }

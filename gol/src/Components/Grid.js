@@ -76,7 +76,7 @@ class Grid extends Component {
     render() { 
         return (
             <div className = 'gol-container'>
-                <Header />
+                <Header generation = {this.state.game_of_life.generate()}/>
                     <div className = 'grid'>
                         {this.createGrid()}
                     </div>
