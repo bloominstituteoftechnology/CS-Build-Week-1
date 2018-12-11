@@ -141,10 +141,16 @@ class App extends Component {
 
   findDeadNeighbors = (position) => {
     //find  neighbors of the dead cell  to use the rules on. 
+    //position should be an object featuring  the row and  position in row. 
+    //A neighbor will be  to the left to the right  up down and diagonal  which will be up to the left, up to the right and down to the left down to the right. 
+    let totalAlive = 0; 
   }
 
   findLiveNeighbors = (position) => {
     //find neighbors of the live cell to use the rules on. 
+    //position should be an object featuring  the row and  position in row. 
+    //A neighbor will be  to the left to the right  up down and diagonal  which will be up to the left, up to the right and down to the left down to the right. 
+    let totalAlive = 0; 
   }
 
   find
