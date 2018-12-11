@@ -17,18 +17,34 @@ function sketch (p){
   const h = GridConstants.cell_h;
   let parentW = document.querySelector(".sketch-container").clientWidth;
   let parentH = document.querySelector(".sketch-container").clientHeight;
+  let gridArr = [[]];
 
   p.preload = () => {};
+
+  const createCells = () => {
+    
+    for (let i=0; i<cols; i++){
+        gridArr[i] = [];
+        for(let j=0; j<rows; j++){
+          gridArr[i][j] = new Cell();
+        }
+    }
+    console.log("GRIDARR >>> ", gridArr);
+  };
   
   p.setup = () => {
     p.pixelDensity(1);
     p.createCanvas(parentW,parentH);
+    console.log(new Cell());
+    
+    createCells();
   };
 
   p.draw = () => {
-    p.background("#474747");
+    p.background("#e8175d");
     for(let i=0; i<cols; i++){
       for(let j=0; j<rows; j++){
+        p.noStroke();
         p.rect(i*w, j*w, w-1, h-1);
         p.fill("#cc527a");
       }

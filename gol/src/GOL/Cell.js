@@ -17,13 +17,18 @@ class Cell {
     this.y = 0;
     this.width = 20;
     this.height = 20;
+    // this.p = p;
+    // this.fill = fill;
   }
-
+  
   // Set x & y values:
   setXAndY = () => {
     
   };
 
+  createRect = () => {
+    
+  };
 
 }
 
