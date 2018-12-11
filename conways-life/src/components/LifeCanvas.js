@@ -1,5 +1,6 @@
 import React from 'react';
 import './LifeCanvas.css';
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 class Cell extends React.Component{
     render(){
@@ -13,53 +14,27 @@ class Cell extends React.Component{
                     width: `${cellSize - 1}px`,
                     height: `${cellSize - 1}px`,
                 }}
-                onClick={this.props.handleClick}
            />
         )
     }
 }
 
-
 class LifeCanvas extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            height: 750,
-            width: 750,
+            height: 225,
+            width: 225,
             cellSize: 15,
             data: [],
+            interval: 1000,
+            isRunning: false,
         }
         this.rows = this.state.height/this.state.cellSize;
         this.cols = this.state.width/this.state.cellSize;
         this.board = this.initializeBoard();
     }
-    // initializeCanvas = () => {
-    //     let canvas = this.refs.canvas.getContext('2d');
-    //     canvas.fillStyle = 'white';
 
-    //     const cells = this.state.height/this.state.cells;
-
-    //     canvas.fillRect(0,0,this.state.height, this.state.width);
-
-    //     for (let i = 0; i <= this.state.height; i += cells){
-    //         //horizontal lines
-    //         canvas.moveTo(0,i);
-    //         canvas.lineTo(this.state.width, i);
-    //         for (let j = 0; j <= this.state.width; j += cells){
-    //             //vertical lines
-    //             canvas.moveTo(j,0);
-    //             canvas.lineTo(j, this.state.height);
-    //         }
-    //     }
-    //     canvas.stroke();
-    // }
-    // getCursorPos = e => {
-    //     let canvas = this.ref.canvas;
-    //     let rect = canvas.getBoundingClientRect();
-    //     let x = e.clientX - rect.left;
-    //     let y = e.clientY - rect.top;
-    //     console.log(x,y);
-    // }
     initializeBoard = () => {
         let board = [];
         for(let y = 0; y < this.rows; y++){
@@ -70,12 +45,12 @@ class LifeCanvas extends React.Component{
         }
         return board;
     }
-    makeCells = () => {
+    makeCells() {
         let cells = [];
-        for(let y = 0; y < this.rows; y++){
-            for (let x = 0; x < this.cols; x++){
-                if (this.board[y][x]){
-                    cells.push({x, y});
+        for (let y = 0; y < this.rows; y++) {
+            for (let x = 0; x < this.cols; x++) {
+                if (this.board[y][x]) {
+                    cells.push({ x, y });
                 }
             }
         }
@@ -104,21 +79,77 @@ class LifeCanvas extends React.Component{
 
         this.setState({ data: this.makeCells()});
     }
+    checkNeighbors = (board, x, y) => {
+        let neighbors = 0;
+        const validNeighbors = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
+        for (let i = 0; i < validNeighbors.length; i++){
+            var validNeighbor = validNeighbors[i];
+            let y1 = y + validNeighbor[0];
+            let x1 = x + validNeighbor[1];
+
+            if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]){
+                neighbors++;
+            }
+        }
+        return neighbors;
+    }
+    runGameOfLife = () => {
+        this.setState({isRunning: true});
+        this.runCycle();
+    }
+    runCycle = () => {
+        let newGame = this.initializeBoard();
+        this.board = newGame;
+        this.setState({data: this.makeCells()});
+        this.timeoutHandler = window.setTimeout(() => {this.runCycle();}, this.state.interval);
+    }
+    stopGameOfLife = () => {
+        this.setState({isRunning: false});
+        if (this.timeoutHandler){
+            window.clearTimeout(this.timeoutHandler);
+            this.timeoutHandler = null;
+        }
+    }
+    clearBoard = e => {
+        e.preventDefault();
+        //make new board first
+        this.board = this.initializeBoard();
+        //initialize cells
+        this.setState({data: this.makeCells()});
+    }
+    handleIntervalChange = e => {
+        this.setState({internal: e.target.value});
+    }
     render(){
-        const { data } = this.state;
         return(
-            <div    
-                className="board"
-                style={{
-                    width: this.state.width,
-                    height: this.state.height,
-                    backgroundSize:`${this.state.cellSize}px ${this.state.cellSize}px`}}
-                    onClick={this.handleClick}
-                    ref={(n) => { this.boardRef = n; }}>   
-                    {data.map(cell => (
-                        <Cell cellSize={this.state.cellSize} x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`}/>
-                    ))}
+            <div>
+                <div    
+                    className="board"
+                    style={{
+                        width: this.state.width,
+                        height: this.state.height,
+                        backgroundSize:`${this.state.cellSize}px ${this.state.cellSize}px`}}
+                        onClick={this.handleClick}
+                        ref={(n) => { this.boardRef = n; }}>   
+                        {this.state.data.map(cell => (
+                            <Cell cellSize={this.state.cellSize} x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`}/>
+                        ))}
+                </div>
+                <div className="controls">
+                    <p>Each cycle takes {this.state.interval} ms</p>
+                    <button onClick={this.runGameOfLife}>Start</button>
+                    <button onClick={this.stopGameOfLife}>Stop</button>
+                    <button onClick={this.clearBoard}>Clear</button> 
+                </div>
+                <div className="rules">
+                    <p>1. Any live cell with fewer than two live neighbors dies, as if caused by under population.</p>
+                    <p>2. Any live cell with two or three live neighbors lives on to the next generation.</p>
+                    <p>3. Any live cell with more than three live neighbors dies, as if by overpopulation.</p>
+                    <p>4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</p>
+                </div>
             </div>
+    
+
         )
     }
 }
