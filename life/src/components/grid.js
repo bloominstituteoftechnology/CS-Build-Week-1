@@ -124,7 +124,7 @@ export default class Grid extends Component {
         })
         console.log("questionables", questionables);
         await questionables.forEach(cube => {
-            console.log("?s forloop", cube)
+            // console.log("?s forloop", cube)
             this.cubeNextTime(cube);
         })
         console.log(this.state)
@@ -154,9 +154,11 @@ export default class Grid extends Component {
         } else {
             //switch to alive if 2 neighbors
             console.log(cube.id, "is dead but",activeNeighbors.length," neighbores are alive")
-            if(activeNeighbors.lenght == 3){
-                newArr[cube.id-1] = {id: cube.id-1, active: true}
+            if(activeNeighbors.length == 3){
+                newArr[cube.id-1] = {id: cube.id, active: true}
                 console.log("so in the next arr", newArr[cube.id-1] , "will be ",{id: cube.id, active: true})
+            }else {
+                newArr[cube.id-1] = {id: cube.id, active: false}
             }
             //else die
         }

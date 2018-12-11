@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Grid from './components/grid';
+import GridObject from './components/gridObject';
 import Canvas from './components/canvas';
 
 class App extends Component {
@@ -9,7 +10,8 @@ class App extends Component {
       <AppDiv>
         AppDiv
         {/* <Canvas /> */}
-        <Grid />
+        {/* <Grid /> */}
+        <GridObject />
       </AppDiv>
     );
   }
