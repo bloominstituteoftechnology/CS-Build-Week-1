@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 
 const Rules = () => {
     return ( 
         <div>
             <h1>
-                Rules:
+                <Link to='/Rules'>Rules</Link>
             </h1>
         </div>
      );
