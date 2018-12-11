@@ -1,34 +1,34 @@
-.Game {
-  position: relative;
-  margin: 0 auto;
-  background-color: #000;
-  background-image:
-    linear-gradient(#333 1px, transparent 1px),
-    linear-gradient(90deg, #333 1px, transparent 1px);
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.Cell {
+ .grid-container {
+  width: 17%;
+  box-sizing: border-box;
+  border: 1px solid black;
+  background-color: black;
+}
+ .row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+ .dead-cell {
+  width: 20px;
+  height: 20px;
+  border: 1px solid white;
+}
+ .live-cell {
+  width: 20px;
+  height: 20px;
+  border: 1px solid white;
   background: white;
-  position: absolute;
 }
 
-.Controls {
+.controls {
   display: flex;
-  justify-content: center;
-  margin-top: 2%;
-}
-
-.Controls p {
-  margin-left: 4%;
-  margin-right: 4%;
-}
-
-.Presets {
-  display: flex;
-  justify-content: center;
-  margin-top: 3%;
-}
-
-.Presets p {
-  margin-left: 4%;
-  margin-right: 4%;
+  width: 30%;
+  justify-content: space-around;
 }

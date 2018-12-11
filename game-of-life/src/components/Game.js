@@ -1,103 +1,129 @@
 import React from 'react';
+import ReactTimeout from 'react-timeout';
 import './Game.css';
 
-const cellHeight = 20;
-const width = 800;
-const height = 600;
-
-class Cell extends React.Component {
-    render() {
-        const { x, y } = this.props;
-        return (
-            <div className="Cell" style={{
-                left: `${cellHeight * x + 1}px`,
-                top: `${cellHeight * y + 1}px`,
-                width: `${cellHeight - 1}px`,
-                height: `${cellHeight - 1}px`,
-            }} />
-        );
-    }
-}
-
-class Game extends React.Component {
-    constructor() {
-        super();
-        this.rows = height / cellHeight;
-        this.cols = width / cellHeight;
-        this.board = this.makeEmptyBoard();
+class App extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
-            cells: []
-        }
-    }
-    makeEmptyBoard() {
-        let board = [];
-        for (let y = 0; y < this.rows; y++) {
-            board[y] = [];
-            for (let x = 0; x < this.cols; x++) {
-                board[y][x] = false;
-            }
-        }
-        return board;
-    }
-    makeCells() {
-        let cells = [];
-        for (let y = 0; y < this.rows; y++) {
-            for (let x = 0; x < this.cols; x++) {
-                if (this.board[y][x]) {
-                    cells.push({ x, y });
+            grid: [],
+            isRunning: false,
+            iterationCount: 0
+        };
+
+        this.startGame = e => {
+            e.preventDefault();
+            if (this.state.isRunning) { return; }
+            this.setState({ isRunning: true });
+            this.continueGame();
+        };
+
+        this.stopGame = e => {
+            e.preventDefault();
+            if (!this.state.isRunning) { return; }
+            window.clearTimeout(this.timeout);
+            this.setState({ isRunning: false, iterationCount: 0 });
+        };
+
+        this.continueGame = () => {
+            let grid = this.state.grid.map(row => row.slice());
+            for (let i = 0; i < grid.length; i++) {
+                for (let j = 0; j < grid[i].length; j++) {
+                    let count = this.countNeighbors(i, j);
+                    if (grid[i][j]) {
+                        if (count < 2 || count > 3) {
+                            grid[i][j] = false;
+                        }
+                    } else {
+                        if (count === 3) {
+                            grid[i][j] = true;
+                        }
+                    }
                 }
             }
-        }
-        return cells;
-    }
-    getElementOffset() {
-        const rect = this.boardRef.getBoundingClientRect();
-        const doc = document.documentElement;
-        return {
-            x: (rect.left + window.pageXOffset) - doc.clientLeft,
-            y: (rect.top + window.pageYOffset) - doc.clientTop,
+            this.setState({
+                grid: grid,
+                iterationCount: this.state.iterationCount + 1
+            });
+
+            this.timeout = setTimeout(() => {
+                this.continueGame();
+            }, 500);
+        };
+
+        this.countNeighbors = (rowIndex, cellIndex) => {
+            const neighbors = [
+                [rowIndex - 1, cellIndex - 1],
+                [rowIndex - 1, cellIndex],
+                [rowIndex - 1, cellIndex + 1],
+                [rowIndex, cellIndex - 1],
+                [rowIndex, cellIndex + 1],
+                [rowIndex + 1, cellIndex - 1],
+                [rowIndex + 1, cellIndex],
+                [rowIndex + 1, cellIndex + 1]
+            ];
+
+            let count = 0;
+
+            for (let i = 0; i < neighbors.length; i++) {
+                if ((neighbors[i][0] >= 0 && neighbors[i][0] <= 14) &&
+                    (neighbors[i][1] >= 0 && neighbors[i][1] <= 14)) {
+                    const position = neighbors[i];
+                    if (this.state.grid[position[0]][position[1]]) {
+                        count += 1;
+                    }
+                }
+            }
+            return count;
+        };
+
+        this.toggleCell = (rowIndex, cellIndex) => {
+            let grid = this.state.grid;
+            grid[rowIndex][cellIndex] = !grid[rowIndex][cellIndex];
+            this.setState({ grid: grid });
+        };
+
+        this.clearGrid = e => {
+            e.preventDefault();
+            let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
+            this.setState({ grid: grid });
         };
     }
-    handleClick = (event) => {
-        const elemOffset = this.getElementOffset();
-        const offsetX = event.clientX - elemOffset.x;
-        const offsetY = event.clientY - elemOffset.y;
 
-        const x = Math.floor(offsetX / cellHeight);
-        const y = Math.floor(offsetY / cellHeight);
-        if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows) {
-            this.board[y][x] = !this.board[y][x];
-        }
-        this.setState({ cells: this.makeCells() });
+    componentDidMount() {
+        let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
+        this.setState({ grid: grid });
     }
-    render() {
-        const { cells } = this.state;
-        return (
-            <div>
-                <div className="Game"
-                    style={{ width: width, height: height,
-                    backgroundSize: `${cellHeight}px ${cellHeight}px` }}
-                    onClick={this.handleClick}
-                    ref={(n) => { this.boardRef = n; }}>
-                    {cells.map(cell => (
-                        <Cell x={cell.x} y={cell.y}
-                            key={`${cell.x},${cell.y}`} />
-                    ))}
-                </div>
-                <div className="Controls">
-                    <p>start</p>
-                    <p>stop</p>
-                    <p>step</p>
-                    <p>clear</p>
-                </div>
-                <div className="Presets">
-                    <p>preset 1</p>
-                    <p>preset 2</p>
-                    <p>preset 3</p>
-                </div>
 
+    render() {
+        return (
+            <div className="container">
+                <div className="grid-container">
+                    {this.state.grid.map((row, rowIndex) => {
+                        return <div key={rowIndex}
+                            className="row">{row.map((cell, cellIndex) => {
+                                return <div key={cellIndex}
+                                    className={cell ? "live-cell" : "dead-cell"}
+                                    onClick={!this.state.isRunning ?
+                                        () => this.toggleCell(rowIndex, cellIndex) :
+                                        null}
+                                >{cell}</div>;
+                            })}</div>;
+                    })}
+                </div>
+                <div className="controls">
+                    <p onClick={this.startGame}>start</p>
+                    <p onClick={this.stopGame}>stop</p>
+                    <p onClick={this.clearGrid}>clear</p>
+                    <div>{this.state.iterationCount} generations</div>
+                </div>
+                <div className="options">
+                    <p>patterns</p>
+                    <p>colors</p>
+                </div>
             </div>
         );
     }
 }
-export default Game;
+
+export default ReactTimeout(App);
