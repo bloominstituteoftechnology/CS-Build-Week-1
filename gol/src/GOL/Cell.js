@@ -21,14 +21,19 @@ class Cell {
     this.inactiveFill = "#d11554";
   }
   
-  setXAndY = () => {
-    
-  };
+  clicked = (x,y) => {
+    if(x >= this.x*this.width && x < this.x*this.width+20){
+      if(y >= this.y * this.width+20 && y < this.y * this.width+40){
+        this.active = this.active == 0 ? 1 : 0;
+        console.log(this.active);
+      }
+    }
+  }
 
   setFill = () => {
     if(this.active == 0){
       this.fill = this.activeFill;
-    } else {
+    } else if (this.active == 1) {
       this.fill = this.inactiveFill;
     }
     return this.fill;
@@ -36,29 +41,10 @@ class Cell {
 
   createRect = () => {
     let fillV = this.setFill();
-    console.log(fillV);
-    
     this.p.noStroke();
     this.p.rect(this.x*this.width, this.y*this.width, this.width-1, this.width-1);
     this.p.fill(fillV);
   };
 }
-
-
-  // Set key value:
-  // setKey = () => {
-
-  // };
-
-  // Swap state.alive value:
-  // toggleAlive = () => {
-
-  // };
-
-  // Determine if cell was clicked:
-  // onclick = (mx, my) => {
-
-  // };
-
   
 export default Cell;

@@ -17,35 +17,48 @@ function sketch (p){
   const h = GridConstants.cell_h;
   let parentW = document.querySelector(".sketch-container").clientWidth;
   let parentH = document.querySelector(".sketch-container").clientHeight;
-  let gridArr = [[]];
+  let currGrid = [[]], nextGrid = [[]];
   let cellFill = "#cc527a";
 
   p.preload = () => {};
 
   const createCells = () => {
     for (let i=0; i<cols; i++){
-        gridArr[i] = [];
+        currGrid[i] = [];
         for(let j=0; j<rows; j++){
-          gridArr[i][j] = new Cell(p, i, j, cellFill);
+          currGrid[i][j] = new Cell(p, i, j, cellFill);
         }
     }
+    nextGrid = currGrid;
   };
   
   p.setup = () => {
     p.pixelDensity(1);
     p.createCanvas(parentW,parentH);
     createCells();
+    p.background("#e8175d");
   };
 
   p.draw = () => {
-    p.background("#e8175d");
     for(let i=0; i<cols; i++){
       for(let j=0; j<rows; j++){
-        gridArr[i][j].createRect();
+        currGrid[i][j].createRect();
       }
     }
   };
 
+  p.mousePressed = () => {
+    for(let i=0; i<cols; i++){
+      for(let j=0; j<rows; j++){
+        currGrid[i][j].clicked(p.mouseX, p.mouseY);
+      }
+    }
+  }
+
+  const blastEm = () => {
+    console.log("Blast'em");
+    
+  };
 }
 
 export default sketch;
