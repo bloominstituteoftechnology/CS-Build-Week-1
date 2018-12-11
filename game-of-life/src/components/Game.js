@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactTimeout from 'react-timeout';
 import './Game.css';
 
-class App extends React.Component {
+class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,44 +10,56 @@ class App extends React.Component {
             iterationCount: 0
         };
 
-        this.startGame = e => {
-            e.preventDefault();
-            if (this.state.isRunning) { return; }
+        this.startGame = event => {
+            event.preventDefault();
+            if (this.state.isRunning) {
+                return;
+            }
             this.setState({ isRunning: true });
             this.continueGame();
         };
 
-        this.stopGame = e => {
-            e.preventDefault();
+        this.stopGame = event => {
+            event.preventDefault();
             if (!this.state.isRunning) { return; }
             window.clearTimeout(this.timeout);
-            this.setState({ isRunning: false, iterationCount: 0 });
+            this.setState({ isRunning: false });
         };
 
         this.continueGame = () => {
-            let grid = this.state.grid.map(row => row.slice());
-            for (let i = 0; i < grid.length; i++) {
-                for (let j = 0; j < grid[i].length; j++) {
-                    let count = this.countNeighbors(i, j);
-                    if (grid[i][j]) {
-                        if (count < 2 || count > 3) {
-                            grid[i][j] = false;
-                        }
-                    } else {
-                        if (count === 3) {
-                            grid[i][j] = true;
+                let grid = this.state.grid.map(row => row.slice());
+                for (let i = 0; i < grid.length; i++) {
+                    for (let j = 0; j < grid[i].length; j++) {
+                        let count = this.countNeighbors(i, j);
+                        if (grid[i][j]) {
+                            if (count < 2 || count > 3) {
+                                grid[i][j] = false;
+                            }
+                        } else {
+                            if (count === 3) {
+                                grid[i][j] = true;
+                            }
                         }
                     }
                 }
-            }
-            this.setState({
-                grid: grid,
-                iterationCount: this.state.iterationCount + 1
-            });
+                this.setState({
+                    grid: grid,
+                    iterationCount: this.state.iterationCount + 1
+                });
 
-            this.timeout = setTimeout(() => {
-                this.continueGame();
-            }, 500);
+                this.timeout = setTimeout(() => {
+                    this.continueGame();
+                }, 500);
+        };
+
+        this.advanceOneStep = event => {
+            event.preventDefault();
+            if (this.state.isRunning) {
+                return;
+            }
+            this.continueGame();
+            window.clearTimeout(this.timeout);
+            this.setState({ isRunning: false });
         };
 
         this.countNeighbors = (rowIndex, cellIndex) => {
@@ -86,7 +97,8 @@ class App extends React.Component {
         this.clearGrid = e => {
             e.preventDefault();
             let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
-            this.setState({ grid: grid });
+            this.setState({ grid: grid, isRunning: false, iterationCount: 0 });
+            window.clearTimeout(this.timeout);
         };
     }
 
@@ -115,6 +127,7 @@ class App extends React.Component {
                     <p onClick={this.startGame}>start</p>
                     <p onClick={this.stopGame}>stop</p>
                     <p onClick={this.clearGrid}>clear</p>
+                    <p onClick={this.advanceOneStep}>next</p>
                     <div>{this.state.iterationCount} generations</div>
                 </div>
                 <div className="options">
@@ -126,4 +139,4 @@ class App extends React.Component {
     }
 }
 
-export default ReactTimeout(App);
+export default Game;
