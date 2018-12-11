@@ -1,4 +1,13 @@
 import React from 'react'
+import styled from 'styled-components'
+
+
+const GridBox = styled.span(props => ({
+    minHeight: '20px',
+    minWidth: '20px',
+    border: '.5px solid #eee',
+    background: props.background,
+}))
 
 class Cell extends React.Component {
     state = {
@@ -8,7 +17,9 @@ class Cell extends React.Component {
     render() {
         return (
             <>
-            <p>hey</p>
+            <GridBox
+            background={this.props.isLiving ? "black" : "white"}
+            onClick={() => this.props.toggleCellLife(this.state.id)}></GridBox>
             </>
         )
     }
