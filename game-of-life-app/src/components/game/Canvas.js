@@ -29,13 +29,13 @@ const ControlButton = styled.button`
     background: #05f;
     color: white;
   }
-`
+`;
 
 class Canvas extends React.Component {
   state = {
     cells: 400,
     gridArr: [],
-    canClick: true,
+    isClickable: true,
     generation: 0
   };
 
@@ -47,30 +47,37 @@ class Canvas extends React.Component {
     this.setState({ gridArr });
   }
 
-  toggleCellLife = (id) => {
-   this.setState(prevState => {
-     return {
-       gridArr: prevState.gridArr.map(cell => {
-         if (cell.id === id) {
-           cell.isLiving = !cell.isLiving;
-           return cell;
-         } else {
-           return cell;
-         }
-       })
-     }
-   })
-  }
+  toggleCellLife = id => {
+    if (this.state.isClickable) {
+      this.setState(prevState => {
+        return {
+          gridArr: prevState.gridArr.map(cell => {
+            if (cell.id === id) {
+              cell.isLiving = !cell.isLiving;
+              return cell;
+            } else {
+              return cell;
+            }
+          })
+        };
+      });
+    }
+  };
 
   render() {
-    console.log(this.state.gridArr)
+    console.log(this.state.gridArr);
     return (
       <>
         <GenerationText>🌀 Generation: {this.state.generation}</GenerationText>
         <CustomHR />
         <CellGrid>
           {this.state.gridArr.map((cell, index) => (
-            <Cell key={index} id={cell.id} isLiving={cell.isLiving} toggleCellLife={this.toggleCellLife} />
+            <Cell
+              key={index}
+              id={cell.id}
+              isLiving={cell.isLiving}
+              toggleCellLife={this.toggleCellLife}
+            />
           ))}
         </CellGrid>
         <CustomHR />
