@@ -21,8 +21,13 @@
 .App-link {
   color: #61dafb;
 }
+.container {
+  width: 750px; 
+}
 
-
+.gridDiv {
+  width: 50px;
+}
 
 .onDiv {
   background: yellow; 
@@ -30,8 +35,10 @@
 }
 
 .offDiv {
-  background: black; 
+  background: blue; 
   border : 1px solid white; 
 }
+
+
 
 
