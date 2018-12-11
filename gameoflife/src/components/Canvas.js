@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Buttons from './Buttons';
 
 
 
@@ -7,7 +8,8 @@ export default class Canvas extends Component {
     super();
     this.state={
         x: 0, 
-        y: 0
+        y: 0,
+        start: 0,
     }
   }
 
@@ -32,6 +34,7 @@ export default class Canvas extends Component {
   }
 
   componentDidUpdate() {
+
     let x = this.state.x; 
     let y = this.state.y-100; 
     
@@ -55,7 +58,6 @@ export default class Canvas extends Component {
 
     function emptySquare(ctx, x, y) {
       ctx.clearRect(x,y,8,8);
-      console.log("clearRect x y", x, y)
     }
 
     let mousePosX = mousePos.x;
@@ -80,34 +82,154 @@ export default class Canvas extends Component {
       fillSquare(ctx, mousePosX, mousePosY);
     }
     console.log("mouse x, y", mousePosX, mousePosY);
+    
+    if(this.state.start === 1) {
+      for(let xCheck = 1; xCheck <= 492; xCheck += 10) {
+        for(let yCheck = 1; yCheck <= 492; yCheck += 10) {
+          let pixelCheck = getPixel(imageData, xCheck ,yCheck);
+          if(pixelCheck[2] === 255) {
+            let neighbor1 = getPixel(imageData, xCheck-10 ,yCheck-10);
+            let neighbor2 = getPixel(imageData, xCheck ,yCheck-10);
+            let neighbor3 = getPixel(imageData, xCheck+10 ,yCheck-10);
+            let neighbor4 = getPixel(imageData, xCheck+10 ,yCheck);
+            let neighbor5 = getPixel(imageData, xCheck+10 ,yCheck+10);
+            let neighbor6 = getPixel(imageData, xCheck ,yCheck+10);
+            let neighbor7 = getPixel(imageData, xCheck-10 ,yCheck+10);
+            let neighbor8 = getPixel(imageData, xCheck-10 ,yCheck);
+            
+            let count = 0;
+            
+            if(neighbor1 !== null) {
+              if(neighbor1[2] === 255) {
+                count = count +1; 
+              }
+            } else if(neighbor2 !== null) {
+              if(neighbor2[2] === 255) {
+                count = count +1; 
+              } 
+            } else if(neighbor3 !== null) {
+              if(neighbor3[2] === 255) {
+                count = count +1; 
+              }
+            } else if(neighbor4 !== null) {
+              if(neighbor4[2] === 255) {
+                count = count +1; 
+              } 
+            } else if(neighbor5 !== null) {
+              if(neighbor5[2] === 255) {
+                count = count +1; 
+              } 
+            } else if(neighbor6 !== null) {
+              if(neighbor6[2] === 255) {
+                count = count +1; 
+              } 
+            } else if(neighbor7 !== null) {
+              if(neighbor7[2] === 255) {
+                count = count +1; 
+              } 
+            } else if(neighbor8 !== null) {
+              if(neighbor8[2] === 255) {
+                count = count +1; 
+              } 
+            }
 
-    for(let xCheck = 1; xCheck <= 492; xCheck += 10) {
-      for(let yCheck = 1; yCheck <= 492; yCheck += 10) {
-        let pixelCheck = getPixel(imageData, xCheck ,yCheck);
-        console.log("pixelCheck2",pixelCheck[2])
-        if(pixelCheck[2] === 255) {
-          emptySquare(ctx, xCheck, yCheck);
-        } 
+            if(count < 2 || count > 3) {
+              emptySquare(ctx, xCheck, yCheck); 
+            } 
+
+            } else {
+              let neighbor11 = getPixel(imageData, xCheck-10 ,yCheck-10);
+              let neighbor22 = getPixel(imageData, xCheck ,yCheck-10);
+              let neighbor33 = getPixel(imageData, xCheck+10 ,yCheck-10);
+              let neighbor44 = getPixel(imageData, xCheck+10 ,yCheck);
+              let neighbor55 = getPixel(imageData, xCheck+10 ,yCheck+10);
+              let neighbor66 = getPixel(imageData, xCheck ,yCheck+10);
+              let neighbor77 = getPixel(imageData, xCheck-10 ,yCheck+10);
+              let neighbor88 = getPixel(imageData, xCheck-10 ,yCheck);
+
+              let count2 = 0;
+
+              if(neighbor11 !== null) {
+                if(neighbor11[2] === 255) {
+                  count2 = count2 +1; 
+                }
+              } else if(neighbor22 !== null) {
+                if(neighbor22[2] === 255) {
+                  count2 = count2 +1; 
+                } 
+              } else if(neighbor33 !== null) {
+                if(neighbor33[2] === 255) {
+                  count2 = count2 +1; 
+                }
+              } else if(neighbor44 !== null) {
+                if(neighbor44[2] === 255) {
+                  count2 = count2 +1; 
+                } 
+              } else if(neighbor55 !== null) {
+                if(neighbor55[2] === 255) {
+                  count2 = count2 +1; 
+                } 
+              } else if(neighbor66 !== null) {
+                if(neighbor66[2] === 255) {
+                  count2 = count2 +1; 
+                } 
+              } else if(neighbor77 !== null) {
+                if(neighbor77[2] === 255) {
+                  count2 = count2 +1; 
+                } 
+              } else if(neighbor88 !== null) {
+                if(neighbor88[2] === 255) {
+                  count2 = count2 +1; 
+                } 
+              }
+
+              if(count2 === 3) {
+                fillSquare(ctx, xCheck, yCheck);
+              }
+              
+            }
+          } 
+        }
       }
     }
   
-  }
 
 
   mouseDown = (e) => {
     this.setState({x: e.screenX, y: e.screenY});
   }
 
+  onClickStart = (e) => {
+    console.log("this state", this.state);
+
+    this.setState({start: 1});
+    console.log("this.state.start", this.state.start)
+  }
+
+  onClickStop = (e) => {
+
+    this.setState({start: 0});
+    console.log("stopped", this.state.start)
+  }
+
 
   render() {
     return(
+      <div>
       <div className="canvas">
         <canvas 
               ref="canvas" 
               width={500}
               height={500}
-              onMouseDown={this.mouseDown.bind(this)}
+              onMouseDown={this.mouseDown}
           />
+      </div>
+      <div>
+        <Buttons 
+          onClickStart={this.onClickStart}
+          onClickStop={this.onClickStop}>
+        </Buttons>
+      </div>
       </div>
     )
   }
