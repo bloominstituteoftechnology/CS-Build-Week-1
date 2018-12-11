@@ -177,14 +177,18 @@ class LifeCanvas extends React.Component{
     randomize = e => {
         e.preventDefault();
         this.board = this.initializeBoard();
-        for (let i = 0; i <= this.state.random; i++){
-            let x = (Math.floor(Math.random()*15));
-            let y = (Math.floor(Math.random()*15));
-            if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows && !this.board[y][x]){
-                this.board[y][x] = true;
+        let count = 0;
+        for (let i = 0; i < this.state.random; i++){
+            while (count < this.state.random) {
+                let x = (Math.floor(Math.random()*15));
+                let y = (Math.floor(Math.random()*15));
+                if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows && !this.board[y][x] && count < this.state.random){
+                    this.board[y][x] = true;
+                    count++
+                }
             }
         }
-
+        
         this.setState({cells: this.makeCells()});
     }
     handleChange = e => {
@@ -208,6 +212,7 @@ class LifeCanvas extends React.Component{
                         ))}
                     </div>
                     <Rules>
+                        <h2>Game of Life Rules</h2>
                         <p>1. Any live cell with fewer than two live neighbors dies, as if caused by under population.</p>
                         <p>2. Any live cell with two or three live neighbors lives on to the next generation.</p>
                         <p>3. Any live cell with more than three live neighbors dies, as if by overpopulation.</p>
