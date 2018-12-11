@@ -179,6 +179,10 @@ class LifeCanvas extends React.Component{
     }
     randomize = e => {
         e.preventDefault();
+        if (this.state.random > Math.pow((this.state.height/this.state.cellSize),2)){
+            alert(`Cells to be generated is greater than the board size. Please enter a number less than ${Math.pow((this.state.height/this.state.cellSize),2)}`);
+            return;
+        }
         this.board = this.initializeBoard();
         let count = 0;
         for (let i = 0; i < this.state.random; i++){
@@ -265,7 +269,7 @@ class LifeCanvas extends React.Component{
                     </div>
                     <div>
                         <span># of Random Cells <Input onChange={this.handleChange} name='random' value={this.state.random} /></span>
-                        <Button onClick={this.randomize}>Randomize</Button>
+                        <Button onClick={this.randomize}>Generate</Button>
                     </div>
                     <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} >
                         <DropdownToggle caret style={{background:"black", color: "red", outline:"none", fontSize:"1.2rem", fontWeight:"800"}}>Change Grid Size</DropdownToggle>
