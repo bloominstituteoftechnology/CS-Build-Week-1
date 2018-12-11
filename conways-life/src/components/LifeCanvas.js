@@ -183,8 +183,8 @@ class LifeCanvas extends React.Component{
         let count = 0;
         for (let i = 0; i < this.state.random; i++){
             while (count < this.state.random) {
-                let x = (Math.floor(Math.random()*15)+1);
-                let y = (Math.floor(Math.random()*15)+1);
+                let x = (Math.floor(Math.random()*(this.state.height/this.state.cellSize))+1);
+                let y = (Math.floor(Math.random()*(this.state.height/this.state.cellSize))+1);
                 if (x >= 0 && x < this.state.height/this.state.cellSize && y >= 0 && y < this.state.width/this.state.cellSize && !this.board[x][y] && count < this.state.random){
                     this.board[x][y] = true;
                     count++
@@ -203,25 +203,31 @@ class LifeCanvas extends React.Component{
         }))
     }
     handleBoardSize = e => {
+        e.preventDefault();
         if (e.target.name === 'small'){
             this.setState({
-                height: this.state.cellSize * 15,
-                width: this.state.cellSize * 15,
+                height: 600,
+                width: 600,
+            }, () => {
+                this.board = this.initializeBoard();
             })
         } else if (e.target.name === 'medium'){
             this.setState({
-                height: this.state.cellSize * 22,
-                width: this.state.cellSize * 22,
+                height: 880,
+                width: 880,
+            }, () => {
+                this.board = this.initializeBoard();
             })
         } else if (e.target.name === 'large'){
             this.setState({
-                height: this.state.cellSize * 30,
-                width: this.state.cellSize * 30,
+                height: 1200,
+                width: 1200,
+            }, () => {
+                this.board = this.initializeBoard();
             })
         }
- 
-        //this.board not changing size
     }
+
     render(){
         return(
             <div>
@@ -252,12 +258,17 @@ class LifeCanvas extends React.Component{
                     <p>
                         Each cycle takes <Input onChange={this.handleChange} name='interval' value={this.state.interval} /> ms
                     </p>
-                    <Button onClick={this.runGameOfLife}>Start</Button>
-                    <Button onClick={this.stopGameOfLife}>Stop</Button>
-                    <Button onClick={this.clearBoard}>Clear</Button> 
-                    <Button onClick={this.randomize}>Random</Button>
-                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                        <DropdownToggle caret>Change Grid Size</DropdownToggle>
+                    <div>
+                        <Button onClick={this.runGameOfLife}>Start</Button>
+                        <Button onClick={this.stopGameOfLife}>Stop</Button>
+                        <Button onClick={this.clearBoard}>Clear</Button> 
+                    </div>
+                    <div>
+                        <span># of Random Cells <Input onChange={this.handleChange} name='random' value={this.state.random} /></span>
+                        <Button onClick={this.randomize}>Randomize</Button>
+                    </div>
+                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} >
+                        <DropdownToggle caret style={{background:"black", color: "red", outline:"none", fontSize:"1.2rem", fontWeight:"800"}}>Change Grid Size</DropdownToggle>
                         <DropdownMenu>
                             <DropdownItem onClick={this.handleBoardSize} name='small'>Small (15x15)</DropdownItem>
                             <DropdownItem onClick={this.handleBoardSize} name='medium'>Medium (22x22)</DropdownItem>
