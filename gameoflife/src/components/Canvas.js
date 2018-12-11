@@ -10,6 +10,7 @@ export default class Canvas extends Component {
         x: 0, 
         y: 0,
         start: 0,
+        test: "",
     }
   }
 
@@ -33,8 +34,30 @@ export default class Canvas extends Component {
     ctx.closePath();
   }
 
-  componentDidUpdate() {
+  
+  mouseDown = (e) => {
+    this.setState({x: e.screenX, y: e.screenY});
+  }
 
+  onClickStart = (e) => {
+    console.log("click start");
+
+    this.setState({start: 1});
+    this.setState({test: "tested"});
+    console.log("this.state.start", this.state.start)
+    console.log("this.state.test", this.state.test)
+    
+  }
+
+  onClickStop = (e) => {
+
+    this.setState({start: 0});
+    console.log("stopped", this.state.start)
+  }
+
+
+  componentDidUpdate() {
+    console.log("component did update")
     let x = this.state.x; 
     let y = this.state.y-100; 
     
@@ -76,7 +99,7 @@ export default class Canvas extends Component {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const pixelRGBA = getPixel(imageData, mousePosX, mousePosY);
     
-    if(pixelRGBA[2] === 255) {
+    if(pixelRGBA !== null && pixelRGBA[2] === 255) {
       emptySquare(ctx, mousePosX, mousePosY);
     } else {
       fillSquare(ctx, mousePosX, mousePosY);
@@ -195,22 +218,6 @@ export default class Canvas extends Component {
   
 
 
-  mouseDown = (e) => {
-    this.setState({x: e.screenX, y: e.screenY});
-  }
-
-  onClickStart = (e) => {
-    console.log("this state", this.state);
-
-    this.setState({start: 1});
-    console.log("this.state.start", this.state.start)
-  }
-
-  onClickStop = (e) => {
-
-    this.setState({start: 0});
-    console.log("stopped", this.state.start)
-  }
 
 
   render() {
