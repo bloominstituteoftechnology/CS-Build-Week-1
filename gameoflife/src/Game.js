@@ -6,6 +6,22 @@ const CELL_SIZE = 20;
 const WIDTH = 800;
 const HEIGHT = 600;
 
+//rendering cells to the board
+class Cell extends React.Component{
+
+    render() {
+        const { x, y } = this.props;
+        return (
+            <div className="Cell" style={{
+                left:  `${CELL_SIZE * x +1}px`,
+                top: `${CELL_SIZE * x + 1}px`,
+                width: `${CELL_SIZE - 1}px`,
+                height: `${CELL_SIZE - 1}px`,
+            }} />
+        );
+    }
+}
+
 class Game extends React.Component {
     constructor () {
         super();
@@ -70,12 +86,17 @@ class Game extends React.Component {
     }
 
     render() {
+        const { cells } = this.state;
         return (
             <div>
                 <div className="gameBoard"
                 style ={{ width: WIDTH, height: HEIGHT, backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}}
                 onClick={this.clickHandler}
                 ref={(n) => { this.boardRef = n; }}>
+                {cells.map(cell => (
+                    <Cell x={cell.x} y={cell.y}
+                        key={`${cell.x}, ${cell.y}`}/>
+                ))}
                 </div>
             </div>
         );
