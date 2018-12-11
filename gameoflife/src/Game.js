@@ -52,7 +52,7 @@ class Game extends React.Component {
 
         return {
             x: (rect.left + window.pageXOffset) - doc.clientLeft,
-            y: (rect.top + window.pageYOffesst) - doc.clientTop,
+            y: (rect.top + window.pageYOffset) - doc.clientTop,
         };
     }
 
