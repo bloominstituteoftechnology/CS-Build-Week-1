@@ -1,0 +1,10 @@
+.gameBoard {
+    position: relative;
+    margin: 0 auto;
+    background-color: lightcyan;
+    background-image:
+        linear-gradient(lavender 1px, transparent 1px),
+        linear-gradient(90deg, lavender 1px, transparent 1px);
+
+}
+
