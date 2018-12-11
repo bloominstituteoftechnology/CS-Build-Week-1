@@ -10,27 +10,28 @@ class App extends Component {
     };
   }
 
-  start_game() {
+  start_game = () => {
     if(!this.state.game_running) {
       this.setState({
         game_running: true,
       });
-    }
+    }    
   }
 
-  stop_game() {
+  stop_game = () => {
     this.setState({
       game_running: false,
-    })
+    });    
   }
 
   render() {
+    console.log(this.state.game_running);
     return (
       <div className="App">
-        <Grid/>
+        <Grid game_running={this.state.game_running}/>
         <div className="headerButtons">
-            <button className="submit" onClick={this.startGame}>Start</button>
-            <button className="submit" onClick={this.stopGame}>Stop</button>
+            <button className="submit" onClick={this.start_game}>Start</button>
+            <button className="submit" onClick={this.stop_game}>Stop</button>
           </div>
       </div>
     );
