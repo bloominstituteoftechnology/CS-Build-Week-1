@@ -54,16 +54,19 @@ p {
 
 export const StyledSection = styled.section`
   margin: 0 auto;
-  padding: 3.2rem;
+  padding: 9.2rem 3.2rem 3.2rem 3.2rem;
   text-align: ${props => (props.center ? "center" : "left")};
   max-width: 920px;
+  @media (max-width: 684px) {
+      padding-top: 12.4rem;
+  }
   h1 {
     font-size: 6rem;
     text-align: center;
     padding: 2.4rem 0 1.2rem 0;
     @media (max-width: 684px) {
       font-size: 3.2rem;
-      padding: 1rem 0 .8rem 0;
+      padding: 1.6rem 0 .8rem 0;
     }
   }
 `;

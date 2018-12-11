@@ -13,6 +13,8 @@ export const StyledLink = styled(Link)`
 
 const HeaderContainer = styled.div`
   background: white;
+  position: fixed;
+  width: 100vw;
   border-bottom: 1px solid #eee;
   display: grid;
   height: 6rem;
