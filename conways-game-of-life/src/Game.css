@@ -7,3 +7,7 @@
     linear-gradient(90deg, #aca2b0 1px, transparent 1px);
 }
 
+.indivCell {
+    background: #e8cccd;
+    position: absolute;
+  }
