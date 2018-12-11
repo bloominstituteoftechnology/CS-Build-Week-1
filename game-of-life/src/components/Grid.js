@@ -2,35 +2,52 @@ import React, { Component } from 'react';
 
 import styled from "styled-components";
 
-const Block = styled.div`
-background-color: black;
-width: 20px;
-height: 20px;
-box-sizing: border-box;
-border: 1px solid white;
-border-radius: 50%;
-
-`
-
-const GridContainer = styled.div`
+// const Block = styled.div`
+// background-color: black;
+// width: 20px;
+// height: 20px;
+// box-sizing: border-box;
+// border: 1px dashed #d45f;
 
 
+// `
 
-`
+// const Block_On = styled.div`
+// background-color: black;
+// width: 20px;
+// height: 20px;
+// box-sizing: border-box;
+// border: 1px dashed #d45f;
+
+
+// `
+
+
 
 
 
 class Grid extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = { activated: 0 }
+    }
+    componentDidMount() {
+        this.setState({activated: this.props.data})
+    }
+    toggleState = (e) => {
+        if(this.state.activated == 0) {
+            this.setState({activated: 1})
+        } else {
+            this.setState({activated: 0})
+        }
     }
     render() { 
         return ( 
+            <div onClick={this.toggleState} className={this.state.activated ? "Block_On"  : "Block"}  />
         
-        <GridContainer>
-        <Block />
-        </GridContainer>
+        // <Block onClick={this.toggleState} />
+        
+    
         );
     }
 }
