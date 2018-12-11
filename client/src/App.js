@@ -1,38 +1,39 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from "reactstrap";
 import "./App.css";
 
 class App extends Component {
   state = {
     matrix: {
-      0: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      3: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      10: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      11: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      12: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      13: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      14: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
     },
 
-    matrixUsing: []
+    matrixUsing: [],
+    row_count: 15,//default
+    col_count: 15,//default
+
+    width: "330px", 
   };
 
   componentWillMount() {
     this.setMatrixUp();
   }
 
-  setMatrixUp() {
+  setMatrixUp = () => {
     const matrixUsing = [];
     let count = 0;
-    Object.entries(this.state.matrix).forEach(entry => {
+    let beginRow = 0; 
+    let beginColumn = 0; 
+    const matrix = {};
+    while(beginRow != this.state.row_count){
+      beginColumn = 0; 
+      matrix[beginRow] = []; 
+      while(beginColumn != this.state.col_count){
+        matrix[beginRow].push(0);
+        beginColumn++; 
+      }
+      beginRow++; 
+    }
+    Object.entries(matrix).forEach(entry => {
       for (let x of entry[1]) {
         const temp_hash = { row: 0, position_in_row: 0, actual_number: 0, value : "  "};
         temp_hash.row = Number(entry[0]);
@@ -42,9 +43,10 @@ class App extends Component {
         count++;
       }
     });
-    console.log(matrixUsing.length);
-    console.log(matrixUsing);
-    this.setState({ matrixUsing });
+    const width_size = 22* this.state.col_count;
+    const width = `${width_size}px`; 
+
+    this.setState({ matrix, matrixUsing, width });
   }
 
   turnOnOrOff = (row, position_in_row) => {
@@ -53,12 +55,56 @@ class App extends Component {
     matrix[row][position_in_row] = matrix[row][position_in_row] === 0 ? 1 : 0;
     this.setState({ matrix });
   };
+  // Game functions being declared below this line.  
+  handleChangeRow = (event) => {
+    //Will handle the changing of the rows.
+    //function allows for user to change the amount of rows that is being used.  
+    this.setState({[event.target.name]: event.target.value});
+  }
+  handleChangeColumn = (event) => {
+    //Will handle changing the columns. 
+    //function allows user to change the amount of columns that is being used. 
+    this.setState({[event.target.name]: event.target.value});
+  }
+
+  updateRowCol = () => {
+    //this function will actually check if the value is acceptable and then make the change. 
+    const rowValue = this.state.row_count;
+    const colValue = this.state.col_count;
+
+    if (rowValue < 15 || rowValue > 30){
+      alert("Must be a numerical value of at least 15 and less than 30!");
+      return; 
+    }
+    if (colValue < 15 || colValue > 30){
+      alert("Must be a numerical value of at least 15 and less than 30!");
+      return; 
+    }
+
+    this.setMatrixUp();
+
+  }
+
+  startTheGame = () => {
+    //Function will start the game. 
+  }
+  stopTheGame = () => {
+    //Function will stop the game. 
+  }
+
+  unPauseGame = () => {
+    //This function will unpause the game running where it left off. 
+    //This will pause the game if it is currently running. 
+  }
 
   render() {
     const matrix = this.state.matrixUsing.slice();
 
     return (
-      <div className="container">
+      <div className="container" style = {{width: this.state.width}}>
+        
+        <h2 className = "titleApp">Jonathan's Game of Life</h2>
+        
         {matrix.map((hash, id) => (
           <div
             key={id}
@@ -88,6 +134,15 @@ class App extends Component {
           </div>
           <div>
             <button>Presets</button>{" "}
+          </div>
+          
+          <div>
+            <h5>Row Size</h5>
+            <input type="text" name = "row_count" value = {this.state.row_count} onChange = {this.handleChangeRow}/>
+            <h5>Col Size</h5>
+            <input type="text" name ="col_count" value = {this.state.col_count} onChange = {this.handleChangeColumn}/>
+            <br/>
+            <button onClick = {this.updateRowCol}>Update Grid</button>
           </div>
         </div>
         
