@@ -1,4 +1,4 @@
-# Cellular Automata and Conway's "Game of Life"
+﻿# Cellular Automata and Conway's "Game of Life"
 
 Over the course of this week, students will work on creating their own application in which users will be able to run different "Game of Life" scenarios. This module leads the reader through the fundamentals of Conways's "Game of Life" and will guide them through the process of creating an app utilizing tools and frameworks that have been taught over the course of their specific track.
 
@@ -34,7 +34,7 @@ Over the course of this week, students will work on creating their own applicati
 - [ ] Add your Trello URL to your project's README.md file. Commit the change, push it to your repository & submit a pull request
 
 
-## MVP Features:
+## MVP Features:  https://www.vox.com/2015/1/28/7924487/game-of-life-history
 
 ### Preliminary Work
 - [ ] Research Conway’s “Game of Life”. Figure out how it works, why it’s useful, and how the notion of Turing Completeness is related to this topic.
