@@ -20,6 +20,7 @@ const ControlButton = styled.button`
   padding: 0.8rem 1.6rem;
   margin: 1.2rem 1.6rem 0 0;
   background: white;
+  min-height: 3.8rem;
   border: 1px solid #eee;
   font-size: 1.2rem;
   font-weight: 700;
@@ -31,10 +32,15 @@ const ControlButton = styled.button`
   }
 `;
 
-const Label = styled.label`
-  padding: 0.8rem 0.4rem;
-  font-weight: 700;
+const ControlSelect = styled.select`
+  background: white;
+  border: 1px solid #eee;
+  height: 3.8rem;
   font-size: 1.2rem;
+  font-weight: 700;
+  width: 12rem;
+  outline: none;
+  margin: 1.2rem 1.6rem 0 0;
 `;
 
 class Canvas extends React.Component {
@@ -121,17 +127,16 @@ class Canvas extends React.Component {
         <ControlButton onClick={this.handleStartGame}>▶️ Play</ControlButton>
         <ControlButton onClick={this.handlePauseGame}>⏸ Pause</ControlButton>
         <ControlButton onClick={this.handleResetGame}>🔄 Reset</ControlButton>
-        <Label>Preset</Label>
-        <select
+        <ControlSelect
           value={this.state.preset}
           onChange={this.handleChange}
           name="preset"
         >
-          <option value="none">None</option>
-          <option value="glider">Glider</option>
-          <option value="random">Random</option>
-          <option value="blinker">Blinker</option>
-        </select>
+          <option value="none">Preset: None</option>
+          <option value="glider">Preset: Glider</option>
+          <option value="random">Preset: Random</option>
+          <option value="blinker">Preset: Blinker</option>
+        </ControlSelect>
       </>
     );
   }
