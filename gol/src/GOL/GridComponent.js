@@ -13,14 +13,13 @@ class Grid extends Component {
   }
 
   componentDidMount(){
-    console.log(sketch);
     
   }
 
   render(){
     return(
       <div className="sketch-container">
-        <P5Wrapper sketch={this.state.sketchy}/>
+        <P5Wrapper sketch={this.state.sketchy} data={this.props.data}/>
       </div>
     )
   }

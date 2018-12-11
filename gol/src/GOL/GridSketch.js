@@ -9,12 +9,12 @@ med gray: #474747
 dark gray: #363636
  */
 
+
+
 function sketch (p){
 
   const cols = GridConstants.num_cols;
   const rows = GridConstants.num_rows;
-  const w = GridConstants.cell_w;
-  const h = GridConstants.cell_h;
   let parentW = document.querySelector(".sketch-container").clientWidth;
   let parentH = document.querySelector(".sketch-container").clientHeight;
   let currGrid = [[]], nextGrid = [[]];
@@ -32,6 +32,13 @@ function sketch (p){
     nextGrid = currGrid;
   };
   
+  p.arbitrary = (props) => {
+    console.log(props.data);
+    if(props.data.isRollin == true){
+      blastEm();
+    }
+  }
+
   p.setup = () => {
     p.pixelDensity(1);
     p.createCanvas(parentW,parentH);
@@ -57,8 +64,7 @@ function sketch (p){
 
   const blastEm = () => {
     console.log("Blast'em");
-    
-  };
+  }
 }
 
 export default sketch;
