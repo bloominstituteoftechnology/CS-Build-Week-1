@@ -1,6 +1,9 @@
 import React from 'react';
 import './LifeCanvas.css';
 import styled from 'styled-components';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import ReactDOM from 'react-dom';
 
 const Rules = styled.div`
     font-size: 1.2rem;
@@ -58,17 +61,16 @@ class LifeCanvas extends React.Component{
             isRunning: false,
             generation: 0,
             random: 20,
+            dropdownOpen: false,
         }
-        this.rows = this.state.height/this.state.cellSize;
-        this.cols = this.state.width/this.state.cellSize;
         this.board = this.initializeBoard();
     }
-
+    
     initializeBoard = () => {
         let board = [];
-        for(let x = 0; x < this.rows; x++){
+        for(let x = 0; x < (this.state.height/this.state.cellSize); x++){
             board[x] = [];
-            for (let y = 0; y < this.cols; y++){
+            for (let y = 0; y < (this.state.width/this.state.cellSize); y++){
                 board[x][y] = false;
             }
         }
@@ -76,8 +78,8 @@ class LifeCanvas extends React.Component{
     }
     makeCells = () => {
         let cells = [];
-        for (let x = 0; x < this.rows; x++) {
-            for (let y = 0; y < this.cols; y++) {
+        for (let x = 0; x < this.state.height/this.state.cellSize; x++) {
+            for (let y = 0; y < this.state.width/this.state.cellSize; y++) {
                 if (this.board[x][y]) {
                     cells.push({ x, y });
                 }
@@ -86,7 +88,8 @@ class LifeCanvas extends React.Component{
         return cells;
     }
     getOffset = () => {
-        const rect = this.boardRef.getBoundingClientRect();
+        const boardRef = ReactDOM.findDOMNode(this.refs.gameboard)
+        const rect = boardRef.getBoundingClientRect();
         const doc = document.documentElement;
 
         return {
@@ -103,7 +106,7 @@ class LifeCanvas extends React.Component{
             const x = Math.floor(offsetX/this.state.cellSize);
             const y = Math.floor(offsetY/this.state.cellSize);
 
-            if (x >= 0 && x <= this.rows && y >= 0 && y <= this.cols){
+            if (x >= 0 && x <= (this.state.height/this.state.cellSize) && y >= 0 && y <= (this.state.width/this.state.cellSize)){
                 this.board[x][y] = !this.board[x][y];
             }
 
@@ -118,7 +121,7 @@ class LifeCanvas extends React.Component{
             let x1 = x + validNeighbor[0];
             let y1 = y + validNeighbor[1];
 
-            if (x1 >= 0 && x1 < this.rows && y1 >= 0 && y1 < this.cols && board[x1][y1]){
+            if (x1 >= 0 && x1 < this.state.height/this.state.cellSize && y1 >= 0 && y1 < this.state.width/this.state.cellSize && board[x1][y1]){
                 neighbors++;
             }
         }
@@ -134,8 +137,8 @@ class LifeCanvas extends React.Component{
         let newGame = this.initializeBoard();
 
         //plots the next board
-        for (let x = 0; x < this.rows; x++){
-            for (let y = 0; y < this.cols; y++){
+        for (let x = 0; x < this.state.height/this.state.cellSize; x++){
+            for (let y = 0; y < this.state.width/this.state.cellSize; y++){
                 let neighbors = this.checkNeighbors(this.board, x, y);
                 if (this.board[x][y]){
                     //covers rule # 1,2,3
@@ -182,7 +185,7 @@ class LifeCanvas extends React.Component{
             while (count < this.state.random) {
                 let x = (Math.floor(Math.random()*15)+1);
                 let y = (Math.floor(Math.random()*15)+1);
-                if (x >= 0 && x < this.rows && y >= 0 && y < this.cols && !this.board[x][y] && count < this.state.random){
+                if (x >= 0 && x < this.state.height/this.state.cellSize && y >= 0 && y < this.state.width/this.state.cellSize && !this.board[x][y] && count < this.state.random){
                     this.board[x][y] = true;
                     count++
                 }
@@ -193,6 +196,31 @@ class LifeCanvas extends React.Component{
     }
     handleChange = e => {
         this.setState({[e.target.name]: e.target.value});
+    }
+    toggle = () => {
+        this.setState( prevState => ({
+            dropdownOpen: !prevState.dropdownOpen
+        }))
+    }
+    handleBoardSize = e => {
+        if (e.target.name === 'small'){
+            this.setState({
+                height: this.state.cellSize * 15,
+                width: this.state.cellSize * 15,
+            })
+        } else if (e.target.name === 'medium'){
+            this.setState({
+                height: this.state.cellSize * 22,
+                width: this.state.cellSize * 22,
+            })
+        } else if (e.target.name === 'large'){
+            this.setState({
+                height: this.state.cellSize * 30,
+                width: this.state.cellSize * 30,
+            })
+        }
+ 
+        //this.board not changing size
     }
     render(){
         return(
@@ -206,7 +234,7 @@ class LifeCanvas extends React.Component{
                             height: this.state.height,
                             backgroundSize:`${this.state.cellSize}px ${this.state.cellSize}px`}}
                         onClick={this.handleClick}
-                        ref={(n) => { this.boardRef = n; }}>   
+                        ref="gameboard">   
                         {this.state.cells.map(cell => (
                             <Cell cellSize={this.state.cellSize} x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`}/>
                         ))}
@@ -227,8 +255,17 @@ class LifeCanvas extends React.Component{
                     <Button onClick={this.runGameOfLife}>Start</Button>
                     <Button onClick={this.stopGameOfLife}>Stop</Button>
                     <Button onClick={this.clearBoard}>Clear</Button> 
-                    <Button onClick={this.randomize}>Random</Button> 
+                    <Button onClick={this.randomize}>Random</Button>
+                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                        <DropdownToggle caret>Change Grid Size</DropdownToggle>
+                        <DropdownMenu>
+                            <DropdownItem onClick={this.handleBoardSize} name='small'>Small (15x15)</DropdownItem>
+                            <DropdownItem onClick={this.handleBoardSize} name='medium'>Medium (22x22)</DropdownItem>
+                            <DropdownItem onClick={this.handleBoardSize} name='large'>Large (30x30)</DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
                 </div>
+
                 <div>Generation # {this.state.generation}</div>
             </div>
         )
