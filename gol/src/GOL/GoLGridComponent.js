@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import p5 from 'p5';
 import P5Wrapper from '../P5Wrapper/P5Wrapper';
-import GridSketch from './GridSketch';
+import sketch from './GridSketch';
 
 class Grid extends Component {
   constructor(props){
     super(props);
     this.state = {
-      sketchy: GridSketch,
+      sketchy: sketch,
     }
   }
 
