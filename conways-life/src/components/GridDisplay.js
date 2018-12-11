@@ -8,6 +8,7 @@ class GridDisplay extends Component {
         this.state = {
             grid: [],
             timer: 0,
+            iterations: 0,
             cols: 15,
             rows: 15
         }
@@ -40,7 +41,7 @@ class GridDisplay extends Component {
             }
         } 
 
-        this.setState({ grid: arr });
+        this.setState({ grid: arr, iterations: 0 });
     }
 
     clearGrid = () => {
@@ -52,32 +53,36 @@ class GridDisplay extends Component {
             }
         } 
 
-        this.setState({ grid: arr });
+        this.setState({ grid: arr, iterations: 0 });
     }
 
     computeNextGrid = () => {
         const prevGrid = this.state.grid.slice();
         let nextGrid = prevGrid.slice();
-
+        
         for (let i = 0; i < this.state.cols; i++) {
             for (let j = 0; j < this.state.rows; j++) {
-              let cellState = prevGrid[i][j].value;
-              // Count live neighbors
-              let neighbors = this.countNeighbors(prevGrid, i, j);
+                let cellState = prevGrid[i][j].value;
+                // Count live neighbors
+                let neighbors = this.countNeighbors(prevGrid, i, j);
         
-              if (cellState === 0 && neighbors === 3) {
+                if (cellState === 0 && neighbors === 3) {
                 nextGrid[i][j].value = 1;
-              } else if (cellState === 1 && (neighbors < 2 || neighbors >= 4)) {
+                } else if (cellState === 1 && (neighbors < 2 || neighbors >= 4)) {
                 nextGrid[i][j].value = 0;
-              } else if (cellState === 1 && (neighbors === 3 || neighbors === 2)){
+                } else if (cellState === 1 && (neighbors === 3 || neighbors === 2)){
                 nextGrid[i][j].value = 1;
-              } else {
+                } else {
                 nextGrid[i][j].value = cellState;
-              }
+                }
         
             }
-          }
-          this.setState({ grid: nextGrid });
+        }
+
+            let nextIter = this.state.iterations;
+            nextIter++;
+        
+            this.setState({ grid: nextGrid, iterations: nextIter });
     }
 
     countNeighbors = (grid, x, y) => {
@@ -115,6 +120,7 @@ class GridDisplay extends Component {
     render() {
             return (
             <div className="mainContainer">
+                <p>Generation: {this.state.iterations}</p>
                  <div className="gridContainer">
                     {this.state.grid.map(row => 
                         row.map((cell, index) => 
