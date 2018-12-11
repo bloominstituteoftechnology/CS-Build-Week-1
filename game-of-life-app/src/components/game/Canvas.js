@@ -36,7 +36,8 @@ class Canvas extends React.Component {
     cells: 400,
     gridArr: [],
     isClickable: true,
-    generation: 0
+    generation: 0,
+    paused: false,
   };
 
   componentDidMount() {
@@ -65,13 +66,26 @@ class Canvas extends React.Component {
   };
 
   handleStartGame = () => {
+      this.setState({
+        isClickable: false,
+        generation: this.state.generation,
+        paused: false
+      })
+      this.generationCounter = setInterval(() => this.setState({
+        generation: this.state.generation + 1
+      }), 1000)
+  }
+  handlePauseGame = () => {
+  }
+
+  handleResetGame = () => {
     this.setState({
-      isClickable: false,
-      generation: this.state.generation
+      gridArr: this.state.gridArr.map(cell => cell.isLiving ? !cell.isLiving : cell),
+      isClickable:true,
+      generation: 0
+
     })
-    this.generationCounter = setInterval(() => this.setState({
-      generation: this.state.generation + 1
-    }), 1000)
+    clearInterval(this.generationCounter)
   }
   render() {
     console.log(this.state.gridArr);
@@ -91,8 +105,8 @@ class Canvas extends React.Component {
         </CellGrid>
         <CustomHR />
         <ControlButton onClick={this.handleStartGame}>▶️Play</ControlButton>
-        <ControlButton>⏸Pause</ControlButton>
-        <ControlButton>🔄Reset</ControlButton>
+        <ControlButton onClick={this.handlePauseGame}>⏸Pause</ControlButton>
+        <ControlButton onClick={this.handleResetGame}>🔄Reset</ControlButton>
       </>
     );
   }
