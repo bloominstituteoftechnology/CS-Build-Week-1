@@ -114,7 +114,7 @@ class Game extends React.Component {
     onAnimFrame = (timestamp) => {
         if (this.state.cycle === 'A') {
             if (this.state.continueAnimating === true) {
-                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, speed)});
+                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
                 
                 const canvas = this.refs.canvas;
                 const context = canvas.getContext('2d');
@@ -202,7 +202,7 @@ class Game extends React.Component {
             }
         } else {
             if (this.state.continueAnimating === true) {
-                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, speed)});
+                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
             
                 const canvas = this.refs.canvas;
                 const context = canvas.getContext('2d');
@@ -298,7 +298,7 @@ class Game extends React.Component {
             clearInterval(myInt);
         } else {
             this.setState({continueAnimating: true});
-            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, speed)});
+            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
         }
         if (this.state.buttonTag === 'Start') {
             this.setState({buttonTag: 'Stop'});
@@ -324,7 +324,7 @@ class Game extends React.Component {
         clearInterval(myInt);
         cancelAnimationFrame(myReq);
         if (this.state.continueAnimating) {
-            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, speed)});
+            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
         }
     }
 
