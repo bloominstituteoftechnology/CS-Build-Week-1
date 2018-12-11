@@ -23,6 +23,7 @@ class Canvas extends Component {
           e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
           squareSize,
           squareSize);
+        console.log(`${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`);
     }
 
     handleDoubleClick = (e) => {
