@@ -109,6 +109,9 @@ table {
   height: 15px;
   border: 1px solid black;
   flex-wrap: wrap;
+}
+
+.toggled {
   background-color: black;
 }
 
