@@ -8,4 +8,10 @@
 
 .canvas {
   border: 2px solid orange;
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.pixel {
+  border: 2px solid blue;
 }
