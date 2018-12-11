@@ -144,6 +144,25 @@ class App extends Component {
     //position should be an object featuring  the row and  position in row. 
     //A neighbor will be  to the left to the right  up down and diagonal  which will be up to the left, up to the right and down to the left down to the right. 
     let totalAlive = 0; 
+
+    lookUp = true; 
+    lookDown = true; 
+    lookRight = true; 
+    lookLeft = true; 
+
+    //logic for if I should look up or down. 
+    if (position.row === 0){
+      lookUp = false; 
+    } else if (position.row === this.state.row_count -1){
+      lookDown = false; 
+    }
+
+    //logic for if I should look right or left. 
+    if (position.position_in_row === 0){
+      lookLeft = false; 
+    } else if (position.position_in_row === this.state.col_count -1){
+      lookRight = false; 
+    }
   }
 
   findLiveNeighbors = (position) => {
