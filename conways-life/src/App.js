@@ -9,28 +9,90 @@ class App extends Component {
       totalCells: 400,
       grid: [],
       isClickable: true,
-      currGen: 1 // current generation of cells
+      currGen: 0 // current generation of cells
     };
   }
 
   componentDidMount() {
     let grid = [];
-    for (let i = 0; i < this.state.totalCells; i++) {
-      grid.push({ isAlive: false });
+    let edgeIndices = []; // array of cells in the first and last columns
+    let neighbors = [];
+    let rowLength = Math.sqrt(this.state.totalCells);
+    edgeIndices.push(0);
+
+    // push edge cells into an array
+    for (let i = rowLength - 1; i < this.state.totalCells; i += rowLength) {
+      if (i + 1 < this.state.totalCells) {
+        edgeIndices.push(i, i + 1);
+      } else {
+        edgeIndices.push(i);
+      }
     }
 
+    // push all cell objects into grid structure
+    for (let i = 0; i < this.state.totalCells; i++) {
+      grid.push({ isAlive: false, neighbors: [] });
+    }
+
+    // give each edge cell an edge property
+    for (let i = 0; i < edgeIndices.length; i++) {
+      if (i % 2 === 0) {
+        grid[edgeIndices[i]].leftEdge = true;
+      } else {
+        grid[edgeIndices[i]].rightEdge = true;
+      }
+    }
+
+    // calculate each cell's neighbors
+    for (let i = 0; i < this.state.totalCells; i++) {
+      if (grid[i].leftEdge) {
+        neighbors = [i - 20, i - 19, i + 1, i + 21, i + 20];
+        neighbors.forEach(index => {
+          if (index >= 0 && index < this.state.totalCells) {
+            grid[i].neighbors.push(index);
+          }
+        });
+      } else if (grid[i].rightEdge) {
+        neighbors = [i + 20, i + 19, i - 1, i - 21, i - 20];
+        neighbors.forEach(index => {
+          if (index >= 0 && index < this.state.totalCells) {
+            grid[i].neighbors.push(index);
+          }
+        });
+      } else {
+        neighbors = [
+          i - 20,
+          i - 19,
+          i + 1,
+          i + 21,
+          i + 20,
+          i + 19,
+          i - 1,
+          i - 21
+        ];
+        neighbors.forEach(index => {
+          if (index >= 0 && index < this.state.totalCells) {
+            grid[i].neighbors.push(index);
+          }
+        });
+      }
+    }
+
+    console.log(grid);
     this.setState({ grid: grid });
   }
 
   // Update the grid upon clicking a cell
   cellClickHandler = id => {
     if (this.state.isClickable) {
-      console.log(id);
       let grid = this.state.grid.slice();
       grid[id].isAlive = !grid[id].isAlive;
-      console.log(grid[id]);
 
-      this.setState({ grid: grid });
+      if (this.state.currGen === 0) {
+        this.setState({ grid: grid, currGen: 1 });
+      } else {
+        this.setState({ grid: grid });
+      }
     }
   };
 
