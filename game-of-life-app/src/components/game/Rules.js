@@ -8,9 +8,9 @@ const RulesContainer = styled.div`
   padding: 2rem;
 `;
 const RulesTitle = styled.h2`
-  font-weight: 300;
-  color: #4b4b4b;
-  font-size: 22px;
+  font-weight: 700;
+  color: #000;
+  font-size: 1.6rem;
 `;
 
 export const Rules = () => (
@@ -24,12 +24,12 @@ export const Rules = () => (
     </p>
     <ul>
       <li>
-        If a cell is <em>alive</em> and it has exactly 2 or 3 neighbors,
-        it <em>stays alive.</em>
+        If a cell is <em>alive</em> and it has exactly 2 or 3 neighbors, it{" "}
+        <em>stays alive.</em>
       </li>
       <li>
-        If a cell is <em>dead</em> and it has exactly 3 live neighbors,
-        it <em>comes to life.</em>
+        If a cell is <em>dead</em> and it has exactly 3 live neighbors, it{" "}
+        <em>comes to life.</em>
       </li>
     </ul>
   </RulesContainer>

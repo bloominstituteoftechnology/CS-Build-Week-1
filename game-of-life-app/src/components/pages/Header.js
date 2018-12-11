@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { GlobalStyle } from "../globals/global-styles";
 
 export const StyledLink = styled(Link)`
-  color: #874ef4;
+  color: #05f;
   font-weight: 500;
   font-size: 2rem;
   padding: 10px;
@@ -15,7 +15,7 @@ const HeaderContainer = styled.div`
   background: white;
   border-bottom: 1px solid #eee;
   display: grid;
-  height: 8rem;
+  height: 6rem;
   @media (max-width: 684px) {
     height: auto;
   }
@@ -58,19 +58,19 @@ const LinkGroup = styled.h2`
 const PageLink = styled(Link)`
   font-weight: 300;
   text-decoration: none;
-  color: #4b4b4b;
+  color: #000;
   margin: 0 0 0 2rem;
-  font-size: 2rem;
+  font-size: 1.6rem;
   @media (max-width: 684px) {
     margin: 0 2rem;
   }
 `;
 
 const HeaderLogoLink = styled(Link)`
-  color: #1b1b1b;
+  color: #05f;
   text-decoration: none;
-  font-weight: 800;
-  font-size: 2.4rem;
+  font-weight: 700;
+  font-size: 1.6rem;
   align-self: center;
 `;
 
@@ -80,16 +80,16 @@ const Header = props => (
     <HeaderContainer>
       <HeaderBar>
         <HeaderLogoText>
-          <HeaderLogoLink to="/">{props.title}</HeaderLogoLink>
+          <HeaderLogoLink to="/">🏁{props.title}</HeaderLogoLink>
         </HeaderLogoText>
         <LinkGroup>
-          <PageLink to="/" exact>
+          <PageLink to="/" exact activeClassName="active">
             Game
           </PageLink>
-          <PageLink to="/about" exact>
+          <PageLink to="/about" exact activeClassName="active">
             About
           </PageLink>
-          <PageLink to="/credits" exact>
+          <PageLink to="/credits" exact activeClassName="active">
             Credits
           </PageLink>
         </LinkGroup>

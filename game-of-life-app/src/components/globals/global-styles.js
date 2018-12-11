@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import styled from 'styled-components'
+import { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 
 // Global styles injection - see layout render for implementation info
 export const GlobalStyle = createGlobalStyle`
@@ -29,40 +29,43 @@ a {
     color: #5334F5;
     font-weight: 600;
 }
+
 ul {
     padding: 0 1rem 2rem 2rem;
     font-weight: 300;
 }
+
 li {
     padding: 1rem 0;
 }
+
 p {
     font-weight: 300;
 }
 
 .active {
     font-weight: 700;
-    color: rgba(22, 23, 26, 1);
+    color: #05f;
 }
-`
+`;
 
 export const StyledSection = styled.section`
-    margin: 0 auto;
-    padding: 5rem;
-    text-align: ${props => props.center ? 'center' : 'left'} ;
-    max-width: 920px;
-    h1 {
-        font-size: 4rem;
-        text-align: center;
-        padding: 2rem 0 4rem 0;
-        @media(max-width: 684px) {
-            font-size: 2.4rem;
-            padding: 1rem 0 2rem 0;
-        }
+  margin: 0 auto;
+  padding: 3.2rem;
+  text-align: ${props => (props.center ? "center" : "left")};
+  max-width: 920px;
+  h1 {
+    font-size: 6rem;
+    text-align: center;
+    padding: 2.4rem 0 2rem 0;
+    @media (max-width: 684px) {
+      font-size: 2.4rem;
+      padding: 1rem 0 2rem 0;
     }
-`
+  }
+`;
 
 export const CustomHR = styled.hr`
-    color: #eee;
-    border: .5px solid #eee;
-`
+  color: #eee;
+  border: 0.5px solid #eee;
+`;
