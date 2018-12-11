@@ -19,6 +19,9 @@ canvas {
   justify-content: space-around;
   height: 300;
 }
+.preset {
+  width: 60px;
+}
 .cycles {
   margin-left: 50px;
 }

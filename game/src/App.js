@@ -103,6 +103,8 @@ class App extends Component {
     }
   }
   buttonClick = (type) => {
+    const c = this.refs.grid
+    const ctx = c.getContext("2d");
     switch(type){
       case "run":
         this.setState({running: true})
@@ -112,12 +114,58 @@ class App extends Component {
         this.setState({running: false})
         break;
       case "clear":
-        const c = this.refs.grid
-        const ctx = c.getContext("2d");
+        this.setState({running: false})
         ctx.clearRect(0,0,c.width,c.height) //this clears the entire canvas
         this.drawGrid() // so i redraw it here
         this.gridStateInit() //reset state with all dead cells
         this.setState({cycles: 0})//restart cycles
+        break;
+      case "glider":
+        this.setState({
+          "120_80": "alive", 
+          "120_100": "alive",
+          "120_120": "alive",
+          "100_120": "alive",
+          "80_100": "alive"
+        });
+        ctx.fillStyle = "#DB7093"
+        ctx.fillRect(121, 81, 19, 19);
+        ctx.fillRect(121, 101, 19, 19);
+        ctx.fillRect(121, 121, 19, 19);
+        ctx.fillRect(101, 121, 19, 19);
+        ctx.fillRect(81, 101, 19, 19);
+        break;
+      case "t":
+        this.setState({
+          "100_80": "alive", 
+          "120_80": "alive", 
+          "140_80": "alive",
+          "120_100": "alive",
+          "120_120": "alive",
+          "120_140": "alive"
+        });
+        ctx.fillStyle = "#DB7093"
+        ctx.fillRect(121, 81, 19, 19);
+        ctx.fillRect(121, 101, 19, 19);
+        ctx.fillRect(121, 121, 19, 19);
+        ctx.fillRect(121, 141, 19, 19);
+        ctx.fillRect(101, 81, 19, 19);
+        ctx.fillRect(141, 81, 19, 19);
+        break;
+      case "arrow":
+        this.setState({
+          "120_100": "alive", 
+          "140_120": "alive", 
+          "160_140": "alive",
+          "140_160": "alive",
+          "120_180": "alive",
+        });
+        ctx.fillStyle = "#DB7093"
+        ctx.fillRect(121, 101, 19, 19);
+        ctx.fillRect(141, 121, 19, 19);
+        ctx.fillRect(161, 141, 19, 19);
+        ctx.fillRect(141, 161, 19, 19);
+        ctx.fillRect(121, 181, 19, 19);
         break;
     }
   }
@@ -136,6 +184,7 @@ class App extends Component {
       ctx.fillRect(x+1, y+1, 19, 19);
       const cellStatus = this.state[`${x}_${y}`] === "alive" ? "dead" : "alive"
       this.setState({[`${x}_${y}`]: cellStatus});
+      console.log(x,y)
     } else {
       return null;
     }
@@ -158,6 +207,11 @@ class App extends Component {
           </div>
         </div>
         <p className="cycles">Number of cycles: {this.state.cycles}</p>
+        <div className="controls preset">
+            <button onClick={()=>this.buttonClick("glider")}>Glider</button>
+            <button onClick={()=>this.buttonClick("t")}>T</button>
+            <button onClick={()=>this.buttonClick("arrow")}>Arrow</button>
+          </div>
       </div>
     );
   }
