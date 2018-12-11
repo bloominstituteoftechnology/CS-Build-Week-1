@@ -232,9 +232,18 @@ export default class Canvas extends Component {
       console.log("nextgenDies",nextGenDies);
       console.log("nextgenLives", nextGenLives);
 
-      fucntion nextGeneration(nextGenDies, nextGenLives) {
+      function nextGeneration(nextGenDies, nextGenLives) {
+          nextGenDies.map(cell => {
+            console.log("nextgen function x and y", cell.x, cell.y);       
+              ctx.clearRect(cell.x, cell.y, 8, 8);
+          })  
+          nextGenLives.map(cell => {
+            ctx.fillRect(cell.x, cell.y, 8, 8);
+          })
         
       }
+
+      nextGeneration(nextGenDies, nextGenLives);
     }
   
 
