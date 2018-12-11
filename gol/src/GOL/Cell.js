@@ -25,7 +25,6 @@ class Cell {
     if(x >= this.x*this.width && x < this.x*this.width+20){
       if(y >= this.y * this.width+20 && y < this.y * this.width+40){
         this.active = this.active == 0 ? 1 : 0;
-        console.log(this.active);
       }
     }
   }

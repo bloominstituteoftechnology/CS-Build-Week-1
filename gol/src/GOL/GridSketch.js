@@ -56,6 +56,9 @@ function sketch (p){
   };
 
   p.mousePressed = () => {
+    if(isBlasting == true){
+      return;
+    }
     for(let i=0; i<cols; i++){
       for(let j=0; j<rows; j++){
         currGrid[i][j].clicked(p.mouseX, p.mouseY);
@@ -64,8 +67,7 @@ function sketch (p){
   }
 
   const blastEm = () => {
-    console.log("Blast'em");
-    console.log(isBlasting); 
+    isBlasting = (isBlasting == false) ? true : false;
   }
 
   const clearEm = () => {
