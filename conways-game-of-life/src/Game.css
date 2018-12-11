@@ -1,9 +1,9 @@
 .graphBoard {
-    background-color: black;
+    background-color: #9D6B84	;
     position: relative;
     margin: 0 auto;
     background-image:
-    linear-gradient(#696969 1px, transparent 1px),
-    linear-gradient(90deg, #696969 1px, transparent 1px);
+    linear-gradient(#aca2b0 1px, transparent 1px),
+    linear-gradient(90deg, #aca2b0 1px, transparent 1px);
 }
 
