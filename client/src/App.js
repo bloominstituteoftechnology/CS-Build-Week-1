@@ -37,13 +37,10 @@ class App extends Component {
       for (let x of entry[1]){
         const temp_hash = {row: 0, position_in_row: 0, actual_number : 0};
         temp_hash.row = Number(entry[0]); 
-        // console.log(entry[0])
         temp_hash.position_in_row = count % 15;
-        // console.log(count % 15); 
         temp_hash.actual_number = count; 
         matrixUsing.push(temp_hash); 
-        count++;
-        console.log(temp_hash, count);  
+        count++; 
       }
     });
     console.log(matrixUsing.length); 
@@ -54,18 +51,13 @@ class App extends Component {
 
   turnOnOrOff = (row, position_in_row) => {
       //Just add 1 to the % of 2  it will provide 0 or 1. The conditional is already set up on the div to set the div to the correct class based off the value
-      console.log("Getting into the function.");
-      console.log(row, position_in_row); 
-      console.log("above is the paramaters for the function"); 
       const matrix = this.state.matrix; 
-      console.log(matrix[row][position_in_row]); 
       matrix[row][position_in_row] = matrix[row][position_in_row] === 0 ? 1 : 0; 
       this.setState({matrix}); 
   }
 
   render() {
     const matrix = this.state.matrixUsing.slice(); 
-    console.log(this.state.matrix); 
 
     return (<div className="container"> 
       
