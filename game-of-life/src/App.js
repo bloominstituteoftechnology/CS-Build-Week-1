@@ -7,21 +7,13 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      squares: [],
       generation: 0,
-
     }
-
-  }
-  draw = () => {
-    const canv = this.refs.canvas;
-    const ctx = canv.getContext('2d');
-    const imageData = ctx.getImageData(0, 0, canv.width, canv.height);
-    let screenbuffer = imageData.data;
-
   }
 
-
+  nextgen = () => {
+    this.setState({ generation: this.state.generation+1 })
+  }
 
 
   render() {
