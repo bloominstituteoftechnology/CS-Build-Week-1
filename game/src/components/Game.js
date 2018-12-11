@@ -370,6 +370,17 @@ class Game extends React.Component {
             }
     }
 
+    generateRandom = () => {
+        if (!this.state.continueAnimating) {
+            for (let i = 0; i < this.state.numY; i++) {
+                for (let j = 0; j < this.state.numX; j++) {
+                    firstMatrix[i][j] = Math.round(Math.random());
+                }
+            }
+            this.setState({array1: firstMatrix});
+        }
+    }
+
     render() {
         return (
             <div>
@@ -386,6 +397,7 @@ class Game extends React.Component {
                     <option selected value="medium">Medium</option>
                     <option value="large">Large</option>
                 </select>
+                <button onClick={this.generateRandom}>Random</button>
             </div>
         );
     }
