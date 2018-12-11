@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import StartStopButton from "./StartStopButton";
 
 const ContentBar = () => {
     return ( 
@@ -8,6 +9,7 @@ const ContentBar = () => {
             </div>
             <div class="col-md-12 bottom">
                 <span>content</span>
+                <StartStopButton />
             </div>
         </div>
      );
