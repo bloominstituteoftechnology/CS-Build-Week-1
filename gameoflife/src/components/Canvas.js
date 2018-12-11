@@ -55,33 +55,42 @@ export default class Canvas extends Component {
 
     function emptySquare(ctx, x, y) {
       ctx.clearRect(x,y,8,8);
+      console.log("clearRect x y", x, y)
     }
 
+    let mousePosX = mousePos.x;
+    let mousePosY = mousePos.y; 
+
     function getPixel(imageData, x, y) {
-      const w = imageData.width; // Conveniently the width is here
+      const w = imageData.width; 
       const h = imageData.height;
-  
-      if (mousePos.x < 0 || mousePos.x >= w || mousePos.y < 0 || mousePos.y >= h) {
-          // Out of bounds
+      if (x < 0 || x >= w || y < 0 || y >= h) {
           return null;
       }
-
-      // Compute index within the array
-      const index = (w * mousePos.y + mousePos.x) * 4;
-  
-      // Return a copy of the R, G, B, and A elements
+      const index = (w * y + x) * 4;
       return imageData.data.slice(index, index + 4);
     }
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const pixelRGBA = getPixel(imageData, mousePos.x, mousePos.y);
+    const pixelRGBA = getPixel(imageData, mousePosX, mousePosY);
     
     if(pixelRGBA[2] === 255) {
-      emptySquare(ctx, mousePos.x, mousePos.y);
+      emptySquare(ctx, mousePosX, mousePosY);
     } else {
-      console.log("fillsquare running");
-      fillSquare(ctx, mousePos.x, mousePos.y);
+      fillSquare(ctx, mousePosX, mousePosY);
     }
+    console.log("mouse x, y", mousePosX, mousePosY);
+
+    for(let xCheck = 1; xCheck <= 492; xCheck += 10) {
+      for(let yCheck = 1; yCheck <= 492; yCheck += 10) {
+        let pixelCheck = getPixel(imageData, xCheck ,yCheck);
+        console.log("pixelCheck2",pixelCheck[2])
+        if(pixelCheck[2] === 255) {
+          emptySquare(ctx, xCheck, yCheck);
+        } 
+      }
+    }
+  
   }
 
 
@@ -91,7 +100,6 @@ export default class Canvas extends Component {
 
 
   render() {
-    console.log("x y state", this.state.x, this.state.y)
     return(
       <div className="canvas">
         <canvas 
