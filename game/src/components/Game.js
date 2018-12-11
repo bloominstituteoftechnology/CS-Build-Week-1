@@ -8,6 +8,12 @@ import {mediumSecond} from './mediumSecond';
 import {largeClear} from './largeClear';
 import {largeFirst} from './largeFirst';
 import {largeSecond} from './largeSecond';
+import {configBlinker} from './configBlinker';
+import {configBeacon} from './configBeacon';
+import {configToad} from './configToad';
+import {configGlider} from './configGlider';
+import {configPulsar} from './configPulsar';
+import {configGggun} from './configGggun';
 
 
 let myReq;
@@ -30,7 +36,7 @@ class Game extends React.Component {
             numX: 50,
             numY: 50,
             cellSize: 20,
-            
+            configuration: ''
         }
     }
 
@@ -114,7 +120,7 @@ class Game extends React.Component {
     onAnimFrame = (timestamp) => {
         if (this.state.cycle === 'A') {
             if (this.state.continueAnimating === true) {
-                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
+                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 500)});
                 
                 const canvas = this.refs.canvas;
                 const context = canvas.getContext('2d');
@@ -202,7 +208,7 @@ class Game extends React.Component {
             }
         } else {
             if (this.state.continueAnimating === true) {
-                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
+                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 500)});
             
                 const canvas = this.refs.canvas;
                 const context = canvas.getContext('2d');
@@ -298,7 +304,7 @@ class Game extends React.Component {
             clearInterval(myInt);
         } else {
             this.setState({continueAnimating: true});
-            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
+            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 500)});
         }
         if (this.state.buttonTag === 'Start') {
             this.setState({buttonTag: 'Stop'});
@@ -324,7 +330,7 @@ class Game extends React.Component {
         clearInterval(myInt);
         cancelAnimationFrame(myReq);
         if (this.state.continueAnimating) {
-            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
+            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 500)});
         }
     }
 
@@ -381,23 +387,82 @@ class Game extends React.Component {
         }
     }
 
+    pickConfiguration = (config) => {
+        this.setState({configuration: config})
+        if (config === "blinker") {
+            for (let i = 0; i < 15; i++) {
+                firstMatrix[i] = configBlinker[i].slice();
+            }
+        } else if (config === "beacon") {
+            for (let i = 0; i < 15; i++) {
+                firstMatrix[i] = configBeacon[i].slice();
+            }
+        } else if (config === "toad") {
+            for (let i = 0; i < 15; i++) {
+                firstMatrix[i] = configToad[i].slice();
+            }
+        } else if (config === "glider") {
+            for (let i = 0; i < 15; i++) {
+                firstMatrix[i] = configGlider[i].slice();
+            }
+        } else if (config === "pulsar") {
+            for (let i = 0; i < 50; i++) {
+                firstMatrix[i] = configPulsar[i].slice();
+            }
+        } else if (config === "gggun") {
+            for (let i = 0; i < 80; i++) {
+                firstMatrix[i] = configGggun[i].slice();
+            }
+        }
+        this.setState({array1: firstMatrix});
+    }
+
     render() {
         return (
             <div>
                 <canvas ref="canvas" id="gameCanvas" width={(this.state.numX + 1) *this.state.cellSize + 1} height={this.state.numY * this.state.cellSize + 1} onClick={this.canvasOnClick} />
                 <button onClick={this.toggleButton}>{this.state.buttonTag}</button>
                 <button onClick={this.clearGrid}>Clear</button>
-                Speed:
-                <button onClick={() => this.changeSpeed(2000)}>></button>
+                {/* <button onClick={() => this.changeSpeed(2000)}>></button>
                 <button onClick={() => this.changeSpeed(1000)}>>></button>
-                <button onClick={() => this.changeSpeed(500)}>>>></button>
-                Board Size:
+                <button onClick={() => this.changeSpeed(500)}>>>></button> */}
                 <select value={this.state.boardSize} onChange={(e) => this.changeBoardSize(e.target.value)}>
                     <option value="small">Small</option>
                     <option selected value="medium">Medium</option>
                     <option value="large">Large</option>
                 </select>
+                {this.state.boardSize === "small" ? 
+                <select value={this.state.configuration} onChange={(e) => this.pickConfiguration(e.target.value)} >
+                    <option value="none">Select a configuration:</option>
+                    <option value="glider">Glider</option>
+                    <option value="blinker">Blinker</option>
+                    <option value="beacon">Beacon</option>
+                    <option value="toad">Toad</option>
+                </select>
+                : null}
+                {this.state.boardSize === "medium" ? 
+                <select value={this.state.configuration} onChange={(e) => this.pickConfiguration(e.target.value)} >
+                    <option value="none">Select a configuration:</option>
+                    <option value="glider">Glider</option>
+                    <option value="blinker">Blinker</option>
+                    <option value="beacon">Beacon</option>
+                    <option value="toad">Toad</option>
+                    <option value="pulsar">Pulsar</option>
+                </select>
+                : null}
+                {this.state.boardSize === "large" ? 
+                <select value={this.state.configuration} onChange={(e) => this.pickConfiguration(e.target.value)} >
+                    <option value="none">Select a configuration:</option>
+                    <option value="glider">Glider</option>
+                    <option value="blinker">Blinker</option>
+                    <option value="beacon">Beacon</option>
+                    <option value="toad">Toad</option>
+                    <option value="pulsar">Pulsar</option>
+                    <option value="gggun">Gosper Glider Gun</option>
+                </select>
+                : null}
                 <button onClick={this.generateRandom}>Random</button>
+
             </div>
         );
     }
