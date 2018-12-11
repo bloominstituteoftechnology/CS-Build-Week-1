@@ -19,4 +19,13 @@
 .button {
     margin-left: 12px;
     cursor: pointer;
+    border-radius: 50%;
+}
+
+.Rules {
+    border-top: 1px solid black;
+    font-family: 'Coda', cursive;
+    font-size: 20px;
+    text-align: left;
+
 }
