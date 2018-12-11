@@ -64,6 +64,15 @@ class Canvas extends React.Component {
     }
   };
 
+  handleStartGame = () => {
+    this.setState({
+      isClickable: false,
+      generation: this.state.generation
+    })
+    this.generationCounter = setInterval(() => this.setState({
+      generation: this.state.generation + 1
+    }), 1000)
+  }
   render() {
     console.log(this.state.gridArr);
     return (
@@ -81,7 +90,7 @@ class Canvas extends React.Component {
           ))}
         </CellGrid>
         <CustomHR />
-        <ControlButton>▶️Play</ControlButton>
+        <ControlButton onClick={this.handleStartGame}>▶️Play</ControlButton>
         <ControlButton>⏸Pause</ControlButton>
         <ControlButton>🔄Reset</ControlButton>
       </>
