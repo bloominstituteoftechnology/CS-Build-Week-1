@@ -40,6 +40,7 @@ class App extends Component {
     const c = this.refs.grid
     const ctx = c.getContext("2d");
     if(this.state.running){
+      setTimeout(() => {
       let stateBuffer = {...this.state};
       for (let i=0; i<=300; i+=20){
         for (let j=0; j<=300; j+=20){
@@ -100,7 +101,7 @@ class App extends Component {
       ++cyclesCopy;
       this.setState({cycles: cyclesCopy})
       requestAnimationFrame(this.moveCells);
-    }
+    }, 2000)}
   }
   buttonClick = (type) => {
     const c = this.refs.grid
