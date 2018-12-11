@@ -198,19 +198,17 @@ class App extends Component {
       lookRight = false;
     }
     //find the alive
-    if (lookUp) {//1
+    if (lookUp) {
+      //1
       if (this.state.matrix[position.row + 1][position.position_in_row] === 1) {
         totalAlive++;
       }
       if (lookRight) {
-        //next in line plus one
-        if (//2
-          this.state.matrix[position.row][position.position_in_row + 1] === 1
-        ) {
-          totalAlive++;
-        }
+        
+
         //diagonal right up one to the right one
-        if (//3
+        if (
+          //3
           this.state.matrix[position.row + 1][position.position_in_row + 1] ===
           1
         ) {
@@ -218,14 +216,9 @@ class App extends Component {
         }
 
         if (lookLeft) {
-          //previous in line minus one
-          if (//4
-            this.state.matrix[position.row][position.position_in_row - 1] === 1
-          ) {
-            totalAlive++;
-          }
           //diagonal left up one minus one
-          if (//5
+          if (
+            //5
             this.state.matrix[position.row + 1][
               position.position_in_row - 1
             ] === 1
@@ -236,14 +229,16 @@ class App extends Component {
       }
     } // end of the lookUP
 
-    if (lookDown) {//6
+    if (lookDown) {
+      //6
       if (this.state.matrix[position.row - 1][position.position_in_row] === 1) {
         totalAlive++;
       }
 
       if (lookRight) {
         //down one to the right (plus one)
-        if (//7
+        if (
+          //7
           this.state.matrix[position.row - 1][position.position_in_row + 1] ===
           1
         ) {
@@ -252,7 +247,29 @@ class App extends Component {
       }
       if (lookLeft) {
         //down one to the left (minus one)
-        if (//8
+        if (
+          //8
+          this.state.matrix[position.row][position.position_in_row - 1] === 1
+        ) {
+          totalAlive++;
+        }
+      }
+
+      //only 8 possible ways but currently if  top is false the cells next to it won't be checked.
+      if (lookRight) {
+        if (
+          //next in line plus one
+          //2
+          this.state.matrix[position.row][position.position_in_row + 1] === 1
+        ) {
+          totalAlive++;
+        }
+      }
+
+      if (lookLeft) {
+        //previous in line minus one
+        if (
+          //4
           this.state.matrix[position.row][position.position_in_row - 1] === 1
         ) {
           totalAlive++;
@@ -260,7 +277,7 @@ class App extends Component {
       }
     }
 
-    return totalAlive; 
+    return totalAlive;
   };
 
   render() {
