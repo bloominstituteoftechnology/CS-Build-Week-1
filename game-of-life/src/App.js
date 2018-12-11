@@ -89,7 +89,7 @@ toggleActive = (element) => {
           {this.state.grid.map(nested =>
             nested.map(element => (
                 
-                <Grid onClick={() => this.toggleActive(nested)} data={element} grid={this.state.grid} /> // this refers to the individual cell, yeah? yea
+                <Grid onClick={() => this.toggleActive(element)} data={element} grid={this.state.grid} /> // this refers to the individual cell, yeah? yea
             ))
           )}
         </GridWrapper>
