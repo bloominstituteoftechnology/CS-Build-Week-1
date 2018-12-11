@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Canvas extends Component {
     state = {
-
+        simRun: false,
     }
 
     gridState = () => {
@@ -14,19 +14,22 @@ class Canvas extends Component {
     }
 
     handleClick = (e) => {
-        const canvo = this.refs.canvas
-        const ctx = canvo.getContext("2d");
-        const pos = canvo.getBoundingClientRect()
-        const squareSize = 20
-        ctx.fillStyle = "lightgrey";
-        ctx.fillRect(e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
-          e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
-          squareSize,
-          squareSize);
-        // console.log(`${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`);
-        let tempCoord = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
-        console.log(this.state[`${tempCoord}`]);
-        this.setState({[`${tempCoord}`]: "living"});
+        if (this.state.simRun === false) {
+            const canvo = this.refs.canvas
+            const ctx = canvo.getContext("2d");
+            const pos = canvo.getBoundingClientRect()
+            const squareSize = 20
+            ctx.fillStyle = "lightgrey";
+            ctx.fillRect(e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
+            e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
+            squareSize,
+            squareSize);
+            // console.log(`${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`);
+            let tempCoord = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
+            console.log(this.state[`${tempCoord}`]);
+            this.setState({[`${tempCoord}`]: "living"});
+        } else {console.log('Grid is not interactive while simulation is running');}
+        
     }
 
     handleDoubleClick = (e) => {
@@ -39,6 +42,10 @@ class Canvas extends Component {
           e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
           squareSize,
           squareSize);
+    }
+
+    simulationToggle = (e) => {
+        this.setState({simRun: !this.state.simRun});
     }
 
     componentDidMount() {
@@ -68,12 +75,15 @@ class Canvas extends Component {
 
     render() {
         return (
-            <div>
+            <div className="GameOfLife" >
                 <canvas 
                 ref="canvas" 
                 onClick={this.handleClick}
                 onDoubleClick={this.handleDoubleClick}
                 />
+                <div className='controls' >
+                    <button onClick={this.simulationToggle}>Start / Stop simulation</button>
+                </div>
             </div>
         )
     }
