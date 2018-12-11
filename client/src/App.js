@@ -6,14 +6,17 @@ class App extends Component {
     matrix: {
 
     },
-
+    //grid set up
     matrixUsing: [],
     row_count: 15,//default
     col_count: 15,//default
 
     width: "330px",
+    //cell choices
     if_one_color : "black",
-    if_zero_color: "white",  
+    if_zero_color: "white", 
+    //game instructions  
+    gameRunning: false,
   };
 
   componentWillMount() {
@@ -58,6 +61,16 @@ class App extends Component {
     matrix[row][position_in_row] = matrix[row][position_in_row] === 0 ? 1 : 0;
     this.setState({ matrix });
   };
+
+  manualTurnOnOrOff = (row, position_in_row) => {
+    //Just add 1 to the % of 2  it will provide 0 or 1. The conditional is already set up on the div to set the div to the correct class based off the value
+    if (this.state.gameRunning === false){
+      const matrix = this.state.matrix;
+      // matrix[row][position_in_row] = matrix[row][position_in_row] === 0 ? this.state.if_one_color: this.state.if_zero_color;
+      matrix[row][position_in_row] = matrix[row][position_in_row] === 0 ? 1 : 0;
+      this.setState({ matrix });
+    }
+  };
   // Game functions being declared below this line.  
   handleChangeRow = (event) => {
     //Will handle the changing of the rows.
@@ -88,11 +101,29 @@ class App extends Component {
 
   }
 
+  runGamne = () => {
+    //functionaly for gameplay goes here
+  }
+
   startTheGame = () => {
     //Function will start the game. 
+    if(this.state.gameRunning === false){
+      this.setState({
+        gameRunning: true, 
+      }, () => {
+        this.intervalRef = setInterval(() => this.runGame(), 10);
+      })
+    }
   }
   stopTheGame = () => {
     //Function will stop the game. 
+    this.setState({
+      gameRunning: false
+    }, () => {
+      if(this.intervalRef){
+        clearInterval(this.intervalRef);
+      }
+    })
   }
 
   unPauseGame = () => {
@@ -121,7 +152,7 @@ class App extends Component {
         {matrix.map((hash, id) => (
           <div
             key={id}
-            onClick={() => this.turnOnOrOff(hash.row, hash.position_in_row)}
+            onClick={() => this.manualTurnOnOrOff(hash.row, hash.position_in_row)}
             style = {{background: this.state.matrix[hash.row][hash.position_in_row] === 0 ? this.state.if_zero_color : this.state.if_one_color, color: this.state.matrix[hash.row][hash.position_in_row] === 0 ? this.state.if_zero_color : this.state.if_one_color}}
             className={
               this.state.matrix[hash.row][hash.position_in_row] === 0
@@ -144,7 +175,7 @@ class App extends Component {
             <button>Pause</button>
           </div>
           <div>
-            <button>Clear</button>
+            <button onClick = {this.updateRowCol}>Clear</button>
           </div>
           <div>
             <button>Presets</button>{" "}
