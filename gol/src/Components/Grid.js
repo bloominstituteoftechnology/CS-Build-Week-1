@@ -20,7 +20,7 @@ class Grid extends Component {
         if (!this.state.runningGame) {
             this.setState({
                 runningGame: true,
-            });
+            }, () => this.startTheShow());
         }
         console.log("Play");
     }
@@ -54,6 +54,12 @@ class Grid extends Component {
         }
     }
 
+    startTheShow() {
+        this.setState({
+            game_of_life: this.state.game_of_life.iteration()
+        });
+    }
+
 
     createGrid = () => {
         let newGrid = [];
@@ -63,6 +69,7 @@ class Grid extends Component {
             for (let j = 0; j < this.state.gridSize[1]; j++) {
                 if (this.state.game_of_life.aliveCells(i + "," + j)) {
                 row.push(<Cell key = {[i, j]} coordinates = {{x: i, y: j}} liveCell = {true} toggleCell = {this.toggleCell} />);
+                console.log('New cell at: ', i, j);
             } else {
                 row.push(<Cell key = {[i, j]} coordinates = {{x: i, y: j}} liveCell = {false} toggleCell = {this.toggleCell} />);
             }
