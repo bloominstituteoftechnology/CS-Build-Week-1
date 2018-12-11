@@ -23,6 +23,15 @@ class Stages extends Component{
             dead = new Map(),
         }
     }
+    //what we want for the functions:
+
+    //get the current stage that the process is in
+    //get all the living cells
+    //tell whether a cell is alive or dead
+    //remove a cell from the map
+    //in each stage tell the new living and dead cells
+    //count the living neighbors
+    //count the dead neighbors
     
 }
 export default Stages
