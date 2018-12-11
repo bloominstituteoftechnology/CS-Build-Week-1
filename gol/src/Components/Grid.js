@@ -12,8 +12,9 @@ class Grid extends Component {
             gridSize: [30, 30],
             runningGame: false,
             game_of_life: new Game_of_life(),
-         }
+         }         
     }
+
 
     play = () => {
         if (!this.state.runningGame) {
@@ -33,6 +34,14 @@ class Grid extends Component {
             runningGame: false,
         });
         console.log("Stop");
+    }
+
+    reset = () => {
+         this.setState({
+             gridSize: [30, 30],
+             runningGame: false,
+             game_of_life: new Game_of_life(),
+         })
     }
 
     toggleCell = (coordinates) => {
@@ -76,6 +85,7 @@ class Grid extends Component {
                     play = {this.play}
                     pause = {this.pause}
                     stop = {this.stop}
+                    reset = {this.reset}
                 />
             </div>
          );
