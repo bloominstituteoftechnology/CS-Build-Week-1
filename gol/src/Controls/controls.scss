@@ -1,14 +1,14 @@
 
 
 .controls-container {
-  position: fixed;
-  max-width: 733px;
+  position: absolute;
+  max-width: 800px;
   width: 100%;
-  height:300px;
-  bottom:0vh;
-  left: 20vw;
+  height: 163px;
+  top: 603px;
+  left: 316px;
   background-color: #a8a7a8;
   color: #cc527a;
-  // margin: 0 auto;
-  border-radius: 5px 0 0 5px;
+  border-radius: 10px 10px 0 0;
+  display: none;
 }
