@@ -12,10 +12,13 @@ canvas {
   margin-left: 50px;
   background: white;
 }
-.presets {
+.controls {
   margin: 50px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   height: 300;
+}
+.cycles {
+  margin-left: 50px;
 }

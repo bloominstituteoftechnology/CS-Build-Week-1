@@ -5,7 +5,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      running: false
+      running: false,
+      cycles: 0
     }
   }
   componentDidMount() {
@@ -95,6 +96,9 @@ class App extends Component {
         }
       }
       this.setState(stateBuffer);
+      let cyclesCopy = this.state.cycles
+      ++cyclesCopy;
+      this.setState({cycles: cyclesCopy})
       requestAnimationFrame(this.moveCells);
     }
   }
@@ -113,6 +117,7 @@ class App extends Component {
         ctx.clearRect(0,0,c.width,c.height) //this clears the entire canvas
         this.drawGrid() // so i redraw it here
         this.gridStateInit() //reset state with all dead cells
+        this.setState({cycles: 0})//restart cycles
         break;
     }
   }
@@ -142,7 +147,7 @@ class App extends Component {
         <h1 className="title">Conway's Game of Life</h1>
         <div className="board">
           <canvas onClick={this.cellClick} ref="grid" width="301" height="301"/>
-          <div className="presets">
+          <div className="controls">
             <button onClick={()=>this.buttonClick("run")}>Run</button>
             <button onClick={()=>this.buttonClick("stop")}>Stop</button>
             <button onClick={()=>this.buttonClick("clear")}>Clear</button>
@@ -152,6 +157,7 @@ class App extends Component {
             <p>some stuff goes here later</p>
           </div>
         </div>
+        <p className="cycles">Number of cycles: {this.state.cycles}</p>
       </div>
     );
   }
