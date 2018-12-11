@@ -1,4 +1,5 @@
 import React from 'react';
+import Presets from './Presets';
 import './Game.css';
 
 class Game extends React.Component {
@@ -8,8 +9,9 @@ class Game extends React.Component {
             grid: [],
             isRunning: false,
             iterationCount: 0,
-            cellColor: 'black',
-            gridColor: 'white'
+            cellColor: '#0074D9',
+            gridColor: 'white',
+            gridSize: 'small'
         };
 
         this.startGame = event => {
@@ -104,9 +106,25 @@ class Game extends React.Component {
             this.setState({ grid: grid, isRunning: false, iterationCount: 0 });
             window.clearTimeout(this.timeout);
         };
+
+        this.usePreset = event => {
+            clearTimeout(this.timeout);
+            let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
+            const presetToLoad = Presets[event.target.value];
+            presetToLoad.forEach(position => {
+                grid[position[0]][position[1]] = true;
+            });
+            this.setState({
+                grid: grid,
+                isRunning: false,
+                iterationCount: 0
+            });
+        };
+
         this.handleCellColorChange = event => {
             this.setState({ cellColor: event.target.value });
         };
+
         this.handleGridColorChange = event => {
             this.setState({ gridColor: event.target.value });
         };
@@ -120,6 +138,10 @@ class Game extends React.Component {
     render() {
         return (
             <div className="container">
+                <div className="size-options">
+                    <button onClick={this.handleGridSizeChange} value={'small'}>small</button>
+                    <button onClick={this.handleGridSizeChange} value={'large'}>large</button>
+                </div>
                 <div>{this.state.iterationCount} generations</div>
                 <div className="grid-container" style={{ backgroundColor: this.state.gridColor }}>
                     {this.state.grid.map((row, rowIndex) => {
@@ -149,7 +171,13 @@ class Game extends React.Component {
                     <p onClick={this.advanceOneStep}>next</p>
                 </div>
                 <div className="options">
-                    <p>patterns</p>
+                    <label>pattern: </label>
+                    <select value={this.state.value} onChange={this.usePreset}>
+                        <option value="glider">Glider</option>
+                        <option value="small exploder">Small Exploder</option>
+                        <option value="exploder">Exploder</option>
+                        <option value="row">Row</option>
+                    </select>
                     <label>grid color: </label>
                     <select value={this.state.value} onChange={this.handleGridColorChange}>
                         <option value="white">White</option>
@@ -166,7 +194,6 @@ class Game extends React.Component {
                     </select>
                     <label>cell color: </label>
                     <select value={this.state.value} onChange={this.handleCellColorChange}>
-                        <option value="black">Black</option>
                         <option value="#0074D9">Blue</option>
                         <option value="#7FDBFF">Aqua</option>
                         <option value="#39CCCC">Teal</option>
