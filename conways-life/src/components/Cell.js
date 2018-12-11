@@ -5,9 +5,13 @@ class Cell extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: props.cell,
+            value: this.props.cell,
         }
     }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ value: nextProps.cell });
+      }
 
     handleToggle() {
         if (this.state.value === 1) {

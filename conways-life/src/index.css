@@ -11,10 +11,13 @@ body {
   text-align: center;
 }
 
+.mainContainer {
+  margin: auto;
+}
 .gridContainer {
   height: 475px;
   width: 500px;
-  margin: 50px auto auto;
+  margin: 50px auto 30px;
   display: flex;
   flex-wrap: wrap;
 }
