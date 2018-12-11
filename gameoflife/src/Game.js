@@ -33,7 +33,7 @@ class Game extends React.Component {
   state = {
     cells: [],
     interval: 100,
-    isRunning: false,
+    isRunning: false
   };
 
   //create the empty board
@@ -92,10 +92,30 @@ class Game extends React.Component {
   //HELPER FUNCTIONS
   runGame = () => {
     this.setState({ isRunning: true });
+    this.runIteration();
   };
 
   stopGame = () => {
     this.setState({ isRunning: false });
+    if (this.timeoutHandler) {
+        window.clearTimeout(this.timeoutHandler);
+        this.timeoutHandler = null;
+    }
+  };
+
+  runIteration() {
+      console.log('running')
+      let newBoard = this.createEmptyBoard();
+
+      //TODOL add logic rules!!
+
+      this.board = newBoard;
+      this.setState({ cells: this.makeCells() });
+
+      this.timeoutHandler = window.setTimeout(() => {
+          this.runIteration();
+      }, this.state.interval);
+
   }
 
   handleIntervalChange = e => {
@@ -122,18 +142,23 @@ class Game extends React.Component {
             <Cell x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`} />
           ))}
         </div>
-      <div className="controls">
-      Update every <input value={this.state.interval}
-              onChange={this.handleIntervalChange} /> milliseconds
-          {this.state.isRunning ?
-            <button className="button"
-              onClick={this.stopGame}>Stop</button> :
-            <button className="button"
-              onClick={this.runGame}>Run</button>
-          }
-      </div>
-
-
+        <div className="controls">
+          Update every{" "}
+          <input
+            value={this.state.interval}
+            onChange={this.handleIntervalChange}
+          />{" "}
+          milliseconds
+          {this.state.isRunning ? (
+            <button className="button" onClick={this.stopGame}>
+              Stop
+            </button>
+          ) : (
+            <button className="button" onClick={this.runGame}>
+              Run
+            </button>
+          )}
+        </div>
       </div>
     );
   }
