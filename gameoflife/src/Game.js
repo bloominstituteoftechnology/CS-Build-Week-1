@@ -1,7 +1,7 @@
 import React from 'react';
 import './Game.css';
 
-const CELL_SIZE = 20;
+const CELL_SIZE = 15;
 const WIDTH = 800;
 const HEIGHT = 600;
 
@@ -31,7 +31,8 @@ class Game extends React.Component {
     state = {
         cells: [],
         isRunning: false,
-        interval: 100,
+        interval: 1000,
+        genCount: 0,
     }
 
     // create an empty board
@@ -72,7 +73,7 @@ class Game extends React.Component {
     handleClick = (event) => {
         const elemOffset = this.getElementOffset();
         const offsetX = event.clientX - elemOffset.x;
-        const offsetY = event.clientY - elemOffset.x;
+        const offsetY = event.clientY - elemOffset.y;
 
         const x = Math.floor(offsetX / CELL_SIZE);
         const y = Math.floor(offsetY / CELL_SIZE);
@@ -116,7 +117,10 @@ class Game extends React.Component {
             }
         }
         this.board = newBoard;
-        this.setState({ cells: this.makeCells() });
+      
+        this.setState((prevState) => (
+            {genCount: prevState.genCount + 1, cells: this.makeCells()}
+        ))
 
         this.timeoutHandler = window.setTimeout(() => {
             this.runIteration();
@@ -130,6 +134,8 @@ class Game extends React.Component {
      * @param {int} y 
      */
 
+
+    // this method below computes the number of neighbors of given (x , y)
     calculateNeighbors(board, x , y) {
         let neighbors = 0;
         const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
@@ -151,7 +157,7 @@ class Game extends React.Component {
 
     handleClear = () => {
         this.board = this.makeEmptyBoard();
-        this.setState({ cells: this.makeCells() });
+        this.setState({ cells: this.makeCells() , genCount: 0 });
     }
 
     handleRandom = () => {
@@ -165,15 +171,19 @@ class Game extends React.Component {
 
     
     render() {
-        const { cells, interval, isRunning } = this.state;
+        const { isRunning } = this.state;
         return (
             <div>
                 <div className="Board"
                 style={{width: WIDTH, height: HEIGHT,backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}}
                 onClick={this.handleClick}
                 ref={(n) => {this.boardRef = n; }}>
-                {cells.map(cell => (
-                  <Cell x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`}/>
+                {this.state.cells.map(cell => (
+                  <Cell 
+                  x={cell.x} 
+                  y={cell.y} 
+                  key={`${cell.x}, ${cell.y}`}
+                   />
                 ))}
                 </div>
 
@@ -183,6 +193,7 @@ class Game extends React.Component {
                 <button className="button" onClick={this.stopGame}>Stop</button>:
                 <button className="button" onClick={this.runGame}>Run</button>
             }
+            <h2>Generation: {this.state.genCount}</h2>
             <button className="button" onClick={this.handleRandom}>Random</button>
             <button className="button" onClick={this.handleClear}>Clear</button>
             </div>
