@@ -187,8 +187,8 @@ class LifeCanvas extends React.Component{
         let count = 0;
         for (let i = 0; i < this.state.random; i++){
             while (count < this.state.random) {
-                let x = (Math.floor(Math.random()*(this.state.height/this.state.cellSize))+1);
-                let y = (Math.floor(Math.random()*(this.state.height/this.state.cellSize))+1);
+                let x = (Math.floor(Math.random()*(this.state.height/this.state.cellSize)));
+                let y = (Math.floor(Math.random()*(this.state.height/this.state.cellSize)));
                 if (x >= 0 && x < this.state.height/this.state.cellSize && y >= 0 && y < this.state.width/this.state.cellSize && !this.board[x][y] && count < this.state.random){
                     this.board[x][y] = true;
                     count++
