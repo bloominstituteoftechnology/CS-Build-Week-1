@@ -24,12 +24,12 @@ export const Rules = () => (
     </p>
     <ul>
       <li>
-      If the cell is alive <em>and</em> has 2 or 3 neighbors, then it remains
-  alive. Else it dies.
+        If the cell is alive <em>and</em> has 2 or 3 neighbors, then it remains
+        alive. Else it dies.
       </li>
       <li>
-      If the cell is dead <em>and</em> has exactly 3 neighbors, then it comes to
-  life. Else if remains dead.
+        If the cell is dead <em>and</em> has exactly 3 neighbors, then it comes
+        to life. Else if remains dead.
       </li>
     </ul>
   </RulesContainer>

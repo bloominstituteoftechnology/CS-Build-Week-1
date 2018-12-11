@@ -1,30 +1,26 @@
 import React from "react";
 import styled from "styled-components";
+
 // styles
 import { StyledSection } from "../globals/global-styles";
-import { CustomHR } from "../globals/global-styles";
 
 // components
 import { Rules } from "./Rules";
+import Canvas from "./Canvas";
 
 // local styles
 const GameContainer = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-gap: 3.2rem;
-  @media(max-width: 684px) {
-      grid-template-columns: 1fr;
+  @media (max-width: 684px) {
+    grid-template-columns: 1fr;
   }
 `;
 
 const GameGrid = styled.div`
   border: 1px solid #eee;
   padding: 2rem;
-`
-const GenerationText = styled.h2`
-  font-weight: 700;
-  color: #000;
-  font-size: 1.6rem;
 `;
 
 class Game extends React.Component {
@@ -34,8 +30,7 @@ class Game extends React.Component {
         <StyledSection>
           <GameContainer>
             <GameGrid>
-              <GenerationText>🌀 Generation: </GenerationText>
-              <CustomHR />
+              <Canvas />
             </GameGrid>
             <Rules />
           </GameContainer>
