@@ -12,10 +12,6 @@ class Grid extends Component {
     }
   }
 
-  componentDidMount(){
-    
-  }
-
   render(){
     return(
       <div className="sketch-container">

@@ -17,12 +17,8 @@ class P5Wrapper extends Component {
   }
 
   componentWillReceiveProps(newprops) {
-		if (this.props.sketch !== newprops.sketch) {
-			this.wrapper.removeChild(this.wrapper.childNodes[0]);
-			this.canvas = new p5(newprops.sketch, this.wrapper);
-		}
-		if (this.canvas.myCustomRedrawAccordingToNewPropsHandler) {
-			this.canvas.myCustomRedrawAccordingToNewPropsHandler(newprops);
+		if (this.canvas.arbitrary) {
+			this.canvas.arbitrary(newprops);
 		}
 	}
 

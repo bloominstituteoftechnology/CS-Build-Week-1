@@ -19,6 +19,7 @@ function sketch (p){
   let parentH = document.querySelector(".sketch-container").clientHeight;
   let currGrid = [[]], nextGrid = [[]];
   let cellFill = "#cc527a";
+  let isBlasting = false;
 
   p.preload = () => {};
 
@@ -33,7 +34,7 @@ function sketch (p){
   };
   
   p.arbitrary = (props) => {
-    console.log(props.data);
+    console.log(props);
     if(props.data.isRollin == true){
       blastEm();
     }
@@ -64,6 +65,11 @@ function sketch (p){
 
   const blastEm = () => {
     console.log("Blast'em");
+    console.log(isBlasting); 
+  }
+
+  const clearEm = () => {
+    
   }
 }
 

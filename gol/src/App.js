@@ -20,7 +20,6 @@ class App extends Component {
   }
 
   goBlastEm = () => {
-    console.log("Go Blast'em!!");
     this.setState({ isRollin : !this.state.isRollin });
   }
 
