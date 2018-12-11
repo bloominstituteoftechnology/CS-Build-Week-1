@@ -1,3 +1,7 @@
+body {
+  background: rgba(139, 158, 241, 0.767);
+  font-family: 'Bungee', cursive;
+}
 .title {
   text-align: center;
 }
@@ -6,6 +10,7 @@
 }
 canvas {
   margin-left: 50px;
+  background: white;
 }
 .presets {
   margin: 50px;
