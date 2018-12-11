@@ -25,3 +25,9 @@
 .on{
   background-color: green; 
 }
+
+.action-buttons{
+  display: flex; 
+  justify-content: center; 
+  margin-top: 40px; 
+}
