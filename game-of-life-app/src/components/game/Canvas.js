@@ -74,9 +74,9 @@ class Canvas extends React.Component {
           ))}
         </CellGrid>
         <CustomHR />
-        <ControlButton>Play</ControlButton>
-        <ControlButton>Pause</ControlButton>
-        <ControlButton>Reset</ControlButton>
+        <ControlButton>▶️Play</ControlButton>
+        <ControlButton>⏸Pause</ControlButton>
+        <ControlButton>🔄Reset</ControlButton>
       </>
     );
   }
