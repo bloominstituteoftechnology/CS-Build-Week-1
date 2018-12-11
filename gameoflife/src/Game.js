@@ -33,6 +33,7 @@ class Game extends React.Component {
         isRunning: false,
         interval: 100,
         genCount: 0,
+        step: false,
     }
 
     // create an empty board
@@ -85,8 +86,14 @@ class Game extends React.Component {
     }
 
     runGame = () => {
-        this.setState({ isRunning: true });
+        this.setState({ isRunning: true, step: false });
         this.runIteration();
+    }
+
+    stepthroughGame = () => {
+        this.setState({ isRunning: true, step: true});
+        this.runIteration();
+        this.setState({ isRunning: false });
     }
 
     stopGame = () => {
@@ -121,10 +128,11 @@ class Game extends React.Component {
         this.setState((prevState) => (
             {genCount: prevState.genCount + 1, cells: this.makeCells(),}
         ))
-
-        this.timeoutHandler = window.setTimeout(() => {
-            this.runIteration();
-        },(this.state.interval));
+        if(!this.state.step) {
+            this.timeoutHandler = window.setTimeout(() => {
+                this.runIteration();
+            },(this.state.interval));
+        }
     }
 
    /**
@@ -193,8 +201,9 @@ class Game extends React.Component {
                 <button className="button" onClick={this.stopGame}>Stop</button>:
                 <button className="button" onClick={this.runGame}>Run</button>
             }
-            <h2>Generation: {this.state.genCount}</h2>
+            <h3>Generation: {this.state.genCount}</h3>
             <button className="button" onClick={this.handleRandom}>Random</button>
+            <button className="button" onClick={this.stepthroughGame}>Step</button>
             <button className="button" onClick={this.handleClear}>Clear</button>
             </div>
         </div>
