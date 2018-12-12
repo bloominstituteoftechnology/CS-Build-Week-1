@@ -75,7 +75,7 @@ class Grid extends React.Component {
         }
       }
 
-      this.setState({ grid: newGrid }, this.updateCanvas([], kills));
+      this.setState({ grid: newGrid, gen: 0 }, this.updateCanvas([], kills));
     }
   }
 

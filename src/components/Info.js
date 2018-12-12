@@ -15,7 +15,7 @@ class Info extends React.Component {
               culpa qui officia deserunt mollit anim id est laborum.</p>
         </section>
         <section className='textbox'>
-          <h2>About The Game of Life</h2>
+          <a href='https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life'>About The Game of Life</a>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
