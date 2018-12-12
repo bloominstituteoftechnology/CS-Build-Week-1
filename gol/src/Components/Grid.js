@@ -95,7 +95,6 @@ class Grid extends Component {
                     </div>
                 <Footer 
                     play = {this.play}
-                    pause = {this.pause}
                     stop = {this.stop}
                     reset = {this.reset}
                 />
