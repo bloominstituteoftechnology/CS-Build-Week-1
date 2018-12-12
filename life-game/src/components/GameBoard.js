@@ -37,8 +37,39 @@ class GameBoard extends React.Component{
      if (this.state.gameOn) {
          for (let x=0; x<=300; x+= 20) {
              for (let y=0; y<=300; y+= 20) {
-                 let lnc = 0;
+                  let lnc = 0;
                   let tln = `${x/20-1},${y/20-1}`;
+                  let tn = `${x/20},${y/20-1}`;
+                  let trn = `${x/20+1},${y/20-1}`;
+                  let ln = `${x/20-1},${y/20}`;
+                  let rn = `${x/20+1},${y/20}`;
+                  let bln = `${x/20-1},${y/20+1}`;
+                  let bn = `${x/20},${y/20+1}`;
+                  let brn = `${x/20+1},${y/20+1}`;
+                if (this.state[tln] === "alive") {
+                    lnc++;
+                }
+                if (this.state[tn] === "alive") {
+                    lnc++;
+                }
+                if (this.state[trn] === "alive") {
+                    lnc++;
+                }
+                if (this.state[ln] === "alive") {
+                    lnc++;
+                }
+                if (this.state[rn] === "alive") {
+                    lnc++;
+                }
+                if (this.state[bln] === "alive") {
+                    lnc++;
+                }
+                if (this.state[bn] === "alive") {
+                    lnc++;
+                }
+                if (this.state[brn] === "alive") {
+                    lnc++;
+                }
              }
          } 
      }
