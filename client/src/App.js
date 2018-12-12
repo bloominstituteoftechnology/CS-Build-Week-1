@@ -144,17 +144,18 @@ class App extends Component {
     }
   };
   stopTheGame = () => {
-    //Function will stop the game.
-    this.setState(
-      {
-        gameRunning: false
-      },
-      () => {
-        if (this.intervalRef) {
-          clearInterval(this.intervalRef);
-        }
-      }
-    );
+    // //Function will stop the game.
+    // this.setState(
+    //   {
+    //     gameRunning: false
+    //   },
+    //   () => {
+    //     if (this.intervalRef) {
+    //       clearInterval(this.intervalRef);
+    //     }
+    //   }
+    // );
+    this.setState({gameRunning: false});
   };
 
   unPauseGame = () => {
