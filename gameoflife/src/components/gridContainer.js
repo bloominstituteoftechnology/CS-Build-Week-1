@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import {
+  checkingNeighbors,
+  fourRules,
+  clearAllCells
+} from "../algorithms/gameFunctions";
 
 class GridContainer extends Component {
   constructor() {
@@ -50,7 +55,7 @@ class GridContainer extends Component {
   getMousePos = (canvas, event) => {
     event.preventDefault();
     let rect = canvas.getBoundingClientRect();
-    return { x: event.clientX - rect.left, y: event.clientY - rect.top};
+    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
   };
 
   // function for determining live or dead
@@ -78,8 +83,8 @@ class GridContainer extends Component {
 
   drawingGrid = (w, h, ctx) => {
     // drawing the grid
-    for (let j = 0; j <= w; j+=15) {
-      for (let k = 0; k <= h; k+=15) {
+    for (let j = 0; j <= w; j += 15) {
+      for (let k = 0; k <= h; k += 15) {
         ctx.moveTo(j, 0);
         ctx.lineTo(j, h);
         ctx.stroke();
@@ -112,7 +117,7 @@ class GridContainer extends Component {
       ctx.fillStyle = "white";
       ctx.fillRect(x * w, y * h, w, h);
       ctx.strokeRect(x * w, y * h, w, h);
-      this.setState(state => { 
+      this.setState(state => {
         {
           grid: state.grid[y][x] = 0;
         }
@@ -122,8 +127,21 @@ class GridContainer extends Component {
     // console.log(`This is state x and y: ${this.state.grid[y][x]}`);
     // this.aliveCheck();
     console.log(`y: ${Math.floor(pos.y / 15)} x: ${Math.floor(pos.x / 15)}`);
-    
   }
+
+  handleClear(event) {
+    event.preventDefault();    
+    for(let i = 0; i < this.state.grid.length; i++) {
+      for( let j = 0; j < this.state.grid[i].length; j++){
+          if(this.state.grid[i][j] === 1){
+              this.state.grid[i][j] = 0;
+          }
+      }
+  }
+  }
+
+
+
 
   // Run function
 
@@ -131,13 +149,21 @@ class GridContainer extends Component {
 
   render() {
     return (
-      <div className="grid-container">
-        <canvas
-          className="grid"
-          ref="canvas"
-          onClick={event => this.handleClick(event)}
-        />
-
+      <div className="game-container">
+        <div className="grid-container">
+          <canvas
+            className="grid"
+            ref="canvas"
+            onClick={event => this.handleClick(event)}
+          />
+        </div>
+        <div className="buttons-container">
+          <div className="button">RUN</div>
+          <div className="button">STOP</div>
+          <div className="button" onClick={this.handleClear}>
+            CLEAR
+          </div>
+        </div>
       </div>
     );
   }
