@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 
+import Gamecontrols from "./Gamecontrols";
+
 class Gameboard extends Component {
   state = {
     canvasSize: 500,
-    squareSize: 50,
+    squareSize: 120,
     gameState: [],
     playing: false,
-    timer: 250,
+    timer: 10,
     timerID: null
   };
+
+  //notes
+  //add in randomizer function for resizer
 
   componentDidMount() {
     const canvas = this.refs.canvas.getContext("2d");
@@ -25,14 +30,16 @@ class Gameboard extends Component {
   }
 
   clearBoard = () => {
-    const clearState = new Array(this.state.squareSize).fill(false).map(() => new Array(this.state.squareSize).fill(false));
+    const clearState = new Array(this.state.squareSize)
+      .fill(false)
+      .map(() => new Array(this.state.squareSize).fill(false));
     this.setState({ gameState: clearState }, () => this.drawBoard());
-  }
+  };
 
   kickoff = () => {
     this.drawBoard();
     this.toggleGame();
-  }
+  };
 
   drawBoard = () => {
     const canvas = this.refs.canvas.getContext("2d");
@@ -56,14 +63,30 @@ class Gameboard extends Component {
     const squareSize = this.state.squareSize;
     for (let i = 0; i < squareSize; i++) {
       for (let j = 0; j < squareSize; j++) {
-        neighbors[0] = (i + 1 < squareSize && this.state.gameState[j][i + 1]) ? 1 : 0;
-        neighbors[1] = (i + 1 < squareSize && j + 1 < squareSize && this.state.gameState[j + 1][i + 1]) ? 1 : 0;
-        neighbors[2] = (j + 1 < squareSize && this.state.gameState[j + 1][i]) ? 1 : 0;
-        neighbors[3] = (i - 1 > -1 && j + 1 < squareSize && this.state.gameState[j + 1][i - 1]) ? 1 : 0;
-        neighbors[4] = (i - 1 > -1 && this.state.gameState[j][i - 1]) ? 1 : 0;
-        neighbors[5] = (i - 1 > -1 && j - 1 > -1 && this.state.gameState[j - 1][i - 1]) ? 1 : 0;
-        neighbors[6] = (j - 1 > -1 && this.state.gameState[j - 1][i]) ? 1 : 0;
-        neighbors[7] = (i + 1 < squareSize && j - 1 > -1 && this.state.gameState[j - 1][i + 1]) ? 1 : 0;
+        neighbors[0] =
+          i + 1 < squareSize && this.state.gameState[j][i + 1] ? 1 : 0;
+        neighbors[1] =
+          i + 1 < squareSize &&
+          j + 1 < squareSize &&
+          this.state.gameState[j + 1][i + 1]
+            ? 1
+            : 0;
+        neighbors[2] =
+          j + 1 < squareSize && this.state.gameState[j + 1][i] ? 1 : 0;
+        neighbors[3] =
+          i - 1 > -1 && j + 1 < squareSize && this.state.gameState[j + 1][i - 1]
+            ? 1
+            : 0;
+        neighbors[4] = i - 1 > -1 && this.state.gameState[j][i - 1] ? 1 : 0;
+        neighbors[5] =
+          i - 1 > -1 && j - 1 > -1 && this.state.gameState[j - 1][i - 1]
+            ? 1
+            : 0;
+        neighbors[6] = j - 1 > -1 && this.state.gameState[j - 1][i] ? 1 : 0;
+        neighbors[7] =
+          i + 1 < squareSize && j - 1 > -1 && this.state.gameState[j - 1][i + 1]
+            ? 1
+            : 0;
         const living = neighbors.reduce((total, i) => (total += i));
         if (this.state.gameState[j][i]) {
           if (living < 2 || living > 3) {
@@ -105,7 +128,17 @@ class Gameboard extends Component {
     }
   };
 
+  changeBoardSize = (e, val) => {
+    this.setState({ squareSize: val}, () => this.clearBoard());
+  };
+
+  changeSpeed = (e, val) => {
+    this.toggleGame();
+    this.setState({ timer: val }, () => this.toggleGame());
+  }
+
   render() {
+    const { squareSize, timer, playing } = this.state;
     return (
       <React.Fragment>
         <canvas
@@ -114,8 +147,13 @@ class Gameboard extends Component {
           height={this.state.canvasSize}
           onClick={this.handleClick}
         />
-        <button onClick={this.toggleGame}>Click Me</button>
-        <button onClick={this.clearBoard}>Click Me</button>
+        <Gamecontrols
+          size={squareSize}
+          speed={timer}
+          changeSize={this.changeBoardSize}
+          changeSpeed={this.changeSpeed}
+          playing={playing}
+        />
       </React.Fragment>
     );
   }
