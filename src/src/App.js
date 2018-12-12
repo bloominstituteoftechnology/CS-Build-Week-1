@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Route from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import Grid from './Grid'
 import ContentBar from "./ContentBar";
