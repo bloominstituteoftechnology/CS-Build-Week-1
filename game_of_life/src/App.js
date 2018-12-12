@@ -70,7 +70,6 @@ class App extends Component {
     this.stopGame = this.stopGame.bind(this);
     this.renderBoard = this.renderBoard.bind(this);
     this.initialCell = this.initialCell.bind(this);
-    this.baseState = this.state; 
   }
 
   initialCell(status) {
@@ -148,10 +147,12 @@ class App extends Component {
     );
   }
   clearGame(){
-    //need the stage to reset and the cells to be all dead.
-    this.setState(this.baseState); 
-  
-    }; 
+    //set running to false and call the initial state of stage.  
+    this.setState({
+      running: false, 
+      stage: new Stages(), 
+    })
+  } 
   
 
   runGame() {
