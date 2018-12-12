@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 'reactstrap';
 
 
 class Cell {  /* boolean   int     int     int */
-  constructor(clickable, living, xcoord, ycoord) {
-    this.clickable = clickable;
+  constructor(living, xcoord, ycoord) {
     this.living = living;
     this.x = xcoord;
     this.y = ycoord;
@@ -25,20 +25,30 @@ for (let i=0; i<rows; i++) {
 }
 for (let j=0; j<rows; j++) {
   for (let k=0; k<cols; k++) {
-    arr[j][k] = new Cell(true, 0, 10*j, 10*k);
+    arr[j][k] = new Cell(0, 10*j, 10*k);
   }
 }
+
 export default class LifeCanvas extends Component {
   constructor(props) {
     super(props);
+    this.slow = 600;
+    this.med = 300;
+    this.fast = 50;
     this.cellsize = 10;
     this.height = 500;
     this.width = 500;
     this.state = {
+      interval: 300,
       continueAnimation: false,
       cells: arr,
-      generation: 0
+      generation: 0,
+      dropdownOpen: false
     }
+  }
+
+  toggle = () => {
+    this.setState(prevState => ({dropdownOpen: !prevState.dropdownOpen}))
   }
 
   clearGrid = () => {
@@ -61,7 +71,7 @@ export default class LifeCanvas extends Component {
         cell.living = 0;
       });
     });
-    this.setState({ cells, generation: 0 });
+    this.setState({ cells, generation: 0, continueAnimation: false });
     this.draw()
   }
 
@@ -73,12 +83,12 @@ export default class LifeCanvas extends Component {
         cell.living = num;
       });
     });
-    this.setState({ cells, generation: 0 });
+    this.setState({ cells, generation: 0, continueAnimation: false });
     this.draw()
   }
 
   nextgen = () => {
-    this.setState({ generation: this.state.generation+1 })
+    this.setState(prevState => ({ generation: prevState.generation+1 }))
   }
 
   draw = () => {
@@ -106,29 +116,29 @@ export default class LifeCanvas extends Component {
         let liveneighbors = 0;
         if (j > 0) {
           if (k>0) {
-            liveneighbors += this.state.cells[j-1][k-1].living;
+            liveneighbors += mirrorCells[j-1][k-1].living;
           }
           if (k<this.width/this.cellsize-1) {
-            liveneighbors += this.state.cells[j-1][k+1].living;
+            liveneighbors += mirrorCells[j-1][k+1].living;
           }
-          liveneighbors += this.state.cells[j-1][k].living;
+          liveneighbors += mirrorCells[j-1][k].living;
         }
         if (k > 0) {
           if (j<this.height/this.cellsize-1) {
-            liveneighbors += this.state.cells[j+1][k-1].living;
+            liveneighbors += mirrorCells[j+1][k-1].living;
           }
-          liveneighbors += this.state.cells[j][k-1].living;
+          liveneighbors += mirrorCells[j][k-1].living;
         }
         if (j<this.height/this.cellsize-1) {
           if (k<this.width/this.cellsize-1) {
-            liveneighbors += this.state.cells[j+1][k+1].living;
+            liveneighbors += mirrorCells[j+1][k+1].living;
           }
-          liveneighbors += this.state.cells[j+1][k].living;
+          liveneighbors += mirrorCells[j+1][k].living;
         }
         if (k<this.width/this.cellsize-1) {
-          liveneighbors += this.state.cells[j][k+1].living;
+          liveneighbors += mirrorCells[j][k+1].living;
         }
-        if (this.state.cells[j][k].living == 0) {
+        if (mirrorCells[j][k].living == 0) {
           switch (liveneighbors) {
             case 3:
               mirrorCells[j][k].toggle();
@@ -136,7 +146,7 @@ export default class LifeCanvas extends Component {
             default:
               mirrorCells[j][k].living = 0;
           }
-        } else if (this.state.cells[j][k].living == 1) {
+        } else if (mirrorCells[j][k].living == 1) {
           switch (liveneighbors) {
             case 0:
             case 1:
@@ -165,7 +175,7 @@ export default class LifeCanvas extends Component {
   }
 
   animate = () => {
-    setTimeout(this.tick, 300)
+    setTimeout(this.tick, this.state.interval)
   }
 
   tick = () => {
@@ -184,6 +194,14 @@ export default class LifeCanvas extends Component {
 
   stop = (e) => {
     this.setState({ continueAnimation: false});
+  }
+
+  changeSpeed = (e) => {
+    this.setState(prevState =>({
+      dropdownOpen: !prevState.dropdownOpen,
+      interval: e.target.value
+    }));
+    console.log(e.target.value);
   }
 
   clickListener = (e) => {
@@ -231,10 +249,18 @@ export default class LifeCanvas extends Component {
             <h3>Welcome to Jordan's Game of Life</h3>
             <p>Generations: {this.state.generation}</p>
             <canvas ref="canvas" width={this.width} height={this.height} onClick = {this.clickListener} />
-            <button onClick = {this.start}>Start</button>
-            <button onClick = {this.stop}>Stop</button>
-            <button onClick = {this.randomize}>Randomize</button>
-            <button onClick = {this.clearGrid}>Clear</button>
+            <Button color="secondary" onClick = {this.start}>Start</Button>
+            <Button color="secondary" onClick = {this.stop}>Stop</Button>
+            <Button color="secondary" onClick = {this.randomize}>Randomize</Button>
+            <Button color="secondary" onClick = {this.clearGrid}>Clear</Button>
+            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+              <DropdownToggle carat>Speed</DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem value={this.slow} onClick={this.changeSpeed}>Slow</DropdownItem>
+                <DropdownItem value={this.med} onClick={this.changeSpeed}>Medium</DropdownItem>
+                <DropdownItem value={this.fast} onClick={this.changeSpeed}>Fast</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </div>
         )
     }
