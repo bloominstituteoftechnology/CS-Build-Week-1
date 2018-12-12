@@ -188,24 +188,17 @@ class App extends Component {
         }
         console.log(matrix[i].row);
     }
-    // setTimeout(this.presetChange("Block"), 3000); 
-    // this.setState(prevState => ({generation: prevState.generation + 1}) );
-    // setTimeout(this.presetChange("Beehive"), 3000); 
-    // this.setState(prevState => ({generation: prevState.generation + 1}) );
-    // setTimeout(this.presetChange("Loaf"), 3000); 
-    // this.setState(prevState => ({generation: prevState.generation + 1}) );
-    // setTimeout(this.presetChange("Boat"), 3000); 
-    // this.setState(prevState => ({generation: prevState.generation + 1}) );
-    // setTimeout(this.presetChange("Tub"), 3000); 
-    // this.setState(prevState => ({generation: prevState.generation + 1}) );
+
     
-    this.setState({matrix : state_matrix});
+    // this.setState({matrix : state_matrix, generation});
+    this.setState(prevState => ({matrix: state_matrix, generation: prevState.generation + 1}));
+    
       
   };
 
   startTheGame = () => {
     //Function will start the game.
-    let intervalRef = setInterval(this.runGamne(), 10); 
+    let intervalRef = setInterval(this.runGamne(), 10000); 
     if (this.state.gameRunning === false) {
       this.setState(
         {
