@@ -32,7 +32,7 @@ class Game extends React.Component {
             continueAnimating: false,
             cycle: 'A',
             buttonTag: 'Start',
-            speed: 1000,
+            speed: 200,
             boardSize: "medium",
             numX: 50,
             numY: 50,
@@ -121,7 +121,7 @@ class Game extends React.Component {
     onAnimFrame = (timestamp) => {
         if (this.state.cycle === 'A') {
             if (this.state.continueAnimating === true) {
-                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 500)});
+                myReq = requestAnimationFrame((timestamp) => {myInt = setTimeout(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
                 
                 const canvas = this.refs.canvas;
                 const context = canvas.getContext('2d');
@@ -210,7 +210,7 @@ class Game extends React.Component {
             }
         } else {
             if (this.state.continueAnimating === true) {
-                myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 500)});
+                myReq = requestAnimationFrame((timestamp) => {myInt = setTimeout(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
             
                 const canvas = this.refs.canvas;
                 const context = canvas.getContext('2d');
@@ -307,7 +307,7 @@ class Game extends React.Component {
             clearInterval(myInt);
         } else {
             this.setState({continueAnimating: true});
-            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 500)});
+            myReq = requestAnimationFrame((timestamp) => {myInt = setTimeout(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
         }
         if (this.state.buttonTag === 'Start') {
             this.setState({buttonTag: 'Stop'});
@@ -334,7 +334,7 @@ class Game extends React.Component {
         clearInterval(myInt);
         cancelAnimationFrame(myReq);
         if (this.state.continueAnimating) {
-            myReq = requestAnimationFrame((timestamp) => {myInt = setInterval(() => {this.onAnimFrame(timestamp)}, 500)});
+            myReq = requestAnimationFrame((timestamp) => {myInt = setTimeout(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
         }
     }
 
@@ -430,9 +430,9 @@ class Game extends React.Component {
                 <div>
                     <button onClick={this.toggleButton}>{this.state.buttonTag}</button>
                     <button onClick={this.clearGrid}>Clear</button>
-                    {/* <button onClick={() => this.changeSpeed(2000)}>></button>
-                    <button onClick={() => this.changeSpeed(1000)}>>></button>
-                    <button onClick={() => this.changeSpeed(500)}>>>></button> */}
+                    <button onClick={() => this.changeSpeed(800)}>></button>
+                    <button onClick={() => this.changeSpeed(200)}>>></button>
+                    <button onClick={() => this.changeSpeed(50)}>>>></button>
                     <select value={this.state.boardSize} onChange={(e) => this.changeBoardSize(e.target.value)}>
                         <option value="small">Small</option>
                         <option selected value="medium">Medium</option>
