@@ -140,7 +140,7 @@ play = () => {
 
   // loop over each row and then each column within the row
   for (let i = 0; i < this.rows; i++) {
-    for (let j = 0; j < this.cols; j ++){
+    for (let j = 0; j < this.cols; j++){
       let count = 0; // the count keeps track of the number of adjacent live cells
       /* 
         i is the row
@@ -177,10 +177,10 @@ play = () => {
       //if we are not in the bottom left corner, add to the count if the cell in bottom left corner is full
       if (i < this.rows - 1 && j > 0) if (g[i+1][j-1]) count++;
       //if we are not in the bottom right corner, add to the count if cell in bottom right corner is full
-      if (i < this.rows - 1 && j < this.cols - 1) if (g[i+1]) count++;
+      if (i < this.rows - 1 && j < this.cols - 1) if (g[i+1][j+1]) count++;
       //apply the rules of the game based on the count of filled adjacent cells
       if (g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
-      if(!g[i][j] && count === 3) g2[i][j] = true;
+      if (!g[i][j] && count === 3) g2[i][j] = true;
     } 
   }
   this.setState({
