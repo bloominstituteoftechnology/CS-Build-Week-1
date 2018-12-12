@@ -26,6 +26,11 @@ class App extends Component {
     this.setMatrixUp();
   }
 
+  reset = () => {
+    this.setState({generation: 0}); 
+    this.updateRowCol();
+  }
+
   generateRandom = () => {
     console.log("random generating");
     const keys = Object.keys(this.state.matrix);
@@ -87,7 +92,7 @@ class App extends Component {
     const width_size = 22 * this.state.col_count;
     const width = `${width_size}px`;
 
-    this.setState({ matrix, matrixUsing, width, matrixMirror: matrix });
+    this.setState({ matrix, matrixUsing, width, matrixMirror: matrix, mirror: matrixUsing });
     return true; // means its finished. 
   };
   continueWithGame = () => {
@@ -160,7 +165,7 @@ class App extends Component {
     //functionaly for gameplay goes here
     console.log("Starting the game");
     const matrix = this.state.matrixUsing.slice(); 
-    let gameRunning = true; 
+    
     const state_matrix = {...this.state.matrix};//creates a copy 
     
     
@@ -198,7 +203,7 @@ class App extends Component {
 
   startTheGame = () => {
     //Function will start the game.
-    let intervalRef = setInterval(this.runGamne(), 10000); 
+    let intervalRef = setInterval(this.runGamne(), 3000); 
     if (this.state.gameRunning === false) {
       this.setState(
         {
@@ -274,96 +279,154 @@ class App extends Component {
     //logic for if I should look up or down.
     if (position.row === 0) {
       lookUp = false;
+      console.log( "looking up", position.row, lookUp);
     } else if (position.row === this.state.row_count - 1) {
       lookDown = false;
+      console.log("looking down", position.row, lookDown);
     }
 
     //logic for if I should look right or left.
     if (position.position_in_row === 0) {
       lookLeft = false;
+      console.log("looking left", position.position_in_row, lookLeft);
     } else if (position.position_in_row === this.state.col_count - 1) {
       lookRight = false;
+      console.log("looking right", position.position_in_row, lookRight);
     }
-    //find the alive
-    if (lookUp) {
-      //1
+    if (lookUp){
       if (this.state.matrix[position.row - 1][position.position_in_row] === 1) {
         totalAlive++;
       }
-      if (lookRight) {
-        
+    }
 
-        //diagonal right up one to the right one
-        if (
-          //3
-          this.state.matrix[position.row - 1][position.position_in_row + 1] ===
-          1
-        ) {
-          totalAlive++;
-        }
-
-        if (lookLeft) {
-          //diagonal left up one minus one
-          if (
-            //5
-            this.state.matrix[position.row - 1][
-              position.position_in_row - 1
-            ] === 1
-          ) {
-            totalAlive++;
-          }
-        }
-      }
-    } // end of the lookUP
-
-    if (lookDown) {
-      //6
+    if (lookDown){
       if (this.state.matrix[position.row + 1][position.position_in_row] === 1) {
-        totalAlive++;
-      }
-
-      if (lookRight) {
-        //down one to the right (plus one)
-        if (
-          //7
-          this.state.matrix[position.row + 1][position.position_in_row + 1] ===
-          1
-        ) {
           totalAlive++;
-        }
-      }
-      if (lookLeft) {
-        //down one to the left (minus one)
-        if (
-          //8
-          this.state.matrix[position.row][position.position_in_row - 1] === 1
-        ) {
-          totalAlive++;
-        }
-      }
-
-      //only 8 possible ways but currently if  top is false the cells next to it won't be checked. Need to check them solo. 
-      if (lookRight) {
-        if (
-          //next in line plus one
-          //2
-          this.state.matrix[position.row][position.position_in_row + 1] === 1
-        ) {
-          totalAlive++;
-        }
-      }
-
-      if (lookLeft) {
-        //previous in line minus one
-        if (
-          //4
-          this.state.matrix[position.row][position.position_in_row - 1] === 1
-        ) {
-          totalAlive++;
-        }
       }
     }
 
+    if (lookRight){
+      if (this.state.matrix[position.row][position.position_in_row + 1] === 1){
+         //next in line plus one//2
+        totalAlive++;
+      }
+    }
+
+    if (lookLeft){
+      if (this.state.matrix[position.row][position.position_in_row - 1] === 1) {
+        //4
+        totalAlive++;
+      }
+    }
+
+    if (lookUp && lookRight){
+      if (this.state.matrix[position.row - 1][position.position_in_row + 1] === 1 ) {
+        //3
+        totalAlive++;
+      }
+    }
+
+    if (lookUp && lookLeft){
+        //diagonal left up one minus one //5
+        if (this.state.matrix[position.row - 1][position.position_in_row - 1] === 1) {
+          totalAlive++;
+        }
+    }
+
+    if (lookDown && lookRight){
+      //down one to the right (plus one) //7
+      if (this.state.matrix[position.row + 1][position.position_in_row + 1] === 1) {
+          totalAlive++;
+      }
+    }
+
+    if(lookDown && lookLeft){
+      //down one to the left (minus one) //8
+      if (this.state.matrix[position.row][position.position_in_row - 1] === 1) {
+        totalAlive++;
+      }
+    }
+
+    //find the alive
+    // if (lookUp) {
+    //   //1
+    //   if (this.state.matrix[position.row - 1][position.position_in_row] === 1) {
+    //     totalAlive++;
+    //   }
+    //   if (lookRight) {
+        
+
+    //     //diagonal right up one to the right one
+    //     if (
+    //       //3
+    //       this.state.matrix[position.row - 1][position.position_in_row + 1] ===
+    //       1
+    //     ) {
+    //       totalAlive++;
+    //     }
+
+    //     if (lookLeft) {
+    //       //diagonal left up one minus one
+    //       if (
+    //         //5
+    //         this.state.matrix[position.row - 1][
+    //           position.position_in_row - 1
+    //         ] === 1
+    //       ) {
+    //         totalAlive++;
+    //       }
+    //     }
+    //   }
+    // } // end of the lookUP
+
+    // if (lookDown) {
+    //   //6
+    //   if (this.state.matrix[position.row + 1][position.position_in_row] === 1) {
+    //     totalAlive++;
+    //   }
+
+    //   if (lookRight) {
+    //     //down one to the right (plus one)
+    //     if (
+    //       //7
+    //       this.state.matrix[position.row + 1][position.position_in_row + 1] ===
+    //       1
+    //     ) {
+    //       totalAlive++;
+    //     }
+    //   }
+    //   if (lookLeft) {
+    //     //down one to the left (minus one)
+    //     if (
+    //       //8
+    //       this.state.matrix[position.row][position.position_in_row - 1] === 1
+    //     ) {
+    //       totalAlive++;
+    //     }
+    //   }
+
+    //   //only 8 possible ways but currently if  top is false the cells next to it won't be checked. Need to check them solo. 
+    //   if (lookRight) {
+    //     if (
+    //       //next in line plus one
+    //       //2
+    //       this.state.matrix[position.row][position.position_in_row + 1] === 1
+    //     ) {
+    //       totalAlive++;
+    //     }
+    //   }
+
+    //   if (lookLeft) {
+    //     //previous in line minus one
+    //     if (
+    //       //4
+    //       this.state.matrix[position.row][position.position_in_row - 1] === 1
+    //     ) {
+    //       totalAlive++;
+    //     }
+    //   }
+    // }
+    console.log(position, totalAlive);
     return totalAlive;
   };
 
@@ -484,7 +547,7 @@ class App extends Component {
               <button onClick = {this.stopTheGame}>Stop</button>
             </div>
             <div>
-              <button onClick={this.updateRowCol}>Clear</button>
+              <button onClick={this.reset}>Clear</button>
             </div>
             <div>
               <button onClick = {this.generateRandom}>Random</button>
