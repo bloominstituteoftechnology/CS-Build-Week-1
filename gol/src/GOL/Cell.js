@@ -18,7 +18,7 @@ class Cell {
     this.width = 20;
     this.height = 20;
     this.p = p;
-    this.activeFill = "#cc527a";
+    this.activeFill = "#e8175d";
     this.inactiveFill = "#d11554";
   }
 

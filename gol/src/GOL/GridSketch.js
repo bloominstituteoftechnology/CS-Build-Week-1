@@ -19,7 +19,8 @@ function sketch (p){
   let parentW = document.querySelector(".sketch-container").clientWidth;
   let parentH = document.querySelector(".sketch-container").clientHeight;
   let currGrid = [[]], nextGrid = [[]]
-  let cellFill = "#cc527a";
+  let cellFill = "#cc527a", textFill = "#D11554", textStroke="#e8175d";
+  // textStroke2 = rgba(232, 23, 93, 0.4);
   let isBlasting = false;
   let generations = 0;
 
@@ -47,6 +48,9 @@ function sketch (p){
     p.createCanvas(parentW,parentH);
     createCells();
     p.background("#e8175d");
+    // p.textFont(font);
+    p.textSize(480);
+    p.textAlign(p.CENTER, p.CENTER);
   };
 
   p.draw = () => {
@@ -58,6 +62,8 @@ function sketch (p){
         currGrid[i][j].createRect();
       }
     }
+    p.textAlign(p.LEFT);
+    drawText( parentW * 0.03);
   };
 
   p.mousePressed = () => {
@@ -69,6 +75,14 @@ function sketch (p){
         currGrid[i][j].clicked(p.mouseX, p.mouseY);
       }
     }
+  }
+
+  const drawText = (x) => {
+    // p.stroke(textFill);
+    p.stroke(232, 23, 93, 131)
+    p.fill(232, 23, 93, 91);
+    p.strokeWeight(8);
+    p.text(generations, x, 200);
   }
 
   const judgement = () => {
@@ -98,22 +112,14 @@ function sketch (p){
       }
     }
 
+    swapJudgement();
+    incrementGenerations();
+  };
+
+  const swapJudgement = () => {
     let temp = currGrid;
     currGrid = nextGrid;
     nextGrid = temp;
-    if(generations < 400){
-      incrementGenerations();
-    } else {
-      return;
-    }
-  };
-
-  const swapJudgement = (curr, next) => {
-    let temp = [[]];
-    temp = curr; 
-    curr = next;
-    next = temp;
-    incrementGenerations();
   }
 
   const incrementGenerations = () => {
@@ -121,6 +127,9 @@ function sketch (p){
   }
 
   const clearEm = () => {
+    if(isBlasting == true){
+      return;
+    }
     for (let i=0; i<cols; i++){
       for (let j=0; j<rows; j++){
         currGrid[i][j].setActiveToFalse();

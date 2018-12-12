@@ -12,6 +12,7 @@ class App extends Component {
     super(props);
     this.state = {
       isRollin: false,
+      generations: 0,
     }
   }
 
@@ -33,7 +34,7 @@ class App extends Component {
         <header className="App-header">
           <Header></Header>
           <Rules></Rules>
-          <Controls goBlast={this.goBlastEm} stop={this.pleaseDontHurtEm}></Controls>
+          <Controls data={this.state} goBlast={this.goBlastEm} stop={this.pleaseDontHurtEm}></Controls>
           <GridSketch className="grid-sketch" data={this.state}></GridSketch>
         </header>
       </div>
