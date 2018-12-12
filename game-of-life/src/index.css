@@ -16,11 +16,11 @@ body {
 }
 
 .on {
-  background-color: green;
+  background-color: black;
 }
 
 .box:hover {
-  background: #00ccff;
+  background: yellow;
 }
 
 .center {
@@ -38,9 +38,7 @@ body {
 }
 
 h1,
-h2,
-h3,
-h4 {
+h2 {
   color: black;
   margin: auto;
   text-align: center;
@@ -50,4 +48,9 @@ h4 {
 
 h4 {
   margin-top: 0px;
+}
+
+.history,
+.instructions {
+  margin: 5%;
 }
