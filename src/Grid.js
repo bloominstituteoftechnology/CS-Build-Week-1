@@ -116,8 +116,12 @@ class Grid extends Component {
   }
 
   componentDidMount() {
+    this.init();
+  }
+
+  init = () => {
     let nextNodeHolder = [];
-    
+
     class Node {
       constructor(id) {
         this.id = id;
@@ -130,8 +134,7 @@ class Grid extends Component {
         this.isAlive = true;
       }
     }
-    
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < this.state.gridSizeValue; i++) {
       nextNodeHolder.push([]);
     }
     let id = 0;
@@ -145,15 +148,15 @@ class Grid extends Component {
     this.setState({ currentNodeHolder: nextNodeHolder });
   }
 
-  handleInputChange = (e) => this.setState({ [e.target.name]: e.target.value });
-
-  changeGridSize = (e) => {
-    console.log(e.value);
+  handleGridSizeChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+    setTimeout(() => {
+      this.init();
+    }, 0);
   }
 
   selectGridPreset = (e) => {
     let nextNodeHolder = this.state.currentNodeHolder.slice();
-    let len = nextNodeHolder.length;
 
     switch(e.target.value) {
       case 'clearPresets':
@@ -181,10 +184,8 @@ class Grid extends Component {
   }
 
   startGame = () => {
-    console.log('one')
     this.setState({canClick: false, isPlaying: true});
     this.playGame();
-    // console.log('two')
     // if (this.state.isPlaying) {
     //   while(this.state.isPlaying) {
     //     setTimeout(() => {
@@ -198,9 +199,9 @@ class Grid extends Component {
   
 
   playGame = () => {
-    console.log('three')
     let nextNodeHolder = this.state.currentNodeHolder.slice();
     let len = nextNodeHolder.length;
+    let lenCheck = nextNodeHolder.length - 1;
 
     for (let i = 0; i < len; i++) {
       for (let j = 0; j < len; j++) {
@@ -212,7 +213,7 @@ class Grid extends Component {
               checker++
             }
           }
-          if (j < 15 && nextNodeHolder[i][j+1]) {
+          if (j < lenCheck && nextNodeHolder[i][j+1]) {
             if (nextNodeHolder[i][j+1].isAlive) {
               checker++
             }
@@ -227,27 +228,26 @@ class Grid extends Component {
               checker++
             }
           }
-          if (i > 0 && j < 15 && nextNodeHolder[i-1][j+1]) {
+          if (i > 0 && j < lenCheck && nextNodeHolder[i-1][j+1]) {
             if (nextNodeHolder[i-1][j+1].isAlive) {
               checker++
             }
           }
-          if (j > 0 && i < 15 && nextNodeHolder[i+1][j-1]) {
+          if (j > 0 && i < lenCheck && nextNodeHolder[i+1][j-1]) {
             if (nextNodeHolder[i+1][j-1].isAlive) {
               checker++
             }
           }
-          if (i < 15 && nextNodeHolder[i+1][j]) {
+          if (i < lenCheck && nextNodeHolder[i+1][j]) {
             if (nextNodeHolder[i+1][j].isAlive) {
               checker++
             }
           }
-          if (i < 15 && j < 15 && nextNodeHolder[i+1][j+1]) {
+          if (i < lenCheck && j < lenCheck && nextNodeHolder[i+1][j+1]) {
             if (nextNodeHolder[i+1][j+1].isAlive) {
               checker++
             }
           }
-          console.log('DEAD', checker, nextNodeHolder[i][j].id)
           if (checker === 3) {
             nextNodeHolder[i][j].makeAlive();
           }
@@ -261,7 +261,7 @@ class Grid extends Component {
               checker++
             }
           }
-          if (j < 15 && nextNodeHolder[i][j+1]) {
+          if (j < lenCheck && nextNodeHolder[i][j+1]) {
             if (nextNodeHolder[i][j+1].isAlive) {
               checker++
             }
@@ -276,36 +276,33 @@ class Grid extends Component {
               checker++
             }
           }
-          if (i > 0 && j < 15 && nextNodeHolder[i-1][j+1]) {
+          if (i > 0 && j < lenCheck && nextNodeHolder[i-1][j+1]) {
             if (nextNodeHolder[i-1][j+1].isAlive) {
               checker++
             }
           }
-          if (j > 0 && i < 15 && nextNodeHolder[i+1][j-1]) {
+          if (j > 0 && i < lenCheck && nextNodeHolder[i+1][j-1]) {
             if (nextNodeHolder[i+1][j-1].isAlive) {
               checker++
             }
           }
-          if (i < 15 && nextNodeHolder[i+1][j]) {
+          if (i < lenCheck && nextNodeHolder[i+1][j]) {
             if (nextNodeHolder[i+1][j].isAlive) {
               checker++
             }
           }
-          if (i < 15 && j < 15 && nextNodeHolder[i+1][j+1]) {
+          if (i < lenCheck && j < lenCheck && nextNodeHolder[i+1][j+1]) {
             if (nextNodeHolder[i+1][j+1].isAlive) {
               checker++
             }
           }
-          console.log('ALIVE',checker,nextNodeHolder[i][j].id)
           if (checker === 2 || checker === 3) {
-            console.log('f')
           } else {
             nextNodeHolder[i][j].makeDead();
           }
         }
       }
     }
-    console.log('fdfg')
     this.setState(prevState => {
       return { currentNodeHolder: nextNodeHolder, generation: prevState.generation + 1 };
     });
@@ -316,24 +313,20 @@ class Grid extends Component {
   }
   
   toggleCell = (col) => {
-    console.log(col.isAlive)
     if (col.isAlive) {
       col.makeDead();
     } else {
       col.makeAlive();
     }
-    console.log(col.isAlive)
     this.forceUpdate()
   }
   
   clearCells = () => {
     let nextNodeHolder = this.state.currentNodeHolder.slice();
-    console.log(nextNodeHolder.length)
 
     for (let i = 0; i < nextNodeHolder.length; i++) {
       for (let j = 0; j < nextNodeHolder.length; j++) {
         if (nextNodeHolder[i][j].isAlive) {
-          console.log('alive')
           nextNodeHolder[i][j].makeDead();
         }
       }
@@ -359,12 +352,12 @@ class Grid extends Component {
         <hr/>
         {/* section */}
         <button onClick={this.state.canClick? this.startGame: null}>Start</button>
-        <button onClick={this.stepGeneration}>Step</button>
+        <button onClick={this.state.canClick? this.stepGeneration: null}>Step</button>
         <button onClick={this.endGame}>End</button>
         <button onClick={this.state.canClick? this.clearCells: null}>Clear Grid</button>
         <div>
           <label htmlFor="gridPresets">Choose a preset:</label>
-          <select onChange={this.selectGridPreset} id="gridPresets">
+          <select onChange={this.state.canClick? this.selectGridPreset: null} id="gridPresets">
             <option value="">-- Select --</option>
             <option value="clearPresets">Clear Grid</option>
             <option value="gridPresetOne">Preset 1</option>
@@ -374,19 +367,19 @@ class Grid extends Component {
           </select>
         </div>
 
-        <RangeSlider class="range-slider">
+        <RangeSlider className="range-slider">
           <label htmlFor="gridSizeSlider">Choose a grid size:</label>
           <input 
-            class="range-slider__range"
+            className="range-slider__range"
             id="gridSizeSlider"
             name="gridSizeValue"
             type="range"
             value={this.state.gridSizeValue}
-            onChange={this.handleInputChange}
+            onChange={this.state.canClick? this.handleGridSizeChange : null}
             min="16"
             max="100"
           />
-          <span class="range-slider__value">{this.state.gridSizeValue}</span>
+          <span className="range-slider__value">{this.state.gridSizeValue}</span>
         </RangeSlider>
 
         <p><strong>Generation: {this.state.generation}</strong></p>
