@@ -30,6 +30,20 @@ class GameBoard extends React.Component{
       }
       canvas.stroke();
   }
+
+ simulateGame = () => {
+     const canvas = this.refs.canvas;
+     const context = canvas.getContext('2d');
+     if (this.state.gameOn) {
+         for (let x=0; x<=300; x+= 20) {
+             for (let y=0; y<=300; y+= 20) {
+                 let lnc = 0;
+                  let tln = `${x/20-1},${y/20-1}`;
+             }
+         } 
+     }
+ }
+
    componentDidMount(){
       this.drawCanvas();
   }
