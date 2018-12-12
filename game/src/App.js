@@ -7,6 +7,7 @@ class App extends Component {
     this.state = {
       running: false,
       cycles: 0,
+      clear: false,
       color: "#DB7093"
     }
   }
@@ -104,6 +105,9 @@ class App extends Component {
     }, 100)} else {
       let stateBuffer = this.nextBoard();
       this.setState({...stateBuffer, cycles: cyclesCopy })
+      if (this.state.clear) {
+        this.setState({cycles: 0})
+      }
     }
   }
   updateCellColor = () => {
@@ -123,21 +127,25 @@ class App extends Component {
     const ctx = c.getContext("2d");
     switch(type){
       case "run":
-        this.setState({running: true})
-        requestAnimationFrame(this.updateCells)
+        if (!this.state.running) {
+          this.setState({running: true, clear: false})
+          requestAnimationFrame(this.updateCells)
+        }
         break;
       case "step":
-        requestAnimationFrame(this.updateCells)
+        if(!this.state.running){
+          this.setState({clear: false})
+          requestAnimationFrame(this.updateCells)
+        }
         break;
       case "stop":
         this.setState({running: false})
         break;
       case "clear":
-        this.setState({running: false})
+        this.setState({running: false, clear: true})
         ctx.clearRect(0,0,c.width,c.height) //this clears the entire canvas
         this.drawGrid() // so i redraw it here
         this.gridStateInit() //reset state with all dead cells
-        this.setState({cycles: 0})//restart cycles
         break;
       case "glider":
         this.setState({
