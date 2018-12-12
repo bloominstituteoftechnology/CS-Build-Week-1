@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Buttons from './Buttons';
 import Presets from './Presets';
+import Random from './Random';
 
 
 export default class Canvas extends Component {
@@ -37,7 +38,17 @@ export default class Canvas extends Component {
     ctx.closePath();
   }
 
-  
+  getPixel = (imageData, x, y) => {
+    const w = imageData.width; 
+    const h = imageData.height;
+    if (x < 0 || x >= w || y < 0 || y >= h) {
+        return null;
+    }
+    const index = (w * y + x) * 4;
+    return imageData.data.slice(index, index + 4);
+  }
+
+
   mouseDown = (e) => {
     e.preventDefault();
     this.setState({x: e.screenX, y: e.screenY});
@@ -239,6 +250,52 @@ export default class Canvas extends Component {
     })
   }
 
+  onClickClearPreset1 = () => {
+    this.setState({preset1: null});
+  }
+
+  onClickClearPreset2 = () => {
+    this.setState({preset2: null});
+  }
+
+  onClickClearPreset3 = () => {
+    this.setState({preset3: null});
+  }
+
+  onClickRandom = () => {
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext("2d");
+    let random = []; 
+    
+
+    for(let xCheck = 1; xCheck <= 492; xCheck += 10) {
+      for(let yCheck = 1; yCheck <= 492; yCheck += 10) {
+        let randomNumber = Math.random()
+        console.log(randomNumber);
+        if(randomNumber > .5) { 
+          random.push({x: xCheck, y: yCheck});
+        }
+      }
+    }
+    
+    this.setState({random: random});
+
+    setTimeout( () => {
+      this.onClickStop();
+      this.onClickClear();
+
+      const canvas = this.refs.canvas;
+      const ctx = canvas.getContext("2d");
+
+      this.state.random.map(cell => {
+          ctx.fillStyle = "blue";
+          ctx.fillRect(cell.x,cell.y,8,8);
+      })
+    }
+    , 500)
+
+  }
+
 
   startFunction = () => {
     const canvas = this.refs.canvas;
@@ -415,8 +472,16 @@ export default class Canvas extends Component {
           onClickPreset1={this.onClickPreset1}
           onClickPreset2={this.onClickPreset2}
           onClickPreset3={this.onClickPreset3}
+          onClickClearPreset1={this.onClickClearPreset1}
+          onClickClearPreset2={this.onClickClearPreset2}
+          onClickClearPreset3={this.onClickClearPreset3}
           >
           </Presets>
+        </div>
+        <div>
+          <Random
+          onClickRandom={this.onClickRandom}
+          ></Random>
         </div>
       </div>
     )
