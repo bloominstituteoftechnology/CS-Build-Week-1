@@ -5,6 +5,7 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.interval = null;
     this.state = {
       totalCells: 400,
       grid: [],
@@ -98,25 +99,16 @@ class App extends Component {
   };
 
   calculateNextGen = () => {
-    let grid = this.state.grid.slice();
+    let grid = [];
+    this.state.grid.forEach(cell => {
+      grid.push({ ...cell });
+    });
     let activeNeighbors = 0;
-    console.log(this.state);
-    console.log(this.state.grid);
-    console.log(grid);
+
     for (let i = 0; i < this.state.totalCells; i++) {
       activeNeighbors = 0;
 
       for (let j = 0; j < this.state.grid[i].neighbors.length; j++) {
-        console.log(
-          'cell: ' +
-            i +
-            'isAlive ' +
-            this.state.grid[i].isAlive +
-            ' neighbor: ' +
-            this.state.grid[i].neighbors[j] +
-            ' active: ' +
-            this.state.grid[this.state.grid[i].neighbors[j]].isAlive
-        );
         if (this.state.grid[this.state.grid[i].neighbors[j]].isAlive) {
           activeNeighbors++;
         }
@@ -126,27 +118,34 @@ class App extends Component {
         this.state.grid[i].isAlive &&
         (activeNeighbors !== 2 && activeNeighbors !== 3)
       ) {
-        //console.log(i + ' ' + activeNeighbors);
         grid[i].isAlive = false;
       } else if (!this.state.grid[i].isAlive && activeNeighbors === 3) {
         grid[i].isAlive = true;
       }
     }
-    console.log(this.state);
-    this.setState({ grid: grid, currGen: this.state.currGen + 1 });
-  };
 
-  playSimulation = () => {
-    let intervalId = setInterval(this.calculateNextGen, 2000);
-    console.log('play');
     this.setState({
-      intervalId: intervalId,
+      grid: grid,
+      currGen: this.state.currGen + 1,
       isClickable: false
     });
   };
 
-  gridResetHandler = () => {
-    clearInterval(this.state.intervalId);
+  playSimulation = event => {
+    event.preventDefault();
+    this.intervalId = setInterval(this.calculateNextGen, 1500);
+  };
+
+  pauseSimulation = event => {
+    event.preventDefault();
+
+    clearInterval(this.intervalId);
+    this.setState({ isClickable: true });
+  };
+
+  gridResetHandler = event => {
+    event.preventDefault();
+    clearInterval(this.intervalId);
     let grid = this.state.grid.slice();
 
     for (let i = 0; i < this.state.totalCells; i++) {
@@ -156,13 +155,11 @@ class App extends Component {
     this.setState({
       grid: grid,
       currGen: 0,
-      isClickable: true,
-      intervalId: null
+      isClickable: true
     });
   };
 
   render() {
-    console.log(this.state);
     return (
       <div className="App">
         <div className="container">
@@ -180,9 +177,20 @@ class App extends Component {
             ))}
           </div>
           <div className="btns">
-            <button onClick={this.playSimulation}>Play</button>
-            <button>Pause</button>
-            <button onClick={this.gridResetHandler}>Reset</button>
+            <button
+              type="button"
+              onClick={() =>
+                (this.intervalId = setInterval(this.calculateNextGen, 1500))
+              }
+            >
+              Play
+            </button>
+            <button type="button" onClick={this.pauseSimulation}>
+              Pause
+            </button>
+            <button type="button" onClick={this.gridResetHandler}>
+              Reset
+            </button>
           </div>
         </div>
       </div>
