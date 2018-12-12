@@ -97,7 +97,7 @@ class App extends Component {
         grid[id].color = 'white';
       } else {
         grid[id].isAlive = !grid[id].isAlive;
-        grid[id].color = 'green';
+        grid[id].color = '#13f252';
       }
 
       if (this.state.currGen === 0) {
@@ -120,7 +120,7 @@ class App extends Component {
       randomNum = Math.floor(Math.random() * Math.floor(5));
       grid[i].isAlive = randomNum === 0 ? true : false;
       if (grid[i].isAlive) {
-        grid[i].color = 'green';
+        grid[i].color = '#13f252';
       } else {
         grid[i].color = 'white';
       }
@@ -150,15 +150,15 @@ class App extends Component {
         (activeNeighbors !== 2 && activeNeighbors !== 3)
       ) {
         grid[i].isAlive = false;
-        grid[i].color = 'black';
+        grid[i].color = '#423636';
       } else if (
         this.state.grid[i].isAlive &&
         (activeNeighbors === 2 || activeNeighbors === 3)
       ) {
-        grid[i].color = 'yellow';
+        grid[i].color = '#f4fc00';
       } else if (!this.state.grid[i].isAlive && activeNeighbors === 3) {
         grid[i].isAlive = true;
-        grid[i].color = 'green';
+        grid[i].color = '#13f252';
       } else if (!this.state.grid[i].isAlive && activeNeighbors !== 3) {
         grid[i].color = 'white';
       }
@@ -270,6 +270,12 @@ class App extends Component {
               <strong>2.</strong> If the cell is dead and has exactly 3
               neighbors, then it comes to life. Else it remains dead.
             </p>
+            <div className="legend">
+              <div className="legend-box box-green" />{' '}
+              <span>Newly Born Cell</span>
+              <div className="legend-box box-yellow" /> <span>Living Cell</span>
+              <div className="legend-box box-black" /> <span>Dead Cell</span>
+            </div>
           </div>
           <div className="about-game">
             <h2>About the Game of Life</h2>
