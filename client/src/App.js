@@ -153,10 +153,10 @@ class App extends Component {
     //A neighbor will be  to the left to the right  up down and diagonal  which will be up to the left, up to the right and down to the left down to the right.
     let totalAlive = 0;
 
-    lookUp = true;
-    lookDown = true;
-    lookRight = true;
-    lookLeft = true;
+    let lookUp = true;
+    let lookDown = true;
+    let lookRight = true;
+    let lookLeft = true;
 
     //logic for if I should look up or down.
     if (position.row === 0) {
@@ -179,10 +179,10 @@ class App extends Component {
     //A neighbor will be  to the left to the right  up down and diagonal  which will be up to the left, up to the right and down to the left down to the right.
     let totalAlive = 0;
 
-    lookUp = true;
-    lookDown = true;
-    lookRight = true;
-    lookLeft = true;
+    let lookUp = true;
+    let lookDown = true;
+    let lookRight = true;
+    let lookLeft = true;
 
     //logic for if I should look up or down.
     if (position.row === 0) {
@@ -255,7 +255,7 @@ class App extends Component {
         }
       }
 
-      //only 8 possible ways but currently if  top is false the cells next to it won't be checked.
+      //only 8 possible ways but currently if  top is false the cells next to it won't be checked. Need to check them solo. 
       if (lookRight) {
         if (
           //next in line plus one
