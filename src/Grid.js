@@ -129,12 +129,6 @@ class Grid extends Component {
         this.id = id;
         this.isAlive = false;
       }
-      makeDead() {
-        this.isAlive = false;
-      }
-      makeAlive() {
-        this.isAlive = true;
-      }
     }
     for (let i = 0; i < this.state.gridSizeValue; i++) {
       nextNodeHolder.push([]);
@@ -158,17 +152,39 @@ class Grid extends Component {
   }
 
   selectGridPreset = (e) => {
+
     let nextNodeHolder = this.state.currentNodeHolder.slice();
+    let len = nextNodeHolder.length;
+
+    let middleOfGrid = Math.floor(len / 2);
+
+    for (let i = 0; i < len; i++) {
+      for (let j = 0; j < len; j++) {
+        if (!nextNodeHolder[i][j].isAlive) {
+          nextNodeHolder[i][j].isAlive = false;
+        }
+      }
+    }
 
     switch(e.target.value) {
       case 'clearPresets':
         console.log('CLEAR');
       break;
-      case 'gridPresetOne':
-        console.log('ONE');
-      break;
-      case 'gridPresetTwo':
-        console.log('TWO');
+      case 'Glider':
+        nextNodeHolder[middleOfGrid][middleOfGrid].isAlive = true;
+        nextNodeHolder[middleOfGrid][middleOfGrid + 1].isAlive = true;
+        nextNodeHolder[middleOfGrid - 1][middleOfGrid - 1].isAlive = true;
+        nextNodeHolder[middleOfGrid - 1][middleOfGrid + 1].isAlive = true;
+        nextNodeHolder[middleOfGrid + 1][middleOfGrid].isAlive = true;
+        break;
+        case 'Acorn':
+        nextNodeHolder[middleOfGrid][middleOfGrid].isAlive = true;
+        nextNodeHolder[middleOfGrid][middleOfGrid + 1].isAlive = true;
+        nextNodeHolder[middleOfGrid][middleOfGrid + 4].isAlive = true;
+        nextNodeHolder[middleOfGrid][middleOfGrid + 5].isAlive = true;
+        nextNodeHolder[middleOfGrid][middleOfGrid + 6].isAlive = true;
+        nextNodeHolder[middleOfGrid - 2][middleOfGrid + 1].isAlive = true;
+        nextNodeHolder[middleOfGrid - 1][middleOfGrid + 3].isAlive = true;
       break;
       case 'gridPresetThree':
         console.log('THREE');
@@ -179,6 +195,7 @@ class Grid extends Component {
       default:
       break;
     }
+    this.setState({ currentNodeHolder: nextNodeHolder });
   }
   
   stepGeneration = () => {
@@ -194,106 +211,117 @@ class Grid extends Component {
   
 
   playGame = () => {
-    let nextNodeHolder = this.state.currentNodeHolder.slice();
-    let len = nextNodeHolder.length;
-    let lenCheck = nextNodeHolder.length - 1;
+    let currentNodeHolder = this.state.currentNodeHolder.slice();
+    let len = currentNodeHolder.length;
+    let lenCheck = currentNodeHolder.length - 1;
+    let nextNodeHolder = [];
+
+    for (let i = 0; i < len; i++) {
+      nextNodeHolder.push([]);
+    }
 
     for (let i = 0; i < len; i++) {
       for (let j = 0; j < len; j++) {
-        if (!nextNodeHolder[i][j].isAlive) {
-          let checker = 0;
-          
-          if (j > 0 && nextNodeHolder[i][j-1]) {
-            if (nextNodeHolder[i][j-1].isAlive) {
-              checker++
-            }
-          }
-          if (j < lenCheck && nextNodeHolder[i][j+1]) {
-            if (nextNodeHolder[i][j+1].isAlive) {
-              checker++
-            }
-          }
-          if (i > 0 && j > 0 && nextNodeHolder[i-1][j-1]) {
-            if (nextNodeHolder[i-1][j-1].isAlive) {
-              checker++
-            }
-          }
-          if (i > 0 && nextNodeHolder[i-1][j]) {
-            if (nextNodeHolder[i-1][j].isAlive) {
-              checker++
-            }
-          }
-          if (i > 0 && j < lenCheck && nextNodeHolder[i-1][j+1]) {
-            if (nextNodeHolder[i-1][j+1].isAlive) {
-              checker++
-            }
-          }
-          if (j > 0 && i < lenCheck && nextNodeHolder[i+1][j-1]) {
-            if (nextNodeHolder[i+1][j-1].isAlive) {
-              checker++
-            }
-          }
-          if (i < lenCheck && nextNodeHolder[i+1][j]) {
-            if (nextNodeHolder[i+1][j].isAlive) {
-              checker++
-            }
-          }
-          if (i < lenCheck && j < lenCheck && nextNodeHolder[i+1][j+1]) {
-            if (nextNodeHolder[i+1][j+1].isAlive) {
-              checker++
-            }
-          }
-          if (checker === 3) {
-            nextNodeHolder[i][j].makeAlive();
-          }
-        }
+        nextNodeHolder[i][j] = Object.assign({}, currentNodeHolder[i][j]);
+      }
+    }
 
-        if (nextNodeHolder[i][j].isAlive) {
+    for (let i = 0; i < len; i++) {
+      for (let j = 0; j < len; j++) {
+        if (currentNodeHolder[i][j].isAlive) {
           let checker = 0;
         
-          if (j > 0 && nextNodeHolder[i][j-1]) {
-            if (nextNodeHolder[i][j-1].isAlive) {
+          if (i > 0 && j > 0 && currentNodeHolder[i-1][j-1]) {
+            if (currentNodeHolder[i-1][j-1].isAlive) {
               checker++
             }
           }
-          if (j < lenCheck && nextNodeHolder[i][j+1]) {
-            if (nextNodeHolder[i][j+1].isAlive) {
+          if (i > 0 && currentNodeHolder[i-1][j]) {
+            if (currentNodeHolder[i-1][j].isAlive) {
               checker++
             }
           }
-          if (i > 0 && j > 0 && nextNodeHolder[i-1][j-1]) {
-            if (nextNodeHolder[i-1][j-1].isAlive) {
+          if (i > 0 && j < lenCheck && currentNodeHolder[i-1][j+1]) {
+            if (currentNodeHolder[i-1][j+1].isAlive) {
               checker++
             }
           }
-          if (i > 0 && nextNodeHolder[i-1][j]) {
-            if (nextNodeHolder[i-1][j].isAlive) {
+          if (j > 0 && currentNodeHolder[i][j-1]) {
+            if (currentNodeHolder[i][j-1].isAlive) {
               checker++
             }
           }
-          if (i > 0 && j < lenCheck && nextNodeHolder[i-1][j+1]) {
-            if (nextNodeHolder[i-1][j+1].isAlive) {
+          if (j < lenCheck && currentNodeHolder[i][j+1]) {
+            if (currentNodeHolder[i][j+1].isAlive) {
               checker++
             }
           }
-          if (j > 0 && i < lenCheck && nextNodeHolder[i+1][j-1]) {
-            if (nextNodeHolder[i+1][j-1].isAlive) {
+          if (j > 0 && i < lenCheck && currentNodeHolder[i+1][j-1]) {
+            if (currentNodeHolder[i+1][j-1].isAlive) {
               checker++
             }
           }
-          if (i < lenCheck && nextNodeHolder[i+1][j]) {
-            if (nextNodeHolder[i+1][j].isAlive) {
+          if (i < lenCheck && currentNodeHolder[i+1][j]) {
+            if (currentNodeHolder[i+1][j].isAlive) {
               checker++
             }
           }
-          if (i < lenCheck && j < lenCheck && nextNodeHolder[i+1][j+1]) {
-            if (nextNodeHolder[i+1][j+1].isAlive) {
+          if (i < lenCheck && j < lenCheck && currentNodeHolder[i+1][j+1]) {
+            if (currentNodeHolder[i+1][j+1].isAlive) {
               checker++
             }
           }
           if (checker === 2 || checker === 3) {
           } else {
-            nextNodeHolder[i][j].makeDead();
+            nextNodeHolder[i][j].isAlive = false;
+          }
+        }
+
+        if (!currentNodeHolder[i][j].isAlive) {
+          let checker = 0;
+          
+          if (i > 0 && j > 0 && currentNodeHolder[i-1][j-1]) {
+            if (currentNodeHolder[i-1][j-1].isAlive) {
+              checker++
+            }
+          }
+          if (i > 0 && currentNodeHolder[i-1][j]) {
+            if (currentNodeHolder[i-1][j].isAlive) {
+              checker++
+            }
+          }
+          if (i > 0 && j < lenCheck && currentNodeHolder[i-1][j+1]) {
+            if (currentNodeHolder[i-1][j+1].isAlive) {
+              checker++
+            }
+          }
+          if (j > 0 && currentNodeHolder[i][j-1]) {
+            if (currentNodeHolder[i][j-1].isAlive) {
+              checker++
+            }
+          }
+          if (j < lenCheck && currentNodeHolder[i][j+1]) {
+            if (currentNodeHolder[i][j+1].isAlive) {
+              checker++
+            }
+          }
+          if (j > 0 && i < lenCheck && currentNodeHolder[i+1][j-1]) {
+            if (currentNodeHolder[i+1][j-1].isAlive) {
+              checker++
+            }
+          }
+          if (i < lenCheck && currentNodeHolder[i+1][j]) {
+            if (currentNodeHolder[i+1][j].isAlive) {
+              checker++
+            }
+          }
+          if (i < lenCheck && j < lenCheck && currentNodeHolder[i+1][j+1]) {
+            if (currentNodeHolder[i+1][j+1].isAlive) {
+              checker++
+            }
+          }
+          if (checker === 3) {
+            nextNodeHolder[i][j].isAlive = true;
           }
         }
       }
@@ -310,9 +338,9 @@ class Grid extends Component {
   
   toggleCell = (col) => {
     if (col.isAlive) {
-      col.makeDead();
+      col.isAlive = false;
     } else {
-      col.makeAlive();
+      col.isAlive = true;
     }
     this.forceUpdate()
   }
@@ -323,7 +351,7 @@ class Grid extends Component {
     for (let i = 0; i < nextNodeHolder.length; i++) {
       for (let j = 0; j < nextNodeHolder.length; j++) {
         if (nextNodeHolder[i][j].isAlive) {
-          nextNodeHolder[i][j].makeDead();
+          nextNodeHolder[i][j].isAlive = false;
         }
       }
     }
@@ -356,8 +384,8 @@ class Grid extends Component {
           <select onChange={this.state.canClick? this.selectGridPreset: null} id="gridPresets">
             <option value="">-- Select --</option>
             <option value="clearPresets">Clear Grid</option>
-            <option value="gridPresetOne">Preset 1</option>
-            <option value="gridPresetTwo">Preset 2</option>
+            <option value="Glider">Preset 1</option>
+            <option value="Acorn">Preset 2</option>
             <option value="gridPresetThree">Preset 3</option>
             <option value="gridPresetFour">Preset 4</option>
           </select>

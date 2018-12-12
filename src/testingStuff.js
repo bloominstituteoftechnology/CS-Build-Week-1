@@ -88,16 +88,29 @@ console.log('LENADD', currentNodeHolder.length)
 
 
 
-0, 0
-0, -1
-0, +1
 -1, -1
 -1, 0
 -1, +1
+0, 0
+0, -1
+0, +1
 +1, -1
 +1, 0
 +1, +1
 
+[
+  [Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),],
+  [Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),],
+  [Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),],
+  [Node(0),Node(0),Node(0),Node(1),Node(1),Node(1),Node(0),Node(0),Node(0),Node(0),],
+  [Node(0),Node(0),Node(0),Node(1),Node(1),Node(1),Node(0),Node(0),Node(0),Node(0),],
+  [Node(0),Node(0),Node(0),Node(1),Node(1),Node(1),Node(0),Node(0),Node(0),Node(0),],
+  [Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),],
+  [Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),],
+  [Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),],
+  [Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),Node(0),],
+
+]
 
 ------------------
 // Before algorithm
