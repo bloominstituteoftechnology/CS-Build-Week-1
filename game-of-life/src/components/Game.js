@@ -83,11 +83,22 @@ class Game extends React.Component {
             let count = 0;
 
             for (let i = 0; i < neighbors.length; i++) {
-                if ((neighbors[i][0] >= 0 && neighbors[i][0] <= 14) &&
-                    (neighbors[i][1] >= 0 && neighbors[i][1] <= 14)) {
-                    const position = neighbors[i];
-                    if (this.state.grid[position[0]][position[1]]) {
-                        count += 1;
+                if(this.state.gridSize === 'small') {
+                    if ((neighbors[i][0] >= 0 && neighbors[i][0] <= 14) &&
+                        (neighbors[i][1] >= 0 && neighbors[i][1] <= 14)) {
+                        const position = neighbors[i];
+                        if (this.state.grid[position[0]][position[1]]) {
+                            count += 1;
+                        }
+                    }
+                }
+                if (this.state.gridSize === 'large') {
+                    if ((neighbors[i][0] >= 0 && neighbors[i][0] <= 29) &&
+                        (neighbors[i][1] >= 0 && neighbors[i][1] <= 29)) {
+                        const position = neighbors[i];
+                        if (this.state.grid[position[0]][position[1]]) {
+                            count += 1;
+                        }
                     }
                 }
             }
@@ -101,8 +112,10 @@ class Game extends React.Component {
         };
 
         this.clearGrid = event => {
-            event.preventDefault();
             let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
+            if (this.state.gridSize === 'large') {
+                grid = Array(30).fill(null).map(_ => Array(30).fill(false));
+            }
             this.setState({ grid: grid, isRunning: false, iterationCount: 0 });
             window.clearTimeout(this.timeout);
         };
@@ -110,10 +123,20 @@ class Game extends React.Component {
         this.usePreset = event => {
             clearTimeout(this.timeout);
             let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
+            if (this.state.gridSize === 'large') {
+                grid = Array(30).fill(null).map(_ => Array(30).fill(false));
+            }
             const presetToLoad = Presets[event.target.value];
-            presetToLoad.forEach(position => {
-                grid[position[0]][position[1]] = true;
-            });
+            if(this.state.gridSize === 'small') {
+                presetToLoad.forEach(position => {
+                    grid[position[0]][position[1]] = true;
+                });
+            }
+            if(this.state.gridSize === 'large') {
+                presetToLoad.forEach(position => {
+                    grid[position[0] + 7][position[1] + 7] = true;
+                });
+            }
             this.setState({
                 grid: grid,
                 isRunning: false,
@@ -128,10 +151,21 @@ class Game extends React.Component {
         this.handleGridColorChange = event => {
             this.setState({ gridColor: event.target.value });
         };
+
+        this.handleGridSizeChange = event => {
+            this.setState({
+                gridSize: event.target.value
+            }, () => {
+                this.clearGrid(event);
+            });
+        };
     }
 
     componentDidMount() {
         let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
+        if (this.state.gridSize === 'large') {
+            grid = Array(30).fill(null).map(_ => Array(30).fill(false));
+        }
         this.setState({ grid: grid });
     }
 
@@ -139,8 +173,8 @@ class Game extends React.Component {
         return (
             <div className="container">
                 <div className="size-options">
-                    <button onClick={this.handleGridSizeChange} value={'small'}>small</button>
-                    <button onClick={this.handleGridSizeChange} value={'large'}>large</button>
+                    <button onMouseDown={this.handleGridSizeChange} value={'small'}>small</button>
+                    <button onMouseDown={this.handleGridSizeChange} value={'large'}>large</button>
                 </div>
                 <div>{this.state.iterationCount} generations</div>
                 <div className="grid-container" style={{ backgroundColor: this.state.gridColor }}>
