@@ -250,10 +250,6 @@ class App extends Component {
     this.setState({gameRunning: false});
   };
 
-  unPauseGame = () => {
-    //This function will unpause the game running where it left off.
-    //This will pause the game if it is currently running.
-  };
 
   handleColorChangeIfZero = color => {
     this.setState({ if_zero_color: color });
@@ -481,9 +477,6 @@ class App extends Component {
             </div>
             <div>
               <button onClick = {this.stopTheGame}>Stop</button>
-            </div>
-            <div>
-              <button>Pause</button>
             </div>
             <div>
               <button onClick={this.updateRowCol}>Clear</button>
