@@ -24,6 +24,7 @@ class Stages extends Component {
     };
   }
   //what we want for the functions:
+
   //get the current stage that the process is in
   getStage() {
     return this.state.stage;
@@ -73,16 +74,16 @@ class Stages extends Component {
         //if they are alive then the counter for living cells
         // increments this is for the rules where a cell must
         //only have two or three to remain alive.
-        if (this.getLifeUpdate(i + "," + j)) {
+        if (this.getLifeUpdate(i + " , " + j)) {
           thoseAlive++;
         } else {
-          this.state.dead.set(i + "," + j, { x: i, y: j });
+          this.state.dead.set(i + " , " + j, { x: i, y: j });
         }
       }
     }
     //finding out if there are 2 or 3 living cells around the initial cell.
     if (thoseAlive === 2 || thoseAlive === 3)
-      this.state.nextStage.set(status.x + "," + status.y, {
+      this.state.nextStage.set(status.x + " , " + status.y, {
         x: status.x,
         y: status.y
       });
@@ -95,28 +96,28 @@ class Stages extends Component {
     for (let i = status.x - 1; i <= status.x + 1; i++) {
       for (let j = status.y - 1; j <= status.y; j++) {
         if (i === status.x && j === status.y) continue;
-        if (this.getLifeUpdate(i + "," + j)) {
+        if (this.getLifeUpdate(i + " , " + j)) {
           thoseAlive++;
         }
       }
     }
     if (thoseAlive === 3)
-      this.state.nextStage.set(status.x + "," + status.y, {
+      this.state.nextStage.set(status.x + " , " + status.y, {
         x: status.x,
         y: status.y
       });
   }
   //get the status of a cell and add it to map of living cells
   addCell(status) {
-    this.state.living.set(status.x + "," + status.y, {
+    this.state.living.set(status.x + " , " + status.y, {
       x: status.x,
       y: status.y
     });
   }
   //set the initial state of the cell
   initialCell(status) {
-    if (this.getLifeUpdate(status.x + "," + status.y)) {
-      this.removeCell(status.x + "," + status.y);
+    if (this.getLifeUpdate(status.x + " , " + status.y)) {
+      this.removeCell(status.x + " , " + status.y);
     } else {
       this.addCell(status);
     }

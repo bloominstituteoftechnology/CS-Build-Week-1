@@ -61,7 +61,8 @@ class App extends Component {
       //-----i    j  i=Column j=Row
       size: [60, 30],
       running: false, 
-      living: false
+      living: false,
+      speed: 1000, 
     };
     this.handleColumnChange = this.handleColumnChange.bind(this);
     this.handleRowChange = this.handleRowChange.bind(this);
@@ -70,6 +71,7 @@ class App extends Component {
     this.stopGame = this.stopGame.bind(this);
     this.renderBoard = this.renderBoard.bind(this);
     this.initialCell = this.initialCell.bind(this);
+    this.baseState = this.state; 
   }
 
   initialCell(status) {
@@ -118,7 +120,19 @@ class App extends Component {
       this.renderBoard();
     }
   }
-
+  handleSpeed(event){
+    if(!this.state.running){
+      let newSpeed = this.state.speed; 
+      if(event.target.value < 1000){
+        newSpeed = event.target.value;
+      }else{
+        newSpeed = 1000;
+      }
+      this.setState({
+        speed: newSpeed
+      });
+    }
+  }
   startGame() {
     //if the game is running
     //set the state of running to true
@@ -127,7 +141,7 @@ class App extends Component {
         {
           running: true
         },() => {
-          this.interval = setInterval(() => this.runGame(), 10);
+          this.interval = setInterval(() => this.runGame(), this.state.speed);
         }
       );
     }
@@ -147,14 +161,12 @@ class App extends Component {
     );
   }
   clearGame(){
-    //set running to false and call the initial state of stage.  
     this.setState({
       running: false, 
       stage: new Stages(), 
-    })
-  } 
-  
 
+    })
+  }
   runGame() {
     this.setState({
       stage: this.state.stage.addStage()
@@ -225,6 +237,14 @@ class App extends Component {
               placeholder="Columns"
               value={this.state.size[0]}
               onChange={this.handleColumnChange}
+            />
+          </InnerHeader>
+          <InnerHeader>
+            <Input 
+            type="number"
+            placeholder="Speed 1-1000"
+            value={this.state.speed}
+            onChange={this.handleSpeed}
             />
           </InnerHeader>
           <Btncontainer>
