@@ -71,7 +71,7 @@ class App extends Component {
     this.stopGame = this.stopGame.bind(this);
     this.renderBoard = this.renderBoard.bind(this);
     this.initialCell = this.initialCell.bind(this);
-    this.baseState = this.state; 
+    this.handleSpeed = this.handleSpeed.bind(this);     
   }
 
   initialCell(status) {
@@ -121,6 +121,7 @@ class App extends Component {
     }
   }
   handleSpeed(event){
+    console.log(event)
     if(!this.state.running){
       let newSpeed = this.state.speed; 
       if(event.target.value < 1000){
