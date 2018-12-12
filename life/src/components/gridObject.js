@@ -38,7 +38,7 @@ export default class GridObject extends Component {
             curObj: initObj,
             length: i,
             array: nextArray,
-            nexObj: initObj,
+            nexObj: nexObj,
             generations: 0,
             allFalse: falseObj
         })
@@ -83,29 +83,36 @@ export default class GridObject extends Component {
 
     //#4 goes through every object in the questionables array
     cubeNextTick(num){
-        console.log("num", num)
+        // console.log("num", num)
         let activeNeighbors = 0;
+        console.log(this.state.curObj,"\n --88-- inside cubeNextTick")
         activeNeighbors = this.countNeighbors(num);
-        console.log("active neighbors", activeNeighbors)
-        console.log(this.state.curObj,"inside cubeNextTick")
+        // console.log("active neighbors", activeNeighbors)
+        // console.log(this.state.curObj,"\ninside cubeNextTick")
         if(this.state.curObj[num] === true){//is alive
             if(activeNeighbors === 2 || activeNeighbors === 3){
-                let newNexObj = this.state.nexObj;
+                console.log(num, "has 2 or 3 neighbors", this.state.nexObj)
+                let newNexObj = {}
+                newNexObj = this.state.nexObj;
                 newNexObj[num] = true;
                 this.setState({
                     nexObj: newNexObj
                 })
             } else {
-                let newNexObj = this.state.nexObj;
+                console.log(num, "doesnt have 2 or 3 neighbors neighbors",  this.state.nexObj)
+                let newNexObj = {} 
+                newNexObj = this.state.nexObj;
                 newNexObj[num] = false;
                 this.setState({
                     nexObj: newNexObj
                 })
+                console.log(num, " @doesnt have 2 or 3 neighbors neighbors",  this.state.curObj)
             }
         } else {//is dead
             if(activeNeighbors === 3) { 
                 console.log(num, "has 3 neighbors")
-                let newNexObj = this.state.nexObj;
+                let newNexObj = {}
+                newNexObj = this.state.nexObj;
                 newNexObj[num] = true;
                 this.setState({
                     nexObj: newNexObj
