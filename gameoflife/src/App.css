@@ -124,6 +124,7 @@ table {
   outline:none;
   text-align: center;
   align-content: center;
+  border-radius: 20px;
 }
 
 .button:hover{

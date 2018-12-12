@@ -37,8 +37,8 @@ class GridContainer extends Component {
     // drawing the grid
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
-    const w = 525;
-    const h = 525;
+    const w = 225;
+    const h = 225;
     ctx.canvas.width = w;
     ctx.canvas.height = h;
 
@@ -99,7 +99,7 @@ class GridContainer extends Component {
     let pos = this.getMousePos(canvas, event),
       x = Math.floor(pos.x / w),
       y = Math.floor(pos.y / h);
-    console.log(`pos.x:${pos.x} x:${x} || pos.y:${pos.y} y:${y}`);
+    // console.log(`pos.x:${pos.x} x:${x} || pos.y:${pos.y} y:${y}`);
     if (this.state.grid[y][x] === 0) {
       ctx.fillStyle = "black";
       ctx.fillRect(x * w, y * h, w, h);
