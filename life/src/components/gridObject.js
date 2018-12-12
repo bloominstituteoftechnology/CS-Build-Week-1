@@ -79,7 +79,7 @@ export default class GridObject extends Component {
             nexObj: allFalse,
             generations: this.state.generations+1,
         })
-        console.log("buildNext False\n", `cur obj 1 = ${this.state.curObj[1]}\n`, `nex obj 1 = ${this.state.nexObj[1]}\n`)
+        // console.log("buildNext False\n", `cur obj 1 = ${this.state.curObj[1]}\n`, `nex obj 1 = ${this.state.nexObj[1]}\n`)
         // console.log("buildNext False\n", `cur obj 16 = ${this.state.curObj[16]}\n`, `nex obj 16 = ${this.state.nexObj[16]}\n`)
         // console.log("buildNext False\n", `cur obj 15 = ${this.state.curObj[15]}\n`, `nex obj 15 = ${this.state.nexObj[15]}\n`)
     }
@@ -90,7 +90,7 @@ export default class GridObject extends Component {
         activeNeighbors = this.countNeighbors(num);
         if(this.state.curObj[num] === true){//is alive
             if(activeNeighbors === 2 || activeNeighbors === 3){
-                console.log(num, "has 2 or 3 neighbors");
+                // console.log(num, "has 2 or 3 neighbors");
                 let newNexObj = {}
                 newNexObj = this.state.nexObj;
                 newNexObj[num] = true;
@@ -107,7 +107,7 @@ export default class GridObject extends Component {
             }
         } else {//is dead
             if(activeNeighbors === 3) { 
-                console.log(num, "has 3 neighbors");
+                // console.log(num, "has 3 neighbors");
                 let newNexObj = {}
                 newNexObj = this.state.nexObj;
                 newNexObj[num] = true;
@@ -115,7 +115,7 @@ export default class GridObject extends Component {
                     nexObj: newNexObj
                 })
             } else {
-                console.log(num, "does not have 3 neighbors");
+                // console.log(num, "does not have 3 neighbors");
                 let newNexObj = {}
                 newNexObj = this.state.nexObj;
                 newNexObj[num] = false;
@@ -182,30 +182,36 @@ export default class GridObject extends Component {
         }
     }
 
-    startTheGame(){
-        let start = window.setInterval(this.buildNext, 5000)
-        this.setState({
-            start: start
-        })
-    }
+    // startTheGame(hello){
+    //     let start = window.setInterval(this.buildNext, 5000)
+    //     this.setState({
+    //         start: start
+    //     })
+    //     if(hello===true){
+    //         console.log("hello")
+    //         window.clearInterval(start)
+    //     }
+    // }
 
-    stopTheGame(){
-        window.clearInterval(this.state.start)
-    }
+    // stopTheGame(){
+    //     window.clearInterval(this.state.start)
+    // }
 
-    print(){
-        console.log("start the game")
-    }
-
+    // print(){
+    //     console.log("start the game")
+    // }
     clickHandler = (e) => {
         e.preventDefault();
         switch(e.target.name){
             case "start":
                 console.log("start");
-                this.startTheGame();
+                // this.startTheGame();
+                start = window.setInterval(this.buildNext, 2000)
                 break;
             case "stop":
                 console.log("stop");
+                // this.startTheGame(true);
+                window.clearInterval(start)
                 break;
             case "next":
                 console.log("next");
@@ -242,6 +248,8 @@ export default class GridObject extends Component {
         )
     }
 }
+
+let start;
 
 const GridDiv = styled.div`
     .cubesBin{
