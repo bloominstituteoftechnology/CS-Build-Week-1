@@ -186,29 +186,34 @@ class App extends Component {
     while(gameRunning){
     // while(this.state.gameRunning){
 
-      for(let i = 0; i<matrix.length; i++){
+      // for(let i = 0; i<matrix.length; i++){
 
-          let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
-          let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
-          if (current_cell_alive){
-            if(aliveNeighbors !== 2 || aliveNeighbors !== 3){
-              //kill the cell that is currently alive. 
-              console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
-              state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
-              // this.setState({state_matrix});
-              this.continueWithGame();
-            }
-          } else {
-            if(aliveNeighbors ===3){
-              //resurrect the currently dead cell. 
-              console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
-              state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
-              // this.setState({state_matrix});
-              this.continueWithGame();
-            }
-          }
-          console.log(matrix[i].row);
-      }
+      //     let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
+      //     let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
+      //     if (current_cell_alive){
+      //       if(aliveNeighbors !== 2 || aliveNeighbors !== 3){
+      //         //kill the cell that is currently alive. 
+      //         console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
+      //         state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
+      //         // this.setState({state_matrix});
+      //         this.continueWithGame();
+      //       }
+      //     } else {
+      //       if(aliveNeighbors ===3){
+      //         //resurrect the currently dead cell. 
+      //         console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
+      //         state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
+      //         // this.setState({state_matrix});
+      //         this.continueWithGame();
+      //       }
+      //     }
+      //     console.log(matrix[i].row);
+      // }
+      setTimeout(this.presetChange("Block"), 3000); 
+      setTimeout(this.presetChange("Beehive"), 3000); 
+      setTimeout(this.presetChange("Loaf"), 3000); 
+      setTimeout(this.presetChange("Boat"), 3000); 
+      setTimeout(this.presetChange("Tub"), 3000); 
       gameRunning = false; 
       this.setState({matrix : state_matrix, gameRunning});
       
@@ -367,10 +372,6 @@ class App extends Component {
     return totalAlive;
   };
 
-  generateRandom = () => {
-
-  }
-
   presetChange = (type) => {
     
     const finished = this.setMatrixUp();//will reset the grid before setting it up. 
@@ -460,6 +461,10 @@ class App extends Component {
         }
       }
     }
+  }
+
+  test = () => {
+    console.log("test");
   }
 
   render() {
