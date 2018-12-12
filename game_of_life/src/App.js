@@ -5,13 +5,11 @@ import Cell from "./Cell";
 import Stages from "./Stages";
 
 const AppHolder = styled.div`
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   flex: 1;
 `;
 const Headercontainer = styled.header`
-  border: 1px solid red;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,7 +23,6 @@ const Btn = styled.button`
   margin: 10px;
 `;
 const InnerHeader = styled.header`
-  border: 1px solid green;
   display: flex;
   width: auto;
   heigth: auto;
@@ -36,17 +33,14 @@ const Input = styled.input`
   margin: 10px;
 `;
 const Btncontainer = styled.div`
-  border: 1px solid blue;
   display: flex;
   width: auto;
   height: auto;
 `;
 const Headertext = styled.div`
-  border: 1px solid yellow;
   width: auto;
 `;
 const BoardContainer = styled.div`
-  border: 1px solid pink;
   display: flex;
   flex: 1;
   justify-content: center;
@@ -60,18 +54,19 @@ class App extends Component {
       stage: new Stages(),
       //-----i    j  i=Column j=Row
       size: [60, 30],
-      running: false, 
+      running: false,
       living: false,
-      speed: 1000, 
+      speed: 1000
     };
     this.handleColumnChange = this.handleColumnChange.bind(this);
     this.handleRowChange = this.handleRowChange.bind(this);
     this.startGame = this.startGame.bind(this);
-    this.clearGame = this.clearGame.bind(this); 
+    this.clearGame = this.clearGame.bind(this);
     this.stopGame = this.stopGame.bind(this);
     this.renderBoard = this.renderBoard.bind(this);
     this.initialCell = this.initialCell.bind(this);
-    this.handleSpeed = this.handleSpeed.bind(this);     
+    this.handleSpeed = this.handleSpeed.bind(this);
+    this.randomGame = this.randomGame.bind(this);
   }
 
   initialCell(status) {
@@ -120,13 +115,12 @@ class App extends Component {
       this.renderBoard();
     }
   }
-  handleSpeed(event){
-    console.log(event)
-    if(!this.state.running){
-      let newSpeed = this.state.speed; 
-      if(event.target.value < 1000){
+  handleSpeed(event) {
+    if (!this.state.running) {
+      let newSpeed = this.state.speed;
+      if (event.target.value < 1000) {
         newSpeed = event.target.value;
-      }else{
+      } else {
         newSpeed = 1000;
       }
       this.setState({
@@ -141,7 +135,8 @@ class App extends Component {
       this.setState(
         {
           running: true
-        },() => {
+        },
+        () => {
           this.interval = setInterval(() => this.runGame(), this.state.speed);
         }
       );
@@ -154,24 +149,52 @@ class App extends Component {
     this.setState(
       {
         running: false
-      },() => {
+      },
+      () => {
         if (this.interval) {
           clearInterval(this.interval);
         }
       }
     );
   }
-  clearGame(){
+  clearGame() {
     this.setState({
-      running: false, 
-      stage: new Stages(), 
-
-    })
+      running: false,
+      stage: new Stages()
+    });
   }
   runGame() {
     this.setState({
       stage: this.state.stage.addStage()
     });
+  }
+  randomGame() {
+    let randomSelection = []; 
+    let randomBoard = []; 
+    if (!this.state.running) {
+      if (!this.initialCell) {
+        for (let i = 0; i < this.state.size[0]; i++) {
+          for (let j = 0; j < this.state.size[1]; j++) {
+            if(this.state.stage.addCell(i + " , " + j)){
+              randomSelection.push(
+                <Cell
+                key={[i, j]}
+                status={{ x: i, y: j }}
+                living={true}
+                initialCell={this.initialCell.bind(this)}
+                />);
+            }
+          }
+          let randomCell = randomSelection[Math.floor(Math.random()*randomSelection.length)];
+          randomBoard.push(
+            <div className="row" key={i}>
+            {randomCell}
+            </div>
+          )
+        }
+      }
+    }
+    return randomBoard; 
   }
 
   renderBoard() {
@@ -241,17 +264,18 @@ class App extends Component {
             />
           </InnerHeader>
           <InnerHeader>
-            <Input 
-            type="number"
-            placeholder="Speed 1-1000"
-            value={this.state.speed}
-            onChange={this.handleSpeed}
+            <Input
+              type="number"
+              placeholder="Speed 1-1000"
+              value={this.state.speed}
+              onChange={this.handleSpeed}
             />
           </InnerHeader>
           <Btncontainer>
             <Btn onClick={this.startGame}>Start</Btn>
             <Btn onClick={this.stopGame}>Stop</Btn>
             <Btn onClick={this.clearGame}>Clear</Btn>
+            <Btn onClick={this.randomGame}>Random</Btn>
           </Btncontainer>
         </Headercontainer>
       </AppHolder>
