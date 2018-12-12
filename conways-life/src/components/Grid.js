@@ -5,33 +5,8 @@ export default class Grid extends Component {
         super(props);
         this.state = {
             // currentState: 'white',
-            generation: '0',
+            generation: 0,
         };
-    }
-
-    handleClick = (e) => {
-        const canvas = this.refs.canvas;
-        const ctx = canvas.getContext('2d');
-        // let position = canvas.getBoundingClientRect();
-        let xcoord = Math.floor(e.offsetX / 20);
-        let ycoord = Math.floor(e.offsetY / 20);
-        let cell = `${xcoord}, ${ycoord}`;
-        this.setState({[`${cell}`]: 'black'});
-        ctx.fillStyle = 'black';
-        ctx.fillRect(Math.floor(e.offsetX / 20) * 20, Math.floor(e.offsetY / 20) *20, 20, 20);
-        console.log(this.state);
-    }
-
-    handleDoubleClick = (e) => {
-        const canvas = this.refs.canvas;
-        const ctx = canvas.getContext('2d');
-        let xcoord = Math.floor(e.offsetX / 20);
-        let ycoord = Math.floor(e.offsetY / 20);
-        let cell = `${xcoord}, ${ycoord}`;
-        this.setState({[`${cell}`]: 'white'});
-        ctx.fillStyle = 'white';
-        ctx.fillRect(Math.floor(e.offsetX / 20) * 20, Math.floor(e.offsetY / 20) *20, 20, 20);
-        console.log(this.state);
     }
 
     cellsState = () => {
@@ -59,6 +34,7 @@ export default class Grid extends Component {
             }
         }
         this.cellsState();
+        this.setState({generation: 0});
     }
 
     componentDidMount() {
@@ -86,10 +62,40 @@ export default class Grid extends Component {
         this.cellsState();
     }
 
+    handleClick = (e) => {
+        const canvas = this.refs.canvas;
+        const ctx = canvas.getContext('2d');
+        // let position = canvas.getBoundingClientRect();
+        let xcoord = Math.floor(e.offsetX / 20);
+        let ycoord = Math.floor(e.offsetY / 20);
+        let cell = `${xcoord}, ${ycoord}`;
+        this.setState({[`${cell}`]: 'black'});
+        ctx.fillStyle = 'black';
+        ctx.fillRect(Math.floor(e.offsetX / 20) * 20, Math.floor(e.offsetY / 20) *20, 20, 20);
+        console.log(this.state);
+    }
+
+    handleDoubleClick = (e) => {
+        const canvas = this.refs.canvas;
+        const ctx = canvas.getContext('2d');
+        let xcoord = Math.floor(e.offsetX / 20);
+        let ycoord = Math.floor(e.offsetY / 20);
+        let cell = `${xcoord}, ${ycoord}`;
+        this.setState({[`${cell}`]: 'white'});
+        ctx.fillStyle = 'white';
+        ctx.fillRect(Math.floor(e.offsetX / 20) * 20, Math.floor(e.offsetY / 20) *20, 20, 20);
+        console.log(this.state);
+    }
+
+    play = (e) => {
+        e.preventDefault();
+        this.setState({generation: this.state.generation + 1});
+    }
+
     render() {
         return(
             <div>
-                <h1>Generation: {this.state.genereation}</h1>
+                <h1>Generation: {this.state.generation}</h1>
                 <canvas className="canvas" ref="canvas" />
                 <button onClick={this.play}>Play</button>
                 <button onClick={this.pause}>Pause</button>
