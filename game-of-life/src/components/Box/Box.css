@@ -1,6 +1,6 @@
 .box {
     display: inline-block;
-    border: 1px solid blue;
+    border: 1px solid rgb(183, 43, 226);
     width: 15px;
     height: 15px;
     margin-left: -1px;
@@ -12,9 +12,9 @@
   }
   
   .on {
-    background-color: white;
+    background-color: rgb(98, 43, 226);
   }
 
   .box:hover {
-    background-color: rgb(43, 183, 226);
+    background-color: rgb(162, 226, 43);
   }
