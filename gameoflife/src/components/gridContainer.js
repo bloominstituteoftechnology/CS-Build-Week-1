@@ -73,7 +73,7 @@ class GridContainer extends Component {
         }
       }
     }
-    this.drawingGrid(450, 450, ctx);
+    this.drawingGrid(225, 225, ctx);
   };
 
   drawingGrid = (w, h, ctx) => {
@@ -97,22 +97,30 @@ class GridContainer extends Component {
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     let pos = this.getMousePos(canvas, event),
-    x = Math.floor(pos.x / w),
-    y = Math.floor(pos.y / h);
-    if(this.state.grid[y][x] == 0 ){
-      this.setState((state) => {
-        {grid: state.grid[y][x] = 1};
+      x = Math.floor(pos.x / w),
+      y = Math.floor(pos.y / h);
+    if (this.state.grid[y][x] == 0) {
+      ctx.fillStyle = "black";
+      ctx.fillRect(x * w, y * h, w, h);
+      this.setState(state => {
+        {
+          grid: state.grid[y][x] = 1;
+        }
       });
     } else {
-        this.setState((state) => {
-      {grid: state.grid[y][x] = 0};
-    });
-  
+      ctx.fillStyle = "white";
+      ctx.fillRect(x * w, y * h, w, h);
+      ctx.strokeRect(x * w, y * h, w, h);
+      this.setState(state => { 
+        {
+          grid: state.grid[y][x] = 0;
+        }
+      });
     }
     console.log(x, y);
+    console.log(`This is state x and y: ${this.state.grid[y][x]}`);
     // this.aliveCheck();
-    console.log(`This is state x and y: ${this.state.grid[y][x]}`)
-  
+    
   }
 
   // Run function
