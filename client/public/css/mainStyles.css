@@ -1,0 +1,242 @@
+﻿
+body {
+    margin:0px;
+    overflow-x:hidden;
+	font-family: 'Roboto Condensed', sans-serif;
+}
+
+#titleArea h1, #titleArea h2 {
+    text-align: center;
+    font-size: 72px;
+    letter-spacing: -3px;
+    transition:font-size 0.2s;
+}
+#titleArea h2 {
+    font-size: 36px;
+}
+@media(max-width:991x) {
+    #titleArea h1 {
+        font-size: 48px;
+    }
+
+    #titleArea h2 {
+        font-size: 28px;
+    }
+}
+.sectBtn{
+    padding:12px;
+    width:100vw;
+    background:#222;
+    border-bottom:2px solid #333;
+    border-top:2px solid #333;
+}
+
+#copyLink::selection{
+    background:#1a1a1a;
+    color:#FD2138;
+}
+#copyLink{
+    min-width:50vw;
+    border:none;
+    background:inherit;
+    height:70px;
+}
+@media(max-width:991px) {
+    #copyLink {
+        width: 100vw;
+    }
+}
+@media(min-width:992px){
+}
+
+.codeBlock{
+    border:2px solid #333;
+    color:#ccc;
+    background:#1a1a1a;
+    padding:8px;
+}
+
+/*Demo start*/
+#exampleSlider{
+    margin-bottom:10px;
+    padding:0;
+}
+.sliderBox{
+    text-align:center;
+    background-size:cover;
+    color:rgba(255,255,255,0.9);
+    font-weight:700;
+    padding:0;
+}
+.sliderBox h3 {
+    font-size: 3em;
+    padding-top: 5em;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 2px;
+font-family: 'Source Sans Pro', sans-serif;
+
+}
+.sliderBox h3 span {
+    display: block;
+    color: #47cf73;
+	
+}
+
+#sl1{
+    background:url(../images/banner.jpg) no-repeat 0px 0px;
+	background-size:cover;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	-ms-background-size:cover;
+}
+#sl2{
+    background:url(../images/banner1.jpg) no-repeat 0px 0px;
+	background-size:cover;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	-ms-background-size:cover;
+}
+#sl3{
+    background:url(../images/banner2.jpg) no-repeat 0px 0px;
+	background-size:cover;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	-ms-background-size:cover;
+}
+/*Demo end*/
+.sliderArr {
+    transition: background 0.2s;
+    z-index: 100;
+    position: absolute;
+    top:42%;
+    bottom: 50%;
+    width: 50px;
+    height: 50px;
+    padding: 8px;
+    background: rgba(0,0,0,0.05);
+    cursor: pointer;
+	border-radius:0!important 
+}
+img#sliderRight {
+    right: 15px!important;
+}
+img#sliderLeft {
+	left:0px!important;
+}
+#exSect{
+    padding-left:16px;
+    padding-right:16px;
+    padding-bottom:48px;
+}
+#exSect .codeBlock{
+    height:200px;
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+/*-- start-responsive-design --*/
+@media (max-width:1440px){
+	.sliderBox h3 {
+		font-size: 3em;
+		padding-top: 4em;
+	}
+}
+@media (max-width:991px){
+	.sliderBox h3 {
+		font-size: 2.4em;
+		padding-top: 5em;
+	}
+}
+@media (max-width:768px){
+	#exampleSlider,.sliderBox {
+		width:100%!important;
+		height:450px!important;
+	}
+	.sliderBox h3 {
+		font-size: 2.4em;
+		padding-top: 4em;
+	}
+}
+@media (max-width:667px){
+
+	#exampleSlider, .sliderBox {
+		width: 100%!important;
+		height: 400px!important;
+	}
+	.sliderBox h3 {
+		font-size: 2em;
+		padding-top: 4em;
+	}
+	.sliderBox h3 span {
+		font-size: 13px;
+		letter-spacing: 10px;
+		padding-top: 1em;
+	}
+}
+@media (max-width:600px){
+	#exampleSlider, .sliderBox {
+		width: 100%!important;
+		height: 350px!important;
+	}
+	.sliderBox h3 {
+		font-size: 1.8em;
+		padding-top: 4em;
+	}
+
+}
+@media (max-width:480px){
+	.sliderBox h3 {
+		font-size: 1.4em;
+		padding-top: 5em;
+	}
+	#exampleSlider, .sliderBox {
+		width: 100%!important;
+		height: 330px!important;
+	}
+}
+@media (max-width:414px){
+	#exampleSlider, .sliderBox {
+		width: 100%!important;
+		height: 300px!important;
+	}
+	.sliderBox h3 span {
+		font-size: 13px;
+		letter-spacing: 7px;
+		padding-top: 1em;
+	}
+	.sliderBox h3 {
+		font-size: 1.4em;
+		padding: 4em 1em 0 1em;
+	}
+}
+@media (max-width:384px){
+	#exampleSlider, .sliderBox {
+		width: 100%!important;
+		height: 280px!important;
+	}
+}
+@media (max-width:375px){
+	#exampleSlider, .sliderBox {
+		width: 100%!important;
+		height: 250px!important;
+	}
+}
+@media (max-width:320px){
+	#exampleSlider, .sliderBox {
+		width: 100%!important;
+		height: 230px!important;
+	}
+	.sliderBox h3 {
+		font-size: 1.2em;
+		padding: 3em 1em 0 1em;
+	}
+	.sliderBox h3 span {
+		font-size: 13px;
+		letter-spacing: 4px;
+		padding-top: 1em;
+	}
+}
+/*-- //end-responsive-design --*/
