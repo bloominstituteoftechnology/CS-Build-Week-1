@@ -4,13 +4,13 @@ import styled from "styled-components";
 import Cell from "./Cell";
 import Stages from "./Stages";
 
-const App_Holder = styled.div`
+const AppHolder = styled.div`
   border: 1px solid black;
   display: flex;
   flex-direction: column;
   flex: 1;
 `;
-const Header_container = styled.header`
+const Headercontainer = styled.header`
   border: 1px solid red;
   display: flex;
   align-items: center;
@@ -24,7 +24,7 @@ const Btn = styled.button`
   padding: 10px;
   margin: 10px;
 `;
-const Inner_Header = styled.header`
+const InnerHeader = styled.header`
   border: 1px solid green;
   display: flex;
   width: auto;
@@ -35,17 +35,17 @@ const Input = styled.input`
   height: 20px;
   margin: 10px;
 `;
-const Btn_container = styled.div`
+const Btncontainer = styled.div`
   border: 1px solid blue;
   display: flex;
   width: auto;
   height: auto;
 `;
-const Header_text = styled.div`
+const Headertext = styled.div`
   border: 1px solid yellow;
   width: auto;
 `;
-const Board_Container = styled.div`
+const BoardContainer = styled.div`
   border: 1px solid pink;
   display: flex;
   flex: 1;
@@ -65,6 +65,7 @@ class App extends Component {
     this.handleColumnChange = this.handleColumnChange.bind(this);
     this.handleRowChange = this.handleRowChange.bind(this);
     this.startGame = this.startGame.bind(this);
+    this.clearGame = this.clearGame.bind(this); 
     this.stopGame = this.stopGame.bind(this);
     this.renderBoard = this.renderBoard.bind(this);
     this.initialCell = this.initialCell.bind(this);
@@ -146,6 +147,12 @@ class App extends Component {
       }
     );
   }
+  clearGame(){
+    this.setState({
+      running: false, 
+      stage: this.state.stage,  
+    })
+  }
 
   runGame() {
     this.setState({
@@ -196,16 +203,16 @@ class App extends Component {
 
   render() {
     return (
-      <App_Holder>
-        <Header_text>
+      <AppHolder>
+        <Headertext>
           <h2>The Game of Life</h2>
-        </Header_text>
-        <Header_text>
+        </Headertext>
+        <Headertext>
           <h3>Generations:{this.state.stage.getStage()}</h3>
-        </Header_text>
-        <Board_Container>{this.renderBoard()}</Board_Container>
-        <Header_container>
-          <Inner_Header>
+        </Headertext>
+        <BoardContainer>{this.renderBoard()}</BoardContainer>
+        <Headercontainer>
+          <InnerHeader>
             <Input
               type="number"
               placeholder="Rows"
@@ -218,13 +225,14 @@ class App extends Component {
               value={this.state.size[0]}
               onChange={this.handleColumnChange}
             />
-          </Inner_Header>
-          <Btn_container>
+          </InnerHeader>
+          <Btncontainer>
             <Btn onClick={this.startGame}>Start</Btn>
             <Btn onClick={this.stopGame}>Stop</Btn>
-          </Btn_container>
-        </Header_container>
-      </App_Holder>
+            <Btn onClick={this.stopGame}>Clear</Btn>
+          </Btncontainer>
+        </Headercontainer>
+      </AppHolder>
     );
   }
 }

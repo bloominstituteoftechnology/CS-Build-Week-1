@@ -35,12 +35,10 @@ class Stages extends Component{
     }
     //tell whether a cell is alive or dead
     getLifeUpdate(status){
-        console.log("getLifeUpdate status:", status); 
         return this.state.living.has(status); 
     }
     //remove a cell from the map
     removeCell(status){
-        console.log("removeCell status:", status); 
         return this.state.living.delete(status); 
     }
     //in each stage tell the new living and dead cells
@@ -110,7 +108,6 @@ class Stages extends Component{
     }
     //get the status of a cell and add it to map of living cells
     addCell(status){
-        console.log("addCell status:", status); 
         this.state.living.set(status.x + " , " + status.y, {x : status.x, y: status.y})
     }
     //set the initial state of the cell
