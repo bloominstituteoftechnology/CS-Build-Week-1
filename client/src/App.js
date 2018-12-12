@@ -103,11 +103,26 @@ class App extends Component {
     this.setMatrixUp();
   };
 
+  cloneObject = () => {
+    const matrix = {};
+
+    Object.entries(this.state.matrix).forEach(entry => {
+      matrix[entry[0]] = []; 
+      for (let x of entry[1]){
+        matrix[entry[0]].push(x); 
+      }
+
+    });
+    
+    return matrix; 
+  }
+
   runGamne = () => {
     //functionaly for gameplay goes here
     console.log("Starting the game");
     const matrix = this.state.matrixUsing.slice(); 
     let gameRunning = true; 
+    const state_matrix = this.cloneObject(); 
     while(gameRunning){
 
       for(let i = 0; i<matrix.length; i++){
@@ -118,17 +133,22 @@ class App extends Component {
             if(aliveNeighbors !== 2 || aliveNeighbors !== 3){
               //kill the cell that is currently alive. 
               console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
-              this.state.matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
+              state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
+              this.setState({state_matrix});
+              this.setMatrixUp()
             }
           } else {
             if(aliveNeighbors ===3){
               //resurrect the currently dead cell. 
               console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
-              this.state.matrix[matrix[i].row][matrix[i].position_in_row] = 1; 
+              state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
+              this.setState({state_matrix});
+              this.setMatrixUp() 
             }
           }
 
       }
+      
       gameRunning = false; 
     }
   };
