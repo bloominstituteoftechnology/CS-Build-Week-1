@@ -36,7 +36,7 @@ class Game extends React.Component {
             boardSize: "medium",
             numX: 50,
             numY: 50,
-            cellSize: 20,
+            cellSize: 15,
             configuration: ''
         }
     }
@@ -347,7 +347,7 @@ class Game extends React.Component {
             secondMatrix = smallSecond;
         } else if (size === "medium") {
             this.setState({array1: mediumClear});
-            this.setState({boardSize: "medium", numX: 50, numY: 50, cellSize: 20});
+            this.setState({boardSize: "medium", numX: 50, numY: 50, cellSize: 15});
             clearMatrix = mediumClear;
             firstMatrix = mediumFirst;
             secondMatrix = mediumSecond;
@@ -423,51 +423,54 @@ class Game extends React.Component {
 
     render() {
         return (
-            <div>
-                <canvas ref="canvas" id="gameCanvas" width={(this.state.numX + 1) *this.state.cellSize + 1} height={this.state.numY * this.state.cellSize + 1} onClick={this.canvasOnClick} />
-                <button onClick={this.toggleButton}>{this.state.buttonTag}</button>
-                <button onClick={this.clearGrid}>Clear</button>
-                {/* <button onClick={() => this.changeSpeed(2000)}>></button>
-                <button onClick={() => this.changeSpeed(1000)}>>></button>
-                <button onClick={() => this.changeSpeed(500)}>>>></button> */}
-                <select value={this.state.boardSize} onChange={(e) => this.changeBoardSize(e.target.value)}>
-                    <option value="small">Small</option>
-                    <option selected value="medium">Medium</option>
-                    <option value="large">Large</option>
-                </select>
-                {this.state.boardSize === "small" ? 
-                <select value={this.state.configuration} onChange={(e) => this.pickConfiguration(e.target.value)} >
-                    <option value="none">Select a configuration:</option>
-                    <option value="glider">Glider</option>
-                    <option value="blinker">Blinker</option>
-                    <option value="beacon">Beacon</option>
-                    <option value="toad">Toad</option>
-                </select>
-                : null}
-                {this.state.boardSize === "medium" ? 
-                <select value={this.state.configuration} onChange={(e) => this.pickConfiguration(e.target.value)} >
-                    <option value="none">Select a configuration:</option>
-                    <option value="glider">Glider</option>
-                    <option value="blinker">Blinker</option>
-                    <option value="beacon">Beacon</option>
-                    <option value="toad">Toad</option>
-                    <option value="pulsar">Pulsar</option>
-                </select>
-                : null}
-                {this.state.boardSize === "large" ? 
-                <select value={this.state.configuration} onChange={(e) => this.pickConfiguration(e.target.value)} >
-                    <option value="none">Select a configuration:</option>
-                    <option value="glider">Glider</option>
-                    <option value="blinker">Blinker</option>
-                    <option value="beacon">Beacon</option>
-                    <option value="toad">Toad</option>
-                    <option value="pulsar">Pulsar</option>
-                    <option value="gggun">Gosper Glider Gun</option>
-                </select>
-                : null}
-                <button onClick={this.generateRandom}>Random</button>
-                Generation: {generationCount}
-
+            <div className="gameDiv">
+                <div>
+                    <canvas ref="canvas" id="gameCanvas" width={(this.state.numX + 1) *this.state.cellSize + 1} height={this.state.numY * this.state.cellSize + 1} onClick={this.canvasOnClick} />
+                </div>
+                <div>
+                    <button onClick={this.toggleButton}>{this.state.buttonTag}</button>
+                    <button onClick={this.clearGrid}>Clear</button>
+                    {/* <button onClick={() => this.changeSpeed(2000)}>></button>
+                    <button onClick={() => this.changeSpeed(1000)}>>></button>
+                    <button onClick={() => this.changeSpeed(500)}>>>></button> */}
+                    <select value={this.state.boardSize} onChange={(e) => this.changeBoardSize(e.target.value)}>
+                        <option value="small">Small</option>
+                        <option selected value="medium">Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                    {this.state.boardSize === "small" ? 
+                    <select value={this.state.configuration} onChange={(e) => this.pickConfiguration(e.target.value)} >
+                        <option value="none">Select a configuration:</option>
+                        <option value="glider">Glider</option>
+                        <option value="blinker">Blinker</option>
+                        <option value="beacon">Beacon</option>
+                        <option value="toad">Toad</option>
+                    </select>
+                    : null}
+                    {this.state.boardSize === "medium" ? 
+                    <select value={this.state.configuration} onChange={(e) => this.pickConfiguration(e.target.value)} >
+                        <option value="none">Select a configuration:</option>
+                        <option value="glider">Glider</option>
+                        <option value="blinker">Blinker</option>
+                        <option value="beacon">Beacon</option>
+                        <option value="toad">Toad</option>
+                        <option value="pulsar">Pulsar</option>
+                    </select>
+                    : null}
+                    {this.state.boardSize === "large" ? 
+                    <select value={this.state.configuration} onChange={(e) => this.pickConfiguration(e.target.value)} >
+                        <option value="none">Select a configuration:</option>
+                        <option value="glider">Glider</option>
+                        <option value="blinker">Blinker</option>
+                        <option value="beacon">Beacon</option>
+                        <option value="toad">Toad</option>
+                        <option value="pulsar">Pulsar</option>
+                        <option value="gggun">Gosper Glider Gun</option>
+                    </select>
+                    : null}
+                    <button onClick={this.generateRandom}>Random</button>
+                    Generation: {generationCount}
+                </div>
             </div>
         );
     }

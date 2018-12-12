@@ -44,3 +44,8 @@ ol, .algoP {
   text-align: left;
   margin: 0 auto;
 }
+
+.gameDiv {
+  display: flex;
+  flex-flow: column wrap;
+}
