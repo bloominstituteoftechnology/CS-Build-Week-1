@@ -100,6 +100,22 @@ class App extends Component {
     }
   };
 
+  randomGridHandler = () => {
+    let grid = [];
+    let randomNum = null;
+
+    this.state.grid.forEach(cell => {
+      grid.push({ ...cell });
+    });
+
+    for (let i = 0; i < this.state.totalCells; i++) {
+      randomNum = Math.floor(Math.random() * Math.floor(3));
+      grid[i].isAlive = randomNum === 0 ? true : false;
+    }
+
+    this.setState({ grid: grid, currGen: 1 });
+  };
+
   calculateNextGen = () => {
     let grid = [];
     this.state.grid.forEach(cell => {
@@ -191,6 +207,13 @@ class App extends Component {
             ))}
           </div>
           <div className="btns">
+            <button
+              type="button"
+              disabled={this.state.isClickable ? false : true}
+              onClick={this.randomGridHandler}
+            >
+              Generate Random Cell Grid
+            </button>
             <button
               type="button"
               onClick={() =>
