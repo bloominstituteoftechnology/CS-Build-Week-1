@@ -113,7 +113,6 @@ class Stages extends Component{
     }
     //set the initial state of the cell
     initialCell(status){
-        console.log("initialCell status:", status); 
         if(this.getLifeUpdate(status.x + " , " + status.y)){
             this.removeCell(status.x + " , " + status.y);
         }else{

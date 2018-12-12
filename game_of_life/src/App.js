@@ -60,7 +60,8 @@ class App extends Component {
       stage: new Stages(),
       //-----i    j  i=Column j=Row
       size: [60, 30],
-      running: false
+      running: false, 
+      living: false
     };
     this.handleColumnChange = this.handleColumnChange.bind(this);
     this.handleRowChange = this.handleRowChange.bind(this);
@@ -125,8 +126,7 @@ class App extends Component {
       this.setState(
         {
           running: true
-        },
-        () => {
+        },() => {
           this.interval = setInterval(() => this.runGame(), 10);
         }
       );
@@ -139,8 +139,7 @@ class App extends Component {
     this.setState(
       {
         running: false
-      },
-      () => {
+      },() => {
         if (this.interval) {
           clearInterval(this.interval);
         }
@@ -148,12 +147,10 @@ class App extends Component {
     );
   }
   clearGame(){
-    this.setState({
-      running: false, 
-      stage: this.state.stage 
-
-    })
-  }
+    //need the stage to reset and the cells to be all dead.
+  
+    }; 
+  
 
   runGame() {
     this.setState({
@@ -176,7 +173,7 @@ class App extends Component {
             <Cell
               key={[i, j]}
               status={{ x: i, y: j }}
-              live={true}
+              living={true}
               initialCell={this.initialCell.bind(this)}
             />
           );
@@ -185,7 +182,7 @@ class App extends Component {
             <Cell
               key={[i, j]}
               status={{ x: i, y: j }}
-              live={false}
+              living={false}
               initialCell={this.initialCell.bind(this)}
             />
           );
@@ -209,7 +206,7 @@ class App extends Component {
           <h2>The Game of Life</h2>
         </Headertext>
         <Headertext>
-          <h3>Generations:{this.state.stage.getStage()}</h3>
+          <h3>Stages:{this.state.stage.getStage()}</h3>
         </Headertext>
         <BoardContainer>{this.renderBoard()}</BoardContainer>
         <Headercontainer>
@@ -230,7 +227,7 @@ class App extends Component {
           <Btncontainer>
             <Btn onClick={this.startGame}>Start</Btn>
             <Btn onClick={this.stopGame}>Stop</Btn>
-            <Btn onClick={this.stopGame}>Clear</Btn>
+            <Btn onClick={this.clearGame}>Clear</Btn>
           </Btncontainer>
         </Headercontainer>
       </AppHolder>
