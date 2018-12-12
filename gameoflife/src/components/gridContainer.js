@@ -37,8 +37,8 @@ class GridContainer extends Component {
     // drawing the grid
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
-    const w = 450;
-    const h = 450;
+    const w = 225;
+    const h = 225;
     ctx.canvas.width = w;
     ctx.canvas.height = h;
 
@@ -50,7 +50,7 @@ class GridContainer extends Component {
   getMousePos = (canvas, event) => {
     event.preventDefault();
     let rect = canvas.getBoundingClientRect();
-    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+    return { x: event.clientX - rect.left, y: event.clientY - rect.top};
   };
 
   // function for determining live or dead
@@ -65,7 +65,7 @@ class GridContainer extends Component {
       for (let x = 0; x < this.state.grid[y].length; x++) {
         if (this.state.grid[y][x]) {
           // this.getMousePos()
-          // console.log(`x: ${x} y: ${y}`);
+          console.log(`x: ${x} y: ${y}`);
           ctx.fillStyle = "black";
           ctx.fillRect(x * w, y * h, w, h);
         } else {
@@ -78,8 +78,8 @@ class GridContainer extends Component {
 
   drawingGrid = (w, h, ctx) => {
     // drawing the grid
-    for (let j = 0; j <= w; j += 15) {
-      for (let k = 0; k <= h; k += 15) {
+    for (let j = 0; j <= w; j+=15) {
+      for (let k = 0; k <= h; k+=15) {
         ctx.moveTo(j, 0);
         ctx.lineTo(j, h);
         ctx.stroke();
@@ -99,7 +99,8 @@ class GridContainer extends Component {
     let pos = this.getMousePos(canvas, event),
       x = Math.floor(pos.x / w),
       y = Math.floor(pos.y / h);
-    if (this.state.grid[y][x] == 0) {
+    console.log(`pos.x:${pos.x} x:${x} || pos.y:${pos.y} y:${y}`);
+    if (this.state.grid[y][x] === 0) {
       ctx.fillStyle = "black";
       ctx.fillRect(x * w, y * h, w, h);
       this.setState(state => {
@@ -117,9 +118,10 @@ class GridContainer extends Component {
         }
       });
     }
-    console.log(x, y);
-    console.log(`This is state x and y: ${this.state.grid[y][x]}`);
+    // console.log(x, y);
+    // console.log(`This is state x and y: ${this.state.grid[y][x]}`);
     // this.aliveCheck();
+    console.log(`y: ${Math.floor(pos.y / 15)} x: ${Math.floor(pos.x / 15)}`);
     
   }
 

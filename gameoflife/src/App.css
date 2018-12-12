@@ -98,7 +98,6 @@ table {
   width: 500px;
   height: 500px; 
   background-color: #F5F5F5;
-  display: flex;
   justify-content: center;
   align-content: center;
   border-radius: 10px;
