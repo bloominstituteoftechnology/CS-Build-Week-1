@@ -2,39 +2,10 @@
   text-align: center;
 }
 
-.box {
-  display: inline-block;
-  border: 1px solid black;
-  width: 15px;
-  height: 15px;
-  margin-left: -1px;
-  margin-bottom: -1px;
-}
-
-.off {
-  background-color: lightgray;
-}
-
-.on {
-  background-color: blueviolet;
-}
-
-.box:hover {
-  background-color: rgb(0, 0, 0);
-}
-
 .center {
   margin: auto;
   display: table;
   margin-top: 10px;
-}
-
-.grid {
-  width: 150px;
-  line-height: 0;
-  margin: auto;
-  margin-top: 20px;
-  box-shadow: 0px 0px 20px white;
 }
 
 h1, h2, h3 , h4 {
