@@ -185,6 +185,7 @@ class Game extends React.Component {
   handleClearBoard = () => {
     this.board = this.createEmptyBoard();
     this.setState({ cells: this.makeCells() });
+    this.setState ({generation: 0})
   };
 
   //generate a random pattern
