@@ -24,12 +24,13 @@ class Canvas extends Component {
             e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
             squareSize,
             squareSize);
-            let tempX = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20}`;
-            let tempY = `${(e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
+            let tempX = (e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20;
+            let tempY = (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20;
             let selectedCell = `${tempX},${tempY}`;
             // console.log(this.state[`${tempCoord}`]);
             this.setState({[`${selectedCell}`]: "living"});
-            console.log(`let tln = ${tempX-1},${tempY-1}`);
+            console.log(`topLeftN = ${tempX-1},${tempY-1}`);
+            console.log(`botRightN = ${tempX+1},${tempY+1}`);
         } else {console.log('Grid is not interactive while simulation is running');}
         
     }
@@ -75,7 +76,6 @@ class Canvas extends Component {
         ctx.strokeStyle = 'rgba(111, 111, 111, 0.8)';
         for (let x=0; x<=300; x+= 20) {
             for (let y=0; y<=300; y+= 20) {
-                
                 ctx.moveTo(x, 0);
                 ctx.lineTo(x, 300);
                 ctx.stroke();
@@ -93,8 +93,15 @@ class Canvas extends Component {
     //         let stateBuffer = {...this.state};
     //         for (let x=0; x<=300; x+= 20) {
     //             for (let y=0; y<=300; y+= 20) {
-    //                 let lnc = 0;
-    //                 let tln = `${x/20-1},${y/20-1}`;
+    //                 let LNC = 0;
+    //                 let topLeftN = `${x/20-1},${y/20-1}`;
+    //                 let topN = `${x/20},${y/20-1}`;
+    //                 let topRightN = `${x/20+1},${y/20-1}`;
+    //                 let leftN = `${x/20-1},${y/20}`;
+    //                 let rightN = `${x/20+1},${y/20}`;
+    //                 let botLeftN = `${x/20-1},${y/20+1}`;
+    //                 let botN = `${x/20},${y/20+1}`;
+    //                 let botRightN = `${x/20+1},${y/20+1}`;
     //             }
     //         } 
     //     }
