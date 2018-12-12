@@ -4,6 +4,7 @@ import Cell from './Cell';
 import '../App.css';
 import Header from './Header';
 import Game_of_life from '../Logic/Game_of_life';
+import Controls from './Controls';
 
 class Grid extends Component {
     constructor(props) {
@@ -47,7 +48,11 @@ class Grid extends Component {
              gridSize: [30, 30],
              runningGame: false,
              game_of_life: new Game_of_life(),
-         })
+         },  () => {
+            if (this.intervalTimer) {
+                clearInterval(this.intervalTimer);
+            }
+        });
     }
 
     toggleCell = (coordinates) => {
@@ -86,6 +91,12 @@ class Grid extends Component {
         return newGrid;
     }
 
+    intervalChange = (event) => {
+        this.setState({
+            interval: event.target.value,
+        });
+    }
+
     render() { 
         return (
             <div className = 'gol-container'>
@@ -97,6 +108,16 @@ class Grid extends Component {
                     play = {this.play}
                     stop = {this.stop}
                     reset = {this.reset}
+                />
+                <Controls 
+                    rows = {this.state.gridSize[1]}
+                    columns = {this.state.gridSize[0]}
+                    interval = {this.state.interval}
+
+
+                    
+                    intervalChange = {this.intervalChange}
+
                 />
             </div>
          );
