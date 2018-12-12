@@ -33,9 +33,15 @@
   color: blue; 
 }
 
+.topButtons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
 .gridDiv {
   width: 20px;
-  border : 1px solid black; 
+  border : 1px solid grey; 
 }
 
 .onDiv {
@@ -85,16 +91,16 @@
 
 .colorChoices {
   display: flex; 
-  /* background: gold;  */
+  justify-content: space-between;
 }
-.divColor {
+.divcolor {
   width: 22px; 
   height: 22px; 
   border: 1px solid gold;
   margin-right: 7px;
 }
 
-.divColor:hover {
+.divcolor:hover {
   cursor: pointer;
 }
 .white {
@@ -128,6 +134,22 @@
 .yellow {
   background: yellow;
   color: yellow;  
+}
+
+.presetsDiv {
+  display: flex; 
+  justify-content: space-between;
+}
+
+.presetsDiv p {
+  background-color: blue;
+  color: white;
+  width: 45px; 
+  font-size: 12px;
+  text-align: center;
+}
+.presetsDiv p:hover {
+  cursor: pointer;
 }
 
 

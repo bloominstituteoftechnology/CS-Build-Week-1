@@ -10,6 +10,8 @@ class App extends Component {
     col_count: 15, //default
 
     width: "330px",
+    //presets 
+    presets: ["Block", "Beehive", "Loaf", "Boat", "Tub"],
     //cell choices
     if_one_color: "black",
     if_zero_color: "white",
@@ -27,10 +29,10 @@ class App extends Component {
     let beginRow = 0;
     let beginColumn = 0;
     const matrix = {};
-    while (beginRow != this.state.row_count) {
+    while (beginRow < this.state.row_count) {
       beginColumn = 0;
       matrix[beginRow] = [];
-      while (beginColumn != this.state.col_count) {
+      while (beginColumn < this.state.col_count) {
         matrix[beginRow].push(0);
         beginColumn++;
       }
@@ -45,8 +47,9 @@ class App extends Component {
           color: this.state.if_zero_color
         };
         temp_hash.row = Number(entry[0]);
-        temp_hash.position_in_row = count % 15;
+        temp_hash.position_in_row = count % this.state.col_count;
         temp_hash.actual_number = count;
+        temp_hash.value = x; //just to get rid of the warning. 
         matrixUsing.push(temp_hash);
         count++;
       }
@@ -56,6 +59,32 @@ class App extends Component {
 
     this.setState({ matrix, matrixUsing, width });
   };
+  continueWithGame = () => {
+    const matrixUsing = [];
+    const matrix = this.cloneObject(); 
+    let count = 0;
+    
+    Object.entries(matrix).forEach(entry => {
+      for (let x of entry[1]) {
+        const temp_hash = {
+          row: 0,
+          position_in_row: 0,
+          actual_number: 0,
+          color: this.state.if_zero_color
+        };
+        temp_hash.row = Number(entry[0]);
+        temp_hash.position_in_row = count % this.state.col_count;
+        temp_hash.actual_number = count;
+        temp_hash.value = x; //just to get rid of the warning. 
+        matrixUsing.push(temp_hash);
+        count++;
+      }
+    });
+    const width_size = 22 * this.state.col_count;
+    const width = `${width_size}px`;
+
+    this.setState({ matrix, matrixUsing, width });
+  }
 
   turnOnOrOff = (row, position_in_row) => {
     //Just add 1 to the % of 2  it will provide 0 or 1. The conditional is already set up on the div to set the div to the correct class based off the value
@@ -135,7 +164,7 @@ class App extends Component {
               console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
               state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
               this.setState({state_matrix});
-              this.setMatrixUp()
+              this.continueWithGame();
             }
           } else {
             if(aliveNeighbors ===3){
@@ -143,10 +172,10 @@ class App extends Component {
               console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
               state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
               this.setState({state_matrix});
-              this.setMatrixUp() 
+              this.continueWithGame();
             }
           }
-
+          console.log(matrix[i].row);
       }
       
       gameRunning = false; 
@@ -195,31 +224,7 @@ class App extends Component {
     this.setState({ if_one_color: color });
   };
 
-  findDeadNeighbors = position => {
-    //find  neighbors of the dead cell  to use the rules on.
-    //position should be an object featuring  the row and  position in row.
-    //A neighbor will be  to the left to the right  up down and diagonal  which will be up to the left, up to the right and down to the left down to the right.
-    let totalAlive = 0;
-
-    let lookUp = true;
-    let lookDown = true;
-    let lookRight = true;
-    let lookLeft = true;
-
-    //logic for if I should look up or down.
-    if (position.row === 0) {
-      lookUp = false;
-    } else if (position.row === this.state.row_count - 1) {
-      lookDown = false;
-    }
-
-    //logic for if I should look right or left.
-    if (position.position_in_row === 0) {
-      lookLeft = false;
-    } else if (position.position_in_row === this.state.col_count - 1) {
-      lookRight = false;
-    }
-  };
+  
 
   findLiveNeighbors = position => {
     //find neighbors of the live cell to use the rules on.
@@ -328,6 +333,75 @@ class App extends Component {
     return totalAlive;
   };
 
+  generateRandom = () => {
+
+  }
+
+  presetChange = (type) => {
+    const matrix = this.cloneObject(); 
+    this.setMatrixUp();//will reset the grid before setting it up. 
+    let row_index = 0;
+    let col_index = 0; 
+    switch(type){
+      case "Block":
+        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+        matrix[row_index][col_index] = 1; 
+        matrix[row_index-1][col_index] = 1; 
+        matrix[row_index-1][col_index-1] = 1; 
+        matrix[row_index][col_index - 1]  = 1; 
+        this.setState({matrix});
+        
+        break;
+      case "Beehive":
+        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+        matrix[row_index][col_index] = 1; 
+        matrix[row_index][col_index-1] = 1; 
+        matrix[row_index -1][col_index-2] = 1;
+        matrix[row_index-2][col_index] = 1; 
+        matrix[row_index-2][col_index -1] = 1; 
+        matrix[row_index-1][col_index + 1] = 1;
+        
+        this.setState({matrix});
+        break; 
+      case "Loaf":
+        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+        matrix[row_index][col_index] = 1; 
+        matrix[row_index-1][col_index] = 1;
+        matrix[row_index+1][col_index-1] = 1;
+        matrix[row_index][col_index-2] =1;
+        matrix[row_index-1][col_index-3] = 1;
+        matrix[row_index-2][col_index-2] = 1;
+        matrix[row_index-2][col_index-1] = 1;
+         
+        this.setState({matrix});
+        break;
+      case "Boat":
+        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+        matrix[row_index-1][col_index] = 1; 
+        matrix[row_index-1][col_index-2] = 1; 
+        matrix[row_index-2][col_index-2] = 1;
+        matrix[row_index-2][col_index-1] = 1; 
+        matrix[row_index][col_index - 1]  = 1;
+        this.setState({matrix});
+        break; 
+      case "Tub":
+        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+        matrix[row_index-1][col_index] = 1; 
+        matrix[row_index-1][col_index-2] = 1; 
+        matrix[row_index-2][col_index-1] = 1; 
+        matrix[row_index][col_index - 1]  = 1; 
+        this.setState({matrix});
+        break;
+      default:
+        console.log("That type doesn't exist");//only for react warning purposes this won't actually hit. 
+    }
+  }
+
   render() {
     
 
@@ -336,13 +410,34 @@ class App extends Component {
     return (
       <div className="container" style={{ width: this.state.width }}>
         <h2 className="titleApp">Jonathan's Game of Life</h2>
-
+        <div className="topButtons">
+          <div>
+              <button onClick = {this.startTheGame}>Start</button>{" "}
+            </div>
+            <div>
+              <button onClick = {this.stopTheGame}>Stop</button>
+            </div>
+            <div>
+              <button>Pause</button>
+            </div>
+            <div>
+              <button onClick={this.updateRowCol}>Clear</button>
+            </div>
+            <div>
+              <button onClick = {this.generateRandom}>Random</button>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+        
+        </div>
         {matrix.map((hash, id) => (
           <div
             key={id}
             onClick={() =>
               this.manualTurnOnOrOff(hash.row, hash.position_in_row)
             }
+            
             style={{
               background:
                 this.state.matrix[hash.row][hash.position_in_row] === 0
@@ -364,21 +459,16 @@ class App extends Component {
         ))}
 
         <div>
-          <div>
-            <button onClick = {this.startTheGame}>Start</button>{" "}
+          <h5>Presets</h5>
+          <div className = "presetsDiv">
+            
+            <p onClick = {() => this.presetChange("Block")}>Block</p>
+            <p onClick = {() => this.presetChange("Beehive")}>Beehive</p>
+            <p onClick = {() => this.presetChange("Loaf")}>Loaf</p>
+            <p onClick = {() => this.presetChange("Boat")}>Boat</p>
+            <p onClick = {() => this.presetChange("Tub")}>Tub</p>
           </div>
-          <div>
-            <button onClick = {this.stopTheGame}>Stop</button>
-          </div>
-          <div>
-            <button>Pause</button>
-          </div>
-          <div>
-            <button onClick={this.updateRowCol}>Clear</button>
-          </div>
-          <div>
-            <button>Presets</button>{" "}
-          </div>
+          
 
           <div className="slidecontainer">
             <h5>Row Count {this.state.row_count}</h5>
@@ -403,8 +493,9 @@ class App extends Component {
               name="col_count"
               onChange={this.handleChangeColumn}
             />
+            <button onClick={this.updateRowCol}>Update Grid</button>
             <br />
-            <h5>Color 0: {this.state.if_zero_color}</h5>
+            <h5> Dead Color: {this.state.if_zero_color}</h5>
             <div className="colorChoices">
               <div
                 className="divcolor white"
@@ -455,7 +546,7 @@ class App extends Component {
                 y
               </div>
             </div>
-            <h5>Color 1: {this.state.if_one_color}</h5>
+            <h5> Alive Color: {this.state.if_one_color}</h5>
             <div className="colorChoices">
               <div
                 className="divcolor white"
@@ -507,7 +598,7 @@ class App extends Component {
               </div>
             </div>
 
-            <button onClick={this.updateRowCol}>Update Grid</button>
+            
           </div>
           <br />
           <br />
