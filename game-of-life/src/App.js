@@ -17,7 +17,6 @@ class Box extends Component {
           id = {this.props.id}
           onClick = {this.selectBox}
       />
-
     );
   }
 }

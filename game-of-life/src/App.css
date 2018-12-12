@@ -1,3 +1,7 @@
+.App{
+  font-family: 'Comfortaa', cursive;
+}
+
 .container {
   display: flex;
   flex-direction: row;
@@ -43,7 +47,7 @@
 
 .side-panel{
   width: 20%;
-  margin-top: 60px;
+  margin-top: 50px;
 }
 
 .buttons{
@@ -74,8 +78,12 @@ h1, h2, h3, h4 {
 }
 
 h4 {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+p{
+  font-family:'Khula', sans-serif;
 }
 
 .text-block{
@@ -88,4 +96,8 @@ h4 {
   justify-content: space-around;
   align-items: center;
   margin: 0 10%;
+}
+
+i{
+  color: gray;
 }
