@@ -48,7 +48,6 @@ export default class GridObject extends Component {
             generations: 0,
             allFalse: falseObj
         })
-        console.log("\nINIT\n", this.state)
     }
 
     toggle = (cubeNum) => {
@@ -63,10 +62,8 @@ export default class GridObject extends Component {
     }
 
     //#1
-    async buildNext(){
-        console.log("buildNext Start\n", `cur obj 1 = ${this.state.curObj[1]}\n`, `nex obj 1 = ${this.state.nexObj[1]}\n`)
-        // console.log("buildNext Start\n", `cur obj 16 = ${this.state.curObj[16]}\n`, `nex obj 16 = ${this.state.nexObj[16]}\n`)
-        // console.log("buildNext Start\n", `cur obj 15 = ${this.state.curObj[15]}\n`, `nex obj 15 = ${this.state.nexObj[15]}\n`)
+    buildNext = async () => {
+        console.log("buildNext")
         let selected = 0;
         selected = this.getSelected();
         let questionables = this.getQuestionables(selected);
@@ -185,11 +182,27 @@ export default class GridObject extends Component {
         }
     }
 
+    startTheGame(){
+        let start = window.setInterval(this.buildNext, 5000)
+        this.setState({
+            start: start
+        })
+    }
+
+    stopTheGame(){
+        window.clearInterval(this.state.start)
+    }
+
+    print(){
+        console.log("start the game")
+    }
+
     clickHandler = (e) => {
         e.preventDefault();
         switch(e.target.name){
             case "start":
                 console.log("start");
+                this.startTheGame();
                 break;
             case "stop":
                 console.log("stop");
@@ -209,6 +222,7 @@ export default class GridObject extends Component {
     }
 
     render(){
+        console.log(this.state)
         console.log(this.props)
         return(
             <GridDiv> 
