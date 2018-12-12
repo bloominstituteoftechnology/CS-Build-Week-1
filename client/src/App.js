@@ -231,8 +231,43 @@ class App extends Component {
     //   }
     // );
     console.log("Stop the game");
-    this.setState({gameRunning: false});
+    // this.setState({gameRunning: false});
+    this.setState(prevState => ({gameRunning: !prevState.gameRunning}) );
   };
+
+  nextGeneration = () => {
+    const state_matrix = {...this.state.matrix}; 
+    const keys = Object.keys(state_matrix); 
+
+    for(let i = 0; i<keys.length; i++){
+
+      // let aliveNeighbors = this.findLiveNeighbors({row: keys[i].row, position_in_row: keys[i].position_in_row});
+      // let current_cell_alive = state_matrix[ === 1 ? true : false; 
+      for (let j = 0; j < state_matrix[i].length; j++){
+        console.log(i, j);
+        let aliveNeighbors = this.findLiveNeighbors({row: i, position_in_row: j});
+        let current_cell_alive = state_matrix[i][j] === 1 ? true : false; 
+        if (current_cell_alive){
+          if(aliveNeighbors !== 2 || aliveNeighbors !== 3){
+            //kill the cell that is currently alive. 
+            console.log(`Killing the cell ${i}, ${j}`);
+            state_matrix[i][j] = 0; 
+            this.setState({state_matrix});
+            this.continueWithGame();
+          } else {
+          if(aliveNeighbors ===3){
+            //resurrect the currently dead cell. 
+            console.log(`Resurrecting the cell ${i}, ${j}`);
+            state_matrix[i][j] = 1;
+            this.setState({state_matrix});
+            this.continueWithGame();
+          }
+        }
+      }
+
+    }
+   }
+  }
 
 
   handleColorChangeIfZero = color => {
@@ -473,6 +508,9 @@ class App extends Component {
             </div>
             <div>
               <button onClick = {this.generateRandom}>Random</button>
+            </div>
+            <div>
+              <button onClick = {this.nextGeneration}>Next</button>
             </div>
             <br/>
             <br/>
