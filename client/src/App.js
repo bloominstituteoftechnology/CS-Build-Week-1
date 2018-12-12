@@ -105,6 +105,27 @@ class App extends Component {
 
   runGamne = () => {
     //functionaly for gameplay goes here
+    const matrix = this.state.matrixUsing.slice(); 
+    while(this.state.gameRunning){
+
+      for(let i = 0; i<matrix.length; i++){
+
+          let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
+          let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
+          if (current_cell_alive){
+            if(aliveNeighbors !== 2 || aliveNeighbors !== 3){
+              //kill the cell that is currently alive. 
+              this.state.matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
+            }
+          } else {
+            if(aliveNeighbors ===3){
+              //resurrent the currently dead cell. 
+              this.state.matrix[matrix[i].row][matrix[i].position_in_row] = 1; 
+            }
+          }
+
+      }
+    }
   };
 
   startTheGame = () => {
