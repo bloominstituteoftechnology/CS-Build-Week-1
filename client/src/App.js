@@ -162,45 +162,45 @@ class App extends Component {
   //CURRENTLY WORKING ON THIS FUNCTION   
   runGamne = () => {
     //functionaly for gameplay goes here
-    // console.log("Starting the game");
-    // const matrix = this.state.matrixUsing.slice(); 
-    // console.log(matrix);
-    // const state_matrix = {...this.state.matrix};//creates a copy 
+    console.log("Starting the game");
+    const matrix = this.state.matrixUsing.slice(); 
+    console.log(matrix);
+    const state_matrix = {...this.state.matrix};//creates a copy 
     
-    
+    let i = 0; 
 
-    // for(let i = 0; i<matrix.length; i++){
+    for(; i<matrix.length; i++){
 
-    //     let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
-    //     let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
-    //     if (current_cell_alive){
-    //       if(aliveNeighbors < 2 || aliveNeighbors > 3){
-    //         //kill the cell that is currently alive. 
-    //         console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
-    //         state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
-    //         // this.setState({state_matrix});
+        let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
+        let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
+        if (current_cell_alive){
+          if(aliveNeighbors < 2 || aliveNeighbors > 3){
+            //kill the cell that is currently alive. 
+            console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
+            state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
+            // this.setState({state_matrix});
             
-    //         // this.continueWithGame();
-    //       }
-    //     } else {
-    //       if(aliveNeighbors ===3){
-    //         //resurrect the currently dead cell. 
-    //         console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
-    //         state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
-    //         // this.setState({state_matrix});
-    //         // this.continueWithGame();
-    //       }
-    //     }
-    //     console.log(matrix[i].row);
-    // }
+            // this.continueWithGame();
+          }
+        } else {
+          if(aliveNeighbors ===3){
+            //resurrect the currently dead cell. 
+            console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
+            state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
+            // this.setState({state_matrix});
+            // this.continueWithGame();
+          }
+        }
+        // console.log(matrix[i].row);
+    }
 
     
-    // // this.setState({matrix : state_matrix, generation});
+    // this.setState({matrix : state_matrix, generation});
     
-    // this.setState(prevState => ({matrix: state_matrix, generation: prevState.generation + 1}));
-    // this.continueWithGame();
+    this.setState(prevState => ({matrix: state_matrix, generation: prevState.generation + 1}));
+    this.continueWithGame();
     
-      this.nextGeneration();
+      // this.nextGeneration();
     
     
     
@@ -212,7 +212,7 @@ class App extends Component {
     console.log(this.state.gameRunning);
     if (this.state.gameRunning === false) {
       console.log("set everything")
-      let intervalRef = setInterval(this.runGamne(), 30); 
+      let intervalRef = setInterval(this.runGamne(), 1000); 
       this.setState(
         {
           gameRunning: true,
@@ -441,6 +441,45 @@ class App extends Component {
             matrix[row_index][col_index - 1]  = 1; 
             this.setState({matrix}, () => {this.continueWithGame()});
             break;
+          case "Jon":
+            matrix[2][1] = 1;
+            matrix[2][2] = 1;
+            matrix[2][3] = 1; 
+            matrix[3][3] = 1; 
+            matrix[4][3] = 1; 
+            matrix[5][3] = 1; 
+            matrix[6][3] = 1; 
+            matrix[6][2] = 1; 
+            matrix[6][1] = 1; 
+            matrix[6][0] = 1; 
+            matrix[5][0] = 1; 
+            //above is J
+            matrix[2][6] = 1; 
+            matrix[2][7] = 1; 
+            matrix[2][8] = 1; 
+            matrix[3][6] = 1;
+            matrix[4][6] = 1; 
+            matrix[5][6] = 1; 
+            matrix[6][6] = 1;  
+            matrix[6][7] = 1; 
+            matrix[6][8] = 1; 
+            matrix[5][8] = 1; 
+            matrix[4][8] = 1; 
+            matrix[3][8] = 1; 
+            //above is o
+            matrix[2][11] = 1; 
+            matrix[2][12] = 1; 
+            matrix[2][13] = 1; 
+            matrix[3][11] = 1; 
+            matrix[4][11] = 1; 
+            matrix[5][11] = 1; 
+            matrix[6][11] = 1; 
+            matrix[3][13] = 1; 
+            matrix[4][13] = 1; 
+            matrix[5][13] = 1; 
+            matrix[6][13] = 1; 
+            this.setState({matrix}, () => {this.continueWithGame()});
+            break
           case "Blinker 1":
             row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
             col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
@@ -540,6 +579,8 @@ class App extends Component {
             <p onClick = {() => this.presetChange("Loaf")}>Loaf</p>
             <p onClick = {() => this.presetChange("Boat")}>Boat</p>
             <p onClick = {() => this.presetChange("Tub")}>Tub</p>
+            <p onClick = {() => this.presetChange("Jon")}>Jon</p>
+
           </div>
 
           <h5>Oscillator</h5>
