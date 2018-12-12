@@ -10,12 +10,13 @@ export default class GameGrid extends Component {
   drawGrid = (arr) => {
     let canvas = ReactDOM.findDOMNode(this.refs.myCanvas);
     let ctx = canvas.getContext("2d");
-    const offset = 2;
+    const offset = 0;
 
-    const size = (window.innerHeight / this.props.x)-(this.props.x*offset);
+    
 
-    canvas.width = this.props.x * size + this.props.x * offset;
-    canvas.height = this.props.y * size + this.props.y * offset;
+    canvas.width = window.innerHeight *.6;
+    canvas.height =  window.innerHeight *.6;
+    const size = (canvas.width / this.props.x)-(offset);
     if (arr.length === 0) {
       return;
     }
@@ -30,7 +31,7 @@ export default class GameGrid extends Component {
       for (let y = 0; y < this.props.y; y++) {
         let curPix = ((y * this.props.x) + x);
         if (arr[curPix].alive){
-          ctx.fillRect(x * (size + offset), y * (size + offset), size, size);
+          ctx.fillRect(x * (size +offset ), y * (size +offset ), size, size);
         }
       }
     }
@@ -38,8 +39,8 @@ export default class GameGrid extends Component {
   handleClick = (e,offset,lineoffset,squaresize)=>{
     let xclickPos = e.clientX - offset.left;
     let yclickPos = e.clientY - offset.top;
-    xclickPos =Math.floor(xclickPos/(squaresize+lineoffset));
-    yclickPos =Math.floor(yclickPos/(squaresize+lineoffset));
+    xclickPos =Math.floor(xclickPos/(squaresize));
+    yclickPos =Math.floor(yclickPos/(squaresize));
     this.props.clickHandle((yclickPos * this.props.x) + xclickPos)
   }
   componentDidMount() {
