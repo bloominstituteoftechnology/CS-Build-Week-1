@@ -46,7 +46,7 @@ class Grid extends Component {
              runningGame: false,
              game_of_life: new Game_of_life(),
          });
-         
+
     }
 
     toggleCell = (coordinates) => {
@@ -68,6 +68,25 @@ class Grid extends Component {
           }, this.state.interval);
     }
 
+    /* randomGrid = () => {
+        let newGrid = [];
+        let row = [];
+
+        for (let i = 0; i < this.state.gridSize[0]; i++) {
+            for (let j = 0; j < this.state.gridSize[1]; j++) {
+                if (this.state.game_of_life.aliveCells(i + "," + j)) {
+                row.push(<Cell key = {[i, j]} coordinates = {{x: i, y: j}} liveCell = {true} toggleCell = {this.toggleCell} />);
+                console.log('New cell at: ', i, j);
+            } else {
+                row.push(<Cell key = {[i, j]} coordinates = {{x: i, y: j}} liveCell = {false} toggleCell = {this.toggleCell} />);
+            }
+        }
+            newGrid.push(<div className = "row" key = {i}>{row}</div>);
+            row = [];
+        }
+        return newGrid;
+    }
+ */
 
     createGrid = () => {
         let newGrid = [];
@@ -117,7 +136,6 @@ class Grid extends Component {
     }
 
 
-
     render() { 
         return (
             <div className = 'gol-container'>
@@ -129,6 +147,7 @@ class Grid extends Component {
                     play = {this.play}
                     stop = {this.stop}
                     reset = {this.reset}
+                    random = {this.randomGrid}
                 />
                 <Controls 
                     rows = {this.state.gridSize[1]}

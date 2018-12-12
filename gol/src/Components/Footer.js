@@ -7,6 +7,7 @@ const Footer = (props) => {
                 <button className='submit' onClick={props.play}>Play</button>
                 <button className='submit' onClick={props.stop}>Stop</button>
                 <button className='submit' onClick={props.reset}>Reset</button>
+                <button className='submit' onClick={props.random}>Random</button>
             </div>
         </div>
     )
