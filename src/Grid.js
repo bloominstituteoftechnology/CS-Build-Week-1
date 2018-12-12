@@ -11,7 +11,8 @@ class Grid extends Component {
     let nextNodeHolder = [];
 
     class Node {
-      constructor() {
+      constructor(id) {
+        this.id = id;
         this.isAlive = false;
       }
       makeDead() {
@@ -35,121 +36,133 @@ class Grid extends Component {
     
     this.setState({ currentNodeHolder: nextNodeHolder });
   }
-  
+
   startGame = () => {
     console.log('one')
     this.setState({canClick: false, isPlaying: true});
-    console.log('two')
-    
-    setTimeout(() => {
-      while (this.state.isPlaying) {
-        console.log('three')
-        let nextNodeHolder = this.state.currentNodeHolder.slice();
-        let len = nextNodeHolder.length;
-        for (let i = 0; i < len; i++) {
-          for (let j = 0; j < len; j++) {
-            console.log(i,j)
+    this.playGame();
+    // console.log('two')
+    // if (this.state.isPlaying) {
+    //   while(this.state.isPlaying) {
+    //     setTimeout(() => {
+    //       if (this.state.isPlaying) {
+    //         this.playGame();
+    //       }
+    //     }, 500)
+    //   }
+    // }
+  }
+  
+  playGame = () => {
+    console.log('three')
+    let nextNodeHolder = this.state.currentNodeHolder.slice();
+    let len = nextNodeHolder.length;
+    for (let i = 0; i < len; i++) {
+      for (let j = 0; j < len; j++) {
 
-            if (!nextNodeHolder[i][j].isAlive) {
-              let checker = 0;
-            
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i][j-1]) {
-                if (nextNodeHolder[i][j-1].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i][j+1]) {
-                if (nextNodeHolder[i][j+1].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i-1][j-1]) {
-                if (nextNodeHolder[i-1][j-1].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i-1][j]) {
-                if (nextNodeHolder[i-1][j].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i-1][j+1]) {
-                if (nextNodeHolder[i-1][j+1].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i+1][j-1]) {
-                if (nextNodeHolder[i+1][j-1].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i+1][j]) {
-                if (nextNodeHolder[i+1][j].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i+1][j+1]) {
-                if (nextNodeHolder[i+1][j+1].isAlive) {
-                  checker++
-                }
-              }
-              if (checker === 3) {
-                nextNodeHolder[i][j].makeAlive();
-              }
-            }
-
-            if (nextNodeHolder[i][j].isAlive) {
-              let checker = 0;
-            
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i][j-1]) {
-                if (nextNodeHolder[i][j-1].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i][j+1]) {
-                if (nextNodeHolder[i][j+1].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i-1][j-1]) {
-                if (nextNodeHolder[i-1][j-1].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i-1][j]) {
-                if (nextNodeHolder[i-1][j].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i-1][j+1]) {
-                if (nextNodeHolder[i-1][j+1].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i+1][j-1]) {
-                if (nextNodeHolder[i+1][j-1].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i+1][j]) {
-                if (nextNodeHolder[i+1][j].isAlive) {
-                  checker++
-                }
-              }
-              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i+1][j+1]) {
-                if (nextNodeHolder[i+1][j+1].isAlive) {
-                  checker++
-                }
-              }
-              if (!checker === 2 || !checker === 3) {
-                nextNodeHolder[i][j].makeDead();
-              }
+        if (!nextNodeHolder[i][j].isAlive) {
+          let checker = 0;
+        
+          if (j > 0 && nextNodeHolder[i][j-1]) {
+            if (nextNodeHolder[i][j-1].isAlive) {
+              checker++
             }
           }
+          if (j < 15 && nextNodeHolder[i][j+1]) {
+            if (nextNodeHolder[i][j+1].isAlive) {
+              checker++
+            }
+          }
+          if (i > 0 && j > 0 && nextNodeHolder[i-1][j-1]) {
+            if (nextNodeHolder[i-1][j-1].isAlive) {
+              checker++
+            }
+          }
+          if (i > 0 && nextNodeHolder[i-1][j]) {
+            if (nextNodeHolder[i-1][j].isAlive) {
+              checker++
+            }
+          }
+          if (i > 0 && j < 15 && nextNodeHolder[i-1][j+1]) {
+            if (nextNodeHolder[i-1][j+1].isAlive) {
+              checker++
+            }
+          }
+          if (j > 0 && i < 15 && nextNodeHolder[i+1][j-1]) {
+            if (nextNodeHolder[i+1][j-1].isAlive) {
+              checker++
+            }
+          }
+          if (i < 15 && nextNodeHolder[i+1][j]) {
+            if (nextNodeHolder[i+1][j].isAlive) {
+              checker++
+            }
+          }
+          if (i < 15 && j < 15 && nextNodeHolder[i+1][j+1]) {
+            if (nextNodeHolder[i+1][j+1].isAlive) {
+              checker++
+            }
+          }
+          console.log('DEAD', checker, nextNodeHolder[i][j].id)
+          if (checker === 3) {
+            nextNodeHolder[i][j].makeAlive();
+          }
         }
-        this.setState({currentNodeHolder: nextNodeHolder});
+
+        if (nextNodeHolder[i][j].isAlive) {
+          let checker = 0;
+        
+          if (j > 0 && nextNodeHolder[i][j-1]) {
+            if (nextNodeHolder[i][j-1].isAlive) {
+              checker++
+            }
+          }
+          if (j < 15 && nextNodeHolder[i][j+1]) {
+            if (nextNodeHolder[i][j+1].isAlive) {
+              checker++
+            }
+          }
+          if (i > 0 && j > 0 && nextNodeHolder[i-1][j-1]) {
+            if (nextNodeHolder[i-1][j-1].isAlive) {
+              checker++
+            }
+          }
+          if (i > 0 && nextNodeHolder[i-1][j]) {
+            if (nextNodeHolder[i-1][j].isAlive) {
+              checker++
+            }
+          }
+          if (i > 0 && j < 15 && nextNodeHolder[i-1][j+1]) {
+            if (nextNodeHolder[i-1][j+1].isAlive) {
+              checker++
+            }
+          }
+          if (j > 0 && i < 15 && nextNodeHolder[i+1][j-1]) {
+            if (nextNodeHolder[i+1][j-1].isAlive) {
+              checker++
+            }
+          }
+          if (i < 15 && nextNodeHolder[i+1][j]) {
+            if (nextNodeHolder[i+1][j].isAlive) {
+              checker++
+            }
+          }
+          if (i < 15 && j < 15 && nextNodeHolder[i+1][j+1]) {
+            if (nextNodeHolder[i+1][j+1].isAlive) {
+              checker++
+            }
+          }
+          console.log('ALIVE',checker,nextNodeHolder[i][j].id)
+          if (checker === 2 || checker === 3) {
+            console.log('f')
+          } else {
+            nextNodeHolder[i][j].makeDead();
+          }
+        }
       }
-    }, 500)
+    }
+    console.log('fdfg')
+    this.setState({currentNodeHolder: nextNodeHolder});
   }
   
   endGame = () => {
