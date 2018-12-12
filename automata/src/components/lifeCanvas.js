@@ -87,6 +87,22 @@ class Canvas extends Component {
         }
     }
 
+    updateCanvas = () => {
+        // const canvas = this.refs.canvas;
+        // const ctx = canvas.getContext('2d');
+        // ctx.canvas.width = 300;
+        // ctx.canvas.height = 300;
+        // ctx.lineWidth = .1;
+        // ctx.beginPath();
+        // ctx.strokeStyle = 'blue';
+        // ctx.strokeStyle = 'rgba(111, 111, 111, 0.8)';
+        for (let item in this.state) {
+            let xval = parseInt(item.substring(0, item.indexOf(',')));
+            console.log(`${item},${xval+1}`);
+
+        }
+    }
+
     gameCycle = () => {
         const canvas = this.refs.canvas;
         const ctx = canvas.getContext('2d');
@@ -139,7 +155,7 @@ class Canvas extends Component {
             let cycleCountTemp = this.state.cycleCount;
             cycleCountTemp++;
             this.setState({...stateBuffer, cycleCount: cycleCountTemp});
-            
+
         }
     }
 
@@ -159,6 +175,7 @@ class Canvas extends Component {
                 <div className='controls' >
                     <button onClick={this.simulationToggle}>Start / Stop simulation</button>
                     <button onClick={this.clearCanvas}>Clear Board</button>
+                    <button onClick={this.updateCanvas}>Step</button>
                 </div>
             </div>
         )
