@@ -32,7 +32,7 @@ class Cell extends Component {
             return (
             <div className="cell"
                 onClick={() => this.handleToggle()}
-                style={ this.state.value === 1 ? { background: "blue" } : null }>
+                style={ this.state.value === 1 ? { background: "dimgrey" } : null }>
             </div>
           );
         }

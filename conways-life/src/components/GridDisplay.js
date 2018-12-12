@@ -130,6 +130,7 @@ class GridDisplay extends Component {
     render() {
             return (
             <div className="mainContainer">
+                <h2>Conway's Game of Life</h2>
                 <p>Generation: {this.state.iterations}</p>
                  <div className="gridContainer">
                     {this.state.grid.map(row => 

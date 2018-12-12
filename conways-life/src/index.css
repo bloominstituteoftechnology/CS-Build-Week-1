@@ -9,11 +9,24 @@ body {
 
 .App {
   text-align: center;
+  margin: 3% 7% auto 7%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.aboutInfo {
+  width: 37%;
+}
+
+.aboutSection {
+  padding-top: 10%;
+  line-height: 1.5;
 }
 
 .mainContainer {
   margin: auto;
 }
+
 .gridContainer {
   height: 475px;
   width: 500px;
@@ -27,4 +40,14 @@ body {
   width: 30px;
   background: white;
   border: 1px solid black;
+}
+
+.controlButtons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.controlButtons button {
+  font-size: 12pt;
 }
