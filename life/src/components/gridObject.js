@@ -19,7 +19,7 @@ export default class GridObject extends Component {
         this.init(this.props.preset)
     }
 
-    init(preset=null){
+    init(preset){
         let width = this.state.width;
         let initObj = {}
         let falseObj = {}
@@ -34,7 +34,7 @@ export default class GridObject extends Component {
             
         }
         if(preset === null){
-            console.log("if preset", preset)
+            console.log("if preset is null", preset)
             this.setState({
                 curObj: initObj,
             })
