@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Cell from "./Cell";
 import Buttons from "./ControlButtons";
+import Options from "./GridOptions";
 
 class GridDisplay extends Component {
     constructor(props) {
@@ -10,7 +11,8 @@ class GridDisplay extends Component {
             timer: 0,
             iterations: 0,
             cols: 15,
-            rows: 15
+            rows: 15,
+            speed: 300
         }
     }
 
@@ -108,13 +110,21 @@ class GridDisplay extends Component {
     }
 
     toggleAnimation = () => {
+        let speed = this.state.speed;
+        if (speed < 30) {
+            speed = 30;
+        }
         if (this.state.timer === 0) {
-            let timer = setInterval(this.computeNextGrid, 500);
+            let timer = setInterval(this.computeNextGrid, speed);
             this.setState({timer: timer});
         } else {
             clearInterval(this.state.timer);
             this.setState({timer: 0});
         }
+    }
+
+    speedInputHandler = e => {
+        this.setState({speed: e.target.value});
     }
 
     render() {
@@ -136,7 +146,13 @@ class GridDisplay extends Component {
                 <Buttons
                     randomGrid={this.randomGrid}
                     clearGrid={this.clearGrid}
-                    toggleAnimation={this.toggleAnimation}/>
+                    stepForward={this.computeNextGrid}
+                    toggleAnimation={this.toggleAnimation}
+                    />
+                <Options
+                    speedValue={this.state.speed}
+                    speedInputHandler={this.speedInputHandler}
+                />
             </div>
           );
         }
