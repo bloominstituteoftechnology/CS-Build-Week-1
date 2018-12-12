@@ -41,11 +41,7 @@ export default class LifeCanvas extends Component {
     }
   }
 
-  nextgen = () => {
-    this.setState({ generation: this.state.generation+1 })
-  }
-
-  draw = () => {
+  clearGrid = () => {
     const canv = this.refs.canvas;
     const ctx = canv.getContext('2d');
     for (let x = 0; x < this.width; x+=this.cellsize) {
@@ -57,17 +53,46 @@ export default class LifeCanvas extends Component {
       ctx.moveTo(0, y);
       ctx.lineTo(this.width, y);
     }
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = 'blue';
     ctx.stroke();
+    let cells = this.state.cells;
+    cells.forEach(cellRow => {
+      cellRow.forEach(cell => {
+        cell.living = 0;
+      });
+    });
+    this.setState({ cells, generation: 0 });
+    this.draw()
+  }
+
+  randomize = () => {
+    let cells = this.state.cells;
+    cells.forEach(cellRow => {
+      cellRow.forEach(cell => {
+        const num = Math.round(Math.random());
+        cell.living = num;
+      });
+    });
+    this.setState({ cells, generation: 0 });
+    this.draw()
+  }
+
+  nextgen = () => {
+    this.setState({ generation: this.state.generation+1 })
+  }
+
+  draw = () => {
+    const canv = this.refs.canvas;
+    const ctx = canv.getContext('2d');
 
     for (let j=0; j<this.height/this.cellsize; j++) {
       for (let k=0; k<this.width/this.cellsize; k++) {
-        if (this.state.cells[j][k] == 1) {
-          ctx.fillStyle = '#FF0000';
+        if (this.state.cells[j][k].living == 1) {
+          ctx.fillStyle = 'white'/*'#'+(Math.random()*0xFFFFFF<<0).toString(16)*/;
           ctx.fillRect(j*this.cellsize, k*this.cellsize, this.cellsize, this.cellsize);
         }
         else {
-          ctx.fillStyle = 'blue';
+          ctx.fillStyle = 'black';
           ctx.fillRect(j*this.cellsize, k*this.cellsize, this.cellsize-1, this.cellsize-1);
         }
       }
@@ -136,7 +161,11 @@ export default class LifeCanvas extends Component {
         }
       }
     }
-    this.setState({ cells: mirrorCells })
+    this.setState({ cells: mirrorCells });
+  }
+
+  animate = () => {
+    setTimeout(this.tick, 300)
   }
 
   tick = () => {
@@ -144,7 +173,7 @@ export default class LifeCanvas extends Component {
       this.draw();
       this.update();
       this.nextgen();
-      requestAnimationFrame(this.tick);
+      requestAnimationFrame(this.animate);
     }
   }
 
@@ -154,25 +183,45 @@ export default class LifeCanvas extends Component {
   }
 
   stop = (e) => {
-    this.setState({ continueAnimation: false})
+    this.setState({ continueAnimation: false});
   }
 
-  componentDidMount() {
+  clickListener = (e) => {
+    if (this.state.continueAnimation === true) {
+      return;
+    }
     const canv = this.refs.canvas;
     const lft = canv.offsetLeft;
     const top = canv.offsetTop;
     let cells = this.state.cells;
-    canv.addEventListener('click', (e) => {
-      const x = e.pageX - lft;
-      const y = e.pageY - top;
-      cells.forEach(cell => {
-        if (x > cell.x && x < cell.x+10 && y > cell.y && y < cell.y+10) {
+    const x = e.pageX - lft;
+    const y = e.pageY - top;
+    cells.forEach(cellrow => {
+      cellrow.forEach(cell => {
+        if (x >= cell.x && x <= cell.x+10 && y >= cell.y && y <= cell.y+10) {
           cell.toggle();
-          console.log("CLICKY!")
         }
       });
-      this.setState({ cells });
-    })
+    });
+    this.setState({ cells });
+    this.draw()
+  }
+
+  componentDidMount() {
+    const canv = this.refs.canvas;
+    const ctx = canv.getContext('2d');
+    for (let x = 0; x < this.width; x+=this.cellsize) {
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, this.height);
+    }
+
+    for (let y = 0; y<this.height; y+=this.cellsize) {
+      ctx.moveTo(0, y);
+      ctx.lineTo(this.width, y);
+    }
+    ctx.strokeStyle = 'blue';
+    ctx.stroke();
+    this.draw();
     requestAnimationFrame(this.tick);
   }
 
@@ -181,9 +230,11 @@ export default class LifeCanvas extends Component {
           <div>
             <h3>Welcome to Jordan's Game of Life</h3>
             <p>Generations: {this.state.generation}</p>
-            <canvas ref="canvas" width={this.width} height={this.height} />
+            <canvas ref="canvas" width={this.width} height={this.height} onClick = {this.clickListener} />
             <button onClick = {this.start}>Start</button>
             <button onClick = {this.stop}>Stop</button>
+            <button onClick = {this.randomize}>Randomize</button>
+            <button onClick = {this.clearGrid}>Clear</button>
           </div>
         )
     }
