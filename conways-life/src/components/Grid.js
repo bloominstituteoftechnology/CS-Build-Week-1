@@ -43,7 +43,6 @@ export default class Grid extends Component {
         ctx.canvas.width = 400;
         ctx.canvas.height = 400;
         canvas.addEventListener('click', this.handleClick);
-        canvas.addEventListener('dblclick', this.handleDoubleClick);
 
         for(let x = 0; x <= 400; x+=20){
             for(let y = 0; y<= 400; y+=20){
@@ -69,21 +68,16 @@ export default class Grid extends Component {
         let xcoord = Math.floor(e.offsetX / 20);
         let ycoord = Math.floor(e.offsetY / 20);
         let cell = `${xcoord}, ${ycoord}`;
-        this.setState({[`${cell}`]: 'black'});
-        ctx.fillStyle = 'black';
+        // this.setState({[`${cell}`]: 'black'});
+        if(this.state[`${cell}`] === 'white') {
+            this.setState({[`${cell}`]: 'black'});
+        }
+        else if(this.state[`${cell}`] === 'black') {
+            this.setState({[`${cell}`]: 'white'});
+        }
+        ctx.fillStyle = this.state[`${cell}`];
         ctx.fillRect(Math.floor(e.offsetX / 20) * 20, Math.floor(e.offsetY / 20) *20, 20, 20);
-        console.log(this.state);
-    }
-
-    handleDoubleClick = (e) => {
-        const canvas = this.refs.canvas;
-        const ctx = canvas.getContext('2d');
-        let xcoord = Math.floor(e.offsetX / 20);
-        let ycoord = Math.floor(e.offsetY / 20);
-        let cell = `${xcoord}, ${ycoord}`;
-        this.setState({[`${cell}`]: 'white'});
-        ctx.fillStyle = 'white';
-        ctx.fillRect(Math.floor(e.offsetX / 20) * 20, Math.floor(e.offsetY / 20) *20, 20, 20);
+        console.log(this.state[`${cell}`]);
         console.log(this.state);
     }
 
