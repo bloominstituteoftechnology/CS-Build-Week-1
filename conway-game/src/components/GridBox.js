@@ -5,7 +5,8 @@ class Box extends React.Component {
     super(props);
     this.state = {
       active: false, 
-      running: this.props.runningGame
+      running: this.props.runningGame, 
+      coordinates: this.props.coordinates
     };
 }
 
@@ -31,10 +32,8 @@ class Box extends React.Component {
     return (
       <div
         onClick={this.onClickHandler}
-        key={this.props.id}
-
         className={`box ${this.state.active ? "on" : "off"}`}
-      />
+      ></div>
     );
   }
 }

@@ -3,8 +3,8 @@
 }
 
 .grid {
-  width: 256px; 
-  height: 256px; 
+  width: 435px; 
+  height: 435px; 
   border: 3px solid black; 
   margin: auto; 
   margin-top: 20px; 
@@ -16,10 +16,11 @@
 .box {
   margin: 0; 
   padding: 0; 
-  line-height: 0; 
-  width: 15px; 
-  height: 15px; 
+  line-height: 0.2; 
+  width: 27px; 
+  height: 27px; 
   border: 1px solid black; 
+  text-align: center; 
 }
 
 .on{
