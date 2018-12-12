@@ -45,8 +45,9 @@ class GameBoard extends React.Component{
       e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
       squareSize,
       squareSize);
-      let cellState = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
-      console.log(this.state[`${cellState}`]);
+      let cellX = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20}`;
+      let cellY = `${(e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
+      let cellState = `${cellX},${cellY}`;
       this.setState({[`${cellState}`]: "alive"});
     }else {console.log('Cannot complete task');}
   }
