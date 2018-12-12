@@ -12,10 +12,14 @@ export default class GridObject extends Component {
     }
 
     componentDidMount(){
-        this.init();
+        this.init(this.props.preset);
     }
 
-    init(){
+    componentWillReceiveProps(){
+        this.init(this.props.preset)
+    }
+
+    init(preset=null){
         let width = this.state.width;
         let initObj = {}
         let falseObj = {}
@@ -29,9 +33,19 @@ export default class GridObject extends Component {
             nexObj[i] = false;
             
         }
-        // console.log(nextObj)
+        if(preset === null){
+            console.log("if preset", preset)
+            this.setState({
+                curObj: initObj,
+            })
+        } else {
+            console.log("if preset", preset)
+            this.setState({
+                curObj: preset,
+            })
+        }
         this.setState({
-            curObj: initObj,
+
             length: i,
             array: nextArray,
             nexObj: nexObj,
