@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 
 class Cell {  /* boolean   int     int     int */
@@ -78,20 +77,42 @@ export default class LifeCanvas extends Component {
     let mirrorCells = this.state.cells;
     for (let j=0; j<this.height/this.cellsize; j++) {
       for (let k=0; k<this.width/this.cellsize; k++) {
-        console.log('Living:', this.state.cells[j][k].living)
+        console.log('Living:', this.state.cells[j][k].living);
+        console.log('J and K:', j, k);
         let liveneighbors = 0;
         if (j > 0) {
-          liveneighbors += this.state.cells[j-1][k-1].living;
+          if (k>0) {
+            console.log('J > 0 K > 0');
+            liveneighbors += this.state.cells[j-1][k-1].living;
+          }
+          if (k<this.width/this.cellsize-1) {
+            console.log('J > 0 K < Width');
+            liveneighbors += this.state.cells[j-1][k+1].living;
+          }
+          console.log('J > 0');
           liveneighbors += this.state.cells[j-1][k].living;
-          liveneighbors += this.state.cells[j-1][k+1].living;
         }
         if (k > 0) {
+          if (j<this.height/this.cellsize-1) {
+            console.log("K>0 J<height");
+            liveneighbors += this.state.cells[j+1][k-1].living;
+          }
+          console.log("K>0")
           liveneighbors += this.state.cells[j][k-1].living;
-          liveneighbors += this.state.cells[j+1][k-1].living;
         }
-        liveneighbors += this.state.cells[j][k+1].living;
-        liveneighbors += this.state.cells[j+1][k].living;
-        liveneighbors += this.state.cells[j+1][k+1].living;
+        if (j<this.height/this.cellsize-1) {
+          if (k<this.width/this.cellsize-1) {
+            console.log("width minus 1", this.width-1)
+            console.log("J < height K<width");
+            liveneighbors += this.state.cells[j+1][k+1].living;
+          }
+          console.log("J < height")
+          liveneighbors += this.state.cells[j+1][k].living;
+        }
+        if (k<this.width/this.cellsize-1) {
+          console.log("K<width");
+          liveneighbors += this.state.cells[j][k+1].living;
+        }
         if (this.state.cells[j][k].living == 0) {
           switch (liveneighbors) {
             case 3:
