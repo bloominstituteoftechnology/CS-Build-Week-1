@@ -117,14 +117,6 @@ class App extends Component {
     this.setState({ matrix, matrixUsing, width });
   }
 
-  turnOnOrOff = (row, position_in_row) => {
-    //Just add 1 to the % of 2  it will provide 0 or 1. The conditional is already set up on the div to set the div to the correct class based off the value
-    const matrix = this.state.matrix;
-    // matrix[row][position_in_row] = matrix[row][position_in_row] === 0 ? this.state.if_one_color: this.state.if_zero_color;
-    matrix[row][position_in_row] = matrix[row][position_in_row] === 0 ? 1 : 0;
-    this.setState({ matrix });
-  };
-
   manualTurnOnOrOff = (row, position_in_row) => {
     //Just add 1 to the % of 2  it will provide 0 or 1. The conditional is already set up on the div to set the div to the correct class based off the value
     if (this.state.gameRunning === false) {
@@ -170,8 +162,8 @@ class App extends Component {
     const matrix = this.state.matrixUsing.slice(); 
     let gameRunning = true; 
     const state_matrix = {...this.state.matrix};//creates a copy 
-    while(gameRunning){
-    // while(this.state.gameRunning){
+    // while(gameRunning){
+    while(this.state.gameRunning){
 
       for(let i = 0; i<matrix.length; i++){
 
