@@ -124,10 +124,9 @@ class Game extends React.Component {
                   }
               }
           }
-          this.setState({ gen: this.state.gen +1 });
       }
 
-
+    this.setState({ gen: this.state.gen +1});
     this.board = newBoard;
     this.setState({ cells: this.makeCells() });
     this.timeoutHandler = window.setTimeout(() => {
