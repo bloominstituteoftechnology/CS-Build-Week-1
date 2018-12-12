@@ -2,7 +2,10 @@
   "name": "game-of-life",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://chainchompa.github.io/Game-Of-Life",
   "dependencies": {
+    "gh-pages": "^2.0.1",
+    "netlify-cli": "^2.5.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-scripts": "2.1.1",
@@ -10,8 +13,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cp build/index.html build/404.html",
     "test": "react-scripts test",
+    "predeploy": "yarn run build",
+    "deploy": "yarn run build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
