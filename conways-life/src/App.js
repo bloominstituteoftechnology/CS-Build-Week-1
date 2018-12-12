@@ -5,13 +5,12 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.interval = null;
+    this.intervalId = null;
     this.state = {
       totalCells: 400,
       grid: [],
       isClickable: true,
-      currGen: 0, // current generation of cells
-      intervalId: null
+      currGen: 0 // current generation of cells
     };
   }
 
@@ -87,7 +86,10 @@ class App extends Component {
   // Update the grid upon clicking a cell
   cellClickHandler = id => {
     if (this.state.isClickable) {
-      let grid = this.state.grid.slice();
+      let grid = [];
+      this.state.grid.forEach(cell => {
+        grid.push({ ...cell });
+      });
       grid[id].isAlive = !grid[id].isAlive;
 
       if (this.state.currGen === 0) {
@@ -124,11 +126,18 @@ class App extends Component {
       }
     }
 
-    this.setState({
-      grid: grid,
-      currGen: this.state.currGen + 1,
-      isClickable: false
-    });
+    if (this.intervalId === null) {
+      this.setState({
+        grid: grid,
+        currGen: this.state.currGen + 1
+      });
+    } else {
+      this.setState({
+        grid: grid,
+        currGen: this.state.currGen + 1,
+        isClickable: false
+      });
+    }
   };
 
   playSimulation = event => {
@@ -140,13 +149,18 @@ class App extends Component {
     event.preventDefault();
 
     clearInterval(this.intervalId);
+    this.intervalId = null;
     this.setState({ isClickable: true });
   };
 
   gridResetHandler = event => {
     event.preventDefault();
     clearInterval(this.intervalId);
-    let grid = this.state.grid.slice();
+    this.intervalId = null;
+    let grid = [];
+    this.state.grid.forEach(cell => {
+      grid.push({ ...cell });
+    });
 
     for (let i = 0; i < this.state.totalCells; i++) {
       grid[i].isAlive = false;
@@ -180,7 +194,7 @@ class App extends Component {
             <button
               type="button"
               onClick={() =>
-                (this.intervalId = setInterval(this.calculateNextGen, 1500))
+                (this.intervalId = setInterval(this.calculateNextGen, 1000))
               }
             >
               Play
@@ -190,6 +204,13 @@ class App extends Component {
             </button>
             <button type="button" onClick={this.gridResetHandler}>
               Reset
+            </button>
+            <button
+              type="button"
+              disabled={this.state.isClickable ? false : true}
+              onClick={this.calculateNextGen}
+            >
+              Next Generation
             </button>
           </div>
         </div>
