@@ -75,15 +75,12 @@ export default class GridObject extends Component {
         })
     }
 
-    //#4 goes through every object in the questionables array
     cubeNextTick(num){
         let activeNeighbors = 0;
         activeNeighbors = this.countNeighbors(num);
         if(this.state.curObj[num] === true){//is alive
             if(activeNeighbors === 2 || activeNeighbors === 3){
-                // console.log(num, "has 2 or 3 neighbors");
-                let newNexObj = {}
-                newNexObj = this.state.nexObj;
+                let newNexObj = Object.assign({}, this.state.nexObj);
                 newNexObj[num] = true;
                 this.setState({
                     nexObj: newNexObj
@@ -106,7 +103,6 @@ export default class GridObject extends Component {
                     nexObj: newNexObj
                 })
             } else {
-                // console.log(num, "does not have 3 neighbors");
                 let newNexObj = {}
                 newNexObj = this.state.nexObj;
                 newNexObj[num] = false;
@@ -135,7 +131,7 @@ export default class GridObject extends Component {
         })
         return count;
     }
-    //#2
+
     getSelected(){
         let curr = [];
         this.state.array.forEach(num => {
@@ -145,7 +141,7 @@ export default class GridObject extends Component {
         })
         return curr
     }
-    //#3
+
     getQuestionables(selected){
         let questionables = selected;
         selected.forEach(selectedNum => {
@@ -177,21 +173,15 @@ export default class GridObject extends Component {
         e.preventDefault();
         switch(e.target.name){
             case "start":
-                // console.log("start");
-                // this.startTheGame();
-                start = window.setInterval(this.buildNext, 2000)
+                start = window.setInterval(this.buildNext, 500)
                 break;
             case "stop":
-                // console.log("stop");
-                // this.startTheGame(true);
                 window.clearInterval(start)
                 break;
             case "next":
-                // console.log("next");
                 this.buildNext();
                 break;
             case "clear":
-                // console.log("clear");
                 this.init();
                 break;
             default: 
@@ -201,7 +191,6 @@ export default class GridObject extends Component {
     }
 
     selectPreset = (e) => {
-        // console.log("select preset", e.target.name-1)
         let tempObj = Object.assign({}, this.state.presets[e.target.name-1])
         this.setState({
           curObj: tempObj,
@@ -235,7 +224,6 @@ export default class GridObject extends Component {
 }
 
 let start;
-let renderCount =0;
 
 const GridDiv = styled.div`
     .cubesBin{
