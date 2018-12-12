@@ -33,23 +33,25 @@ class Canvas extends Component {
     }
 
     handleDoubleClick = (e) => {
-        const canvo = this.refs.canvas
-        const ctx = canvo.getContext("2d");
-        const pos = canvo.getBoundingClientRect()
-        const squareSize = 20
-        ctx.fillStyle = "white";
-        ctx.fillRect(e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
-          e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
-          squareSize,
-          squareSize);
+        if (this.state.simRun === false) {
+            const canvo = this.refs.canvas
+            const ctx = canvo.getContext("2d");
+            const pos = canvo.getBoundingClientRect()
+            const squareSize = 20
+            ctx.fillStyle = "white";
+            ctx.fillRect(e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
+            e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
+            squareSize,
+            squareSize);
+        } else {console.log('Grid is not interactive while simulation is running');}
+        
     }
 
     simulationToggle = (e) => {
         this.setState({simRun: !this.state.simRun});
     }
 
-    componentDidMount() {
-        this.gridState();
+    initCanvas = () => {
         const canvas = this.refs.canvas;
         const ctx = canvas.getContext('2d');
         ctx.canvas.width = 300;
@@ -71,6 +73,11 @@ class Canvas extends Component {
                 ctx.stroke();
             }
         }
+    }
+
+    componentDidMount() {
+        this.gridState();
+        this.initCanvas();
     }
 
     render() {
