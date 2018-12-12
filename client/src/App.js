@@ -160,7 +160,7 @@ class App extends Component {
     this.setMatrixUp();
   };
 
-
+  //CURRENTLY WORKING ON THIS FUNCTION   
   runGamne = () => {
     //functionaly for gameplay goes here
     console.log("Starting the game");
@@ -205,7 +205,7 @@ class App extends Component {
 
   startTheGame = () => {
     //Function will start the game.
-    let intervalRef = setInterval(this.runGamne(), 3000); 
+    let intervalRef = setInterval(this.runGamne(), 30); 
     if (this.state.gameRunning === false) {
       this.setState(
         {
@@ -222,8 +222,10 @@ class App extends Component {
   };
 
   nextGeneration = () => {
+    //functionaly for gameplay goes here
+    console.log("Starting the game");
     const matrix = this.state.matrixUsing.slice(); 
-    
+    console.log(matrix);
     const state_matrix = {...this.state.matrix};//creates a copy 
     
     
@@ -231,7 +233,7 @@ class App extends Component {
     for(let i = 0; i<matrix.length; i++){
 
         let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
-        let current_cell_alive = state_matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
+        let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
         if (current_cell_alive){
           if(aliveNeighbors < 2 || aliveNeighbors > 3){
             //kill the cell that is currently alive. 
@@ -241,7 +243,7 @@ class App extends Component {
             // this.continueWithGame();
           }
         } else {
-          if(aliveNeighbors === 3){
+          if(aliveNeighbors ===3){
             //resurrect the currently dead cell. 
             console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
             state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
@@ -251,9 +253,12 @@ class App extends Component {
         }
         console.log(matrix[i].row);
     }
+
+    
+    // this.setState({matrix : state_matrix, generation});
+    
     this.setState(prevState => ({matrix: state_matrix, generation: prevState.generation + 1}));
     this.continueWithGame();
-    // this.setState({matrix : state_matrix, generation});
     
   }
 
