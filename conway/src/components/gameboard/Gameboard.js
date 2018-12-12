@@ -3,10 +3,10 @@ import React, { Component } from "react";
 class Gameboard extends Component {
   state = {
     canvasSize: 500,
-    squareSize: 15,
+    squareSize: 50,
     gameState: [],
     playing: false,
-    timer: 1000,
+    timer: 250,
     timerID: null
   };
 
@@ -22,6 +22,11 @@ class Gameboard extends Component {
           .map(() => (Math.floor(Math.random() * 2) === 0 ? true : false))
       );
     this.setState({ gameState: startState }, () => this.kickoff());
+  }
+
+  clearBoard = () => {
+    const clearState = new Array(this.state.squareSize).fill(false).map(() => new Array(this.state.squareSize).fill(false));
+    this.setState({ gameState: clearState }, () => this.drawBoard());
   }
 
   kickoff = () => {
@@ -46,26 +51,26 @@ class Gameboard extends Component {
   };
 
   calculateNextLife = () => {
-    const neighbors = new Array(8).fill(0);
-    const newState = this.state.gameState.slice();
+    const neighbors = new Array(8);
+    const newState = this.state.gameState.map(arr => arr.slice());
     const squareSize = this.state.squareSize;
     for (let i = 0; i < squareSize; i++) {
       for (let j = 0; j < squareSize; j++) {
-        neighbors[0] = i + 1 < squareSize && this.state.gameState[j][i + 1] ? 1 : 0;
-        neighbors[1] = i + 1 < squareSize && j + 1 < squareSize && this.state.gameState[j + 1][i + 1] ? 1 : 0;
-        neighbors[2] = j + 1 < squareSize && this.state.gameState[j + 1][i] ? 1 : 0;
-        neighbors[3] = i - 1 > -1 && j + 1 < squareSize && this.state.gameState[j + 1][i - 1] ? 1 : 0;
-        neighbors[4] = i - 1 > -1 && this.state.gameState[j][i - 1] ? 1 : 0;
-        neighbors[5] = i - 1 > -1 && j - 1 > -1 && this.state.gameState[j - 1][i - 1] ? 1 : 0;
-        neighbors[6] = j - 1 > -1 && this.state.gameState[j - 1][i] ? 1 : 0;
-        neighbors[7] = i + 1 < squareSize && j - 1 > -1 && this.state.gameState[j - 1][i + 1] ? 1 : 0;
-        const tileState = neighbors.reduce((total, i) => (total += i));
-        if (newState[j][i]) {
-          if (tileState < 2 || tileState > 3) {
+        neighbors[0] = (i + 1 < squareSize && this.state.gameState[j][i + 1]) ? 1 : 0;
+        neighbors[1] = (i + 1 < squareSize && j + 1 < squareSize && this.state.gameState[j + 1][i + 1]) ? 1 : 0;
+        neighbors[2] = (j + 1 < squareSize && this.state.gameState[j + 1][i]) ? 1 : 0;
+        neighbors[3] = (i - 1 > -1 && j + 1 < squareSize && this.state.gameState[j + 1][i - 1]) ? 1 : 0;
+        neighbors[4] = (i - 1 > -1 && this.state.gameState[j][i - 1]) ? 1 : 0;
+        neighbors[5] = (i - 1 > -1 && j - 1 > -1 && this.state.gameState[j - 1][i - 1]) ? 1 : 0;
+        neighbors[6] = (j - 1 > -1 && this.state.gameState[j - 1][i]) ? 1 : 0;
+        neighbors[7] = (i + 1 < squareSize && j - 1 > -1 && this.state.gameState[j - 1][i + 1]) ? 1 : 0;
+        const living = neighbors.reduce((total, i) => (total += i));
+        if (this.state.gameState[j][i]) {
+          if (living < 2 || living > 3) {
             newState[j][i] = false;
           }
         } else {
-          if (tileState === 3) {
+          if (living === 3) {
             newState[j][i] = true;
           }
         }
@@ -76,7 +81,8 @@ class Gameboard extends Component {
 
   toggleGame = () => {
     if (this.state.playing) {
-      this.setState({ playing: false, timerID: false });
+      clearInterval(this.state.timerID);
+      this.setState({ playing: false, timerID: null });
     } else {
       const timerID = setInterval(this.calculateNextLife, this.state.timer);
       this.setState({
@@ -101,12 +107,16 @@ class Gameboard extends Component {
 
   render() {
     return (
-      <canvas
-        ref="canvas"
-        width={this.state.canvasSize}
-        height={this.state.canvasSize}
-        onClick={this.handleClick}
-      />
+      <React.Fragment>
+        <canvas
+          ref="canvas"
+          width={this.state.canvasSize}
+          height={this.state.canvasSize}
+          onClick={this.handleClick}
+        />
+        <button onClick={this.toggleGame}>Click Me</button>
+        <button onClick={this.clearBoard}>Click Me</button>
+      </React.Fragment>
     );
   }
 }
