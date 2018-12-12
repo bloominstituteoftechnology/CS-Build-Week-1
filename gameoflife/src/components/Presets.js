@@ -35,13 +35,8 @@ export default function Presets(props) {
           </button>
     </div>
     <div className="buttons">
-          <button onClick={props.onClickPresetBuilder}>
-            Preset Builder
-          </button>
-    </div>
-    <div className="buttons">
           <button onClick={props.onClickPresetSave}>
-            Save
+            Save Preset
           </button>
     </div>
     </div>

@@ -146,7 +146,8 @@ export default class Canvas extends Component {
     this.setState({generationNumber: this.state.generationNumber + 1});
   }
 
-  onClickPresetBuilder = () => {
+
+  onClickPresetSave = () => {
     let presetBuild = [];
     
     const canvas = this.refs.canvas;
@@ -174,17 +175,17 @@ export default class Canvas extends Component {
     }
 
     this.setState({presetBuild: presetBuild});
-  }
 
-  onClickPresetSave = () => {
-    
-    if(this.state.preset1 === null) {
-      this.setState({preset1: this.state.presetBuild})
-    } else if(this.state.preset2 === null) {
-      this.setState({preset2: this.state.presetBuild})
-    } else if(this.state.preset3 === null) {
-      this.setState({preset3: this.state.presetBuild})
-    } 
+    setTimeout( () => {
+      if(this.state.preset1 === null) {
+        this.setState({preset1: this.state.presetBuild})
+      } else if(this.state.preset2 === null) {
+        this.setState({preset2: this.state.presetBuild})
+      } else if(this.state.preset3 === null) {
+        this.setState({preset3: this.state.presetBuild})
+      } 
+    }
+    , 500)
   }
 
   onClickPreset1 = () => {
@@ -228,7 +229,7 @@ export default class Canvas extends Component {
 
     this.onClickStop();
     this.onClickClear();
-    
+
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
 
@@ -410,7 +411,6 @@ export default class Canvas extends Component {
       <div>Generation number: {this.state.generationNumber}</div>
         <div>
           <Presets
-          onClickPresetBuilder={this.onClickPresetBuilder}
           onClickPresetSave={this.onClickPresetSave} 
           onClickPreset1={this.onClickPreset1}
           onClickPreset2={this.onClickPreset2}
