@@ -162,76 +162,62 @@ class App extends Component {
     const matrix = this.state.matrixUsing.slice(); 
     let gameRunning = true; 
     const state_matrix = {...this.state.matrix};//creates a copy 
-    // while(gameRunning){
-    while(this.state.gameRunning){
+    
+    
 
-      for(let i = 0; i<matrix.length; i++){
+    for(let i = 0; i<matrix.length; i++){
 
-          let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
-          let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
-          if (current_cell_alive){
-            if(aliveNeighbors !== 2 || aliveNeighbors !== 3){
-              //kill the cell that is currently alive. 
-              console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
-              state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
-              // this.setState({state_matrix});
-              this.continueWithGame();
-            }
-          } else {
-            if(aliveNeighbors ===3){
-              //resurrect the currently dead cell. 
-              console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
-              state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
-              // this.setState({state_matrix});
-              this.continueWithGame();
-            }
+        let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
+        let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
+        if (current_cell_alive){
+          if(aliveNeighbors !== 2 || aliveNeighbors !== 3){
+            //kill the cell that is currently alive. 
+            console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
+            state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
+            // this.setState({state_matrix});
+            this.continueWithGame();
           }
-          console.log(matrix[i].row);
-      }
-      // setTimeout(this.presetChange("Block"), 3000); 
-      // this.setState(prevState => ({generation: prevState.generation + 1}) );
-      // setTimeout(this.presetChange("Beehive"), 3000); 
-      // this.setState(prevState => ({generation: prevState.generation + 1}) );
-      // setTimeout(this.presetChange("Loaf"), 3000); 
-      // this.setState(prevState => ({generation: prevState.generation + 1}) );
-      // setTimeout(this.presetChange("Boat"), 3000); 
-      // this.setState(prevState => ({generation: prevState.generation + 1}) );
-      // setTimeout(this.presetChange("Tub"), 3000); 
-      // this.setState(prevState => ({generation: prevState.generation + 1}) );
-      gameRunning = false; 
-      this.setState({matrix : state_matrix, gameRunning});
-      
+        } else {
+          if(aliveNeighbors ===3){
+            //resurrect the currently dead cell. 
+            console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
+            state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
+            // this.setState({state_matrix});
+            this.continueWithGame();
+          }
+        }
+        console.log(matrix[i].row);
     }
+    // setTimeout(this.presetChange("Block"), 3000); 
+    // this.setState(prevState => ({generation: prevState.generation + 1}) );
+    // setTimeout(this.presetChange("Beehive"), 3000); 
+    // this.setState(prevState => ({generation: prevState.generation + 1}) );
+    // setTimeout(this.presetChange("Loaf"), 3000); 
+    // this.setState(prevState => ({generation: prevState.generation + 1}) );
+    // setTimeout(this.presetChange("Boat"), 3000); 
+    // this.setState(prevState => ({generation: prevState.generation + 1}) );
+    // setTimeout(this.presetChange("Tub"), 3000); 
+    // this.setState(prevState => ({generation: prevState.generation + 1}) );
+    
+    this.setState({matrix : state_matrix});
+      
   };
 
   startTheGame = () => {
     //Function will start the game.
+    let intervalRef = setInterval(this.runGamne(), 10); 
     if (this.state.gameRunning === false) {
       this.setState(
         {
-          gameRunning: true
-        },
-        () => {
-          // this.intervalRef = setInterval(this.runGame(), 10);
-          this.runGamne()
-        }
-      );
+          gameRunning: true,
+          intervalRef
+        });
     }
   };
   stopTheGame = () => {
     // //Function will stop the game.
-    // this.setState(
-    //   {
-    //     gameRunning: false
-    //   },
-    //   () => {
-    //     if (this.intervalRef) {
-    //       clearInterval(this.intervalRef);
-    //     }
-    //   }
-    // );
+    clearInterval(this.state.intervalRef);
     console.log("Stop the game");
-    // this.setState({gameRunning: false});
     this.setState(prevState => ({gameRunning: !prevState.gameRunning}) );
   };
 
