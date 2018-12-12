@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Rules from './Rules';
 import './App.css';
 
 class Box extends Component {
@@ -213,7 +214,7 @@ play = () => {
           cols = {this.cols}
           selectBox = {this.selectBox}
         />
-
+        <Rules />
       </div>
     );
   }
