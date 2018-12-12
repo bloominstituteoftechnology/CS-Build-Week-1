@@ -259,6 +259,19 @@ class App extends Component {
               Next Generation
             </button>
           </div>
+          <div>
+            <h2>Rules:</h2>
+            <ol>
+              <li>
+                If the cell is alive and has 2 or 3 neighbors, then it remains
+                alive. Else it dies.
+              </li>
+              <li>
+                If the cell is dead and has exactly 3 neighbors, then it comes
+                to life. Else it remains dead.
+              </li>
+            </ol>
+          </div>
         </div>
       </div>
     );
