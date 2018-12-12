@@ -476,6 +476,11 @@ class App extends Component {
     return (
       <div className="container" style={{ width: this.state.width }}>
         <h2 className="titleApp">Jonathan's Game of Life</h2>
+        <p>Rules: 
+          •	If a cell is alive and it has exactly 2 or 3 living neighbors, it stays alive. 
+          
+          •	If a cell is dead and it has exactly 3 living neighbors, it rises again.
+        </p>
         <h4 className="titleApp">Generation : {this.state.generation}</h4>
         <div className="topButtons">
           <div>
