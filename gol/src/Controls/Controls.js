@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './controls.scss';
 
 let isGoing = false;
-let isClear = false;
 
 class Controls extends Component {
   constructor(props){
@@ -19,7 +18,7 @@ class Controls extends Component {
   }
 
   handleClear = () => {
-    isClear = (isClear === false) ? true : false;
+    this.props.stop();
   }
 
   render(){
@@ -30,7 +29,7 @@ class Controls extends Component {
           ? <div> go! </div> 
           : <div> halt! </div> 
       }</button>
-        <button onClick={()=>{this.props.stop()}}>scrap!</button>
+        <button onClick={()=>{this.handleClear()}}>scrap!</button>
       </div>
     )
   }

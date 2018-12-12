@@ -6,6 +6,7 @@ import Controls from './Controls/Controls';
 import GridSketch from './GOL/GridComponent';
 import sketch from './GOL/GridSketch';
 
+let isClear = false;
 
 class App extends Component {
   constructor(props){
@@ -13,6 +14,7 @@ class App extends Component {
     this.state = {
       isRollin: false,
       generations: 0,
+      isClear: false,
     }
   }
 
@@ -25,7 +27,10 @@ class App extends Component {
   }
 
   pleaseDontHurtEm = () => {
-    this.setState({isRollin: false});
+    this.setState({isClear: true});
+    window.setTimeout(()=>{
+      this.setState({isClear: false});
+    }, 5);
   }
 
   render() {

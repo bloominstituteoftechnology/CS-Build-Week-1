@@ -21,7 +21,7 @@ function sketch (p){
   let currGrid = [[]], nextGrid = [[]]
   let cellFill = "#cc527a", textFill = "#D11554", textStroke="#e8175d";
   // textStroke2 = rgba(232, 23, 93, 0.4);
-  let isBlasting = false;
+  let isBlasting = false, goForClear = 0;
   let generations = 0;
 
   p.preload = () => {};
@@ -36,7 +36,12 @@ function sketch (p){
     nextGrid = currGrid;
   };
   
+  // "Props" coming from React via P5Wrapper
   p.arbitrary = (props) => {
+    console.log(props);
+    if(props.data.isClear == true){
+      clearEm();
+    }
     if(props.data.isRollin == true){
       isBlasting = !isBlasting;
     }
@@ -127,6 +132,7 @@ function sketch (p){
   }
 
   const clearEm = () => {
+    // Needs to set generations to 0, also!
     if(isBlasting == true){
       return;
     }
@@ -135,7 +141,9 @@ function sketch (p){
         currGrid[i][j].setActiveToFalse();
       }
     }
+    generations = 0;
   }
 }
+console.log(sketch);
 
 export default sketch;

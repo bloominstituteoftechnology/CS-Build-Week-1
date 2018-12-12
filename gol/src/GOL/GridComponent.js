@@ -12,7 +12,7 @@ class Grid extends Component {
   }
 
   render(){
-    return(
+    return (
       <div className="sketch-container">
         <P5Wrapper sketch={this.state.sketchy} data={this.props.data}/>
       </div>
