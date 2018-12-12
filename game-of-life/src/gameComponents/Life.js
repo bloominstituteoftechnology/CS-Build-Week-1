@@ -1,7 +1,5 @@
 let Life=class {
     constructor(){
-        this.rowPixels=15;
-        this.colPixels=15;
         this.grid=[];
     }
     runIteration(){
@@ -42,14 +40,15 @@ let Life=class {
         }
         return count;
       }
-      createGrid(){
-        for (let i=0; i<15; i++) {
-            this.grid[i]=[];
-            for (let j=0; j<15; j++) {
-                this.grid[i].push({currentState:0,isClickable:true});
+    createGrid(){
+        this.grid=[];
+            for (let i=0; i<15; i++) {
+                this.grid[i]=[];
+                for (let j=0; j<15; j++) {
+                    this.grid[i].push({currentState:0,isClickable:true});
+                }
             }
         }
-    }
     changeClickState(){
         for (let i=0; i<this.grid.length;i++) {
             for (let j=0; j<this.grid[0].length; j++) {
