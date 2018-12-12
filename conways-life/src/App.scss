@@ -1,0 +1,68 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  box-sizing: border-box;
+}
+
+.App .container {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0 auto;
+  max-width: 992px;
+  border: 1px solid red;
+
+  header {
+    width: 100%;
+    text-align: center;
+  }
+
+  .game-view {
+    width: 60%;
+
+    h2 {
+      text-align: center;
+    }
+    .grid {
+      display: flex;
+      flex-flow: row wrap;
+      max-width: 100%;
+      border: 1px solid black;
+    }
+
+    .btns {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      button {
+      }
+    }
+  }
+
+  .info-view {
+    width: 40%;
+
+    h2 {
+      text-align: center;
+    }
+  }
+
+  .about-game {
+    h2 {
+      text-align: center;
+    }
+  }
+}

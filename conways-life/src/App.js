@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Cell from './components/cell';
-import './App.css';
+import './App.scss';
 
 class App extends Component {
   constructor(props) {
@@ -217,62 +217,61 @@ class App extends Component {
       <div className="App">
         <div className="container">
           <header>Conway's Game of Life</header>
-          <h2>Generation #{this.state.currGen}</h2>
-          <div className="grid">
-            {this.state.grid.map((cell, value) => (
-              <Cell
-                key={value}
-                id={value}
-                color={cell.color}
-                isClickable={this.state.isClickable}
-                cellClickHandler={this.cellClickHandler}
-              />
-            ))}
+          <div className="game-view">
+            <h2>Generation #{this.state.currGen}</h2>
+            <div className="grid">
+              {this.state.grid.map((cell, value) => (
+                <Cell
+                  key={value}
+                  id={value}
+                  color={cell.color}
+                  isClickable={this.state.isClickable}
+                  cellClickHandler={this.cellClickHandler}
+                />
+              ))}
+            </div>
+            <div className="btns">
+              <button
+                type="button"
+                disabled={this.state.isClickable ? false : true}
+                onClick={this.randomGridHandler}
+              >
+                Generate Random Grid
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  (this.intervalId = setInterval(this.calculateNextGen, 1000))
+                }
+              >
+                Play
+              </button>
+              <button type="button" onClick={this.pauseSimulation}>
+                Pause
+              </button>
+              <button type="button" onClick={this.gridResetHandler}>
+                Reset
+              </button>
+              <button
+                type="button"
+                disabled={this.state.isClickable ? false : true}
+                onClick={this.calculateNextGen}
+              >
+                Next Generation
+              </button>
+            </div>
           </div>
-          <div className="btns">
-            <button
-              type="button"
-              disabled={this.state.isClickable ? false : true}
-              onClick={this.randomGridHandler}
-            >
-              Generate Random Grid
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                (this.intervalId = setInterval(this.calculateNextGen, 1000))
-              }
-            >
-              Play
-            </button>
-            <button type="button" onClick={this.pauseSimulation}>
-              Pause
-            </button>
-            <button type="button" onClick={this.gridResetHandler}>
-              Reset
-            </button>
-            <button
-              type="button"
-              disabled={this.state.isClickable ? false : true}
-              onClick={this.calculateNextGen}
-            >
-              Next Generation
-            </button>
-          </div>
-          <div>
+          <div className="info-view">
             <h2>Rules:</h2>
-            <ol>
-              <li>
-                If the cell is alive and has 2 or 3 neighbors, then it remains
-                alive. Else it dies.
-              </li>
-              <li>
-                If the cell is dead and has exactly 3 neighbors, then it comes
-                to life. Else it remains dead.
-              </li>
-            </ol>
+            <p>
+              <strong>1.</strong> If the cell is alive and has 2 or 3 neighbors,
+              then it remains alive. Else it dies.
+              <br /> <br />
+              <strong>2.</strong> If the cell is dead and has exactly 3
+              neighbors, then it comes to life. Else it remains dead.
+            </p>
           </div>
-          <div>
+          <div className="about-game">
             <h2>About the Game of Life</h2>
             <p>
               The <strong>Game of Life</strong> is a cellular automaton designed

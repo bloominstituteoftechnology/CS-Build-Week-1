@@ -1,5 +1,5 @@
 import React from 'react';
-import './cell.css';
+import './cell.scss';
 
 const Cell = props => {
   return (
