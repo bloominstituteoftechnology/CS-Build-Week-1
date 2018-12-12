@@ -210,7 +210,8 @@ class App extends Component {
     console.log(this.state.gameRunning);
     if (this.state.gameRunning === false) {
       console.log("set everything")
-      let intervalRef = setInterval(this.runGamne(), 1000); 
+      // let intervalRef = setInterval(this.runGamne(), 1000); 
+      let intervalRef = setInterval(() => this.runGamne(), 1000);
       this.setState(
         {
           gameRunning: true,
