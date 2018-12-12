@@ -12,6 +12,10 @@ canvas {
   margin-left: 50px;
   background: white;
 }
+.rules {
+  width: 500px;
+  font-family: 'Ubuntu', sans-serif;
+}
 .controls {
   margin: 50px;
   display: flex;
@@ -23,7 +27,34 @@ canvas {
   display: flex;
   margin-left: 50px;
   width: 200px;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+.colors {
+  display: flex;
+  margin-left: 50px;
+  width: 400px;
+  justify-content: space-between;
+}
+.r {
+  background: red;
+}
+.o {
+  background: #FF7F50;
+}
+.y {
+  background: #FEFA8A;
+}
+.g {
+  background: #00FA9A;
+}
+.b {
+  background: #1E90FF;
+}
+.pu {
+  background: #8A2BE2;
+}
+.pi {
+  background: #DB7093;
 }
 .belowText {
   margin-left: 50px;
