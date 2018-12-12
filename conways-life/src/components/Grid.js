@@ -12,17 +12,22 @@ export default class Grid extends Component {
     handleClick = (e) => {
         const canvas = this.refs.canvas;
         const ctx = canvas.getContext('2d');
-        if(this.state.currentState === 'white'){
+        let position = canvas.getBoundingClientRect();
+        let coord = {x: e.clientX - position.left, y: e.clientY - position.top};
+        this.setState(state => ({
+            coord: "black"
+        }))
+        if(this.state.coord === 'white'){
             this.setState(state => ({
-                currentState: 'black'
+                coord: 'black'
             }))
         }
-        else if(this.state.currentState === 'black'){
+        else if(this.state.coord === 'black'){
             this.setState(state => ({
-                currentState: 'white'
+                coord: 'white'
             }))
         }
-        ctx.fillStyle = this.state.currentState;
+        ctx.fillStyle = this.state.coord;
         ctx.fillRect(Math.floor(e.offsetX / 20) * 20, Math.floor(e.offsetY / 20) *20, 20, 20);
     }
 
@@ -48,7 +53,7 @@ export default class Grid extends Component {
         ctx.canvas.width = 400;
         ctx.canvas.height = 400;
         canvas.addEventListener('click', this.handleClick);
-        canvas.addEventListener('clear', this.clearGrid);
+        canvas.addEventListener('mousemove', this.handleMouseMove)
 
         for(let x = 0; x <= 400; x+=20){
             for(let y = 0; y<= 400; y+=20){
