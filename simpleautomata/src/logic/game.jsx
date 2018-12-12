@@ -31,6 +31,7 @@ class Game extends React.Component {
     cells: [],
     interval: 200,
     isRunning: false,
+    gen: 0,
   }
   //method to create an empty board:
   makeEmptyBoard(){
@@ -112,6 +113,7 @@ class Game extends React.Component {
               let neighbors = this.calculateNeighbors(this.board, x, y);
               if (this.board[y][x]) {
                   if (neighbors === 2 || neighbors === 3) {
+                    //individual cell in 2d array
                       newBoard[y][x] = true;
                   } else {
                       newBoard[y][x] = false;
@@ -122,6 +124,7 @@ class Game extends React.Component {
                   }
               }
           }
+          this.setState({ gen: this.state.gen +1 });
       }
 
 
@@ -162,6 +165,7 @@ class Game extends React.Component {
   handleClear = () => {
     this.board = this.makeEmptyBoard();
     this.setState({ cells: this.makeCells() });
+    this.setState({ gen:0 });
   }
 
   handleRandom = () => {
@@ -179,6 +183,7 @@ class Game extends React.Component {
     const { cells } = this.state;
     return (
       <div>
+        <div>current gen: {this.state.gen}</div>
         <div className="Board"
           style = {{ width: WIDTH, height: HEIGHT,
              backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}} onClick={this.handleClick}
