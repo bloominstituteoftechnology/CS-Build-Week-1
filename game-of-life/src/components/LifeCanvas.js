@@ -35,7 +35,7 @@ export default class LifeCanvas extends Component {
     this.height = 500;
     this.width = 500;
     this.state = {
-      continueAnimation: true,
+      continueAnimation: false,
       cells: arr,
       generation: 0
     }
@@ -57,7 +57,7 @@ export default class LifeCanvas extends Component {
       ctx.moveTo(0, y);
       ctx.lineTo(this.width, y);
     }
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = 'blue';
     ctx.stroke();
 
     for (let j=0; j<this.height/this.cellsize; j++) {
@@ -77,40 +77,29 @@ export default class LifeCanvas extends Component {
     let mirrorCells = this.state.cells;
     for (let j=0; j<this.height/this.cellsize; j++) {
       for (let k=0; k<this.width/this.cellsize; k++) {
-        console.log('Living:', this.state.cells[j][k].living);
-        console.log('J and K:', j, k);
         let liveneighbors = 0;
         if (j > 0) {
           if (k>0) {
-            console.log('J > 0 K > 0');
             liveneighbors += this.state.cells[j-1][k-1].living;
           }
           if (k<this.width/this.cellsize-1) {
-            console.log('J > 0 K < Width');
             liveneighbors += this.state.cells[j-1][k+1].living;
           }
-          console.log('J > 0');
           liveneighbors += this.state.cells[j-1][k].living;
         }
         if (k > 0) {
           if (j<this.height/this.cellsize-1) {
-            console.log("K>0 J<height");
             liveneighbors += this.state.cells[j+1][k-1].living;
           }
-          console.log("K>0")
           liveneighbors += this.state.cells[j][k-1].living;
         }
         if (j<this.height/this.cellsize-1) {
           if (k<this.width/this.cellsize-1) {
-            console.log("width minus 1", this.width-1)
-            console.log("J < height K<width");
             liveneighbors += this.state.cells[j+1][k+1].living;
           }
-          console.log("J < height")
           liveneighbors += this.state.cells[j+1][k].living;
         }
         if (k<this.width/this.cellsize-1) {
-          console.log("K<width");
           liveneighbors += this.state.cells[j][k+1].living;
         }
         if (this.state.cells[j][k].living == 0) {
@@ -158,6 +147,15 @@ export default class LifeCanvas extends Component {
     }
   }
 
+  start = (e) => {
+    this.setState({ continueAnimation: true});
+    requestAnimationFrame(this.tick);
+  }
+
+  stop = (e) => {
+    this.setState({ continueAnimation: false})
+  }
+
   componentDidMount() {
     const canv = this.refs.canvas;
     const lft = canv.offsetLeft;
@@ -169,6 +167,7 @@ export default class LifeCanvas extends Component {
       cells.forEach(cell => {
         if (x > cell.x && x < cell.x+10 && y > cell.y && y < cell.y+10) {
           cell.toggle();
+          console.log("CLICKY!")
         }
       });
       this.setState({ cells });
@@ -180,10 +179,10 @@ export default class LifeCanvas extends Component {
         return (
           <div>
             <h3>Welcome to Jordan's Game of Life</h3>
-            <p>Generations: ${this.state.generation}</p>
+            <p>Generations: {this.state.generation}</p>
             <canvas ref="canvas" width={this.width} height={this.height} />
-            <button>Start</button>
-            <button>Stop</button>
+            <button onClick = {this.start}>Start</button>
+            <button onClick = {this.stop}>Stop</button>
           </div>
         )
     }
