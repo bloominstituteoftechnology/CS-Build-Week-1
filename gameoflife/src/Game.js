@@ -97,8 +97,7 @@ class Game extends React.Component {
 
   //HELPER FUNCTIONS
   runGame = () => {
-    this.setState({ isRunning: true });
-    this.runIteration();
+    this.setState({ isRunning: true }, () => this.runIteration());
   };
 
   stopGame = () => {
@@ -109,7 +108,7 @@ class Game extends React.Component {
     }
   };
 
-  runIteration() {
+  runIteration = () => {
     console.log("running");
     let newBoard = this.createEmptyBoard();
 
@@ -133,9 +132,11 @@ class Game extends React.Component {
     this.board = newBoard;
     this.setState({ cells: this.makeCells() });
 
-    this.timeoutHandler = window.setTimeout(() => {
-      this.runIteration();
-    }, this.state.interval);
+    if (this.state.isRunning) {
+      this.timeoutHandler = window.setTimeout(() => {
+        this.runIteration();
+      }, this.state.interval);
+    }
 
     let newGeneration = this.state.generation;
     ++newGeneration;
@@ -242,11 +243,8 @@ class Game extends React.Component {
           <button className="button" onClick={this.handleClearBoard}>
             Clear
           </button>
-          <button className="button" onClick={this.handleRandom}>
+          <button className="button" onClick={this.runIteration}>
             Next
-          </button>
-          <button className="button" onClick={this.handleRandom}>
-            Previous
           </button>
           Generation: {this.state.generation}
         </div>
