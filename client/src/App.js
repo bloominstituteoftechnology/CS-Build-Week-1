@@ -29,7 +29,7 @@ class App extends Component {
   generateRandom = () => {
     console.log("random generating");
     const keys = Object.keys(this.state.matrix);
-    const matrix = {...this.state.matrix};//creates a copy 
+    const matrix = {...this.state.matrixMirror};//creates a copy 
 
     for(let i = 0; i< keys.length; i++){
       for(let j = 0; j<matrix[i].length; j++){
@@ -184,6 +184,7 @@ class App extends Component {
     let gameRunning = true; 
     const state_matrix = {...this.state.matrix};//creates a copy 
     while(gameRunning){
+    // while(this.state.gameRunning){
 
       for(let i = 0; i<matrix.length; i++){
 
@@ -194,7 +195,7 @@ class App extends Component {
               //kill the cell that is currently alive. 
               console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
               state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
-              this.setState({state_matrix});
+              // this.setState({state_matrix});
               this.continueWithGame();
             }
           } else {
@@ -202,14 +203,15 @@ class App extends Component {
               //resurrect the currently dead cell. 
               console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
               state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
-              this.setState({state_matrix});
+              // this.setState({state_matrix});
               this.continueWithGame();
             }
           }
           console.log(matrix[i].row);
       }
-      
       gameRunning = false; 
+      this.setState({matrix : state_matrix, gameRunning});
+      
     }
   };
 
@@ -239,6 +241,7 @@ class App extends Component {
     //     }
     //   }
     // );
+    console.log("Stop the game");
     this.setState({gameRunning: false});
   };
 
