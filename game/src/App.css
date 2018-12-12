@@ -49,3 +49,8 @@ ol, .algoP {
   display: flex;
   flex-flow: column wrap;
 }
+
+a:link, a:visited, a:active, a:hover, button, select {
+  margin-left: 10px;
+  margin-right: 10px;
+}
