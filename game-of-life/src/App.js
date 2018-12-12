@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
+import { ButtonToolbar, MenuItem, DropdownButton } from 'react-bootstrap';
 import Rules from './Rules';
 import About from './About';
 import './App.css';
@@ -25,7 +26,7 @@ class Grid extends Component{
 
   render(){
     //set a constant width equal to the number columns, consider the border which is one pixel
-    const width = this.props.cols * 31;
+    const width = this.props.cols * 16;
     //array of all rows in the grid
     let rowArray = []; //add everything that will show up in the grid to this array
 
@@ -63,34 +64,47 @@ class Grid extends Component{
 }
 
 class Controls extends Component{
+
+  handleGridSize = (event) => {
+    this.props.gridSize(event);
+  }
+
   render () {
     return(
       <div className = "buttons">
         <h4>
           Game Controls
         </h4>
-      <button className = "play-button" onClick = {this.props.playButton}>
-        Play
-      </button>
-      <button className = "pause-button" onClick = {this.props.pauseButton}>
-        Stop
-      </button>
-      <button className = "clear-button" onClick = {this.props.clearButton}>
-        Reset
-      </button>
-      <button className = "random-pattern" onClick = {this.props.random}>
-        Random
-      </button>
-      <button className = "slow-button" >
-        Slow
-      </button>
-      <button className = "fast-button" >
-        Fast
-      </button>
-      <button className = "grid-size" >
-        Grid Size
-      </button>
+    <ButtonToolbar>
+        <button className = "play-button" onClick = {this.props.playButton}>
+          Play
+        </button>
+        <button className = "pause-button" onClick = {this.props.pauseButton}>
+          Stop
+        </button>
+        <button className = "clear-button" onClick = {this.props.clearButton}>
+          Reset
+        </button>
+        <button className = "random-pattern" onClick = {this.props.random}>
+          Random
+        </button>
+        <DropdownButton 
+                title = "Speed"
+                id = "speed-menu"
+                onSelect = {this.handleSpeed} >
+                <MenuItem eventKey = "1">Slow</MenuItem>
+                <MenuItem eventKey = "2">Fast</MenuItem>
+        </DropdownButton>
+        <DropdownButton 
+                title = "Grid Size"
+                id = "size-menu"
+                onSelect = {this.handleGridSize} >
+                <MenuItem eventKey = "1">Small Grid</MenuItem>
+                <MenuItem eventKey = "2">Large Grid</MenuItem>
+        </DropdownButton>
+      </ButtonToolbar>
       </div>
+
     );
   }
 }
@@ -123,8 +137,8 @@ class App extends Component {
 
     // these variables will not be accessible to other components
     // define these outside of state so we can reference them within the state
-    this.rows = 15;
-    this.cols = 15;
+    this.rows = 30;
+    this.cols = 50;
 
     this.state = {
       generation: 0, //this variable serves as a counter to track which generation the game is on
@@ -144,6 +158,19 @@ class App extends Component {
     this.setState({
       gridFull: gridCopy
     });
+  }
+
+  gridSize = (size) => {
+    switch(size) {
+      case "1":
+        this.cols = 30;
+        this.rows = 20;
+      break;
+      case "2":
+        this.cols = 50;
+        this.rows = 30;
+    }
+    this.clear();
   }
 
   random = () => {
@@ -269,6 +296,7 @@ play = () => {
           rows = {this.rows}
           cols = {this.cols}
           selectBox = {this.selectBox}
+        
         />
         <h4>
           Generations: {this.state.generation}
@@ -284,6 +312,7 @@ play = () => {
           pauseButton = {this.pauseButton}
           clearButton = {this.clear}
           random = {this.random}
+          gridSize = {this.gridSize}
         />
         </div> 
 

@@ -14,8 +14,8 @@
 .box {
   display: inline-block;       
   border: 1px solid rgb(126, 126, 126);
-  width: 30px;
-  height: 30px;
+  width: 15px;
+  height: 15px;
   margin-left: -1px;
   margin-bottom: -1px;
   }
@@ -25,11 +25,11 @@
 }
 
 .on {
-  background-color: rgb(49, 136, 96);
+  background-color: rgb(126, 126, 126);
 }
   
 .box:hover { 
-  background:rgb(89, 102, 98);
+  background:rgb(126, 126, 126);
 }
 
 .center {
@@ -65,7 +65,7 @@ button{
 }
 
 button:hover{
-  background:rgb(212, 250, 238);
+  background:rgb(228, 228, 228);
 }
 
 
@@ -95,7 +95,9 @@ p{
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  width: 80%;
   margin: 0 10%;
+  border: 1px solid red;
 }
 
 i{
