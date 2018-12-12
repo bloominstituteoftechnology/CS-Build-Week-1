@@ -2,36 +2,81 @@ import React from "react";
 
 import Slider from "@material-ui/lab/Slider";
 import Typography from "@material-ui/core/Typography";
-import Switch from '@material-ui/core/Switch';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Fab from "@material-ui/core/Fab";
+import { withStyles } from "@material-ui/core/styles";
 
-const Gamecontrols = ({ size, speed, changeSize, changeSpeed, playing, toggleGame }) => {
+const styles = theme => ({
+  root: {
+    width: "33%",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column"
+  },
+  btns: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-evenly"
+  }
+});
+
+const Gamecontrols = ({
+  size,
+  speed,
+  changeSize,
+  changeSpeed,
+  playing,
+  toggleGame,
+  skip,
+  clear,
+  random,
+  classes
+}) => {
   return (
-    <div style={{ width: '33%' }}>
-      <FormGroup row>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={playing}
-              onChange={toggleGame}
-              color="primary"
-            />
-          }
-          label="Play!"
-        />
-      </FormGroup>
+    <div className={classes.root}>
+      <div className={classes.btns}>
+        <Fab
+          color={playing ? "secondary" : "primary"}
+          onClick={toggleGame}
+        >
+          {playing ? "Pause" : "Play"}
+        </Fab>
+        <Fab
+          color="primary"
+          disabled={playing}
+          onClick={() => skip(1)}
+        >
+          {" "}
+          >{" "}
+        </Fab>
+        <Fab
+          color="primary"
+          disabled={playing}
+          onClick={() => skip(5)}
+        >
+          {" "}
+          >>{" "}
+        </Fab>
+        <Fab
+          color="primary"
+          disabled={playing}
+          onClick={clear}
+        >
+          Clear
+        </Fab>
+        <Fab
+          color="primary"
+          disabled={playing}
+          onClick={random}
+        >
+          Random
+        </Fab>
+      </div>
       <Typography id="slider-speed">Speed</Typography>
-      <Slider
-        min={3000}
-        max={1}
-        value={speed}
-        onChange={changeSpeed}
-      />
+      <Slider min={250} max={0.05} value={speed} onChange={changeSpeed} />
       <Typography id="slider-size">Board Size</Typography>
       <Slider
         min={15}
-        max={120}
+        max={135}
         step={15}
         value={size}
         onChange={changeSize}
@@ -41,4 +86,4 @@ const Gamecontrols = ({ size, speed, changeSize, changeSpeed, playing, toggleGam
   );
 };
 
-export default Gamecontrols;
+export default withStyles(styles)(Gamecontrols);

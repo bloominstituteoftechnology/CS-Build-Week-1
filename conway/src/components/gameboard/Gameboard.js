@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 
+import Typography from '@material-ui/core/Typography';
+
 import Gamecontrols from "./Gamecontrols";
 
 class Gameboard extends Component {
   state = {
-    canvasSize: 500,
-    squareSize: 120,
+    canvasSize: 350,
+    squareSize: 75,
     gameState: [],
-    playing: true,
-    timer: 1,
-    timerID: null
+    playing: false,
+    timer: 125,
+    timerID: null,
+    generations: 0
   };
 
   //notes
@@ -19,6 +22,10 @@ class Gameboard extends Component {
     const canvas = this.refs.canvas.getContext("2d");
     canvas.fillStyle = "white";
     canvas.fillRect(0, 0, this.state.canvasSize, this.state.canvasSize);
+    this.randomizeBoard();
+  }
+
+  randomizeBoard = () => {
     const startState = new Array(this.state.squareSize)
       .fill(false)
       .map(() =>
@@ -26,7 +33,7 @@ class Gameboard extends Component {
           .fill(false)
           .map(() => (Math.floor(Math.random() * 2) === 0 ? true : false))
       );
-    this.setState({ gameState: startState }, () => this.kickoff());
+    this.setState({ gameState: startState }, () => this.drawBoard());
   }
 
   clearBoard = () => {
@@ -34,11 +41,6 @@ class Gameboard extends Component {
       .fill(false)
       .map(() => new Array(this.state.squareSize).fill(false));
     this.setState({ gameState: clearState }, () => this.drawBoard());
-  };
-
-  kickoff = () => {
-    this.drawBoard();
-    this.toggleGame();
   };
 
   drawBoard = () => {
@@ -99,7 +101,11 @@ class Gameboard extends Component {
         }
       }
     }
-    this.setState({ gameState: newState }, () => this.drawBoard());
+
+    this.setState(
+      { gameState: newState, generations: this.state.generations + 1 },
+      () => this.drawBoard()
+    );
   };
 
   toggleGame = () => {
@@ -129,7 +135,7 @@ class Gameboard extends Component {
   };
 
   changeBoardSize = (e, val) => {
-    this.setState({ squareSize: val }, () => this.clearBoard());
+    this.setState({ squareSize: val }, () => this.randomizeBoard());
   };
 
   changeSpeed = (e, val) => {
@@ -137,11 +143,21 @@ class Gameboard extends Component {
     this.setState({ timer: val }, () => this.toggleGame());
   };
 
+  skipForward = num => {
+    for (let i = 0; i < num; i++) {
+      this.calculateNextLife();
+    }
+  };
+
   render() {
     const { squareSize, timer, playing } = this.state;
     return (
       <React.Fragment>
+        <Typography variant="h6" gutterBottom>
+          Generation: {this.state.generations}
+        </Typography>
         <canvas
+          style={{ border: '1px solid black'}}
           ref="canvas"
           width={this.state.canvasSize}
           height={this.state.canvasSize}
@@ -154,6 +170,9 @@ class Gameboard extends Component {
           changeSpeed={this.changeSpeed}
           playing={playing}
           toggleGame={this.toggleGame}
+          skip={this.skipForward}
+          clear={this.clearBoard}
+          random={this.randomizeBoard}
         />
       </React.Fragment>
     );
