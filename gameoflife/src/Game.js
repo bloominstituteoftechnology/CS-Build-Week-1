@@ -80,17 +80,19 @@ class Game extends React.Component {
    */
 
   clickHandler = e => {
-    const elemOffset = this.getElementOffset();
-    const offsetX = e.clientX - elemOffset.x;
-    const offsetY = e.clientY - elemOffset.y;
+    if (!this.state.isRunning) {
+      const elemOffset = this.getElementOffset();
+      const offsetX = e.clientX - elemOffset.x;
+      const offsetY = e.clientY - elemOffset.y;
 
-    const x = Math.floor(offsetX / CELL_SIZE);
-    const y = Math.floor(offsetY / CELL_SIZE);
+      const x = Math.floor(offsetX / CELL_SIZE);
+      const y = Math.floor(offsetY / CELL_SIZE);
 
-    if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows) {
-      this.board[y][x] = !this.board[y][x];
+      if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows) {
+        this.board[y][x] = !this.board[y][x];
+      }
+      this.setState({ cells: this.makeCells() });
     }
-    this.setState({ cells: this.makeCells() });
   };
 
   //HELPER FUNCTIONS
@@ -135,10 +137,10 @@ class Game extends React.Component {
       this.runIteration();
     }, this.state.interval);
 
-    let newGeneration = this.state.generation
+    let newGeneration = this.state.generation;
     ++newGeneration;
-    this.setState({generation: newGeneration})
-    console.log(this.state.generation)
+    this.setState({ generation: newGeneration });
+    console.log(this.state.generation);
   }
 
   /**
@@ -185,7 +187,7 @@ class Game extends React.Component {
   handleClearBoard = () => {
     this.board = this.createEmptyBoard();
     this.setState({ cells: this.makeCells() });
-    this.setState ({generation: 0})
+    this.setState({ generation: 0 });
   };
 
   //generate a random pattern
@@ -239,6 +241,12 @@ class Game extends React.Component {
           </button>
           <button className="button" onClick={this.handleClearBoard}>
             Clear
+          </button>
+          <button className="button" onClick={this.handleRandom}>
+            Next
+          </button>
+          <button className="button" onClick={this.handleRandom}>
+            Previous
           </button>
           Generation: {this.state.generation}
         </div>
