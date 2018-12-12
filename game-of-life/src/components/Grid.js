@@ -27,9 +27,19 @@ import styled from "styled-components";
 
 
 class Grid extends Component {
+    refresh=() => {
+        console.log("before for")
+        for(let i = 0; i < this.props.neighbors.length; i++) {
+            console.log(i)
+            if(this.props.neighbors.length < 2) {
+                this.props.data = 0;
+            }
+        }
+    } 
     render() { 
         return ( 
-            <div onClick={this.props.onClick} className={this.props.data ? "Block_On"  : "Block"}  />
+            <div onClick={this.props.onClick} className={this.props.data ? "Block_On"  : "Block"}>{this.refresh}</div>
+
 
     
         );
