@@ -10,6 +10,7 @@ class Grid extends Component {
     var rowsArr = [];
 
     var boxClass = "";
+
     for (var i = 0; i < this.props.rows; i++) {
       for (var j = 0; j < this.props.cols; j++) {
 
