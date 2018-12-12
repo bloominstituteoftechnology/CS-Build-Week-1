@@ -150,7 +150,8 @@ class App extends Component {
   clearGame(){
     this.setState({
       running: false, 
-      stage: this.state.stage,  
+      stage: this.state.stage 
+
     })
   }
 

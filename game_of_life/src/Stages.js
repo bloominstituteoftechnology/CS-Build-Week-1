@@ -14,11 +14,11 @@ import React, { Component } from 'react';
 //nextStage = will give a map of the new stage in the process.
 
 class Stages extends Component{
-    constructor(){
+    constructor(stage = 0, living = new Map()){
         super();
         this.state ={
-            stage: 0,
-            living: new Map(),
+            stage: stage,
+            living: living,
             nextStage: new Map(),
             dead: new Map(),
         }
@@ -53,7 +53,7 @@ class Stages extends Component{
         })
         this.state.stage++;
 
-        return new Stages(this.stage, this.nextStage); 
+        return new Stages(this.state.stage, this.state.nextStage); 
     }
     //count the living neighbors
     livingNeighbor(status){
@@ -85,7 +85,7 @@ class Stages extends Component{
         }
         //finding out if there are 2 or 3 living cells around the initial cell.
         if((thoseAlive === 2 || thoseAlive === 3))
-        this.nextStage.set(status.x + " , " + status.y, {x: this.status.x, y: status.y});
+        this.state.nextStage.set(status.x + " , " + status.y, {x: status.x, y: status.y});
     }
     //count the dead neighbors
     //very similar structure to the livingNeighbor
@@ -104,8 +104,9 @@ class Stages extends Component{
             }
         }
         if(thoseAlive === 3)
-        this.nextStage.set(status.x + " , " + status.y, {x: status.x, y: status.y}); 
+        this.state.nextStage.set(status.x + " , " + status.y, {x: status.x, y: status.y}); 
     }
+    
     //get the status of a cell and add it to map of living cells
     addCell(status){
         this.state.living.set(status.x + " , " + status.y, {x : status.x, y: status.y})
