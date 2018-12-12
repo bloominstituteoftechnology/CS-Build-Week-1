@@ -88,8 +88,9 @@ class Canvas extends Component {
     }
 
     updateCanvas = () => {
-        // const canvas = this.refs.canvas;
-        // const ctx = canvas.getContext('2d');
+        const canvas = this.refs.canvas;
+        const ctx = canvas.getContext('2d');
+        const squareSize = 20
         // ctx.canvas.width = 300;
         // ctx.canvas.height = 300;
         // ctx.lineWidth = .1;
@@ -97,9 +98,15 @@ class Canvas extends Component {
         // ctx.strokeStyle = 'blue';
         // ctx.strokeStyle = 'rgba(111, 111, 111, 0.8)';
         for (let item in this.state) {
-            let xval = parseInt(item.substring(0, item.indexOf(',')));
-            console.log(`${item},${xval+1}`);
-
+            let xVal = parseInt(item.substring(0, item.indexOf(',')));
+            let yVal = parseInt(item.substring(item.indexOf(',')+1));
+            // console.log(`${item},${xVal+1},${yVal}`);
+            if (this.state[item] === "deadite") {
+                ctx.clearRect(xVal*20, yVal*20, squareSize, squareSize);
+            } else if (this.state[item] === "living") {
+                ctx.strokeRect(xVal*20, yVal*20, squareSize, squareSize);
+            }
+            
         }
     }
 
@@ -155,7 +162,7 @@ class Canvas extends Component {
             let cycleCountTemp = this.state.cycleCount;
             cycleCountTemp++;
             this.setState({...stateBuffer, cycleCount: cycleCountTemp});
-
+            this.updateCanvas();
         }
     }
 
@@ -172,10 +179,11 @@ class Canvas extends Component {
                 onClick={this.handleClick}
                 onDoubleClick={this.handleDoubleClick}
                 />
+                <p>Generation: {this.state.cycleCount}</p>
                 <div className='controls' >
                     <button onClick={this.simulationToggle}>Start / Stop simulation</button>
                     <button onClick={this.clearCanvas}>Clear Board</button>
-                    <button onClick={this.updateCanvas}>Step</button>
+                    <button onClick={this.gameCycle}>Step</button>
                 </div>
             </div>
         )
