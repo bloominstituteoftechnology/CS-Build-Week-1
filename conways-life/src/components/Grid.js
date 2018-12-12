@@ -5,7 +5,7 @@ export default class Grid extends Component {
         super(props);
         this.state = {
             // currentState: 'white',
- 
+            generation: '0',
         };
     }
 
@@ -16,9 +16,22 @@ export default class Grid extends Component {
         let xcoord = Math.floor(e.offsetX / 20);
         let ycoord = Math.floor(e.offsetY / 20);
         let cell = `${xcoord}, ${ycoord}`;
-        this.setState({[`${cell}`]: "black"});
-        ctx.fillStyle = this.state.coord;
+        this.setState({[`${cell}`]: 'black'});
+        ctx.fillStyle = 'black';
         ctx.fillRect(Math.floor(e.offsetX / 20) * 20, Math.floor(e.offsetY / 20) *20, 20, 20);
+        console.log(this.state);
+    }
+
+    handleDoubleClick = (e) => {
+        const canvas = this.refs.canvas;
+        const ctx = canvas.getContext('2d');
+        let xcoord = Math.floor(e.offsetX / 20);
+        let ycoord = Math.floor(e.offsetY / 20);
+        let cell = `${xcoord}, ${ycoord}`;
+        this.setState({[`${cell}`]: 'white'});
+        ctx.fillStyle = 'white';
+        ctx.fillRect(Math.floor(e.offsetX / 20) * 20, Math.floor(e.offsetY / 20) *20, 20, 20);
+        console.log(this.state);
     }
 
     cellsState = () => {
@@ -54,7 +67,7 @@ export default class Grid extends Component {
         ctx.canvas.width = 400;
         ctx.canvas.height = 400;
         canvas.addEventListener('click', this.handleClick);
-        canvas.addEventListener('mousemove', this.handleMouseMove)
+        canvas.addEventListener('dblclick', this.handleDoubleClick);
 
         for(let x = 0; x <= 400; x+=20){
             for(let y = 0; y<= 400; y+=20){
@@ -76,7 +89,8 @@ export default class Grid extends Component {
     render() {
         return(
             <div>
-                <canvas class="canvas" ref="canvas" />
+                <h1>Generation: {this.state.genereation}</h1>
+                <canvas className="canvas" ref="canvas" />
                 <button onClick={this.play}>Play</button>
                 <button onClick={this.pause}>Pause</button>
                 <button onClick={this.clearGrid}>Clear</button>
