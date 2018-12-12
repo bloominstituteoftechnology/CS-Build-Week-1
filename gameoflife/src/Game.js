@@ -33,7 +33,8 @@ class Game extends React.Component {
   state = {
     cells: [],
     interval: 100,
-    isRunning: false
+    isRunning: false,
+    generation: 0
   };
 
   //create the empty board
@@ -133,6 +134,11 @@ class Game extends React.Component {
     this.timeoutHandler = window.setTimeout(() => {
       this.runIteration();
     }, this.state.interval);
+
+    let newGeneration = this.state.generation
+    ++newGeneration;
+    this.setState({generation: newGeneration})
+    console.log(this.state.generation)
   }
 
   /**
@@ -233,6 +239,7 @@ class Game extends React.Component {
           <button className="button" onClick={this.handleClearBoard}>
             Clear
           </button>
+          Generation: {this.state.generation}
         </div>
       </div>
     );
