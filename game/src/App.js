@@ -14,8 +14,8 @@ class App extends Component {
     this.drawGrid()
   }
   gridStateInit = () => {
-    for (let i=0; i<=300; i+=20){
-      for (let j=0; j<=300; j+=20){
+    for (let i=0; i<300; i+=20){
+      for (let j=0; j<300; j+=20){
         this.setState({[`${i}_${j}`]: "dead"})
       }
     }
@@ -42,8 +42,8 @@ class App extends Component {
     if(this.state.running){
       setTimeout(() => {
       let stateBuffer = {...this.state};
-      for (let i=0; i<=300; i+=20){
-        for (let j=0; j<=300; j+=20){
+      for (let i=0; i<300; i+=20){
+        for (let j=0; j<300; j+=20){
           let livingNeighbors = 0
           let neighborTop = `${i}_${j-20}`
           let neighborBot = `${i}_${j+20}`
@@ -77,7 +77,6 @@ class App extends Component {
           if (this.state[neighborBotR] === "alive"){
             ++livingNeighbors
           }
-          console.log("neighbors", livingNeighbors)
           if (this.state[`${i}_${j}`] === "alive" && livingNeighbors > 3) {
             console.log("o no cell die")
             stateBuffer[`${i}_${j}`] = "dead"
@@ -94,14 +93,15 @@ class App extends Component {
             ctx.fillStyle = "#DB7093"
             ctx.fillRect(i+1, j+1, 19, 19);
           }
+          console.log("neighbors:", livingNeighbors, "current cell:", i,j, "alive or dead?", stateBuffer[`${i}_${j}`])
         }
       }
-      this.setState(stateBuffer);
+
       let cyclesCopy = this.state.cycles
       ++cyclesCopy;
-      this.setState({cycles: cyclesCopy})
-      requestAnimationFrame(this.moveCells);
-    }, 2000)}
+      console.log(stateBuffer)
+      this.setState ({...stateBuffer, cycles: cyclesCopy }, () => requestAnimationFrame(this.moveCells));
+    }, 100)}
   }
   buttonClick = (type) => {
     const c = this.refs.grid
@@ -207,8 +207,9 @@ class App extends Component {
             <p>some stuff goes here later</p>
           </div>
         </div>
-        <p className="cycles">Number of cycles: {this.state.cycles}</p>
-        <div className="controls preset">
+        <p className="belowText">Number of cycles: {this.state.cycles}</p>
+        <p className="belowText">Presets</p>
+        <div className="presets">
             <button onClick={()=>this.buttonClick("glider")}>Glider</button>
             <button onClick={()=>this.buttonClick("t")}>T</button>
             <button onClick={()=>this.buttonClick("arrow")}>Arrow</button>

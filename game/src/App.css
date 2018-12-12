@@ -19,9 +19,18 @@ canvas {
   justify-content: space-around;
   height: 300;
 }
-.preset {
-  width: 60px;
-}
-.cycles {
+.presets {
+  display: flex;
   margin-left: 50px;
+  width: 200px;
+  justify-content: space-around;
+}
+.belowText {
+  margin-left: 50px;
+}
+button {
+  border-radius: 3px;
+  border: none;
+  font-family: 'Bungee', cursive;
+  height: 20px;
 }
