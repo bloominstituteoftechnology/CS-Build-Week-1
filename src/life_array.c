@@ -32,107 +32,137 @@ and -w+1 (9) is up-right. For those below it, 13 +w(5) = 18, below,
 
 //Corner case: if both of the above conditions are true, the index must be in a corner.
 
-unsigned int total_adjacents(int index, int width, int height, unsigned int *life_array) {
+void init_array(unsigned int *array) {
+    for (int i = 0; i < sizeof(array); i++) {
+        array[i] = 0;
+    }
+}
+
+unsigned int total_adjacents(int index, int width, int height, unsigned int *array) {
     int total = 0;
     //Commented numbers use a numpad notation to refer to directionals. 1 = lower left, 6 = right, 8 = up, etc. 5 = self, is unused
     //Check if index is on top left
     if (index % width == 0 && index < width) {
-        total += life_array[index + (width * 2 - 1)]; //1
-        total += life_array[index + width]; //2
-        total += life_array[index + width + 1]; //3
-        total += life_array[index + width - 1]; //4
-        total += life_array[index + 1]; //6
-        total += life_array[(height * width) -1]; //7
-        total += life_array[(width * (height - 1))]; //8
-        total += life_array[(width * (height - 1)) + 1]; //9
+        total += array[index + (width * 2 - 1)]; //1
+        total += array[index + width]; //2
+        total += array[index + width + 1]; //3
+        total += array[index + width - 1]; //4
+        total += array[index + 1]; //6
+        total += array[(height * width) -1]; //7
+        total += array[(width * (height - 1))]; //8
+        total += array[(width * (height - 1)) + 1]; //9
     }
     //Check if index is on top right
     else if (index % width == (width - 1) && index < width) {
-        total += life_array[index + width - 1]; //1
-        total += life_array[index + width]; //2
-        total += life_array[index + 1]; //3
-        total += life_array[index - 1]; //4
-        total += life_array[0]; //6
-        total += life_array[width * height - 2]; //7
-        total += life_array[width * height - 1]; //8
-        total += life_array[width * (height - 1)]; //9
+        total += array[index + width - 1]; //1
+        total += array[index + width]; //2
+        total += array[index + 1]; //3
+        total += array[index - 1]; //4
+        total += array[0]; //6
+        total += array[width * height - 2]; //7
+        total += array[width * height - 1]; //8
+        total += array[width * (height - 1)]; //9
     }
     //Check if index is on bottom left
     else if (index % width == 0 && index >= width * (height - 1)) {
-        total += life_array[width - 1]; //1
-        total += life_array[0]; //2
-        total += life_array[1]; //3
-        total += life_array[index + width -1]; //4
-        total += life_array[index + 1]; //6
-        total += life_array[index - 1]; //7
-        total += life_array[index - width]; //8
-        total += life_array[index] - (width - 1); //9
+        total += array[width - 1]; //1
+        total += array[0]; //2
+        total += array[1]; //3
+        total += array[index + width -1]; //4
+        total += array[index + 1]; //6
+        total += array[index - 1]; //7
+        total += array[index - width]; //8
+        total += array[index] - (width - 1); //9
     }
     //Check if index is on bottom right
     else if (index % width == (width - 1) && index >= width * (height - 1)) {
-        total += life_array[width - 2]; //1
-        total += life_array[width - 1]; //2
-        total += life_array[0]; //3
-        total += life_array[index - 1]; //4
-        total += life_array[index - (width - 1)]; //6
-        total += life_array[index - width - 1]; //7
-        total += life_array[index - width]; //8
-        total += life_array[index - (width * 2 - 1)]; //9
+        total += array[width - 2]; //1
+        total += array[width - 1]; //2
+        total += array[0]; //3
+        total += array[index - 1]; //4
+        total += array[index - (width - 1)]; //6
+        total += array[index - width - 1]; //7
+        total += array[index - width]; //8
+        total += array[index - (width * 2 - 1)]; //9
     }
     //Check if index is left edge
     else if (index % width == 0) {
-        total += life_array[index + (width * 2 - 1)]; // 1
-        total += life_array[index + width]; // 2
-        total += life_array[index + (width + 1)]; // 3
-        total += life_array[index + (width - 1)]; // 4
-        total += life_array[index + 1]; // 6
-        total += life_array[index - 1]; // 7
-        total += life_array[index - width]; // 8
-        total += life_array[index - (width - 1)]; // 9
+        total += array[index + (width * 2 - 1)]; // 1
+        total += array[index + width]; // 2
+        total += array[index + (width + 1)]; // 3
+        total += array[index + (width - 1)]; // 4
+        total += array[index + 1]; // 6
+        total += array[index - 1]; // 7
+        total += array[index - width]; // 8
+        total += array[index - (width - 1)]; // 9
     }
     //Check if index is on right edge
     else if (index % width == (width - 1)) {
-        total += life_array[index + (width - 1)]; //1
-        total += life_array[index + width]; //2
-        total += life_array[index + 1]; //3
-        total += life_array[index - 1]; //4
-        total += life_array[index - (width - 1)]; //6
-        total += life_array[index - (width + 1)]; //7
-        total += life_array[index - width]; //8
-        total += life_array[index - (width * 2 - 1)]; //9
+        total += array[index + (width - 1)]; //1
+        total += array[index + width]; //2
+        total += array[index + 1]; //3
+        total += array[index - 1]; //4
+        total += array[index - (width - 1)]; //6
+        total += array[index - (width + 1)]; //7
+        total += array[index - width]; //8
+        total += array[index - (width * 2 - 1)]; //9
     }
     //Check if index is on top
     else if (index < width) {
-        total += life_array[index + (width - 1)]; //1
-        total += life_array[index + width]; //2
-        total += life_array[index + (width + 1)]; //3
-        total += life_array[index - 1]; //4
-        total += life_array[index + 1]; //6
-        total += life_array[index + (width * (height - 1) - 1)]; //7
-        total += life_array[index + (width * (height - 1))]; //8
-        total += life_array[index + (width * (height - 1) + 1)]; //9
+        total += array[index + (width - 1)]; //1
+        total += array[index + width]; //2
+        total += array[index + (width + 1)]; //3
+        total += array[index - 1]; //4
+        total += array[index + 1]; //6
+        total += array[index + (width * (height - 1) - 1)]; //7
+        total += array[index + (width * (height - 1))]; //8
+        total += array[index + (width * (height - 1) + 1)]; //9
     }
     //Check if index is on bottom
     else if (index >= width * (height - 1)) {
-        total += life_array[index - (width * (height - 1) - 1)]; //1
-        total += life_array[index - (width * (height - 1))]; //2
-        total += life_array[index - (width * (height - 1) + 1)]; //3
-        total += life_array[index - 1]; //4
-        total += life_array[index + 1]; //6
-        total += life_array[index - (width + 1)]; //7
-        total += life_array[index - width]; //8
-        total += life_array[index - (width - 1)]; //9
+        total += array[index - (width * (height - 1) - 1)]; //1
+        total += array[index - (width * (height - 1))]; //2
+        total += array[index - (width * (height - 1) + 1)]; //3
+        total += array[index - 1]; //4
+        total += array[index + 1]; //6
+        total += array[index - (width + 1)]; //7
+        total += array[index - width]; //8
+        total += array[index - (width - 1)]; //9
     }
     //If index is on neither edge
     else {
-        total += life_array[index + (width - 1)]; //1
-        total += life_array[index + width]; //2
-        total += life_array[index + (width + 1)]; //3
-        total += life_array[index - 1]; //4
-        total += life_array[index + 1]; //6
-        total += life_array[index - (width + 1)]; //7
-        total += life_array[index - width]; //8
-        total += life_array[index - (width - 1)]; //9
+        total += array[index + (width - 1)]; //1
+        total += array[index + width]; //2
+        total += array[index + (width + 1)]; //3
+        total += array[index - 1]; //4
+        total += array[index + 1]; //6
+        total += array[index - (width + 1)]; //7
+        total += array[index - width]; //8
+        total += array[index - (width - 1)]; //9
     }
     return total;
+}
+
+void life_rules(unsigned int *array, unsigned int *array_b, int index, int total) {
+    if (array[index] = 0) {
+        if (total == 3) {
+            array_b[index] = 1;
+        }
+    }
+    else {
+        if (total == 2 || total == 3) {
+            array_b[index] = 1;
+        }
+        else {
+            array_b[index] = 0;
+        }
+    }
+}
+int main(void) {
+    unsigned int life_array_a = define_array(15, 15);
+    unsigned int life_array_b = define_array(15, 15);
+    init_array(life_array_a);
+    init_array(life_array_b);
+
+
 }
