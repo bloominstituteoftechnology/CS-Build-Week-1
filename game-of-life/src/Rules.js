@@ -5,7 +5,7 @@ class Rules extends Component {
 
       render(){
       return(
-        <div>
+        <div className = "text-block">
             <h4>
                 Rules of the Game
             </h4>

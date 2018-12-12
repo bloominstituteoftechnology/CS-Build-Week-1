@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Link, Route } from 'react-router-dom';
 import Rules from './Rules';
+import About from './About';
 import './App.css';
 
 class Box extends Component {
@@ -65,15 +67,40 @@ class Controls extends Component{
   render () {
     return(
       <div className = "buttons">
+        <h4>
+          Game Controls
+        </h4>
       <button className = "play-button" onClick = {this.props.playButton}>
         Play
       </button>
       <button className = "pause-button" onClick = {this.props.pauseButton}>
-        Pause
+        Stop
       </button>
       <button className = "clear-button" onClick = {this.props.clearButton}>
-        Clear
+        Reset
       </button>
+      </div>
+    );
+  }
+}
+
+class Info extends Component{
+  render(){
+    return(
+      <div className = "game-info">
+      <Link to = '/rules'>
+        <button>
+          Rules
+        </button>
+      </Link>
+      <Link to = '/about'>
+        <button>
+          About
+        </button>
+      </Link>
+      <Link to = '/'>
+        <i class="fas fa-times"></i>
+      </Link>
       </div>
     );
   }
@@ -195,17 +222,13 @@ play = () => {
     return (
       //always wrap everything in a div
       <div className="App">
+
+      <div className = "container">
+
+      <div className= "main">
         <h1>
           Conway's Game Of Life
         </h1>
-        <Controls 
-          playButton = {this.playButton}
-          pauseButton = {this.pauseButton}
-          clearButton = {this.clear}
-        />
-        <h4>
-          Generations: {this.state.generation}
-        </h4>
         <Grid
           /* pass in these variables in the parent component so as to reference them
           from within the Grid component */ 
@@ -214,7 +237,24 @@ play = () => {
           cols = {this.cols}
           selectBox = {this.selectBox}
         />
-        <Rules />
+        <h4>
+          Generations: {this.state.generation}
+        </h4>
+        <Info />
+        <Route path='/about' component={About}/>
+        <Route path='/rules' component={Rules}/>
+        </div>
+
+        <div className = "side-panel">
+        <Controls 
+          playButton = {this.playButton}
+          pauseButton = {this.pauseButton}
+          clearButton = {this.clear}
+        />
+        </div> 
+
+        </div>
+
       </div>
     );
   }
