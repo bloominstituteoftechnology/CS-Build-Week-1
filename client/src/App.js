@@ -210,10 +210,15 @@ class App extends Component {
       //     console.log(matrix[i].row);
       // }
       setTimeout(this.presetChange("Block"), 3000); 
+      this.setState(prevState => ({generation: prevState.generation + 1}) );
       setTimeout(this.presetChange("Beehive"), 3000); 
+      this.setState(prevState => ({generation: prevState.generation + 1}) );
       setTimeout(this.presetChange("Loaf"), 3000); 
+      this.setState(prevState => ({generation: prevState.generation + 1}) );
       setTimeout(this.presetChange("Boat"), 3000); 
+      this.setState(prevState => ({generation: prevState.generation + 1}) );
       setTimeout(this.presetChange("Tub"), 3000); 
+      this.setState(prevState => ({generation: prevState.generation + 1}) );
       gameRunning = false; 
       this.setState({matrix : state_matrix, gameRunning});
       
@@ -471,6 +476,7 @@ class App extends Component {
     return (
       <div className="container" style={{ width: this.state.width }}>
         <h2 className="titleApp">Jonathan's Game of Life</h2>
+        <h4 className="titleApp">Generation : {this.state.generation}</h4>
         <div className="topButtons">
           <div>
               <button onClick = {this.startTheGame}>Start</button>{" "}
