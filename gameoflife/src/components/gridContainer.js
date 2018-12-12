@@ -95,10 +95,24 @@ class GridContainer extends Component {
     const w = 15;
     const h = 15;
     const canvas = this.refs.canvas;
+    const ctx = canvas.getContext("2d");
     let pos = this.getMousePos(canvas, event),
-      x = Math.floor(pos.x / w),
-      y = Math.floor(pos.y / h);
-    // console.log(`x: ${x} y  : ${y}`);
+    x = Math.floor(pos.x / w),
+    y = Math.floor(pos.y / h);
+    if(this.state.grid[y][x] == 0 ){
+      this.setState((state) => {
+        {grid: state.grid[y][x] = 1};
+      });
+    } else {
+        this.setState((state) => {
+      {grid: state.grid[y][x] = 0};
+    });
+  
+    }
+    console.log(x, y);
+    // this.aliveCheck();
+    console.log(`This is state x and y: ${this.state.grid[y][x]}`)
+  
   }
 
   // Run function
