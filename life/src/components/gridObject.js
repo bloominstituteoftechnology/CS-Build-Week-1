@@ -12,14 +12,22 @@ export default class GridObject extends Component {
     }
 
     componentDidMount(){
-        this.init(this.props.preset);
+        this.init();
     }
 
     componentWillReceiveProps(){
-        this.init(this.props.preset)
+        this.setPreset()
     }
 
-    init(preset){
+    setPreset(){
+        if(this.props.preset!=null){
+            this.setState({
+                curObj: Object.assign({}, this.props.preset),
+            })
+        }
+    }
+
+    init(){
         let width = this.state.width;
         let initObj = {}
         let falseObj = {}
@@ -31,21 +39,9 @@ export default class GridObject extends Component {
             falseObj[i] = false;
             nextArray[i] = i;
             nexObj[i] = false;
-            
-        }
-        if(preset === null){
-            console.log("if preset is null", preset)
-            this.setState({
-                curObj: initObj,
-            })
-        } else {
-            console.log("if preset", preset)
-            this.setState({
-                curObj: preset,
-            })
         }
         this.setState({
-
+            curObj: initObj,
             length: i,
             array: nextArray,
             nexObj: nexObj,
@@ -69,8 +65,8 @@ export default class GridObject extends Component {
     //#1
     async buildNext(){
         console.log("buildNext Start\n", `cur obj 1 = ${this.state.curObj[1]}\n`, `nex obj 1 = ${this.state.nexObj[1]}\n`)
-        console.log("buildNext Start\n", `cur obj 16 = ${this.state.curObj[16]}\n`, `nex obj 16 = ${this.state.nexObj[16]}\n`)
-        console.log("buildNext Start\n", `cur obj 15 = ${this.state.curObj[15]}\n`, `nex obj 15 = ${this.state.nexObj[15]}\n`)
+        // console.log("buildNext Start\n", `cur obj 16 = ${this.state.curObj[16]}\n`, `nex obj 16 = ${this.state.nexObj[16]}\n`)
+        // console.log("buildNext Start\n", `cur obj 15 = ${this.state.curObj[15]}\n`, `nex obj 15 = ${this.state.nexObj[15]}\n`)
         let selected = 0;
         selected = this.getSelected();
         let questionables = this.getQuestionables(selected);
@@ -80,15 +76,15 @@ export default class GridObject extends Component {
         let allFalse = {}
         allFalse = this.state.allFalse;
         let curObj = {}
-        curObj = this.state.nexObj
+        curObj = Object.assign({}, this.state.nexObj)
         await this.setState({
             curObj: curObj,
             nexObj: allFalse,
             generations: this.state.generations+1,
         })
         console.log("buildNext False\n", `cur obj 1 = ${this.state.curObj[1]}\n`, `nex obj 1 = ${this.state.nexObj[1]}\n`)
-        console.log("buildNext False\n", `cur obj 16 = ${this.state.curObj[16]}\n`, `nex obj 16 = ${this.state.nexObj[16]}\n`)
-        console.log("buildNext False\n", `cur obj 15 = ${this.state.curObj[15]}\n`, `nex obj 15 = ${this.state.nexObj[15]}\n`)
+        // console.log("buildNext False\n", `cur obj 16 = ${this.state.curObj[16]}\n`, `nex obj 16 = ${this.state.nexObj[16]}\n`)
+        // console.log("buildNext False\n", `cur obj 15 = ${this.state.curObj[15]}\n`, `nex obj 15 = ${this.state.nexObj[15]}\n`)
     }
 
     //#4 goes through every object in the questionables array
