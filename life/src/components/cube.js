@@ -10,9 +10,9 @@ export default class Cube extends Component {
     }  
 
     render(){
-        // console.log(this.props)
+        console.log(this.props)
         return(
-            <CubeDiv onClick={this.props.clickHandler} name={this.props.name} style={{background: this.props.active ? "orange": null}}>
+            <CubeDiv onClick={this.props.clickHandler} name={this.props.name} style={{background: this.props.active ? this.props.color: null}}>
                 {this.props.name}
             </CubeDiv>
         )

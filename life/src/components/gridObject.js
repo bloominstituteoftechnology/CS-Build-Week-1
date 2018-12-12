@@ -6,11 +6,8 @@ export default class GridObject extends Component {
     constructor(props){
         super(props)
         this.state = {
-            generations: 0,
             width: 15,
             length: this.width*this.width,
-            array: [],
-            allFalse: {}
         }
     }
 
@@ -19,7 +16,6 @@ export default class GridObject extends Component {
     }
 
     init(){
-        console.log("INIT\n\n\n\n\n\nppppppppppppp\n\n\n")
         let width = this.state.width;
         let initObj = {}
         let falseObj = {}
@@ -31,7 +27,7 @@ export default class GridObject extends Component {
             falseObj[i] = false;
             nextArray[i] = i;
             nexObj[i] = false;
-
+            
         }
         // console.log(nextObj)
         this.setState({
@@ -42,56 +38,52 @@ export default class GridObject extends Component {
             generations: 0,
             allFalse: falseObj
         })
+        console.log("\nINIT\n", this.state)
     }
 
     toggle = (cubeNum) => {
-        console.log("toggle1", this.state.allFalse[0])
         let monkey = {};
         monkey = this.state.curObj
-        console.log("toggle1", this.state.allFalse[0])
         let curr = null;
         curr = this.state.curObj[cubeNum];
         monkey[cubeNum] = !curr;
-        console.log("toggle2", this.state.allFalse[0])
         this.setState({
             curObj: monkey
         })
-        console.log("toggle3", this.state.allFalse[0])
     }
 
     //#1
     async buildNext(){
-        // this.initNextObj()
+        console.log("buildNext Start\n", `cur obj 1 = ${this.state.curObj[1]}\n`, `nex obj 1 = ${this.state.nexObj[1]}\n`)
+        console.log("buildNext Start\n", `cur obj 16 = ${this.state.curObj[16]}\n`, `nex obj 16 = ${this.state.nexObj[16]}\n`)
+        console.log("buildNext Start\n", `cur obj 15 = ${this.state.curObj[15]}\n`, `nex obj 15 = ${this.state.nexObj[15]}\n`)
         let selected = 0;
         selected = this.getSelected();
-        console.log(selected, "selected");
         let questionables = this.getQuestionables(selected);
-        // console.log(questionables, "questionables");
         await questionables.forEach(num => {
             this.cubeNextTick(num);
         })
         let allFalse = {}
         allFalse = this.state.allFalse;
-        console.log("\n\n-------buildnext 1----------\n\n", this.state)
-        this.setState({
-            curObj: this.state.nexObj,
+        let curObj = {}
+        curObj = this.state.nexObj
+        await this.setState({
+            curObj: curObj,
             nexObj: allFalse,
             generations: this.state.generations+1,
         })
-        console.log("\n\n-------buildnext 2----------\n\n", this.state)
+        console.log("buildNext False\n", `cur obj 1 = ${this.state.curObj[1]}\n`, `nex obj 1 = ${this.state.nexObj[1]}\n`)
+        console.log("buildNext False\n", `cur obj 16 = ${this.state.curObj[16]}\n`, `nex obj 16 = ${this.state.nexObj[16]}\n`)
+        console.log("buildNext False\n", `cur obj 15 = ${this.state.curObj[15]}\n`, `nex obj 15 = ${this.state.nexObj[15]}\n`)
     }
 
     //#4 goes through every object in the questionables array
     cubeNextTick(num){
-        // console.log("num", num)
         let activeNeighbors = 0;
-        console.log(this.state.curObj,"\n --88-- inside cubeNextTick")
         activeNeighbors = this.countNeighbors(num);
-        // console.log("active neighbors", activeNeighbors)
-        // console.log(this.state.curObj,"\ninside cubeNextTick")
         if(this.state.curObj[num] === true){//is alive
             if(activeNeighbors === 2 || activeNeighbors === 3){
-                console.log(num, "has 2 or 3 neighbors", this.state.nexObj)
+                console.log(num, "has 2 or 3 neighbors");
                 let newNexObj = {}
                 newNexObj = this.state.nexObj;
                 newNexObj[num] = true;
@@ -99,18 +91,16 @@ export default class GridObject extends Component {
                     nexObj: newNexObj
                 })
             } else {
-                console.log(num, "doesnt have 2 or 3 neighbors neighbors",  this.state.nexObj)
                 let newNexObj = {} 
                 newNexObj = this.state.nexObj;
                 newNexObj[num] = false;
                 this.setState({
                     nexObj: newNexObj
                 })
-                console.log(num, " @doesnt have 2 or 3 neighbors neighbors",  this.state.curObj)
             }
         } else {//is dead
             if(activeNeighbors === 3) { 
-                console.log(num, "has 3 neighbors")
+                console.log(num, "has 3 neighbors");
                 let newNexObj = {}
                 newNexObj = this.state.nexObj;
                 newNexObj[num] = true;
@@ -118,7 +108,13 @@ export default class GridObject extends Component {
                     nexObj: newNexObj
                 })
             } else {
-                //do nothing
+                console.log(num, "does not have 3 neighbors");
+                let newNexObj = {}
+                newNexObj = this.state.nexObj;
+                newNexObj[num] = false;
+                this.setState({
+                    nexObj: newNexObj
+                })
             }
         }
     }
@@ -135,7 +131,7 @@ export default class GridObject extends Component {
         surrounding.push(this.state.curObj[num+this.state.width+1]);
         let count = 0;
         surrounding.forEach(bool => {
-            if(bool == true){
+            if(bool === true){
                 count = count +1;
             }
         })
@@ -164,7 +160,6 @@ export default class GridObject extends Component {
             this.checkDuplicates(questionables, selectedNum+this.state.width-1)
             this.checkDuplicates(questionables, selectedNum+this.state.width+1)
         })
-        console.log("questionables at end of loop", questionables)
         return questionables;
     }
 
@@ -198,15 +193,13 @@ export default class GridObject extends Component {
                 this.init();
                 break;
             default: 
-                // console.log("default");
-                console.log("toggle", e.target.name);
                 this.toggle(e.target.name);
                 break;
         }
     }
 
     render(){
-        console.log(this.state)
+        console.log(this.props)
         return(
             <GridDiv> 
                 Generation: {this.state.generations}
@@ -218,7 +211,7 @@ export default class GridObject extends Component {
                 </div>
                 <div className="cubesBin">
                     {this.state.curObj ? this.state.array.map(num => {
-                        return <Cube key={num} clickHandler={this.clickHandler} name={num} active={this.state.curObj[num]} />
+                        return <Cube key={num} color={this.props.color} clickHandler={this.clickHandler} name={num} active={this.state.curObj[num]} />
                     }): null}
                 </div>
             </GridDiv>
