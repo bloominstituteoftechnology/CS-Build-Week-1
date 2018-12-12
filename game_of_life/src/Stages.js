@@ -14,43 +14,46 @@ import React, { Component } from 'react';
 //nextStage = will give a map of the new stage in the process.
 
 class Stages extends Component{
-    constructor(stage = 0, living = new Map()){
-        this.stage = stage;
-        this.living = living;
-        this.nextStage = new Map();
-        this.dead = new Map();
+    constructor(){
+        super();
+        this.state ={
+            stage: 0,
+            living: new Map(),
+            nextStage: new Map(),
+            dead: new Map(),
+        }
     }
     //what we want for the functions:
 
     //get the current stage that the process is in
     getStage(){
-        return this.stage; 
+        return this.state.stage; 
     }
     //get all the living cells
     getLiving(){
-        return this.living;
+        return this.state.living;
     }
     //tell whether a cell is alive or dead
     getLifeUpdate(status){
         console.log("getLifeUpdate status:", status); 
-        return this.living.has(status); 
+        return this.state.living.has(status); 
     }
     //remove a cell from the map
     removeCell(status){
         console.log("removeCell status:", status); 
-        return this.living.delete(status); 
+        return this.state.living.delete(status); 
     }
     //in each stage tell the new living and dead cells
     //finding all of the living and dead cells so that the 
     //info from the previous stage can move to the next stage. 
     addStage(){
-        this.living.forEach((cell) => {
+        this.state.living.forEach((cell) => {
             this.livingNeighbor(cell);
         })
-        this.dead.forEach((cell) => {
+        this.state.dead.forEach((cell) => {
             this.deadNeighbor(cell);
         })
-        this.stage++;
+        this.state.stage++;
 
         return new Stages(this.stage, this.nextStage); 
     }
@@ -78,7 +81,7 @@ class Stages extends Component{
                 if(this.getLifeUpdate(i + " , " + j)){
                     thoseAlive++;
                 }else{
-                    this.dead.set(i + " , " + j, {x: i, y: j});
+                    this.state.dead.set(i + " , " + j, {x: i, y: j});
                 }
             }
         }
@@ -108,7 +111,7 @@ class Stages extends Component{
     //get the status of a cell and add it to map of living cells
     addCell(status){
         console.log("addCell status:", status); 
-        this.living.set(status.x + " , " + status.y, {x : status.x, y: status.y})
+        this.state.living.set(status.x + " , " + status.y, {x : status.x, y: status.y})
     }
     //set the initial state of the cell
     initialCell(status){
@@ -118,7 +121,7 @@ class Stages extends Component{
         }else{
             this.addCell(status); 
         }
-        return new Stages(this.stage, this.living); 
+        return new Stages(this.state.stage, this.state.living); 
     }
 }
 export default Stages

@@ -57,6 +57,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      stage: new Stages(), 
       //-----i    j  i=Column j=Row
       size: [60, 30],
       running: false
@@ -66,8 +67,16 @@ class App extends Component {
     this.startGame = this.startGame.bind(this);
     this.stopGame = this.stopGame.bind(this);
     this.renderBoard = this.renderBoard.bind(this);
+    this.initialCell = this.initialCell.bind(this); 
   }
 
+  initialCell(status){
+    if(!this.state.running){
+      this.setState({
+        stage: this.state.stage.initialCell(status)
+      })
+    }
+  }
   handleColumnChange(event) {
     //if the game is running
     //form a column that is according to the value of size
@@ -114,6 +123,8 @@ class App extends Component {
     if (!this.state.running) {
       this.setState({
         running: true
+      }, () => {
+        this.interval = setInterval(() => this.runGame(), 10); 
       });
     }
   }
@@ -123,10 +134,18 @@ class App extends Component {
     //set the state of running to false
     this.setState({
       running: false
+    }, () => {
+      if(this.interval){
+        clearInterval(this.interval); 
+      }
     });
   }
 
-  runGame() {}
+  runGame() {
+    this.setState({
+      stage: this.state.stage.addStage()
+    })
+  }
 
   renderBoard() {
     //two empty arrays
@@ -137,8 +156,16 @@ class App extends Component {
     //loop through twice to the row and column sizes.
     for (let i = 0; i < this.state.size[0]; i++) {
       for (let j = 0; j < this.state.size[1]; j++) {
+        if(this.state.stage.getLifeUpdate(i + " , " + j)){
         //push the cells into the board made.
-        cellRow.push(<Cell key={[i, j]} />);
+        cellRow.push(
+        <Cell key={[i, j]} status={{x: i, y: j}} live={true} initialCell={this.initialCell.bind(this)} />
+      );
+        }else{
+          cellRow.push(
+            <Cell key={[i, j]} status={{x: i, y: j}} live={false} initialCell={this.initialCell.bind(this)} />
+          );
+        }
       }
       //create the new board
       newBoard.push(
@@ -158,7 +185,7 @@ class App extends Component {
           <h2>The Game of Life</h2>
         </Header_text>
         <Header_text>
-          <h3>Generations:</h3>
+          <h3>Generations:{this.state.stage.getStage()}</h3>
         </Header_text>
         <Board_Container>{this.renderBoard()}</Board_Container>
         <Header_container>
