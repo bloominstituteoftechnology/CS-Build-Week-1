@@ -231,7 +231,7 @@ class App extends Component {
     for(let i = 0; i<matrix.length; i++){
 
         let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
-        let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
+        let current_cell_alive = state_matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
         if (current_cell_alive){
           if(aliveNeighbors < 2 || aliveNeighbors > 3){
             //kill the cell that is currently alive. 
