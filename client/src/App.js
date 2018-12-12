@@ -199,11 +199,9 @@ class App extends Component {
     
     this.setState(prevState => ({matrix: state_matrix, generation: prevState.generation + 1}));
     this.continueWithGame();
+    // let intervalRef = setInterval(this.runGamne(), 1000); 
     
       // this.nextGeneration();
-    
-    
-    
       
   };
 
