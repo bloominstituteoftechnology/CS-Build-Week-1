@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 class Grid extends Component {
   state = {
     currentNodeHolder: [],
-    canClick: true
+    canClick: true,
+    isPlaying: false
   }
 
   componentDidMount() {
@@ -36,7 +37,119 @@ class Grid extends Component {
   }
   
   startGame = () => {
-    this.setState({canClick: false});
+    console.log('one')
+    this.setState({canClick: false, isPlaying: true});
+    console.log('two')
+    
+    setTimeout(() => {
+      while (this.state.isPlaying) {
+        console.log('three')
+        let nextNodeHolder = this.state.currentNodeHolder.slice();
+        let len = nextNodeHolder.length;
+        for (let i = 0; i < len; i++) {
+          for (let j = 0; j < len; j++) {
+            console.log(i,j)
+
+            if (!nextNodeHolder[i][j].isAlive) {
+              let checker = 0;
+            
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i][j-1]) {
+                if (nextNodeHolder[i][j-1].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i][j+1]) {
+                if (nextNodeHolder[i][j+1].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i-1][j-1]) {
+                if (nextNodeHolder[i-1][j-1].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i-1][j]) {
+                if (nextNodeHolder[i-1][j].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i-1][j+1]) {
+                if (nextNodeHolder[i-1][j+1].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i+1][j-1]) {
+                if (nextNodeHolder[i+1][j-1].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i+1][j]) {
+                if (nextNodeHolder[i+1][j].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i+1][j+1]) {
+                if (nextNodeHolder[i+1][j+1].isAlive) {
+                  checker++
+                }
+              }
+              if (checker === 3) {
+                nextNodeHolder[i][j].makeAlive();
+              }
+            }
+
+            if (nextNodeHolder[i][j].isAlive) {
+              let checker = 0;
+            
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i][j-1]) {
+                if (nextNodeHolder[i][j-1].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i][j+1]) {
+                if (nextNodeHolder[i][j+1].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i-1][j-1]) {
+                if (nextNodeHolder[i-1][j-1].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i-1][j]) {
+                if (nextNodeHolder[i-1][j].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i-1][j+1]) {
+                if (nextNodeHolder[i-1][j+1].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i+1][j-1]) {
+                if (nextNodeHolder[i+1][j-1].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i+1][j]) {
+                if (nextNodeHolder[i+1][j].isAlive) {
+                  checker++
+                }
+              }
+              if (i > 0 && j > 0 && i < 15 && j < 15 && nextNodeHolder[i+1][j+1]) {
+                if (nextNodeHolder[i+1][j+1].isAlive) {
+                  checker++
+                }
+              }
+              if (!checker === 2 || !checker === 3) {
+                nextNodeHolder[i][j].makeDead();
+              }
+            }
+          }
+        }
+        this.setState({currentNodeHolder: nextNodeHolder});
+      }
+    }, 500)
   }
   
   endGame = () => {
