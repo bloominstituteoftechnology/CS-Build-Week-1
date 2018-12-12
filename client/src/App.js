@@ -58,6 +58,7 @@ class App extends Component {
     const width = `${width_size}px`;
 
     this.setState({ matrix, matrixUsing, width });
+    return true; // means its finished. 
   };
   continueWithGame = () => {
     const matrixUsing = [];
@@ -338,90 +339,99 @@ class App extends Component {
   }
 
   presetChange = (type) => {
-    const matrix = this.cloneObject(); 
-    this.setMatrixUp();//will reset the grid before setting it up. 
+    
+    const finished = this.setMatrixUp();//will reset the grid before setting it up. 
+    
     let row_index = 0;
     let col_index = 0; 
-    switch(type){
-      case "Block":
-        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
-        matrix[row_index][col_index] = 1; 
-        matrix[row_index-1][col_index] = 1; 
-        matrix[row_index-1][col_index-1] = 1; 
-        matrix[row_index][col_index - 1]  = 1; 
-        this.setState({matrix});
-        
-        break;
-      case "Beehive":
-        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
-        matrix[row_index][col_index] = 1; 
-        matrix[row_index][col_index-1] = 1; 
-        matrix[row_index -1][col_index-2] = 1;
-        matrix[row_index-2][col_index] = 1; 
-        matrix[row_index-2][col_index -1] = 1; 
-        matrix[row_index-1][col_index + 1] = 1;
-        
-        this.setState({matrix});
-        break; 
-      case "Loaf":
-        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
-        matrix[row_index][col_index] = 1; 
-        matrix[row_index-1][col_index] = 1;
-        matrix[row_index+1][col_index-1] = 1;
-        matrix[row_index][col_index-2] =1;
-        matrix[row_index-1][col_index-3] = 1;
-        matrix[row_index-2][col_index-2] = 1;
-        matrix[row_index-2][col_index-1] = 1;
-         
-        this.setState({matrix});
-        break;
-      case "Boat":
-        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
-        matrix[row_index-1][col_index] = 1; 
-        matrix[row_index-1][col_index-2] = 1; 
-        matrix[row_index-2][col_index-2] = 1;
-        matrix[row_index-2][col_index-1] = 1; 
-        matrix[row_index][col_index - 1]  = 1;
-        this.setState({matrix});
-        break; 
-      case "Tub":
-        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
-        matrix[row_index-1][col_index] = 1; 
-        matrix[row_index-1][col_index-2] = 1; 
-        matrix[row_index-2][col_index-1] = 1; 
-        matrix[row_index][col_index - 1]  = 1; 
-        this.setState({matrix});
-        break;
-      case "Blinker 1":
-        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
-        matrix[row_index][col_index] = 1;
-        matrix[row_index - 1][col_index] = 1;
-        matrix[row_index + 1][col_index] = 1; 
-
-        this.setState({matrix});
-        break;
-      case "Blinker 2":
-        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
-        matrix[row_index][col_index] = 1;
-        matrix[row_index][col_index-1] = 1; 
-        matrix[row_index][col_index+1] = 1; 
-        this.setState({matrix});
-        break;
-      default:
-        console.log("That type doesn't exist");//only for react warning purposes this won't actually hit. 
+    if (finished){
+      console.log(finished);
+      console.log(this.state.matrix);
+      const matrix = this.cloneObject(); 
+      if(Object.keys(matrix).length){
+        switch(type){
+          case "Block":
+            this.setMatrixUp();//will reset the grid before setting it up. 
+            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+            matrix[row_index][col_index] = 1; 
+            matrix[row_index-1][col_index] = 1; 
+            matrix[row_index-1][col_index-1] = 1; 
+            matrix[row_index][col_index - 1]  = 1; 
+            this.setState({matrix});
+            
+            break;
+          case "Beehive":
+            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+            matrix[row_index][col_index] = 1; 
+            matrix[row_index][col_index-1] = 1; 
+            matrix[row_index -1][col_index-2] = 1;
+            matrix[row_index-2][col_index] = 1; 
+            matrix[row_index-2][col_index -1] = 1; 
+            matrix[row_index-1][col_index + 1] = 1;
+            
+            this.setState({matrix});
+            break; 
+          case "Loaf":
+            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+            matrix[row_index][col_index] = 1; 
+            matrix[row_index-1][col_index] = 1;
+            matrix[row_index+1][col_index-1] = 1;
+            matrix[row_index][col_index-2] =1;
+            matrix[row_index-1][col_index-3] = 1;
+            matrix[row_index-2][col_index-2] = 1;
+            matrix[row_index-2][col_index-1] = 1;
+            
+            this.setState({matrix});
+            break;
+          case "Boat":
+            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+            matrix[row_index-1][col_index] = 1; 
+            matrix[row_index-1][col_index-2] = 1; 
+            matrix[row_index-2][col_index-2] = 1;
+            matrix[row_index-2][col_index-1] = 1; 
+            matrix[row_index][col_index - 1]  = 1;
+            this.setState({matrix});
+            break; 
+          case "Tub":
+            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+            matrix[row_index-1][col_index] = 1; 
+            matrix[row_index-1][col_index-2] = 1; 
+            matrix[row_index-2][col_index-1] = 1; 
+            matrix[row_index][col_index - 1]  = 1; 
+            this.setState({matrix});
+            break;
+          case "Blinker 1":
+            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+            matrix[row_index][col_index] = 1;
+            matrix[row_index - 1][col_index] = 1;
+            matrix[row_index + 1][col_index] = 1; 
+    
+            this.setState({matrix});
+            break;
+          case "Blinker 2":
+            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+            matrix[row_index][col_index] = 1;
+            matrix[row_index][col_index-1] = 1; 
+            matrix[row_index][col_index+1] = 1; 
+            this.setState({matrix});
+            break;
+          default:
+            console.log("That type doesn't exist");//only for react warning purposes this won't actually hit. 
+        }
+      }
     }
   }
 
   render() {
     
-
+    console.log("test");
     const matrix = this.state.matrixUsing.slice();
 
     return (
