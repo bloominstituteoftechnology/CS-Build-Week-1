@@ -1,17 +1,77 @@
 .App {
   border: 1px solid #b7b7b7;
   max-width: 890px;
-  display: flex;
   margin: 60px auto;
 
 }
 
+.title {
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+}
+
+.canvas-presets {
+  border: 2px solid yellow;
+  width: 750px;
+  display:flex;
+  justify-content: center;
+}
+
 .canvas {
-  border: 2px solid orange;
+  border: 10px solid black;
+  width: 500px;
+  height: 500px;
   display:flex;
   flex-wrap: wrap;
 }
 
-.pixel {
+.buttons-body {
   border: 2px solid blue;
+  display: flex; 
+  justify-content: space-around;
+  width: 500px;
 }
+
+.presets-body {
+  border: 2px solid brown;
+  width: 200px;
+}
+
+.presets {
+  margin: 10px 0 0 10px;
+}
+
+.preset-group1 {
+  display:flex;
+}
+
+.preset-group2 {
+  display:flex;
+}
+
+.preset-group3 {
+  display:flex;
+}
+
+.preset-group4 {
+  display:flex;
+}
+
+.random-body {
+  margin: 10px 0 0 10px;
+}
+
+.generation-body {
+  margin: 10px 0 0 10px;
+}
+
+.speed-body {
+  margin: 10px 0 0 10px;
+}
+
+.speedtext-body {
+  margin: 10px 0 0 10px;
+}
+
+
