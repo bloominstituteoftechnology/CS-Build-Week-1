@@ -22,6 +22,7 @@ let speed = 1000;
 let clearMatrix = mediumClear;
 let firstMatrix = mediumFirst;
 let secondMatrix = mediumSecond;
+let generationCount = 1;
 
 class Game extends React.Component {
     constructor(props) {
@@ -203,6 +204,7 @@ class Game extends React.Component {
                 }
                 this.setState({array1: secondMatrix});
                 this.setState({cycle: 'B'});
+                generationCount++;
             } else {
                 cancelAnimationFrame(myReq);
             }
@@ -291,6 +293,7 @@ class Game extends React.Component {
                 }
                 this.setState({array1: firstMatrix});
                 this.setState({cycle: 'A'});
+                generationCount++;
             } else {
                 cancelAnimationFrame(myReq);
             }
@@ -319,6 +322,7 @@ class Game extends React.Component {
             secondMatrix[i] = clearMatrix[i].slice();
         }
         this.setState({array1: clearMatrix});
+        generationCount = 1;
     }
 
     changeSpeed = (newSpeed) => {
@@ -462,6 +466,7 @@ class Game extends React.Component {
                 </select>
                 : null}
                 <button onClick={this.generateRandom}>Random</button>
+                Generation: {generationCount}
 
             </div>
         );
