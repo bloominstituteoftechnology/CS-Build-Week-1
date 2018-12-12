@@ -127,9 +127,10 @@ class GridDisplay extends Component {
                         <Cell
                             key={index}
                             value={cell.value}
-                            updateGrid={this.updateGrid}
                             x={cell.x}
-                            y={cell.y}/>
+                            y={cell.y}
+                            animation={this.state.timer}
+                            updateGrid={this.updateGrid}/>
                     ))}
                 </div>
                 <Buttons

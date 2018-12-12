@@ -17,12 +17,14 @@ class Cell extends Component {
       
 
     handleToggle = () => {
-        if (this.state.value === 1) {
-            this.setState({value: 0}); 
-            this.props.updateGrid(0, this.state.x, this.state.y);
-        } else {
-            this.setState({value: 1});
-            this.props.updateGrid(1, this.state.x, this.state.y); 
+        if (this.props.animation === 0) {
+            if (this.state.value === 1) {
+                this.setState({value: 0}); 
+                this.props.updateGrid(0, this.state.x, this.state.y);
+            } else {
+                this.setState({value: 1});
+                this.props.updateGrid(1, this.state.x, this.state.y); 
+            }
         }
     }
 
