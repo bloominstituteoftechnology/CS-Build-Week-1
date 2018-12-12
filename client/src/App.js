@@ -397,6 +397,23 @@ class App extends Component {
         matrix[row_index][col_index - 1]  = 1; 
         this.setState({matrix});
         break;
+      case "Blinker 1":
+        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+        matrix[row_index][col_index] = 1;
+        matrix[row_index - 1][col_index] = 1;
+        matrix[row_index + 1][col_index] = 1; 
+
+        this.setState({matrix});
+        break;
+      case "Blinker 2":
+        row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
+        col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+        matrix[row_index][col_index] = 1;
+        matrix[row_index][col_index-1] = 1; 
+        matrix[row_index][col_index+1] = 1; 
+        this.setState({matrix});
+        break;
       default:
         console.log("That type doesn't exist");//only for react warning purposes this won't actually hit. 
     }
@@ -467,6 +484,12 @@ class App extends Component {
             <p onClick = {() => this.presetChange("Loaf")}>Loaf</p>
             <p onClick = {() => this.presetChange("Boat")}>Boat</p>
             <p onClick = {() => this.presetChange("Tub")}>Tub</p>
+          </div>
+
+          <h5>Oscillator</h5>
+          <div className="presetsDiv">
+            <p onClick = {() => this.presetChange("Blinker 1")}>Blinker 1</p>
+            <p onClick = {() => this.presetChange("Blinker 2")}>Blinker 2</p>
           </div>
           
 
