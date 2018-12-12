@@ -175,7 +175,7 @@ class App extends Component {
         let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
         let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
         if (current_cell_alive){
-          if(aliveNeighbors !== 2 || aliveNeighbors !== 3){
+          if(aliveNeighbors < 2 || aliveNeighbors > 3){
             //kill the cell that is currently alive. 
             console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
             state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
@@ -220,38 +220,39 @@ class App extends Component {
   };
 
   nextGeneration = () => {
-    const state_matrix = {...this.state.matrix}; 
-    const keys = Object.keys(state_matrix); 
+    const matrix = this.state.matrixUsing.slice(); 
+    
+    const state_matrix = {...this.state.matrix};//creates a copy 
+    
+    
 
-    for(let i = 0; i<keys.length; i++){
+    for(let i = 0; i<matrix.length; i++){
 
-      // let aliveNeighbors = this.findLiveNeighbors({row: keys[i].row, position_in_row: keys[i].position_in_row});
-      // let current_cell_alive = state_matrix[ === 1 ? true : false; 
-      for (let j = 0; j < state_matrix[i].length; j++){
-        console.log(i, j);
-        let aliveNeighbors = this.findLiveNeighbors({row: i, position_in_row: j});
-        let current_cell_alive = state_matrix[i][j] === 1 ? true : false; 
+        let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
+        let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
         if (current_cell_alive){
-          if(aliveNeighbors !== 2 || aliveNeighbors !== 3){
+          if(aliveNeighbors < 2 || aliveNeighbors > 3){
             //kill the cell that is currently alive. 
-            console.log(`Killing the cell ${i}, ${j}`);
-            state_matrix[i][j] = 0; 
-            this.setState({matrix: state_matrix});
-            
-            this.continueWithGame();
-          } else {
+            console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
+            state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
+            // this.setState({state_matrix});
+            // this.continueWithGame();
+          }
+        } else {
           if(aliveNeighbors ===3){
             //resurrect the currently dead cell. 
-            console.log(`Resurrecting the cell ${i}, ${j}`);
-            state_matrix[i][j] = 1;
-            this.setState({matrix: state_matrix});
-            this.continueWithGame();
+            console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
+            state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
+            // this.setState({state_matrix});
+            // this.continueWithGame();
           }
         }
-      }
-
+        console.log(matrix[i].row);
     }
-   }
+    this.setState(prevState => ({matrix: state_matrix, generation: prevState.generation + 1}));
+    this.continueWithGame();
+    // this.setState({matrix : state_matrix, generation});
+    
   }
 
 
@@ -295,12 +296,14 @@ class App extends Component {
     }
     if (lookUp){
       if (this.state.matrix[position.row - 1][position.position_in_row] === 1) {
+        console.log("neighbor up", position, position.row-1, position.position_in_row);
         totalAlive++;
       }
     }
 
     if (lookDown){
       if (this.state.matrix[position.row + 1][position.position_in_row] === 1) {
+          console.log("neighbor down", position, position.row + 1, position.position_in_row);
           totalAlive++;
       }
     }
@@ -308,6 +311,7 @@ class App extends Component {
     if (lookRight){
       if (this.state.matrix[position.row][position.position_in_row + 1] === 1){
          //next in line plus one//2
+         console.log("neighbor right", position, position.row, position.position_in_row + 1);
         totalAlive++;
       }
     }
@@ -315,6 +319,7 @@ class App extends Component {
     if (lookLeft){
       if (this.state.matrix[position.row][position.position_in_row - 1] === 1) {
         //4
+        console.log("neighbor left", position, position.row, position.position_in_row -1);
         totalAlive++;
       }
     }
@@ -322,6 +327,7 @@ class App extends Component {
     if (lookUp && lookRight){
       if (this.state.matrix[position.row - 1][position.position_in_row + 1] === 1 ) {
         //3
+        console.log("neighbor up right", position, position.row-1, position.position_in_row + 1); 
         totalAlive++;
       }
     }
@@ -329,6 +335,7 @@ class App extends Component {
     if (lookUp && lookLeft){
         //diagonal left up one minus one //5
         if (this.state.matrix[position.row - 1][position.position_in_row - 1] === 1) {
+          console.log("neighbor up left", position, position.row -1, position.position_in_row -1);
           totalAlive++;
         }
     }
@@ -336,6 +343,7 @@ class App extends Component {
     if (lookDown && lookRight){
       //down one to the right (plus one) //7
       if (this.state.matrix[position.row + 1][position.position_in_row + 1] === 1) {
+          console.log("neighbor down right", position, position.row +1, position.position_in_row +1); 
           totalAlive++;
       }
     }
@@ -343,6 +351,7 @@ class App extends Component {
     if(lookDown && lookLeft){
       //down one to the left (minus one) //8
       if (this.state.matrix[position.row][position.position_in_row - 1] === 1) {
+        console.log("neighbor down left", position, position.row, position.position_in_row + 1); 
         totalAlive++;
       }
     }
