@@ -21,6 +21,7 @@ function sketch (p){
   let currGrid = [[]], nextGrid = [[]];
   let cellFill = "#cc527a";
   let isBlasting = false;
+  let generations = 0;
 
   p.preload = () => {};
 
@@ -71,14 +72,10 @@ function sketch (p){
     isBlasting = !isBlasting;
     for(let i=0; i<cols; i++){
       for(let j=0; j<rows; j++){
-        // 1. get cell's activity
-
-        // 2. get the cell's neighbors
-        // 3. get the cell's neighbors' activity
-        // 4. neighbors' activity determines cell's activity
-        // 5. repeat 1-4 for all cells
-        // 6. copy current array to next array
-        // 7. repeat 1-6
+        if(judgement(currGrid, i, j) == false){
+          currGrid[i][j].toggleActive();
+        }
+        swapJudgement();
       }
     }
   }
@@ -94,14 +91,29 @@ function sketch (p){
     if(arr[x][y+1].active) theLoving += 1;
     if(arr[x+1][y+1].active) theLoving += 1;
     if(arr[x-1][y+1].active) theLoving += 1;
-    if(theLoving < 3 || theLoving > 1) {
+    if(theLoving <= 3 || theLoving > 1) {
       mercy = true;
     } 
     return mercy;
   };
 
+  const swapJudgement = () => {
+    let temp = [[]];
+    currGrid = nextGrid;
+    nextGrid = temp;
+    incrementGenerations();
+  }
+
+  const incrementGenerations = () => {
+    generations += 1;
+  }
+
   const clearEm = () => {
-    
+    for (let i=0; i<cols; i++){
+      for (let j=0; j<rows; j++){
+        currGrid[i][j].setActiveToFalse();
+      }
+    }
   }
 }
 

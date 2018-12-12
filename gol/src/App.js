@@ -20,7 +20,11 @@ class App extends Component {
   }
 
   goBlastEm = () => {
-    this.setState({ isRollin : !this.state.isRollin });
+    this.setState({isRollin: true});
+  }
+
+  pleaseDontHurtEm = () => {
+    this.setState({isRollin: false});
   }
 
   render() {
@@ -29,7 +33,7 @@ class App extends Component {
         <header className="App-header">
           <Header></Header>
           <Rules></Rules>
-          <Controls goBlast={this.goBlastEm}></Controls>
+          <Controls goBlast={this.goBlastEm} stop={this.pleaseDontHurtEm}></Controls>
           <GridSketch className="grid-sketch" data={this.state}></GridSketch>
         </header>
       </div>

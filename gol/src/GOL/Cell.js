@@ -23,11 +23,15 @@ class Cell {
   }
 
   getActivity = () => {
-    
+
   }
 
   toggleActive = () => {
     this.active = (this.active == false) ? true : false;
+  }
+
+  setActiveToFalse = () =>{
+    this.active = false;
   }
   
   clicked = (x,y) => {
