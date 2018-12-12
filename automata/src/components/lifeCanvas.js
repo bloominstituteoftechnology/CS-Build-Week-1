@@ -51,6 +51,15 @@ class Canvas extends Component {
         this.setState({simRun: !this.state.simRun});
     }
 
+    clearCanvas = (e) => {
+        this.setState({simRun: false});
+        const canvas = this.refs.canvas;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        this.initCanvas();
+        this.gridState();
+    }
+
     initCanvas = () => {
         const canvas = this.refs.canvas;
         const ctx = canvas.getContext('2d');
@@ -61,7 +70,7 @@ class Canvas extends Component {
         // ctx.strokeStyle = 'blue';
         // ctx.globalAlpha = 0.9;
         // ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
-        ctx.strokeStyle = 'rgba(44, 255, 44, 0.8)';
+        ctx.strokeStyle = 'rgba(111, 111, 111, 0.8)';
         for (let x=0; x<=300; x+= 20) {
             for (let y=0; y<=300; y+= 20) {
                 
@@ -90,6 +99,7 @@ class Canvas extends Component {
                 />
                 <div className='controls' >
                     <button onClick={this.simulationToggle}>Start / Stop simulation</button>
+                    <button onClick={this.clearCanvas}>Clear Board</button>
                 </div>
             </div>
         )
