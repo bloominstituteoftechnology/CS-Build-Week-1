@@ -27,19 +27,22 @@
 
 // export default App;
 
+// 
+
 import React, { Component } from 'react';
 import './App.css';
-
-import Home from './component/home';
+import LifeCanvas from './gol';
+// import Title from './components/Title';
+// import Description from './components/Description';
 
 class App extends Component {
   render() {
     return (
-      // <React.Fragment>
-        <div className="container">
-          <Home />
-        </div>
-      // </React.Fragment>
+      <div className="App">
+        {/* <Title /> */}
+        <LifeCanvas />
+        {/* <Description /> */}
+      </div>
     );
   }
 }

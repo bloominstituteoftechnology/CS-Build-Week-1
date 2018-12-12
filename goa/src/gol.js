@@ -6,6 +6,7 @@ class GOL extends React.Component {
     super(props);
     this.boardWidth = 500;
     this.boardHeight = 400;
+    this.speed = 100;
     this.size = 10;
     this.cols = 80;
     this.rows = 40;
@@ -191,6 +192,11 @@ class GOL extends React.Component {
     this.setState({ isRunning: false, iteration: 0 }, () => {
       this.initGame(this.state.config);
     });
+  };
+
+  slow = () => {
+    this.speed = 1000;
+    this.playButton();
   };
 
   step = () => {
