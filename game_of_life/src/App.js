@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import styled from "styled-components";
 import Cell from "./Cell";
+import Stages from "./Stages"; 
 
 const App_Holder = styled.div`
   border: 1px solid black;
