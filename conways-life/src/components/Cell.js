@@ -4,6 +4,7 @@ class Cell extends Component {
 
     constructor(props) {
         super(props);
+        this.colors = ["aqua", "blueviolet", "cornflowerblue", "coral", "cornsilk", "crimson", "darkcyan", "palegreen", "pink", "plum", "darkkhaki", "darkorchid", "deeppink", "dodgerblue", "fuchsia", "gold", "green", "greenyellow", "honeydew", "lavender", "lightseagreen", "rosybrown"]
         this.state = {
             value: this.props.value,
             x: this.props.x,
@@ -28,11 +29,20 @@ class Cell extends Component {
         }
     }
 
+    colorPicker = () => {
+        if (this.props.multicolor === true) {
+            let randomColor = this.colors[Math.floor(Math.random() * this.colors.length)];
+            return randomColor;
+        } else {
+            return "#2a2b2d";
+        }
+    }
+
     render() {
             return (
             <div className="cell"
                 onClick={() => this.handleToggle()}
-                style={ this.state.value === 1 ? { background: "dimgrey" } : null }>
+                style={ this.state.value === 1 ? { background: this.colorPicker() } : null }>
             </div>
           );
         }

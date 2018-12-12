@@ -12,7 +12,8 @@ class GridDisplay extends Component {
             iterations: 0,
             cols: 15,
             rows: 15,
-            speed: 300
+            speed: 300,
+            multicolor: false
         }
     }
 
@@ -123,9 +124,17 @@ class GridDisplay extends Component {
         }
     }
 
-    speedInputHandler = e => {
-        this.setState({speed: e.target.value});
-    }
+    // speedInputHandler = e => {
+    //     this.setState({speed: e.target.value});
+    // }
+
+    handleInputChange = e => {
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+    
+        this.setState({ [name]: value });
+      }
 
     render() {
             return (
@@ -140,6 +149,7 @@ class GridDisplay extends Component {
                             value={cell.value}
                             x={cell.x}
                             y={cell.y}
+                            multicolor={this.state.multicolor}
                             animation={this.state.timer}
                             updateGrid={this.updateGrid}/>
                     ))}
@@ -151,8 +161,9 @@ class GridDisplay extends Component {
                     toggleAnimation={this.toggleAnimation}
                     />
                 <Options
-                    speedValue={this.state.speed}
-                    speedInputHandler={this.speedInputHandler}
+                    speed={this.state.speed}
+                    multicolor={this.state.multicolor}
+                    handleInputChange={this.handleInputChange}
                 />
             </div>
           );

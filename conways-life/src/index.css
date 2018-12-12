@@ -51,3 +51,7 @@ body {
 .controlButtons button {
   font-size: 12pt;
 }
+
+.gridOptions div {
+  margin-bottom: 30px;
+}
