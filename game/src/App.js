@@ -6,7 +6,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      game_running: false
+      game_running: false,
+      gen_count: 0
     };
   }
 
@@ -30,6 +31,7 @@ class App extends Component {
       <div className="App">
         <Grid game_running={this.state.game_running}/>
         <div className="headerButtons">
+        <button className="submit" onClick={this.start_game}>Next</button>
             <button className="submit" onClick={this.start_game}>Start</button>
             <button className="submit" onClick={this.stop_game}>Stop</button>
           </div>

@@ -14,16 +14,16 @@ class Grid extends Component {
   }
   componentDidMount() {
     let size = this.state.cell_size;
-    let height = this.state.grid_height_cells*size;
-    let width = this.state.grid_width_cells*size;
-    
+    let height = this.state.grid_height_cells * size;
+    let width = this.state.grid_width_cells * size;
+
     //set grid array size and set all values to false
     this.grid_init(this.state.grid_width_cells, this.state.grid_height_cells);
 
     //render the canvas
-    let canvas = document.getElementById("canvas");
+    let canvas = this.refs.canvas;
     let ctx = canvas.getContext("2d");
-    
+
     ctx.lineWidth = 1;
     ctx.strokeRect(0, 0, width, height);
 
@@ -49,7 +49,7 @@ class Grid extends Component {
       grid[y] = [];
       for (let x = 0; x < width; x++) {
         grid[y][x] = new Cell({
-            is_alive: false
+          is_alive: false
         });
       }
     }
@@ -59,7 +59,7 @@ class Grid extends Component {
   }
   //create a new grid based on the game rules being applied to the current grid, then setting the new grid to the current grid in state.
   new_grid() {
-    let canvas = document.getElementById("canvas");
+    let canvas =  this.refs.canvas;
     let ctx = canvas.getContext("2d");
     const grid = this.state.grid;
     const neighbors = [
@@ -93,26 +93,89 @@ class Grid extends Component {
           if (counter === 2 || counter === 3) {
             grid[y][x] = true;
             ctx.fillStyle = "green";
-            ctx.fillRect(y*this.state.cell_size, x*this.state.cell_size, this.state.cell_size, this.state.cell_size);
+            ctx.fillRect(
+              y * this.state.cell_size,
+              x * this.state.cell_size,
+              this.state.cell_size,
+              this.state.cell_size
+            );
           } else {
             grid[y][x] = false;
-            ctx.clearRect(y*this.state.cell_size, x*this.state.cell_size, this.state.cell_size, this.state.cell_size);
+            ctx.clearRect(
+              y * this.state.cell_size,
+              x * this.state.cell_size,
+              this.state.cell_size,
+              this.state.cell_size
+            );
           }
         } else {
           if (!this.state.grid[y][x] && counter === 3) {
             grid[y][x] = true;
             ctx.fillStyle = "green";
-            ctx.fillRect(y*this.state.cell_size, x*this.state.cell_size, this.state.cell_size, this.state.cell_size);
+            ctx.fillRect(
+              y * this.state.cell_size,
+              x * this.state.cell_size,
+              this.state.cell_size,
+              this.state.cell_size
+            );
           }
         }
       }
     }
   }
 
+  get_cursor = event => {
+    if (this.props.game_running) {
+      return;
+    }
+    let canvas = this.refs.canvas;
+    let top = canvas.offsetTop;
+    let left = canvas.offsetLeft;
+    let x = event.clientX - left;
+    let y = event.clientY - top;
+    let cellSize = this.state.cell_size;
+    let currentsquareX = Math.floor(x / cellSize);
+    let currentsquareY = Math.floor(y / cellSize);
+    let grid = this.state.grid.slice(0);
+    if(grid[currentsquareY][currentsquareX] === true) {
+      grid[currentsquareY][currentsquareX] = false;
+    } else {
+      grid[currentsquareY][currentsquareX] = true;
+    }
+    this.setState({ grid }, () => this.grid_update_draw(currentsquareY, currentsquareX, cellSize));
+  };
+
+  grid_update_draw(currentsquareY, currentsquareX, cellSize) {
+    let canvas = this.refs.canvas.getContext('2d');
+    if(this.state.grid[currentsquareY][currentsquareX] === true) {
+      canvas.fillStyle = 'green';
+      canvas.fillRect(
+        currentsquareX * cellSize + 1,
+        currentsquareY * cellSize + 1,
+        cellSize - 2,
+        cellSize - 2
+      );
+    } else {
+      canvas.fillStyle = 'white';
+      canvas.fillRect(
+        currentsquareX * cellSize + 1,
+        currentsquareY * cellSize + 1,
+        cellSize - 2,
+        cellSize - 2
+      );
+    }
+  }
+
   render() {
     return (
       <div className="gridContainer">
-        <canvas id="canvas" width={(this.state.grid_width_cells*this.state.cell_size)} height={(this.state.grid_height_cells*this.state.cell_size)} />
+        <canvas
+          id="canvas"
+          ref = "canvas"
+          width={this.state.grid_width_cells * this.state.cell_size}
+          height={this.state.grid_height_cells * this.state.cell_size}
+          onClick={this.get_cursor}
+        />
       </div>
     );
   }
