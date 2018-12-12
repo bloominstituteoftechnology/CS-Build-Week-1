@@ -4,6 +4,7 @@ button {
     color: white;
     border: 1px solid rgba(241, 0, 0, 0);
     font-size: 1.2rem;
+    transition: all .3s;
 }
 
 button:hover {
