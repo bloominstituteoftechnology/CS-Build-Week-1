@@ -24,10 +24,12 @@ class Canvas extends Component {
             e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
             squareSize,
             squareSize);
-            // console.log(`${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`);
-            let tempCoord = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
-            console.log(this.state[`${tempCoord}`]);
-            this.setState({[`${tempCoord}`]: "living"});
+            let tempX = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20}`;
+            let tempY = `${(e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
+            let selectedCell = `${tempX},${tempY}`;
+            // console.log(this.state[`${tempCoord}`]);
+            this.setState({[`${selectedCell}`]: "living"});
+            console.log(`let tln = ${tempX-1},${tempY-1}`);
         } else {console.log('Grid is not interactive while simulation is running');}
         
     }
@@ -70,8 +72,6 @@ class Canvas extends Component {
         // ctx.lineWidth = .1;
         // ctx.beginPath();
         // ctx.strokeStyle = 'blue';
-        // ctx.globalAlpha = 0.9;
-        // ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
         ctx.strokeStyle = 'rgba(111, 111, 111, 0.8)';
         for (let x=0; x<=300; x+= 20) {
             for (let y=0; y<=300; y+= 20) {
@@ -85,6 +85,20 @@ class Canvas extends Component {
             }
         }
     }
+
+    // gameCycle = () => {
+    //     const canvas = this.refs.canvas;
+    //     const ctx = canvas.getContext('2d');
+    //     if (this.state.simRun) {
+    //         let stateBuffer = {...this.state};
+    //         for (let x=0; x<=300; x+= 20) {
+    //             for (let y=0; y<=300; y+= 20) {
+    //                 let lnc = 0;
+    //                 let tln = `${x/20-1},${y/20-1}`;
+    //             }
+    //         } 
+    //     }
+    // }
 
     componentDidMount() {
         this.gridState();
