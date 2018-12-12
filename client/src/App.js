@@ -252,14 +252,15 @@ class App extends Component {
             //kill the cell that is currently alive. 
             console.log(`Killing the cell ${i}, ${j}`);
             state_matrix[i][j] = 0; 
-            this.setState({state_matrix});
+            this.setState({matrix: state_matrix});
+            
             this.continueWithGame();
           } else {
           if(aliveNeighbors ===3){
             //resurrect the currently dead cell. 
             console.log(`Resurrecting the cell ${i}, ${j}`);
             state_matrix[i][j] = 1;
-            this.setState({state_matrix});
+            this.setState({matrix: state_matrix});
             this.continueWithGame();
           }
         }
