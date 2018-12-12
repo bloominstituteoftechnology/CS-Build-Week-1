@@ -92,16 +92,66 @@ table {
   padding: 20px 0;
 }
 
+.game-container {
+  display: flex;
+  justify-content: center;
+}
 
 .grid-container {
-  margin: 20px auto;
+  margin: 50px;
   width: 500px;
   height: 500px; 
-  background-color: #F5F5F5;
   justify-content: center;
   align-content: center;
   border-radius: 10px;
 }
+
+.buttons-container {
+  margin: 50px 0;
+}
+
+.button {
+  margin: 20px 0;
+  background:#033A4D;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+  text-align: center;
+  align-content: center;
+}
+
+.button:hover{
+  background:#fff;
+  color:#033A4D;
+}
+.button:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+button:hover:before,button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+
 
 .square {
   width: 15px;

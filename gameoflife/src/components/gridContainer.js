@@ -37,8 +37,8 @@ class GridContainer extends Component {
     // drawing the grid
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
-    const w = 225;
-    const h = 225;
+    const w = 525;
+    const h = 525;
     ctx.canvas.width = w;
     ctx.canvas.height = h;
 
@@ -137,8 +137,7 @@ class GridContainer extends Component {
           ref="canvas"
           onClick={event => this.handleClick(event)}
         />
-        <div className="run-button">RUN</div>
-        <div className="stop-button">STOP</div>
+
       </div>
     );
   }
