@@ -7,8 +7,8 @@ class Gameboard extends Component {
     canvasSize: 500,
     squareSize: 120,
     gameState: [],
-    playing: false,
-    timer: 10,
+    playing: true,
+    timer: 1,
     timerID: null
   };
 
@@ -122,20 +122,20 @@ class Gameboard extends Component {
       const tileSize = this.state.canvasSize / this.state.squareSize;
       const x = Math.floor((event.clientX - rect.left) / tileSize);
       const y = Math.floor((event.clientY - rect.top) / tileSize);
-      const gameState = this.state.gameState.slice();
+      const gameState = this.state.gameState.map(arr => arr.slice());
       gameState[y][x] = !gameState[y][x];
       this.setState({ gameState }, () => this.drawBoard());
     }
   };
 
   changeBoardSize = (e, val) => {
-    this.setState({ squareSize: val}, () => this.clearBoard());
+    this.setState({ squareSize: val }, () => this.clearBoard());
   };
 
   changeSpeed = (e, val) => {
     this.toggleGame();
     this.setState({ timer: val }, () => this.toggleGame());
-  }
+  };
 
   render() {
     const { squareSize, timer, playing } = this.state;
@@ -153,6 +153,7 @@ class Gameboard extends Component {
           changeSize={this.changeBoardSize}
           changeSpeed={this.changeSpeed}
           playing={playing}
+          toggleGame={this.toggleGame}
         />
       </React.Fragment>
     );
