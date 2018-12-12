@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import {
   checkingNeighbors,
-  fourRules,
-  clearAllCells
+  fourRules
 } from "../algorithms/gameFunctions";
 
 class GridContainer extends Component {
@@ -60,7 +59,7 @@ class GridContainer extends Component {
 
   // function for determining live or dead
   aliveCheck = () => {
-    console.log("Current Grid in State:", this.state.grid);
+    // console.log("Current Grid in State:", this.state.grid);
 
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
@@ -70,7 +69,7 @@ class GridContainer extends Component {
       for (let x = 0; x < this.state.grid[y].length; x++) {
         if (this.state.grid[y][x]) {
           // this.getMousePos()
-          console.log(`x: ${x} y: ${y}`);
+          // console.log(`x: ${x} y: ${y}`);
           ctx.fillStyle = "black";
           ctx.fillRect(x * w, y * h, w, h);
         } else {
@@ -129,12 +128,22 @@ class GridContainer extends Component {
     console.log(`y: ${Math.floor(pos.y / 15)} x: ${Math.floor(pos.x / 15)}`);
   }
 
-  handleClear(event) {
-    event.preventDefault();    
+  handleClear = (event) => {
+    event.preventDefault();
+    const w = 15;
+    const h = 15;
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext("2d");
+
     for(let i = 0; i < this.state.grid.length; i++) {
       for( let j = 0; j < this.state.grid[i].length; j++){
           if(this.state.grid[i][j] === 1){
-              this.state.grid[i][j] = 0;
+            // Set back to 0
+            this.state.grid[i][j] = 0;
+            // Erase lit square from canvas
+            ctx.fillStyle = "white";
+            ctx.fillRect(j * w, i * h, w, h);
+            ctx.strokeRect(j * w, i * h, w, h);
           }
       }
   }
