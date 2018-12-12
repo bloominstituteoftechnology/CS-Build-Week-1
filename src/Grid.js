@@ -106,11 +106,13 @@ input::-moz-focus-outer {
 }
 `;
 
+
+let interval;
+
 class Grid extends Component {
   state = {
     currentNodeHolder: [],
     canClick: true,
-    isPlaying: false,
     generation: 0,
     gridSizeValue: 16
   }
@@ -184,17 +186,10 @@ class Grid extends Component {
   }
 
   startGame = () => {
-    this.setState({canClick: false, isPlaying: true});
-    this.playGame();
-    // if (this.state.isPlaying) {
-    //   while(this.state.isPlaying) {
-    //     setTimeout(() => {
-    //       if (this.state.isPlaying) {
-    //         this.playGame();
-    //       }
-    //     }, 500)
-    //   }
-    // }
+    this.setState({canClick: false});
+    interval = setInterval(() => {
+      this.playGame();
+    }, 500);
   }
   
 
@@ -309,7 +304,8 @@ class Grid extends Component {
   }
   
   endGame = () => {
-    this.setState({ canClick: true, generation: 0 });
+    clearInterval(interval);
+    this.setState({ canClick: true });
   }
   
   toggleCell = (col) => {
@@ -353,7 +349,7 @@ class Grid extends Component {
         {/* section */}
         <button onClick={this.state.canClick? this.startGame: null}>Start</button>
         <button onClick={this.state.canClick? this.stepGeneration: null}>Step</button>
-        <button onClick={this.endGame}>End</button>
+        <button onClick={this.endGame}>Stop</button>
         <button onClick={this.state.canClick? this.clearCells: null}>Clear Grid</button>
         <div>
           <label htmlFor="gridPresets">Choose a preset:</label>
