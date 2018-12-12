@@ -11,13 +11,14 @@
 }
 
 .navigation a {
+  margin-top: 50%;
   padding: 6px 8px 6px 16px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: #f1f1f1;
   display: block;
 }
 
 .navigation a:hover {
-  color: #f1f1f1;
+  color: #818181;
 }

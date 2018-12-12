@@ -4,7 +4,25 @@
   flex-direction: column;
   align-items: center;
   color: white;
+  margin-left: 5%;
 }
+
+.container h1 {
+  font-family: Tahoma, Geneva, sans-serif;
+}
+.container .game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  padding-top: 2%;
+  margin-bottom: 30%;
+}
+
+.container .small {
+  padding-top: 10%;;
+}
+
  .grid-container {
   box-sizing: border-box;
   border: 1px solid black;
@@ -30,6 +48,122 @@
 
 .controls {
   display: flex;
-  width: 30%;
+  width: 100%;
   justify-content: space-around;
+  margin-top: 40px;
+}
+
+.options {
+  background: rgba(0, 0, 0, .6);
+  border: 3px white solid;
+  margin-top: 15%;
+  margin-bottom: 30%;
+  height: 100%;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5%;
+}
+
+.options h1 {
+  margin-bottom: 10%; 
+}
+.options .option-settings {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.options .option-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  font-size: 1.4em;
+}
+
+.options .option-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-bottom: 1%;
+}
+
+.options button {
+  background: rgba(0, 0, 0, 0);
+  color: #fff;
+  font-family: Sans-serif;
+  font-size: 20px;
+  height: 3%;
+  width: 150px;
+  line-height: 50px;
+  margin: 25px 25px;
+  text-align: center;
+  border: 1px white solid;
+  transition: all 0.3s ease 0s;
+}
+
+.size-options button.selected {
+  background: rgba(0, 0, 0, .8);
+  color: white;
+}
+.option-controls .size-options .selected button  {
+  background-color: pink;
+  color: blue;
+  font-family: Sans-serif;
+  font-size: 20px;
+  height: 3%;
+  width: 150px;
+  line-height: 50px;
+  margin: 25px 25px;
+  border: 20px red solid;
+}
+
+.option-controls .dropdowns {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20%;
+}
+.option-controls select {
+  width: 50%;
+  height: 40px;
+  color: white;
+  position: relative;
+  margin-bottom: 4%;
+  margin-left: 30px;
+  background: transparent;
+  border: 1px white solid;
+  font-family: Sans-serif;
+  font-size: 20px;
+  width: 150px;
+  line-height: 50px;
+  margin: 25px 25px;
+}
+
+.option-controls select option {
+  background: rgba(0, 0, 0, 1);
+}
+
+.option-controls select option:hover {
+  color: purple;
+}
+
+.rules {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, .6);
+  border: 3px white solid;
+  padding: 3%;
+  font-size: 1.4rem;
+  margin-bottom: 30%;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  background-color: rgba(0, 0, 0, .6);
+  border: 3px white solid;
+  padding: 3%;
+  font-size: 1.4rem;
+  margin-bottom: 30%;
 }
