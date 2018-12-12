@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { CustomHR } from "../globals/global-styles";
 import Cell from "./Cell";
 
 const GenerationText = styled.h2`
@@ -11,6 +10,7 @@ const GenerationText = styled.h2`
 
 const CellGrid = styled.div`
   display: grid;
+  padding: 1rem 0;
   grid-template-columns: repeat(20, 1fr);
   grid-template-rows: repeat(20, 1fr);
   grid-gap: 0;
@@ -29,6 +29,9 @@ const ControlButton = styled.button`
   &:focus {
     background: #05f;
     color: white;
+    -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
   }
 `;
 
@@ -36,11 +39,15 @@ const ControlSelect = styled.select`
   background: white;
   border: 1px solid #eee;
   height: 3.8rem;
+  padding: 0 0 0 1.6rem;
   font-size: 1.2rem;
   font-weight: 700;
   width: 12rem;
   outline: none;
   margin: 1.2rem 1.6rem 0 0;
+  -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
 `;
 
 class Canvas extends React.Component {
@@ -50,9 +57,12 @@ class Canvas extends React.Component {
     isClickable: true,
     generation: 0,
     paused: false,
-    preset: "none"
+    preset: "none",
+    viewportWidth: this.props.viewportWidth
   };
-
+  componentWillMount() {
+    this.setState({ viewportWidth: window.innerWidth });
+  }
   componentDidMount() {
     let gridArr = [];
     for (let i = 0; i < this.state.cells; i++) {
@@ -65,9 +75,14 @@ class Canvas extends React.Component {
     if (this.state.isClickable) {
       this.setState(prevState => {
         return {
-          gridArr: prevState.gridArr.map(cell =>
-            cell.id === id ? (cell.isLiving = !cell.isLiving && cell) : cell
-          )
+          gridArr: prevState.gridArr.map(cell => {
+            if (cell.id === id) {
+              cell.isLiving = !cell.isLiving;
+              return cell;
+            } else {
+              return cell;
+            }
+          })
         };
       });
     }
@@ -109,10 +124,10 @@ class Canvas extends React.Component {
   };
 
   render() {
+    console.log(this.state);
     return (
       <>
         <GenerationText>🌀 Generation: {this.state.generation}</GenerationText>
-        <CustomHR />
         <CellGrid>
           {this.state.gridArr.map((cell, index) => (
             <Cell
@@ -120,10 +135,10 @@ class Canvas extends React.Component {
               id={cell.id}
               isLiving={cell.isLiving}
               toggleCellLife={this.toggleCellLife}
+              viewportWidth={this.state.viewportWidth}
             />
           ))}
         </CellGrid>
-        <CustomHR />
         <ControlButton onClick={this.handleStartGame}>▶️ Play</ControlButton>
         <ControlButton onClick={this.handlePauseGame}>⏸ Pause</ControlButton>
         <ControlButton onClick={this.handleResetGame}>🔄 Reset</ControlButton>
@@ -141,5 +156,8 @@ class Canvas extends React.Component {
     );
   }
 }
+Canvas.defaultProps = {
+  viewportWidth: "600"
+};
 
 export default Canvas;

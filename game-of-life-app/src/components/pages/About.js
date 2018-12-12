@@ -1,6 +1,6 @@
 import React from "react";
 import { StyledSection } from "../globals/global-styles";
-import {StyledLink} from './Header'
+
 
 const About = props => (
   <>
@@ -50,7 +50,7 @@ const About = props => (
         discrete moment at which this happens is sometimes called a tick. Each
         generation is a pure function of the preceding one. The rules continue
         to be applied repeatedly to create further generations."
-        
+
         <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="blank">Read more on Wikipedia...</a>
       </p>
     </StyledSection>

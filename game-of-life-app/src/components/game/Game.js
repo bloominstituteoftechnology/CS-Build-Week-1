@@ -13,7 +13,7 @@ const GameContainer = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-gap: 3.2rem;
-  @media (max-width: 684px) {
+  @media (max-width: 800px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -30,7 +30,7 @@ class Game extends React.Component {
         <StyledSection>
           <GameContainer>
             <GameGrid>
-              <Canvas />
+              <Canvas props={this.props} />
             </GameGrid>
             <Rules />
           </GameContainer>

@@ -1,5 +1,4 @@
 import React from "react";
-import {Link} from 'react-router-dom'
 import { StyledSection } from "../globals/global-styles";
 import {StyledLink} from './Header'
 

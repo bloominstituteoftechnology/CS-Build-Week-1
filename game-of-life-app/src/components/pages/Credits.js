@@ -6,9 +6,7 @@ const Credits = props => (
     <StyledSection>
     <h1>Credits</h1>
       <p>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores
-        repellendus, ut quibusdam quas alias fugiat? Quae ullam, pariatur ad qui
-        maxime quidem est amet sint in suscipit laborum maiores voluptate.
+        This little app was coded from scratch by Keegan Burkett over the course of a few days using React, React Router and Styled Components. It is deployed to Netlify. The code is hosted on Github - feel free to check out the repo. 
       </p>
     </StyledSection>
   </>
