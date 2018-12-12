@@ -18,7 +18,7 @@ function sketch (p){
   const rows = GridConstants.num_rows;
   let parentW = document.querySelector(".sketch-container").clientWidth;
   let parentH = document.querySelector(".sketch-container").clientHeight;
-  let currGrid = [[]], nextGrid = [[]];
+  let currGrid = [[]], nextGrid = [[]]
   let cellFill = "#cc527a";
   let isBlasting = false;
   let generations = 0;
@@ -36,13 +36,13 @@ function sketch (p){
   };
   
   p.arbitrary = (props) => {
-    console.log(props);
     if(props.data.isRollin == true){
-      blastEm();
+      isBlasting = !isBlasting;
     }
   }
 
   p.setup = () => {
+    p.frameRate(15);
     p.pixelDensity(1);
     p.createCanvas(parentW,parentH);
     createCells();
@@ -50,6 +50,9 @@ function sketch (p){
   };
 
   p.draw = () => {
+    if(isBlasting == true){
+      judgement();
+    }
     for(let i=0; i<cols; i++){
       for(let j=0; j<rows; j++){
         currGrid[i][j].createRect();
@@ -68,39 +71,48 @@ function sketch (p){
     }
   }
 
-  const blastEm = () => {
-    isBlasting = !isBlasting;
-    for(let i=0; i<cols; i++){
-      for(let j=0; j<rows; j++){
-        if(judgement(currGrid, i, j) == false){
-          currGrid[i][j].toggleActive();
+  const judgement = () => {
+    
+    for(let i=1; i<cols-1; i++){
+      for( let j=1; j<rows-1; j++){
+        let theLoving = 0;
+        if(currGrid[i-1][j-1].getActivity() == true){theLoving++;}
+        if(currGrid[i-1][j+1].getActivity() == true){theLoving++;}
+        if(currGrid[i-1][j].getActivity() == true){theLoving++;}
+        if(currGrid[i+1][j-1].getActivity() == true){theLoving++;}
+        if(currGrid[i+1][j].getActivity() == true){theLoving++;}
+        if(currGrid[i+1][j+1].getActivity() == true){theLoving++;}
+        if(currGrid[i][j-1].getActivity() == true){theLoving++;}
+        if(currGrid[i][j+1].getActivity() == true){theLoving++;}
+        if(theLoving > 3 || theLoving < 2){
+          if(currGrid[i][j].getActivity() == true){
+            nextGrid[i][j].setActiveToFalse();
+          }
+        } else if (theLoving == 3) {
+          if(currGrid[i][j].getActivity() == false){
+            nextGrid[i][j].setActiveToTrue();
+          }
+        } else {
+          nextGrid[i][j].setActivity(currGrid[i][j].getActivity());
         }
-        swapJudgement();
       }
     }
-  }
 
-  const judgement = (arr,x,y) => {
-    let theLoving = 0, mercy = false;
-    if(arr[x-1][y].active) theLoving += 1;
-    if(arr[x-1][y-1].active) theLoving += 1;
-    if(arr[x][y-1].active) theLoving += 1;
-    if(arr[x+1][y-1].active) theLoving += 1;
-    if(arr[x+1][y].active) theLoving += 1;
-    if(arr[x+1][y+1].active) theLoving += 1;
-    if(arr[x][y+1].active) theLoving += 1;
-    if(arr[x+1][y+1].active) theLoving += 1;
-    if(arr[x-1][y+1].active) theLoving += 1;
-    if(theLoving <= 3 || theLoving > 1) {
-      mercy = true;
-    } 
-    return mercy;
-  };
-
-  const swapJudgement = () => {
-    let temp = [[]];
+    let temp = currGrid;
     currGrid = nextGrid;
     nextGrid = temp;
+    if(generations < 400){
+      incrementGenerations();
+    } else {
+      return;
+    }
+  };
+
+  const swapJudgement = (curr, next) => {
+    let temp = [[]];
+    temp = curr; 
+    curr = next;
+    next = temp;
     incrementGenerations();
   }
 
