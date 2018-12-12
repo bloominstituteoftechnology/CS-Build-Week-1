@@ -384,8 +384,8 @@ class Grid extends Component {
           <select onChange={this.state.canClick? this.selectGridPreset: null} id="gridPresets">
             <option value="">-- Select --</option>
             <option value="clearPresets">Clear Grid</option>
-            <option value="Glider">Preset 1</option>
-            <option value="Acorn">Preset 2</option>
+            <option value="Glider">Glider</option>
+            <option value="Acorn">Acorn</option>
             <option value="gridPresetThree">Preset 3</option>
             <option value="gridPresetFour">Preset 4</option>
           </select>
