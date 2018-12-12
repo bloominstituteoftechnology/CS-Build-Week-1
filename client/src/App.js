@@ -105,6 +105,7 @@ class App extends Component {
 
   runGamne = () => {
     //functionaly for gameplay goes here
+    console.log("Starting the game");
     const matrix = this.state.matrixUsing.slice(); 
     while(this.state.gameRunning){
 
@@ -136,7 +137,8 @@ class App extends Component {
           gameRunning: true
         },
         () => {
-          this.intervalRef = setInterval(() => this.runGame(), 10);
+          // this.intervalRef = setInterval(this.runGame(), 10);
+          this.runGamne()
         }
       );
     }
@@ -221,7 +223,7 @@ class App extends Component {
     //find the alive
     if (lookUp) {
       //1
-      if (this.state.matrix[position.row + 1][position.position_in_row] === 1) {
+      if (this.state.matrix[position.row - 1][position.position_in_row] === 1) {
         totalAlive++;
       }
       if (lookRight) {
@@ -230,7 +232,7 @@ class App extends Component {
         //diagonal right up one to the right one
         if (
           //3
-          this.state.matrix[position.row + 1][position.position_in_row + 1] ===
+          this.state.matrix[position.row - 1][position.position_in_row + 1] ===
           1
         ) {
           totalAlive++;
@@ -240,7 +242,7 @@ class App extends Component {
           //diagonal left up one minus one
           if (
             //5
-            this.state.matrix[position.row + 1][
+            this.state.matrix[position.row - 1][
               position.position_in_row - 1
             ] === 1
           ) {
@@ -252,7 +254,8 @@ class App extends Component {
 
     if (lookDown) {
       //6
-      if (this.state.matrix[position.row - 1][position.position_in_row] === 1) {
+      console.log(position.row, position.position_in_row)
+      if (this.state.matrix[position.row + 1][position.position_in_row] === 1) {
         totalAlive++;
       }
 
@@ -260,7 +263,7 @@ class App extends Component {
         //down one to the right (plus one)
         if (
           //7
-          this.state.matrix[position.row - 1][position.position_in_row + 1] ===
+          this.state.matrix[position.row + 1][position.position_in_row + 1] ===
           1
         ) {
           totalAlive++;
@@ -338,10 +341,10 @@ class App extends Component {
 
         <div>
           <div>
-            <button>Start</button>{" "}
+            <button onClick = {this.startTheGame}>Start</button>{" "}
           </div>
           <div>
-            <button>Stop</button>
+            <button onClick = {this.stopTheGame}>Stop</button>
           </div>
           <div>
             <button>Pause</button>
