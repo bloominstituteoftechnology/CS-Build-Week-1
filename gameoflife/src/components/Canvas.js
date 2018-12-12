@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Buttons from './Buttons';
 import Presets from './Presets';
 import Random from './Random';
+import Speed from './Speed';
 
 
 export default class Canvas extends Component {
@@ -16,6 +17,9 @@ export default class Canvas extends Component {
         preset1: null,
         preset2: null,
         preset3: null, 
+        random: null,
+        tempSpeed: null,
+        speed: [],
     }
   }
 
@@ -111,9 +115,15 @@ export default class Canvas extends Component {
 
   onClickStart = () => {
     this.setState({start: 1});
+    let speed = 1000;
+
+    if(this.state.speed !== null) {
+        speed = this.state.speed;
+    }
+
     setInterval(() => {
       this.startFunction();
-    }, 1000);
+    }, speed);
   }
 
   onClickStop = () => {
@@ -293,7 +303,16 @@ export default class Canvas extends Component {
       })
     }
     , 500)
+  }
 
+  inputHandler = (e) => {
+    this.setState({[e.target.name]: e.target.value})
+  } 
+
+  onUpdateHandler = (e) => {
+    e.preventDefault();
+
+    this.setState({speed: this.state.tempSpeed, tempSpeed: null});
   }
 
 
@@ -482,6 +501,14 @@ export default class Canvas extends Component {
           <Random
           onClickRandom={this.onClickRandom}
           ></Random>
+        </div>
+        <div>
+          <Speed
+            tempSpeed={this.state.tempSpeed}
+            inputHandler={this.inputHandler}
+            onUpdateHandler={this.onUpdateHandler}
+          >
+          </Speed>
         </div>
       </div>
     )
