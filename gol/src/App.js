@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import "./App.css";
 import Grid from "./components/GameGrid";
 
-
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +13,10 @@ class App extends Component {
       nextGrid: [],
       afterNextGrid: [],
       intervalID: 0,
-      gen: 1
+      gen: 1,
+      preset: "",
+      speed: 500,
+      clickable: true
     };
   }
   newGrid = () => {
@@ -46,7 +47,6 @@ class App extends Component {
     if (cellID % this.state.y === 0) {
       touchs[3] = true;
     }
-
     if (!touchs[0]) {
       holdingArr.push(gridArr[cellID - this.state.x].alive);
       if (!touchs[1]) {
@@ -89,10 +89,7 @@ class App extends Component {
   };
   toggleClick = () => {
     this.setState({
-      curGrid: this.state.curGrid.map(e => {
-        e.isClickable = !e.isClickable;
-        return e;
-      })
+      clickable: !this.state.clickable
     });
   };
   gameLoop = () => {
@@ -106,16 +103,21 @@ class App extends Component {
     });
   };
   waitTime = () => {
+    this.toggleClick();
     const interval = setInterval(() => {
       this.gameLoop();
-    }, 500);
+    }, this.state.speed);
     this.setState({
-      intervalID: interval
+      intervalID: interval,
+      running:true
     });
   };
   stopSim = () => {
     clearInterval(this.state.intervalID);
-    this.toggleClick();
+    if(this.state.running){
+      this.toggleClick();
+
+    }
     this.setState({
       running: false
     });
@@ -123,12 +125,14 @@ class App extends Component {
   resetSim = () => {
     this.stopSim();
     this.newGrid();
+    this.setState({
+      preset: ""
+    });
   };
   newSim = () => {
-    if(this.state.running){
+    if (this.state.running) {
       return;
     }
-    this.toggleClick();
     const newArr = this.arrayCalc(this.state.curGrid);
     const lastArr = this.arrayCalc(newArr);
     this.setState(
@@ -142,7 +146,7 @@ class App extends Component {
       }
     );
   };
-  setGrid = e => {
+  setGrid = event => {
     this.resetSim();
     let gridCopy = [];
     for (let index = 0; index < this.state.x * this.state.y; index++) {
@@ -152,241 +156,448 @@ class App extends Component {
     const middleY = Math.floor(this.state.y / 2);
     const fillin = { alive: true, color: "#000000", isClickable: true };
 
-    switch (e.target.value) {
+    switch (event.target.value) {
       case "random":
-      gridCopy =  gridCopy.map(e=>{
-        if(Math.random() >=.75){
-          return Object.create(fillin);
-        }
-        return e;
-      })
-      this.setState({
-        curGrid: gridCopy
-      });
+        gridCopy = gridCopy.map(e => {
+          if (Math.random() >= 0.75) {
+            return Object.create(fillin);
+          }
+          return e;
+        });
+        this.setState({
+          curGrid: gridCopy,
+          preset: event.target.value
+        });
         break;
       case "block":
         gridCopy[middleY * this.state.x + middleX] = Object.create(fillin);
         gridCopy[middleY * this.state.x + middleX - 1] = Object.create(fillin);
-        gridCopy[(middleY - 1) * this.state.x + middleX - 1] = Object.create(fillin);
-        gridCopy[(middleY - 1) * this.state.x + 1 + middleX - 1] = Object.create(fillin);
+        gridCopy[(middleY - 1) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
+        gridCopy[
+          (middleY - 1) * this.state.x + 1 + middleX - 1
+        ] = Object.create(fillin);
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
       case "beehive":
-        gridCopy[(middleY - 1) * this.state.x + middleX - 1] = Object.create(fillin);
-        gridCopy[(middleY - 1) * this.state.x + 1 + middleX - 1] = Object.create(fillin);
-        gridCopy[(middleY + 1) * this.state.x - 1 + middleX + 1] = Object.create(fillin);
-        gridCopy[(middleY + 1) * this.state.x + middleX - 1] = Object.create(fillin);
+        gridCopy[(middleY - 1) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
+        gridCopy[
+          (middleY - 1) * this.state.x + 1 + middleX - 1
+        ] = Object.create(fillin);
+        gridCopy[
+          (middleY + 1) * this.state.x - 1 + middleX + 1
+        ] = Object.create(fillin);
+        gridCopy[(middleY + 1) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
         gridCopy[middleY * this.state.x + middleX - 2] = Object.create(fillin);
         gridCopy[middleY * this.state.x + middleX + 1] = Object.create(fillin);
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
-        case "loaf":
-        gridCopy[(middleY - 1) * this.state.x + middleX - 1] = Object.create(fillin);
-        gridCopy[(middleY - 1) * this.state.x + 1 + middleX - 1] = Object.create(fillin);
-     
-        gridCopy[(middleY + 1) * this.state.x + middleX - 1] = Object.create(fillin);
+      case "loaf":
+        gridCopy[(middleY - 1) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
+        gridCopy[
+          (middleY - 1) * this.state.x + 1 + middleX - 1
+        ] = Object.create(fillin);
+
+        gridCopy[(middleY + 1) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
         gridCopy[middleY * this.state.x + middleX - 2] = Object.create(fillin);
         gridCopy[middleY * this.state.x + middleX + 1] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX + 1] = Object.create(fillin);
-        gridCopy[(middleY+2) * this.state.x + middleX ] = Object.create(fillin);
+        gridCopy[(middleY + 1) * this.state.x + middleX + 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 2) * this.state.x + middleX] = Object.create(
+          fillin
+        );
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
-        case "blinker":
-        gridCopy[(middleY) * this.state.x + middleX ] = Object.create(fillin);
-        gridCopy[(middleY) * this.state.x + middleX + 1] = Object.create(fillin);
-        gridCopy[(middleY) * this.state.x + middleX - 1] = Object.create(fillin);
+      case "blinker":
+        gridCopy[middleY * this.state.x + middleX] = Object.create(fillin);
+        gridCopy[middleY * this.state.x + middleX + 1] = Object.create(fillin);
+        gridCopy[middleY * this.state.x + middleX - 1] = Object.create(fillin);
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
-        case "toad":
-        gridCopy[(middleY) * this.state.x + middleX ] = Object.create(fillin);
-        gridCopy[(middleY) * this.state.x + middleX + 1] = Object.create(fillin);
-        gridCopy[(middleY) * this.state.x + middleX - 1] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX ] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX - 2] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX - 1] = Object.create(fillin);
+      case "toad":
+        gridCopy[middleY * this.state.x + middleX] = Object.create(fillin);
+        gridCopy[middleY * this.state.x + middleX + 1] = Object.create(fillin);
+        gridCopy[middleY * this.state.x + middleX - 1] = Object.create(fillin);
+        gridCopy[(middleY - 1) * this.state.x + middleX] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 1) * this.state.x + middleX - 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 1) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
-        case "beacon":
-       
-        gridCopy[(middleY) * this.state.x + middleX ] = Object.create(fillin);
-        gridCopy[(middleY) * this.state.x + middleX - 1] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX +2] = Object.create(fillin);
-        
-        gridCopy[(middleY-1) * this.state.x + middleX + 1] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX ] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX - 1] = Object.create(fillin);
-        gridCopy[(middleY-2) * this.state.x + middleX +2] = Object.create(fillin);
-        
-        gridCopy[(middleY-2) * this.state.x + middleX + 1] = Object.create(fillin);
+      case "beacon":
+        gridCopy[middleY * this.state.x + middleX] = Object.create(fillin);
+        gridCopy[middleY * this.state.x + middleX - 1] = Object.create(fillin);
+        gridCopy[(middleY - 1) * this.state.x + middleX + 2] = Object.create(
+          fillin
+        );
+
+        gridCopy[(middleY - 1) * this.state.x + middleX + 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 2) * this.state.x + middleX + 2] = Object.create(
+          fillin
+        );
+
+        gridCopy[(middleY - 2) * this.state.x + middleX + 1] = Object.create(
+          fillin
+        );
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
-        case "pulsar":
-        if(this.state.x < 15 ||this.state.y < 15){
+      case "pulsar":
+        if (this.state.x < 15 || this.state.y < 15) {
           console.log(`Not enough room`);
           break;
         }
-        gridCopy[(middleY-2) * this.state.x + middleX -1 ] = Object.create(fillin);
-        gridCopy[(middleY-3) * this.state.x + middleX -1 ] = Object.create(fillin);
-        gridCopy[(middleY-4) * this.state.x + middleX -1 ] = Object.create(fillin);
-        gridCopy[(middleY-2) * this.state.x + middleX -6 ] = Object.create(fillin);
-        gridCopy[(middleY-3) * this.state.x + middleX -6 ] = Object.create(fillin);
-        gridCopy[(middleY-4) * this.state.x + middleX -6 ] = Object.create(fillin);
-        gridCopy[(middleY-2) * this.state.x + middleX +1 ] = Object.create(fillin);
-        gridCopy[(middleY-3) * this.state.x + middleX +1 ] = Object.create(fillin);
-        gridCopy[(middleY-4) * this.state.x + middleX +1 ] = Object.create(fillin);
-        gridCopy[(middleY-2) * this.state.x + middleX +6 ] = Object.create(fillin);
-        gridCopy[(middleY-3) * this.state.x + middleX +6 ] = Object.create(fillin);
-        gridCopy[(middleY-4) * this.state.x + middleX +6 ] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX -2 ] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX -3 ] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX -4 ] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX +2 ] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX +3 ] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX +4 ] = Object.create(fillin);
-        gridCopy[(middleY-6) * this.state.x + middleX -2 ] = Object.create(fillin);
-        gridCopy[(middleY-6) * this.state.x + middleX -3 ] = Object.create(fillin);
-        gridCopy[(middleY-6) * this.state.x + middleX -4 ] = Object.create(fillin);
-        gridCopy[(middleY-6) * this.state.x + middleX +2 ] = Object.create(fillin);
-        gridCopy[(middleY-6) * this.state.x + middleX +3 ] = Object.create(fillin);
-        gridCopy[(middleY-6) * this.state.x + middleX +4 ] = Object.create(fillin);
-        gridCopy[(middleY+2) * this.state.x + middleX -1 ] = Object.create(fillin);
-        gridCopy[(middleY+3) * this.state.x + middleX -1 ] = Object.create(fillin);
-        gridCopy[(middleY+4) * this.state.x + middleX -1 ] = Object.create(fillin);
-        gridCopy[(middleY+2) * this.state.x + middleX -6 ] = Object.create(fillin);
-        gridCopy[(middleY+3) * this.state.x + middleX -6 ] = Object.create(fillin);
-        gridCopy[(middleY+4) * this.state.x + middleX -6 ] = Object.create(fillin);
-        gridCopy[(middleY+2) * this.state.x + middleX +1 ] = Object.create(fillin);
-        gridCopy[(middleY+3) * this.state.x + middleX +1 ] = Object.create(fillin);
-        gridCopy[(middleY+4) * this.state.x + middleX +1 ] = Object.create(fillin);
-        gridCopy[(middleY+2) * this.state.x + middleX +6 ] = Object.create(fillin);
-        gridCopy[(middleY+3) * this.state.x + middleX +6 ] = Object.create(fillin);
-        gridCopy[(middleY+4) * this.state.x + middleX +6 ] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX -2 ] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX -3 ] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX -4 ] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX +2 ] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX +3 ] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX +4 ] = Object.create(fillin);
-        gridCopy[(middleY+6) * this.state.x + middleX -2 ] = Object.create(fillin);
-        gridCopy[(middleY+6) * this.state.x + middleX -3 ] = Object.create(fillin);
-        gridCopy[(middleY+6) * this.state.x + middleX -4 ] = Object.create(fillin);
-        gridCopy[(middleY+6) * this.state.x + middleX +2 ] = Object.create(fillin);
-        gridCopy[(middleY+6) * this.state.x + middleX +3 ] = Object.create(fillin);
-        gridCopy[(middleY+6) * this.state.x + middleX +4 ] = Object.create(fillin);
+        gridCopy[(middleY - 2) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 3) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 4) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 2) * this.state.x + middleX - 6] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 3) * this.state.x + middleX - 6] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 4) * this.state.x + middleX - 6] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 2) * this.state.x + middleX + 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 3) * this.state.x + middleX + 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 4) * this.state.x + middleX + 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 2) * this.state.x + middleX + 6] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 3) * this.state.x + middleX + 6] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 4) * this.state.x + middleX + 6] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 1) * this.state.x + middleX - 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 1) * this.state.x + middleX - 3] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 1) * this.state.x + middleX - 4] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 1) * this.state.x + middleX + 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 1) * this.state.x + middleX + 3] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 1) * this.state.x + middleX + 4] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 6) * this.state.x + middleX - 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 6) * this.state.x + middleX - 3] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 6) * this.state.x + middleX - 4] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 6) * this.state.x + middleX + 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 6) * this.state.x + middleX + 3] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 6) * this.state.x + middleX + 4] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 2) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 3) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 4) * this.state.x + middleX - 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 2) * this.state.x + middleX - 6] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 3) * this.state.x + middleX - 6] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 4) * this.state.x + middleX - 6] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 2) * this.state.x + middleX + 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 3) * this.state.x + middleX + 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 4) * this.state.x + middleX + 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 2) * this.state.x + middleX + 6] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 3) * this.state.x + middleX + 6] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 4) * this.state.x + middleX + 6] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX - 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX - 3] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX - 4] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX + 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX + 3] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX + 4] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 6) * this.state.x + middleX - 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 6) * this.state.x + middleX - 3] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 6) * this.state.x + middleX - 4] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 6) * this.state.x + middleX + 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 6) * this.state.x + middleX + 3] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 6) * this.state.x + middleX + 4] = Object.create(
+          fillin
+        );
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
-        case "pentadecathlon":
-        if(this.state.x < 8||this.state.y < 16){
+      case "pentadecathlon":
+        if (this.state.x < 8 || this.state.y < 16) {
           console.log(`Not enough room`);
         }
-        gridCopy[(middleY) * this.state.x + middleX] = Object.create(fillin);
-        gridCopy[(middleY) * this.state.x + middleX-1] = Object.create(fillin);
-        gridCopy[(middleY) * this.state.x + middleX-2] = Object.create(fillin);
-        gridCopy[(middleY) * this.state.x + middleX+1] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX+2] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX+2] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX-3] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX-3] = Object.create(fillin);
-        gridCopy[(middleY) * this.state.x + middleX-4] = Object.create(fillin);
-        gridCopy[(middleY) * this.state.x + middleX+3] = Object.create(fillin);
-        gridCopy[(middleY) * this.state.x + middleX-5] = Object.create(fillin);
-        gridCopy[(middleY) * this.state.x + middleX+4] = Object.create(fillin);
+        gridCopy[middleY * this.state.x + middleX] = Object.create(fillin);
+        gridCopy[middleY * this.state.x + middleX - 1] = Object.create(fillin);
+        gridCopy[middleY * this.state.x + middleX - 2] = Object.create(fillin);
+        gridCopy[middleY * this.state.x + middleX + 1] = Object.create(fillin);
+        gridCopy[(middleY - 1) * this.state.x + middleX + 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX + 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 1) * this.state.x + middleX - 3] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX - 3] = Object.create(
+          fillin
+        );
+        gridCopy[middleY * this.state.x + middleX - 4] = Object.create(fillin);
+        gridCopy[middleY * this.state.x + middleX + 3] = Object.create(fillin);
+        gridCopy[middleY * this.state.x + middleX - 5] = Object.create(fillin);
+        gridCopy[middleY * this.state.x + middleX + 4] = Object.create(fillin);
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
-        case "glider":
+      case "glider":
         gridCopy[0] = Object.create(fillin);
-        gridCopy[this.state.y*2] = Object.create(fillin);
-        gridCopy[this.state.y*2+1] = Object.create(fillin);
-        gridCopy[this.state.y+1] = Object.create(fillin);
-        gridCopy[this.state.y+2] = Object.create(fillin);
+        gridCopy[this.state.y * 2] = Object.create(fillin);
+        gridCopy[this.state.y * 2 + 1] = Object.create(fillin);
+        gridCopy[this.state.y + 1] = Object.create(fillin);
+        gridCopy[this.state.y + 2] = Object.create(fillin);
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
-        case "lspaceship":
+      case "lspaceship":
         gridCopy[0] = Object.create(fillin);
         gridCopy[3] = Object.create(fillin);
-        gridCopy[this.state.y*2] = Object.create(fillin);
-        gridCopy[this.state.y*3+1] = Object.create(fillin);
-        gridCopy[this.state.y*3+2] = Object.create(fillin);
-        gridCopy[this.state.y*3+3] = Object.create(fillin);
-        gridCopy[this.state.y*3+4] = Object.create(fillin);
-        gridCopy[this.state.y*2+4] = Object.create(fillin);
-        gridCopy[this.state.y*1+4] = Object.create(fillin);
+        gridCopy[this.state.y * 2] = Object.create(fillin);
+        gridCopy[this.state.y * 3 + 1] = Object.create(fillin);
+        gridCopy[this.state.y * 3 + 2] = Object.create(fillin);
+        gridCopy[this.state.y * 3 + 3] = Object.create(fillin);
+        gridCopy[this.state.y * 3 + 4] = Object.create(fillin);
+        gridCopy[this.state.y * 2 + 4] = Object.create(fillin);
+        gridCopy[this.state.y * 1 + 4] = Object.create(fillin);
 
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
-        case "r":
+      case "r":
         gridCopy[middleY * this.state.x + middleX] = Object.create(fillin);
-        gridCopy[middleY * this.state.x + middleX -1] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX +1] = Object.create(fillin);
-
+        gridCopy[middleY * this.state.x + middleX - 1] = Object.create(fillin);
+        gridCopy[(middleY - 1) * this.state.x + middleX] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 1) * this.state.x + middleX + 1] = Object.create(
+          fillin
+        );
 
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
-        case "diehard":
-        
-        gridCopy[middleY * this.state.x + middleX -3] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX -3] = Object.create(fillin);
-        gridCopy[middleY * this.state.x + middleX -4] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX +1] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX +2] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX +3] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX +2] = Object.create(fillin);
+      case "diehard":
+        gridCopy[middleY * this.state.x + middleX - 3] = Object.create(fillin);
+        gridCopy[(middleY + 1) * this.state.x + middleX - 3] = Object.create(
+          fillin
+        );
+        gridCopy[middleY * this.state.x + middleX - 4] = Object.create(fillin);
+        gridCopy[(middleY + 1) * this.state.x + middleX + 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX + 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX + 3] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 1) * this.state.x + middleX + 2] = Object.create(
+          fillin
+        );
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
-        case "acorn":
-        
+      case "acorn":
         gridCopy[middleY * this.state.x + middleX] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX -2] = Object.create(fillin);
-        gridCopy[(middleY-1) * this.state.x + middleX -2] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX -3] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX +1] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX +2] = Object.create(fillin);
-        gridCopy[(middleY+1) * this.state.x + middleX +3] = Object.create(fillin);
+        gridCopy[(middleY + 1) * this.state.x + middleX - 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY - 1) * this.state.x + middleX - 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX - 3] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX + 1] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX + 2] = Object.create(
+          fillin
+        );
+        gridCopy[(middleY + 1) * this.state.x + middleX + 3] = Object.create(
+          fillin
+        );
         this.setState({
-          curGrid: gridCopy
+          curGrid: gridCopy,
+          preset: event.target.value
         });
         break;
-      
+
       default:
         break;
     }
   };
   toggleCell = e => {
+    if (!this.state.clickable) {
+      return;
+    }
     let newArr = [...this.state.curGrid];
-    newArr[e.target.id].alive = !newArr[e.target.id].alive;
-    if (newArr[e.target.id].alive) {
-      newArr[e.target.id].color = "#000000";
+    newArr[e].alive = !newArr[e].alive;
+    if (newArr[e].alive) {
+      newArr[e].color = "#000000";
     } else {
-      newArr[e.target.id].color = "#ffffff";
+      newArr[e].color = "#ffffff";
     }
     this.setState({
       curGrid: newArr
+    });
+  };
+  setGirdSize = e => {
+    if (isNaN(parseInt(e.target.value)) || parseInt(e.target.value) < 10) {
+      return;
+    }
+    this.setState(
+      {
+        x: parseInt(e.target.value),
+        y: parseInt(e.target.value)
+      },
+      () => {
+        this.resetSim();
+      }
+    );
+  };
+  setGirdSpeed = e => {
+    if (isNaN(parseInt(e.target.value)) || parseInt(e.target.value) < 50) {
+      return;
+    }
+    this.setState({
+      speed: parseInt(e.target.value)
     });
   };
   componentDidMount() {
@@ -400,6 +611,7 @@ class App extends Component {
           x={this.state.x}
           y={this.state.y}
           clickHandle={this.toggleCell}
+          clickable={this.state.clickable}
         />
         <button onClick={this.newSim}>Start</button>
 
@@ -411,7 +623,7 @@ class App extends Component {
           {this.state.gen}
         </div>
 
-        <select onChange={this.setGrid}>
+        <select value={this.state.preset} onChange={this.setGrid}>
           <option value="blank">User Defined</option>
           <option value="random">Random</option>
           <option value="block">Block</option>
@@ -427,8 +639,23 @@ class App extends Component {
           <option value="r">R-Petominio</option>
           <option value="diehard">Diehard</option>
           <option value="acorn">Acorn</option>
-
         </select>
+        <div className="dimension">
+          Change grid size:{" "}
+          <input
+            onChange={this.setGirdSize}
+            type="number"
+            value={this.state.x}
+          />
+        </div>
+        <div className="speed">
+          Change grid speed:{" "}
+          <input
+            onChange={this.setGirdSpeed}
+            type="number"
+            value={this.state.speed}
+          />
+        </div>
       </div>
     );
   }
