@@ -169,10 +169,10 @@ class App extends Component {
     });
   }
   randomGame() {
+    console.log("click")
     let randomSelection = []; 
     let randomBoard = []; 
     if (!this.state.running) {
-      if (!this.initialCell) {
         for (let i = 0; i < this.state.size[0]; i++) {
           for (let j = 0; j < this.state.size[1]; j++) {
             if(this.state.stage.addCell(i + " , " + j)){
@@ -191,8 +191,8 @@ class App extends Component {
             {randomCell}
             </div>
           )
+          randomSelection=[]; 
         }
-      }
     }
     return randomBoard; 
   }
