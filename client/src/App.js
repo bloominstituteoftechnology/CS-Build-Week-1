@@ -107,7 +107,8 @@ class App extends Component {
     //functionaly for gameplay goes here
     console.log("Starting the game");
     const matrix = this.state.matrixUsing.slice(); 
-    while(this.state.gameRunning){
+    let gameRunning = true; 
+    while(gameRunning){
 
       for(let i = 0; i<matrix.length; i++){
 
@@ -116,16 +117,19 @@ class App extends Component {
           if (current_cell_alive){
             if(aliveNeighbors !== 2 || aliveNeighbors !== 3){
               //kill the cell that is currently alive. 
+              console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
               this.state.matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
             }
           } else {
             if(aliveNeighbors ===3){
-              //resurrent the currently dead cell. 
+              //resurrect the currently dead cell. 
+              console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
               this.state.matrix[matrix[i].row][matrix[i].position_in_row] = 1; 
             }
           }
 
       }
+      gameRunning = false; 
     }
   };
 
@@ -255,7 +259,6 @@ class App extends Component {
 
     if (lookDown) {
       //6
-      console.log(position.row, position.position_in_row)
       if (this.state.matrix[position.row + 1][position.position_in_row] === 1) {
         totalAlive++;
       }
@@ -306,7 +309,7 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state.if_zero_color);
+    
 
     const matrix = this.state.matrixUsing.slice();
 
