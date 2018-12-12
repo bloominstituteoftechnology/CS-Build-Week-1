@@ -111,7 +111,7 @@ class Game extends React.Component {
             this.setState({ grid: grid });
         };
 
-        this.clearGrid = event => {
+        this.clearGrid = () => {
             let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
             if (this.state.gridSize === 'large') {
                 grid = Array(30).fill(null).map(_ => Array(30).fill(false));
@@ -137,6 +137,36 @@ class Game extends React.Component {
                     grid[position[0] + 7][position[1] + 7] = true;
                 });
             }
+            this.setState({
+                grid: grid,
+                isRunning: false,
+                iterationCount: 0
+            });
+        };
+
+        this.createRandomGrid = () => {
+            clearTimeout(this.timeout);
+            let grid = Array(15).fill(null).map(_ => Array(15).fill(false));
+            if (this.state.gridSize === 'large') {
+                grid = Array(30).fill(null).map(_ => Array(30).fill(false));
+            }
+            for(let i = 0; i < grid.length; i++) {
+                for(let j = 0; j < grid.length; j++) {
+                    if (Math.random() < .5) {
+                        grid[i][j] = !grid[i][j];
+                    }
+                }
+            }
+            // if (this.state.gridSize === 'small') {
+            //     presetToLoad.forEach(position => {
+            //         grid[position[0]][position[1]] = true;
+            //     });
+            // }
+            // if (this.state.gridSize === 'large') {
+            //     presetToLoad.forEach(position => {
+            //         grid[position[0] + 7][position[1] + 7] = true;
+            //     });
+            // }
             this.setState({
                 grid: grid,
                 isRunning: false,
@@ -203,6 +233,7 @@ class Game extends React.Component {
                     <p onClick={this.stopGame}>stop</p>
                     <p onClick={this.clearGrid}>clear</p>
                     <p onClick={this.advanceOneStep}>next</p>
+                    <p onClick={this.createRandomGrid}>random</p>
                 </div>
                 <div className="options">
                     <label>pattern: </label>
@@ -239,6 +270,15 @@ class Game extends React.Component {
                         <option value="#85144b">Maroon</option>
                         <option value="#AAAAAA">Gray</option>
                     </select>
+                </div>
+                <div className="information">
+                    <h1>Rules</h1>
+                    <p>Any live cell with fewer than two live neighbors dies, as if by underpopulation.</p>
+                    <p>Any live cell with two or three live neighbors lives on to the next generation.</p>
+                    <p>Any live cell with more than three live neighbors dies, as if by overpopulation.</p>
+                    <p>Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</p>
+                    <h1>About</h1>
+                    <p>In late 1940, John von Neumann defined life as a creation (as a being or organism) which can reproduce itself and simulate a Turing machine. Von Neumann was thinking about an engineering solution which would use electromagnetic components floating randomly in liquid or gas. This turned out not to be realistic with the technology available at the time. Thus, ingeniously, Stanisław Ulam invented cellular automata, which were intended to simulate von Neumann's theoretical electromagnetic constructions. Ulam discussed using computers to simulate his cellular automata in a two-dimensional lattice in several papers. In parallel, Von Neumann attempted to construct Ulam's cellular automaton. Although successful, he was busy with other projects and left some details unfinished. His construction was complicated because it tried to simulate his own engineering design.</p>
                 </div>
             </div>
         );
