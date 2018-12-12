@@ -4,31 +4,31 @@ export default class Grid extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentState: 'white',
-
+            // currentState: 'white',
+ 
         };
     }
 
     handleClick = (e) => {
         const canvas = this.refs.canvas;
         const ctx = canvas.getContext('2d');
-        let position = canvas.getBoundingClientRect();
-        let coord = {x: e.clientX - position.left, y: e.clientY - position.top};
-        this.setState(state => ({
-            coord: "black"
-        }))
-        if(this.state.coord === 'white'){
-            this.setState(state => ({
-                coord: 'black'
-            }))
-        }
-        else if(this.state.coord === 'black'){
-            this.setState(state => ({
-                coord: 'white'
-            }))
-        }
+        // let position = canvas.getBoundingClientRect();
+        let xcoord = Math.floor(e.offsetX / 20);
+        let ycoord = Math.floor(e.offsetY / 20);
+        let cell = `${xcoord}, ${ycoord}`;
+        this.setState({[`${cell}`]: "black"});
         ctx.fillStyle = this.state.coord;
         ctx.fillRect(Math.floor(e.offsetX / 20) * 20, Math.floor(e.offsetY / 20) *20, 20, 20);
+    }
+
+    cellsState = () => {
+        for(let x = 0; x <= 400; x+=20){
+            for(let y = 0; y<= 400; y+=20){
+                this.setState({
+                    [`${x/20}, ${y/20}`]: 'white'
+                })
+            }
+        }
     }
 
     clearGrid = (e) => {
@@ -45,6 +45,7 @@ export default class Grid extends Component {
                 ctx.stroke();
             }
         }
+        this.cellsState();
     }
 
     componentDidMount() {
@@ -63,8 +64,13 @@ export default class Grid extends Component {
                 ctx.moveTo(0, y);
                 ctx.lineTo(400, y);
                 ctx.stroke();
+
+                this.setState(state => {
+
+                })
             }
         }
+        this.cellsState();
     }
 
     render() {
