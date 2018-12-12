@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Grid from './components/Grid/Grid';
+import Menu from './components/Menu/Menu';
 
 // Stringify array of boxes and then parse it.
 function arrayClone(arr) {
@@ -11,8 +12,8 @@ function arrayClone(arr) {
 class App extends Component {
   constructor() {
     super();
-    this.rows = 30;
-    this.cols = 50;
+    this.rows = 20;
+    this.cols = 40;
     
     this.state = {
       generation: 0,
@@ -32,13 +33,14 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Game of Life</h1>
+        <h4>Generation: {this.state.generation} </h4>
         <Grid 
           rows={this.rows} 
           cols={this.cols} 
           gridFull={this.state.gridFull} 
           selectBox={this.selectBox}
         />
-        <h3>Generation: {this.state.generation} </h3>
+        <Menu/>
       </div>
     );
   }

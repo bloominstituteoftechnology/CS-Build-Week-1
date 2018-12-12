@@ -1,6 +1,6 @@
 .box {
     display: inline-block;
-    border: 1px solid rgb(183, 43, 226);
+    border: 1px solid rgba(183, 43, 226, 0.575);
     width: 15px;
     height: 15px;
     margin-left: -1px;
