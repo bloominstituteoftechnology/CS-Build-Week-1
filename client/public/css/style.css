@@ -1,9 +1,4 @@
-/*--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
---*/
+
 html, body{
     font-size: 100%;
 font-family: 'Source Sans Pro', sans-serif;
@@ -36,22 +31,22 @@ input[type="submit"],input[type="reset"],input[type="search"],input[type="text"]
 	font-family: 'Source Sans Pro', sans-serif;
 }
 /*-- header --*/
-.w3layouts_header_left {
+.k-lab_header_left {
     float: right;
     margin-top: 10px;
 }
-.w3layouts_header_left p{
+.k-lab_header_left p{
 	color:#999;
 	line-height:1.8em;
 }
-.w3layouts_header_right{
+.k-lab_header_right{
 	float:left;
 }
 .header {
     padding: 0.6em 3em;
     background: #09347a;
 }
-.w3layouts_header_right ul li{
+.k-lab_header_right ul li{
 	display:inline-block;
 	    color: #fff;
 }
@@ -66,29 +61,29 @@ input[type="submit"],input[type="reset"],input[type="search"],input[type="text"]
 .agileits-social.top_content {
      margin: 0!important;
 }
-.w3layouts_header_right ul li i{
+.k-lab_header_right ul li i{
 	 color: #47cf73;
 }
-.w3layouts_header_right ul li a{
+.k-lab_header_right ul li a{
 		    color: #fff;
 	text-decoration:none;
 }
-.w3layouts_header_right ul li a:hover{
+.k-lab_header_right ul li a:hover{
 	color:#fa3d43;
 }
-.w3layouts_header_left ul li {
+.k-lab_header_left ul li {
     display: inline-block;
     list-style: none;
     margin-right: 1em;
 }
-.w3layouts_header_left ul li a {
+.k-lab_header_left ul li a {
       color: #fff;
     padding: 0.5em 1em;
     font-size: 1em;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
-.w3layouts_header_left i {
+.k-lab_header_left i {
     color: #47cf73;
 }
 .social_list_w3ls {
@@ -112,8 +107,8 @@ input[type="submit"],input[type="reset"],input[type="search"],input[type="text"]
 .social_list_w3ls span {
     font-size: 1em;
 }
-/*-- w3layouts_header_mid --*/
-.w3layouts_header_mid ul li {
+/*-- k-lab_header_mid --*/
+.k-lab_header_mid ul li {
     list-style: none;
     display: inline-block;
     width: 23%;
@@ -143,16 +138,16 @@ a.w3l_header_contact_details_agile-info_inner,.w3l_header_contact_details_agile 
     background: rgba(245, 244, 244, 0.41);
 }
 
-.w3layouts_header_mid ul li {
+.k-lab_header_mid ul li {
     list-style: none;
     display: inline-block;
     width: 24.5%;
     border-right: 1px ridge#b5c0d4;
 }
-.w3layouts_header_mid ul li:nth-child(4) {
+.k-lab_header_mid ul li:nth-child(4) {
 border:none;
 }
-/*-- //w3layouts_header_mid--*/
+/*-- //k-lab_header_mid--*/
 /*-- bootstrap-pop-up --*/
 .modal-header {
     color: #222;
@@ -755,11 +750,11 @@ h3.w3l_header.w3_agileits_header.two {
 .agile_team_grids_top {
     margin-top: 3em;
 }
-.agileits_w3layouts_banner_bottom_grid img {
+.agileits_k-lab_banner_bottom_grid img {
     width: 100%;
 
 }
-.agileits_w3layouts_banner_bottom_grid {
+.agileits_k-lab_banner_bottom_grid {
 background: #ececec;
     padding: 0.5em 0.5em 0.5em 0;
 		    box-shadow: 0 0px 24px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
@@ -1122,19 +1117,19 @@ background: #ececec;
     line-height: 2em;
     text-transform: capitalize;
 }
-.agileits_w3layouts_logo.logo2 {
+.agileits_k-lab_logo.logo2 {
     text-align: center;
 }
-.agileits_w3layouts_logo.logo2 h2 {
+.agileits_k-lab_logo.logo2 h2 {
     margin: 1.5em 0 0.7em;
 }
-.agileits_w3layouts_logo.logo2 h2 a {
+.agileits_k-lab_logo.logo2 h2 a {
     font-size: 1.4em;
     color: #fff;
     font-weight: 700;
 	    text-transform: uppercase;
 }
-.agileits_w3layouts_logo.logo2 h2 span {
+.agileits_k-lab_logo.logo2 h2 span {
     font-size: .3em;
     letter-spacing: 8px;
 }
@@ -1382,17 +1377,17 @@ font-size: 2.5em;
 }
 /*-- //courses --*/
 /*-- stats --*/
-.w3layouts_stats_left{
+.k-lab_stats_left{
 	padding:5em 0;
 	text-align:center;
 }
-.w3layouts_stats_left p{
+.k-lab_stats_left p{
 	font-size: 2em;
     font-weight: 600;
     letter-spacing: 5px;
     color: #fff;
 }
-.w3layouts_stats_left h3{
+.k-lab_stats_left h3{
 	font-size:1.2em;
 	color:#fff;
 }
@@ -1604,7 +1599,7 @@ p.b_label {
 .w3_agileits_services_grid1 {
     padding: 1em 0;
 }
-.agileits_w3layouts_services_grid1 h4 a{
+.agileits_k-lab_services_grid1 h4 a{
     text-transform: capitalize;
     font-size: 1.1em;
     color: #121213;
@@ -1612,13 +1607,13 @@ p.b_label {
     text-decoration: none;
     font-weight: 600;
 }
-.agileits_w3layouts_services_grid1 h4 a:hover{
+.agileits_k-lab_services_grid1 h4 a:hover{
 	color: #47cf73;
 }
-.agileits_w3layouts_services_grid1 h4 a:focus{
+.agileits_k-lab_services_grid1 h4 a:focus{
 	outline:none;
 }
-.agileits_w3layouts_services_grid1 p{
+.agileits_k-lab_services_grid1 p{
 	color:#777;
 	line-height:2em;
 	margin:1em 0 0;
@@ -2132,7 +2127,7 @@ h3.agileits-icons-title {
 }
 /*-- //icons --*/
 /*--Typography--*/
-.grid_3.grid_4.w3layouts {
+.grid_3.grid_4.k-lab {
     margin: 0;
 }
 .well {
@@ -2353,7 +2348,7 @@ h2.typoh2{
 	.pagination {
 		margin: 20px 0 0px;
 	}
-	.grid_3.grid_4.w3layouts {
+	.grid_3.grid_4.k-lab {
 		margin-top: 25px;
 	}
 	.grid_3.grid_5.w3l,.grid_3.grid_5.agileinfo {
@@ -2390,7 +2385,7 @@ h2.typoh2{
 	table.table.table-striped,.table-bordered,.bs-docs-example {
 		display: none;
 	}
-	.grid_3.grid_4.w3layouts {
+	.grid_3.grid_4.k-lab {
 		margin-top: 0;
 	}
 }
@@ -2513,10 +2508,10 @@ h2.typoh2{
 	.w3ls_banner_bottom_left {
 		padding-bottom: 0 !important;
 	}
-	.w3layouts_register_right form {
+	.k-lab_register_right form {
 		width: 100%;
 	}
-	.w3layouts_register_left h3 {
+	.k-lab_register_left h3 {
 		font-size: 2.3em;
 	}
 	.second-effect:hover .mask {
@@ -2531,10 +2526,10 @@ h2.typoh2{
 	.w3ls_courses_left_grid p {
 		margin: 1em 0 0;
 	}
-	.w3layouts_stats_left {
+	.k-lab_stats_left {
 		padding: 3em 0;
 	}
-	.agileits_w3layouts_services_grid1 h4 a {
+	.agileits_k-lab_services_grid1 h4 a {
 		font-size: 1em;
 	}
 	.agileits_services_bottom_grid {
@@ -2596,10 +2591,10 @@ h2.typoh2{
 	.button {
 		max-width: 165px;
 	}
-	.w3layouts_register_right form {
+	.k-lab_register_right form {
 		width: 100%;
 	}
-	.w3layouts_register_left h3 {
+	.k-lab_register_left h3 {
 		font-size: 2.2em;
 	}
 	.w3_agile_team_grid_right h3 {
@@ -2644,7 +2639,7 @@ h2.typoh2{
 	.banner-bottom,.gallery {
 		padding:3em 0 0 0;
 	}
-	.agileits_w3layouts_logo.logo2 h2 a {
+	.agileits_k-lab_logo.logo2 h2 a {
       font-size: 1.1em;
 	}
 	.w3ls-special-text:after {
@@ -2658,11 +2653,11 @@ h2.typoh2{
 	.w3_agile_team_grid_right p {
 		width: 100%;
 	}
-	.agileits_w3layouts_team_grid {
+	.agileits_k-lab_team_grid {
 		float: left;
 		width: 33.33%;
 	}
-	.agileits_w3layouts_team_grid h3 {
+	.agileits_k-lab_team_grid h3 {
 		font-size: 1.1em;
 	}
 	.agileinfo_gallery_top h3 {
@@ -2692,7 +2687,7 @@ h2.typoh2{
 		width: 33.33%;
 		padding: 0;
 	}
-	.agileits_w3layouts_copy_right {
+	.agileits_k-lab_copy_right {
 		float: left;
 	}
 	.w3_agile_copy_right {
@@ -2704,13 +2699,13 @@ h2.typoh2{
 	.agile_footer_copy {
 		padding: 3em 0 2em;
 	}
-	.agileits_w3layouts_team_grids {
+	.agileits_k-lab_team_grids {
 		margin: 2em 0 0;
 	}
 	.agileits_courses_right {
 		margin: 2em 0 0;
 	}
-	.w3layouts_stats_left {
+	.k-lab_stats_left {
 		float: left;
 		width: 25%;
 	}
@@ -2811,7 +2806,7 @@ h2.typoh2{
 	.navbar-right {
 		margin: 0.8em 0 0 7em;
 	}
-	.footer-w3-agileits, .footer-agileits, .footer-wthree, .footer-agileits-w3layouts {
+	.footer-w3-agileits, .footer-agileits, .footer-wthree, .footer-agileits-k-lab {
 		padding: 0;
 		margin-bottom: 1em;
 	}
@@ -2820,14 +2815,14 @@ h2.typoh2{
 		width: 360px;
 		height: 315px;
 	}
-	.w3layouts_header_mid ul li {
+	.k-lab_header_mid ul li {
 		list-style: none;
 		display: inline-block;
 		width: 49%;
 		border-right: 1px ridge#b5c0d4;
 		margin-top: 10px;
 	}
-	.w3layouts_header_mid ul li:nth-child(2) {
+	.k-lab_header_mid ul li:nth-child(2) {
 		border: none;
 	}
 	.agileinfo_mail_grid_left {
@@ -2883,7 +2878,7 @@ h2.typoh2{
 	.agile_map iframe {
 		min-height: 300px;
 	}
-	.agileits_w3layouts_logo.logo2 h2 a {
+	.agileits_k-lab_logo.logo2 h2 a {
       font-size: 1.2em;
 	}
 	.w3_agile_search {
@@ -2900,7 +2895,7 @@ h2.typoh2{
 	.w3_agile_team_grid_right h3 {
 		font-size: 1.6em;
 	}
-	.w3layouts_register_left h3 {
+	.k-lab_register_left h3 {
 		font-size: 2em;
 	}	
 	.second-effect:hover .mask {
@@ -3041,10 +3036,10 @@ h2.typoh2{
 		width: 55%;
 		margin-top: 0em;
 	}
-	.w3layouts_stats_left h3 {
+	.k-lab_stats_left h3 {
        font-size: 1em;
 	}
-	.w3layouts_stats_left p {
+	.k-lab_stats_left p {
 		font-size: 1.6em;
 		letter-spacing: 2px;
 	}
@@ -3153,7 +3148,7 @@ h2.typoh2{
 	.w3l_stats_bottom_grid_right {
 		margin: 1em 0 0;
 	}
-	.agileits_w3layouts_services_grid1 h4 a {
+	.agileits_k-lab_services_grid1 h4 a {
 		font-size: .95em;
 	}
 	.agile_services_grid1 h4 {
@@ -3175,7 +3170,7 @@ h2.typoh2{
 	.agileinfo_mail_social_rightl, .agileinfo_mail_social_rightr {
 		width: 48.58%;
 	}
-	.footer-w3-agileits,.footer-agileits,.footer-wthree,.footer-agileits-w3layouts {
+	.footer-w3-agileits,.footer-agileits,.footer-wthree,.footer-agileits-k-lab {
 		padding: 0;
 		margin-bottom:1em;
 	}
@@ -3184,22 +3179,22 @@ h2.typoh2{
 		margin-bottom: 7px;
 		letter-spacing:1px;
 	}
-	.agileits_w3layouts_logo.logo2 h2 a {
+	.agileits_k-lab_logo.logo2 h2 a {
        font-size: 1em;
 	}
-	.agileits_w3layouts_logo.logo2 h2 {
+	.agileits_k-lab_logo.logo2 h2 {
 		margin: 0em 0 0.5em;
 	}
-	.w3layouts_header_left {
+	.k-lab_header_left {
 		float: none;
 		text-align: center;
 	}
-	.w3layouts_header_right {
+	.k-lab_header_right {
 		float: none;
 		text-align: center;
 		margin-bottom: 6px;
 	}
-	.w3layouts_header_left ul li a {
+	.k-lab_header_left ul li a {
 		padding: 0.5em 0em;
 		font-size: 0.95em;
 	}
@@ -3239,12 +3234,12 @@ h2.typoh2{
 	.w3_agile_social_icons {
 		bottom: 7%;
 	}
-	.agileits_w3layouts_team_grid {
+	.agileits_k-lab_team_grid {
 		float: none;
 		width: 50%;
 		margin: 0 auto;
 	}
-	.agileits_w3layouts_team_grid:nth-child(2) {
+	.agileits_k-lab_team_grid:nth-child(2) {
 		margin: 2em auto;
 	}
 	.second-effect:hover .mask {
@@ -3263,7 +3258,7 @@ h2.typoh2{
 	.footer input[type="email"],.footer input[type="submit"] {
 		font-size: 1.2em;
 	}
-	.agileits_w3layouts_copy_right {
+	.agileits_k-lab_copy_right {
 		float: none;
 		text-align: center;
 		margin-bottom: .5em;
@@ -3281,7 +3276,7 @@ h2.typoh2{
 			float: none;
 			width: 100%;
 	}
-	.agileits_w3layouts_services_grid1 h4 a {
+	.agileits_k-lab_services_grid1 h4 a {
 		font-size: .9em;
 	}
 	.agileits_services_bottom_grid h3 {
@@ -3301,7 +3296,7 @@ h2.typoh2{
 		padding: 6px 12px;
 		width:79%;
 	}
-	.w3layouts_stats_left {
+	.k-lab_stats_left {
 		float: left;
 		width: 50%;
 	}
@@ -3336,14 +3331,14 @@ h2.typoh2{
 	.banner1 {
 		min-height: 160px;
 	}
-	.w3layouts_stats_left p {
+	.k-lab_stats_left p {
 		font-size: 1.8em;
 		letter-spacing: 2px;
 	}
-	.w3layouts_stats_left h3 {
+	.k-lab_stats_left h3 {
 		font-size: 1.1em;
 	}
-	.w3layouts_stats_left {
+	.k-lab_stats_left {
 		padding: 2em 0;
 	}
 	.stats-bottom-banner h3 {
@@ -3393,19 +3388,19 @@ h2.typoh2{
 	.nav > li > a {
 		font-size: 12px;
 	}
-	.w3layouts_register_right input[type="text"], .w3layouts_register_right input[type="email"] {
+	.k-lab_register_right input[type="text"], .k-lab_register_right input[type="email"] {
 		padding: 10px;
 	}
-	.w3layouts_register_right form {
+	.k-lab_register_right form {
 		width: 100%;
 	}
-	.w3layouts_register_left h3 {
+	.k-lab_register_left h3 {
 		font-size: 1.5em;
 	}
-	.w3layouts_register_left p {
+	.k-lab_register_left p {
 		margin: 1em 0 0;
 	}
-	.agileits_w3layouts_team_grid {
+	.agileits_k-lab_team_grid {
 		width: 60%;
 	}
 	.second-effect:hover .mask {
@@ -3439,7 +3434,7 @@ h2.typoh2{
 	.w3agile_footer_grid h3 {
 		font-size: 1.3em;
 	}
-	.w3layouts_stats_left {
+	.k-lab_stats_left {
 		width: 50%;
 	}
 	.stats-bottom-banner p {
@@ -3462,7 +3457,7 @@ h2.typoh2{
 		float: none;
 		width: 100%;
 	}
-	.agileits_w3layouts_services_grid1 h4 a {
+	.agileits_k-lab_services_grid1 h4 a {
 		font-size: 1.1em;
 	}
 	.w3_agileits_services1_grid {
@@ -3556,10 +3551,10 @@ h2.typoh2{
 	.w3ls_banner_bottom_right {
 		width: 80%;
 	}
-	.w3layouts_register_left {
+	.k-lab_register_left {
 		margin: 2em 0 0;
 	}
-	.agileits_w3layouts_team_grid {
+	.agileits_k-lab_team_grid {
 		width: 70%;
 	}
 	.agileinfo_gallery_top h3 {
@@ -3609,7 +3604,7 @@ h2.typoh2{
 	.w3l_header,.w3ls_banner_bottom_right1 h2 {
       font-size: 1.6em;
 	}
-	.w3layouts_header_right ul li:last-child {
+	.k-lab_header_right ul li:last-child {
 		margin-left: 0.6em;
 	}
 	.w3ls-special-img.text_info h4 {
@@ -3644,7 +3639,7 @@ h2.typoh2{
 		padding: 6px 12px;
 		width: 71%;
 	}
-	.w3layouts_header_mid ul li {
+	.k-lab_header_mid ul li {
 		list-style: none;
 		display: inline-block;
 		width: 100%;
@@ -3659,7 +3654,7 @@ h2.typoh2{
 	.w3_agile_team_grid_right h3 {
 		font-size: 1.3em;
 	}
-	.agileits_w3layouts_team_grid {
+	.agileits_k-lab_team_grid {
 		width: 80%;
 	}
 	.second-effect:hover .mask {
@@ -3693,7 +3688,7 @@ h2.typoh2{
 	.w3ls_courses_left_grid h3 {
 		font-size: 1em;
 	}
-	.agileits_w3layouts_services_grid1 h4 a {
+	.agileits_k-lab_services_grid1 h4 a {
 		font-size: 1em;
 	}
 	.modal-header {
@@ -3747,7 +3742,7 @@ h2.typoh2{
 		font-size: 1.1em;
 		margin: 6em 0 0;
 	}
-	.agileits_w3layouts_services_grid1 h4 a {
+	.agileits_k-lab_services_grid1 h4 a {
 		font-size: .9em;
 	}
 	.agileits_services_bottom_grid h3 {
@@ -3772,13 +3767,13 @@ h2.typoh2{
 	.navbar-brand {
 		font-size: .7em;
 	}
-	p, ul li, ol li,.w3agile_footer_grid p,.w3agile_footer_grid ul li,.w3layouts_register_right input[type="text"], .w3layouts_register_right input[type="email"] {
+	p, ul li, ol li,.w3agile_footer_grid p,.w3agile_footer_grid ul li,.k-lab_register_right input[type="text"], .k-lab_register_right input[type="email"] {
 		font-size: 13px;
 	}
 	.w3ls_banner_bottom_right {
 		width: 90%;
 	}
-	.agileits_w3layouts_team_grid h3 {
+	.agileits_k-lab_team_grid h3 {
 		font-size: 1em;
 	}
 	.w3l_testimonial_grid_pos {
@@ -3790,10 +3785,10 @@ h2.typoh2{
 	.navbar-default .navbar-collapse, .navbar-default .navbar-form {
 		width: 89%;
 	}
-	.w3layouts_stats_left p {
+	.k-lab_stats_left p {
 		font-size: 1.5em;
 	}
-	.w3layouts_stats_left h3 {
+	.k-lab_stats_left h3 {
 		font-size: 1em;
 	}
 	.stats-bottom-banner h3 {
