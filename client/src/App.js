@@ -5,6 +5,7 @@ class App extends Component {
   state = {
     matrix: {},
     //grid set up
+    matrixMirror : {}, 
     matrixUsing: [],
     mirror: [], 
     row_count: 15, //default
@@ -26,6 +27,7 @@ class App extends Component {
   }
 
   generateRandom = () => {
+    console.log("random generating");
     const keys = Object.keys(this.state.matrix);
     const matrix = {...this.state.matrix};//creates a copy 
 
@@ -38,14 +40,16 @@ class App extends Component {
     
         if (floorNumber === 1) {
           matrix[i][j] = 1; 
+          
         } else {
           matrix[i][j] = 0; 
         }
       }
     }
-
-    // this.setState({matrix})
-    this.setState(prevState => {matrix});
+    console.log(matrix); 
+    this.setState({matrix});
+    this.continueWithGame();
+    
 
   }
 
@@ -83,7 +87,7 @@ class App extends Component {
     const width_size = 22 * this.state.col_count;
     const width = `${width_size}px`;
 
-    this.setState({ matrix, matrixUsing, width });
+    this.setState({ matrix, matrixUsing, width, matrixMirror: matrix });
     return true; // means its finished. 
   };
   continueWithGame = () => {
@@ -373,7 +377,7 @@ class App extends Component {
     if (finished){
       console.log(finished);
       console.log(this.state.matrix);
-      const matrix = {...this.state.matrix};//creates a copy
+      const matrix = {...this.state.matrixMirror};//creates a copy
       if(Object.keys(matrix).length){
         switch(type){
           case "Block":
@@ -384,7 +388,7 @@ class App extends Component {
             matrix[row_index-1][col_index] = 1; 
             matrix[row_index-1][col_index-1] = 1; 
             matrix[row_index][col_index - 1]  = 1; 
-            this.setState({matrix});
+            this.setState({matrix}, () => {this.continueWithGame()});
             
             break;
           case "Beehive":
@@ -397,7 +401,7 @@ class App extends Component {
             matrix[row_index-2][col_index -1] = 1; 
             matrix[row_index-1][col_index + 1] = 1;
             
-            this.setState({matrix});
+            this.setState({matrix}, () => {this.continueWithGame()});
             break; 
           case "Loaf":
             row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
@@ -410,7 +414,7 @@ class App extends Component {
             matrix[row_index-2][col_index-2] = 1;
             matrix[row_index-2][col_index-1] = 1;
             
-            this.setState({matrix});
+            this.setState({matrix}, () => {this.continueWithGame()});
             break;
           case "Boat":
             row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
@@ -420,7 +424,7 @@ class App extends Component {
             matrix[row_index-2][col_index-2] = 1;
             matrix[row_index-2][col_index-1] = 1; 
             matrix[row_index][col_index - 1]  = 1;
-            this.setState({matrix});
+            this.setState({matrix}, () => {this.continueWithGame()});
             break; 
           case "Tub":
             row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
@@ -429,7 +433,7 @@ class App extends Component {
             matrix[row_index-1][col_index-2] = 1; 
             matrix[row_index-2][col_index-1] = 1; 
             matrix[row_index][col_index - 1]  = 1; 
-            this.setState({matrix});
+            this.setState({matrix}, () => {this.continueWithGame()});
             break;
           case "Blinker 1":
             row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
@@ -438,7 +442,7 @@ class App extends Component {
             matrix[row_index - 1][col_index] = 1;
             matrix[row_index + 1][col_index] = 1; 
     
-            this.setState({matrix});
+            this.setState({matrix}, () => {this.continueWithGame()});
             break;
           case "Blinker 2":
             row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
@@ -446,7 +450,7 @@ class App extends Component {
             matrix[row_index][col_index] = 1;
             matrix[row_index][col_index-1] = 1; 
             matrix[row_index][col_index+1] = 1; 
-            this.setState({matrix});
+            this.setState({matrix}, () => {this.continueWithGame()});
             break;
           default:
             console.log("That type doesn't exist");//only for react warning purposes this won't actually hit. 
