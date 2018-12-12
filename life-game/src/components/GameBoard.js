@@ -8,6 +8,7 @@ class GameBoard extends React.Component{
           width: 300,
           cells: 15,
           gameOn: false,
+          count: 0,
       }
   }
 
@@ -34,6 +35,7 @@ class GameBoard extends React.Component{
  simulateGame = () => {
      const canvas = this.refs.canvas;
      const context = canvas.getContext('2d');
+     let gameState = {...this.state};
      if (this.state.gameOn) {
          for (let x=0; x<=300; x+= 20) {
              for (let y=0; y<=300; y+= 20) {
@@ -70,13 +72,21 @@ class GameBoard extends React.Component{
                 if (this.state[brn] === "alive") {
                     lnc++;
                 }
+                if (this.state[`${x/20},${y/20}`] === "alive" && (lnc != 2||3)) {
+                  gameState[`${x/20},${y/20}`] = "dead";
+              } else if (this.state[`${x/20},${y/20}`] === "dead" && lnc === 3) {
+                  gameState[`${x/20},${y/20}`] = "alive";
+              }
+          }
+      } 
+      let gameCount = this.state.count;
+      gameCount++;
+      this.setState({...gameState, count: gameCount});
              }
          } 
-     }
- }
 
    componentDidMount(){
-      this.drawCanvas();
+      this.drawCanvas()
   }
 
   handleClick = (e) => {
@@ -117,6 +127,9 @@ gridState = () => {
   }
 }
 
+randomizeHandler = e => {
+}
+
 clearGrid = (e) => {
   const can = this.refs.canvas
   const context = can.getContext("2d");
@@ -141,6 +154,7 @@ playToggle = (e) => {
               <div className = 'buttons'>
               <button onClick = {this.playToggle}>Play/Pause</button>
               <button onClick={this.clearGrid}>Clear</button>
+              <button >Randomize</button>
               </div>
               <div>Game Rules:</div>
             </>
