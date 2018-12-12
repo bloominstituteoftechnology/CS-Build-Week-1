@@ -352,8 +352,8 @@ class App extends Component {
 
     if(lookDown && lookLeft){
       //down one to the left (minus one) //8
-      if (this.state.matrix[position.row][position.position_in_row - 1] === 1) {
-        console.log("neighbor down left", position, position.row, position.position_in_row - 1); 
+      if (this.state.matrix[position.row + 1][position.position_in_row - 1] === 1) {
+        console.log("neighbor down left", position, position.row + 1, position.position_in_row - 1); 
         totalAlive++;
       }
     }
