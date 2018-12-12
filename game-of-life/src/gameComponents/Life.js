@@ -2,16 +2,16 @@ let Life=class {
     constructor(){
         this.grid=[];
     }
-    runIteration(){
-        const newBoard = this.grid.map(arr=>[...arr]);
-        const height=this.grid.length;
-        const width=this.grid[0].length;
+    runIteration(board){
+        const newBoard = board.map(arr=>[...arr]);
+        const height=board.length;
+        const width=board[0].length;
         for (let i=0; i<height; i++) {
           for (let j=0; j<width; j++) {
-            const neighbors=this.getNeighbors(this.grid,i,j);
-            if (neighbors===3 && !this.grid[i][j].currentState) {
+            const neighbors=this.getNeighbors(board,i,j);
+            if (neighbors===3 && !board[i][j].currentState) {
               newBoard[i][j].currentState=1;
-            } else if ((neighbors===2 || neighbors===3) && this.grid[i][j].currentState) {
+            } else if ((neighbors===2 || neighbors===3) && board[i][j].currentState) {
               newBoard[i][j].currentState=1;
             } else {
               newBoard[i][j].currentState=0;
@@ -19,6 +19,7 @@ let Life=class {
           }
         }
         this.grid=newBoard;
+        return this.grid;
       };
       getNeighbors(board,i,j){
         const height=board.length;
@@ -48,6 +49,7 @@ let Life=class {
                     this.grid[i].push({currentState:0,isClickable:true});
                 }
             }
+        return this.grid;
         }
     changeClickState(){
         for (let i=0; i<this.grid.length;i++) {

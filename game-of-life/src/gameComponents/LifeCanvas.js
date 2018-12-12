@@ -4,12 +4,20 @@ import Life from './Life.js';
 class Grid extends Component{
     constructor(){
         super();
+        this.continueAnimation=true;
+        this.state={
+          generation:0,
+          board:[]
+        }
     }
     componentDidMount() {
         this.draw();
         this.life=new Life();
-        this.life.createGrid();
+        this.setState({board:this.life.createGrid()});
     } 
+    componentWillUnmount() {
+      this.continueAnimation = false;
+    }
     draw() {
         const ctx = this.refs.canvas.getContext('2d');
         for(let i = 0; i <= 375; i += 25){
@@ -39,6 +47,7 @@ class Grid extends Component{
           this.life.grid[x_index][y_index].currentState=1 : 
           this.life.grid[x_index][y_index].currentState=0;
         }
+        this.setState({board:this.life.grid},()=>this.fillsquares());
     }
     fillsquares=()=>{
         const ctx = this.refs.canvas.getContext('2d');
@@ -53,11 +62,19 @@ class Grid extends Component{
         }
         this.draw();
     }
-    
+    play=()=>{
+      console.log(this.state.board);
+      const board=this.state.board.map(arr=>[...arr]);
+      this.life.runIteration(board);
+      //this.fillsquares();
+    }
     render(){
         return (
-            <canvas ref="canvas" width={375} height={375} onClick={(e)=>this.getPosition(e)}>
-            </canvas>
+          <div>
+            <canvas ref="canvas" width={375} height={375} onClick={(e)=>this.getPosition(e)}/>
+            <p>Current generation: {this.state.generation}</p>
+            <button onClick={()=>this.play()}>Start</button>
+          </div>
         );
     }
 }
