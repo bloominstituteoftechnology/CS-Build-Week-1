@@ -14,6 +14,11 @@ export default function Buttons(props) {
             Stop
           </button>
     </div>
+    <div className="buttons">
+          <button onClick={props.onClickClear}>
+            Clear
+          </button>
+    </div>
     </div>
   );
 }

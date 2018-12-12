@@ -98,11 +98,44 @@ export default class Canvas extends Component {
     this.setState({start: 1});
     setInterval(() => {
       this.startFunction();
-    }, 1000);
+    }, 500);
   }
 
   onClickStop = () => {
     this.setState({start: 0});
+  }
+
+  onClickClear = () => {
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext("2d");
+
+    function getPixel(imageData, x, y) {
+      const w = imageData.width; 
+      const h = imageData.height;
+      if (x < 0 || x >= w || y < 0 || y >= h) {
+          return null;
+      }
+      const index = (w * y + x) * 4;
+      return imageData.data.slice(index, index + 4);
+    }
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    function emptySquare(ctx, x, y) {
+      ctx.clearRect(x,y,8,8);
+    }
+
+    for(let xCheck = 1; xCheck <= 492; xCheck += 10) {
+      for(let yCheck = 1; yCheck <= 492; yCheck += 10) {
+        let pixelCheck = getPixel(imageData, xCheck , yCheck);
+        if(pixelCheck[2] === 255) {
+            emptySquare(ctx, xCheck, yCheck);
+        }
+      }
+    }
+
+    this.setState({start: 0, generationNumber: 0});
+
   }
 
   countGen = () => {
@@ -110,10 +143,8 @@ export default class Canvas extends Component {
   }
 
   startFunction = () => {
-
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
-     
 
     function getPixel(imageData, x, y) {
       const w = imageData.width; 
@@ -127,9 +158,6 @@ export default class Canvas extends Component {
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
        
-
-
-
     if(this.state.start === 1) {
       setTimeout(()=> {
         this.countGen();
@@ -277,7 +305,8 @@ export default class Canvas extends Component {
       <div>
         <Buttons 
           onClickStart={this.onClickStart}
-          onClickStop={this.onClickStop}>
+          onClickStop={this.onClickStop}
+          onClickClear={this.onClickClear}>
         </Buttons>
       </div>
       <div>Generation number: {this.state.generationNumber}</div>
