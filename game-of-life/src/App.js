@@ -79,6 +79,18 @@ class Controls extends Component{
       <button className = "clear-button" onClick = {this.props.clearButton}>
         Reset
       </button>
+      <button className = "random-pattern" onClick = {this.props.random}>
+        Random
+      </button>
+      <button className = "slow-button" >
+        Slow
+      </button>
+      <button className = "fast-button" >
+        Fast
+      </button>
+      <button className = "grid-size" >
+        Grid Size
+      </button>
       </div>
     );
   }
@@ -135,32 +147,54 @@ class App extends Component {
     });
   }
 
+  random = () => {
+    //make a copy of the grid using the arrayClone function
+    let gridCopy = arrayClone(this.state.gridFull);
+    //loop over rows, then columns within each row
+    for (let i = 0; i<this.rows; i++){
+      for (let j=0; j<this.cols; j++){
+        /* Math.random generates a random number between 0 and 1, 
+        when multiplied by 4 we get a random number between 0 and 4,
+        we round down to the nearest integer. This method will generate
+        a 1 25% of the time.  
+        */
+        if (Math.floor(Math.random()*4) === 1){
+          //if the random number is a 1, we fill the grid
+          gridCopy[i][j] = true;
+        }
+      }
+    }
+    //set the state with the copied grid containing about 25% "live cells"
+    this.setState({
+      gridFull: gridCopy
+    });
+  }
 
   //play button function to start game 
-playButton = () => {
-  clearInterval(this.intervalId);
-  this.intervalId = setInterval(this.play);
-}
+  playButton = () => {
+    clearInterval(this.intervalId);
+    this.intervalId = setInterval(this.play);
+  }
 
-pauseButton = () => {
-  clearInterval(this.intervalId);
-}
+  pauseButton = () => {
+    clearInterval(this.intervalId);
+  }
 
-clear = () => {
-  let grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
-  this.setState({
-    gridFull: grid,
-    generation: 0
-  });
-}
+  clear = () => {
+    let grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
+    this.setState({
+      gridFull: grid,
+      generation: 0
+    });
+  }
  
-//main function for making the game work
-/*
-1. Any live cell with fewer than two live neighbors dies
-2. Any live cell with two or three live neighbors lives on to the next generation
-3. Any live cell with more than three live neighbors dies
-4. Any dead cell with exactly three live neighbors becomes a live cell
-*/
+  //main function for making the game work
+  /*
+  1. Any live cell with fewer than two live neighbors dies
+  2. Any live cell with two or three live neighbors lives on to the next generation
+  3. Any live cell with more than three live neighbors dies
+  4. Any dead cell with exactly three live neighbors becomes a live cell
+  */
 
 play = () => {
   let g = this.state.gridFull;
@@ -226,9 +260,9 @@ play = () => {
       <div className = "container">
 
       <div className= "main">
-        <h1>
+        <h2>
           Conway's Game Of Life
-        </h1>
+        </h2>
         <Grid
           /* pass in these variables in the parent component so as to reference them
           from within the Grid component */ 
@@ -250,6 +284,7 @@ play = () => {
           playButton = {this.playButton}
           pauseButton = {this.pauseButton}
           clearButton = {this.clear}
+          random = {this.random}
         />
         </div> 
 

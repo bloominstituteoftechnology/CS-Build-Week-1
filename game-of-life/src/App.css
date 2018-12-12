@@ -4,7 +4,7 @@
 }
 
 .main{
-  margin: 10px 5%;
+  margin: 10px 5% 0 5%;
 }
 
 .box {
@@ -43,7 +43,7 @@
 
 .side-panel{
   width: 20%;
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
 .buttons{
@@ -64,11 +64,12 @@ button:hover{
   background:rgb(212, 250, 238);
 }
 
+
 h1, h2, h3, h4 {
   color: black;
   margin: auto;
   text-align: center;
-  width: 50%;
+  width: 80%;
   margin-top: 10px;
 }
 
@@ -86,5 +87,5 @@ h4 {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  margin: 10px 10%;
+  margin: 0 10%;
 }
