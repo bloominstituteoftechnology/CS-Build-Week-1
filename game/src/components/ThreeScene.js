@@ -10,8 +10,6 @@ import layer3Second from './layer3Second';
 
 let myReq;
 let myInt;
-let firstMatrix;
-let secondMatrix;
 let generationCount;
 
 class ThreeScene extends React.Component {
@@ -274,7 +272,7 @@ class ThreeScene extends React.Component {
                 } else if ((firstMatrix[i][j] === 0) && (count === 5)) {
                     secondMatrix[i][j] = 1;
                     console.log(firstMatrix[i][j], count);
-                } else if ((firstMatrix[i][j] === 0) && (count !== 3)) {
+                } else if ((firstMatrix[i][j] === 0) && (count !== 5)) {
                     secondMatrix[i][j] = 0;
                 }
             }
