@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Typography from '@material-ui/core/Typography';
+import Typography from "@material-ui/core/Typography";
 
 import Gamecontrols from "./Gamecontrols";
 
@@ -33,14 +33,18 @@ class Gameboard extends Component {
           .fill(false)
           .map(() => (Math.floor(Math.random() * 2) === 0 ? true : false))
       );
-    this.setState({ gameState: startState }, () => this.drawBoard());
-  }
+    this.setState({ gameState: startState, generations: 0 }, () =>
+      this.drawBoard()
+    );
+  };
 
   clearBoard = () => {
     const clearState = new Array(this.state.squareSize)
       .fill(false)
       .map(() => new Array(this.state.squareSize).fill(false));
-    this.setState({ gameState: clearState }, () => this.drawBoard());
+    this.setState({ gameState: clearState, generations: 0 }, () =>
+      this.drawBoard()
+    );
   };
 
   drawBoard = () => {
@@ -135,7 +139,9 @@ class Gameboard extends Component {
   };
 
   changeBoardSize = (e, val) => {
-    this.setState({ squareSize: val }, () => this.randomizeBoard());
+    this.setState({ squareSize: val, generations: 0 }, () =>
+      this.randomizeBoard()
+    );
   };
 
   changeSpeed = (e, val) => {
@@ -157,7 +163,7 @@ class Gameboard extends Component {
           Generation: {this.state.generations}
         </Typography>
         <canvas
-          style={{ border: '1px solid black'}}
+          style={{ border: "1px solid black" }}
           ref="canvas"
           width={this.state.canvasSize}
           height={this.state.canvasSize}
