@@ -13,7 +13,7 @@ class Grid extends Component {
             gridSize: [30, 30],
             runningGame: false,
             game_of_life: new Game_of_life(),
-            interval: 100,
+            interval: 1000,
          }         
     }
 
@@ -97,6 +97,30 @@ class Grid extends Component {
         });
     }
 
+    rowsOnChange = (event) => {
+        let size = this.state.gridSize;
+        size[1] = event.target.value;
+
+        this.setState({
+            gridSize: size,
+        });
+
+        this.createGrid();
+    }
+
+    columnsOnChange = (event) => {
+        let size = this.state.gridSize;
+        size[0] = event.target.value;
+        
+        this.setState({
+            gridSize: size,
+        });
+
+        this.createGrid();
+    }
+
+
+
     render() { 
         return (
             <div className = 'gol-container'>
@@ -114,8 +138,8 @@ class Grid extends Component {
                     columns = {this.state.gridSize[0]}
                     interval = {this.state.interval}
 
-
-                    
+                    rowsOnChange = {this.rowsOnChange}
+                    columnsOnChange = {this.columnsOnChange}
                     intervalChange = {this.intervalChange}
 
                 />
