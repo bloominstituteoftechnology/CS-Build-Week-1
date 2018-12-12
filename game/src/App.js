@@ -106,6 +106,18 @@ class App extends Component {
       this.setState({...stateBuffer, cycles: cyclesCopy })
     }
   }
+  updateCellColor = () => {
+    const c = this.refs.grid
+    const ctx = c.getContext("2d");
+    for (let i=0; i<300; i+=20){
+      for (let j=0; j<300; j+=20){
+        if (this.state[`${i}_${j}`] === "alive") {
+          ctx.fillStyle = this.state.color
+          ctx.fillRect(i+1, j+1, 19, 19);
+        }
+      }
+    }
+  }
   buttonClick = (type) => {
     const c = this.refs.grid
     const ctx = c.getContext("2d");
@@ -186,7 +198,7 @@ class App extends Component {
       //I expected, can't figure out for now so using brute force
       const x = Math.floor((e.clientX - 9) / boxSize) * boxSize -40
       const y = Math.floor(e.clientY / boxSize) * boxSize -80
-      ctx.fillStyle = this.state[`${x}_${y}`] === "alive" ? "#FFFFFF" : "#DB7093";
+      ctx.fillStyle = this.state[`${x}_${y}`] === "alive" ? "#FFFFFF" : this.state.color;
       //plus 1 px for border
       ctx.fillRect(x+1, y+1, 19, 19);
       const cellStatus = this.state[`${x}_${y}`] === "alive" ? "dead" : "alive"
@@ -196,29 +208,28 @@ class App extends Component {
       return null;
     }
   }
-
   colorClick = (color) => {
     switch(color) {
       case "r":
-        this.setState({color: "red"})
+        this.setState({color: "red"}, () => this.updateCellColor())
         break;
       case "o":
-        this.setState({color: "#FF7F50"})
+        this.setState({color: "#FF7F50"}, () => this.updateCellColor())
         break;
       case "y":
-        this.setState({color: "#FEFA8A"})
+        this.setState({color: "#FEFA8A"}, () => this.updateCellColor())
         break;
       case "g":
-        this.setState({color: "#00FA9A"})
+        this.setState({color: "#00FA9A"}, () => this.updateCellColor())
         break;
       case "b":
-        this.setState({color: "#1E90FF"})
+        this.setState({color: "#1E90FF"}, () => this.updateCellColor())
         break;
       case "pu":
-        this.setState({color: "#8A2BE2"})
+        this.setState({color: "#8A2BE2"}, () => this.updateCellColor())
         break;
       case "pi":
-        this.setState({color: "#DB7093"})
+        this.setState({color: "#DB7093"}, () => this.updateCellColor())
     }
   }
 
