@@ -57,7 +57,7 @@ export default class LifeCanvas extends Component {
       ctx.moveTo(0, y);
       ctx.lineTo(this.width, y);
     }
-    ctx.strokeStyle = 'blue';
+    ctx.strokeStyle = 'black';
     ctx.stroke();
 
     for (let j=0; j<this.height/this.cellsize; j++) {
@@ -65,9 +65,10 @@ export default class LifeCanvas extends Component {
         if (this.state.cells[j][k] == 1) {
           ctx.fillStyle = '#FF0000';
           ctx.fillRect(j*this.cellsize, k*this.cellsize, this.cellsize, this.cellsize);
-        } else {
-          ctx.fillStyle = 'black';
-          ctx.fillRect(j*this.cellsize, k*this.cellsize, this.cellsize, this.cellsize);
+        }
+        else {
+          ctx.fillStyle = 'blue';
+          ctx.fillRect(j*this.cellsize, k*this.cellsize, this.cellsize-1, this.cellsize-1);
         }
       }
     }
