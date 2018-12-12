@@ -36,24 +36,23 @@ class Grid extends Component{
         const x=e.clientX-grid.left;
         const y=e.clientY-grid.top;
         this.toggleState(x,y);
-        this.fillsquares();
     }
     
     toggleState(x,y){
         const x_index=Math.floor(x/25);
         const y_index=Math.floor(y/25);
-        if (this.life.grid[x_index][y_index].isClickable){
-          this.life.grid[x_index][y_index].currentState===0 ? 
-          this.life.grid[x_index][y_index].currentState=1 : 
-          this.life.grid[x_index][y_index].currentState=0;
-        }
-        this.setState({board:this.life.grid},()=>this.fillsquares());
+        const board = JSON.parse(JSON.stringify(this.state.board))
+        board[x_index][y_index]===0? 
+        board[x_index][y_index]=1: 
+        board[x_index][y_index]=0;
+        this.setState({board:board},()=>this.fillsquares());
     }
     fillsquares=()=>{
         const ctx = this.refs.canvas.getContext('2d');
-        for (let i=0; i<this.life.grid.length;i++) {
-          for (let j=0; j<this.life.grid[0].length; j++) {
-            if (this.life.grid[i][j].currentState) {
+        const board=this.state.board.map(arr=>[...arr]);
+        for (let i=0; i<board.length;i++) {
+          for (let j=0; j<board[0].length; j++) {
+            if (board[i][j]) {
               ctx.fillRect(i*25, j*25, 25, 25);
             } else {
               ctx.clearRect(i*25,j*25,25,25);
@@ -65,8 +64,10 @@ class Grid extends Component{
     play=()=>{
       console.log(this.state.board);
       const board=this.state.board.map(arr=>[...arr]);
-      this.life.runIteration(board);
-      //this.fillsquares();
+      //const board = JSON.parse(JSON.stringify(this.state.board))
+      const newBoard = this.life.runIteration(board);
+      this.setState({board: newBoard, generation: this.state.generation + 1},()=>this.fillsquares())
+      // this.fillsquares();
     }
     render(){
         return (
