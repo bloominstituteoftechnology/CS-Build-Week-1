@@ -3,7 +3,6 @@
   width: 100vw;
   height: 100vh;
   margin: 1px;
-  border: 1px solid black;
 }
 
 .main {
@@ -11,7 +10,6 @@
   flex-direction: column;
   width: 66%;
   height: 100%;
-  border: 1px solid red;
 }
 
 .info {
@@ -19,7 +17,6 @@
   flex-direction: column;
   width: 33%;
   height: 100%;
-  border: 1px solid blue;
 }
 
 .grid {
@@ -28,38 +25,43 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  border: 1px solid green;
 }
 
-.canvas {
-  border: 1px solid crimson;
-  margin: 3px;
+canvas {
+  border: 1px solid black;
+  margin: auto;
 }
 
 .inputs {
   width: 100%;
   height: 20%;
-  border: 1px solid purple;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputs .buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.inputs .buttons button {
+  margin: 5px 10px;
+  height: 20px;
+  width: 90px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.inputs .buttons button:hover {
+  background-color: black;
+  color: white;
 }
 
 .textbox {
   width: 100%;
   height: 50%;
   padding: 5px;
-  border: 1px solid teal;
-}
-
-.box {
-  width: 50px;
   border: 1px solid black;
-}
-
-.row {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.alive {
-  background-color: black;
 }
