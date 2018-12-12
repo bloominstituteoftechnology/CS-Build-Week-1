@@ -1,12 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import { ButtonToolbar, MenuItem, DropdownButton } from "react-bootstrap";
+import "./index.css";
+
+function arrayClone(arr) {
+  return JSON.parse(JSON.stringify(arr));
+}
 
 class Box extends React.Component {
   selectBox = () => {
     this.props.selectBox(this.props.rows, this.props.col);
   };
+
   render() {
     return (
       <div
@@ -18,42 +23,40 @@ class Box extends React.Component {
   }
 }
 
-class Grid extends React.Component {
-  render() {
-    const width = this.props.cols * 14;
-    var rowsArr = [];
+const Grid = props => {
+  const width = props.cols * 14;
+  let boxClass = "";
 
-    var boxClass = "";
-    for (var i = 0; i < this.props.rows; i++) {
-      for (var j = 0; j < this.props.cols; j++) {
-        let boxId = i + "_" + j;
+  const rowsArr = props.gridFull.map((rowArr, rowIdx) =>
+    rowArr.map((item, colIdx) => {
+      const boxId = `${rowIdx}_${colIdx}`;
 
-        boxClass = this.props.gridFull[i][j] ? "box on" : "box off";
-        rowsArr.push(
-          <Box
-            boxClass={boxClass}
-            key={boxId}
-            boxId={boxId}
-            row={i}
-            col={j}
-            selectBox={this.props.selectBox}
-          />
-        );
-      }
-    }
+      boxClass = props.gridFull[rowIdx][colIdx] ? "box on" : "box off";
+      return (
+        <Box
+          boxClass={boxClass}
+          key={boxId}
+          boxId={boxId}
+          row={rowIdx}
+          col={colIdx}
+          selectBox={props.selectBox}
+        />
+      );
+    })
+  );
 
-    return (
-      <div className="grid" style={{ width: width }}>
-        {rowsArr}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="grid" style={{ width }}>
+      {rowsArr}
+    </div>
+  );
+};
 
 class Buttons extends React.Component {
-  handleSelect = evt => {
-    this.props.gridSize(evt);
+  handleSelect = eventKey => {
+    this.props.gridSize(eventKey);
   };
+
   render() {
     return (
       <div className="center">
@@ -91,38 +94,49 @@ class Buttons extends React.Component {
   }
 }
 
-class App extends React.Component {
-  speed = 100;
-  rows = 30;
-  cols = 50;
+class Main extends React.Component {
+  constructor() {
+    super();
+    this.speed = 100;
+    this.rows = 30;
+    this.cols = 50;
 
-  state = {
-    generation: 0,
-    gridFull: Array(this.rows)
-      .fill()
-      .map(() => Array(this.cols).fill(false))
-  };
+    this.state = {
+      generation: 0,
+      gridFull: Array(this.rows)
+        .fill()
+        .map(() => Array(this.cols).fill(false))
+    };
+  }
+
+  componentDidMount() {
+    this.seed();
+    this.playButton();
+  }
 
   selectBox = (row, col) => {
-    let gridCopy = arrayClone(this.state.gridFull);
-    gridCopy[row][col] = !gridCopy[row][col];
-    this.setState({
-      gridFull: gridCopy
-    });
+    const gridFull = this.state.gridFull.map((rowArr, rowIdx) =>
+      rowArr.map((item, colIdx) =>
+        rowIdx === row && colIdx === col ? !item : item
+      )
+    );
+    this.setState(() => ({ gridFull }));
   };
 
   seed = () => {
-    let gridCopy = arrayClone(this.state.gridFull);
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.cols; j++) {
-        if (Math.floor(Math.random() * 4) === 1) {
-          gridCopy[i][j] = true;
-        }
-      }
-    }
-    this.setState({
-      gridFull: gridCopy
-    });
+    const gridFull = this.state.gridFull.map(rowArr =>
+      rowArr.map(() => Math.floor(Math.random() * 4) === 1)
+    );
+    this.setState(() => ({ gridFull }));
+  };
+
+  playButton = () => {
+    clearInterval(this.intervalId);
+    this.intervalId = setInterval(this.play, this.speed);
+  };
+
+  pauseButton = () => {
+    clearInterval(this.intervalId);
   };
 
   slow = () => {
@@ -136,13 +150,14 @@ class App extends React.Component {
   };
 
   clear = () => {
-    var grid = Array(this.rows)
+    const gridFull = Array(this.rows)
       .fill()
       .map(() => Array(this.cols).fill(false));
-    this.setState({
-      gridFull: grid,
+
+    this.setState(() => ({
+      gridFull,
       generation: 0
-    });
+    }));
   };
 
   gridSize = size => {
@@ -181,43 +196,37 @@ class App extends React.Component {
         if (!g[i][j] && count === 3) g2[i][j] = true;
       }
     }
-    this.setState({
+
+    this.setState(prevState => ({
       gridFull: g2,
-      generation: this.state.generation + 1
-    });
+      generation: prevState.generation + 1
+    }));
   };
 
-  playButton = () => {
-    clearInterval(this.intervalId);
-    this.intervalId = setInterval(this.play, this.speed);
-  };
-
-  pauseButton = () => {
-    clearInterval(this.intervalId);
-  };
-
-  componentDidMount() {
-    this.seed();
-    this.playButton();
-  }
   render() {
     return (
       <div>
         <h1>Conway's Game of Life</h1>
         <h2>Number of Generations: {this.state.generation}</h2>
-        <Buttons playButton={this.playButton} />
         <Grid
           gridFull={this.state.gridFull}
           rows={this.rows}
           cols={this.cols}
           selectBox={this.selectBox}
         />
+        <Buttons
+          playButton={this.playButton}
+          pauseButton={this.pauseButton}
+          slow={this.slow}
+          fast={this.fast}
+          clear={this.clear}
+          seed={this.seed}
+          gridSize={this.gridSize}
+        />
+        ;
       </div>
     );
   }
 }
 
-function arrayClone(arr) {
-  return JSON.parse(JSON.stringify(arr));
-}
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<Main />, document.getElementById("root"));
