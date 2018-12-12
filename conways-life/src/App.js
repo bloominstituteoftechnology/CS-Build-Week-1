@@ -117,7 +117,7 @@ class App extends Component {
     });
 
     for (let i = 0; i < this.state.totalCells; i++) {
-      randomNum = Math.floor(Math.random() * Math.floor(3));
+      randomNum = Math.floor(Math.random() * Math.floor(5));
       grid[i].isAlive = randomNum === 0 ? true : false;
       if (grid[i].isAlive) {
         grid[i].color = 'green';
@@ -235,7 +235,7 @@ class App extends Component {
               disabled={this.state.isClickable ? false : true}
               onClick={this.randomGridHandler}
             >
-              Generate Random Cell Grid
+              Generate Random Grid
             </button>
             <button
               type="button"
@@ -271,6 +271,16 @@ class App extends Component {
                 to life. Else it remains dead.
               </li>
             </ol>
+          </div>
+          <div>
+            <h2>About the Game of Life</h2>
+            <p>
+              The <strong>Game of Life</strong> is a cellular automaton designed
+              by John Horton Conway. The game is played by creating an initial
+              configuration of cells which evolves based on the rules specified.
+              Advanced configurations will create patterns that will appear as
+              animations or graphics.
+            </p>
           </div>
         </div>
       </div>
