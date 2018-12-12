@@ -1,4 +1,3 @@
 [build]
  base    = "gameoflife"
  publish = "gameoflife/build"
- command = "yarn build"
