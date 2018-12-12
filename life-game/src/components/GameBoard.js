@@ -6,10 +6,13 @@ class GameBoard extends React.Component{
       this.state = {
           height: 300,
           width: 300,
-          cells: 15
+          cells: 15,
+          gameOn: false,
       }
   }
+
   drawCanvas = () => {
+      this.gridState();
       let canvas = this.refs.canvas.getContext('2d');
       canvas.fillStyle = 'white';
 
@@ -32,6 +35,7 @@ class GameBoard extends React.Component{
   }
 
   handleClick = (e) => {
+    if (this.state.gameOn === false){
     const can = this.refs.canvas
     const context = can.getContext("2d");
     const pos = this.refs.canvas.getBoundingClientRect()
@@ -44,6 +48,7 @@ class GameBoard extends React.Component{
       let cellState = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
       console.log(this.state[`${cellState}`]);
       this.setState({[`${cellState}`]: "alive"});
+    }else {console.log('Cannot complete task');}
   }
 
   unselectSquare = (e) => {
@@ -58,11 +63,23 @@ class GameBoard extends React.Component{
       squareSize);
 }
 
+gridState = () => {
+  for (let i=0; i<300; i+=20){
+      for (let j=0; j<300; j+=20){
+      this.setState({[`${i/20},${j/20}`]: "dead"})
+      }
+  }
+}
+
 clearGrid = (e) => {
   const can = this.refs.canvas
   const context = can.getContext("2d");
   context.clearRect(0,0,can.width,can.height)
   this.drawCanvas()
+}
+
+playToggle = (e) => {
+  this.setState({gameOn: !this.state.gameOn});
 }
 
   render(){
@@ -76,9 +93,8 @@ clearGrid = (e) => {
               width={this.state.width} 
               /> 
               <div className = 'buttons'>
-              <button>play</button>
-              <button>stop</button>
-              <button onClick={this.clearGrid}>clear</button>
+              <button onClick = {this.playToggle}>Play/Pause</button>
+              <button onClick={this.clearGrid}>Clear</button>
               </div>
               <div>Game Rules:</div>
             </>
