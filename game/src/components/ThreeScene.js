@@ -97,7 +97,7 @@ class ThreeScene extends React.Component {
                 
                 this.setState({cycle: 'B'});
                 generationCount++;
-                console.log("layer1First[0][0]:", layer1First[0][0]);
+                // console.log("layer1First[0][0]:", layer1First[0][0]);
             } else {
                 cancelAnimationFrame(myReq);
             }
@@ -125,14 +125,14 @@ class ThreeScene extends React.Component {
 
     computeNeigborsAndChangeMatrix = (firstMatrix, secondMatrix, layer) => {
         for (let i = 0; i < 20; i++) {
-            for (let j = 0; j <= 20; j++) {
+            for (let j = 0; j < 20; j++) {
                 // wrap around
                 let prevRow = i - 1;
                 if (prevRow === -1) {
                     prevRow = 19;
                 }
                 let nextRow = i + 1;
-                if (nextRow === 40) {
+                if (nextRow === 20) {
                     nextRow = 0
                 }
                 let prevCol = j - 1;
@@ -320,7 +320,7 @@ class ThreeScene extends React.Component {
         } else {
             this.setState({continueAnimating: true});
             this.start();
-            // myReq = requestAnimationFrame((timestamp) => {myInt = setTimeout(() => {this.animate(timestamp)}, this.state.speed)});
+            myReq = requestAnimationFrame((timestamp) => {myInt = setTimeout(() => {this.animate(timestamp)}, this.state.speed)});
         }
         if (this.state.buttonTag === 'Start') {
             this.setState({buttonTag: 'Stop'});
@@ -343,14 +343,20 @@ class ThreeScene extends React.Component {
     }
 
     clearBoard = () => {
-        for (let i = 0; i < 20; i ++) {
+        for (let i = 0; i < 20; i++) {
             layer1First[i] = ThreeDClear[i].slice();
+            layer1Second[i] = ThreeDClear[i].slice();
             layer2First[i] = ThreeDClear[i].slice();
+            layer2Second[i] = ThreeDClear[i].slice();
             layer3First[i] = ThreeDClear[i].slice();
+            layer3Second[i] = ThreeDClear[i].slice();
         }
-        this.setState({array1: layer1First});
-        this.setState({array2: layer2First});
-        this.setState({array3: layer3First});
+        this.setState({array1: ThreeDClear});
+        this.setState({array2: ThreeDClear});
+        this.setState({array3: ThreeDClear});
+        this.addCubes(this.state.array1, 1);
+        this.addCubes(this.state.array2, 2);
+        this.addCubes(this.state.array3, 3);
     }
     
 
