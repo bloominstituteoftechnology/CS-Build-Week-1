@@ -22,24 +22,21 @@ class Grid extends Component {
         if (!this.state.runningGame) {
             this.setState({
                 runningGame: true,
-            }, () => { this.intervalTimer = setInterval(() => this.startTheShow(), this.state.interval);
-        })
+            });
+        this.startTheShow();
         console.log("Play");
         }
-    }
-
-    pause = () => {
-        console.log("Pause");
     }
 
     stop = () => {
         this.setState({
             runningGame: false,
-        }, () => {
-            if (this.intervalTimer) {
-                clearInterval(this.intervalTimer);
-            }
         });
+
+        if (this.timeoutHandler) {
+            window.clearTimeout(this.timeoutHandler);
+            this.timeoutHandler = null;
+        }
         console.log("Stop");
     }
 
@@ -48,11 +45,8 @@ class Grid extends Component {
              gridSize: [30, 30],
              runningGame: false,
              game_of_life: new Game_of_life(),
-         },  () => {
-            if (this.intervalTimer) {
-                clearInterval(this.intervalTimer);
-            }
-        });
+         });
+         
     }
 
     toggleCell = (coordinates) => {
@@ -69,6 +63,9 @@ class Grid extends Component {
         this.setState({
             game_of_life: this.state.game_of_life.iteration()
         });
+        this.timeoutHandler = window.setTimeout(() => {
+            this.startTheShow();
+          }, this.state.interval);
     }
 
 
