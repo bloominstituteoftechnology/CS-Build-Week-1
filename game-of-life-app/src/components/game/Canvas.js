@@ -52,8 +52,9 @@ const ControlSelect = styled.select`
 class Canvas extends React.Component {
   state = {
     cells: 400,
-    gridArr: [],
+    currentNode: [],
     isClickable: true,
+    isPlaying: false,
     generation: 0,
     paused: false,
     preset: "none",
@@ -63,18 +64,18 @@ class Canvas extends React.Component {
     this.setState({ viewportWidth: window.innerWidth });
   }
   componentDidMount() {
-    let gridArr = [];
+    let currentNode = [];
     for (let i = 0; i < this.state.cells; i++) {
-      gridArr.push({ id: i, isLiving: false });
+      currentNode.push({ id: i, isLiving: false });
     }
-    this.setState({ gridArr });
+    this.setState({ currentNode });
   }
 
   toggleCellLife = id => {
     if (this.state.isClickable) {
       this.setState(prevState => {
         return {
-          gridArr: prevState.gridArr.map(cell => {
+          currentNode: prevState.currentNode.map(cell => {
             if (cell.id === id) {
               cell.isLiving = !cell.isLiving;
               return cell;
@@ -87,15 +88,26 @@ class Canvas extends React.Component {
     }
   };
 
+  killCell = () => {
+    this.isLiving = false;
+  }
+
+  giveLife = () => {
+    this.isLiving = true;
+  }
+
   handleChange = event => {
     const { name, value, type, checked } = event.target;
     type === "checkbox"
       ? this.setState({ [name]: checked })
       : this.setState({ [name]: value });
   };
+
+  // START GAME HANDLER
   handleStartGame = () => {
     this.setState({
       isClickable: false,
+      isPlaying: true,
       generation: this.state.generation,
       paused: false
     });
@@ -106,17 +118,33 @@ class Canvas extends React.Component {
         }),
       1000
     );
+    this.playGame();
   };
-
+  // PLAY GAME 
+  playGame = () => {
+    console.log('test')
+    let nextNode = this.state.currentNode.slice();
+    let length = nextNode.length;
+    console.log(length);
+    
+    for (let i = 0; i < length; i++) {
+      if (!nextNode[i].isLiving) {
+        let check = 0;
+        console.log("He ded")
+      }
+    }
+  }
+  
   // Todo
   handlePauseGame = () => {};
 
   handleResetGame = () => {
     this.setState({
-      gridArr: this.state.gridArr.map(cell =>
+      currentNode: this.state.currentNode.map(cell =>
         cell.isLiving ? !cell.isLiving : cell
       ),
       isClickable: true,
+      isPlaying: false,
       generation: 0
     });
     clearInterval(this.generationCounter);
@@ -126,9 +154,9 @@ class Canvas extends React.Component {
     console.log(this.state);
     return (
       <>
-        <GenerationText>🌀 Generation: {this.state.generation}</GenerationText>
+        <GenerationText><span role="img" aria-label="spiral">🌀</span> Generation: {this.state.generation}</GenerationText>
         <CellGrid>
-          {this.state.gridArr.map((cell, index) => (
+          {this.state.currentNode.map((cell, index) => (
             <Cell
               key={index}
               id={cell.id}
@@ -138,9 +166,9 @@ class Canvas extends React.Component {
             />
           ))}
         </CellGrid>
-        <ControlButton onClick={this.handleStartGame}>▶️ Play</ControlButton>
-        <ControlButton onClick={this.handlePauseGame}>⏸ Pause</ControlButton>
-        <ControlButton onClick={this.handleResetGame}>🔄 Reset</ControlButton>
+        <ControlButton onClick={this.handleStartGame}><span role="img" aria-label="play">▶️</span> Play</ControlButton>
+        <ControlButton onClick={this.handlePauseGame}><span role="img" aria-label="pause">⏸</span> Pause</ControlButton>
+        <ControlButton onClick={this.handleResetGame}><span role="img" aria-label="reset">🔄</span> Reset</ControlButton>
         <ControlSelect
           value={this.state.preset}
           onChange={this.handleChange}

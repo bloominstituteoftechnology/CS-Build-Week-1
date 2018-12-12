@@ -82,16 +82,16 @@ const Header = props => (
     <HeaderContainer>
       <HeaderBar>
         <HeaderLogoText>
-          <HeaderLogoLink to="/">🏁 {props.title}</HeaderLogoLink>
+          <HeaderLogoLink to="/"><span role="img" aria-label="flag">🏁 </span>{props.title}</HeaderLogoLink>
         </HeaderLogoText>
         <LinkGroup>
-          <PageLink to="/" exact activeClassName="active">
+          <PageLink to="/">
             Game
           </PageLink>
-          <PageLink to="/about" exact activeClassName="active">
+          <PageLink to="/about" exact="true">
             About
           </PageLink>
-          <PageLink to="/credits" exact activeClassName="active">
+          <PageLink to="/credits" exact="true">
             Credits
           </PageLink>
         </LinkGroup>

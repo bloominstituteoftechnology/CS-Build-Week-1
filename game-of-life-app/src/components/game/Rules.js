@@ -15,7 +15,7 @@ const RulesTitle = styled.h2`
 
 export const Rules = () => (
   <RulesContainer>
-    <RulesTitle>📃 Rules</RulesTitle>
+    <RulesTitle><span role="img" aria-label="rules">📃</span> Rules</RulesTitle>
     <CustomHR />
     <p>
       In the Game of Life, these rules examine each cell of the grid. For each

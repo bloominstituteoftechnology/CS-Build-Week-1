@@ -9,8 +9,8 @@ onClick={() => this.props.toggleCellLife(this.state.id)}
 */
 
 const GridBox = styled.span(props => ({
-    minHeight: "24px",
-    minWidth: "24px",
+  minHeight: "24px",
+  minWidth: "24px",
   border: ".5px solid #eee",
   background: props.background
 }));
