@@ -1,5 +1,6 @@
 import GridConstants from './GridConstants';
 import Cell from './Cell';
+
 /**
  * Palette:
 lite gray: #a8a7a8
@@ -68,7 +69,36 @@ function sketch (p){
 
   const blastEm = () => {
     isBlasting = !isBlasting;
+    for(let i=0; i<cols; i++){
+      for(let j=0; j<rows; j++){
+        // 1. get cell's activity
+
+        // 2. get the cell's neighbors
+        // 3. get the cell's neighbors' activity
+        // 4. neighbors' activity determines cell's activity
+        // 5. repeat 1-4 for all cells
+        // 6. copy current array to next array
+        // 7. repeat 1-6
+      }
+    }
   }
+
+  const judgement = (arr,x,y) => {
+    let theLoving = 0, mercy = false;
+    if(arr[x-1][y].active) theLoving += 1;
+    if(arr[x-1][y-1].active) theLoving += 1;
+    if(arr[x][y-1].active) theLoving += 1;
+    if(arr[x+1][y-1].active) theLoving += 1;
+    if(arr[x+1][y].active) theLoving += 1;
+    if(arr[x+1][y+1].active) theLoving += 1;
+    if(arr[x][y+1].active) theLoving += 1;
+    if(arr[x+1][y+1].active) theLoving += 1;
+    if(arr[x-1][y+1].active) theLoving += 1;
+    if(theLoving < 3 || theLoving > 1) {
+      mercy = true;
+    } 
+    return mercy;
+  };
 
   const clearEm = () => {
     

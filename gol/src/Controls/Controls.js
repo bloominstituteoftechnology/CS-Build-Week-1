@@ -8,6 +8,7 @@ const Controls = (props) => {
       <button onClick={()=>{props.goBlast()}}>Go, go, go!</button>
     </div>
   )
+  
 };
 
 export default Controls;

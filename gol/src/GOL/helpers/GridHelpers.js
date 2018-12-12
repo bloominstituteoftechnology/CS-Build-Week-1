@@ -1,6 +1,5 @@
 
-// Draw base grid
-const drawBaseGrid = (cell) => {
-
-  return
-};
+const checkIfActive = () => {
+  // 1. get isActive for cell
+  // 2. 
+}

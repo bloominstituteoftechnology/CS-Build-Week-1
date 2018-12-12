@@ -9,6 +9,7 @@ dark gray: #363636
  */
 
 class Cell {
+
   constructor(p, i, j, fill){
     this.active = false;
     this.id = null;
@@ -19,6 +20,10 @@ class Cell {
     this.p = p;
     this.activeFill = "#cc527a";
     this.inactiveFill = "#d11554";
+  }
+
+  getActivity = () => {
+    
   }
 
   toggleActive = () => {
