@@ -10,6 +10,7 @@ export default class Canvas extends Component {
         x: 0, 
         y: 0,
         start: 0,
+        generationNumber: 0,
     }
   }
 
@@ -40,6 +41,9 @@ export default class Canvas extends Component {
   }
 
   cellChange = () => {
+    if(this.state.start === 1) {
+      return null; 
+    }
     let x = this.state.x; 
     let y = this.state.y-100; 
     
@@ -90,18 +94,26 @@ export default class Canvas extends Component {
     }
   }
 
-  onClickStart = (e) => {
+  onClickStart = () => {
     this.setState({start: 1});
+    setInterval(() => {
+      this.startFunction();
+    }, 1000);
   }
 
-  onClickStop = (e) => {
+  onClickStop = () => {
     this.setState({start: 0});
   }
 
+  countGen = () => {
+    this.setState({generationNumber: this.state.generationNumber + 1});
+  }
 
-  componentDidUpdate() {  
+  startFunction = () => {
+
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
+     
 
     function getPixel(imageData, x, y) {
       const w = imageData.width; 
@@ -116,23 +128,29 @@ export default class Canvas extends Component {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
        
 
-    let nextGenDies = [];
-    let nextGenLives = [];
+
 
     if(this.state.start === 1) {
+      setTimeout(()=> {
+        this.countGen();
+      }, 50);
+
+      let nextGenDies = [];
+      let nextGenLives = [];
+
       for(let xCheck = 1; xCheck <= 492; xCheck += 10) {
         for(let yCheck = 1; yCheck <= 492; yCheck += 10) {
-          let pixelCheck = getPixel(imageData, xCheck ,yCheck);
+          let pixelCheck = getPixel(imageData, xCheck , yCheck);
           if(pixelCheck[2] === 255) {
-            let neighbor1 = getPixel(imageData, xCheck-10 ,yCheck-10);
-            let neighbor2 = getPixel(imageData, xCheck ,yCheck-10);
-            let neighbor3 = getPixel(imageData, xCheck+10 ,yCheck-10);
-            let neighbor4 = getPixel(imageData, xCheck+10 ,yCheck);
-            let neighbor5 = getPixel(imageData, xCheck+10 ,yCheck+10);
-            let neighbor6 = getPixel(imageData, xCheck ,yCheck+10);
-            let neighbor7 = getPixel(imageData, xCheck-10 ,yCheck+10);
-            let neighbor8 = getPixel(imageData, xCheck-10 ,yCheck);
-            
+            let neighbor1 = getPixel(imageData, xCheck-10 , yCheck-10);
+            let neighbor2 = getPixel(imageData, xCheck , yCheck-10);
+            let neighbor3 = getPixel(imageData, xCheck+10 , yCheck-10);
+            let neighbor4 = getPixel(imageData, xCheck+10 , yCheck);
+            let neighbor5 = getPixel(imageData, xCheck+10 , yCheck+10);
+            let neighbor6 = getPixel(imageData, xCheck , yCheck+10);
+            let neighbor7 = getPixel(imageData, xCheck-10 , yCheck+10);
+            let neighbor8 = getPixel(imageData, xCheck-10 , yCheck);
+
             let count = 0;
             
             if(neighbor1 !== null) {
@@ -176,14 +194,14 @@ export default class Canvas extends Component {
             }
 
             } else {
-              let neighbor11 = getPixel(imageData, xCheck-10 ,yCheck-10);
-              let neighbor22 = getPixel(imageData, xCheck ,yCheck-10);
-              let neighbor33 = getPixel(imageData, xCheck+10 ,yCheck-10);
-              let neighbor44 = getPixel(imageData, xCheck+10 ,yCheck);
-              let neighbor55 = getPixel(imageData, xCheck+10 ,yCheck+10);
-              let neighbor66 = getPixel(imageData, xCheck ,yCheck+10);
-              let neighbor77 = getPixel(imageData, xCheck-10 ,yCheck+10);
-              let neighbor88 = getPixel(imageData, xCheck-10 ,yCheck);
+              let neighbor11 = getPixel(imageData, xCheck-10 , yCheck-10);
+              let neighbor22 = getPixel(imageData, xCheck , yCheck-10);
+              let neighbor33 = getPixel(imageData, xCheck+10 , yCheck-10);
+              let neighbor44 = getPixel(imageData, xCheck+10 , yCheck);
+              let neighbor55 = getPixel(imageData, xCheck+10 , yCheck+10);
+              let neighbor66 = getPixel(imageData, xCheck , yCheck+10);
+              let neighbor77 = getPixel(imageData, xCheck-10 , yCheck+10);
+              let neighbor88 = getPixel(imageData, xCheck-10 , yCheck);
 
               let count2 = 0;
 
@@ -224,13 +242,11 @@ export default class Canvas extends Component {
               if(count2 === 3) {
                 nextGenLives.push({'x': xCheck, 'y': yCheck});
               }
-              
             }
           } 
         }
+        nextGeneration(nextGenDies, nextGenLives);
       }
-      console.log("nextgenDies",nextGenDies);
-      console.log("nextgenLives", nextGenLives);
 
       function nextGeneration(nextGenDies, nextGenLives) {
           nextGenDies.map(cell => {
@@ -243,10 +259,7 @@ export default class Canvas extends Component {
         
       }
 
-      nextGeneration(nextGenDies, nextGenLives);
-    }
-  
-
+  }
 
 
 
@@ -267,6 +280,7 @@ export default class Canvas extends Component {
           onClickStop={this.onClickStop}>
         </Buttons>
       </div>
+      <div>Generation number: {this.state.generationNumber}</div>
       </div>
     )
   }
