@@ -7,8 +7,7 @@ const Cell_Container = styled.div`
   flex: 1;
   padding: 5px;
   margin: 1px;
-  border: 1px solid black;
-`;
+  `;
 
 class Cell extends Component {
   render() {

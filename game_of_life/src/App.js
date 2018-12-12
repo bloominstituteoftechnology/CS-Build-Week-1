@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import styled from "styled-components";
 import Cell from "./Cell";
-import Stages from "./Stages"; 
+import Stages from "./Stages";
 
 const App_Holder = styled.div`
   border: 1px solid black;
@@ -57,7 +57,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      stage: new Stages(), 
+      stage: new Stages(),
       //-----i    j  i=Column j=Row
       size: [60, 30],
       running: false
@@ -67,14 +67,14 @@ class App extends Component {
     this.startGame = this.startGame.bind(this);
     this.stopGame = this.stopGame.bind(this);
     this.renderBoard = this.renderBoard.bind(this);
-    this.initialCell = this.initialCell.bind(this); 
+    this.initialCell = this.initialCell.bind(this);
   }
 
-  initialCell(status){
-    if(!this.state.running){
+  initialCell(status) {
+    if (!this.state.running) {
       this.setState({
         stage: this.state.stage.initialCell(status)
-      })
+      });
     }
   }
   handleColumnChange(event) {
@@ -121,30 +121,36 @@ class App extends Component {
     //if the game is running
     //set the state of running to true
     if (!this.state.running) {
-      this.setState({
-        running: true
-      }, () => {
-        this.interval = setInterval(() => this.runGame(), 10); 
-      });
+      this.setState(
+        {
+          running: true
+        },
+        () => {
+          this.interval = setInterval(() => this.runGame(), 10);
+        }
+      );
     }
   }
 
   stopGame() {
     //if the game is running
     //set the state of running to false
-    this.setState({
-      running: false
-    }, () => {
-      if(this.interval){
-        clearInterval(this.interval); 
+    this.setState(
+      {
+        running: false
+      },
+      () => {
+        if (this.interval) {
+          clearInterval(this.interval);
+        }
       }
-    });
+    );
   }
 
   runGame() {
     this.setState({
       stage: this.state.stage.addStage()
-    })
+    });
   }
 
   renderBoard() {
@@ -156,14 +162,24 @@ class App extends Component {
     //loop through twice to the row and column sizes.
     for (let i = 0; i < this.state.size[0]; i++) {
       for (let j = 0; j < this.state.size[1]; j++) {
-        if(this.state.stage.getLifeUpdate(i + " , " + j)){
-        //push the cells into the board made.
-        cellRow.push(
-        <Cell key={[i, j]} status={{x: i, y: j}} live={true} initialCell={this.initialCell.bind(this)} />
-      );
-        }else{
+        if (this.state.stage.getLifeUpdate(i + " , " + j)) {
+          //push the cells into the board made.
           cellRow.push(
-            <Cell key={[i, j]} status={{x: i, y: j}} live={false} initialCell={this.initialCell.bind(this)} />
+            <Cell
+              key={[i, j]}
+              status={{ x: i, y: j }}
+              live={true}
+              initialCell={this.initialCell.bind(this)}
+            />
+          );
+        } else {
+          cellRow.push(
+            <Cell
+              key={[i, j]}
+              status={{ x: i, y: j }}
+              live={false}
+              initialCell={this.initialCell.bind(this)}
+            />
           );
         }
       }
