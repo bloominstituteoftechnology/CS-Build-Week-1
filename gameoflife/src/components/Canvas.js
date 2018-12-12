@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Buttons from './Buttons';
-
+import Presets from './Presets';
 
 
 export default class Canvas extends Component {
@@ -11,6 +11,10 @@ export default class Canvas extends Component {
         y: 0,
         start: 0,
         generationNumber: 0,
+        presetBuild: null,
+        preset1: null,
+        preset2: null,
+        preset3: null, 
     }
   }
 
@@ -98,7 +102,7 @@ export default class Canvas extends Component {
     this.setState({start: 1});
     setInterval(() => {
       this.startFunction();
-    }, 500);
+    }, 1000);
   }
 
   onClickStop = () => {
@@ -141,6 +145,99 @@ export default class Canvas extends Component {
   countGen = () => {
     this.setState({generationNumber: this.state.generationNumber + 1});
   }
+
+  onClickPresetBuilder = () => {
+    let presetBuild = [];
+    
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext("2d");
+
+    function getPixel(imageData, x, y) {
+      const w = imageData.width; 
+      const h = imageData.height;
+      if (x < 0 || x >= w || y < 0 || y >= h) {
+          return null;
+      }
+      const index = (w * y + x) * 4;
+      return imageData.data.slice(index, index + 4);
+    }
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    for(let xCheck = 1; xCheck <= 492; xCheck += 10) {
+      for(let yCheck = 1; yCheck <= 492; yCheck += 10) {
+        let pixelCheck = getPixel(imageData, xCheck , yCheck);
+        if(pixelCheck[2] === 255) { 
+          presetBuild.push({x: xCheck, y: yCheck});
+        }
+      }
+    }
+
+    this.setState({presetBuild: presetBuild});
+  }
+
+  onClickPresetSave = () => {
+    
+    if(this.state.preset1 === null) {
+      this.setState({preset1: this.state.presetBuild})
+    } else if(this.state.preset2 === null) {
+      this.setState({preset2: this.state.presetBuild})
+    } else if(this.state.preset3 === null) {
+      this.setState({preset3: this.state.presetBuild})
+    } 
+  }
+
+  onClickPreset1 = () => {
+    if(this.state.preset1 === null) {
+      return null; 
+    }
+
+    this.onClickStop();
+    this.onClickClear();
+
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext("2d");
+
+    this.state.preset1.map(cell => {
+        ctx.fillStyle = "blue";
+        ctx.fillRect(cell.x,cell.y,8,8);
+    })
+  }
+
+  onClickPreset2 = () => {
+    if(this.state.preset2 === null) {
+      return null; 
+    }
+
+    this.onClickStop();
+    this.onClickClear();
+
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext("2d");
+
+    this.state.preset2.map(cell => {
+        ctx.fillStyle = "blue";
+        ctx.fillRect(cell.x,cell.y,8,8);
+    })
+  }
+
+  onClickPreset3 = () => {
+    if(this.state.preset3 === null) {
+      return null; 
+    }
+
+    this.onClickStop();
+    this.onClickClear();
+    
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext("2d");
+
+    this.state.preset3.map(cell => {
+        ctx.fillStyle = "blue";
+        ctx.fillRect(cell.x,cell.y,8,8);
+    })
+  }
+
 
   startFunction = () => {
     const canvas = this.refs.canvas;
@@ -292,6 +389,7 @@ export default class Canvas extends Component {
 
 
   render() {
+    console.log("state", this.state)
     return(
       <div>
       <div className="canvas">
@@ -310,6 +408,16 @@ export default class Canvas extends Component {
         </Buttons>
       </div>
       <div>Generation number: {this.state.generationNumber}</div>
+        <div>
+          <Presets
+          onClickPresetBuilder={this.onClickPresetBuilder}
+          onClickPresetSave={this.onClickPresetSave} 
+          onClickPreset1={this.onClickPreset1}
+          onClickPreset2={this.onClickPreset2}
+          onClickPreset3={this.onClickPreset3}
+          >
+          </Presets>
+        </div>
       </div>
     )
   }
