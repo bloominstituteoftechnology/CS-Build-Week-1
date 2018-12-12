@@ -6,6 +6,7 @@ class App extends Component {
     matrix: {},
     //grid set up
     matrixUsing: [],
+    mirror: [], 
     row_count: 15, //default
     col_count: 15, //default
 
@@ -16,11 +17,36 @@ class App extends Component {
     if_one_color: "black",
     if_zero_color: "white",
     //game instructions
-    gameRunning: false
+    gameRunning: false,
+    generation: 0,
   };
 
   componentWillMount() {
     this.setMatrixUp();
+  }
+
+  generateRandom = () => {
+    const keys = Object.keys(this.state.matrix);
+    const matrix = {...this.state.matrix};//creates a copy 
+
+    for(let i = 0; i< keys.length; i++){
+      for(let j = 0; j<matrix[i].length; j++){
+        const grabRandom = Math.random(); 
+        const convertToNumber = (grabRandom *2);
+    
+        const floorNumber =Math.floor(convertToNumber);
+    
+        if (floorNumber === 1) {
+          matrix[i][j] = 1; 
+        } else {
+          matrix[i][j] = 0; 
+        }
+      }
+    }
+
+    // this.setState({matrix})
+    this.setState(prevState => {matrix});
+
   }
 
   setMatrixUp = () => {
@@ -62,7 +88,7 @@ class App extends Component {
   };
   continueWithGame = () => {
     const matrixUsing = [];
-    const matrix = this.cloneObject(); 
+    const matrix = {...this.state.matrix};//creates a copy
     let count = 0;
     
     Object.entries(matrix).forEach(entry => {
@@ -152,7 +178,7 @@ class App extends Component {
     console.log("Starting the game");
     const matrix = this.state.matrixUsing.slice(); 
     let gameRunning = true; 
-    const state_matrix = this.cloneObject(); 
+    const state_matrix = {...this.state.matrix};//creates a copy 
     while(gameRunning){
 
       for(let i = 0; i<matrix.length; i++){
@@ -347,7 +373,7 @@ class App extends Component {
     if (finished){
       console.log(finished);
       console.log(this.state.matrix);
-      const matrix = this.cloneObject(); 
+      const matrix = {...this.state.matrix};//creates a copy
       if(Object.keys(matrix).length){
         switch(type){
           case "Block":
