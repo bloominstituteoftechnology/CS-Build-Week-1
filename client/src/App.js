@@ -165,7 +165,7 @@ class App extends Component {
     //functionaly for gameplay goes here
     console.log("Starting the game");
     const matrix = this.state.matrixUsing.slice(); 
-    
+    console.log(matrix);
     const state_matrix = {...this.state.matrix};//creates a copy 
     
     
@@ -180,7 +180,7 @@ class App extends Component {
             console.log(`Killing the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
             state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
             // this.setState({state_matrix});
-            this.continueWithGame();
+            // this.continueWithGame();
           }
         } else {
           if(aliveNeighbors ===3){
@@ -188,7 +188,7 @@ class App extends Component {
             console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
             state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
             // this.setState({state_matrix});
-            this.continueWithGame();
+            // this.continueWithGame();
           }
         }
         console.log(matrix[i].row);
@@ -196,7 +196,9 @@ class App extends Component {
 
     
     // this.setState({matrix : state_matrix, generation});
+    
     this.setState(prevState => ({matrix: state_matrix, generation: prevState.generation + 1}));
+    this.continueWithGame();
     
       
   };
@@ -239,7 +241,7 @@ class App extends Component {
             // this.continueWithGame();
           }
         } else {
-          if(aliveNeighbors ===3){
+          if(aliveNeighbors === 3){
             //resurrect the currently dead cell. 
             console.log(`Resurrecting the cell ${matrix[i].row}, ${matrix[i].position_in_row}`);
             state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
@@ -351,91 +353,13 @@ class App extends Component {
     if(lookDown && lookLeft){
       //down one to the left (minus one) //8
       if (this.state.matrix[position.row][position.position_in_row - 1] === 1) {
-        console.log("neighbor down left", position, position.row, position.position_in_row + 1); 
+        console.log("neighbor down left", position, position.row, position.position_in_row - 1); 
         totalAlive++;
       }
     }
 
-    //find the alive
-    // if (lookUp) {
-    //   //1
-    //   if (this.state.matrix[position.row - 1][position.position_in_row] === 1) {
-    //     totalAlive++;
-    //   }
-    //   if (lookRight) {
-        
-
-    //     //diagonal right up one to the right one
-    //     if (
-    //       //3
-    //       this.state.matrix[position.row - 1][position.position_in_row + 1] ===
-    //       1
-    //     ) {
-    //       totalAlive++;
-    //     }
-
-    //     if (lookLeft) {
-    //       //diagonal left up one minus one
-    //       if (
-    //         //5
-    //         this.state.matrix[position.row - 1][
-    //           position.position_in_row - 1
-    //         ] === 1
-    //       ) {
-    //         totalAlive++;
-    //       }
-    //     }
-    //   }
-    // } // end of the lookUP
-
-    // if (lookDown) {
-    //   //6
-    //   if (this.state.matrix[position.row + 1][position.position_in_row] === 1) {
-    //     totalAlive++;
-    //   }
-
-    //   if (lookRight) {
-    //     //down one to the right (plus one)
-    //     if (
-    //       //7
-    //       this.state.matrix[position.row + 1][position.position_in_row + 1] ===
-    //       1
-    //     ) {
-    //       totalAlive++;
-    //     }
-    //   }
-    //   if (lookLeft) {
-    //     //down one to the left (minus one)
-    //     if (
-    //       //8
-    //       this.state.matrix[position.row][position.position_in_row - 1] === 1
-    //     ) {
-    //       totalAlive++;
-    //     }
-    //   }
-
-    //   //only 8 possible ways but currently if  top is false the cells next to it won't be checked. Need to check them solo. 
-    //   if (lookRight) {
-    //     if (
-    //       //next in line plus one
-    //       //2
-    //       this.state.matrix[position.row][position.position_in_row + 1] === 1
-    //     ) {
-    //       totalAlive++;
-    //     }
-    //   }
-
-    //   if (lookLeft) {
-    //     //previous in line minus one
-    //     if (
-    //       //4
-    //       this.state.matrix[position.row][position.position_in_row - 1] === 1
-    //     ) {
-    //       totalAlive++;
-    //     }
-    //   }
-    // }
-    console.log(position, totalAlive);
+    
+    console.log("total alive: ", position, totalAlive);
     return totalAlive;
   };
 
