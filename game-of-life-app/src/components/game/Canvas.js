@@ -26,12 +26,10 @@ const ControlButton = styled.button`
   font-weight: 700;
   outline: none;
   border-radius: 4rem;
-  &:focus {
+  box-shadow: rgba(72, 76, 87, 0.1) 0px 1px 3px;
+  &:hover {
     background: #05f;
     color: white;
-    -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
   }
 `;
 
@@ -39,15 +37,16 @@ const ControlSelect = styled.select`
   background: white;
   border: 1px solid #eee;
   height: 3.8rem;
-  padding: 0 0 0 1.6rem;
+  padding: 0 1.6rem 0 1.6rem;
   font-size: 1.2rem;
   font-weight: 700;
-  width: 12rem;
+  width: 13.2rem;
   outline: none;
+  box-shadow: rgba(72, 76, 87, 0.1) 0px 1px 3px;
   margin: 1.2rem 1.6rem 0 0;
   -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 `;
 
 class Canvas extends React.Component {
@@ -147,10 +146,10 @@ class Canvas extends React.Component {
           onChange={this.handleChange}
           name="preset"
         >
-          <option value="none">Preset: None</option>
-          <option value="glider">Preset: Glider</option>
-          <option value="random">Preset: Random</option>
-          <option value="blinker">Preset: Blinker</option>
+          <option value="none">🎛 Preset: None</option>
+          <option value="glider">🎛 Preset: Glider</option>
+          <option value="random">🎛 Preset: Random</option>
+          <option value="blinker">🎛 Preset: Blinker</option>
         </ControlSelect>
       </>
     );

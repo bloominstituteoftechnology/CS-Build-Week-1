@@ -15,7 +15,7 @@ const HeaderContainer = styled.div`
   background: white;
   position: fixed;
   width: 100vw;
-  border-bottom: 1px solid #eee;
+      box-shadow: rgba(72, 76, 87, 0.1) 0px 1px 3px;
   display: grid;
   height: 6rem;
   @media (max-width: 684px) {
