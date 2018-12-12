@@ -59,7 +59,6 @@ class Game extends React.Component {
     drawBoard = () => {
         let canvas = this.refs.canvas;
         let context = canvas.getContext('2d');
-        let rect = canvas.getBoundingClientRect();
 
         for (let x = 0.5; x < this.state.numX * this.state.cellSize + 1; x += this.state.cellSize) {
             context.moveTo(x, 0);
@@ -74,32 +73,6 @@ class Game extends React.Component {
         context.strokeStyle = "#000";
         context.stroke();
 
-        // canvas.addEventListener('click', function(event) {
-        //     if (!this.state.continueAnimating) {
-        //         let xCoord = Number((Math.ceil((event.pageX - rect.left) / this.state.cellSize))) - 1;
-        //         let yCoord = Number((Math.ceil((event.pageY - rect.top) / this.state.cellSize))) - 1;
-        //         console.log("rect.left: ", rect.left);
-        //         console.log("rect.top: ", rect.top);
-        //         console.log("xCoord: ", xCoord);
-        //         console.log("pageX:", event.pageX);
-        //         console.log("yCoord: ", yCoord);
-        //         console.log("pageY:", event.pageY);
-        //         firstMatrix[yCoord][xCoord] = firstMatrix[yCoord][xCoord] === 1 ? 0 : 1;
-        //         this.setState({array1: firstMatrix});
-        //         }
-        //     }.bind(this), 1);
-
-        // for (let i = 0; i < 80; i++) {
-        //     for (let j = 0; j < 190; j++) {
-        //         if (this.state.array1[i][j]) {
-        //             context.fillStyle = "yellow";
-        //             context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, 9, 9);
-        //         } else {
-        //             context.fillStyle = "dodgerblue";
-        //             context.fillRect(j * this.state.cellSize + 1, i this.state.cellSize + 1, 9, 9);
-        //         }
-        //     }
-        // }
     }
 
     toggleSquares = () => {
@@ -363,7 +336,6 @@ class Game extends React.Component {
 
     canvasOnClick = (event) => {
         let canvas = this.refs.canvas;
-        let context = canvas.getContext('2d');
         let rect = canvas.getBoundingClientRect();
 
         if (!this.state.continueAnimating) {

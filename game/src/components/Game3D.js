@@ -14,6 +14,7 @@ import {configToad} from './configToad';
 import {configGlider} from './configGlider';
 import {configPulsar} from './configPulsar';
 import {configGggun} from './configGggun';
+import ThreeScene from './ThreeScene';
 
 
 let myReq;
@@ -42,7 +43,7 @@ class Game3D extends React.Component {
     }
 
     componentDidMount = () => {
-        this.drawBoard();
+        // this.drawBoard();
         // requestAnimationFrame((timestamp) => {this.onAnimFrame(timestamp)});
     }
 
@@ -59,7 +60,6 @@ class Game3D extends React.Component {
     drawBoard = () => {
         let canvas = this.refs.canvas;
         let context = canvas.getContext('2d');
-        let rect = canvas.getBoundingClientRect();
 
         for (let x = 0.5; x < this.state.numX * this.state.cellSize + 1; x += this.state.cellSize) {
             context.moveTo(x, 0);
@@ -363,7 +363,6 @@ class Game3D extends React.Component {
 
     canvasOnClick = (event) => {
         let canvas = this.refs.canvas;
-        let context = canvas.getContext('2d');
         let rect = canvas.getBoundingClientRect();
 
         if (!this.state.continueAnimating) {
@@ -425,9 +424,10 @@ class Game3D extends React.Component {
         return (
             <div className="gameDiv">
                 <div>
-                    <canvas ref="canvas" id="gameCanvas" width={(this.state.numX + 1) *this.state.cellSize + 1} height={this.state.numY * this.state.cellSize + 1} onClick={this.canvasOnClick} />
+                    {/* <canvas ref="canvas" id="gameCanvas" width={(this.state.numX + 1) *this.state.cellSize + 1} height={this.state.numY * this.state.cellSize + 1} onClick={this.canvasOnClick} /> */}
+                    <ThreeScene />
                 </div>
-                <div>
+                {/* <div>
                     <button onClick={this.toggleButton}>{this.state.buttonTag}</button>
                     <button onClick={this.clearGrid}>Clear</button>
                     <button onClick={() => this.changeSpeed(800)}>></button>
@@ -470,7 +470,7 @@ class Game3D extends React.Component {
                     : null}
                     <button onClick={this.generateRandom}>Random</button>
                     Generation: {generationCount}
-                </div>
+                </div> */}
             </div>
         );
     }
