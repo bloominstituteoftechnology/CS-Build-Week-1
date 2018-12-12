@@ -6,12 +6,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.intervalId = null;
+    this.bornColor = '#13f252';
+    this.liveColor = '#f4fc00';
+    this.deadColor = '#423636';
+    this.emptyColor = 'white';
+
     this.state = {
       totalCells: 400,
       grid: [],
       isClickable: true,
       currGen: 0, // current generation of cells
-      speed: 1500 // in milliseconds
+      speed: 1500, // in milliseconds
+      deadCells: 0,
+      bornCells: 0,
+      totalLiveCells: 0
     };
   }
 
@@ -33,7 +41,7 @@ class App extends Component {
 
     // push all cell objects into grid structure
     for (let i = 0; i < this.state.totalCells; i++) {
-      grid.push({ isAlive: false, neighbors: [], color: 'white' });
+      grid.push({ isAlive: false, neighbors: [], color: this.emptyColor });
     }
 
     // give each edge cell an edge property
@@ -86,6 +94,10 @@ class App extends Component {
 
   // Update the grid upon clicking a cell
   cellClickHandler = id => {
+    let bornCells = this.state.bornCells;
+    let deadCells = this.state.deadCells;
+    let totalLiveCells = this.state.totalLiveCells;
+
     if (this.state.isClickable) {
       let grid = [];
 
@@ -93,18 +105,38 @@ class App extends Component {
         grid.push({ ...cell });
       });
 
-      if (grid[id].isAlive) {
+      if (grid[id].isAlive && grid[id].color === this.bornColor) {
+        grid[id].color = this.liveColor;
+        bornCells--;
+      } else if (grid[id].isAlive && grid[id].color === this.liveColor) {
         grid[id].isAlive = !grid[id].isAlive;
-        grid[id].color = 'white';
+        grid[id].color = this.deadColor;
+        deadCells++;
+        totalLiveCells--;
+      } else if (!grid[id].isAlive && grid[id].color === this.deadColor) {
+        grid[id].color = this.emptyColor;
       } else {
         grid[id].isAlive = !grid[id].isAlive;
-        grid[id].color = '#13f252';
+        grid[id].color = this.bornColor;
+        bornCells++;
+        totalLiveCells++;
       }
 
       if (this.state.currGen === 0) {
-        this.setState({ grid: grid, currGen: 1 });
+        this.setState({
+          grid: grid,
+          currGen: 1,
+          bornCells: bornCells,
+          deadCells: deadCells,
+          totalLiveCells: totalLiveCells
+        });
       } else {
-        this.setState({ grid: grid });
+        this.setState({
+          grid: grid,
+          bornCells: bornCells,
+          deadCells: deadCells,
+          totalLiveCells: totalLiveCells
+        });
       }
     }
   };
@@ -112,6 +144,8 @@ class App extends Component {
   randomGridHandler = () => {
     let grid = [];
     let randomNum = null;
+    let bornCells = 0;
+    let totalLiveCells = 0;
 
     this.state.grid.forEach(cell => {
       grid.push({ ...cell });
@@ -121,17 +155,28 @@ class App extends Component {
       randomNum = Math.floor(Math.random() * Math.floor(5));
       grid[i].isAlive = randomNum === 0 ? true : false;
       if (grid[i].isAlive) {
-        grid[i].color = '#13f252';
+        grid[i].color = this.bornColor;
+        bornCells++;
+        totalLiveCells++;
       } else {
-        grid[i].color = 'white';
+        grid[i].color = this.emptyColor;
       }
     }
 
-    this.setState({ grid: grid, currGen: 1 });
+    this.setState({
+      grid: grid,
+      currGen: 1,
+      bornCells: bornCells,
+      totalLiveCells: totalLiveCells
+    });
   };
 
   calculateNextGen = () => {
     let grid = [];
+    let bornCells = 0;
+    let deadCells = 0;
+    let totalLiveCells = 0;
+
     this.state.grid.forEach(cell => {
       grid.push({ ...cell });
     });
@@ -146,34 +191,59 @@ class App extends Component {
         }
       }
 
+      // Kill the cell
       if (
         this.state.grid[i].isAlive &&
         (activeNeighbors !== 2 && activeNeighbors !== 3)
       ) {
         grid[i].isAlive = false;
-        grid[i].color = '#423636';
-      } else if (
+        grid[i].color = this.deadColor;
+        deadCells++;
+      }
+      // Living cell
+      else if (
         this.state.grid[i].isAlive &&
         (activeNeighbors === 2 || activeNeighbors === 3)
       ) {
-        grid[i].color = '#f4fc00';
-      } else if (!this.state.grid[i].isAlive && activeNeighbors === 3) {
+        grid[i].color = this.liveColor;
+        bornCells--;
+      }
+      // Newly born cell
+      else if (!this.state.grid[i].isAlive && activeNeighbors === 3) {
         grid[i].isAlive = true;
-        grid[i].color = '#13f252';
-      } else if (!this.state.grid[i].isAlive && activeNeighbors !== 3) {
-        grid[i].color = 'white';
+        grid[i].color = this.bornColor;
+        bornCells++;
+        totalLiveCells++;
+      }
+      // Previously dead cells become empty
+      else if (
+        !this.state.grid[i].isAlive &&
+        activeNeighbors !== 3 &&
+        this.state.grid[i].color === this.deadColor
+      ) {
+        grid[i].color = this.emptyColor;
+        deadCells--;
       }
     }
 
+    // simulation not running
     if (this.intervalId === null) {
       this.setState({
         grid: grid,
-        currGen: this.state.currGen + 1
+        currGen: this.state.currGen + 1,
+        bornCells: bornCells,
+        deadCells: deadCells,
+        totalLiveCells: totalLiveCells
       });
-    } else {
+    }
+    // simulation running
+    else {
       this.setState({
         grid: grid,
         currGen: this.state.currGen + 1,
+        bornCells: bornCells,
+        deadCells: deadCells,
+        totalLiveCells: totalLiveCells,
         isClickable: false
       });
     }
