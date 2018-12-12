@@ -46,6 +46,7 @@ body {
     .btns {
       display: flex;
       justify-content: space-between;
+      flex-flow: row wrap;
       width: 100%;
       padding: 3rem 0;
 
@@ -63,6 +64,23 @@ body {
         &:focus {
           outline: none;
           box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+        }
+      }
+
+      .speed-btns {
+        width: 100%;
+        padding: 3rem 0;
+
+        h3 {
+          display: inline-block;
+        }
+
+        button {
+          margin: 0 1.5rem;
+        }
+
+        .speed-active {
+          background-color: #8e8989;
         }
       }
     }

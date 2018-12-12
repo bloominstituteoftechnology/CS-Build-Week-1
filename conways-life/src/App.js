@@ -10,7 +10,8 @@ class App extends Component {
       totalCells: 400,
       grid: [],
       isClickable: true,
-      currGen: 0 // current generation of cells
+      currGen: 0, // current generation of cells
+      speed: 1500 // in milliseconds
     };
   }
 
@@ -180,7 +181,7 @@ class App extends Component {
 
   playSimulation = event => {
     event.preventDefault();
-    this.intervalId = setInterval(this.calculateNextGen, 1500);
+    this.intervalId = setInterval(this.calculateNextGen, this.state.speed);
   };
 
   pauseSimulation = event => {
@@ -211,6 +212,20 @@ class App extends Component {
       isClickable: true
     });
   };
+
+  speedToggleHandler = event => {
+    if (this.intervalId != null) {
+      clearInterval(this.intervalId);
+      this.intervalId = setInterval(this.calculateNextGen, event.target.value);
+      this.setState({ speed: event.target.value });
+    } else {
+      this.setState({ speed: event.target.value });
+    }
+  };
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
+  }
 
   render() {
     return (
@@ -259,6 +274,33 @@ class App extends Component {
               >
                 Next Generation
               </button>
+              <div className="speed-btns">
+                <h3>SPEED: </h3>
+                <button
+                  type="button"
+                  value={2250}
+                  className={this.state.speed === 2250 ? 'speed-active' : ''}
+                  onClick={this.speedToggleHandler}
+                >
+                  0.5x
+                </button>
+                <button
+                  type="button"
+                  value={1500}
+                  className={this.state.speed === 1500 ? 'speed-active' : ''}
+                  onClick={this.speedToggleHandler}
+                >
+                  1x
+                </button>
+                <button
+                  type="button"
+                  value={750}
+                  className={this.state.speed === 750 ? 'speed-active' : ''}
+                  onClick={this.speedToggleHandler}
+                >
+                  1.5x
+                </button>
+              </div>
             </div>
           </div>
           <div className="info-view">
