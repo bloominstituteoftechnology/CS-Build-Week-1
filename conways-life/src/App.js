@@ -32,7 +32,7 @@ class App extends Component {
 
     // push all cell objects into grid structure
     for (let i = 0; i < this.state.totalCells; i++) {
-      grid.push({ isAlive: false, neighbors: [] });
+      grid.push({ isAlive: false, neighbors: [], color: 'white' });
     }
 
     // give each edge cell an edge property
@@ -87,10 +87,18 @@ class App extends Component {
   cellClickHandler = id => {
     if (this.state.isClickable) {
       let grid = [];
+
       this.state.grid.forEach(cell => {
         grid.push({ ...cell });
       });
-      grid[id].isAlive = !grid[id].isAlive;
+
+      if (grid[id].isAlive) {
+        grid[id].isAlive = !grid[id].isAlive;
+        grid[id].color = 'white';
+      } else {
+        grid[id].isAlive = !grid[id].isAlive;
+        grid[id].color = 'green';
+      }
 
       if (this.state.currGen === 0) {
         this.setState({ grid: grid, currGen: 1 });
@@ -111,6 +119,11 @@ class App extends Component {
     for (let i = 0; i < this.state.totalCells; i++) {
       randomNum = Math.floor(Math.random() * Math.floor(3));
       grid[i].isAlive = randomNum === 0 ? true : false;
+      if (grid[i].isAlive) {
+        grid[i].color = 'green';
+      } else {
+        grid[i].color = 'white';
+      }
     }
 
     this.setState({ grid: grid, currGen: 1 });
@@ -137,8 +150,17 @@ class App extends Component {
         (activeNeighbors !== 2 && activeNeighbors !== 3)
       ) {
         grid[i].isAlive = false;
+        grid[i].color = 'black';
+      } else if (
+        this.state.grid[i].isAlive &&
+        (activeNeighbors === 2 || activeNeighbors === 3)
+      ) {
+        grid[i].color = 'yellow';
       } else if (!this.state.grid[i].isAlive && activeNeighbors === 3) {
         grid[i].isAlive = true;
+        grid[i].color = 'green';
+      } else if (!this.state.grid[i].isAlive && activeNeighbors !== 3) {
+        grid[i].color = 'white';
       }
     }
 
@@ -180,6 +202,7 @@ class App extends Component {
 
     for (let i = 0; i < this.state.totalCells; i++) {
       grid[i].isAlive = false;
+      grid[i].color = 'white';
     }
 
     this.setState({
@@ -200,7 +223,7 @@ class App extends Component {
               <Cell
                 key={value}
                 id={value}
-                isAlive={cell.isAlive}
+                color={cell.color}
                 isClickable={this.state.isClickable}
                 cellClickHandler={this.cellClickHandler}
               />

@@ -5,7 +5,7 @@ const Cell = props => {
   return (
     <div
       style={{
-        backgroundColor: props.isAlive ? 'yellow' : 'white',
+        backgroundColor: props.color,
         cursor: props.isClickable ? 'pointer' : 'not-allowed'
       }}
       className="cell"
