@@ -52,7 +52,7 @@ const ControlSelect = styled.select`
 class Canvas extends React.Component {
   state = {
     cells: 400,
-    currentNode: [],
+    currentNodes: [],
     isClickable: true,
     isPlaying: false,
     generation: 0,
@@ -64,18 +64,18 @@ class Canvas extends React.Component {
     this.setState({ viewportWidth: window.innerWidth });
   }
   componentDidMount() {
-    let currentNode = [];
+    let currentNodes = [];
     for (let i = 0; i < this.state.cells; i++) {
-      currentNode.push({ id: i, isLiving: false });
+      currentNodes.push({ id: i, isLiving: false });
     }
-    this.setState({ currentNode });
+    this.setState({ currentNodes });
   }
 
   toggleCellLife = id => {
     if (this.state.isClickable) {
       this.setState(prevState => {
         return {
-          currentNode: prevState.currentNode.map(cell => {
+          currentNodes: prevState.currentNodes.map(cell => {
             if (cell.id === id) {
               cell.isLiving = !cell.isLiving;
               return cell;
@@ -90,11 +90,11 @@ class Canvas extends React.Component {
 
   killCell = () => {
     this.isLiving = false;
-  }
+  };
 
   giveLife = () => {
     this.isLiving = true;
-  }
+  };
 
   handleChange = event => {
     const { name, value, type, checked } = event.target;
@@ -120,7 +120,7 @@ class Canvas extends React.Component {
     );
     this.playGame();
   };
-  
+
   /* 
   EDGE CASES:
   
@@ -136,38 +136,96 @@ class Canvas extends React.Component {
   -----------------------------------------------
   [i + 19]       |      [i + 20]  |   [i + 21]
   */
-  // PLAY GAME 
+  // PLAY GAME
   playGame = () => {
-    console.log('test')
-    let nextNode = this.state.currentNode.slice();
-    let length = nextNode.length;
-    console.log(length);
-    
+    console.log("test");
+    let currentNodes = this.state.currentNodes.slice();
+    let length = currentNodes.length;
+    let endOfArray = currentNodes.length - 1;
+    let nextNodes = [];
+
     for (let i = 0; i < length; i++) {
-      // IF NOT LIVING AKA DEAD
-      if (!nextNode[i].isLiving) {
+      nextNodes.push([]);
+    }
+
+    for (let i = 0; i < length; i++) {
+      nextNodes[i] = Object.assign({}, currentNodes[i]);
+    }
+    // start of matrix logic
+    for (let i = 0; i < length; i++) {
+      // Check the alive nodes/cells
+      if (currentNodes[i].isLiving) {
+        // set check
         let check = 0;
-        if (i >= 0 && i < 20 && nextNode[i - 1].isLiving) {
-          check++
+        // check corner edge cases
+        if (i === 0) {
+          if (currentNodes[i + 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 21].isLiving) {
+            check++;
+          }
         }
-        if (i < 399 && nextNode[i + 1].isLiving) {
-          check++
+        // edge case
+        if (i === 19) {
+          if (currentNodes[i - 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 19].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 20].isLiving) {
+            check++;
+            console.log(check);
+          }
         }
-        if (check === 3) {
-          nextNode[i].isLiving = true;
-          console.log(check)
+        // edge case
+        if (i === 380) {
+          if (currentNodes[i + 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 21].isLiving) {
+            check++;
+          }
         }
-      } // end dead if checks 
+        // edge case
+        if (i === 399) {
+          if (currentNodes[i - 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 21].isLiving) {
+            check++;
+          }
+        }
+        if (check === 2 || check === 3) {
+          console.log("Alive")
+        } else {
+          nextNodes[i].isLiving = false;
+          console.log("Dead")
+        }
+      } // end Living node check
+      // {} uncomment and start
     } // end massive for loop
-  }
-  
+
+    console.log("nextNodes", nextNodes);
+  };
+
   // Todo
   handlePauseGame = () => {};
 
   // generationCounter method is set within handleStartGame
   handleResetGame = () => {
     this.setState({
-      currentNode: this.state.currentNode.map(cell =>
+      currentNodes: this.state.currentNodes.map(cell =>
         cell.isLiving ? !cell.isLiving : cell
       ),
       isClickable: true,
@@ -181,9 +239,14 @@ class Canvas extends React.Component {
     console.log(this.state);
     return (
       <>
-        <GenerationText><span role="img" aria-label="spiral">🌀</span> Generation: {this.state.generation}</GenerationText>
+        <GenerationText>
+          <span role="img" aria-label="spiral">
+            🌀
+          </span>{" "}
+          Generation: {this.state.generation}
+        </GenerationText>
         <CellGrid>
-          {this.state.currentNode.map((cell, index) => (
+          {this.state.currentNodes.map((cell, index) => (
             <Cell
               key={index}
               id={cell.id}
@@ -193,9 +256,24 @@ class Canvas extends React.Component {
             />
           ))}
         </CellGrid>
-        <ControlButton onClick={this.handleStartGame}><span role="img" aria-label="play">▶️</span> Play</ControlButton>
-        <ControlButton onClick={this.handlePauseGame}><span role="img" aria-label="pause">⏸</span> Pause</ControlButton>
-        <ControlButton onClick={this.handleResetGame}><span role="img" aria-label="reset">🔄</span> Reset</ControlButton>
+        <ControlButton onClick={this.handleStartGame}>
+          <span role="img" aria-label="play">
+            ▶️
+          </span>{" "}
+          Play
+        </ControlButton>
+        <ControlButton onClick={this.handlePauseGame}>
+          <span role="img" aria-label="pause">
+            ⏸
+          </span>{" "}
+          Pause
+        </ControlButton>
+        <ControlButton onClick={this.handleResetGame}>
+          <span role="img" aria-label="reset">
+            🔄
+          </span>{" "}
+          Reset
+        </ControlButton>
         <ControlSelect
           value={this.state.preset}
           onChange={this.handleChange}
