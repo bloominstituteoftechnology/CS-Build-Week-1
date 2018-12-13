@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
 
-
-
 export const Controls = styled.main`
   margin-top: 30px;
 `;
 
+
+export const OptionsSection = styled.main`
+  display: flex;
+  justify-content: space-between;
+`;
 
 
 export const RangeSlider = styled.section`
@@ -99,7 +102,6 @@ export const RangeSlider = styled.section`
   }
 }
 
-
 /*modzilla overrides*/
 ::-moz-range-track {
     background: #d7dcdf;
@@ -113,3 +115,8 @@ input::-moz-focus-outer {
 `;
 
 
+export const GenerationSection = styled.main`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`;
