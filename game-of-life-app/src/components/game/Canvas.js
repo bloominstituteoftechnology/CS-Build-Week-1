@@ -90,13 +90,13 @@ class Canvas extends React.Component {
     }
   };
 
-  killCell = () => {
-    this.isLiving = false;
-  };
+  // killCell = () => {
+  //   this.isLiving = false;
+  // };
 
-  giveLife = () => {
-    this.isLiving = true;
-  };
+  // giveLife = () => {
+  //   this.isLiving = true;
+  // };
 
   handleChange = event => {
     const { name, value, type, checked } = event.target;
