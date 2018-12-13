@@ -44,9 +44,12 @@ class Game extends Component {
   clearGrid = () => {
     const c = this.refs.grid
     const ctx = c.getContext("2d");
-    ctx.clearRect(0,0,c.width,c.height) //this clears the entire canvas
-    this.drawGrid() // so i redraw it here
-    this.gridStateInit() //reset state with all dead cells
+    for (let i=0; i<400; i+=10){
+      for (let j=0; j<400; j+=10){
+        ctx.clearRect(i+1,j+1,9,9)
+      }
+    }
+    this.gridStateInit()
   }
   nextBoard = () => {
     let stateBuffer = {...this.state};
@@ -114,9 +117,7 @@ class Game extends Component {
     }, 100)} else if (step === "step") {
       let stateBuffer = this.nextBoard();
       this.setState({...stateBuffer, cycles: cyclesCopy })
-    } else if (this.state.clear){
-      this.setState({cycles: 0}, () => this.clearGrid())
-    }
+    } 
   }
   updateCellColor = () => {
     const c = this.refs.grid
@@ -158,7 +159,7 @@ class Game extends Component {
         this.setState({running: false, rainbowMode: false})
         break;
       case "clear":
-        this.setState({running: false, clear: true, rainbowMode: false}, () => this.updateCells())
+        this.setState({running: false, rainbowMode: false, cycles: 0}, () => this.clearGrid())
         break;
       case "glider":
         this.setState({
@@ -207,6 +208,106 @@ class Game extends Component {
         ctx.fillRect(131, 151, 9, 9);
         ctx.fillRect(121, 161, 9, 9);
         break;
+      case "pulsar":
+        this.setState({
+          "210_180": "alive", 
+          "220_180": "alive", 
+          "230_180": "alive",
+          "270_180": "alive",
+          "280_180": "alive",
+          "290_180": "alive", 
+          "240_200": "alive", 
+          "240_210": "alive",
+          "240_220": "alive",
+          "260_200": "alive",
+          "260_210": "alive",
+          "260_220": "alive",
+          "270_230": "alive",
+          "280_230": "alive",
+          "290_230": "alive",
+          "210_230": "alive",
+          "220_230": "alive",
+          "230_230": "alive",
+          "310_220": "alive",
+          "310_210": "alive",
+          "310_200": "alive",
+          "190_220": "alive",
+          "190_210": "alive",
+          "190_200": "alive",
+          "240_260": "alive",
+          "230_250": "alive",
+          "260_260": "alive",
+          "270_250": "alive",
+          "280_250": "alive",
+          "290_250": "alive",
+          "260_270": "alive",
+          "260_280": "alive",
+          "240_270": "alive",
+          "240_280": "alive",
+          "220_250": "alive",
+          "210_250": "alive",
+          "310_260": "alive",
+          "310_270": "alive",
+          "310_280": "alive",
+          "190_260": "alive",
+          "190_280": "alive",      
+          "190_270": "alive",
+          "270_300": "alive",
+          "280_300": "alive",
+          "290_300": "alive",
+          "210_300": "alive",
+          "220_300": "alive",
+          "230_300": "alive",
+        });
+        ctx.fillStyle = this.state.color
+        ctx.fillRect(211, 181, 9, 9);
+        ctx.fillRect(221, 181, 9, 9);
+        ctx.fillRect(231, 181, 9, 9);
+        ctx.fillRect(271, 181, 9, 9);
+        ctx.fillRect(281, 181, 9, 9);
+        ctx.fillRect(291, 181, 9, 9);
+        ctx.fillRect(241, 201, 9, 9);
+        ctx.fillRect(241, 211, 9, 9);
+        ctx.fillRect(241, 221, 9, 9);
+        ctx.fillRect(261, 201, 9, 9);
+        ctx.fillRect(261, 211, 9, 9);
+        ctx.fillRect(261, 221, 9, 9);
+        ctx.fillRect(271, 231, 9, 9);
+        ctx.fillRect(281, 231, 9, 9);
+        ctx.fillRect(291, 231, 9, 9);
+        ctx.fillRect(211, 231, 9, 9);
+        ctx.fillRect(221, 231, 9, 9);
+        ctx.fillRect(231, 231, 9, 9);
+        ctx.fillRect(311, 201, 9, 9);
+        ctx.fillRect(311, 211, 9, 9);
+        ctx.fillRect(311, 221, 9, 9);
+        ctx.fillRect(191, 201, 9, 9);
+        ctx.fillRect(191, 211, 9, 9);
+        ctx.fillRect(191, 221, 9, 9);
+        ctx.fillRect(241, 261, 9, 9);
+        ctx.fillRect(231, 251, 9, 9);
+        ctx.fillRect(261, 261, 9, 9);
+        ctx.fillRect(271, 251, 9, 9);
+        ctx.fillRect(281, 251, 9, 9);
+        ctx.fillRect(291, 251, 9, 9);
+        ctx.fillRect(261, 271, 9, 9);
+        ctx.fillRect(261, 281, 9, 9);
+        ctx.fillRect(241, 271, 9, 9);
+        ctx.fillRect(241, 281, 9, 9);
+        ctx.fillRect(221, 251, 9, 9);
+        ctx.fillRect(211, 251, 9, 9);
+        ctx.fillRect(311, 261, 9, 9);
+        ctx.fillRect(311, 271, 9, 9);
+        ctx.fillRect(311, 281, 9, 9);
+        ctx.fillRect(191, 261, 9, 9);
+        ctx.fillRect(191, 271, 9, 9);
+        ctx.fillRect(191, 281, 9, 9);
+        ctx.fillRect(271, 301, 9, 9);
+        ctx.fillRect(281, 301, 9, 9);
+        ctx.fillRect(291, 301, 9, 9);
+        ctx.fillRect(211, 301, 9, 9);
+        ctx.fillRect(221, 301, 9, 9);
+        ctx.fillRect(231, 301, 9, 9);
     }
   }
   cellClick = (e) => {
@@ -249,6 +350,7 @@ class Game extends Component {
         break;
       case "pi":
         this.setState({color: "#DB7093", rainbowMode: false}, () => this.updateCellColor())
+        break;
       case "ra":
         this.setState({rainbowMode: true}, this.rainbowMode);
     }
@@ -266,6 +368,7 @@ class Game extends Component {
                 <button onClick={()=>this.buttonClick("glider")}>Glider</button>
                 <button onClick={()=>this.buttonClick("t")}>T</button>
                 <button onClick={()=>this.buttonClick("arrow")}>Arrow</button>
+                <button onClick={()=>this.buttonClick("pulsar")}>Pulsar</button>
               </div>
             </div>
             <div className="colorContainer">
