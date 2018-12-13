@@ -153,7 +153,17 @@ class GridContainer extends Component {
 
 
   // Run function
+  runGame = (event) => {
+    // checkingNeighbors(this.state.grid, );
+    this.setState({ grid: fourRules(this.state.grid)});
+    this.aliveCheck();
 
+  };
+
+  stopGame = (event) => {
+    return;
+  }
+  
   // stop function
 
   render() {
@@ -167,8 +177,8 @@ class GridContainer extends Component {
           />
         </div>
         <div className="buttons-container">
-          <div className="button">RUN</div>
-          <div className="button">STOP</div>
+          <div className="button" onClick={this.runGame}>RUN</div>
+          <div className="button" onClick={this.stopGame}>STOP</div>
           <div className="button" onClick={this.handleClear}>
             CLEAR
           </div>
