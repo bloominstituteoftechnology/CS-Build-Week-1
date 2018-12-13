@@ -27,15 +27,15 @@ export default class Canvas extends Component {
     const ctx = canvas.getContext("2d");
     ctx.lineWidth = 1;
     ctx.beginPath();
-    for (let x = 0; x < 500; x += 10) {
+    for (let x = 0; x < 510; x += 10) {
       ctx.moveTo(x, 0);
-      ctx.lineTo(x, 500);
+      ctx.lineTo(x, 510);
       ctx.stroke();
     }
 
-    for (let y = 0; y < 500; y += 10) {
+    for (let y = 0; y < 510; y += 10) {
       ctx.moveTo(0, y);
-      ctx.lineTo(500, y);
+      ctx.lineTo(510, y);
       ctx.stroke();
     }
     ctx.closePath();
@@ -72,8 +72,8 @@ export default class Canvas extends Component {
     function getSquare(canvas, x, y) {
       var rect = canvas.getBoundingClientRect();
       return {
-        x: 1 + (x - rect.left) - ((x - rect.left) % 10),
-        y: 1 + (y - rect.top) - ((y - rect.top) % 10)
+        x: 1 + (x - rect.left) - ((x - rect.left)),
+        y: 1 + (y - rect.top) - ((y - rect.top))
       };
     }
 
@@ -257,6 +257,8 @@ export default class Canvas extends Component {
     setTimeout(() => {
       this.onClickStop();
       this.onClickClear();
+
+      this.setState({speed: 1000});
 
       const canvas = this.refs.canvas;
       const ctx = canvas.getContext("2d");
@@ -466,7 +468,7 @@ export default class Canvas extends Component {
                   Generation: {this.state.generationNumber}
               </div>
               <div className="speedtext-body">
-                  Speed(ms): {this.state.speed}
+                  Speed (ms): {this.state.speed}
               </div>
 
           </div>
