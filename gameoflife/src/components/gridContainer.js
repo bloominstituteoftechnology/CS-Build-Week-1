@@ -8,7 +8,9 @@ class GridContainer extends Component {
       width: 15,
       height: 15,
       grid: [...Array(15)].map(rows => Array(15).fill(0)),
-      running: false
+      running: false,
+      fillColor:"#000",
+      gameTiming: 300,
     };
   }
   // This is a visual of the data structure above
@@ -46,8 +48,17 @@ class GridContainer extends Component {
     // const h = this.state.width * this.state.height;
     // ctx.canvas.width = w;
     // ctx.canvas.height = h;
-    
-    this.drawingGrid();
+    // this.setState({ grid: newGrid }, () => {
+    //   this.drawingGrid();
+    //   // console.log("newGrid", this.state.grid);
+    // });
+
+    let startingGrid = [...Array(this.state.height)].map(rows =>
+      Array(this.state.height).fill(0)
+    );
+    this.setState({ grid: startingGrid }, () => {
+      this.drawingGrid();
+    });
     // alivecheck
   }
 
@@ -100,7 +111,7 @@ class GridContainer extends Component {
         // console.log(j,k);
         if (this.state.grid[j / h][k / w]) {
           // this.getMousePos()
-          console.log("fire", k, j * h);
+          // console.log("fire", k, j * h);
           // ctx.fillStyle = "#000";
           ctx.fillRect(k, j, w, h);
         }
@@ -117,7 +128,7 @@ class GridContainer extends Component {
     // event.preventDefault();
     // console.log(event);
     const w = this.state.width;
-    const h = 15;
+    const h = this.state.height;
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     let pos = this.getMousePos(canvas, event),
@@ -125,7 +136,7 @@ class GridContainer extends Component {
       y = Math.floor(pos.y / h);
     // console.log(`pos.x:${pos.x} x:${x} || pos.y:${pos.y} y:${y}`);
     if (this.state.grid[y][x] === 0) {
-      ctx.fillStyle = "black";
+      ctx.fillStyle = this.state.fillColor;
       // console.log("painting black");
       ctx.fillRect(x * w, y * h, w, h);
       this.state.grid[y][x] = 1;
@@ -153,8 +164,8 @@ class GridContainer extends Component {
 
   handleClear = event => {
     event.preventDefault();
-    const w = 15;
-    const h = 15;
+    const w = this.state.width;
+    const h = this.state.height;
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
 
@@ -191,7 +202,7 @@ class GridContainer extends Component {
       console.log("we are playing");
       setTimeout(() => {
         this.runGame();
-      }, 300);
+      }, this.state.gameTiming);
     }
   };
 
@@ -204,14 +215,47 @@ class GridContainer extends Component {
     this.setState({ running: false });
   };
 
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
-  customizeGrid = () => {
 
+  // putting this function on hold
+  customizeGrid = (event) => {
+    event.preventDefault();
+    // change width and height state to input values
+    console.log(`w: ${this.state.width}, h: ${this.state.height}`) //width and height are set
+    console.log("customGrid",this.state.grid)
+    let customGrid = [...Array(this.state.height)].map(rows =>
+      Array(this.state.width).fill(0)
+    );
+    this.setState({ grid: customGrid });
+    this.drawingGrid();
+    
+    // call the draw function to rerender the grid (last step)
+    // this.drawingGrid();
+  };
+    
+
+// Change fill color functions
+  yellowFill = (event) => {
+    event.preventDefault();
+    this.setState({fillColor: "#E0F708"});
+  }
+  blueFill = (event) => {
+    event.preventDefault();
+    this.setState({fillColor: "#0838F7"});
+  }
+  redFill = (event) => {
+    event.preventDefault();
+    this.setState({fillColor: "#F70808"});
   }
 
 
-
-  // stop function
+// change timing function
+  changeGameTiming = (event) => {
+    event.preventDefault();
+  }
 
   render() {
     return (
@@ -239,13 +283,39 @@ class GridContainer extends Component {
             NEXT
           </div>
         </div>
-          <form className="customize-grid">
-            <input type="text" placeholder="width" />
-            <input type="text" placeholder="height" />
-            <div className="button" onClick={this.customizeGrid}>
-              CUSTOMIZE
-            </div>
-          </form>
+        <div className="color-change">
+          <h2>Change the Color here</h2>
+          <div className="button" onClick={this.blueFill}>
+            BLUE
+          </div>
+          <div className="button" onClick={this.redFill}>
+            RED
+          </div>
+          <div className="button" onClick={this.yellowFill}>
+            YELLOW
+          </div>
+        </div>
+        {/* <form className="customize-grid">
+          <input
+            className="input-custom"
+            type="text"
+            placeholder="width"
+            name="width"
+            value={this.state.width}
+            onChange={this.onChange}
+          />
+          <input
+            className="input-custom"
+            type="text"
+            placeholder="height"
+            name="height"
+            value={this.state.height}
+            onChange={this.onChange}
+          />
+          <div className="button" onClick={this.customizeGrid}>
+            CUSTOMIZE
+          </div>
+        </form> */}
       </div>
     );
   }
