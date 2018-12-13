@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-       <h1>Conway's Game of Life</h1>
+      <h1>Conway's Game of Life</h1>
         <Route exact path='/' component={Home} />
         <Route path='/Game' component={Game} />
       </div>

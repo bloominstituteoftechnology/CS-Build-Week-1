@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 
 
 const game_cell = 20;
-const game_width = 620;
+const game_width = 640;
 const game_height = 440;
 
 
@@ -170,11 +170,8 @@ class Game extends React.Component {
     const { gamecells } = this.state;
     return (
       <div>
-        <div>
-        <div> <Link to='/' className="home-link"><button className="home-button button">Go Home!</button></Link></div>
-        </div>
         <div><h3>Generation: {this.state.generationNum}</h3>
-        <div class="speed">
+        <div className="speed">
           Update Every{" "}
           <input
             value={this.state.interval}
@@ -183,7 +180,7 @@ class Game extends React.Component {
           milliseconds
           </div>
         </div>
-        <div class="container">
+        <div className="container">
         <div
           className="gameBoard"
           style={{
@@ -213,12 +210,16 @@ class Game extends React.Component {
           <button className="button" onClick={this.handleRandom}>
             Random
           </button>
+          <button className="button" onClick={this.iterationMethod}>
+            One Step
+          </button>
           <button className="button" onClick={this.handleClear}>
             Clear
           </button>
-          <button className="button" onClick={this.iterationMethod}>
-            Next
-          </button>
+        
+          <div>
+        <div> <Link to='/' className="home-link"><button className="home-button button">Go Home!</button></Link></div>
+        </div>
           
           </div>
           
