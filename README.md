@@ -1,5 +1,7 @@
 # Cellular Automata and Conway's "Game of Life"
 
+Trello: https://trello.com/b/suyue8kj/game-of-life-das-g-ma
+
 Over the course of this week, students will work on creating their own application in which users will be able to run different "Game of Life" scenarios. This module leads the reader through the fundamentals of Conways's "Game of Life" and will guide them through the process of creating an app utilizing tools and frameworks that have been taught over the course of their specific track.
 
 ![example-patterns](https://media.giphy.com/media/4VVZTvTqzRR0BUwNIH/giphy.gif)
@@ -90,7 +92,7 @@ Implment at least 3 of the following features:
 - [ ] Deploy your app using a tool like [GitHub Pages or Heroku](resources/deployment)
 
 
-## Stretch Goals
+## Stretch Goals 
 - [ ] Write a how-to guide or blog post that walks readers through the work you did to implement your project
 - [ ] Expand your simulation into the third dimension - [check out 3D-ThreeJS](https://github.com/LambdaSchool/3D-ThreeJS)
 - [ ] Explore alternate algorithms for finding the nth generation, such as [Hashlife](https://en.wikipedia.org/wiki/Hashlife)
