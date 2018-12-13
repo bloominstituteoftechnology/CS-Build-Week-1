@@ -2,14 +2,15 @@
   text-align: center;
 }
 
-h1, h2 {
+h1,
+h2 {
   margin: 20px 0;
 }
-.innerbox
-{
-   width:50px; 
-   max-width:50px; 
-   display: inline-block;
+.innerbox {
+  width: 50px;
+  max-width: 50px;
+  display: inline-block;
 }
-
-
+.buttons {
+  margin-bottom: 20px;
+}

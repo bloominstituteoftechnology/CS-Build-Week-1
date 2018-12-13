@@ -135,12 +135,12 @@ class App extends Component {
   };
 
   slowButton = () => {
-    this.speed = 1000;
+    this.speed = 800;
     this.playButton();
   };
 
   fastButton = () => {
-    this.speed = 200;
+    this.speed = 1;
     this.playButton();
   };
 
@@ -205,7 +205,7 @@ class App extends Component {
         <h2>
           Generations:<div className="innerbox">{this.state.generation}</div>
         </h2>
-        <ButtonGroup>
+        <ButtonGroup className="buttons">
           <Button onClick={this.playButton}>Play</Button>
           <Button onClick={this.pauseButton}>Pause</Button>
           <Button onClick={this.clearButton}>Clear</Button>
