@@ -1,27 +1,17 @@
 import React from "react";
+import {connect} from 'react-redux'; 
 
 class Box extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: false, 
-      running: this.props.runningGame, 
-      coordinates: this.props.coordinates
+      active: false,
     };
 }
 
- componentDidMount(){
-     this.setState({
-         running: this.props.runningGame
-     })
- }
 
- componentWillReceiveProps(newProps){
-    this.setState({running: newProps.runningGame})
- }
-
-  onClickHandler = event => {
-      if(!this.state.running){
+onClickHandler = event => {
+      if(!this.props.isRunning){
         this.setState({
             active: !this.state.active
           });
@@ -32,11 +22,16 @@ class Box extends React.Component {
     return (
       <div
         onClick={this.onClickHandler}
-        active = {this.state.active}
         className={`box ${this.state.active ? "on" : "off"}`}
       ></div>
     );
   }
 }
 
-export default Box;
+const mapStateToProps = (state) => {
+    return {
+        isRunning: state.isRunning
+    }
+}
+
+export default connect(mapStateToProps, {})(Box);
