@@ -74,7 +74,7 @@ class Game extends React.Component {
   }
 
   handleClick = (event) => {
-    if(this.state.isRunning == false){
+    if(this.state.isRunning === false){
       const elemOffset = this.getElementOffset();
       const offsetX = event.clientX - elemOffset.x;
       const offsetY = event.clientY - elemOffset.y;
@@ -259,6 +259,23 @@ class Game extends React.Component {
             <button className="button" onClick={this.handleBlinker}>Blinker</button>
             <button className="button" onClick={this.handleEater}>Eater</button>
             <button className="button" onClick={this.handleClear}>Clear</button>
+          </div>
+          <div>
+            <h1>Rules:</h1>
+            <p>
+              Births: Each dead cell adjacent to exactly three live neighbors will become live in the next generation.
+            </p>
+            <p>Death by isolation: Each live cell with one or fewer live neighbors will die in the next generation.
+            </p>
+            <p>Death by overcrowding: Each live cell with four or more live neighbors will die in the next generation.
+            </p>
+            <p>Survival: Each live cell with either two or three live neighbors will remain alive for the next generation.
+            </p>
+          </div>
+          <div>
+            <h2>About the algorithm</h2>
+            <p>This implementation uses a double buffering technique with a 2d array. Cells are loaded onto a secondary matrix and states of life and death are kept track on the old matrix. Neighbors are caclulated by using a directional array to check the rectangle around squares. Then for each iteration the algorithim checks to see the number of live neighbors and implements the rules accordingly. </p>
+            <p>Conways Game of life was written in the 70s as a solution to John VonNoumen's</p>
           </div>
         </div>
       </div>
