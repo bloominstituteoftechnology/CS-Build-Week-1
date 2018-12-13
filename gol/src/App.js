@@ -5,7 +5,7 @@ import Rules from './Rules/Rules';
 import Controls from './Controls/Controls';
 import GridSketch from './GOL/GridComponent';
 import sketch from './GOL/GridSketch';
-
+import Instructions from './Instructions/Instructions';
 let isClear = false;
 
 class App extends Component {
@@ -39,6 +39,7 @@ class App extends Component {
         <header className="App-header">
           <Header></Header>
           <Rules></Rules>
+          <Instructions></Instructions>
           <Controls data={this.state} goBlast={this.goBlastEm} stop={this.pleaseDontHurtEm}></Controls>
           <GridSketch className="grid-sketch" data={this.state}></GridSketch>
         </header>

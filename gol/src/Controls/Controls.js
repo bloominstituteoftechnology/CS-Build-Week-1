@@ -13,14 +13,11 @@ class Controls extends Component {
     this.state = {
       isGoing: this.props.data.isRollin,
     }
-    console.log(this.props);
   }
 
   componentDidMount(){
     window.setTimeout(()=>{
       let ctrl = document.querySelector('.controls-container');
-      console.log(ctrl);
-      
       ctrl.classList.add('show-container');
     }, 100);
   }

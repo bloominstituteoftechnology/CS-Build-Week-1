@@ -12,7 +12,7 @@ const Rules = (props) => {
 
   return (
     <div className="rules-container" onClick={()=>{}}>
-      <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank" title="Learn more on mathetmatician John Conway's 'Game of Life'">
+      <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank" title="Learn more about mathetmatician John Conway's 'Game of Life'">
         <FontAwesomeIcon icon={faInfo} />
       </a>
     </div>
