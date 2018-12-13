@@ -580,7 +580,11 @@ class App extends Component {
     });
   };
   setGirdSize = e => {
-    if (isNaN(parseInt(e.target.value)) || parseInt(e.target.value) < 10|| parseInt(e.target.value) > 300) {
+    if (
+      isNaN(parseInt(e.target.value)) ||
+      parseInt(e.target.value) < 10 ||
+      parseInt(e.target.value) > 300
+    ) {
       return;
     }
     this.setState(
@@ -608,10 +612,10 @@ class App extends Component {
     return (
       <div className="App">
         <div className="game">
-        <Title/>
+          <Title />
           <div className="gen">
             Current Gen is:
-           <b> {this.state.gen}</b> 
+            <b> {this.state.gen}</b>
           </div>
           <Grid
             pixels={this.state.curGrid}
@@ -643,26 +647,29 @@ class App extends Component {
               <option value="acorn">Acorn</option>
             </select>
           </div>
-          <div className="dimension">
-            Change grid size:
-            <input
-              onChange={this.setGirdSize}
-              type="number"
-              value={this.state.x}
-            />
-          </div>
-          <div className="speed">
-            Change grid speed:
-            <input
-              onChange={this.setGridSpeed}
-              type="number"
-              value={this.state.speed}
-            />
+          <div className="gridSettings">
+            <div className="dimension">
+              Change grid size:
+              <br />
+              <input
+                onChange={this.setGirdSize}
+                type="number"
+                value={this.state.x}
+              />
+            </div>
+            <div className="speed">
+              Change grid speed:
+              <br />
+              <input
+                onChange={this.setGridSpeed}
+                type="number"
+                value={this.state.speed}
+              />
+            </div>
           </div>
         </div>
 
-         
-          <Infobox />
+        <Infobox />
       </div>
     );
   }
