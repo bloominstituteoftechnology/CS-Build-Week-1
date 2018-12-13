@@ -105,6 +105,7 @@ export default class Canvas extends Component {
 
   onClickStart = () => {
     this.setState({ start: 1 });
+<<<<<<< HEAD
     this.timer();
   }
 
@@ -118,6 +119,14 @@ export default class Canvas extends Component {
       }, this.state.speed);
   }
   
+=======
+    let speed = this.state.speed;
+
+    setInterval(() => {
+      this.startFunction();
+    }, speed);
+  };
+>>>>>>> 05c3d4c... fixed speed
 
   onClickStop = () => {
     this.setState({ start: 0 });
