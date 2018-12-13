@@ -3,6 +3,7 @@ import React from 'react';
 const Rules = () => {
     return(
         <div>
+            <h1>Rules:</h1>
             <h2>Survival:</h2>
             <p>If a cell is alive and has 2 or 3 living neighors, it survives and moves on to the next generation.</p>
             <h2>Birth:</h2>
