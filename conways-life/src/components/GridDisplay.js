@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Cell from "./Cell";
 import Buttons from "./ControlButtons";
 import Options from "./GridOptions";
+
  class GridDisplay extends Component {
     constructor(props) {
         super(props);
@@ -38,8 +39,8 @@ import Options from "./GridOptions";
         let arr = this.state.grid.slice();
          for (let i = 0; i < this.state.cols; i++) {
             for (let j = 0; j < this.state.rows; j++) {
-                arr[i][j].value = Math.round(Math.random()); //random 0 or 1
-            }
+                arr[i][j].value = Math.round(Math.random());
+            }                     // random 0 or 1
         } 
          this.setState({ grid: arr, iterations: 0 });
     }
@@ -92,6 +93,7 @@ import Options from "./GridOptions";
             sum += grid[col][row].value;
             }
         }
+        // subtract the center cell
         sum -= grid[x][y].value;
         return sum;
     }
@@ -100,7 +102,7 @@ import Options from "./GridOptions";
         let arr = this.state.grid.slice();
   
         arr[x][y].value = value;
-         this.setState({ grid: arr });
+        this.setState({ grid: arr });
     }
 
      toggleAnimation = () => {
