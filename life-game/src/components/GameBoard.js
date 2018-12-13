@@ -4,11 +4,13 @@ class GameBoard extends React.Component{
   constructor(props){
       super(props);
       this.state = {
+         
           height: 300,
           width: 300,
           cells: 15,
           gameOn: false,
-          count: 0,
+          count: 0, 
+          gameState:[],
       }
   }
 
@@ -16,6 +18,7 @@ class GameBoard extends React.Component{
     const canvas = this.refs.canvas;
     const context = canvas.getContext('2d');
     const squareSize = 20
+    
     for (let item in this.state) {
         let x = parseInt(item.substring(0, item.indexOf(',')));
         let y = parseInt(item.substring(item.indexOf(',')+1));
@@ -89,11 +92,15 @@ class GameBoard extends React.Component{
                 if (this.state[brn] === "alive") {
                     lnc++;
                 }
-                if (this.state[`${x/20},${y/20}`] === "alive" && (lnc != 2||3)) {
-                  gameState[`${x/20},${y/20}`] = "dead";
-              } else if (this.state[`${x/20},${y/20}`] === "dead" && lnc === 3) {
+                if (this.state[`${x/20},${y/20}`] === "alive") {
+                    if(lnc === 2|| lnc ===3){
+                        gameState[`${x/20},${y/20}`] = "alive";
+                    }else{
+                        gameState[`${x/20},${y/20}`] = "dead";
+                    }
+                } else if (this.state[`${x/20},${y/20}`] === "dead" && lnc === 3) {
                   gameState[`${x/20},${y/20}`] = "alive";
-              }
+                }
           }
       } 
       let gameCount = this.state.count;
@@ -103,6 +110,10 @@ class GameBoard extends React.Component{
              }
          } 
 
+         runGame = () => {
+            setInterval(this.simulateGame, 1000)
+        }
+   
    componentDidMount(){
       this.drawCanvas()
   }
@@ -145,7 +156,11 @@ gridState = () => {
   }
 }
 
+
 randomizeHandler = e => {
+    const start = new Array(this.state.cells)
+
+
 }
 
 clearGrid = (e) => {
@@ -170,10 +185,10 @@ playToggle = (e) => {
               width={this.state.width} 
               /> 
               <div className = 'buttons'>
-              <button onClick = {this.simulateGame}>Start</button>
+              <button onClick = {this.runGame}>Start</button>
               <button onClick = {this.playToggle}>Play/Pause</button>
               <button onClick={this.clearGrid}>Clear</button>
-              <button >Randomize</button>
+              <button onClick= {this.randomizeHandler}>Randomize</button>
               </div>
               <div>Game Rules:</div>
             </>
