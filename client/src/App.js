@@ -3,23 +3,23 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    matrix: {},
+    matrix: {},//using this for the grid. 
     //grid set up
-    matrixMirror: {},
-    matrixUsing: [],
-    mirror: [],
-    row_count: 15, //default
-    col_count: 15, //default
+    matrixMirror: {},//using for clearing the grid will be set to a all dead cell grid. 
+    matrixUsing: [],//using this to iterate over and show the grid on the screen. 
+    mirror: [], // mirror for clearing the grid. 
+    row_count: 15, //default amount of rows on the grid can be changed. 
+    col_count: 15, //default amount of columns on the grid can be changed. 
 
-    width: "330px",
+    width: "330px", //width of the grid can be changed. 
     //presets
     //cell choices
-    if_one_color: "black",
-    if_zero_color: "white",
+    if_one_color: "black",// if one the cell is alive 
+    if_zero_color: "white", // if zero the cell is dead 
     //game instructions
-    gameRunning: false,
-    generation: 0,
-    gameSpeed: 125
+    gameRunning: false,//used to show game has started. 
+    generation: 0,// keeps count of generations
+    gameSpeed: 125 // default game speed can be changed. 
   };
 
   componentWillMount() {
@@ -27,11 +27,13 @@ class App extends Component {
   }
 
   reset = () => {
+    //resets gameRunning and generation count. 
     this.setState({ generation: 0, gameRunning: false });
     this.updateRowCol();
   };
 
   generateRandom = () => {
+    //generates a random grid to start with. 
     const keys = Object.keys(this.state.matrix);
     const matrix = { ...this.state.matrixMirror }; //creates a copy
 
@@ -161,39 +163,40 @@ class App extends Component {
 
   //CURRENTLY WORKING ON THIS FUNCTION
   runGamne = () => {
-    //functionaly for gameplay goes here
-    const matrix = this.state.matrixUsing.slice();
-    const state_matrix = { ...this.state.matrix }; //creates a copy
+    // //functionaly for gameplay goes here
+    // const matrix = this.state.matrixUsing.slice();
+    // const state_matrix = { ...this.state.matrix }; //creates a copy
 
-    let i = 0;
+    // let i = 0;
 
-    for (; i < matrix.length; i++) {
-      let aliveNeighbors = this.findLiveNeighbors({
-        row: matrix[i].row,
-        position_in_row: matrix[i].position_in_row
-      });
-      let current_cell_alive =
-        this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1
-          ? true
-          : false;
-      if (current_cell_alive) {
-        if (aliveNeighbors < 2 || aliveNeighbors > 3) {
-          //kill the cell that is currently alive.
-          state_matrix[matrix[i].row][matrix[i].position_in_row] = 0;
-        }
-      } else {
-        if (aliveNeighbors === 3) {
-          //resurrect the currently dead cell.
-          state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
-        }
-      }
-    }
+    // for (; i < matrix.length; i++) {
+    //   let aliveNeighbors = this.findLiveNeighbors({
+    //     row: matrix[i].row,
+    //     position_in_row: matrix[i].position_in_row
+    //   });
+    //   let current_cell_alive =
+    //     this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1
+    //       ? true
+    //       : false;
+    //   if (current_cell_alive) {
+    //     if (aliveNeighbors < 2 || aliveNeighbors > 3) {
+    //       //kill the cell that is currently alive.
+    //       state_matrix[matrix[i].row][matrix[i].position_in_row] = 0;
+    //     }
+    //   } else {
+    //     if (aliveNeighbors === 3) {
+    //       //resurrect the currently dead cell.
+    //       state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
+    //     }
+    //   }
+    // }
 
-    this.setState(prevState => ({
-      matrix: state_matrix,
-      generation: prevState.generation + 1
-    }));
-    this.continueWithGame();
+    // this.setState(prevState => ({
+    //   matrix: state_matrix,
+    //   generation: prevState.generation + 1
+    // }));
+    // this.continueWithGame();
+    this.nextGeneration();
   };
 
   startTheGame = () => {
