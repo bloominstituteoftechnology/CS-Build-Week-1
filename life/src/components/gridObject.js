@@ -55,7 +55,6 @@ export default class GridObject extends Component {
         })
     }
 
-    //#1
     buildNext = async () => {
         console.log("buildNext")
         let selected = 0;
@@ -80,7 +79,8 @@ export default class GridObject extends Component {
         activeNeighbors = this.countNeighbors(num);
         if(this.state.curObj[num] === true){//is alive
             if(activeNeighbors === 2 || activeNeighbors === 3){
-                let newNexObj = Object.assign({}, this.state.nexObj);
+                let newNexObj = {};
+                newNexObj = this.state.nexObj;
                 newNexObj[num] = true;
                 this.setState({
                     nexObj: newNexObj
@@ -173,10 +173,10 @@ export default class GridObject extends Component {
         e.preventDefault();
         switch(e.target.name){
             case "start":
-                start = window.setInterval(this.buildNext, 500)
+                start = setInterval(() => this.buildNext(), 2000)
                 break;
             case "stop":
-                window.clearInterval(start)
+                clearInterval(start)
                 break;
             case "next":
                 this.buildNext();
