@@ -9,6 +9,7 @@ class Cell extends React.Component {
   render() {
     let randomColor = Math.floor(Math.random()*16777215).toString(16);
     const { x, y } = this.props;
+    //offseting by x and y for left and top, everything relative to the left and top of grid
     return (
       <div className="Cell" style={{
         left: `${CELL_SIZE * x + 1}px`,
@@ -78,6 +79,8 @@ class Game extends React.Component {
   handleClick = (event) => {
     if(this.state.isRunning === false){
       const elemOffset = this.getElementOffset();
+      //client returns horz/vert mouse position
+      //offset gives coordinates relative to css bound
       const offsetX = event.clientX - elemOffset.x;
       const offsetY = event.clientY - elemOffset.y;
 
@@ -152,18 +155,27 @@ class Game extends React.Component {
   */
 
   calculateNeighbors(board, x, y) {
+    //initialize neighbor count
      let neighbors = 0;
      const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
      for (let i = 0; i < dirs.length; i++) {
+        //iterating through directions
          const dir = dirs[i];
+         //new index for x
          let y1 = y + dir[0];
+         // new index for y
          let x1 = x + dir[1];
-
+         //if the neighbor indices are in bounds:
          if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
+           //if we are still inbounds
              neighbors++;
+             
          }
+         //else do nothing breaks loop
+         /// TO:DO//
+         //figure out wrap
      }
-
+     //reutrns the number of live neighbors
      return neighbors;
   }
 
@@ -276,7 +288,7 @@ class Game extends React.Component {
             <p>4. <strong>Survival</strong>: Each <strong className = "live">live</strong> cell with either two or three live neighbors will remain <strong className = "live">alive</strong> for the next generation.
             </p>
           </div>
-          <div>
+          <div className = "about">
             <h2>About the algorithm</h2>
             <p>This implementation uses a double buffering technique with a 2d array. Cells are loaded onto a secondary matrix and states of life and death are kept track on the old matrix. Neighbors are caclulated by using a directional array to check the rectangle around squares. Then for each iteration the algorithim checks to see the number of live neighbors and implements the rules accordingly. </p>
             <p>Conways Game of life was written in the 70s as a solution to John VonNoumen's hypothetical self replicating machine. It is of theortical interest because the game of life has the power of a universal turing machine which means any computation that can be computed algoritimically can be computed using the game of life. </p>
