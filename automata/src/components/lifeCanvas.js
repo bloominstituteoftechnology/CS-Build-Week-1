@@ -16,7 +16,7 @@ class Canvas extends Component {
     }
 
     handleClick = (e) => {
-        if (this.state.simRun === false) {
+        if (!this.handleTimer) {
             const canvo = this.refs.canvas
             const ctx = canvo.getContext("2d");
             const pos = canvo.getBoundingClientRect()
