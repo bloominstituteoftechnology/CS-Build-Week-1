@@ -15,7 +15,10 @@ const Instructions = (props) => {
   return (
     <div className="instructions-container">
       <div>Playing with lives.</div>
-      <div>Conway's "Game of Life" is </div>
+      <div>Conway's "Game of Life" is a simulation created by a mathematician named John Conway.  The simulation is to display, in real-time, the ebb and flow of life and death. "Cells" represent living or dead entities.  And those entities live or die accord to the number of "neighbors they have.  In this instance of the <i>Game of Life</i>, I cell dies if:</div>
+      <ul>
+        <li>a cell's qty of neighbors is <i>&gt;3</i> or <i>&lt;two</i></li>
+      </ul>
       <ol>
         <li></li>
       </ol>
