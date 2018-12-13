@@ -13,3 +13,16 @@
     background: lavender;
     position: absolute;
 }
+
+.tab {
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 100px;
+    height: 25px;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+  }
