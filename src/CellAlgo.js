@@ -48,6 +48,11 @@ export const cellPresetAlgo = (currentNodeHolder, target) => {
       currentNodeHolder[middleOfGrid - 2][middleOfGrid + 1].isAlive = true;
       currentNodeHolder[middleOfGrid - 1][middleOfGrid + 3].isAlive = true;
     break;
+    case 'Blinker':
+      currentNodeHolder[middleOfGrid][middleOfGrid].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid + 1].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid - 1].isAlive = true;
+    break;
     default:
     break;
   }

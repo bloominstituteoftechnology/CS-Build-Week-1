@@ -41,6 +41,7 @@ class ControlSection extends Component {
               <option value="">-- Select --</option>
               <option value="Glider">Glider</option>
               <option value="Acorn">Acorn</option>
+              <option value="Blinker">Blinker</option>
             </select>
           </PresetSection>
 
