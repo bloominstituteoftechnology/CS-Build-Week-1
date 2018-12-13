@@ -77,6 +77,17 @@ export const cellPresetAlgo = (currentNodeHolder, target) => {
       currentNodeHolder[middleOfGrid - 4][middleOfGrid - 5].isAlive = true;
       currentNodeHolder[middleOfGrid - 4][middleOfGrid - 6].isAlive = true;
     break;
+    case 'Random':
+      let random;
+      for (let i = 0; i < len; i++) {
+        for (let j = 0; j < len; j++) {
+          random = Math.random() * (20 - 1) + 1;
+          if (random > 10) {
+            currentNodeHolder[i][j].isAlive = true;
+          }
+        }
+      }
+    break;
     default:
     break;
   }
