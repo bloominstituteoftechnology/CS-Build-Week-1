@@ -28,10 +28,7 @@ class Canvas extends Component {
             let tempX = (e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20;
             let tempY = (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20;
             let selectedCell = `${tempX},${tempY}`;
-            // console.log(this.state[`${tempCoord}`]);
             this.setState({[`${selectedCell}`]: "living"});
-            // console.log(`topLeftN = ${tempX-1},${tempY-1}`);
-            // console.log(`botRightN = ${tempX+1},${tempY+1}`);
         } else {console.log('Grid is not interactive while simulation is running');}
         
     }
@@ -71,15 +68,11 @@ class Canvas extends Component {
         const ctx = canvas.getContext('2d');
         ctx.canvas.width = 300;
         ctx.canvas.height = 300;
-        // ctx.lineWidth = .1;
-        // ctx.beginPath();
-        // ctx.strokeStyle = 'blue';
         ctx.strokeStyle = 'rgba(111, 111, 111, 0.8)';
         for (let x=0; x<=300; x+= 20) {
             for (let y=0; y<=300; y+= 20) {
                 ctx.moveTo(x, 0);
                 ctx.lineTo(x, 300);
-                // ctx.stroke();
                 ctx.moveTo(0, y);
                 ctx.lineTo(300, y);
                 ctx.stroke();
@@ -91,34 +84,19 @@ class Canvas extends Component {
         const canvas = this.refs.canvas;
         const ctx = canvas.getContext('2d');
         const squareSize = 20
-        // ctx.strokeRect(0,0,ctx.width,ctx.height);
-        ctx.moveTo(0, 0);
-        ctx.lineTo(300, 0);
-        // ctx.stroke();
-        ctx.lineTo(300, 300);
-        ctx.lineTo(0, 300);
-        ctx.lineTo(0, 0);
-        ctx.stroke();
-        console.log(`ctx.height is ${ctx.canvas.height}, width is ${ctx.canvas.width}`);
         for (let item in this.state) {
             let xVal = parseInt(item.substring(0, item.indexOf(',')));
             let yVal = parseInt(item.substring(item.indexOf(',')+1));
-            // console.log(`${item},${xVal+1},${yVal}`);
-            // ctx.strokeRect(xVal*20, yVal*20, squareSize, squareSize);
             if (this.state[item] === "deadite") {
                 ctx.clearRect(xVal*20, yVal*20, squareSize, squareSize);
                 ctx.strokeRect(xVal*20, yVal*20, squareSize, squareSize);
             } else if (this.state[item] === "living") {
                 ctx.fillRect(xVal*20, yVal*20, squareSize, squareSize);
             }
-            
         }
-        console.log(``);
     }
 
     gameCycle = () => {
-        const canvas = this.refs.canvas;
-        const ctx = canvas.getContext('2d');
         if (this.state.simRun) {
             let stateBuffer = {...this.state};
             for (let x=0; x<=300; x+= 20) {
@@ -157,23 +135,13 @@ class Canvas extends Component {
                         ++LNC;
                     }
                     let tempCell = `${x/20},${y/20}`;
-                    if (this.state[`${x/20},${y/20}`] === "living") {
-                        // let tempCell = `${x/20},${y/20}`;
-                        console.log(`cell is ${x/20},${y/20} LNC is ${LNC}, state is ${this.state[tempCell]}`);
+                    if ((this.state[tempCell] === "living") && LNC > 3) {
+                        stateBuffer[tempCell] = "deadite";
+                    } else if ((this.state[tempCell] === "living") && LNC < 2) {
+                        stateBuffer[tempCell] = "deadite";
                     }
-                    if ((this.state[`${x/20},${y/20}`] === "living") && LNC > 3) {
-                        console.log(`Welcome to the deadites ${x/20},${y/20} LNC is ${LNC}, state is ${this.state[tempCell]}`);
-                        stateBuffer[`${x/20},${y/20}`] = "deadite";
-                    } else if ((this.state[`${x/20},${y/20}`] === "living") && LNC < 2) {
-                        console.log(`Welcome to the deadites ${x/20},${y/20} LNC is ${LNC}, state is ${this.state[tempCell]}`);
-                        stateBuffer[`${x/20},${y/20}`] = "deadite";
-                    }
-                    else if (this.state[`${x/20},${y/20}`] === "deadite" && LNC === 3) {
-                        console.log(`Welcome to the living ${x/20},${y/20}`);
-                        stateBuffer[`${x/20},${y/20}`] = "living";
-                    // } else if (LNC === (2 || 3)) {
-                    //     console.log(`Welcome to the deadites ${x/20},${y/20} LNC is ${LNC}`);
-                        // stateBuffer[`${x/20},${y/20}`] = "deadite";
+                    else if (this.state[tempCell] === "deadite" && LNC === 3) {
+                        stateBuffer[tempCell] = "living";
                     }
                 }
             } 
