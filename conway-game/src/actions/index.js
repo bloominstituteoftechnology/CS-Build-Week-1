@@ -17,9 +17,9 @@ export const pauseRunning = () => {
   };
 };
 
-export const updateBoxActiveState = (id) => {
-    return {
-        type: "ACTIVE_STATE", 
-        payload: id
-    }
-}
+export const updateBoxActiveState = id => {
+  return {
+    type: "ACTIVE_STATE",
+    payload: id
+  };
+};

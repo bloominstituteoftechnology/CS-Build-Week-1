@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 import { populateArrayBoxes, startRunning, pauseRunning } from "../actions";
 
 class GridLayout extends Component {
- 
-
   componentDidMount() {
     this.props.populateArrayBoxes(this.props.gridRows);
   }
@@ -31,8 +29,8 @@ class GridLayout extends Component {
             <Box
               runningGame={this.props.isRunning}
               key={box.id}
-              id = {box.id}
-              active = {box.active}
+              id={box.id}
+              active={box.active}
             />
           );
         })}
@@ -48,15 +46,12 @@ class GridLayout extends Component {
 }
 
 const mapStateToProps = state => {
-   
   return {
     gridRows: state.gridRows,
     gridBoxArr: state.gridBoxArr,
     isRunning: state.isRunning
   };
 };
-
-
 
 export default connect(
   mapStateToProps,

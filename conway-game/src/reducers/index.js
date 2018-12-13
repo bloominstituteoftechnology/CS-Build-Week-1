@@ -25,11 +25,11 @@ export const gameReducer = (state = initialState, action) => {
       return Object.assign({}, state, { isRunning: true });
     case "PAUSE_GAME":
       return Object.assign({}, state, { isRunning: false });
-    case("ACTIVE_STATE"): 
-      const box = state.gridBoxArr[action.payload]; 
-      box.active = !box.active; 
-      const gridCopy = [...state.gridBoxArr]; 
-      gridCopy[action.payload] = box; 
+    case "ACTIVE_STATE":
+      const box = state.gridBoxArr[action.payload];
+      box.active = !box.active;
+      const gridCopy = [...state.gridBoxArr];
+      gridCopy[action.payload] = box;
       return Object.assign({}, state, { gridBoxArr: gridCopy });
     default:
       return state;
