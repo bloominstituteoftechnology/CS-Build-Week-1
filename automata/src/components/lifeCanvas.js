@@ -323,10 +323,12 @@ class Canvas extends Component {
                     </div>
                     <div className="rules" >
                         <h3>RULES</h3>
-                        <p>Any live cell with fewer than two live neighbors dies, as if by underpopulation.</p>
-                        <p>Any live cell with two or three live neighbors lives on to the next generation.</p>
-                        <p>Any live cell with more than three live neighbors dies, as if by overpopulation.</p>
-                        <p>Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</p>
+                        <p>1. Any live cell with fewer than two live neighbors dies, as if by underpopulation.</p>
+                        <p>2. Any live cell with two or three live neighbors lives on to the next generation.</p>
+                        <p>3. Any live cell with more than three live neighbors dies, as if by overpopulation.</p>
+                        <p>4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</p>
+                        <h3>History</h3>
+                        <p>The game made its first public appearance in a 1970 issue of Scientific American.  Since then, it has attracted plenty of interest due in part because of the vast ways the patterns can evolve.  The game has been used by scientists to illustrate the possible evolution of complex contructs.  The game's "popularity" was bolstered by its appearance just as computer access became more prevalent and affordable.</p>
                     </div>
                 </div>
 

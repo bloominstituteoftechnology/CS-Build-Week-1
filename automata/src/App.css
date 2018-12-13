@@ -44,6 +44,7 @@
   /* align-items: flex-end; */
   max-width: 35%;
   text-align: left;
-  margin-left: 40px;
+  /* margin-left: 40px; */
   font-size: 13px;
+  padding-left: 50px;
 }
