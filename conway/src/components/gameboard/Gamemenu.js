@@ -6,6 +6,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Divider from "@material-ui/core/Divider";
 
 const styles = theme => ({
   root: {
@@ -55,18 +56,26 @@ class Gamemenu extends Component {
               considered alive or dead. Each generation cells are born, stay
               alive, or die based on simple rules.
             </Typography>
+          </ExpansionPanelDetails>
+          <ExpansionPanelDetails>
             <Typography variant="subtitle2">
               1. Any live cell with fewer than two live neighbors dies, as if by
               underpopulation
             </Typography>
+          </ExpansionPanelDetails>
+          <ExpansionPanelDetails>
             <Typography variant="subtitle2">
               2. Any live cell with two or three live neighbors lives on to the
               next generation
             </Typography>
+          </ExpansionPanelDetails>
+          <ExpansionPanelDetails>
             <Typography variant="subtitle2">
               3. Any live cell with more than three live neighbors dies, as if
               by overpopulation
             </Typography>
+          </ExpansionPanelDetails>
+          <ExpansionPanelDetails>
             <Typography variant="subtitle2">
               4. Any dead cell with exactly three live neighbors becomes a live
               cell, as if by reproduction
@@ -109,6 +118,15 @@ class Gamemenu extends Component {
               states. The number of states in the rotation is the periodicity.
             </Typography>
           </ExpansionPanelDetails>
+          <Divider />
+          <ExpansionPanelDetails>
+            <img
+              src={require("./static/blinker.gif")}
+              alt="blinker oscillator"
+            />
+            <img src={require("./static/toad.gif")} alt="toad oscillator" />
+            <img src={require("./static/beacon.gif")} alt="beacon oscillator" />
+          </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel
           expanded={expanded === "panel4"}
@@ -126,6 +144,13 @@ class Gamemenu extends Component {
               through it's states.
             </Typography>
           </ExpansionPanelDetails>
+          <Divider />
+          <ExpansionPanelDetails>
+            <img
+              src={require("./static/light-spaceship.gif")}
+              alt="lightweight spaceship"
+            />
+          </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel
           expanded={expanded === "panel5"}
@@ -141,8 +166,12 @@ class Gamemenu extends Component {
             <Typography>
               A gun is a pattern that emits moving patterns from itself. The
               first one ever discovered was the Gosper Glider Gun by Bill
-              Gosper.
+              Gosper. (See top portion of example image below)
             </Typography>
+          </ExpansionPanelDetails>
+          <Divider />
+          <ExpansionPanelDetails>
+            <img src={require("./static/gun:eater.gif")} alt="Gun with Eater" />
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel
@@ -161,6 +190,12 @@ class Gamemenu extends Component {
               change between generations until acted on by an outside force.
             </Typography>
           </ExpansionPanelDetails>
+          <Divider />
+          <ExpansionPanelDetails>
+            <img src={require("./static/block.png")} alt="block pattern" />
+            <img src={require("./static/beehive.png")} alt="beehive pattern" />
+            <img src={require("./static/loaf.png")} alt="loaf pattern" />
+          </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel
           expanded={expanded === "panel7"}
@@ -176,8 +211,13 @@ class Gamemenu extends Component {
             <Typography>
               An Eater is a still life that can interact with other shapes
               without suffering permamnent damage. They can often be used to
-              destroy the patterns shot out by guns.
+              destroy the patterns shot out by guns. (See the bottom of example
+              image, where the eater destroys the glider produced by a gun)
             </Typography>
+          </ExpansionPanelDetails>
+          <Divider />
+          <ExpansionPanelDetails>
+            <img src={require("./static/gun:eater.gif")} alt="Gun with Eater" />
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel
