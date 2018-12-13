@@ -10,6 +10,11 @@ const Header = (props) => {
     let hdr = document.querySelector('.header-container');
     hdr.classList.add('hide-container')
   }, 1000);
+  window.setTimeout(()=>{
+    let hdr = document.querySelector('.header-container');
+    hdr.classList.add('header-container-small')
+  }, 7000);
+
 
   return (
     <div className="header-container">
