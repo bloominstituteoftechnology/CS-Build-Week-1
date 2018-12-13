@@ -16,7 +16,7 @@
 
 .box {
   display: inline-block;       
-  border: 1px solid rgb(126, 126, 126);
+  border: 1px solid white;
   width: 15px;
   height: 15px;
   margin-left: -1px;
@@ -24,21 +24,21 @@
   }
 
 .off {
-  background-color: rgb(252, 249, 249);
+  background-color: rgb(225, 243, 240);
 }
 
 .on {
-  background-color: rgb(43, 95, 56);
+  background-color:rgb(163, 223, 213);
 }
   
 .box:hover { 
-  background:rgb(126, 126, 126);
+  background-color: rgb(163, 223, 213);
 }
 
 .grid {
   width: 150px;
   line-height: 0;
-  box-shadow: 0px 0px 20px white;
+  box-shadow: 0px 0px 20px rgb(245, 248, 247);
   margin-top: 10px;
 }
 
