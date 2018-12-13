@@ -1,39 +1,72 @@
 body {
-  background: rgba(139, 158, 241, 0.767);
+  background-image: radial-gradient(circle, rgba(139, 158, 241, 0.767), rgb(166, 144, 248));
   font-family: 'Bungee', cursive;
 }
 .title {
   text-align: center;
+  margin-bottom: 50px;
 }
 .board {
   display: flex;
+  justify-content: center;
 }
 canvas {
-  margin-left: 50px;
   background: white;
 }
+h2 {
+  margin-top: 0;
+}
+
 .rules {
-  width: 500px;
   font-family: 'Ubuntu', sans-serif;
 }
-.controls {
-  margin: 50px;
+.rightControls {
+  box-sizing: border-box;
+  padding: 20px 0;
+  margin: 50px 147px 50px 50px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   height: 300;
+}
+.leftControls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+  margin-right: 20px;
+}
+.presetContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+  margin-top: 50px;
+}
+.colorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .presets {
   display: flex;
-  margin-left: 50px;
-  width: 200px;
+  flex-direction: column;
+  width: 60px;
   justify-content: space-between;
+  height: 100px;
+  align-content: center;
 }
 .colors {
   display: flex;
-  margin-left: 50px;
-  width: 400px;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 200px;
+  justify-content: center;
+}
+.colorRow {
+   display: flex;
+}
+.color {
+  margin: 5px;
 }
 .r {
   background: red;
@@ -56,12 +89,58 @@ canvas {
 .pi {
   background: #DB7093;
 }
-.belowText {
-  margin-left: 50px;
+.cycles {
+  text-align: center;
 }
 button {
   border-radius: 3px;
   border: none;
+  outline: none;
   font-family: 'Bungee', cursive;
   height: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.123), 0 6px 20px 0 rgba(0, 0, 0, 0.425);
+  cursor: pointer;
+}
+button:active {
+  background:rgba(32, 73, 255, 0.562);
+}
+
+.cornerClick {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+}
+.gameCard {
+  width: 100%;
+  height: 100%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+.cardface {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, rgba(139, 158, 241, 0.767), rgb(166, 144, 248));
+  backface-visibility: hidden;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.123), 0 6px 20px 0 rgba(0, 0, 0, 0.425);
+}
+.front {
+  border-radius: 10px;
+}
+.back {
+  transform: rotateY(180deg);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 20px;
+}
+.scene {
+  margin: 50px auto;
+  height: 550px;
+  width: 900px;
+  perspective: 800px;
+}
+.isFlipped {
+  transform: rotateY(180deg);
 }
