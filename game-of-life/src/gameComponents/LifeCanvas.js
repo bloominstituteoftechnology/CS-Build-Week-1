@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Life from './Life.js';
 
-class Grid extends Component{
+class LifeCanvas extends Component{
     constructor(){
       super();
       this.state={
@@ -77,6 +77,7 @@ class Grid extends Component{
       cancelAnimationFrame(this.myreq);
     }
     clear=()=>{
+      this.stopAnimation();
       this.setState({generation:0},()=>{this.isClickable=true; this.life.createBlankGrid(); this.fillsquares();});
     }
     render(){
@@ -94,4 +95,4 @@ class Grid extends Component{
         );
     }
 }
-export default Grid;
+export default LifeCanvas;
