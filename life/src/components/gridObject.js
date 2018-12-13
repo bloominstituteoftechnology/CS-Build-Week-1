@@ -73,6 +73,7 @@ export default class GridObject extends Component {
             nexObj: allFalse,
             generations: this.state.generations+1,
         })
+        return "done"
     }
 
     cubeNextTick(num){
@@ -170,12 +171,22 @@ export default class GridObject extends Component {
         }
     }
 
+    recursiveTimeout = async () => {
+        console.log("recursive timeout")
+        ran = await setTimeout(() => {
+            recursiveCounter = recursiveCounter + 1;
+            ran = this.buildNext()
+        }, 2000)  
+
+    }
+    
     clickHandler = (e) => {
         e.preventDefault();
         switch(e.target.name){
             case "start":
-                start = setInterval(() => this.buildNext(), this.state.time)
+                start = setInterval(() => this.buildNext(), 1000)
                 // start = setInterval(() => console.log("this timeer", this.state.generations+1), this.state.time)
+                // start = this.recursiveTimeout();//broken
                 this.setState({
                     lock: true
                 })
@@ -224,7 +235,7 @@ export default class GridObject extends Component {
             <GridDiv> 
                 <h4>Generation: {this.state.generations}</h4>
                 <div className="timer">
-                    <span><strong>Timer increments: ~{this.state.time/1000}-20 seconds</strong></span>
+                    <span><strong>Timer increments: ~{this.state.time/1000}</strong></span>
                     <div>
                         <button name="+" onClick={this.clickHandler}>+</button>
                         <button name="-" onClick={this.clickHandler}>-</button>
@@ -253,6 +264,8 @@ export default class GridObject extends Component {
 }
 
 let start;
+let ran;
+let recursiveCounter = 0;
 
 const GridDiv = styled.div`
     margin: 10px;
