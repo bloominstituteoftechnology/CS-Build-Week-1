@@ -29,7 +29,8 @@ class App extends Component {
   reset = () => {
     //resets gameRunning and generation count. 
     this.setState({ generation: 0, gameRunning: false });
-    this.updateRowCol();
+    // this.updateRowCol();
+    this.setMatrixUp(); 
   };
 
   generateRandom = () => {
@@ -66,26 +67,40 @@ class App extends Component {
       matrix[beginRow] = [];
       while (beginColumn < this.state.col_count) {
         matrix[beginRow].push(0);
-        beginColumn++;
-      }
-      beginRow++;
-    }
-    Object.entries(matrix).forEach(entry => {
-      for (let x of entry[1]) {
+        // beginColumn++;
+
         const temp_hash = {
           row: 0,
           position_in_row: 0,
           actual_number: 0,
           color: this.state.if_zero_color
         };
-        temp_hash.row = Number(entry[0]);
-        temp_hash.position_in_row = count % this.state.col_count;
+        temp_hash.row = beginRow;
+        temp_hash.position_in_row = beginColumn;
         temp_hash.actual_number = count;
-        temp_hash.value = x; //just to get rid of the warning.
+        temp_hash.value = 0; //just to get rid of the warning.
         matrixUsing.push(temp_hash);
         count++;
+        beginColumn++;
       }
-    });
+      beginRow++;
+    }
+    // Object.entries(matrix).forEach(entry => {
+    //   for (let x of entry[1]) {
+        // const temp_hash = {
+        //   row: 0,
+        //   position_in_row: 0,
+        //   actual_number: 0,
+        //   color: this.state.if_zero_color
+        // };
+        // temp_hash.row = Number(entry[0]);
+        // temp_hash.position_in_row = count % this.state.col_count;
+        // temp_hash.actual_number = count;
+        // temp_hash.value = x; //just to get rid of the warning.
+        // matrixUsing.push(temp_hash);
+        // count++;
+    //   }
+    // });
     const width_size = 22 * this.state.col_count;
     const width = `${width_size}px`;
 
@@ -133,69 +148,32 @@ class App extends Component {
     }
   };
   // Game functions being declared below this line.
-  handleChangeRow = event => {
-    //Will handle the changing of the rows.
-    //function allows for user to change the amount of rows that is being used.
-    this.setState({ [event.target.name]: event.target.value });
-  };
-  handleChangeColumn = event => {
-    //Will handle changing the columns.
+  
+  handleChange = event => {
+    //Will handle changing the columns. and columns
     //function allows user to change the amount of columns that is being used.
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  updateRowCol = () => {
-    //this function will actually check if the value is acceptable and then make the change.
-    const rowValue = this.state.row_count;
-    const colValue = this.state.col_count;
+  // updateRowCol = () => {
+  //   //this function will actually check if the value is acceptable and then make the change.
+  //   const rowValue = this.state.row_count;
+  //   const colValue = this.state.col_count;
 
-    if (rowValue < 15 || rowValue > 30) {
-      alert("Must be a numerical value of at least 15 and less than 30!");
-      return;
-    }
-    if (colValue < 15 || colValue > 30) {
-      alert("Must be a numerical value of at least 15 and less than 30!");
-      return;
-    }
+  //   if (rowValue < 15 || rowValue > 30) {
+  //     alert("Must be a numerical value of at least 15 and less than 30!");
+  //     return;
+  //   }
+  //   if (colValue < 15 || colValue > 30) {
+  //     alert("Must be a numerical value of at least 15 and less than 30!");
+  //     return;
+  //   }
 
-    this.setMatrixUp();
-  };
+  //   this.setMatrixUp();
+  // };
 
   //CURRENTLY WORKING ON THIS FUNCTION
   runGamne = () => {
-    // //functionaly for gameplay goes here
-    // const matrix = this.state.matrixUsing.slice();
-    // const state_matrix = { ...this.state.matrix }; //creates a copy
-
-    // let i = 0;
-
-    // for (; i < matrix.length; i++) {
-    //   let aliveNeighbors = this.findLiveNeighbors({
-    //     row: matrix[i].row,
-    //     position_in_row: matrix[i].position_in_row
-    //   });
-    //   let current_cell_alive =
-    //     this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1
-    //       ? true
-    //       : false;
-    //   if (current_cell_alive) {
-    //     if (aliveNeighbors < 2 || aliveNeighbors > 3) {
-    //       //kill the cell that is currently alive.
-    //       state_matrix[matrix[i].row][matrix[i].position_in_row] = 0;
-    //     }
-    //   } else {
-    //     if (aliveNeighbors === 3) {
-    //       //resurrect the currently dead cell.
-    //       state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
-    //     }
-    //   }
-    // }
-
-    // this.setState(prevState => ({
-    //   matrix: state_matrix,
-    //   generation: prevState.generation + 1
-    // }));
-    // this.continueWithGame();
     this.nextGeneration();
   };
 
@@ -633,7 +611,7 @@ class App extends Component {
               className="slider"
               id="myRange"
               name="row_count"
-              onChange={this.handleChangeRow}
+              onChange={this.handleChange}
             />
             <h5>Col Count {this.state.col_count}</h5>
             <input
@@ -644,9 +622,10 @@ class App extends Component {
               className="slider"
               id="myRange"
               name="col_count"
-              onChange={this.handleChangeColumn}
+              onChange={this.handleChange}
             />
-            <button onClick={this.updateRowCol}>Update Grid</button>
+            {/* <button onClick={this.updateRowCol}>Update Grid</button> */}
+            <button onClick={this.setMatrixUp}>Update Grid</button>
             <br />
             <h5> Dead Color: {this.state.if_zero_color}</h5>
             <div className="colorChoices">
