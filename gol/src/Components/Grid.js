@@ -5,6 +5,7 @@ import '../App.css';
 import Header from './Header';
 import Game_of_life from '../Logic/Game_of_life';
 import Controls from './Controls';
+import {Container} from 'reactstrap';
 class Grid extends Component {
     constructor(props) {
         super(props);
@@ -125,7 +126,7 @@ class Grid extends Component {
     render() { 
         
         return (
-            <div className = 'gol-container'>
+            <Container>
                 <Header generation = {this.state.game_of_life.generate()}/>
                     <div className = 'grid'>
                     {this.createGrid()}
@@ -146,7 +147,7 @@ class Grid extends Component {
                     intervalChange = {this.intervalChange}
 
                 />
-            </div>
+            </Container>
          );
     }
 }
