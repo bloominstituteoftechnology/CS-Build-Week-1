@@ -594,10 +594,10 @@ class App extends Component {
           </div>
 
           <h5>Current Speed {this.state.gameSpeed}</h5>
+          <p>Stop the game and then click start to notice speed change.</p>
           <div className="presetsDiv">
-            <button onClick={this.decrementSpeed}>-</button>
-            <p>{this.state.gameSpeed}</p>
-            <button onClick={this.incrementSpeed}>+</button>
+
+            <input type="range" min="125" max = "2000" value={this.state.gameSpeed} className="slider" id="myRange" name = "gameSpeed" onChange={this.handleChange}/>
           </div>
 
           <div className="slidecontainer">
@@ -623,7 +623,7 @@ class App extends Component {
               name="col_count"
               onChange={this.handleChange}
             />
-            {/* <button onClick={this.updateRowCol}>Update Grid</button> */}
+            <p>Click update grid to set the row and column size</p>
             <button onClick={this.setMatrixUp}>Update Grid</button>
             <br />
             <h5> Dead Color: {this.state.if_zero_color}</h5>
