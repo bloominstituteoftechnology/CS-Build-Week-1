@@ -24,10 +24,12 @@ export const cellInitAlgo = (gridSizeValue) => {
 export const cellPresetAlgo = (currentNodeHolder, target) => {
   let len = currentNodeHolder.length;
   let middleOfGrid = Math.floor(len / 2);
-  for (let i = 0; i < len; i++) {
-    for (let j = 0; j < len; j++) {
-      if (currentNodeHolder[i][j].isAlive) {
-        currentNodeHolder[i][j].isAlive = false;
+  if (target !== "") {
+    for (let i = 0; i < len; i++) {
+      for (let j = 0; j < len; j++) {
+        if (currentNodeHolder[i][j].isAlive) {
+          currentNodeHolder[i][j].isAlive = false;
+        }
       }
     }
   }
