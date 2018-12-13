@@ -1,5 +1,7 @@
 # Cellular Automata and Conway's "Game of Life"
 
+[See Trello Here](https://trello.com/b/s6FWuPzY/gameoflife-jocatherine-griggs)
+
 Over the course of this week, students will work on creating their own application in which users will be able to run different "Game of Life" scenarios. This module leads the reader through the fundamentals of Conways's "Game of Life" and will guide them through the process of creating an app utilizing tools and frameworks that have been taught over the course of their specific track.
 
 ![example-patterns](https://media.giphy.com/media/4VVZTvTqzRR0BUwNIH/giphy.gif)
@@ -43,22 +45,22 @@ Over the course of this week, students will work on creating their own applicati
 
 #### Visualizing the “Game of Life”
 The main entry point of your application should house the visualization of this cellular automata. Include necessary components, such as:
-- [ ] Grid to display cells. 
+- [ ] Grid to display cells.
 - [ ] Cell objects or components that, at a minimum, should have:
     * Properties
         - [ ] currentState: (alive, dead), (black, white)
         - [ ] isClickable:
-          - can be clicked to allow user to setup initial cell configuration 
+          - can be clicked to allow user to setup initial cell configuration
           - should NOT be clickable while simulation is running
     * Behaviors
         - [ ] toggle_state( ): switch between alive & dead either because user manually toggled cell before starting simulation or simulation is running and rules of life caused cell to change state
-- [ ] An appropriate data structure to hold a grid of cells that is at least 15 X 15. 
+- [ ] An appropriate data structure to hold a grid of cells that is at least 15 X 15.
 - [ ] Text to display current generation # being displayed
-    * Utilize a timeout function to build the next generation of cells & update the display at the chosen time interval     
+    * Utilize a timeout function to build the next generation of cells & update the display at the chosen time interval
 - [ ] Button(s) that start & stop the animation
 - [ ] Button to clear the grid
 
-Write an algorithm that:    
+Write an algorithm that:
 - [ ] Implements the following basic steps:
     - For each cell in the current generation's grid:
       1. Examine state of all eight neighbors (it's up to you whether you want cells to wrap around the grid and consider cells on the other side or not)
@@ -71,7 +73,7 @@ Write an algorithm that:
 
 ### Custom Features
 Implment at least 3 of the following features:
-- [ ] Create a few sample cell configurations that users can load and run 
+- [ ] Create a few sample cell configurations that users can load and run
 - [ ] Add an option that creates a random cell configuration that users can run
 - [ ] Add additional cell properties, like color or size, and incorporate them into your visualization
 - [ ] Allow users to specify the speed of the simulation
@@ -80,7 +82,7 @@ Implment at least 3 of the following features:
 - [ ] Given a specific generation, calculate the configuration of cells at that point in time, and jump to that state, bypassing animation
 - [ ] If you have an idea for a custom feature on this list, run it by your PM or instructor
 
-#### Rules 
+#### Rules
 - [ ] On the main entry point of the application, include a separate section or link to another page / screen that describes the two main rules (birth & death) of Conway’s “Game of Life”
 
 #### About this Algorithm
@@ -110,10 +112,10 @@ Implment at least 3 of the following features:
    4. Algorithm to generate new generations of cells correctly implemented
    5. Display is updated seamlessly using double buffering
    6. At least 3 features from ***Custom Features*** section successfully implemented
-   7. Application includes a section outlining the rules to Conway's "Game of Life" 
+   7. Application includes a section outlining the rules to Conway's "Game of Life"
    8. Application includes a section that describes history of / technical details related to Conway's "Game of Life"
    9. Application is successfully deployed
-   
+
 
 #### Your simulation will receive a 3 when it satisfies all of the above requirements AND implements one of the following stretech goals:
    * Write a how-to guide or blog post that walks readers through the work you did to implement your project

@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css?family=Inconsolata:400,700");
+
+.App {
+  text-align: center;
+  margin: 50px;
+  font-family: "Inconsolata", "Helvetica", "Arial", sans-serif;
+}
+
+h1 {
+  font-family: "Inconsolata", "Helvetica", "Arial", sans-serif;
+  color: gray;
+}
+.tabContent {
+  font-size: inherit;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 4px solid lavender;
+  color: gray;
+  background: #fff;
+  outline: none;
+  position: relative;
+  display: inline-block;
+  padding: 15px 10px 14px;
+  cursor: pointer;
+  width: auto;
+}
+
+body {
+  background: lightyellow;
+}
+.tab {
+  margin: 20px;
+
+  font-size: inherit;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 4px solid lavender;
+  color: gray;
+  background: #fff;
+  outline: none;
+  position: relative;
+  display: inline-block;
+  padding: 15px 10px 14px;
+  cursor: pointer;
+  width: auto;
+}
+.tab:after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  border: 2px solid lavender;
+  background-color: lavender;
+  left: 4px;
+  top: 4px;
+  z-index: -1;
+  content: "";
+
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+}
+.tab:hover {
+  top: 2px;
+  left: 2px;
+}
+.tab:hover:after {
+  top: -2px;
+  left: -2px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+}
