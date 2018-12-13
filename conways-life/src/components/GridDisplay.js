@@ -15,9 +15,12 @@ import Options from "./GridOptions";
             multicolor: false
         }
     }
+
      componentDidMount() {
-        this.make2DArray();
+        let arr = this.make2DArray();
+        this.setState({ grid: arr });
     }
+
      make2DArray = () => {
         let arr = new Array(this.state.cols);
         for (let i = 0; i < arr.length; i++) {
@@ -28,8 +31,9 @@ import Options from "./GridOptions";
                 arr[i][j] = { value: 0, x: i, y: j };
             }
         } 
-        this.setState({ grid: arr });
+        return arr;
     }
+
      randomGrid = () => {
         let arr = this.state.grid.slice();
          for (let i = 0; i < this.state.cols; i++) {
@@ -39,6 +43,7 @@ import Options from "./GridOptions";
         } 
          this.setState({ grid: arr, iterations: 0 });
     }
+
      clearGrid = () => {
         let arr = this.state.grid.slice();
          for (let i = 0; i < this.state.cols; i++) {
@@ -48,9 +53,10 @@ import Options from "./GridOptions";
         } 
          this.setState({ grid: arr, iterations: 0 });
     }
+
      computeNextGrid = () => {
-        const prevGrid = this.state.grid.slice();
-        let nextGrid = prevGrid.slice();
+        let prevGrid = this.state.grid;
+        let nextGrid = this.make2DArray();
         
         for (let i = 0; i < this.state.cols; i++) {
             for (let j = 0; j < this.state.rows; j++) {
@@ -70,11 +76,12 @@ import Options from "./GridOptions";
         
             }
         }
-             let nextIter = this.state.iterations;
+            let nextIter = this.state.iterations;
             nextIter++;
         
             this.setState({ grid: nextGrid, iterations: nextIter });
     }
+
      countNeighbors = (grid, x, y) => {
         let sum = 0;
         for (let i = -1; i < 2; i++) {
@@ -88,12 +95,14 @@ import Options from "./GridOptions";
         sum -= grid[x][y].value;
         return sum;
     }
+
      updateGrid = (value, x, y) => {
         let arr = this.state.grid.slice();
   
         arr[x][y].value = value;
          this.setState({ grid: arr });
     }
+
      toggleAnimation = () => {
         let speed = this.state.speed;
         if (speed < 30) {
