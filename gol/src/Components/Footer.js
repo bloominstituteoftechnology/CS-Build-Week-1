@@ -1,16 +1,15 @@
 import React from 'react';
-import {Button} from 'reactstrap';
+import {Button, Container} from 'reactstrap';
+import '../App.css';
 
 const Footer = (props) => {
     return (
-        <div className = 'container'>
-            <div className='Buttons'>
-                <Button color = 'success' className='submit' onClick={props.play}>Play</Button>
-                <Button color = 'primary' className='submit' onClick={props.stop}>Stop</Button>
-                <Button color = 'danger' className='submit' onClick={props.reset}>Reset</Button>
-                <Button color = 'secondary' className='submit' onClick={props.random}>Random</Button>
-            </div>
-        </div>
+        <Container style = {{marginTop: '10px', marginBottom: '10px', display: 'flex', justifyContent: 'center'}}>
+                <Button color = 'success' size = 'sm' className='submit' onClick={props.play}>Play</Button>
+                <Button color = 'primary' size = 'sm' className='submit' onClick={props.stop}>Stop</Button>
+                <Button color = 'danger' size = 'sm' className='submit' onClick={props.reset}>Reset</Button>
+                <Button color = 'secondary' size = 'sm' className='submit' onClick={props.random}>Random</Button>
+        </Container>
     )
 }
  

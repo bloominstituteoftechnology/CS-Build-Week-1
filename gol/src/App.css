@@ -3,7 +3,6 @@
 }
 
 .cell-dead {
-  
   padding: 10px;
   border: 1px solid black;
 }
@@ -15,7 +14,19 @@
   background: black;
 }
 
-.grid {
-  
+.history-rules {
+  display: flex;
   justify-content: center;
+
+}
+
+.submit {
+  margin-right: 5px;
+  margin-left: 5px;
+  width: 100px;
+}
+
+.info {
+  width: 200px;
+  margin: 10px;
 }

@@ -20,7 +20,7 @@ class RulesModal extends Component {
     render () {
       return (
         <div>
-          <Button color="info" onClick={this.toggle}>Game Of Life Rules</Button>
+          <Button className = 'info' color="info" onClick={this.toggle}>Game Of Life Rules</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
               <ModalHeader toggle={this.toggle}></ModalHeader>
                 <ModalBody>

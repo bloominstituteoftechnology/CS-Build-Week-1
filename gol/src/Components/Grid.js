@@ -6,14 +6,16 @@ import Header from './Header';
 import Game_of_life from '../Logic/Game_of_life';
 import Controls from './Controls';
 import {Container} from 'reactstrap';
+import RulesModal from './RulesModal';
+import HistoryModal from './HistoryModal';
 class Grid extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            gridSize: [30, 30],
+            gridSize: [25, 25],
             runningGame: false,
             game_of_life: new Game_of_life(),
-            interval: 1000,
+            interval: 100,
          }         
     }
 
@@ -88,7 +90,7 @@ class Grid extends Component {
                 row.push(<Cell key = {[i, j]} coordinates = {{x: i, y: j}} liveCell = {false} toggleCell = {this.toggleCell} />);
             }
         }
-            newGrid.push(<div className = "row" key = {i}>{row}</div>);
+            newGrid.push(<div style = {{textAlign: 'center', justifyContent: 'center'}} className = "row" key = {i}>{row}</div>);
             row = [];
         }
         return newGrid;
@@ -127,10 +129,14 @@ class Grid extends Component {
         
         return (
             <Container>
+                <div className = 'history-rules'>
+                    <RulesModal />
+                    <HistoryModal />
+                </div>
                 <Header generation = {this.state.game_of_life.generate()}/>
-                    <div className = 'grid'>
+                    <Container >
                     {this.createGrid()}
-                    </div>
+                    </Container>
                 <Footer 
                     play = {this.play}
                     stop = {this.stop}
