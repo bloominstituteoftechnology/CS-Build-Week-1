@@ -20,6 +20,7 @@ import styled from "styled-components";
 // border: 1px dashed #d45f;
 
 
+
 // `
 
 
@@ -27,18 +28,30 @@ import styled from "styled-components";
 
 
 class Grid extends Component {
-    refresh=() => {
-        console.log("before for")
-        for(let i = 0; i < this.props.neighbors.length; i++) {
-            console.log(i)
-            if(this.props.neighbors.length < 2) {
-                this.props.data = 0;
+    state = {
+        alive: 0
+    }
+
+    componentDidMount() {
+        this.setState({alive: this.props.data})
+    }
+
+    componentDidUpdate() {
+        this.logic()
+    }
+    logic=() => {
+        if (this.props.neighbors.length < 2 || this.props.neighbors.length > 3 && this.state.alive !== 0) {
+            this.setState({alive: 0});
+        } else if (this.props.neighbors.length == 3) {
+            if(this.state.alive == 0) {
+                this.setState({alive: 1})
             }
+
         }
     } 
     render() { 
         return ( 
-            <div onClick={this.props.onClick} className={this.props.data ? "Block_On"  : "Block"}>{this.refresh}</div>
+            <div onClick={this.props.onClick} className={this.props.data ? "Block_On"  : "Block"} />
 
 
     

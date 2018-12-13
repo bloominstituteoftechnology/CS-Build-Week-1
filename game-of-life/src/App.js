@@ -74,9 +74,9 @@ class App extends Component {
   }
 
   async gameLoop() {
+    this.setState({view : [...this.state.grid]})
     while (this.state.play === 1) {
       await this.sleep(2000);
-      this.setState({view : [...this.state.grid]})
     }
   }
 
@@ -143,6 +143,7 @@ class App extends Component {
           onClick={null}
           data={element}
           grid={this.state.grid}
+          gridSetup={this.gridSetup}
         />
       );
     }
