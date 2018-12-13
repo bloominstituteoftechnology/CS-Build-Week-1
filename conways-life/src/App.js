@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Cell from './components/cell';
+import Switch from 'react-switch';
 import './App.scss';
 
 class App extends Component {
@@ -19,7 +20,8 @@ class App extends Component {
       speed: 1500, // in milliseconds
       deadCells: 0,
       bornCells: 0,
-      totalLiveCells: 0
+      totalLiveCells: 0,
+      showBirthDeath: true
     };
   }
 
@@ -41,7 +43,12 @@ class App extends Component {
 
     // push all cell objects into grid structure
     for (let i = 0; i < this.state.totalCells; i++) {
-      grid.push({ isAlive: false, neighbors: [], color: this.emptyColor });
+      grid.push({
+        isAlive: false,
+        neighbors: [],
+        color: this.emptyColor,
+        altColor: this.emptyColor
+      });
     }
 
     // give each edge cell an edge property
@@ -105,21 +112,50 @@ class App extends Component {
         grid.push({ ...cell });
       });
 
-      if (grid[id].isAlive && grid[id].color === this.bornColor) {
-        grid[id].color = this.liveColor;
-        bornCells--;
-      } else if (grid[id].isAlive && grid[id].color === this.liveColor) {
-        grid[id].isAlive = !grid[id].isAlive;
-        grid[id].color = this.deadColor;
-        deadCells++;
-        totalLiveCells--;
-      } else if (!grid[id].isAlive && grid[id].color === this.deadColor) {
-        grid[id].color = this.emptyColor;
+      if (this.state.showBirthDeath) {
+        if (grid[id].color === this.bornColor) {
+          grid[id].color = this.liveColor;
+          grid[id].altColor = this.liveColor;
+          bornCells--;
+        } else if (grid[id].color === this.liveColor) {
+          grid[id].isAlive = !grid[id].isAlive;
+          grid[id].color = this.deadColor;
+          grid[id].altColor = this.emptyColor;
+          deadCells++;
+          totalLiveCells--;
+        } else if (grid[id].color === this.deadColor) {
+          grid[id].color = this.emptyColor;
+          grid[id].altColor = this.emptyColor;
+          deadCells--;
+        } else {
+          grid[id].isAlive = !grid[id].isAlive;
+          grid[id].color = this.bornColor;
+          grid[id].altColor = this.liveColor;
+          bornCells++;
+          totalLiveCells++;
+        }
       } else {
-        grid[id].isAlive = !grid[id].isAlive;
-        grid[id].color = this.bornColor;
-        bornCells++;
-        totalLiveCells++;
+        if (grid[id].altColor === this.liveColor) {
+          grid[id].isAlive = false;
+          grid[id].altColor = this.emptyColor;
+          totalLiveCells--;
+
+          if (grid[id].color === this.bornColor) {
+            bornCells--;
+          }
+
+          grid[id].color = this.emptyColor;
+        } else if (grid[id].altColor === this.emptyColor) {
+          grid[id].isAlive = true;
+          grid[id].altColor = this.liveColor;
+          totalLiveCells++;
+
+          if (grid[id].color === this.deadColor) {
+            deadCells--;
+          }
+
+          grid[id].color = this.liveColor;
+        }
       }
 
       if (this.state.currGen === 0) {
@@ -156,6 +192,8 @@ class App extends Component {
       grid[i].isAlive = randomNum === 0 ? true : false;
       if (grid[i].isAlive) {
         grid[i].color = this.bornColor;
+        grid[i].altColor = this.liveColor;
+
         bornCells++;
         totalLiveCells++;
       } else {
@@ -206,6 +244,7 @@ class App extends Component {
 
         grid[i].isAlive = false;
         grid[i].color = this.deadColor;
+        grid[i].altColor = this.emptyColor;
       }
       // set to living cell
       else if (
@@ -216,6 +255,7 @@ class App extends Component {
           bornCells--;
         }
         grid[i].color = this.liveColor;
+        grid[i].altColor = this.liveColor;
       }
       // Newly born cell
       else if (!this.state.grid[i].isAlive && activeNeighbors === 3) {
@@ -224,6 +264,7 @@ class App extends Component {
         }
         grid[i].isAlive = true;
         grid[i].color = this.bornColor;
+        grid[i].altColor = this.liveColor;
         bornCells++;
         totalLiveCells++;
       }
@@ -234,6 +275,7 @@ class App extends Component {
         this.state.grid[i].color === this.deadColor
       ) {
         grid[i].color = this.emptyColor;
+        grid[i].altColor = this.emptyColor;
         deadCells--;
       }
     }
@@ -255,8 +297,7 @@ class App extends Component {
         currGen: this.state.currGen + 1,
         bornCells: bornCells,
         deadCells: deadCells,
-        totalLiveCells: totalLiveCells,
-        isClickable: false
+        totalLiveCells: totalLiveCells
       });
     }
   };
@@ -264,6 +305,7 @@ class App extends Component {
   playSimulation = event => {
     event.preventDefault();
     this.intervalId = setInterval(this.calculateNextGen, this.state.speed);
+    this.setState({ isClickable: false });
   };
 
   pauseSimulation = event => {
@@ -275,7 +317,10 @@ class App extends Component {
   };
 
   gridResetHandler = event => {
-    event.preventDefault();
+    if (event !== undefined) {
+      event.preventDefault();
+    }
+
     clearInterval(this.intervalId);
     this.intervalId = null;
     let grid = [];
@@ -285,7 +330,8 @@ class App extends Component {
 
     for (let i = 0; i < this.state.totalCells; i++) {
       grid[i].isAlive = false;
-      grid[i].color = 'white';
+      grid[i].color = this.emptyColor;
+      grid[i].altColor = this.emptyColor;
     }
 
     this.setState({
@@ -299,12 +345,23 @@ class App extends Component {
   };
 
   speedToggleHandler = event => {
+    let speed = parseInt(event.target.value);
+
     if (this.intervalId != null) {
       clearInterval(this.intervalId);
-      this.intervalId = setInterval(this.calculateNextGen, event.target.value);
-      this.setState({ speed: event.target.value });
+      this.intervalId = setInterval(this.calculateNextGen, speed);
+      this.setState({ speed: speed });
     } else {
-      this.setState({ speed: event.target.value });
+      this.setState({ speed: speed });
+    }
+  };
+
+  showBirthDeathToggler = () => {
+    if (this.state.currGen !== 0) {
+      this.gridResetHandler();
+      this.setState({ showBirthDeath: !this.state.showBirthDeath });
+    } else {
+      this.setState({ showBirthDeath: !this.state.showBirthDeath });
     }
   };
 
@@ -324,7 +381,7 @@ class App extends Component {
                 <Cell
                   key={value}
                   id={value}
-                  color={cell.color}
+                  color={this.state.showBirthDeath ? cell.color : cell.altColor}
                   isClickable={this.state.isClickable}
                   cellClickHandler={this.cellClickHandler}
                 />
@@ -340,9 +397,8 @@ class App extends Component {
               </button>
               <button
                 type="button"
-                onClick={() =>
-                  (this.intervalId = setInterval(this.calculateNextGen, 1000))
-                }
+                onClick={this.playSimulation}
+                disabled={this.state.isClickable ? false : true}
               >
                 Play
               </button>
@@ -363,8 +419,8 @@ class App extends Component {
                 <h3>SPEED: </h3>
                 <button
                   type="button"
-                  value={2250}
-                  className={this.state.speed === 2250 ? 'speed-active' : ''}
+                  value={3000}
+                  className={this.state.speed === 3000 ? 'speed-active' : ''}
                   onClick={this.speedToggleHandler}
                 >
                   0.5x
@@ -383,7 +439,7 @@ class App extends Component {
                   className={this.state.speed === 750 ? 'speed-active' : ''}
                   onClick={this.speedToggleHandler}
                 >
-                  1.5x
+                  2x
                 </button>
               </div>
             </div>
@@ -409,6 +465,16 @@ class App extends Component {
               <p>Total Live Cells: {this.state.totalLiveCells}</p>
               <p>Born Cells: {this.state.bornCells}</p>
               <p>Dead Cells: {this.state.deadCells}</p>
+            </div>
+            <div className="switch-ctn">
+              <label htmlFor="bdSwitch" />
+              <Switch
+                id="bdSwitch"
+                checked={this.state.showBirthDeath}
+                onChange={this.showBirthDeathToggler}
+                disabled={this.state.isClickable ? false : true}
+              />
+              <p>Display Birth/Death States</p>
             </div>
           </div>
           <div className="about-game">

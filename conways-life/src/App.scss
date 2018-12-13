@@ -138,6 +138,21 @@ body {
         padding: 0.5rem 0;
       }
     }
+
+    .switch-ctn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-top: 3rem;
+      padding: 3rem 0;
+
+      p {
+        display: inline-block;
+        padding: 0 1.5rem;
+        font-size: 1.8rem;
+      }
+    }
   }
 
   .about-game {
