@@ -1,5 +1,5 @@
 {
-  "homepage": "https://<github-username>.github.io/<github-repo-name>/",
+  "homepage": "https://jordan-massingill.github.io/Conways-Life/",
   "name": "game-of-life",
   "version": "0.1.0",
   "private": true,
@@ -16,7 +16,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",   
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
