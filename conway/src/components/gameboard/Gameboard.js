@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 
 import Typography from "@material-ui/core/Typography";
+import Drawer from "@material-ui/core/Drawer";
 
 import Gamecontrols from "./Gamecontrols";
+import Gamemenu from './Gamemenu';
 
 class Gameboard extends Component {
   state = {
@@ -12,7 +14,8 @@ class Gameboard extends Component {
     playing: false,
     timer: 125,
     timerID: null,
-    generations: 0
+    generations: 0,
+    menu: false
   };
 
   //notes
@@ -149,10 +152,8 @@ class Gameboard extends Component {
     this.setState({ timer: val }, () => this.toggleGame());
   };
 
-  skipForward = num => {
-    for (let i = 0; i < num; i++) {
-      this.calculateNextLife();
-    }
+  toggleMenu = () => {
+    this.setState(prev => ({ menu: !prev.menu }));
   };
 
   render() {
@@ -176,10 +177,18 @@ class Gameboard extends Component {
           changeSpeed={this.changeSpeed}
           playing={playing}
           toggleGame={this.toggleGame}
-          skip={this.skipForward}
+          skip={this.calculateNextLife}
+          open={this.toggleMenu}
           clear={this.clearBoard}
           random={this.randomizeBoard}
         />
+        <Drawer
+          anchor="bottom"
+          open={this.state.menu}
+          onClose={this.toggleMenu}
+        >
+          <Gamemenu />
+        </Drawer>
       </React.Fragment>
     );
   }

@@ -27,6 +27,7 @@ const Gamecontrols = ({
   playing,
   toggleGame,
   skip,
+  open,
   clear,
   random,
   classes
@@ -43,7 +44,7 @@ const Gamecontrols = ({
         <Fab
           color="primary"
           disabled={playing}
-          onClick={() => skip(1)}
+          onClick={skip}
         >
           {" "}
           >{" "}
@@ -51,10 +52,9 @@ const Gamecontrols = ({
         <Fab
           color="primary"
           disabled={playing}
-          onClick={() => skip(5)}
+          onClick={() => open()}
         >
-          {" "}
-          >>{" "}
+          Help
         </Fab>
         <Fab
           color="primary"
