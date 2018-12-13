@@ -13,54 +13,65 @@
 
 // checking the neighbord to see if they are alive
 export const checkingNeighbors = (grid, x, y) => {
-    console.log(`x: ${x} y: ${y}`);
-    let neighbors = 0;
+  let neighbors = 0;
+  /*
+      0 1 2
+    0 x x x
+    1 x o x
+    2 x x x
+    */
 
-    const north = grid[y - 1][x];
-    const east = grid[y][x + 1];
-    const northEast = grid[y - 1][x + 1];
-    const southEast = grid[y + 1][x + 1];
-    const south = grid[y + 1][x];
-    const southWest = grid[y - 1][x - 1];
-    const west = grid[y][x - 1];
-    const northWest = grid[y - 1][x - 1];
-    
-  if (y === 0 && x === 0) { //checks top left corner
+  /*
+    const grid[y - 1][x] = grid[y - 1][x];
+    const grid[y][x + 1] = grid[y][x + 1];
+    const grid[y - 1][x + 1] = grid[y - 1][x + 1];
+    const grid[y + 1][x + 1] = grid[y + 1][x + 1];
+    const grid[y + 1][x] = grid[y + 1][x];
+    const grid[y + 1][x - 1] = grid[y + 1][x - 1];
+    const grid[y][x - 1] = grid[y][x - 1];
+    const grid[y - 1][x - 1] = grid[y - 1][x - 1];
+    */
+
+  if (y === 0 && x === 0) {
+    //checks top left corner
     // only check
     // E
     // SE
     // S
-    neighbors += east // E
-    neighbors += southEast // SE
-    neighbors += south // S
-  } else if (y === 0 && x === grid[0].length - 1) { //top right corner
+    neighbors += grid[y][x + 1]; // E
+    neighbors += grid[y + 1][x + 1]; // SE
+    neighbors += grid[y + 1][x]; // S
+  } else if (y === 0 && x === grid[0].length - 1) {
+    //top right corner
     // only check
     // W
     // SW
     // S
 
-    neighbors += south // S
-    neighbors += southWest // SW
-    neighbors += west // W
-
-  } else if (y === grid.length - 1 && x === grid[0].length - 1) { //bottom right corner
+    neighbors += grid[y + 1][x]; // S
+    neighbors += grid[y + 1][x - 1]; // SW
+    neighbors += grid[y][x - 1]; // W
+  } else if (y === grid.length - 1 && x === grid[0].length - 1) {
+    //bottom right corner
     // only check
     // N
     // w
     // NW
-    neighbors +=  north // N
-    neighbors +=  west// W
-    neighbors +=  northWest// NW
-  } else if (y === grid.length - 1 && x === 0) {// bottom left corner
+    neighbors += grid[y - 1][x]; // N
+    neighbors += grid[y][x - 1]; // W
+    neighbors += grid[y - 1][x - 1]; // NW
+  } else if (y === grid.length - 1 && x === 0) {
+    // bottom left corner
     // check
     // n
     // NE
     // E
 
-    neighbors += north // N
-    neighbors +=  northEast// NE
-    neighbors += east // E
-  } else if (x === 0) { // left side
+    neighbors += grid[y - 1][x]; // N
+    neighbors += grid[y - 1][x + 1]; // NE
+    neighbors += grid[y][x + 1]; // E
+  } else if (x === 0) {
+    // left side
     // only check
     // N  1, 0 (    x, y - 1)
     // NE 2, 0 (x + 1, y - 1)
@@ -68,26 +79,26 @@ export const checkingNeighbors = (grid, x, y) => {
     // SE 2, 2 (x + 1, y + 1)
     // S  1, 2
 
-    neighbors += north // N
-    neighbors += northEast // NE
-    neighbors += east // E
-    neighbors += southEast // SE
-    neighbors += south // S
-
-} else if (x === grid[0].length - 1) { //right side 
+    neighbors += grid[y - 1][x]; // N
+    neighbors += grid[y - 1][x + 1]; // NE
+    neighbors += grid[y][x + 1]; // E
+    neighbors += grid[y + 1][x + 1]; // SE
+    neighbors += grid[y + 1][x]; // S
+  } else if (x === grid[0].length - 1) {
+    //right side
     // S  1, 2
     // SW 0, 2
     // W  0, 1
     // NW 0, 0
     // N  1, 0 (    x, y - 1)
 
-    neighbors += north // N
-    neighbors += south // S
-    neighbors += southWest // SW
-    neighbors += west // W
-    neighbors += northWest // NW
-  
-} else if (y === grid.length - 1) { // south/bottom side 
+    neighbors += grid[y - 1][x]; // N
+    neighbors += grid[y + 1][x]; // S
+    neighbors += grid[y + 1][x - 1]; // SW
+    neighbors += grid[y][x - 1]; // W
+    neighbors += grid[y - 1][x - 1]; // NW
+  } else if (y === grid.length - 1) {
+    // grid[y + 1][x]/bottom side
     // only check
     // W  0, 1
     // NW 0, 0
@@ -95,33 +106,32 @@ export const checkingNeighbors = (grid, x, y) => {
     // NE 2, 0 (x + 1, y - 1)
     // E  2, 1 (x + 1,     y)
 
-    neighbors += north // N
-    neighbors += northEast // NE
-    neighbors += east // E
-    neighbors += northWest // NW
-    neighbors += west // W
-
-  } else if (y === 0) { //north/top side
+    neighbors += grid[y - 1][x]; // N
+    neighbors += grid[y - 1][x + 1]; // NE
+    neighbors += grid[y][x + 1]; // E
+    neighbors += grid[y - 1][x - 1]; // NW
+    neighbors += grid[y][x - 1]; // W
+  } else if (y === 0) {
+    //grid[y - 1][x]/top side
     // only check
     //     E  2, 1 (x + 1,     y)
     // SE 2, 2 (x + 1, y + 1)
     // S  1, 2
     // SW 0, 2
     // W  0, 1
-    neighbors += east // E
-    neighbors += southEast // SE
-    neighbors += south // S
+    neighbors += grid[y][x + 1]; // E
+    neighbors += grid[y + 1][x + 1]; // SE
+    neighbors += grid[y + 1][x]; // S
   } else {
     // check all of them
-    console.log("ERROR THREAT");
-    neighbors += north // N
-    neighbors += northEast // NE
-    neighbors += east // E
-    neighbors += southEast // SE
-    neighbors += south // S
-    neighbors += southWest // SW
-    neighbors += west // W
-    neighbors += northWest // NW
+    neighbors += grid[y - 1][x]; // N
+    neighbors += grid[y - 1][x + 1]; // NE
+    neighbors += grid[y][x + 1]; // E
+    neighbors += grid[y + 1][x + 1]; // SE
+    neighbors += grid[y + 1][x]; // S
+    neighbors += grid[y + 1][x - 1]; // SW
+    neighbors += grid[y][x - 1]; // W
+    neighbors += grid[y - 1][x - 1]; // NW
   }
 
   return neighbors; // this will return a number
@@ -135,9 +145,8 @@ export const checkingNeighbors = (grid, x, y) => {
 // Any live cell with more than three live neighbors dies, as if by overpopulation
 // Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
 
-
 // possibly use map nested in the for loop to output another array
-export const fourRules = (grid) => {
+export const fourRules = grid => {
   // create new output array, and will alternate between arrays
   let newGrid = [...Array(15)].map(e => Array(15).fill(0));
   let neighbors = 0;
@@ -146,17 +155,26 @@ export const fourRules = (grid) => {
     for (let x = 0; x < grid[y].length; x++) {
       // each cell, check how many neighbors are alive
       neighbors = checkingNeighbors(grid, x, y);
-      // if 2 or less that cell will die && if more than three
-      if (neighbors <= 2 || neighbors > 3) {
-        newGrid[y][x] = 0;
-      }
-      // if 3 exactly then that cell will live/become alive
-      if (neighbors === 3) {
-        newGrid[y][x] = 1;
-      }
+      //   // if 2 or less that cell will die && if more than three
+      //   if (neighbors < 2 || neighbors > 3) {
+      //     newGrid[y][x] = 0;
+      //   }
+      //   // if 3 exactly then that cell will live/become alive
+
+      //   if (neighbors === 3 && grid[y][x] === 1) {
+      //     newGrid[y][x] = 1;
+      //   }
+      //   if (neighbors === 3){
+      //     newGrid[y][x] = 1;
+      //   }
       // else don't change the state of the current cell
+      if (grid[y][x]) {
+        newGrid[y][x] = neighbors === 2 || neighbors === 3 ? 1 : 0;
+      }
+      else {
+        newGrid[y][x] = neighbors === 3 ? 1 : 0;
+      }
     }
   }
-
   return newGrid;
 };

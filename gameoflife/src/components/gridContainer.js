@@ -74,6 +74,7 @@ class GridContainer extends Component {
           ctx.fillRect(x * w, y * h, w, h);
         } else {
           ctx.clearRect(x * w, y * h, w, h);
+          ctx.strokeRect(x * w, y * h, w, h);
         }
       }
     }
@@ -155,8 +156,10 @@ class GridContainer extends Component {
   // Run function
   runGame = (event) => {
     // checkingNeighbors(this.state.grid, );
-    this.setState({ grid: fourRules(this.state.grid)});
-    this.aliveCheck();
+    this.setState({ grid: fourRules(this.state.grid)}, () => {
+      this.aliveCheck();
+    });
+    // this.aliveCheck();
 
   };
 
