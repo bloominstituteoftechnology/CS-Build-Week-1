@@ -170,6 +170,9 @@ class App extends Component {
 
   pauseButton = () => {
     clearInterval(this.intervalId);
+    this.setState({
+      isPlaying: false
+    });
   };
 
   slowButton = () => {
