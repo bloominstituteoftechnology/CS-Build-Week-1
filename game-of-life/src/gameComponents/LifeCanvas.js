@@ -111,7 +111,8 @@ class LifeCanvas extends Component{
             <p className='generationHeader'>Current generation: {this.state.generation}</p>
             <div className='button-container'>
               <button className='btn waves-effect waves-light' onClick={()=>this.oneStep()}>Step</button>
-              <button className='btn waves-effect waves-light' onClick={()=>{this.myreq=requestAnimationFrame(this.animate)}}>Start</button>
+              <button className='btn waves-effect waves-light' 
+              onClick={()=>{if (!this.myreq && !this.start) {this.myreq=requestAnimationFrame(this.animate)}}}>Start</button>
               <button className='btn waves-effect waves-light' onClick={()=>this.stopAnimation()}>Stop</button>
               <button className='btn waves-effect waves-light' onClick={()=>this.clear()}>Clear</button>
             </div>

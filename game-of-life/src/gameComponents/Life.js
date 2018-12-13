@@ -56,5 +56,28 @@ const Life=class{
         }
       }
     }
+    createRPentomino() {
+      this.createBlankGrid();
+      this.grid[19][11]=1;
+      this.grid[18][11]=1;
+      this.grid[18][12]=1;
+      this.grid[18][13]=1;
+      this.grid[17][12]=1;
+    }
+    createQueenBee(){
+      this.createBlankGrid();
+      this.grid[9][10]=1;
+      this.grid[9][11]=1;
+      this.grid[9][15]=1;
+      this.grid[9][16]=1;
+      this.grid[10][12]=1;
+      this.grid[10][13]=1;
+      this.grid[10][14]=1;
+      this.grid[11][11]=1;
+      this.grid[12][12]=1;
+      this.grid[13][13]=1;
+      this.grid[12][14]=1;
+      this.grid[11][15]=1;
+    }
 }
 export default Life;
