@@ -15,7 +15,11 @@ const styles = theme => ({
   btns: {
     width: "100%",
     display: "flex",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
+    marginBottom: "20px"
+  },
+  slider: {
+    marginBottom: "20px"
   }
 });
 
@@ -35,45 +39,34 @@ const Gamecontrols = ({
   return (
     <div className={classes.root}>
       <div className={classes.btns}>
-        <Fab
-          color={playing ? "secondary" : "primary"}
-          onClick={toggleGame}
-        >
+        <Fab color={playing ? "secondary" : "primary"} onClick={toggleGame}>
           {playing ? "Pause" : "Play"}
         </Fab>
-        <Fab
-          color="primary"
-          disabled={playing}
-          onClick={skip}
-        >
+        <Fab color="primary" disabled={playing} onClick={skip}>
           {" "}
           >{" "}
         </Fab>
-        <Fab
-          color="primary"
-          disabled={playing}
-          onClick={() => open()}
-        >
+        <Fab color="primary" disabled={playing} onClick={() => open()}>
           Help
         </Fab>
-        <Fab
-          color="primary"
-          disabled={playing}
-          onClick={clear}
-        >
+        <Fab color="primary" disabled={playing} onClick={clear}>
           Clear
         </Fab>
-        <Fab
-          color="primary"
-          disabled={playing}
-          onClick={random}
-        >
+        <Fab color="primary" disabled={playing} onClick={random}>
           Random
         </Fab>
       </div>
-      <Typography id="slider-speed">Speed</Typography>
-      <Slider min={250} max={0.05} value={speed} onChange={changeSpeed} />
-      <Typography id="slider-size">Board Size</Typography>
+      <Typography className={classes.slider}>Speed</Typography>
+      <Slider
+        min={250}
+        max={0.05}
+        value={speed}
+        onChange={changeSpeed}
+        className={classes.slider}
+      />
+      <Typography className={classes.slider}>
+        Board Size (Overwrites current pattern with random pattern on change!)
+      </Typography>
       <Slider
         min={15}
         max={135}
@@ -81,6 +74,7 @@ const Gamecontrols = ({
         value={size}
         onChange={changeSize}
         disabled={playing}
+        className={classes.slider}
       />
     </div>
   );

@@ -88,7 +88,8 @@ class Gamemenu extends Component {
               This implementation is fairly basic. The play button starts and
               stops the animation. Only the speed may be changed while playing.
               When the animation is not running click a cell to toggle between
-              alive and dead.
+              alive and dead. The board is not infinite, or looping. Anything
+              outside the bounds of the game board is considered dead.
             </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>

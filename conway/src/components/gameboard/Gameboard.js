@@ -164,7 +164,7 @@ class Gameboard extends Component {
           Generation: {this.state.generations}
         </Typography>
         <canvas
-          style={{ border: "1px solid black" }}
+          style={{ border: "1px solid black", marginBottom: '20px' }}
           ref="canvas"
           width={this.state.canvasSize}
           height={this.state.canvasSize}
