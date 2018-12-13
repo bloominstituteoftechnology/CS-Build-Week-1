@@ -5,21 +5,21 @@ class App extends Component {
   state = {
     matrix: {},
     //grid set up
-    matrixMirror : {}, 
+    matrixMirror: {},
     matrixUsing: [],
-    mirror: [], 
+    mirror: [],
     row_count: 15, //default
     col_count: 15, //default
 
     width: "330px",
-    //presets 
+    //presets
     //cell choices
     if_one_color: "black",
     if_zero_color: "white",
     //game instructions
     gameRunning: false,
     generation: 0,
-    gameSpeed: 125, 
+    gameSpeed: 125
   };
 
   componentWillMount() {
@@ -27,34 +27,31 @@ class App extends Component {
   }
 
   reset = () => {
-    this.setState({generation: 0, gameRunning: false}); 
+    this.setState({ generation: 0, gameRunning: false });
     this.updateRowCol();
-  }
+  };
 
   generateRandom = () => {
     const keys = Object.keys(this.state.matrix);
-    const matrix = {...this.state.matrixMirror};//creates a copy 
+    const matrix = { ...this.state.matrixMirror }; //creates a copy
 
-    for(let i = 0; i< keys.length; i++){
-      for(let j = 0; j<matrix[i].length; j++){
-        const grabRandom = Math.random(); 
-        const convertToNumber = (grabRandom *2);
-    
-        const floorNumber =Math.floor(convertToNumber);
-    
+    for (let i = 0; i < keys.length; i++) {
+      for (let j = 0; j < matrix[i].length; j++) {
+        const grabRandom = Math.random();
+        const convertToNumber = grabRandom * 2;
+
+        const floorNumber = Math.floor(convertToNumber);
+
         if (floorNumber === 1) {
-          matrix[i][j] = 1; 
-          
+          matrix[i][j] = 1;
         } else {
-          matrix[i][j] = 0; 
+          matrix[i][j] = 0;
         }
       }
     }
-    this.setState({matrix});
+    this.setState({ matrix });
     this.continueWithGame();
-    
-
-  }
+  };
 
   setMatrixUp = () => {
     const matrixUsing = [];
@@ -82,7 +79,7 @@ class App extends Component {
         temp_hash.row = Number(entry[0]);
         temp_hash.position_in_row = count % this.state.col_count;
         temp_hash.actual_number = count;
-        temp_hash.value = x; //just to get rid of the warning. 
+        temp_hash.value = x; //just to get rid of the warning.
         matrixUsing.push(temp_hash);
         count++;
       }
@@ -90,14 +87,20 @@ class App extends Component {
     const width_size = 22 * this.state.col_count;
     const width = `${width_size}px`;
 
-    this.setState({ matrix, matrixUsing, width, matrixMirror: matrix, mirror: matrixUsing });
-    return true; // means its finished. 
+    this.setState({
+      matrix,
+      matrixUsing,
+      width,
+      matrixMirror: matrix,
+      mirror: matrixUsing
+    });
+    return true; // means its finished.
   };
   continueWithGame = () => {
     const matrixUsing = [];
-    const matrix = {...this.state.matrix};//creates a copy
+    const matrix = { ...this.state.matrix }; //creates a copy
     let count = 0;
-    
+
     Object.entries(matrix).forEach(entry => {
       for (let x of entry[1]) {
         const temp_hash = {
@@ -109,15 +112,14 @@ class App extends Component {
         temp_hash.row = Number(entry[0]);
         temp_hash.position_in_row = count % this.state.col_count;
         temp_hash.actual_number = count;
-        temp_hash.value = x; //just to get rid of the warning. 
+        temp_hash.value = x; //just to get rid of the warning.
         matrixUsing.push(temp_hash);
         count++;
       }
     });
-    
 
-    this.setState({ matrix, matrixUsing});
-  }
+    this.setState({ matrix, matrixUsing });
+  };
 
   manualTurnOnOrOff = (row, position_in_row) => {
     //Just add 1 to the % of 2  it will provide 0 or 1. The conditional is already set up on the div to set the div to the correct class based off the value
@@ -157,35 +159,41 @@ class App extends Component {
     this.setMatrixUp();
   };
 
-  //CURRENTLY WORKING ON THIS FUNCTION   
+  //CURRENTLY WORKING ON THIS FUNCTION
   runGamne = () => {
     //functionaly for gameplay goes here
-    const matrix = this.state.matrixUsing.slice(); 
-    const state_matrix = {...this.state.matrix};//creates a copy 
-    
-    let i = 0; 
+    const matrix = this.state.matrixUsing.slice();
+    const state_matrix = { ...this.state.matrix }; //creates a copy
 
-    for(; i<matrix.length; i++){
+    let i = 0;
 
-        let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
-        let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
-        if (current_cell_alive){
-          if(aliveNeighbors < 2 || aliveNeighbors > 3){
-            //kill the cell that is currently alive. 
-            state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
-          }
-        } else {
-          if(aliveNeighbors ===3){
-            //resurrect the currently dead cell. 
-            state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
-            
-          }
+    for (; i < matrix.length; i++) {
+      let aliveNeighbors = this.findLiveNeighbors({
+        row: matrix[i].row,
+        position_in_row: matrix[i].position_in_row
+      });
+      let current_cell_alive =
+        this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1
+          ? true
+          : false;
+      if (current_cell_alive) {
+        if (aliveNeighbors < 2 || aliveNeighbors > 3) {
+          //kill the cell that is currently alive.
+          state_matrix[matrix[i].row][matrix[i].position_in_row] = 0;
         }
-        
+      } else {
+        if (aliveNeighbors === 3) {
+          //resurrect the currently dead cell.
+          state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
+        }
+      }
     }
-    
-    this.setState(prevState => ({matrix: state_matrix, generation: prevState.generation + 1}));
-    this.continueWithGame();  
+
+    this.setState(prevState => ({
+      matrix: state_matrix,
+      generation: prevState.generation + 1
+    }));
+    this.continueWithGame();
   };
 
   startTheGame = () => {
@@ -193,50 +201,55 @@ class App extends Component {
     console.log(this.state.gameRunning);
     if (this.state.gameRunning === false) {
       // let intervalRef = setInterval(this.runGamne(), 1000); will only run one time. Not a loop.
-      let intervalRef = setInterval(() => this.runGamne(), this.state.gameSpeed);
-      this.setState(
-        {
-          gameRunning: true,
-          intervalRef
-        });
+      let intervalRef = setInterval(
+        () => this.runGamne(),
+        this.state.gameSpeed
+      );
+      this.setState({
+        gameRunning: true,
+        intervalRef
+      });
     }
   };
   stopTheGame = () => {
     // //Function will stop the game.
     clearInterval(this.state.intervalRef);
-    this.setState(prevState => ({gameRunning: !prevState.gameRunning}) );
+    this.setState(prevState => ({ gameRunning: !prevState.gameRunning }));
   };
 
   nextGeneration = () => {
     //functionaly for gameplay goes here
-    const matrix = this.state.matrixUsing.slice(); 
-    const state_matrix = {...this.state.matrix};//creates a copy 
-    
-    
+    const matrix = this.state.matrixUsing.slice();
+    const state_matrix = { ...this.state.matrix }; //creates a copy
 
-    for(let i = 0; i<matrix.length; i++){
-
-        let aliveNeighbors = this.findLiveNeighbors({row: matrix[i].row, position_in_row: matrix[i].position_in_row});
-        let current_cell_alive = this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1 ? true : false; 
-        if (current_cell_alive){
-          if(aliveNeighbors < 2 || aliveNeighbors > 3){
-            //kill the cell that is currently alive. 
-            state_matrix[matrix[i].row][matrix[i].position_in_row] = 0; 
-
-          }
-        } else {
-          if(aliveNeighbors ===3){
-            //resurrect the currently dead cell. 
-            state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
-          }
+    for (let i = 0; i < matrix.length; i++) {
+      let aliveNeighbors = this.findLiveNeighbors({
+        row: matrix[i].row,
+        position_in_row: matrix[i].position_in_row
+      });
+      let current_cell_alive =
+        this.state.matrix[matrix[i].row][matrix[i].position_in_row] === 1
+          ? true
+          : false;
+      if (current_cell_alive) {
+        if (aliveNeighbors < 2 || aliveNeighbors > 3) {
+          //kill the cell that is currently alive.
+          state_matrix[matrix[i].row][matrix[i].position_in_row] = 0;
         }
+      } else {
+        if (aliveNeighbors === 3) {
+          //resurrect the currently dead cell.
+          state_matrix[matrix[i].row][matrix[i].position_in_row] = 1;
+        }
+      }
     }
-    
-    this.setState(prevState => ({matrix: state_matrix, generation: prevState.generation + 1}));
-    this.continueWithGame();
-    
-  }
 
+    this.setState(prevState => ({
+      matrix: state_matrix,
+      generation: prevState.generation + 1
+    }));
+    this.continueWithGame();
+  };
 
   handleColorChangeIfZero = color => {
     this.setState({ if_zero_color: color });
@@ -245,8 +258,6 @@ class App extends Component {
   handleColorChangeIfOne = color => {
     this.setState({ if_one_color: color });
   };
-
-  
 
   findLiveNeighbors = position => {
     //find neighbors of the live cell to use the rules on.
@@ -272,203 +283,266 @@ class App extends Component {
     } else if (position.position_in_row === this.state.col_count - 1) {
       lookRight = false;
     }
-    if (lookUp){
+    if (lookUp) {
       if (this.state.matrix[position.row - 1][position.position_in_row] === 1) {
         totalAlive++;
       }
     }
 
-    if (lookDown){
+    if (lookDown) {
       if (this.state.matrix[position.row + 1][position.position_in_row] === 1) {
-          totalAlive++;
-      }
-    }
-
-    if (lookRight){
-      if (this.state.matrix[position.row][position.position_in_row + 1] === 1){
-         //next in line plus one//2
         totalAlive++;
       }
     }
 
-    if (lookLeft){
+    if (lookRight) {
+      if (this.state.matrix[position.row][position.position_in_row + 1] === 1) {
+        //next in line plus one//2
+        totalAlive++;
+      }
+    }
+
+    if (lookLeft) {
       if (this.state.matrix[position.row][position.position_in_row - 1] === 1) {
         //4
         totalAlive++;
       }
     }
 
-    if (lookUp && lookRight){
-      if (this.state.matrix[position.row - 1][position.position_in_row + 1] === 1 ) {
-        //3 
+    if (lookUp && lookRight) {
+      if (
+        this.state.matrix[position.row - 1][position.position_in_row + 1] === 1
+      ) {
+        //3
         totalAlive++;
       }
     }
 
-    if (lookUp && lookLeft){
-        //diagonal left up one minus one //5
-        if (this.state.matrix[position.row - 1][position.position_in_row - 1] === 1) {
-          totalAlive++;
-        }
-    }
-
-    if (lookDown && lookRight){
-      //down one to the right (plus one) //7
-      if (this.state.matrix[position.row + 1][position.position_in_row + 1] === 1) {
-          totalAlive++;
+    if (lookUp && lookLeft) {
+      //diagonal left up one minus one //5
+      if (
+        this.state.matrix[position.row - 1][position.position_in_row - 1] === 1
+      ) {
+        totalAlive++;
       }
     }
 
-    if(lookDown && lookLeft){
+    if (lookDown && lookRight) {
+      //down one to the right (plus one) //7
+      if (
+        this.state.matrix[position.row + 1][position.position_in_row + 1] === 1
+      ) {
+        totalAlive++;
+      }
+    }
+
+    if (lookDown && lookLeft) {
       //down one to the left (minus one) //8
-      if (this.state.matrix[position.row + 1][position.position_in_row - 1] === 1) { 
+      if (
+        this.state.matrix[position.row + 1][position.position_in_row - 1] === 1
+      ) {
         totalAlive++;
       }
     }
     return totalAlive;
   };
 
-  presetChange = (type) => {
-    
-    const finished = this.setMatrixUp();//will reset the grid before setting it up. 
-    
+  presetChange = type => {
+    const finished = this.setMatrixUp(); //will reset the grid before setting it up.
+
     let row_index = 0;
-    let col_index = 0; 
-    if (finished){
-      const matrix = {...this.state.matrixMirror};//creates a copy
-      if(Object.keys(matrix).length){
-        switch(type){
+    let col_index = 0;
+    if (finished) {
+      const matrix = { ...this.state.matrixMirror }; //creates a copy
+      if (Object.keys(matrix).length) {
+        switch (type) {
           case "Block":
-            this.setMatrixUp();//will reset the grid before setting it up. 
-            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
-            matrix[row_index][col_index] = 1; 
-            matrix[row_index-1][col_index] = 1; 
-            matrix[row_index-1][col_index-1] = 1; 
-            matrix[row_index][col_index - 1]  = 1; 
-            this.setState({matrix}, () => {this.continueWithGame()});
-            
+            this.setMatrixUp(); //will reset the grid before setting it up.
+            row_index =
+              this.state.row_count % 2 === 0
+                ? this.state.row_count / 2
+                : (this.state.row_count - 1) / 2;
+            col_index =
+              this.state.col_count % 2 === 0
+                ? this.state.col_count / 2
+                : (this.state.col_count - 1) / 2;
+            matrix[row_index][col_index] = 1;
+            matrix[row_index - 1][col_index] = 1;
+            matrix[row_index - 1][col_index - 1] = 1;
+            matrix[row_index][col_index - 1] = 1;
+            this.setState({ matrix }, () => {
+              this.continueWithGame();
+            });
+
             break;
           case "Beehive":
-            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
-            matrix[row_index][col_index] = 1; 
-            matrix[row_index][col_index-1] = 1; 
-            matrix[row_index -1][col_index-2] = 1;
-            matrix[row_index-2][col_index] = 1; 
-            matrix[row_index-2][col_index -1] = 1; 
-            matrix[row_index-1][col_index + 1] = 1;
-            
-            this.setState({matrix}, () => {this.continueWithGame()});
-            break; 
+            row_index =
+              this.state.row_count % 2 === 0
+                ? this.state.row_count / 2
+                : (this.state.row_count - 1) / 2;
+            col_index =
+              this.state.col_count % 2 === 0
+                ? this.state.col_count / 2
+                : (this.state.col_count - 1) / 2;
+            matrix[row_index][col_index] = 1;
+            matrix[row_index][col_index - 1] = 1;
+            matrix[row_index - 1][col_index - 2] = 1;
+            matrix[row_index - 2][col_index] = 1;
+            matrix[row_index - 2][col_index - 1] = 1;
+            matrix[row_index - 1][col_index + 1] = 1;
+
+            this.setState({ matrix }, () => {
+              this.continueWithGame();
+            });
+            break;
           case "Loaf":
-            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
-            matrix[row_index][col_index] = 1; 
-            matrix[row_index-1][col_index] = 1;
-            matrix[row_index+1][col_index-1] = 1;
-            matrix[row_index][col_index-2] =1;
-            matrix[row_index-1][col_index-3] = 1;
-            matrix[row_index-2][col_index-2] = 1;
-            matrix[row_index-2][col_index-1] = 1;
-            
-            this.setState({matrix}, () => {this.continueWithGame()});
+            row_index =
+              this.state.row_count % 2 === 0
+                ? this.state.row_count / 2
+                : (this.state.row_count - 1) / 2;
+            col_index =
+              this.state.col_count % 2 === 0
+                ? this.state.col_count / 2
+                : (this.state.col_count - 1) / 2;
+            matrix[row_index][col_index] = 1;
+            matrix[row_index - 1][col_index] = 1;
+            matrix[row_index + 1][col_index - 1] = 1;
+            matrix[row_index][col_index - 2] = 1;
+            matrix[row_index - 1][col_index - 3] = 1;
+            matrix[row_index - 2][col_index - 2] = 1;
+            matrix[row_index - 2][col_index - 1] = 1;
+
+            this.setState({ matrix }, () => {
+              this.continueWithGame();
+            });
             break;
           case "Boat":
-            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
-            matrix[row_index-1][col_index] = 1; 
-            matrix[row_index-1][col_index-2] = 1; 
-            matrix[row_index-2][col_index-2] = 1;
-            matrix[row_index-2][col_index-1] = 1; 
-            matrix[row_index][col_index - 1]  = 1;
-            this.setState({matrix}, () => {this.continueWithGame()});
-            break; 
+            row_index =
+              this.state.row_count % 2 === 0
+                ? this.state.row_count / 2
+                : (this.state.row_count - 1) / 2;
+            col_index =
+              this.state.col_count % 2 === 0
+                ? this.state.col_count / 2
+                : (this.state.col_count - 1) / 2;
+            matrix[row_index - 1][col_index] = 1;
+            matrix[row_index - 1][col_index - 2] = 1;
+            matrix[row_index - 2][col_index - 2] = 1;
+            matrix[row_index - 2][col_index - 1] = 1;
+            matrix[row_index][col_index - 1] = 1;
+            this.setState({ matrix }, () => {
+              this.continueWithGame();
+            });
+            break;
           case "Tub":
-            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
-            matrix[row_index-1][col_index] = 1; 
-            matrix[row_index-1][col_index-2] = 1; 
-            matrix[row_index-2][col_index-1] = 1; 
-            matrix[row_index][col_index - 1]  = 1; 
-            this.setState({matrix}, () => {this.continueWithGame()});
+            row_index =
+              this.state.row_count % 2 === 0
+                ? this.state.row_count / 2
+                : (this.state.row_count - 1) / 2;
+            col_index =
+              this.state.col_count % 2 === 0
+                ? this.state.col_count / 2
+                : (this.state.col_count - 1) / 2;
+            matrix[row_index - 1][col_index] = 1;
+            matrix[row_index - 1][col_index - 2] = 1;
+            matrix[row_index - 2][col_index - 1] = 1;
+            matrix[row_index][col_index - 1] = 1;
+            this.setState({ matrix }, () => {
+              this.continueWithGame();
+            });
             break;
           case "Jon":
             matrix[2][1] = 1;
             matrix[2][2] = 1;
-            matrix[2][3] = 1; 
-            matrix[3][3] = 1; 
-            matrix[4][3] = 1; 
-            matrix[5][3] = 1; 
-            matrix[6][3] = 1; 
-            matrix[6][2] = 1; 
-            matrix[6][1] = 1; 
-            matrix[6][0] = 1; 
-            matrix[5][0] = 1; 
+            matrix[2][3] = 1;
+            matrix[3][3] = 1;
+            matrix[4][3] = 1;
+            matrix[5][3] = 1;
+            matrix[6][3] = 1;
+            matrix[6][2] = 1;
+            matrix[6][1] = 1;
+            matrix[6][0] = 1;
+            matrix[5][0] = 1;
             //above is J
-            matrix[2][6] = 1; 
-            matrix[2][7] = 1; 
-            matrix[2][8] = 1; 
+            matrix[2][6] = 1;
+            matrix[2][7] = 1;
+            matrix[2][8] = 1;
             matrix[3][6] = 1;
-            matrix[4][6] = 1; 
-            matrix[5][6] = 1; 
-            matrix[6][6] = 1;  
-            matrix[6][7] = 1; 
-            matrix[6][8] = 1; 
-            matrix[5][8] = 1; 
-            matrix[4][8] = 1; 
-            matrix[3][8] = 1; 
+            matrix[4][6] = 1;
+            matrix[5][6] = 1;
+            matrix[6][6] = 1;
+            matrix[6][7] = 1;
+            matrix[6][8] = 1;
+            matrix[5][8] = 1;
+            matrix[4][8] = 1;
+            matrix[3][8] = 1;
             //above is o
-            matrix[2][11] = 1; 
-            matrix[2][12] = 1; 
-            matrix[2][13] = 1; 
-            matrix[3][11] = 1; 
-            matrix[4][11] = 1; 
-            matrix[5][11] = 1; 
-            matrix[6][11] = 1; 
-            matrix[3][13] = 1; 
-            matrix[4][13] = 1; 
-            matrix[5][13] = 1; 
-            matrix[6][13] = 1; 
-            this.setState({matrix}, () => {this.continueWithGame()});
-            break
+            matrix[2][11] = 1;
+            matrix[2][12] = 1;
+            matrix[2][13] = 1;
+            matrix[3][11] = 1;
+            matrix[4][11] = 1;
+            matrix[5][11] = 1;
+            matrix[6][11] = 1;
+            matrix[3][13] = 1;
+            matrix[4][13] = 1;
+            matrix[5][13] = 1;
+            matrix[6][13] = 1;
+            this.setState({ matrix }, () => {
+              this.continueWithGame();
+            });
+            break;
           case "Blinker 1":
-            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+            row_index =
+              this.state.row_count % 2 === 0
+                ? this.state.row_count / 2
+                : (this.state.row_count - 1) / 2;
+            col_index =
+              this.state.col_count % 2 === 0
+                ? this.state.col_count / 2
+                : (this.state.col_count - 1) / 2;
             matrix[row_index][col_index] = 1;
             matrix[row_index - 1][col_index] = 1;
-            matrix[row_index + 1][col_index] = 1; 
-    
-            this.setState({matrix}, () => {this.continueWithGame()});
+            matrix[row_index + 1][col_index] = 1;
+
+            this.setState({ matrix }, () => {
+              this.continueWithGame();
+            });
             break;
           case "Blinker 2":
-            row_index = this.state.row_count % 2 === 0 ? this.state.row_count / 2 : (this.state.row_count - 1) / 2; 
-            col_index = this.state.col_count % 2 === 0 ? this.state.col_count / 2 : (this.state.col_count - 1) / 2; 
+            row_index =
+              this.state.row_count % 2 === 0
+                ? this.state.row_count / 2
+                : (this.state.row_count - 1) / 2;
+            col_index =
+              this.state.col_count % 2 === 0
+                ? this.state.col_count / 2
+                : (this.state.col_count - 1) / 2;
             matrix[row_index][col_index] = 1;
-            matrix[row_index][col_index-1] = 1; 
-            matrix[row_index][col_index+1] = 1; 
-            this.setState({matrix}, () => {this.continueWithGame()});
+            matrix[row_index][col_index - 1] = 1;
+            matrix[row_index][col_index + 1] = 1;
+            this.setState({ matrix }, () => {
+              this.continueWithGame();
+            });
             break;
           default:
-            console.log("That type doesn't exist");//only for react warning purposes this won't actually hit. 
+            console.log("That type doesn't exist"); //only for react warning purposes this won't actually hit.
         }
       }
     }
-  }
+  };
 
   decrementSpeed = () => {
-    console.log("decrement");
-    if (this.state.gameSpeed > 125){
-      this.setState(prevState => ({gameSpeed : prevState.gameSpeed - 1}));
+    if (this.state.gameSpeed > 125) {
+      this.setState(prevState => ({ gameSpeed: prevState.gameSpeed - 1 }));
     }
-  }
+  };
 
   incrementSpeed = () => {
-    if (this.state.gameSpeed < 2000){
-      this.setState(prevState => ({gameSpeed : prevState.gameSpeed + 1}));
+    if (this.state.gameSpeed < 2000) {
+      this.setState(prevState => ({ gameSpeed: prevState.gameSpeed + 1 }));
     }
-  }
-
+  };
 
   render() {
     const matrix = this.state.matrixUsing.slice();
@@ -476,32 +550,31 @@ class App extends Component {
     return (
       <div className="container" style={{ width: this.state.width }}>
         <h2 className="titleApp">Conway's Game of Life</h2>
-        <p>Rules: 
-          •	If a cell is alive and it has exactly 2 or 3 living neighbors, it stays alive. 
-          
-          •	If a cell is dead and it has exactly 3 living neighbors, it rises again.
+        <p>
+          Rules: • If a cell is alive and it has exactly 2 or 3 living
+          neighbors, it stays alive. • If a cell is dead and it has exactly 3
+          living neighbors, it rises again.
         </p>
         <h4 className="titleApp">Generation : {this.state.generation}</h4>
         <div className="topButtons">
           <div>
-              <button onClick = {this.startTheGame}>Start</button>{" "}
-            </div>
-            <div>
-              <button onClick = {this.stopTheGame}>Stop</button>
-            </div>
-            <div>
-              <button onClick={this.reset}>Clear</button>
-            </div>
-            <div>
-              <button onClick = {this.generateRandom}>Random</button>
-            </div>
-            <div>
-              <button onClick = {this.nextGeneration}>Next</button>
-            </div>
-            <br/>
-            <br/>
-            <br/>
-        
+            <button onClick={this.startTheGame}>Start</button>{" "}
+          </div>
+          <div>
+            <button onClick={this.stopTheGame}>Stop</button>
+          </div>
+          <div>
+            <button onClick={this.reset}>Clear</button>
+          </div>
+          <div>
+            <button onClick={this.generateRandom}>Random</button>
+          </div>
+          <div>
+            <button onClick={this.nextGeneration}>Next</button>
+          </div>
+          <br />
+          <br />
+          <br />
         </div>
         {matrix.map((hash, id) => (
           <div
@@ -509,7 +582,6 @@ class App extends Component {
             onClick={() =>
               this.manualTurnOnOrOff(hash.row, hash.position_in_row)
             }
-            
             style={{
               background:
                 this.state.matrix[hash.row][hash.position_in_row] === 0
@@ -532,23 +604,21 @@ class App extends Component {
 
         <div>
           <h5>Presets</h5>
-          <div className = "presetsDiv">
-            
-            <p onClick = {() => this.presetChange("Block")}>Block</p>
-            <p onClick = {() => this.presetChange("Beehive")}>Beehive</p>
-            <p onClick = {() => this.presetChange("Loaf")}>Loaf</p>
-            <p onClick = {() => this.presetChange("Boat")}>Boat</p>
-            <p onClick = {() => this.presetChange("Tub")}>Tub</p>
-            <p onClick = {() => this.presetChange("Jon")}>Jon</p>
-
+          <div className="presetsDiv">
+            <p onClick={() => this.presetChange("Block")}>Block</p>
+            <p onClick={() => this.presetChange("Beehive")}>Beehive</p>
+            <p onClick={() => this.presetChange("Loaf")}>Loaf</p>
+            <p onClick={() => this.presetChange("Boat")}>Boat</p>
+            <p onClick={() => this.presetChange("Tub")}>Tub</p>
+            <p onClick={() => this.presetChange("Jon")}>Jon</p>
           </div>
 
           <h5>Current Speed {this.state.gameSpeed}</h5>
           <div className="presetsDiv">
-            <button onClick = {this.decrementSpeed}>-</button><p>{this.state.gameSpeed}</p><button onClick = {this.incrementSpeed}>+</button>
-            
+            <button onClick={this.decrementSpeed}>-</button>
+            <p>{this.state.gameSpeed}</p>
+            <button onClick={this.incrementSpeed}>+</button>
           </div>
-          
 
           <div className="slidecontainer">
             <h5>Row Count {this.state.row_count}</h5>
@@ -677,8 +747,6 @@ class App extends Component {
                 y
               </div>
             </div>
-
-            
           </div>
           <br />
           <br />
