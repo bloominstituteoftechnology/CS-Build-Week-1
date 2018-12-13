@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import GridSection from './components/HOC/GridSection';
-import ControlSection from './components/HOC/ControlSection';
+import GridSection from './components/grid/GridSection';
+import ControlSection from './components/controls/ControlSection';
 import { cellInitAlgo, cellPresetAlgo, CellAlgo, clearCellsAlgo } from './CellAlgo';
-import './App.css';
 
+import { Main, MainHeader } from './AppStyles';
+
+// grid section - dark bg and dead cells, neon dark cell borders for all cells
+// neon bright alive cells
+// 4:3 aspect ratio cells desktop, and more tower-like for mobile
+
+// bottom section - controls, dark colors
 
 let interval;
 
@@ -69,12 +75,14 @@ class App extends Component {
 
   render() {
     return (
-      <main className="main-container">
+      <Main>
+        <MainHeader>
+          <h1>Conway's Game of Life</h1>
+        </MainHeader>
         <GridSection
           currentNodeHolder={this.state.currentNodeHolder}
           canClick={this.state.canClick}
           />
-        <hr/>
         <ControlSection 
           canClick={this.state.canClick}
           gridSizeValue={this.state.gridSizeValue}
@@ -86,7 +94,7 @@ class App extends Component {
           selectGridPreset={this.selectGridPreset}
           handleGridSizeChange={this.handleGridSizeChange}
         />
-      </main>
+      </Main>
     );
   }
 }

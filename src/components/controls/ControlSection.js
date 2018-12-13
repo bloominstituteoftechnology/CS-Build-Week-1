@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { RangeSlider } from './ControlSectionStyles';
+import { Controls, RangeSlider } from './ControlSectionStyles';
 
 
 class ControlSection extends Component {
 
   render() {
     return (
-      <section>
+      <Controls>
 
         <section>
           <button onClick={this.props.canClick? this.props.startGame: null}>Start</button>
@@ -38,7 +38,7 @@ class ControlSection extends Component {
               value={this.props.gridSizeValue}
               onChange={this.props.canClick? this.props.handleGridSizeChange : null}
               min="16"
-              max="100"
+              max="50"
             />
             <span className="range-slider__value">{this.props.gridSizeValue}</span>
           </RangeSlider>
@@ -48,7 +48,7 @@ class ControlSection extends Component {
           <p><strong>Generation: {this.props.generation}</strong></p>
         </section>
 
-      </section>
+      </Controls>
     )
   }
 }

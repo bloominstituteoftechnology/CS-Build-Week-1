@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-
-
-// grid section - dark bg and dead cells, neon dark cell borders for all cells
-// neon bright alive cells
-// 4:3 aspect ratio cells desktop, and more tower-like for mobile
-
-// bottom section - controls, dark colors
+import { Grid, Row, Col } from './GridSectionStyles';
 
 
 class GridSection extends Component {
@@ -21,19 +15,19 @@ class GridSection extends Component {
 
   render() {
     return (
-      <section>
+      <Grid>
         {this.props.currentNodeHolder.map((row, index) => {
           return (
-            <article>
+            <Row>
               {this.props.currentNodeHolder[index].map(col => {
                 return (
-                  col.isAlive ? <span onClick={this.props.canClick? () => this.toggleCell(col) : null}> 1 </span> : <span onClick={this.props.canClick? () => this.toggleCell(col) : null}> 0 </span>
+                  col.isAlive ? <Col onClick={this.props.canClick? () => this.toggleCell(col) : null}></Col> : <Col dead onClick={this.props.canClick? () => this.toggleCell(col) : null}></Col>
                   );
                 })}
-            </article>
+            </Row>
           );
         })}
-      </section>
+      </Grid>
     );
   }
 }

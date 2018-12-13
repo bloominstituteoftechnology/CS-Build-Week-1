@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 
 
+
+
+export const Controls = styled.main`
+  margin-top: 30px;
+`;
+
+
+
 export const RangeSlider = styled.section`
   width: 100%;
 
