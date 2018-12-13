@@ -50,44 +50,6 @@ class App extends Component {
   gliderGun = () => {
     if (this.state.isPlaying === false) {
       let gridCopy = arrayClone(this.state.gridFull);
-
-      // gridCopy[1][5] = true;
-      // gridCopy[1][6] = true;
-      // gridCopy[2][5] = true;
-      // gridCopy[2][6] = true;
-      // gridCopy[11][5] = true;
-      // gridCopy[11][6] = true;
-      // gridCopy[11][7] = true;
-      // gridCopy[12][4] = true;
-      // gridCopy[12][8] = true;
-      // gridCopy[13][3] = true;
-      // gridCopy[13][9] = true;
-      // gridCopy[14][3] = true;
-      // gridCopy[14][9] = true;
-      // gridCopy[15][6] = true;
-      // gridCopy[16][4] = true;
-      // gridCopy[16][8] = true;
-      // gridCopy[17][5] = true;
-      // gridCopy[17][6] = true;
-      // gridCopy[17][7] = true;
-      // gridCopy[18][6] = true;
-      // gridCopy[21][3] = true;
-      // gridCopy[21][4] = true;
-      // gridCopy[21][5] = true;
-      // gridCopy[22][3] = true;
-      // gridCopy[22][4] = true;
-      // gridCopy[22][5] = true;
-      // gridCopy[23][2] = true;
-      // gridCopy[23][6] = true;
-      // gridCopy[25][1] = true;
-      // gridCopy[25][2] = true;
-      // gridCopy[25][6] = true;
-      // gridCopy[25][7] = true;
-      // gridCopy[35][3] = true;
-      // gridCopy[35][4] = true;
-      // gridCopy[36][3] = true;
-      // gridCopy[36][4] = true;
-
       gridCopy[5][1] = true;
       gridCopy[6][1] = true;
       gridCopy[5][2] = true;
@@ -132,6 +94,24 @@ class App extends Component {
     }
   };
 
+  acorn = () => {
+    if (this.state.isPlaying === false) {
+      let gridCopy = arrayClone(this.state.gridFull);
+      gridCopy[13][19] = true;
+      gridCopy[13][20] = true;
+      gridCopy[11][20] = true;
+      gridCopy[12][22] = true;
+      gridCopy[13][23] = true;
+      gridCopy[13][24] = true;
+      gridCopy[13][25] = true;
+      this.setState({
+        gridFull: gridCopy
+      });
+    } else {
+      alert("Simulation in progress – cannot seed game!");
+    }
+  }
+
   playButton = () => {
     clearInterval(this.intervalId);
     this.intervalId = setInterval(this.playGame, this.speed);
@@ -139,9 +119,7 @@ class App extends Component {
 
   pauseButton = () => {
     clearInterval(this.intervalId);
-    this.setState({
-      isPlaying: false
-    });
+
   };
 
   slowButton = () => {
@@ -150,7 +128,7 @@ class App extends Component {
   };
 
   fastButton = () => {
-    this.speed = 100;
+    this.speed = 200;
     this.playButton();
   };
 
@@ -184,8 +162,7 @@ class App extends Component {
         if (j > 0) if (g[i][j - 1]) count++;
         if (i < this.rows - 1) if (g[i + 1][j]) count++;
         if (i < this.rows - 1 && j > 0) if (g[i + 1][j - 1]) count++;
-        if (i < this.rows - 1 && j < this.cols - 1)
-          if (g[i + 1][j + 1]) count++;
+        if (i < this.rows - 1 && j < this.cols - 1) if (g[i + 1][j + 1]) count++;
         if (g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
         if (!g[i][j] && count === 3) g2[i][j] = true;
       }
@@ -211,13 +188,14 @@ class App extends Component {
           cols={this.cols}
           selectBox={this.selectBox}
         />
-        <h2>Generations: {this.state.generation}</h2>
+        <h2>Generations: <span>{this.state.generation}</span></h2>
         <ButtonGroup>
           <Button onClick={this.playButton}>Play</Button>
           <Button onClick={this.pauseButton}>Pause</Button>
           <Button onClick={this.clearButton}>Clear</Button>
           <Button onClick={this.seedGame}>Seed</Button>
           <Button onClick={this.gliderGun}>Glider Gun</Button>
+          <Button onClick={this.acorn}>Acorn</Button>
           <Button onClick={this.slowButton}>Slow</Button>
           <Button onClick={this.fastButton}>Fast</Button>
         </ButtonGroup>
