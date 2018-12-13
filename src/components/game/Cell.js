@@ -31,12 +31,12 @@ class Cell extends React.Component {
       <>
         {this.props.viewportWidth > 610 ? (
           <GridBox
-            background={this.props.isLiving ? `black` : "white"}
+            background={this.props.isLiving ? "#05f" : "white"}
             onClick={() => this.props.toggleCellLife(this.state.id)}
           />
         ) : (
           <GridBoxSmall
-            background={this.props.isLiving ? `black` : "white"}
+            background={this.props.isLiving ? "#05f" : "white"}
             onClick={() => this.props.toggleCellLife(this.state.id)}
           />
         )}
