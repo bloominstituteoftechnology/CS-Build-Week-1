@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import GridSection from './components/HOC/GridSection';
 import ControlSection from './components/HOC/ControlSection';
-import { CellAlgo, cellPresetAlgo, cellInitAlgo } from './CellAlgo';
+import { cellInitAlgo, cellPresetAlgo, CellAlgo, clearCellsAlgo } from './CellAlgo';
 import './App.css';
 
 
@@ -33,7 +33,7 @@ class App extends Component {
 
   selectGridPreset = (e) => {
     let currentNodeHolder = this.state.currentNodeHolder.slice();
-    let nextNodeHolder = cellPresetAlgo(currentNodeHolder, e.target.value)
+    let nextNodeHolder = cellPresetAlgo(currentNodeHolder, e.target.value);
     this.setState({ currentNodeHolder: nextNodeHolder });
   }
 
@@ -50,7 +50,7 @@ class App extends Component {
 
   playGame = () => {
     let currentNodeHolder = this.state.currentNodeHolder.slice();
-    let nextNodeHolder = CellAlgo(currentNodeHolder)
+    let nextNodeHolder = CellAlgo(currentNodeHolder);
     this.setState(prevState => {
       return { currentNodeHolder: nextNodeHolder, generation: prevState.generation + 1 };
     });
@@ -62,16 +62,8 @@ class App extends Component {
   }
 
   clearCells = () => {
-    let nextNodeHolder = this.state.currentNodeHolder.slice();
-
-    for (let i = 0; i < nextNodeHolder.length; i++) {
-      for (let j = 0; j < nextNodeHolder.length; j++) {
-        if (nextNodeHolder[i][j].isAlive) {
-          nextNodeHolder[i][j].isAlive = false;
-        }
-      }
-    }
-    
+    let currentNodeHolder = this.state.currentNodeHolder.slice();
+    let nextNodeHolder = clearCellsAlgo(currentNodeHolder);
     this.setState({ currentNodeHolder: nextNodeHolder, generation: 0 });
   }
 
@@ -81,7 +73,7 @@ class App extends Component {
         <GridSection
           currentNodeHolder={this.state.currentNodeHolder}
           canClick={this.state.canClick}
-        />
+          />
         <hr/>
         <ControlSection 
           canClick={this.state.canClick}

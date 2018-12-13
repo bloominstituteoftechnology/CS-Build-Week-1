@@ -21,6 +21,49 @@ export const cellInitAlgo = (gridSizeValue) => {
 }
 
 
+export const cellPresetAlgo = (currentNodeHolder, target) => {
+  let len = currentNodeHolder.length;
+  let middleOfGrid = Math.floor(len / 2);
+  for (let i = 0; i < len; i++) {
+    for (let j = 0; j < len; j++) {
+      if (!currentNodeHolder[i][j].isAlive) {
+        currentNodeHolder[i][j].isAlive = false;
+      }
+    }
+  }
+  switch(target) {
+    case 'clearPresets':
+      console.log('CLEAR');
+    break;
+    case 'Glider':
+      currentNodeHolder[middleOfGrid][middleOfGrid].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid + 1].isAlive = true;
+      currentNodeHolder[middleOfGrid - 1][middleOfGrid - 1].isAlive = true;
+      currentNodeHolder[middleOfGrid - 1][middleOfGrid + 1].isAlive = true;
+      currentNodeHolder[middleOfGrid + 1][middleOfGrid].isAlive = true;
+      break;
+      case 'Acorn':
+      currentNodeHolder[middleOfGrid][middleOfGrid].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid + 1].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid + 4].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid + 5].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid + 6].isAlive = true;
+      currentNodeHolder[middleOfGrid - 2][middleOfGrid + 1].isAlive = true;
+      currentNodeHolder[middleOfGrid - 1][middleOfGrid + 3].isAlive = true;
+    break;
+    case 'gridPresetThree':
+      console.log('THREE');
+    break;
+    case 'gridPresetFour':
+      console.log('FOUR');
+    break;
+    default:
+    break;
+  }
+  return currentNodeHolder;
+}
+
+
 export const CellAlgo = (currentNodeHolder) => {
   let len = currentNodeHolder.length;
   let lenCheck = currentNodeHolder.length - 1;
@@ -136,45 +179,13 @@ export const CellAlgo = (currentNodeHolder) => {
   return nextNodeHolder;
 }
 
-
-export const cellPresetAlgo = (currentNodeHolder, target) => {
-  let len = currentNodeHolder.length;
-  let middleOfGrid = Math.floor(len / 2);
-  for (let i = 0; i < len; i++) {
-    for (let j = 0; j < len; j++) {
-      if (!currentNodeHolder[i][j].isAlive) {
+export const clearCellsAlgo = (currentNodeHolder) => {
+  for (let i = 0; i < currentNodeHolder.length; i++) {
+    for (let j = 0; j < currentNodeHolder.length; j++) {
+      if (currentNodeHolder[i][j].isAlive) {
         currentNodeHolder[i][j].isAlive = false;
       }
     }
-  }
-  switch(target) {
-    case 'clearPresets':
-      console.log('CLEAR');
-    break;
-    case 'Glider':
-      currentNodeHolder[middleOfGrid][middleOfGrid].isAlive = true;
-      currentNodeHolder[middleOfGrid][middleOfGrid + 1].isAlive = true;
-      currentNodeHolder[middleOfGrid - 1][middleOfGrid - 1].isAlive = true;
-      currentNodeHolder[middleOfGrid - 1][middleOfGrid + 1].isAlive = true;
-      currentNodeHolder[middleOfGrid + 1][middleOfGrid].isAlive = true;
-      break;
-      case 'Acorn':
-      currentNodeHolder[middleOfGrid][middleOfGrid].isAlive = true;
-      currentNodeHolder[middleOfGrid][middleOfGrid + 1].isAlive = true;
-      currentNodeHolder[middleOfGrid][middleOfGrid + 4].isAlive = true;
-      currentNodeHolder[middleOfGrid][middleOfGrid + 5].isAlive = true;
-      currentNodeHolder[middleOfGrid][middleOfGrid + 6].isAlive = true;
-      currentNodeHolder[middleOfGrid - 2][middleOfGrid + 1].isAlive = true;
-      currentNodeHolder[middleOfGrid - 1][middleOfGrid + 3].isAlive = true;
-    break;
-    case 'gridPresetThree':
-      console.log('THREE');
-    break;
-    case 'gridPresetFour':
-      console.log('FOUR');
-    break;
-    default:
-    break;
   }
   return currentNodeHolder;
 }
