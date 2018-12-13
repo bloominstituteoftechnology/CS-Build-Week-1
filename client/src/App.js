@@ -504,6 +504,7 @@ class App extends Component {
           neighbors, it stays alive. • If a cell is dead and it has exactly 3
           living neighbors, it rises again.
         </p>
+        <p>Click random then start or one of the presets then start. YOu can pause or stop. You can also click on some of the cells to make them alive then click next for one generation or start for automatic generation.</p>
         <h4 className="titleApp">Generation : {this.state.generation}</h4>
         <div className="topButtons">
           <div>
