@@ -155,6 +155,19 @@ export const fourRules = grid => {
     for (let x = 0; x < grid[y].length; x++) {
       // each cell, check how many neighbors are alive
       neighbors = checkingNeighbors(grid, x, y);
+
+      if (grid[y][x]) {
+        newGrid[y][x] = neighbors === 2 || neighbors === 3 ? 1 : 0;
+      }
+      else {
+        newGrid[y][x] = neighbors === 3 ? 1 : 0;
+      }
+    }
+  }
+  return newGrid;
+};
+
+
       //   // if 2 or less that cell will die && if more than three
       //   if (neighbors < 2 || neighbors > 3) {
       //     newGrid[y][x] = 0;
@@ -168,13 +181,3 @@ export const fourRules = grid => {
       //     newGrid[y][x] = 1;
       //   }
       // else don't change the state of the current cell
-      if (grid[y][x]) {
-        newGrid[y][x] = neighbors === 2 || neighbors === 3 ? 1 : 0;
-      }
-      else {
-        newGrid[y][x] = neighbors === 3 ? 1 : 0;
-      }
-    }
-  }
-  return newGrid;
-};

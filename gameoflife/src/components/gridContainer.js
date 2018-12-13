@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  checkingNeighbors,
   fourRules
 } from "../algorithms/gameFunctions";
 
@@ -8,7 +7,8 @@ class GridContainer extends Component {
   constructor() {
     super();
     this.state = {
-      grid: [...Array(15)].map(e => Array(15).fill(0))
+      grid: [...Array(15)].map(e => Array(15).fill(0)),
+      running: true,
     };
   }
   // This is a visual of the data structure above
@@ -78,7 +78,6 @@ class GridContainer extends Component {
         }
       }
     }
-    this.drawingGrid(225, 225, ctx);
   };
 
   drawingGrid = (w, h, ctx) => {
@@ -150,22 +149,41 @@ class GridContainer extends Component {
   }
   }
 
-
+  // runGame = () => {
+  //   this.setState({ grid: fourRules(this.state.grid) });
+  //   this.draw()
+  //   if (this.running) {
+  //     setTimeout(() => {
+  //       this.runGame();
+  //     }, 30);
+  //   }
+  // };
 
 
   // Run function
   runGame = (event) => {
     // checkingNeighbors(this.state.grid, );
-    this.setState({ grid: fourRules(this.state.grid)}, () => {
-      this.aliveCheck();
-    });
-    // this.aliveCheck();
-
+    // if(!this.state.running) {
+    //   this.setState({running: true})
+    // }
+    
+    this.setState({ grid: fourRules(this.state.grid)});
+    this.aliveCheck();
+    if(this.state.running) {
+      setTimeout( () => {
+        this.runGame();
+      }, 300);
+      
+    
+    }
   };
 
   stopGame = (event) => {
-    return;
-  }
+    this.setState({running: false}, () => {
+      console.log("running", this.state.running);
+
+    });
+  };
   
   // stop function
 
