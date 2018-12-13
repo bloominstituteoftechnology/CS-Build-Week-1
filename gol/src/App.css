@@ -1,7 +1,15 @@
 .App {
   text-align: center;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color:lightblue;
+  padding: 1em 4em;
+  box-sizing: border-box;
+
 }
 
 .screen {
@@ -12,13 +20,36 @@
   grid-gap: 2px;
   padding: 2px;
 }
-/* .canvasDiv{
-  height: 50vmin;
-  width: 50vmin;
-
-} */
-/* canvas {
+.infobox{
+  
   background-color: white;
-  width:100%;
-  height:100%
-} */
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 1rem;
+}
+.game{
+  background-color: white;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 100%;
+}
+ol li {
+  
+  list-style-position: inside;
+
+}
+.settingsbar{
+  padding-bottom: 1rem;
+}
+.canvasDiv{
+  margin: 2rem 0;
+  
+}
+canvas{
+  border: 2px black solid;
+  border-radius: 10px;
+}
+.gen{
+  font-size: 20px;
+}

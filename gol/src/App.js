@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import Grid from "./components/GameGrid";
+import Infobox from "./components/Infobox";
+import Title from "./components/Title";
 
 class App extends Component {
   constructor(props) {
@@ -109,14 +111,13 @@ class App extends Component {
     }, this.state.speed);
     this.setState({
       intervalID: interval,
-      running:true
+      running: true
     });
   };
   stopSim = () => {
     clearInterval(this.state.intervalID);
-    if(this.state.running){
+    if (this.state.running) {
       this.toggleClick();
-
     }
     this.setState({
       running: false
@@ -579,7 +580,7 @@ class App extends Component {
     });
   };
   setGirdSize = e => {
-    if (isNaN(parseInt(e.target.value)) || parseInt(e.target.value) < 10) {
+    if (isNaN(parseInt(e.target.value)) || parseInt(e.target.value) < 10|| parseInt(e.target.value) > 300) {
       return;
     }
     this.setState(
@@ -592,7 +593,7 @@ class App extends Component {
       }
     );
   };
-  setGirdSpeed = e => {
+  setGridSpeed = e => {
     if (isNaN(parseInt(e.target.value)) || parseInt(e.target.value) < 50) {
       return;
     }
@@ -606,56 +607,62 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Grid
-          pixels={this.state.curGrid}
-          x={this.state.x}
-          y={this.state.y}
-          clickHandle={this.toggleCell}
-          clickable={this.state.clickable}
-        />
-        <button onClick={this.newSim}>Start</button>
-
-        <button onClick={this.stopSim}>Stop</button>
-        <button onClick={this.resetSim}>Reset</button>
-
-        <div className="gen">
-          Current Gen is:
-          {this.state.gen}
-        </div>
-
-        <select value={this.state.preset} onChange={this.setGrid}>
-          <option value="blank">User Defined</option>
-          <option value="random">Random</option>
-          <option value="block">Block</option>
-          <option value="beehive">Beehive</option>
-          <option value="loaf">Loaf</option>
-          <option value="blinker">Blinker</option>
-          <option value="toad">Toad</option>
-          <option value="beacon">Beacon</option>
-          <option value="pulsar">Pulsar</option>
-          <option value="pentadecathlon">Pentadecathlon</option>
-          <option value="glider">Glider</option>
-          <option value="lspaceship">Lightweight Spaceship</option>
-          <option value="r">R-Petominio</option>
-          <option value="diehard">Diehard</option>
-          <option value="acorn">Acorn</option>
-        </select>
-        <div className="dimension">
-          Change grid size:{" "}
-          <input
-            onChange={this.setGirdSize}
-            type="number"
-            value={this.state.x}
+        <div className="game">
+        <Title/>
+          <div className="gen">
+            Current Gen is:
+           <b> {this.state.gen}</b> 
+          </div>
+          <Grid
+            pixels={this.state.curGrid}
+            x={this.state.x}
+            y={this.state.y}
+            clickHandle={this.toggleCell}
+            clickable={this.state.clickable}
           />
+          <div className="settingsbar">
+            <button onClick={this.newSim}>Start</button>
+
+            <button onClick={this.stopSim}>Stop</button>
+            <button onClick={this.resetSim}>Reset</button>
+            <select value={this.state.preset} onChange={this.setGrid}>
+              <option value="blank">User Defined</option>
+              <option value="random">Random</option>
+              <option value="block">Block</option>
+              <option value="beehive">Beehive</option>
+              <option value="loaf">Loaf</option>
+              <option value="blinker">Blinker</option>
+              <option value="toad">Toad</option>
+              <option value="beacon">Beacon</option>
+              <option value="pulsar">Pulsar</option>
+              <option value="pentadecathlon">Pentadecathlon</option>
+              <option value="glider">Glider</option>
+              <option value="lspaceship">Lightweight Spaceship</option>
+              <option value="r">R-Petominio</option>
+              <option value="diehard">Diehard</option>
+              <option value="acorn">Acorn</option>
+            </select>
+          </div>
+          <div className="dimension">
+            Change grid size:
+            <input
+              onChange={this.setGirdSize}
+              type="number"
+              value={this.state.x}
+            />
+          </div>
+          <div className="speed">
+            Change grid speed:
+            <input
+              onChange={this.setGridSpeed}
+              type="number"
+              value={this.state.speed}
+            />
+          </div>
         </div>
-        <div className="speed">
-          Change grid speed:{" "}
-          <input
-            onChange={this.setGirdSpeed}
-            type="number"
-            value={this.state.speed}
-          />
-        </div>
+
+         
+          <Infobox />
       </div>
     );
   }
