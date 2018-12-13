@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 
 const game_cell = 20;
 const game_width = 620;
-const game_height = 420;
+const game_height = 440;
 
 
 class Game extends React.Component {
@@ -173,9 +173,17 @@ class Game extends React.Component {
         <div>
         <div> <Link to='/' className="home-link"><button className="home-button button">Go Home!</button></Link></div>
         </div>
-        <div><h3>Generation: {this.state.generationNum}</h3></div>
+        <div><h3>Generation: {this.state.generationNum}</h3>
+        <div class="speed">
+          Update Every{" "}
+          <input
+            value={this.state.interval}
+            onChange={this.handleInterval}
+          />{" "}
+          milliseconds
+          </div>
+        </div>
         <div class="container">
-        
         <div
           className="gameBoard"
           style={{
@@ -193,14 +201,6 @@ class Game extends React.Component {
           ))}
         </div>
         <div className="controls">
-        <div>
-          Update Every{" "}
-          <input
-            value={this.state.interval}
-            onChange={this.handleInterval}
-          />{" "}
-          milliseconds
-          </div>
           {this.state.isEngaged ? (
             <button className="button" onClick={this.stopGame}>
               Stop Game
@@ -219,8 +219,11 @@ class Game extends React.Component {
           <button className="button" onClick={this.iterationMethod}>
             Next
           </button>
+          
           </div>
+          
         </div>
+        
       </div>
     );
   }
