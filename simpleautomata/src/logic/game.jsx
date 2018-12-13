@@ -105,15 +105,17 @@ class Game extends React.Component {
 
   runIteration() {
     console.log('running iteration');
+    //double buffering
     let newBoard = this.makeEmptyBoard();
 
     //logic for each iteration:
       for (let y = 0; y < this.rows; y++) {
           for (let x = 0; x < this.cols; x++) {
               let neighbors = this.calculateNeighbors(this.board, x, y);
+              //cehck neighbors from old array.
               if (this.board[y][x]) {
                   if (neighbors === 2 || neighbors === 3) {
-                    //individual cell in 2d array
+                    //individual cell in  new 2d array
                       newBoard[y][x] = true;
                   } else {
                       newBoard[y][x] = false;
@@ -141,6 +143,7 @@ class Game extends React.Component {
   * @param {int} x
   * @param {int} y
   */
+
   calculateNeighbors(board, x, y) {
      let neighbors = 0;
      const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
@@ -177,6 +180,37 @@ class Game extends React.Component {
       this.setState({ cells: this.makeCells() });
   }
 
+  handleGlider = () => {
+    //set the right indices in the 2d array:
+    this.board[1][1] = 1;
+    this.board[1][3] = 1;
+    this.board[2][2] = 1;
+    this.board[2][3] = 1;
+    this.board[3][2] = 1;
+
+    //make the cells:
+    this.setState({ cells: this.makeCells() });
+
+  }
+
+  handleBlinker = () => {
+    //set the right indices in the 2d array:
+    this.board[14][18] = 1;
+    this.board[14][19] = 1;
+    this.board[14][20] = 1;
+    //make the cells:
+    this.setState({ cells: this.makeCells() });
+  }
+
+  // presetHanddler = e => {
+  //   switch(e.target.value){
+  //     case: 'glider':
+  //       break;
+  //     case: 'blinker':
+  //       break;
+  //   }
+  // }
+
   //event handler with render method to allow user to toggle cells to true(on) onClick.
   render() {
     const { cells } = this.state;
@@ -198,8 +232,12 @@ class Game extends React.Component {
             <button className="button"
               onClick={this.runGame}>Run</button>
           }
-          <button className="button" onClick={this.handleRandom}>Random</button>
-          <button className="button" onClick={this.handleClear}>Clear</button>
+          <div>
+            <button className="button" onClick={this.handleRandom}>Random</button>
+            <button className="button" onClick={this.handleGlider}>Gilder</button>
+            <button className="button" onClick={this.handleBlinker}>Blinker</button>
+            <button className="button" onClick={this.handleClear}>Clear</button>
+          </div>
         </div>
       </div>
     );
