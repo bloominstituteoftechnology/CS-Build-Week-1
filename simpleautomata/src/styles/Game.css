@@ -7,6 +7,11 @@
     linear-gradient(90deg, #333 1px, transparent 1px);
 }
 .Cell {
-  background: #ccc;
   position: absolute;
+}
+.live {
+  color:red;
+}
+.dead {
+  color:blue;
 }

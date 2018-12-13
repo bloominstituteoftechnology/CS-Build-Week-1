@@ -7,6 +7,7 @@ const HEIGHT = 600;
 
 class Cell extends React.Component {
   render() {
+    let randomColor = Math.floor(Math.random()*16777215).toString(16);
     const { x, y } = this.props;
     return (
       <div className="Cell" style={{
@@ -14,6 +15,7 @@ class Cell extends React.Component {
         top: `${CELL_SIZE * y + 1}px`,
         width: `${CELL_SIZE - 1}px`,
         height: `${CELL_SIZE - 1}px`,
+        background: `#${randomColor}`,
       }} />
     );
   }
@@ -245,7 +247,7 @@ class Game extends React.Component {
           style = {{ width: WIDTH, height: HEIGHT,
              backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}} onClick={this.handleClick}
           ref={(n) => { this.boardRef = n; }}>
-          {cells.map(cell => (<Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`}/>
+          {cells.map(cell => (<Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
           ))}
         </div>
         <div className="controls">
@@ -265,20 +267,19 @@ class Game extends React.Component {
           </div>
           <div>
             <h1>Rules:</h1>
-            <p>
-              Births: Each dead cell adjacent to exactly three live neighbors will become live in the next generation.
+            <p>1. <strong>Births</strong>: Each <strong className = "dead"> dead </strong> cell adjacent to exactly three live neighbors will become <strong className = "live">live</strong> in the next generation.
             </p>
-            <p>Death by isolation: Each live cell with one or fewer live neighbors will die in the next generation.
+            <p>2. <strong>Death by isolation</strong>: Each <strong className = "live">live</strong> cell with one or fewer live neighbors will <strong className = "dead"> die </strong> in the next generation.
             </p>
-            <p>Death by overcrowding: Each live cell with four or more live neighbors will die in the next generation.
+            <p>3. <strong>Death by overcrowding</strong>: Each <strong className = "live">live</strong> cell with four or more live neighbors will <strong className = "dead"> die </strong> in the next generation.
             </p>
-            <p>Survival: Each live cell with either two or three live neighbors will remain alive for the next generation.
+            <p>4. <strong>Survival</strong>: Each <strong className = "live">live</strong> cell with either two or three live neighbors will remain <strong className = "live">alive</strong> for the next generation.
             </p>
           </div>
           <div>
             <h2>About the algorithm</h2>
             <p>This implementation uses a double buffering technique with a 2d array. Cells are loaded onto a secondary matrix and states of life and death are kept track on the old matrix. Neighbors are caclulated by using a directional array to check the rectangle around squares. Then for each iteration the algorithim checks to see the number of live neighbors and implements the rules accordingly. </p>
-            <p>Conways Game of life was written in the 70s as a solution to John VonNoumen's</p>
+            <p>Conways Game of life was written in the 70s as a solution to John VonNoumen's hypothetical self replicating machine.</p>
           </div>
         </div>
       </div>
