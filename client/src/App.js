@@ -85,22 +85,7 @@ class App extends Component {
       }
       beginRow++;
     }
-    // Object.entries(matrix).forEach(entry => {
-    //   for (let x of entry[1]) {
-    // const temp_hash = {
-    //   row: 0,
-    //   position_in_row: 0,
-    //   actual_number: 0,
-    //   color: this.state.if_zero_color
-    // };
-    // temp_hash.row = Number(entry[0]);
-    // temp_hash.position_in_row = count % this.state.col_count;
-    // temp_hash.actual_number = count;
-    // temp_hash.value = x; //just to get rid of the warning.
-    // matrixUsing.push(temp_hash);
-    // count++;
-    //   }
-    // });
+    
     const width_size = 22 * this.state.col_count;
     const width = `${width_size}px`;
 
@@ -155,22 +140,6 @@ class App extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  // updateRowCol = () => {
-  //   //this function will actually check if the value is acceptable and then make the change.
-  //   const rowValue = this.state.row_count;
-  //   const colValue = this.state.col_count;
-
-  //   if (rowValue < 15 || rowValue > 30) {
-  //     alert("Must be a numerical value of at least 15 and less than 30!");
-  //     return;
-  //   }
-  //   if (colValue < 15 || colValue > 30) {
-  //     alert("Must be a numerical value of at least 15 and less than 30!");
-  //     return;
-  //   }
-
-  //   this.setMatrixUp();
-  // };
 
   runGamne = () => {
     this.nextGeneration();
