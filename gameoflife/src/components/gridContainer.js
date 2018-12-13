@@ -7,8 +7,11 @@ class GridContainer extends Component {
   constructor() {
     super();
     this.state = {
-      grid: [...Array(15)].map(e => Array(15).fill(0)),
-      running: true,
+      width: 15,
+      height: 15,
+      grid: [...Array(15)].map(rows => Array(15).fill(0)),
+      running: false,
+
     };
   }
   // This is a visual of the data structure above
@@ -39,16 +42,16 @@ class GridContainer extends Component {
 
   componentDidMount() {
     // drawing the grid
+    
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
-    const w = 225;
-    const h = 225;
-    ctx.canvas.width = w;
-    ctx.canvas.height = h;
+    // const w = this.state.width * this.state.height;
+    // const h = this.state.width * this.state.height;
+    // ctx.canvas.width = w;
+    // ctx.canvas.height = h;
 
-    this.drawingGrid(w, h, ctx);
-
-    this.aliveCheck();
+    this.drawingGrid();
+    // alivecheck
   }
 
   getMousePos = (canvas, event) => {
@@ -58,45 +61,65 @@ class GridContainer extends Component {
   };
 
   // function for determining live or dead
-  aliveCheck = () => {
-    // console.log("Current Grid in State:", this.state.grid);
+  // aliveCheck = () => {
+  //   // console.log("Current Grid in State:", this.state.grid);
 
+  //   const canvas = this.refs.canvas;
+  //   const ctx = canvas.getContext("2d");
+  //   const w = this.state.width;
+  //   const h = this.state.height;
+  //   for (let y = 0; y < this.state.grid.length; y++) {
+  //     for (let x = 0; x < this.state.grid[y].length; x++) {
+  //       if (this.state.grid[y][x]) {
+  //         // this.getMousePos()
+  //         // console.log(`x: ${x} y: ${y}`);
+  //         ctx.fillStyle = "black";
+  //         ctx.fillRect(x * w, y * h, w, h);
+  //       } else {
+  //         ctx.clearRect(x * w, y * h, w, h);
+  //         ctx.strokeRect(x * w, y * h, w, h);
+  //       }
+  //     }
+  //   }
+  // };
+
+  drawingGrid = () => {
+    // drawing the grid
+   console.log(this.state.grid);
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
-    const w = 15;
-    const h = 15;
-    for (let y = 0; y < this.state.grid.length; y++) {
-      for (let x = 0; x < this.state.grid[y].length; x++) {
-        if (this.state.grid[y][x]) {
-          // this.getMousePos()
-          // console.log(`x: ${x} y: ${y}`);
-          ctx.fillStyle = "black";
-          ctx.fillRect(x * w, y * h, w, h);
-        } else {
-          ctx.clearRect(x * w, y * h, w, h);
-          ctx.strokeRect(x * w, y * h, w, h);
-        }
-      }
-    }
-  };
-
-  drawingGrid = (w, h, ctx) => {
-    // drawing the grid
-    for (let j = 0; j <= w; j += 15) {
-      for (let k = 0; k <= h; k += 15) {
-        ctx.moveTo(j, 0);
-        ctx.lineTo(j, h);
-        ctx.stroke();
+    const w = this.state.width;
+    const h = this.state.height;
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = 1;
+    ctx.clearRect(0, 0, w * w, h * h);
+    for (let j = 0; j < w * w; j += this.state.height) {
+      ctx.moveTo(j, 0);
+      ctx.lineTo(j, h * h);
+      for (let k = 0; k < h * h; k += this.state.width) {
+        // ctx.stroke();
         ctx.moveTo(0, k);
-        ctx.lineTo(w, k);
-        ctx.stroke();
+        ctx.lineTo(h * h, k);
+        // console.log(j,k);
+        if (this.state.grid[j / h][k / w]) {
+          // this.getMousePos()
+          console.log("fire", k, j*h);
+          // ctx.fillStyle = "#000";
+          ctx.fillRect(k, j, w, h);
+        } 
+        // else {
+        //   ctx.clearRect(k * w, j * h, w, h);
+        //   ctx.strokeRect(k * w, j * h, w, h);
+        // }
       }
     }
+    ctx.stroke();
   };
 
   handleClick(event) {
-    event.preventDefault();
-    const w = 15;
+    // event.preventDefault();
+    // console.log(event);
+    const w = this.state.width;
     const h = 15;
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
@@ -106,12 +129,15 @@ class GridContainer extends Component {
     // console.log(`pos.x:${pos.x} x:${x} || pos.y:${pos.y} y:${y}`);
     if (this.state.grid[y][x] === 0) {
       ctx.fillStyle = "black";
+      // console.log("painting black");
       ctx.fillRect(x * w, y * h, w, h);
-      this.setState(state => {
-        {
-          grid: state.grid[y][x] = 1;
-        }
-      });
+      this.state.grid[y][x] = 1;
+      // this.setState(state => {
+      //   {
+      //     grid: state.grid[y][x] = 1;
+      //   }
+      // });
+      // console.log(x, y, this.state.grid[y][x], this.state.grid);
     } else {
       ctx.fillStyle = "white";
       ctx.fillRect(x * w, y * h, w, h);
@@ -125,7 +151,7 @@ class GridContainer extends Component {
     // console.log(x, y);
     // console.log(`This is state x and y: ${this.state.grid[y][x]}`);
     // this.aliveCheck();
-    console.log(`y: ${Math.floor(pos.y / 15)} x: ${Math.floor(pos.x / 15)}`);
+    // console.log(`y: ${Math.floor(pos.y / 15)} x: ${Math.floor(pos.x / 15)}`);
   }
 
   handleClear = (event) => {
@@ -166,23 +192,35 @@ class GridContainer extends Component {
     // if(!this.state.running) {
     //   this.setState({running: true})
     // }
+    let generation = 0;
+    // console.log("old GRid", this.state.grid);
+    const newGrid = fourRules(this.state.grid);
+    this.setState({grid: newGrid}, () => {
+      this.drawingGrid()
+      // console.log("newGrid", this.state.grid);
+    }
+     
+    );
     
-    this.setState({ grid: fourRules(this.state.grid)});
-    this.aliveCheck();
+    // this.drawingGrid();
     if(this.state.running) {
+      console.log("we are playing")
       setTimeout( () => {
         this.runGame();
+
       }, 300);
       
     
     }
   };
 
-  stopGame = (event) => {
-    this.setState({running: false}, () => {
-      console.log("running", this.state.running);
+  startGame = (event) => {
+    this.setState({running: true});
+    this.runGame();
+  };
 
-    });
+  stopGame = (event) => {
+    this.setState({running: false});
   };
   
   // stop function
@@ -194,14 +232,19 @@ class GridContainer extends Component {
           <canvas
             className="grid"
             ref="canvas"
-            onClick={event => this.handleClick(event)}
+            onClick={(event => this.handleClick(event))}
+            width={this.state.height * this.state.width}
+            height={this.state.height * this.state.width}
           />
         </div>
         <div className="buttons-container">
-          <div className="button" onClick={this.runGame}>RUN</div>
+          <div className="button" onClick={this.startGame}>START</div>
           <div className="button" onClick={this.stopGame}>STOP</div>
           <div className="button" onClick={this.handleClear}>
             CLEAR
+          </div>
+          <div className="button" onClick={this.runGame}>
+            NEXT
           </div>
         </div>
       </div>
@@ -210,5 +253,3 @@ class GridContainer extends Component {
 }
 
 export default GridContainer;
-
-// {this.state.square ? "square toggled" : "square"
