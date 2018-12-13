@@ -39,7 +39,7 @@ class Game_of_life {
         return this.aliveOrganizms.has(coordinates);
     }
 
-    toggleCell (coordinates){
+    toggleCell (coordinates) {
         if (this.aliveCells(coordinates.x + "," + coordinates.y)){
             this.deleteCell(coordinates.x + "," + coordinates.y);
             console.log("Delete cell")
@@ -47,7 +47,7 @@ class Game_of_life {
             this.newCell(coordinates);
             console.log("New Cell")
         }
-        return new Game_of_life(this.aliveOrganizms, this.generation);
+        
     }
 
     ///////// Game rules goes here///////////

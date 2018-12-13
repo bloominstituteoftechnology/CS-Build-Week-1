@@ -5,8 +5,7 @@ class Cell extends Component {
     render() { 
         return ( 
             <div onClick = {() => this.props.toggleCell(this.props.coordinates)}
-            className = {this.props.liveCell ? 'cell-live' : 'cell-dead'}>
-            
+                className = {this.props.liveCell ? 'cell-live' : 'cell-dead'}>
             </div>
          );
     }

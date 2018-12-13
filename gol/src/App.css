@@ -3,22 +3,19 @@
 }
 
 .cell-dead {
-  display: flex;
-  flex: 1;
+
   padding: 10px;
   border: 1px solid black;
 }
 
 .cell-live {
-  display: flex;
-  flex: 1;
+  
   padding: 10px;
   border: 1px solid red;
   background: black;
 }
 
 .grid {
-  display: flex;
-  flex: 1;
+  
   justify-content: center;
 }
