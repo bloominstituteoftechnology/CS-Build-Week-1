@@ -105,6 +105,7 @@ class Canvas extends React.Component {
   };
   componentWillMount() {
     this.setState({ viewportWidth: window.innerWidth });
+    console.log("componentWillMount:")
   }
   componentDidMount() {
     let currentNodes = [];
@@ -112,6 +113,7 @@ class Canvas extends React.Component {
       currentNodes.push({ id: i, isLiving: false });
     }
     this.setState({ currentNodes });
+    console.log("componentDidMount:")
   }
 
   // If isClickable is true, set state and map through current nodes and toggle id of node that was clicked
@@ -160,6 +162,7 @@ class Canvas extends React.Component {
       generation: 0
     });
     clearInterval(interval);
+    console.log("Game was reset")
   };
 
   
@@ -168,7 +171,7 @@ class Canvas extends React.Component {
     console.log("Game has started");
     let currentNodes = this.state.currentNodes.slice();
     let length = currentNodes.length;
-    let endOfArray = currentNodes.length - 1;
+    // let endOfArray = currentNodes.length - 1;
     let nextNodes = [];
 
     // // loop through the length of currentNodes Array and 
