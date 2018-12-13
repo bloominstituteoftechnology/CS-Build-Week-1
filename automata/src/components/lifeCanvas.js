@@ -4,6 +4,7 @@ class Canvas extends Component {
     state = {
         simRun: false,
         cycleCount: 0,
+        runSpeed: 1000,
     }
 
     gridState = () => {
@@ -167,7 +168,7 @@ class Canvas extends Component {
         this.gameCycle();
         this.handleTimer = window.setTimeout(() => {
             this.runSimulation();
-        }, 777);
+        }, this.state.runSpeed);
     }
 
     stepOnce = () => {
@@ -179,6 +180,16 @@ class Canvas extends Component {
     componentDidMount() {
         this.gridState();
         this.initCanvas();
+    }
+
+    slow = () => {
+        // console.log('test');
+        this.setState({runSpeed: 1200});
+    }
+
+    fast = () => {
+        // console.log('test');
+        this.setState({runSpeed: 400});
     }
 
     render() {
@@ -195,6 +206,13 @@ class Canvas extends Component {
                     <button onClick={this.pauseGame}>Stop </button>
                     <button onClick={this.clearCanvas}>Clear Board</button>
                     <button onClick={this.stepOnce}>Step</button>
+                    <button onClick={this.simulationToggle}>?</button>
+                </div>
+                <div>
+                    <input type="radio" id="slow" name="speed" value="slow" onClick={this.slow} />
+                    <label >slow</label>
+                    <input type="radio" id="fast" name="speed" value="fast" onClick={this.fast}/>
+                    <label >fast</label>
                 </div>
             </div>
         )
