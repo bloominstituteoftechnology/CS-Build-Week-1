@@ -62,7 +62,7 @@ class Grid extends Component{
       this.setState({generation: this.state.generation+1,isClickable:false},()=>this.fillsquares());
     }
     animate=()=>{
-      
+
     }
     stopAnimation=()=>{
 
@@ -74,11 +74,13 @@ class Grid extends Component{
         return (
           <div>
             <canvas ref="canvas" width={375} height={375} onClick={(e)=>this.getPosition(e)}/>
-            <p>Current generation: {this.state.generation}</p>
-            <button onClick={()=>this.oneStep()}>Step</button>
-            <button onClick={()=>this.animate()}>Start</button>
-            <button onClick={()=>this.stopAnimation()}>Stop</button>
-            <button onClick={()=>this.clear()}>Clear</button>
+            <p className='generationHeader'>Current generation: {this.state.generation}</p>
+            <div className='button-container'>
+              <button className='btn waves-effect waves-light' onClick={()=>this.oneStep()}>Step</button>
+              <button className='btn waves-effect waves-light' onClick={()=>this.animate()}>Start</button>
+              <button className='btn waves-effect waves-light' onClick={()=>this.stopAnimation()}>Stop</button>
+              <button className='btn waves-effect waves-light' onClick={()=>this.clear()}>Clear</button>
+            </div>
           </div>
         );
     }

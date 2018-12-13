@@ -41,13 +41,32 @@ p{
   user-select: none;
 }
 ul{
-  width:350px;
+  width:375px;
   margin:0 auto;
 }
 ul li{
   padding-bottom:10px;
   text-align:left;
 }
-li:before {
-  padding-left: 10px;
+.button-container{
+  width:375px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-evenly;
+}
+h2{
+  font-size:22px;
+}
+h1{
+  font-size:28px;
+}
+.generationHeader{
+  font-size:22px;
+}
+.lifeInfo{
+  width:375px;
+  margin:0 auto;
+  text-align:left;
+  margin-top:30px;
+  margin-bottom:30px;
 }
