@@ -5,29 +5,31 @@ class Grid extends Component{
     constructor(){
         super();
         this.state={
-          generation:0,
-          isClickable:true
+          generation: 0
         }
     }
     componentDidMount() {
         this.draw();
         this.life=new Life();
         this.life.createBlankGrid();
+        this.start=null;
+        this.myreq=null;
+        this.isClickable=true;
     } 
     draw() {
         const ctx = this.refs.canvas.getContext('2d');
         for(let i = 0; i <= 375; i += 25){
             for(let j = 0 ; j <= 375; j+= 25){
-              ctx.moveTo(i, 0);
-              ctx.lineTo(i, j)
-              ctx.moveTo(0, j);
-              ctx.lineTo(i, j)
+              ctx.moveTo(i,0);
+              ctx.lineTo(i,j);
+              ctx.moveTo(0,j);
+              ctx.lineTo(i,j);
             }
         }
         ctx.stroke();
     }
     getPosition=(e)=>{
-      if (this.state.isClickable) {
+      if (this.isClickable) {
         const canvas=this.refs.canvas;
         const grid=canvas.getBoundingClientRect();
         const x=e.clientX-grid.left;
@@ -35,7 +37,6 @@ class Grid extends Component{
         this.toggleState(x,y);
       }
     }
-    
     toggleState(x,y){
         const x_index=Math.floor(x/25);
         const y_index=Math.floor(y/25);
@@ -59,16 +60,25 @@ class Grid extends Component{
     }
     oneStep=()=>{
       this.life.runIteration(this.life.grid);
-      this.setState({generation: this.state.generation+1,isClickable:false},()=>this.fillsquares());
+      this.setState({generation: this.state.generation+1},()=>{this.isClickable=false; this.fillsquares()});
     }
-    animate=()=>{
-
+    animate=(timestamp)=>{
+      this.myreq=requestAnimationFrame(this.animate);
+      if (!this.start) {
+        this.start=timestamp;
+      }
+      const elapsed=timestamp-this.start;
+      if (elapsed>=500) {
+        this.life.runIteration(this.life.grid);
+        this.setState({generation: this.state.generation+1},()=>{this.isClickable=false; this.fillsquares()});
+        this.start=timestamp;
+      }
     }
     stopAnimation=()=>{
-
+      cancelAnimationFrame(this.myreq);
     }
     clear=()=>{
-      this.setState({generation:0,isClickable:true},()=>{this.life.createBlankGrid(); this.fillsquares();});
+      this.setState({generation:0},()=>{this.isClickable=true; this.life.createBlankGrid(); this.fillsquares();});
     }
     render(){
         return (
@@ -77,7 +87,7 @@ class Grid extends Component{
             <p className='generationHeader'>Current generation: {this.state.generation}</p>
             <div className='button-container'>
               <button className='btn waves-effect waves-light' onClick={()=>this.oneStep()}>Step</button>
-              <button className='btn waves-effect waves-light' onClick={()=>this.animate()}>Start</button>
+              <button className='btn waves-effect waves-light' onClick={()=>{this.myreq=requestAnimationFrame(this.animate)}}>Start</button>
               <button className='btn waves-effect waves-light' onClick={()=>this.stopAnimation()}>Stop</button>
               <button className='btn waves-effect waves-light' onClick={()=>this.clear()}>Clear</button>
             </div>

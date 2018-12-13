@@ -15,6 +15,7 @@ class App extends Component {
           <li><span>Any live cell with more than three live neighbors dies, as if by overpopulation.</span></li>
           <li><span>Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</span></li>
         </ul>
+        <h2>Nerd Stuff</h2>
         <p className='lifeInfo'>
           The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician 
           John Horton Conway in 1970.  The Game of Life is Turing Complete.  It is Turing Complete based on the definition that 

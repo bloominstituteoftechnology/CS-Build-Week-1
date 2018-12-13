@@ -1,4 +1,4 @@
-let Life=class {
+const Life=class{
     constructor(){
         this.grid=[];
     }
