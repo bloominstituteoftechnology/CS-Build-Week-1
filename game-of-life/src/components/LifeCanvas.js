@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 
 class Cell {  /* boolean   int     int     int */
@@ -39,7 +39,7 @@ export default class LifeCanvas extends Component {
     this.height = 500;
     this.width = 500;
     this.state = {
-      interval: 300,
+      interval: 500,
       continueAnimation: false,
       cells: arr,
       generation: 0,
@@ -47,8 +47,123 @@ export default class LifeCanvas extends Component {
     }
   }
 
-  toggle = () => {
-    this.setState(prevState => ({dropdownOpen: !prevState.dropdownOpen}))
+  sample1 = () => {
+    const rows = this.height/this.cellsize;
+    const cols = this.width/this.cellsize;
+    const midX = Math.floor(rows/2);
+    const midY = Math.floor(cols/2);
+    this.clearGrid();
+    const mirrorCells = this.state.cells;
+    mirrorCells[midX][midY].toggle();
+    mirrorCells[midX+1][midY].toggle();
+    mirrorCells[midX][midY+1].toggle();
+    mirrorCells[midX+1][midY+1].toggle();
+    mirrorCells[midX+2][midY+2].toggle();
+    mirrorCells[midX+3][midY+2].toggle();
+    mirrorCells[midX+2][midY+3].toggle();
+    mirrorCells[midX+3][midY+3].toggle();
+
+    mirrorCells[midX-15][midY+15].toggle();
+    mirrorCells[midX-14][midY+15].toggle();
+    mirrorCells[midX-15][midY+16].toggle();
+    mirrorCells[midX-14][midY+16].toggle();
+    mirrorCells[midX-13][midY+17].toggle();
+    mirrorCells[midX-12][midY+17].toggle();
+    mirrorCells[midX-13][midY+18].toggle();
+    mirrorCells[midX-12][midY+18].toggle();
+
+    mirrorCells[midX-15][midY-15].toggle();
+    mirrorCells[midX-14][midY-15].toggle();
+    mirrorCells[midX-15][midY-14].toggle();
+    mirrorCells[midX-14][midY-14].toggle();
+    mirrorCells[midX-13][midY-13].toggle();
+    mirrorCells[midX-12][midY-13].toggle();
+    mirrorCells[midX-13][midY-12].toggle();
+    mirrorCells[midX-12][midY-12].toggle();
+
+    mirrorCells[midX+15][midY+15].toggle();
+    mirrorCells[midX+16][midY+15].toggle();
+    mirrorCells[midX+15][midY+16].toggle();
+    mirrorCells[midX+16][midY+16].toggle();
+    mirrorCells[midX+17][midY+17].toggle();
+    mirrorCells[midX+18][midY+17].toggle();
+    mirrorCells[midX+17][midY+18].toggle();
+    mirrorCells[midX+18][midY+18].toggle();
+
+    mirrorCells[midX+15][midY-15].toggle();
+    mirrorCells[midX+16][midY-15].toggle();
+    mirrorCells[midX+15][midY-14].toggle();
+    mirrorCells[midX+16][midY-14].toggle();
+    mirrorCells[midX+17][midY-13].toggle();
+    mirrorCells[midX+18][midY-13].toggle();
+    mirrorCells[midX+17][midY-12].toggle();
+    mirrorCells[midX+18][midY-12].toggle();
+    this.draw();
+  }
+
+  sample2 = () => {
+    const rows = this.height/this.cellsize;
+    const cols = this.width/this.cellsize;
+    const midX = Math.floor(rows/2);
+    const midY = Math.floor(cols/2);
+    this.clearGrid();
+    const mirrorCells = this.state.cells;
+    mirrorCells[midX][midY].toggle();
+    mirrorCells[midX][midY+1].toggle();
+    mirrorCells[midX][midY+2].toggle();
+    mirrorCells[midX-1][midY+2].toggle();
+    mirrorCells[midX-2][midY+1].toggle();
+
+    mirrorCells[midX-5][midY-5].toggle();
+    mirrorCells[midX-5][midY-4].toggle();
+    mirrorCells[midX-5][midY-3].toggle();
+    mirrorCells[midX-6][midY-3].toggle();
+    mirrorCells[midX-7][midY-4].toggle();
+
+    mirrorCells[midX-5][midY].toggle();
+    mirrorCells[midX-5][midY+1].toggle();
+    mirrorCells[midX-5][midY+2].toggle();
+    mirrorCells[midX-6][midY+2].toggle();
+    mirrorCells[midX-7][midY+1].toggle();
+
+    mirrorCells[midX][midY-5].toggle();
+    mirrorCells[midX][midY-4].toggle();
+    mirrorCells[midX][midY-3].toggle();
+    mirrorCells[midX-1][midY-3].toggle();
+    mirrorCells[midX-2][midY-4].toggle();
+    this.draw();
+  }
+
+  sample3 = () => {
+    const rows = this.height/this.cellsize;
+    const cols = this.width/this.cellsize;
+    const midX = Math.floor(rows/2);
+    const midY = Math.floor(cols/2);
+    this.clearGrid();
+    const mirrorCells = this.state.cells;
+    mirrorCells[midX][midY].toggle();
+    mirrorCells[midX][midY+1].toggle();
+    mirrorCells[midX][midY+2].toggle();
+    mirrorCells[midX][midY+4].toggle();
+    mirrorCells[midX][midY+5].toggle();
+    mirrorCells[midX][midY-1].toggle();
+    mirrorCells[midX][midY-2].toggle();
+    mirrorCells[midX][midY-4].toggle();
+    mirrorCells[midX][midY-5].toggle();
+    mirrorCells[midX+1][midY+3].toggle();
+    mirrorCells[midX-1][midY+3].toggle();
+    mirrorCells[midX+1][midY-3].toggle();
+    mirrorCells[midX-1][midY-3].toggle();
+    this.draw();
+  }
+
+  stepBy1Gen = () => {
+    if (this.state.continueAnimation) {
+      return;
+    }
+    this.update();
+    this.draw();
+    this.nextgen();
   }
 
   clearGrid = () => {
@@ -63,7 +178,7 @@ export default class LifeCanvas extends Component {
       ctx.moveTo(0, y);
       ctx.lineTo(this.width, y);
     }
-    ctx.strokeStyle = 'blue';
+    ctx.strokeStyle = 'black';
     ctx.stroke();
     let cells = this.state.cells;
     cells.forEach(cellRow => {
@@ -94,15 +209,16 @@ export default class LifeCanvas extends Component {
   draw = () => {
     const canv = this.refs.canvas;
     const ctx = canv.getContext('2d');
+    const color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
 
     for (let j=0; j<this.height/this.cellsize; j++) {
       for (let k=0; k<this.width/this.cellsize; k++) {
         if (this.state.cells[j][k].living == 1) {
-          ctx.fillStyle = 'white'/*'#'+(Math.random()*0xFFFFFF<<0).toString(16)*/;
-          ctx.fillRect(j*this.cellsize, k*this.cellsize, this.cellsize, this.cellsize);
+          ctx.fillStyle = color;
+          ctx.fillRect(j*this.cellsize, k*this.cellsize, this.cellsize-1, this.cellsize-1);
         }
         else {
-          ctx.fillStyle = 'black';
+          ctx.fillStyle = 'lightgray';
           ctx.fillRect(j*this.cellsize, k*this.cellsize, this.cellsize-1, this.cellsize-1);
         }
       }
@@ -110,65 +226,64 @@ export default class LifeCanvas extends Component {
   }
 
   update = () => {
-    let mirrorCells = this.state.cells;
+    const rows = this.height/this.cellsize;
+    const cols = this.width/this.cellsize;
+    const mirrorCells = new Array(rows).fill(0).map(row => new Array(cols).fill(0));
+
+    for (let x=0; x<rows; x++) {
+      for (let y=0; y<cols; y++) {
+        mirrorCells[x][y] = new Cell(0, x*this.width, y*this.height);
+      }
+    }
+
     for (let j=0; j<this.height/this.cellsize; j++) {
       for (let k=0; k<this.width/this.cellsize; k++) {
         let liveneighbors = 0;
         if (j > 0) {
           if (k>0) {
-            liveneighbors += mirrorCells[j-1][k-1].living;
+            liveneighbors += this.state.cells[j-1][k-1].living;
           }
+
           if (k<this.width/this.cellsize-1) {
-            liveneighbors += mirrorCells[j-1][k+1].living;
+            liveneighbors += this.state.cells[j-1][k+1].living;
           }
-          liveneighbors += mirrorCells[j-1][k].living;
+
+          liveneighbors += this.state.cells[j-1][k].living;
         }
+
         if (k > 0) {
+
           if (j<this.height/this.cellsize-1) {
-            liveneighbors += mirrorCells[j+1][k-1].living;
+            liveneighbors += this.state.cells[j+1][k-1].living;
           }
-          liveneighbors += mirrorCells[j][k-1].living;
+          liveneighbors += this.state.cells[j][k-1].living;
         }
+
         if (j<this.height/this.cellsize-1) {
           if (k<this.width/this.cellsize-1) {
-            liveneighbors += mirrorCells[j+1][k+1].living;
+            liveneighbors += this.state.cells[j+1][k+1].living;
           }
-          liveneighbors += mirrorCells[j+1][k].living;
+          liveneighbors += this.state.cells[j+1][k].living;
         }
+
         if (k<this.width/this.cellsize-1) {
-          liveneighbors += mirrorCells[j][k+1].living;
+          liveneighbors += this.state.cells[j][k+1].living;
         }
-        if (mirrorCells[j][k].living == 0) {
-          switch (liveneighbors) {
-            case 3:
+
+        if (this.state.cells[j][k].living == 0 && liveneighbors === 3) {
               mirrorCells[j][k].toggle();
-              break;
-            default:
-              mirrorCells[j][k].living = 0;
-          }
-        } else if (mirrorCells[j][k].living == 1) {
+        }
+        if (this.state.cells[j][k].living == 1) {
           switch (liveneighbors) {
-            case 0:
-            case 1:
-              mirrorCells[j][k].toggle();
-              break;
             case 2:
             case 3:
-              mirrorCells[j][k].living = 1;
-              break;
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
               mirrorCells[j][k].toggle();
               break;
-            default:
-              mirrorCells[j][k].living = 0;
           }
-        } else {
-          console.log("Something went wrong in your update function!")
         }
+        // else {
+        //   console.log("Something went wrong in your update function!")
+        // }
       }
     }
     this.setState({ cells: mirrorCells });
@@ -188,6 +303,9 @@ export default class LifeCanvas extends Component {
   }
 
   start = (e) => {
+    if (this.state.continueAnimation) {
+      return;
+    }
     this.setState({ continueAnimation: true});
     requestAnimationFrame(this.tick);
   }
@@ -196,33 +314,25 @@ export default class LifeCanvas extends Component {
     this.setState({ continueAnimation: false});
   }
 
-  changeSpeed = (e) => {
-    this.setState(prevState =>({
-      dropdownOpen: !prevState.dropdownOpen,
-      interval: e.target.value
-    }));
-    console.log(e.target.value);
-  }
-
   clickListener = (e) => {
     if (this.state.continueAnimation === true) {
       return;
     }
     const canv = this.refs.canvas;
+    const ctx = canv.getContext('2d');
     const lft = canv.offsetLeft;
     const top = canv.offsetTop;
     let cells = this.state.cells;
     const x = e.pageX - lft;
     const y = e.pageY - top;
-    cells.forEach(cellrow => {
-      cellrow.forEach(cell => {
-        if (x >= cell.x && x <= cell.x+10 && y >= cell.y && y <= cell.y+10) {
-          cell.toggle();
-        }
-      });
-    });
-    this.setState({ cells });
-    this.draw()
+    const xindex = Math.floor(x/this.cellsize);
+    const yindex = Math.floor(y/this.cellsize);
+    console.log(xindex, yindex);
+    cells[xindex][yindex].toggle();
+    // this.draw()
+    ctx.fillStyle = cells[xindex][yindex].living ? 'white' : 'gray';
+    ctx.fillRect(xindex*this.cellsize, yindex*this.cellsize, this.cellsize-1, this.cellsize-1);
+    this.setState({ cells })
   }
 
   componentDidMount() {
@@ -237,7 +347,7 @@ export default class LifeCanvas extends Component {
       ctx.moveTo(0, y);
       ctx.lineTo(this.width, y);
     }
-    ctx.strokeStyle = 'blue';
+    ctx.strokeStyle = 'black';
     ctx.stroke();
     this.draw();
     requestAnimationFrame(this.tick);
@@ -246,21 +356,19 @@ export default class LifeCanvas extends Component {
   render() {
         return (
           <div>
-            <h3>Welcome to Jordan's Game of Life</h3>
+            <h3>Jordan's Game of Life</h3>
             <p>Generations: {this.state.generation}</p>
-            <canvas ref="canvas" width={this.width} height={this.height} onClick = {this.clickListener} />
-            <Button color="secondary" onClick = {this.start}>Start</Button>
-            <Button color="secondary" onClick = {this.stop}>Stop</Button>
-            <Button color="secondary" onClick = {this.randomize}>Randomize</Button>
-            <Button color="secondary" onClick = {this.clearGrid}>Clear</Button>
-            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-              <DropdownToggle carat>Speed</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem value={this.slow} onClick={this.changeSpeed}>Slow</DropdownItem>
-                <DropdownItem value={this.med} onClick={this.changeSpeed}>Medium</DropdownItem>
-                <DropdownItem value={this.fast} onClick={this.changeSpeed}>Fast</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+            <canvas ref="canvas" width={this.width} height={this.height} onClick = {this.clickListener} /> <br/>
+            <button onClick = {this.start}>Start</button>
+            <button onClick = {this.stop}>Stop</button>
+            <button onClick = {this.randomize}>Randomize</button>
+            <button onClick = {this.clearGrid}>Clear</button>
+            <button onClick = {this.stepBy1Gen}>Next Generation</button>
+            <button onClick = {this.sample1}>Sample 1</button>
+            <button onClick = {this.sample2}>Sample 2</button>
+            <button onClick = {this.sample3}>Sample 3</button><br/>
+            <Link to='/rules'><button>Rules of the Game</button></Link>
+            <Link to='/about'><button>About the Algorithm</button></Link>
           </div>
         )
     }
