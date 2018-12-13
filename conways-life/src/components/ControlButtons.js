@@ -1,6 +1,6 @@
 import React from "react";
 
-const Buttons = props => {
+ const Buttons = props => {
     return (
         <div className="controlButtons">
         <button onClick={() => props.toggleAnimation()}>Play/Pause</button>
@@ -10,7 +10,6 @@ const Buttons = props => {
     </div>
     );
   };
-
-
-export default Buttons;
+  
+ export default Buttons;
 

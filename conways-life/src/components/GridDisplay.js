@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import Cell from "./Cell";
 import Buttons from "./ControlButtons";
 import Options from "./GridOptions";
-
-class GridDisplay extends Component {
+ class GridDisplay extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,12 +15,10 @@ class GridDisplay extends Component {
             multicolor: false
         }
     }
-
-    componentDidMount() {
+     componentDidMount() {
         this.make2DArray();
     }
-
-    make2DArray = () => {
+     make2DArray = () => {
         let arr = new Array(this.state.cols);
         for (let i = 0; i < arr.length; i++) {
             arr[i] = new Array(this.state.rows);
@@ -33,33 +30,25 @@ class GridDisplay extends Component {
         } 
         this.setState({ grid: arr });
     }
-
-
-    randomGrid = () => {
+     randomGrid = () => {
         let arr = this.state.grid.slice();
-
-        for (let i = 0; i < this.state.cols; i++) {
+         for (let i = 0; i < this.state.cols; i++) {
             for (let j = 0; j < this.state.rows; j++) {
                 arr[i][j].value = Math.round(Math.random()); //random 0 or 1
             }
         } 
-
-        this.setState({ grid: arr, iterations: 0 });
+         this.setState({ grid: arr, iterations: 0 });
     }
-
-    clearGrid = () => {
+     clearGrid = () => {
         let arr = this.state.grid.slice();
-
-        for (let i = 0; i < this.state.cols; i++) {
+         for (let i = 0; i < this.state.cols; i++) {
             for (let j = 0; j < this.state.rows; j++) {
                 arr[i][j].value = 0;
             }
         } 
-
-        this.setState({ grid: arr, iterations: 0 });
+         this.setState({ grid: arr, iterations: 0 });
     }
-
-    computeNextGrid = () => {
+     computeNextGrid = () => {
         const prevGrid = this.state.grid.slice();
         let nextGrid = prevGrid.slice();
         
@@ -81,14 +70,12 @@ class GridDisplay extends Component {
         
             }
         }
-
-            let nextIter = this.state.iterations;
+             let nextIter = this.state.iterations;
             nextIter++;
         
             this.setState({ grid: nextGrid, iterations: nextIter });
     }
-
-    countNeighbors = (grid, x, y) => {
+     countNeighbors = (grid, x, y) => {
         let sum = 0;
         for (let i = -1; i < 2; i++) {
             for (let j = -1; j < 2; j++) {
@@ -101,16 +88,13 @@ class GridDisplay extends Component {
         sum -= grid[x][y].value;
         return sum;
     }
-
-    updateGrid = (value, x, y) => {
+     updateGrid = (value, x, y) => {
         let arr = this.state.grid.slice();
   
         arr[x][y].value = value;
-
-        this.setState({ grid: arr });
+         this.setState({ grid: arr });
     }
-
-    toggleAnimation = () => {
+     toggleAnimation = () => {
         let speed = this.state.speed;
         if (speed < 30) {
             speed = 30;
@@ -123,10 +107,6 @@ class GridDisplay extends Component {
             this.setState({timer: 0});
         }
     }
-
-    // speedInputHandler = e => {
-    //     this.setState({speed: e.target.value});
-    // }
 
     handleInputChange = e => {
         const target = e.target;
