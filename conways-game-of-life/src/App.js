@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Game from './Game';
 import Home from './Home';
-import GameBoard from './GameBoard';
 import { Route } from "react-router-dom"; 
 
 class App extends Component {
