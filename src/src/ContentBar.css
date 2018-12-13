@@ -50,3 +50,8 @@ flex-direction: column;
     margin-left: 110px;
     margin-top: 30px;
 }
+
+.Rules{
+text-decoration: none;
+color: black;
+}

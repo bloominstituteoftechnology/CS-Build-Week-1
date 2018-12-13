@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import Cells from './Cells';
 
 class Grid extends Component {
+    // constructor(props){
+    //     super(props);
     state = { 
-        //state for toggling here(alive/dead), ternary operator?
-        // alive:""
+        // alive:"",
+        // dead:"",
+        grid: [...Array(20)].map(e => Array(20).fill(0))
      }
+    // }
 
      componentDidMount(){
         const canvas = this.refs.canvas;
@@ -26,9 +31,11 @@ class Grid extends Component {
      componentDidMount(){
          const canvas = this.refs.canvas;
          const ctx = canvas.getContext('2d');
+         ctx.canvas.width = 200;
+         ctx.canvas.height = 200;
          const boxSize = 40;
          const boxes = Math.floor(200/boxSize);
-         canvas.addEventListener('click', handleClick);
+        //  canvas.addEventListener('click', handleClick);
         //  canvas.addEventListener('mousemove', handleClick);
 
          function drawBox(){
@@ -47,20 +54,52 @@ class Grid extends Component {
              }
              ctx.closePath();
          }
-
-         function handleClick(e){
-            ctx.fillStyle = 'black';
-
-            ctx.fillRect(Math.floor(e.offsetX / boxSize)* boxSize,
-            Math.floor(e.offsetY / boxSize) * boxSize,
-            boxSize, boxSize);
-         }
          drawBox();
-     }
+        }
+
+    //      function handleClick(e){
+    //          console.log(ctx.fillStyle);
+    //         // ctx.fillStyle = "white" ? "black" : "white";
+    //         ctx.fillStyle = "alive" ? "black" : "white";
+    //         // if (ctx.fillStyle = 'white') {
+    //         //     ctx.fillStyle = 'black';
+    //         //  } else {
+    //         //     ctx.fillStyle = 'white';
+    //         //  }
+
+    //         ctx.fillRect(Math.floor(e.offsetX / boxSize)* boxSize,
+    //         Math.floor(e.offsetY / boxSize) * boxSize,
+    //         boxSize, boxSize);
+    //      }
+    //      drawBox();
+    //  }
+
+    fillIn = e => {
+        let canvas = this.refs.canvas;
+        let context = canvas.getContext("2d");
+        let boxSize = 40;
+        let fix = canvas.getBoundingClientRect();
+        let offX = Math.floor((e.clientX - fix.x) / boxSize);
+        let offY = Math.floor((e.clientY - fix.y) / boxSize);
+         if (this.state.grid[offY][offX] === 0) {
+          this.state.grid[offY][offX] = 1;
+          context.fillStyle = "black";
+          context.fillRect(offX * boxSize, offY * boxSize, boxSize, boxSize);
+        } else if (this.state.grid[offY][offX] === 1) {
+          this.state.grid[offY][offX] = 0;
+          context.fillStyle = "white";
+          context.fillRect(offX * boxSize, offY * boxSize, boxSize, boxSize);
+          context.strokeRect(offX * boxSize, offY * boxSize, boxSize, boxSize);
+        }
+         console.log("offX is:", offX);
+        console.log("offy is:", offY);
+        //arr[y][x]
+      };
+
     render() { 
         return ( 
             <div>
-            <canvas class="canvas" ref="canvas" />
+            <canvas class="canvas" ref="canvas" onClick={this.fillIn} />
             Grid
             // div squares or canvas here
             </div>

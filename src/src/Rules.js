@@ -5,7 +5,7 @@ const Rules = () => {
     return ( 
         <div>
             <h1>
-                <Link to='/Rules'>Rules</Link>
+                <Link to='/Rules' class="Rules">Rules</Link>
             </h1>
         </div>
      );
