@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import { Controls, OptionsSection, PresetSection, RangeSlider, GenerationSection } from './ControlSectionStyles';
+import { 
+  Controls,
+  Button,
+  OptionsSection,
+  PresetSection,
+  RangeSlider,
+  GenerationSection
+} from './ControlSectionStyles';
 import Modal from '../modal/Modal';
 
 
@@ -19,11 +26,11 @@ class ControlSection extends Component {
       <Controls>
 
         <section>
-          <button onClick={this.props.canClick? this.props.startGame: null}>Start</button>
-          <button onClick={this.props.canClick? this.props.stepGeneration: null}>Step</button>
-          <button onClick={this.props.endGame}>Stop</button>
-          <button onClick={this.props.canClick? this.props.clearCells: null}>Clear Grid</button>
-          <button onClick={this.handleModal}>Rules</button>
+          <Button onClick={this.props.canClick? this.props.startGame: null}>Start</Button>
+          <Button onClick={this.props.canClick? this.props.stepGeneration: null}>Step</Button>
+          <Button onClick={this.props.endGame}>Stop</Button>
+          <Button onClick={this.props.canClick? this.props.clearCells: null}>Clear Grid</Button>
+          <Button onClick={this.handleModal}>Rules</Button>
         </section>
 
         <OptionsSection>
@@ -56,7 +63,7 @@ class ControlSection extends Component {
         </OptionsSection>
 
         <GenerationSection>
-          <p><strong>Generation: {this.props.generation}</strong></p>
+          <h2>Generation: {this.props.generation}</h2>
         </GenerationSection>
 
         {this.state.isModalOpen ? (

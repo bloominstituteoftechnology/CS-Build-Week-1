@@ -31,6 +31,8 @@ export const Col = styled.article`
   background: rgba(29,43,100, .3); /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, rgba(29,43,100, .3), rgba(248,205,218, .3)); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, rgba(29,43,100, .3), rgba(248,205,218, .3)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+  &:hover {
+    cursor: pointer;
+  }
   background: ${props => props.dead ? "none" : null};
 `;

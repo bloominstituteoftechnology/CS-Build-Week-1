@@ -22,12 +22,10 @@ export const Opacity = styled.div`
 
 export const ModalBody = styled.div`
   position: fixed;
-  top: 50%;
+  top: 40%;
   left: 50%;
-  margin-left: -360px;
-  margin-top: -240px;
-  width: 718px;
-  height: 242px;
+  transform: translate(-50%, -50%);
+  width: 70%;
   background: white;
   border: 1px solid black;
   z-index: 30;
