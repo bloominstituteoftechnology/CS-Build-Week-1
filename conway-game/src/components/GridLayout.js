@@ -31,7 +31,8 @@ class GridLayout extends Component {
             <Box
               runningGame={this.props.isRunning}
               key={box.id}
-              coordinates={box.coords}
+              id = {box.id}
+              active = {box.active}
             />
           );
         })}
@@ -47,12 +48,15 @@ class GridLayout extends Component {
 }
 
 const mapStateToProps = state => {
+   
   return {
     gridRows: state.gridRows,
     gridBoxArr: state.gridBoxArr,
     isRunning: state.isRunning
   };
 };
+
+
 
 export default connect(
   mapStateToProps,

@@ -1,28 +1,32 @@
 import React from "react";
 import {connect} from 'react-redux'; 
+import {updateBoxActiveState } from '../actions'; 
 
 class Box extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: false,
+      id: this.props.id, 
+      active: this.props.active
     };
 }
 
 
 onClickHandler = event => {
       if(!this.props.isRunning){
-        this.setState({
-            active: !this.state.active
-          });
-      }
+        this.props.updateBoxActiveState(this.state.id); 
   };
+}
+
+componentWillReceiveProps(newProps){
+    this.setState({active: newProps.active})
+ }
 
   render() {
     return (
       <div
+        className = {`box ${this.state.active ? "on" : "off"}`}
         onClick={this.onClickHandler}
-        className={`box ${this.state.active ? "on" : "off"}`}
       ></div>
     );
   }
@@ -30,8 +34,9 @@ onClickHandler = event => {
 
 const mapStateToProps = (state) => {
     return {
-        isRunning: state.isRunning
+        isRunning: state.isRunning, 
+        gridBoxArr: state.gridBoxArr
     }
 }
 
-export default connect(mapStateToProps, {})(Box);
+export default connect(mapStateToProps, {updateBoxActiveState})(Box);

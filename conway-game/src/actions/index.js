@@ -16,3 +16,10 @@ export const pauseRunning = () => {
     type: "PAUSE_GAME"
   };
 };
+
+export const updateBoxActiveState = (id) => {
+    return {
+        type: "ACTIVE_STATE", 
+        payload: id
+    }
+}
