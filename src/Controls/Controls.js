@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import './controls.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPause, faPlay, faEraser } from '@fortawesome/free-solid-svg-icons'
+import { faPause, faPlay, faEraser, faRandom } from '@fortawesome/free-solid-svg-icons'
 
-const pause = <FontAwesomeIcon icon={faPause} />
-const play = <FontAwesomeIcon icon={faPlay} />
 let isGoing = false;
 
 class Controls extends Component {
@@ -30,6 +28,10 @@ class Controls extends Component {
     this.props.goBlast();
   }
 
+  handleRandom = () => {
+    this.props.random();
+  }
+
   handleClear = () => {
     this.props.stop();
   }
@@ -43,6 +45,7 @@ class Controls extends Component {
           : <FontAwesomeIcon icon={faPause} /> 
       }</button>
         <button className="controls-btn" onClick={()=>{this.handleClear()}}><FontAwesomeIcon icon={faEraser} /></button>
+        <button className="controls-btn" onClick={()=>{this.handleRandom()}}><FontAwesomeIcon icon={faRandom} /></button>
       </div>
     )
   }

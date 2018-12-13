@@ -15,6 +15,7 @@ class App extends Component {
       isRollin: false,
       generations: 0,
       isClear: false,
+      isRandom: false,
     }
   }
 
@@ -33,6 +34,15 @@ class App extends Component {
     }, 5);
   }
 
+  handleRandom = () => {
+    console.log("random");
+    
+    this.setState({isRandom: true});
+    window.setTimeout(()=>{
+      this.setState({isRandom: false});
+    }, 5);
+  }
+
   render() {
     return (
       <div className="App">
@@ -40,7 +50,7 @@ class App extends Component {
           <Header></Header>
           <Rules></Rules>
           <Instructions></Instructions>
-          <Controls data={this.state} goBlast={this.goBlastEm} stop={this.pleaseDontHurtEm}></Controls>
+          <Controls data={this.state} goBlast={this.goBlastEm} stop={this.pleaseDontHurtEm} random={this.handleRandom}></Controls>
           <GridSketch className="grid-sketch" data={this.state}></GridSketch>
         </header>
       </div>

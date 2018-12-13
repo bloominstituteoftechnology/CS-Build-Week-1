@@ -22,6 +22,7 @@ class Cell {
     this.inactiveFill = "#d11554";
     this.generation = 0;
     this.centaFill = "#F1FFC0";
+    this.hoverFill = "#363636";
   }
 
   getActivity = () => {
@@ -47,6 +48,14 @@ class Cell {
   setActiveToFalse = () =>{
     this.active = false;
   }
+
+  randomActive = () => {
+    let min = Math.floor(1), max = Math.floor(9);
+    let rndmDigit = Math.floor(Math.random() * (max - min + 1)) + min;
+    if(rndmDigit % 5 == 0){
+      this.active = true;
+    }
+  }
   
   clicked = (x,y) => {
     if(x >= this.x*this.width && x < this.x*this.width+20){
@@ -56,9 +65,6 @@ class Cell {
     }
   }
 
-  // if(this.generation != 0 && this.generation % 50 === 0){
-    // this.fill = this.centaFill;
-  // } else {
   setFill = () => {
     if(this.active == true){
         this.fill = this.activeFill;

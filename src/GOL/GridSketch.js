@@ -22,7 +22,7 @@ function sketch (p){
   let cellFill = "#cc527a", textFill = "#D11554", textStroke="#e8175d";
   // textStroke2 = rgba(232, 23, 93, 0.4);
   let isBlasting = false, goForClear = 0;
-  let generations = 0;
+  let generations = 0, isRandom = false;
 
   p.preload = () => {};
 
@@ -35,10 +35,28 @@ function sketch (p){
     }
     nextGrid = currGrid;
   };
+
+  const stirChaos = () => {
+    if(isBlasting == true){
+      return;
+    }
+    for(let i=0; i<cols; i++){
+      for(let j=0; j<rows; j++){
+        currGrid[i][j].randomActive();
+        currGrid[i][j].createRect();
+      }
+    }
+  }
   
   // "Props" coming from React via P5Wrapper
   p.arbitrary = (props) => {
     console.log(props);
+    if(props.data.isRandom == true && isBlasting == false){
+      isRandom = true;
+      stirChaos();
+    } else {
+      isRandom = false;
+    }
     if(props.data.isClear == true){
       clearEm();
     }
@@ -53,10 +71,11 @@ function sketch (p){
     p.createCanvas(parentW,parentH);
     createCells();
     p.background("#e8175d");
-    // p.textFont(font);
     p.textSize(480);
     p.textAlign(p.CENTER, p.CENTER);
   };
+
+
 
   p.draw = () => {
     if(isBlasting == true){
@@ -66,6 +85,7 @@ function sketch (p){
       for(let j=0; j<rows; j++){
         currGrid[i][j].setGeneration(generations);
         currGrid[i][j].createRect();
+
       }
     }
     p.textAlign(p.LEFT);
@@ -84,7 +104,6 @@ function sketch (p){
   }
 
   const drawText = (x) => {
-    // p.stroke(textFill);
     if(generations != 0 && generations % 50 == 0){
 
       p.fill(241, 255, 192, 200);
@@ -147,7 +166,6 @@ function sketch (p){
   }
 
   const clearEm = () => {
-    // Needs to set generations to 0, also!
     if(isBlasting == true){
       return;
     }
@@ -159,6 +177,5 @@ function sketch (p){
     generations = 0;
   }
 }
-console.log(sketch);
 
 export default sketch;
