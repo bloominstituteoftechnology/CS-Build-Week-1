@@ -32,6 +32,7 @@ class Box extends React.Component {
     return (
       <div
         onClick={this.onClickHandler}
+        active = {this.state.active}
         className={`box ${this.state.active ? "on" : "off"}`}
       ></div>
     );
