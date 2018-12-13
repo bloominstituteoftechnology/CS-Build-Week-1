@@ -100,8 +100,6 @@ class Grid extends Component {
         return ( 
             <div>
             <canvas class="canvas" ref="canvas" onClick={this.fillIn} />
-            Grid
-            // div squares or canvas here
             </div>
          );
     }

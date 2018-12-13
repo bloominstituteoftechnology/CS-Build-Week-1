@@ -52,6 +52,11 @@ flex-direction: column;
 }
 
 .Rules{
-text-decoration: none;
+/* text-decoration: none; */
 color: black;
+}
+
+.About{
+/* text-decoration: none; */
+color: white; 
 }
