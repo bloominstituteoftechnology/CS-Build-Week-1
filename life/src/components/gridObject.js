@@ -174,8 +174,8 @@ export default class GridObject extends Component {
         e.preventDefault();
         switch(e.target.name){
             case "start":
-                // start = setInterval(() => this.buildNext(), this.state.time)
-                start = setInterval(() => console.log("this timeer"), this.state.time)
+                start = setInterval(() => this.buildNext(), this.state.time)
+                // start = setInterval(() => console.log("this timeer"), this.state.time)
                 this.setState({
                     lock: true
                 })
