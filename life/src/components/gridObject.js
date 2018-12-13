@@ -175,7 +175,7 @@ export default class GridObject extends Component {
         switch(e.target.name){
             case "start":
                 start = setInterval(() => this.buildNext(), this.state.time)
-                // start = setInterval(() => console.log("this timeer"), this.state.time)
+                // start = setInterval(() => console.log("this timeer", this.state.generations+1), this.state.time)
                 this.setState({
                     lock: true
                 })
@@ -224,15 +224,15 @@ export default class GridObject extends Component {
             <GridDiv> 
                 <h4>Generation: {this.state.generations}</h4>
                 <div className="timer">
-                    <span><strong>Timer increments: {this.state.time/1000} seconds</strong></span>
+                    <span><strong>Timer increments: ~{this.state.time/1000}-20 seconds</strong></span>
                     <div>
                         <button name="+" onClick={this.clickHandler}>+</button>
                         <button name="-" onClick={this.clickHandler}>-</button>
                     </div>
                 </div>
                 <div className="buttons">
-                    <button name="start" onClick={this.clickHandler}>start</button>
-                    <button name="stop" onClick={this.clickHandler}>stop</button>
+                    <button name="start" onClick={this.clickHandler} style={{border: this.state.lock?"2px solid black": null}}>start</button>
+                    <button name="stop" onClick={this.clickHandler} style={{border: this.state.lock?null:"2px solid black"}}>stop</button>
                     <button name="next" onClick={this.clickHandler}>next</button>
                     <button name="clear" onClick={this.clickHandler}>clear</button>
                 </div>
