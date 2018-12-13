@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
+const colorWheel = ["red", "#FF7F50", "#FEFA8A", "#00FA9A", "#1E90FF", "#8A2BE2", "#DB7093"]
+
 class Game extends Component {
   constructor() {
     super();
@@ -8,7 +10,9 @@ class Game extends Component {
       running: false,
       cycles: 0,
       clear: false,
-      color: "#DB7093"
+      color: "#DB7093",
+      rainbowColor: 0,
+      rainbowMode: false
     }
   }
   componentDidMount() {
@@ -126,6 +130,14 @@ class Game extends Component {
       }
     }
   }
+  rainbowMode = () => {
+    if (this.state.rainbowMode){
+      let nextColor = this.state.rainbowColor;
+      nextColor = (nextColor + 1) % 7
+      this.setState({color: colorWheel[nextColor], rainbowColor: nextColor}, this.updateCellColor)
+      setTimeout(this.rainbowMode, 100)
+    }
+  }
   buttonClick = (type) => {
     const c = this.refs.grid
     const ctx = c.getContext("2d");
@@ -143,10 +155,10 @@ class Game extends Component {
         }
         break;
       case "stop":
-        this.setState({running: false})
+        this.setState({running: false, rainbowMode: false})
         break;
       case "clear":
-        this.setState({running: false, clear: true}, () => this.updateCells())
+        this.setState({running: false, clear: true, rainbowMode: false}, () => this.updateCells())
         break;
       case "glider":
         this.setState({
@@ -218,25 +230,27 @@ class Game extends Component {
   colorClick = (color) => {
     switch(color) {
       case "r":
-        this.setState({color: "red"}, () => this.updateCellColor())
+        this.setState({color: "red", rainbowMode: false}, () => this.updateCellColor())
         break;
       case "o":
-        this.setState({color: "#FF7F50"}, () => this.updateCellColor())
+        this.setState({color: "#FF7F50", rainbowMode: false}, () => this.updateCellColor())
         break;
       case "y":
-        this.setState({color: "#FEFA8A"}, () => this.updateCellColor())
+        this.setState({color: "#FEFA8A", rainbowMode: false}, () => this.updateCellColor())
         break;
       case "g":
-        this.setState({color: "#00FA9A"}, () => this.updateCellColor())
+        this.setState({color: "#00FA9A", rainbowMode: false}, () => this.updateCellColor())
         break;
       case "b":
-        this.setState({color: "#1E90FF"}, () => this.updateCellColor())
+        this.setState({color: "#1E90FF", rainbowMode: false}, () => this.updateCellColor())
         break;
       case "pu":
-        this.setState({color: "#8A2BE2"}, () => this.updateCellColor())
+        this.setState({color: "#8A2BE2", rainbowMode: false}, () => this.updateCellColor())
         break;
       case "pi":
-        this.setState({color: "#DB7093"}, () => this.updateCellColor())
+        this.setState({color: "#DB7093", rainbowMode: false}, () => this.updateCellColor())
+      case "ra":
+        this.setState({rainbowMode: true}, this.rainbowMode);
     }
   }
 
@@ -264,6 +278,7 @@ class Game extends Component {
                 <button className="b color" onClick={()=>this.colorClick("b")}>Blue</button>
                 <button className="pu color" onClick={()=>this.colorClick("pu")}>Purple</button>
                 <button className="pi color" onClick={()=>this.colorClick("pi")}>Pink</button>
+                <button className="ra color" onClick={()=>this.colorClick("ra")}>Rainbow</button>
               </div>
             </div>
           </div>

@@ -1,6 +1,8 @@
 body {
   background-image: radial-gradient(circle, rgba(139, 158, 241, 0.767), rgb(166, 144, 248));
   font-family: 'Bungee', cursive;
+  max-width: 1000px;
+  margin: auto;
 }
 .title {
   text-align: center;
@@ -137,10 +139,24 @@ button:active {
 }
 .scene {
   margin: 50px auto;
-  height: 550px;
+  height: 570px;
   width: 900px;
   perspective: 800px;
 }
 .isFlipped {
   transform: rotateY(180deg);
 }
+/* ~~~~~~~~ mobile version ~~~~~~~~~*/
+/* @media screen and (max-width: 480px) {
+  .title {
+    font-size: 140%;
+  }
+  .scene {
+    width: 400px;
+    height: 700px;
+  }
+  canvas {
+    transform: scale(.8)
+  }
+
+} */
