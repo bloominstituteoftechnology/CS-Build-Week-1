@@ -62,9 +62,14 @@ class Grid extends Component{
         this.draw();
     }
     oneStep=()=>{
-      const board=this.life.grid;
-      this.life.runIteration(board);
-      this.setState({generation: this.state.generation + 1},()=>this.fillsquares());
+      this.life.runIteration(this.life.grid);
+      this.setState({generation: this.state.generation+1,isClickable:false},()=>this.fillsquares());
+    }
+    animate=()=>{
+
+    }
+    clear=()=>{
+      this.setState({generation:0,isClickable:true},()=>{this.life.createBlankGrid(); this.fillsquares();});
     }
     render(){
         return (
@@ -72,6 +77,8 @@ class Grid extends Component{
             <canvas ref="canvas" width={375} height={375} onClick={(e)=>this.getPosition(e)}/>
             <p>Current generation: {this.state.generation}</p>
             <button onClick={()=>this.oneStep()}>Step</button>
+            <button onClick={()=>this.animate()}>Start</button>
+            <button onClick={()=>this.clear()}>Clear</button>
           </div>
         );
     }
