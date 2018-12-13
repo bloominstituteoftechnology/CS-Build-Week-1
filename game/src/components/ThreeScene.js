@@ -289,7 +289,7 @@ class ThreeScene extends React.Component {
                 let cubeName = `cube.${i}.${j}`;
                 let objName = `object.${i}.${j}`;
                 if (matrix[i][j] === 1) {
-                    const geometry = new THREE.BoxGeometry(.05, .05, .05);
+                    const geometry = new THREE.BoxGeometry(.2, .2, .2);
                     let material;
                     if (layer === 1) {
                         material = new THREE.MeshBasicMaterial({color: '#ffff00'});
@@ -300,7 +300,7 @@ class ThreeScene extends React.Component {
                     }
                     window[cubeName] = new THREE.Mesh(geometry, material);
                     window[objName] = new THREE.Object3D();
-                    window[cubeName].position.set(j/8-3.4, 20/(i/8+2.8)-4.5, (layer-1)/10);
+                    window[cubeName].position.set(j/3-3.4, 20/(i/3+3)-4.5, (layer-1)/4);
                     this.scene.add(window[cubeName]);
                     this.scene.add(window[objName]);
                 } else {
