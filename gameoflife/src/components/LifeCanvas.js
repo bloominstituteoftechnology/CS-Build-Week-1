@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 
 class LifeCanvas extends Component {
+  constructor() {
+    super();
+    this.state = {
+      running: false,
+      grid: [...Array(20)].map(e => Array(20).fill(0))
+    };
+  }
+
   componentDidMount() {
     this.draw();
   }
@@ -26,15 +34,23 @@ class LifeCanvas extends Component {
     let context = canvas.getContext("2d");
     let boxSize = 20;
     let fix = canvas.getBoundingClientRect();
+    let offX = Math.floor((e.clientX - fix.x) / boxSize);
+    let offY = Math.floor((e.clientY - fix.y) / boxSize);
 
-    context.fillStyle = "grey";
+    if (this.state.grid[offY][offX] === 0) {
+      this.state.grid[offY][offX] = 1;
+      context.fillStyle = "black";
+      context.fillRect(offX * boxSize, offY * boxSize, boxSize, boxSize);
+    } else if (this.state.grid[offY][offX] === 1) {
+      this.state.grid[offY][offX] = 0;
+      context.fillStyle = "white";
+      context.fillRect(offX * boxSize, offY * boxSize, boxSize, boxSize);
+      context.strokeRect(offX * boxSize, offY * boxSize, boxSize, boxSize);
+    }
 
-    context.fillRect(
-      Math.floor((e.clientX - fix.x) / boxSize) * boxSize,
-      Math.floor((e.clientY - fix.y) / boxSize) * boxSize,
-      boxSize,
-      boxSize
-    );
+    console.log("offX is:", offX);
+    console.log("offy is:", offY);
+    //arr[y][x]
   };
 
   render() {
