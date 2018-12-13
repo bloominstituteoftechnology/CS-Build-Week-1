@@ -1,0 +1,107 @@
+.App {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color:lightblue;
+  padding: 1em 4em;
+  box-sizing: border-box;
+
+}
+
+.screen {
+  display: grid;
+  height: 60vh;
+  width: 60vh;
+  border: 3px black solid;
+  grid-gap: 2px;
+  padding: 2px;
+}
+.infobox{
+  
+  background-color: white;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 1rem;
+  max-width: 60em;
+
+}
+.game{
+  background-color: white;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 100%;
+  max-width: 60em;
+}
+ol li {
+  
+  list-style-position: inside;
+
+}
+.settingsbar{
+  padding-bottom: 1rem;
+}
+.canvasDiv{
+  margin: 1rem 0;
+  
+}
+canvas{
+  border: 2px black solid;
+  border-radius: 10px;
+  box-shadow:         inset 0 0 10px #000000
+}
+.gen{
+  font-size: 20px;
+  margin-top: 2rem;
+}
+button{
+  background: rgb(66, 184, 221);
+  background: lightblue;
+
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  text-decoration-color: initial;
+  margin-right: 10px;
+  font-size: 20px;
+}
+select{
+  background: lightblue;
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  text-decoration-color: initial;
+  margin-right: 10px;
+  font-size: 20px;
+}
+.gridSettings{
+  width:60%;
+  margin:auto;
+  display:flex;
+  align-items: center;
+  justify-content:space-between;
+  font-size: 20px;
+}
+input{
+  font-size: 20px;
+  width: 20%;
+  text-align: center; 
+  border-radius: 4px;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  text-decoration-color: initial;
+}
