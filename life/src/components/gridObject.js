@@ -56,25 +56,7 @@ export default class GridObject extends Component {
         })
     }
 
-    buildNext = async () => {
-        console.log("buildNext")
-        let selected = 0;
-        selected = this.getSelected();
-        let questionables = this.getQuestionables(selected);
-        await questionables.forEach(num => {
-            this.cubeNextTick(num);
-        })
-        let allFalse = {}
-        allFalse = this.state.allFalse;
-        let curObj = {}
-        curObj = Object.assign({}, this.state.nexObj)
-        await this.setState({
-            curObj: curObj,
-            nexObj: allFalse,
-            generations: this.state.generations+1,
-        })
-        return "done"
-    }
+    
 
     cubeNextTick(num){
         let activeNeighbors = 0;
@@ -171,22 +153,56 @@ export default class GridObject extends Component {
         }
     }
 
-    recursiveTimeout = async () => {
-        console.log("recursive timeout")
-        ran = await setTimeout(() => {
-            recursiveCounter = recursiveCounter + 1;
-            ran = this.buildNext()
-        }, 2000)  
+    buildNext = () => {
+        console.log("buildNext")
+        
+        return new Promise(res => {
+            // return setTimeout(() => res("waiting"), 1000)
+            let selected = 0;
+            selected = this.getSelected();
+            let questionables = this.getQuestionables(selected);
+            questionables.forEach(num => {
+                this.cubeNextTick(num);
+            })
+            let allFalse = {}
+            allFalse = this.state.allFalse;
+            let curObj = {}
+            curObj = Object.assign({}, this.state.nexObj)
+            this.setState({
+                curObj: curObj,
+                nexObj: allFalse,
+                generations: this.state.generations+1,
+            })
+            
+            return res(selected)
+        });
+    }
 
+    recursiveTimeout = async () => {
+        while(recursiveCounter < 4){
+            try{
+                console.log("recursive timeout")
+                 this.buildNext().then(res => {
+                     console.log(res)
+                })
+                recursiveCounter+=1;
+                console.log(start)
+                console.log("done")
+              }
+              catch(error){
+                console.log(error)
+              }
+        }
+        //call recursive here?
     }
     
     clickHandler = (e) => {
         e.preventDefault();
         switch(e.target.name){
             case "start":
-                start = setInterval(() => this.buildNext(), 1000)
+                // start = setInterval(() => this.buildNext(), 100)
                 // start = setInterval(() => console.log("this timeer", this.state.generations+1), this.state.time)
-                // start = this.recursiveTimeout();//broken
+                this.recursiveTimeout();//broken
                 this.setState({
                     lock: true
                 })
