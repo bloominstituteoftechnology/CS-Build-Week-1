@@ -107,8 +107,8 @@ import Options from "./GridOptions";
 
      toggleAnimation = () => {
         let speed = this.state.speed;
-        if (speed < 30) {
-            speed = 30;
+        if (speed < 10) {
+            speed = 10;
         }
         if (this.state.timer === 0) {
             let timer = setInterval(this.computeNextGrid, speed);
