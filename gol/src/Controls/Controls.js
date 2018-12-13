@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './controls.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPause, faPlay, faEraser } from '@fortawesome/free-solid-svg-icons'
 
+const pause = <FontAwesomeIcon icon={faPause} />
+const play = <FontAwesomeIcon icon={faPlay} />
 let isGoing = false;
 
 class Controls extends Component {
@@ -24,12 +28,12 @@ class Controls extends Component {
   render(){
     return (
       <div className="controls-container">
-        <button onClick={()=>{this.toggleOnGoing()}}>{ //Check if message failed
+        <button className="controls-btn" onClick={()=>{this.toggleOnGoing()}}>{ //Check if message failed
         (isGoing === false)
-          ? <div> go! </div> 
-          : <div> halt! </div> 
+          ? <FontAwesomeIcon icon={faPlay} />
+          : <FontAwesomeIcon icon={faPause} /> 
       }</button>
-        <button onClick={()=>{this.handleClear()}}>scrap!</button>
+        <button className="controls-btn" onClick={()=>{this.handleClear()}}><FontAwesomeIcon icon={faEraser} /></button>
       </div>
     )
   }

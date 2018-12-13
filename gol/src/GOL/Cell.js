@@ -20,6 +20,8 @@ class Cell {
     this.p = p;
     this.activeFill = "#e8175d";
     this.inactiveFill = "#d11554";
+    this.generation = 0;
+    this.centaFill = "#F1FFC0";
   }
 
   getActivity = () => {
@@ -32,6 +34,10 @@ class Cell {
 
   setActiveToTrue = () => {
     this.active = true;
+  }
+
+  setGeneration = (g) => {
+    this.generation = g;
   }
 
   setActivity = (a) => {
@@ -50,13 +56,24 @@ class Cell {
     }
   }
 
+  // if(this.generation != 0 && this.generation % 50 === 0){
+    // this.fill = this.centaFill;
+  // } else {
   setFill = () => {
     if(this.active == true){
-      this.fill = this.activeFill;
+        this.fill = this.activeFill;
     } else if (this.active == false) {
       this.fill = this.inactiveFill;
     }
     return this.fill;
+  }
+
+  setDimension = () => {
+    if(this.active == true){
+      this.width = 22;
+    } else {
+      this.width = 20;
+    }
   }
 
   createRect = () => {
@@ -64,7 +81,7 @@ class Cell {
     this.p.noStroke();
     this.p.rect(this.x*this.width, this.y*this.width, this.width-1, this.width-1);
     this.p.fill(fillV);
-  };
+  }
 }
   
 export default Cell;

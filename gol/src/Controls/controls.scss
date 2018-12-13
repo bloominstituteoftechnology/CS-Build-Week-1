@@ -7,7 +7,23 @@
   height: 163px;
   top: 603px;
   left: 316px;
-  // background-color: #a8a7a8;
   color: #cc527a;
   border-radius: 10px 10px 0 0;
+
+  .controls-btn {
+    width: 200px;
+    height: 122px;
+    background: none;
+    font-size: 6rem;
+    border: none;
+    color: rgba(255,255,255, 0.3);
+    text-shadow: none;
+    outline: none;
+    &:active{
+      color:rgba(241, 255, 64,1);
+    }
+    &:hover{
+      color: #cc527a;
+    }
+  }
 }

@@ -64,6 +64,7 @@ function sketch (p){
     }
     for(let i=0; i<cols; i++){
       for(let j=0; j<rows; j++){
+        currGrid[i][j].setGeneration(generations);
         currGrid[i][j].createRect();
       }
     }
@@ -84,6 +85,20 @@ function sketch (p){
 
   const drawText = (x) => {
     // p.stroke(textFill);
+    if(generations != 0 && generations % 50 == 0){
+
+      p.fill(241, 255, 192, 200);
+      p.strokeWeight(8);
+      p.text(generations, x, 200);
+
+      window.setTimeout(()=>{
+        p.stroke(232, 23, 93, 131)
+        p.fill(232, 23, 93, 91);
+        p.strokeWeight(8);
+        p.text(generations, x, 200);
+      },1700);
+    }
+    
     p.stroke(232, 23, 93, 131)
     p.fill(232, 23, 93, 91);
     p.strokeWeight(8);
