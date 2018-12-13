@@ -383,7 +383,6 @@ class Canvas extends React.Component {
           if (currentNodes[i - 1].isLiving) {
             check++;
           }
-          console.log(currentNodes[i - 20])
           if (currentNodes[i - 20].isLiving) {
             check++;
           }
