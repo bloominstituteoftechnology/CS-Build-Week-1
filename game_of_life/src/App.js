@@ -167,36 +167,46 @@ class App extends Component {
     });
   }
   randomGame() {
-    let randomSelection = [];
-    let randomBoard = [];
-    if (!this.state.running) {
-      for (let i = 0; i < this.state.size[0]; i++) {
-        for (let j = 0; j < this.state.size[1]; j++) {
-          if (this.state.stage.initialCell(i + " , " + j)) {
-            // console.log("click", i, j);
-            // console.log(randomSelection);
-            randomSelection.push(
-              <Cell
-                key={[i, j]}
-                status={{ x: i, y: j }}
-                living={true}
-                initialCell={this.initialCell.bind(this)}
-              />
-            );
-          }
+    // let randomSelection = [];
+    // let randomBoard = this.state.stage.living;
+    // if (!this.state.running) {
+    //   for (let i = 0; i < this.state.size[0]; i++) {
+    //     for (let j = 0; j < this.state.size[1]; j++) {
+    //       if (this.state.stage.initialCell(i + " , " + j)) {
+    //         // console.log("click", i, j);
+    //         // console.log(randomSelection);
+    //         randomSelection.push(
+    //           <Cell
+    //             key={[i, j]}
+    //             status={{ x: i, y: j }}
+    //             living={true}
+    //             initialCell={this.initialCell.bind(this)}
+    //           />
+    //         );
+    //       }
+    //     }
+    //     let randomCell =
+    //       randomSelection[Math.floor(Math.random() * randomSelection.length)];
+    //     console.log(randomCell);
+    //     randomBoard.push(
+    //         <div className="row" key={i}>
+    //         {randomCell}
+    //         </div>
+    //     );
+    //     randomSelection = [];
+    //   }
+    // }
+    // this.setState({
+    //   living: randomBoard; 
+    // })
+    if(!this.state.running){
+      for(let i = 0; i < this.state.size[0]; i++){
+        for(let j = 0; j < this.state.size[1]; j++){
+          this.state.stage.living[i][j] = Math.round(Math.random()); 
         }
-        let randomCell =
-          randomSelection[Math.floor(Math.random() * randomSelection.length)];
-        console.log(randomCell);
-        randomBoard.push(
-            {randomCell}
-        );
-        randomSelection = [];
       }
     }
-    return randomBoard;
   }
-
   renderBoard() {
     //two empty arrays
     //one for a new board

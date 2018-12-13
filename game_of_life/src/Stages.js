@@ -31,8 +31,10 @@ class Stages extends Component {
   }
   //get all the living cells
   getLiving() {
+      console.log("living", this.state.living)
     return this.state.living;
   }
+  
   //tell whether a cell is alive or dead
   getLifeUpdate(status) {
     return this.state.living.has(status);
@@ -75,7 +77,7 @@ class Stages extends Component {
         // increments this is for the rules where a cell must
         //only have two or three to remain alive.
         if (this.getLifeUpdate(i + " , " + j)) {
-          thoseAlive++;
+            thoseAlive++;
         } else {
           this.state.dead.set(i + " , " + j, { x: i, y: j });
         }
@@ -85,8 +87,11 @@ class Stages extends Component {
     if (thoseAlive === 2 || thoseAlive === 3)
       this.state.nextStage.set(status.x + " , " + status.y, {
         x: status.x,
-        y: status.y
+        y: status.y  
       });
+      console.log(thoseAlive, "LN BTM")
+      console.log(this.getLifeUpdate(), "LN BTM")
+
   }
   //count the dead neighbors
   //very similar structure to the livingNeighbor
@@ -106,6 +111,8 @@ class Stages extends Component {
         x: status.x,
         y: status.y
       });
+      console.log(thoseAlive, "DN BTM")
+      console.log(this.getLifeUpdate(), "DN BTM")
   }
   //get the status of a cell and add it to map of living cells
   addCell(status) {
