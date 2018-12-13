@@ -8,9 +8,11 @@ const Cell = props => {
         backgroundColor: props.color,
         cursor: props.isClickable ? 'pointer' : 'not-allowed'
       }}
-      className="cell"
+      className="cell tooltip"
       onClick={() => props.cellClickHandler(props.id)}
-    />
+    >
+      <span className="tooltip-text">{props.id}</span>
+    </div>
   );
 };
 
