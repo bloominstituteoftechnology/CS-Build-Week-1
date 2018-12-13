@@ -25,6 +25,8 @@
   display: flex; 
   flex-wrap: wrap;
   border: 3px solid red; 
+  background: grey;
+  margin: 0 auto;
 
 }
 .titleApp {
@@ -151,6 +153,12 @@
 .presetsDiv p:hover {
   cursor: pointer;
 }
+
+.labels {
+  font-size: 8px; 
+}
+
+
 
 
 
