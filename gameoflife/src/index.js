@@ -20,7 +20,7 @@ class Box extends React.Component {
 
 class Grid extends React.Component {
     render() {
-        const width = (this.props.cols * 16);
+        const width = this.props.cols * 14;
         let rowsArr = []
 
         let boxClass = "";
@@ -129,11 +129,46 @@ class Main extends React.Component {
 
     playButton = () => {
         clearInterval(this.intervalId)
-        this.intervalId = setInterval(this.playButton, this.speed);
+        this.intervalId = setInterval(this.play, this.speed);
     }
 
     pauseButton = () => {
         clearInterval(this.intervalId);
+    }
+
+    slow = () => {
+        this.speed = 1000;
+        this.playButton();
+    }
+
+    fast = () => {
+        this.speed = 100;
+        this.playButton();
+    }
+
+    clear = () => {
+        let grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
+        this.setState({
+            gridFull: grid,
+            generation: 0
+        });
+    }
+
+    gridSize = (size) => {
+        switch (size) {
+            case "1":
+                this.cols = 20;
+                this.rows = 10;
+                break;
+            case "2":
+                this.cols = 50;
+                this.rows = 30;
+                break;
+            default:
+                this.cols = 70;
+                this.rows = 50;
+        }
+        this.clear();
     }
 
     play = () => {
@@ -189,6 +224,10 @@ class Main extends React.Component {
             </div>
         )
     }
+}
+
+function arrayClone(arr) {
+    return JSON.parse(JSON.stringify(arr));
 }
 
 ReactDOM.render(<Main />, document.getElementById('root'));

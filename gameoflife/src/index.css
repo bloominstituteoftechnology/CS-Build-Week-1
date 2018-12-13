@@ -38,8 +38,8 @@ body {
 }
 
 h1, h2, h3, h4 {
-  color: white;
-  margin: atuo;
+  color: black;
+  margin: auto;
   text-align: center;
   width: 50%;
   margin-top: 10px;
