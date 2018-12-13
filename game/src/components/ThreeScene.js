@@ -23,7 +23,7 @@ class ThreeScene extends React.Component {
             array3: layer3First,
             continueAnimating : false,
             buttonTag: 'Start',
-            speed: 250
+            speed: 0
         }
     }
 
@@ -110,7 +110,7 @@ class ThreeScene extends React.Component {
                 this.setState({array2: layer2First});
                 this.computeNeigborsAndChangeMatrix(layer3Second, layer3First, 3);
                 this.setState({array3: layer3First});
-
+                
                 this.setState({cycle: 'A'});
                 generationCount++;
             } else {
@@ -337,8 +337,11 @@ class ThreeScene extends React.Component {
                 layer3First[i][j] = Math.round(Math.random());
             }
         }
-        this.setState({array1: layer1First, array2: layer2First, array3: layer3First});
-        this.componentDidUpdate();
+        this.setState( function() {
+            return {array1: layer1First, array2: layer2First, array3: layer3First}}
+        );
+
+        
     }
 
     clearBoard = () => {
@@ -367,7 +370,7 @@ class ThreeScene extends React.Component {
                 </div>
                 <div>
                     <button onClick={this.toggleButton}>{this.state.buttonTag}</button>
-                    <button onClick={this.randomize}>Random</button>
+                    <button onClick={() => this.randomize()}>Random</button>
                     <button onClick={this.clearBoard}>Clear</button>
                 </div>
             </div>
