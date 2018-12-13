@@ -1,6 +1,8 @@
 .App {
   text-align: center;
   margin-top:30px;
+  width:380px;
+  margin:0 auto;
 }
 
 .App-logo {
@@ -31,28 +33,25 @@
     transform: rotate(360deg);
   }
 }
-p{
-  margin-top:30px;
-  -webkit-touch-callout: none; 
-  -webkit-user-select: none; 
-  -khtml-user-select: none;
-  -moz-user-select: none; 
-  -ms-user-select: none; 
-  user-select: none;
-}
-ul{
-  width:375px;
-  margin:0 auto;
-}
+
 ul li{
   padding-bottom:10px;
   text-align:left;
 }
+li,h2,h1,p{
+  padding-left: 10px;
+  padding-right:10px;
+}
 .button-container{
-  width:375px;
-  margin:0 auto;
   display:flex;
   justify-content:space-evenly;
+  flex-wrap:wrap;
+}
+.btn{
+  margin-bottom:20px;
+}
+.button-container,.lifeinfo{
+  margin:0 auto;
 }
 h2{
   font-size:22px;
@@ -64,9 +63,6 @@ h1{
   font-size:22px;
 }
 .lifeInfo{
-  width:375px;
-  margin:0 auto;
   text-align:left;
-  margin-top:30px;
   margin-bottom:30px;
 }

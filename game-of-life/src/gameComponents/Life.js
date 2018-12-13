@@ -49,5 +49,14 @@ const Life=class{
                 }
             }
         }
+    createRandomizedGrid(){
+      this.grid=[];
+      for (let i=0; i<15;i++) {
+        this.grid[i]=[];
+        for (let j=0; j<15; j++) {
+          this.grid[i].push(Math.round(Math.random()));
+        }
+      }
+    }
 }
 export default Life;

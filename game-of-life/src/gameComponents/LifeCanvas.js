@@ -68,28 +68,36 @@ class LifeCanvas extends Component{
         this.start=timestamp;
       }
       const elapsed=timestamp-this.start;
-      if (elapsed>=500) {
+      if (elapsed>=300) {
         this.oneStep();
         this.start=timestamp;
       }
     }
     stopAnimation=()=>{
       cancelAnimationFrame(this.myreq);
+      this.myreq=null;
+      this.start=null;
     }
     clear=()=>{
       this.stopAnimation();
       this.setState({generation:0},()=>{this.isClickable=true; this.life.createBlankGrid(); this.fillsquares();});
     }
+    randomize=()=>{
+      if (!this.start && !this.myreq) {
+        this.setState({generation:0},()=>{this.life.createRandomizedGrid();this.fillsquares();});
+      }
+    }
     render(){
         return (
           <div>
-            <canvas ref="canvas" width={375} height={375} onClick={(e)=>this.getPosition(e)}/>
+            <canvas ref="canvas" width={380} height={380} onClick={(e)=>this.getPosition(e)}/>
             <p className='generationHeader'>Current generation: {this.state.generation}</p>
             <div className='button-container'>
               <button className='btn waves-effect waves-light' onClick={()=>this.oneStep()}>Step</button>
               <button className='btn waves-effect waves-light' onClick={()=>{this.myreq=requestAnimationFrame(this.animate)}}>Start</button>
               <button className='btn waves-effect waves-light' onClick={()=>this.stopAnimation()}>Stop</button>
               <button className='btn waves-effect waves-light' onClick={()=>this.clear()}>Clear</button>
+              <button className='btn waves-effect waves-light' onClick={()=>this.randomize()}>Random</button>
             </div>
           </div>
         );
