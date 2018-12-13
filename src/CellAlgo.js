@@ -26,7 +26,7 @@ export const cellPresetAlgo = (currentNodeHolder, target) => {
   let middleOfGrid = Math.floor(len / 2);
   for (let i = 0; i < len; i++) {
     for (let j = 0; j < len; j++) {
-      if (!currentNodeHolder[i][j].isAlive) {
+      if (currentNodeHolder[i][j].isAlive) {
         currentNodeHolder[i][j].isAlive = false;
       }
     }
@@ -48,10 +48,34 @@ export const cellPresetAlgo = (currentNodeHolder, target) => {
       currentNodeHolder[middleOfGrid - 2][middleOfGrid + 1].isAlive = true;
       currentNodeHolder[middleOfGrid - 1][middleOfGrid + 3].isAlive = true;
     break;
-    case 'Blinker':
+    case 'Blinkers':
       currentNodeHolder[middleOfGrid][middleOfGrid].isAlive = true;
       currentNodeHolder[middleOfGrid][middleOfGrid + 1].isAlive = true;
       currentNodeHolder[middleOfGrid][middleOfGrid - 1].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid + 4].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid + 5].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid + 6].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid - 4].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid - 5].isAlive = true;
+      currentNodeHolder[middleOfGrid][middleOfGrid - 6].isAlive = true;
+      currentNodeHolder[middleOfGrid + 4][middleOfGrid].isAlive = true;
+      currentNodeHolder[middleOfGrid + 4][middleOfGrid + 1].isAlive = true;
+      currentNodeHolder[middleOfGrid + 4][middleOfGrid - 1].isAlive = true;
+      currentNodeHolder[middleOfGrid - 4][middleOfGrid].isAlive = true;
+      currentNodeHolder[middleOfGrid - 4][middleOfGrid + 1].isAlive = true;
+      currentNodeHolder[middleOfGrid - 4][middleOfGrid - 1].isAlive = true;
+      currentNodeHolder[middleOfGrid + 4][middleOfGrid + 4].isAlive = true;
+      currentNodeHolder[middleOfGrid + 4][middleOfGrid + 5].isAlive = true;
+      currentNodeHolder[middleOfGrid + 4][middleOfGrid + 6].isAlive = true;
+      currentNodeHolder[middleOfGrid + 4][middleOfGrid - 4].isAlive = true;
+      currentNodeHolder[middleOfGrid + 4][middleOfGrid - 5].isAlive = true;
+      currentNodeHolder[middleOfGrid + 4][middleOfGrid - 6].isAlive = true;
+      currentNodeHolder[middleOfGrid - 4][middleOfGrid + 4].isAlive = true;
+      currentNodeHolder[middleOfGrid - 4][middleOfGrid + 5].isAlive = true;
+      currentNodeHolder[middleOfGrid - 4][middleOfGrid + 6].isAlive = true;
+      currentNodeHolder[middleOfGrid - 4][middleOfGrid - 4].isAlive = true;
+      currentNodeHolder[middleOfGrid - 4][middleOfGrid - 5].isAlive = true;
+      currentNodeHolder[middleOfGrid - 4][middleOfGrid - 6].isAlive = true;
     break;
     default:
     break;

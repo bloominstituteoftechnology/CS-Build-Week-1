@@ -38,10 +38,10 @@ class ControlSection extends Component {
           <PresetSection>
             <label htmlFor="gridPresets">Choose a preset:</label>
             <select onChange={this.props.canClick? this.props.selectGridPreset: null} id="gridPresets">
-              <option value="">-- Select --</option>
+              <option defaultSelected value="">-- Select --</option>
               <option value="Glider">Glider</option>
               <option value="Acorn">Acorn</option>
-              <option value="Blinker">Blinker</option>
+              <option value="Blinkers">Blinkers</option>
             </select>
           </PresetSection>
 
