@@ -72,8 +72,8 @@ export default class Canvas extends Component {
     function getSquare(canvas, x, y) {
       var rect = canvas.getBoundingClientRect();
       return {
-        x: 1 + (x - rect.left) - ((x - rect.left)),
-        y: 1 + (y - rect.top) - ((y - rect.top))
+        x: 1 + (x - rect.left) - ((x - rect.left)%10),
+        y: 1 + (y - rect.top) - ((y - rect.top)%10)
       };
     }
 
