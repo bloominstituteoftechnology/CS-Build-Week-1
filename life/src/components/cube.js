@@ -20,7 +20,7 @@ export default class Cube extends Component {
 }
 
 const CubeDiv = styled.button`
-    border: 1px solid green;
+    border: 1px solid gray;
     box-sizing: border-box;
     width: 26px;
     height: 26px;

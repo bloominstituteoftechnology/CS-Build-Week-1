@@ -222,11 +222,13 @@ export default class GridObject extends Component {
     render(){
         return(
             <GridDiv> 
-                <h6>Generation: {this.state.generations}</h6>
+                <h4>Generation: {this.state.generations}</h4>
                 <div className="timer">
-                    <h6>Timer increments: {this.state.time/1000} seconds</h6>
-                    <button name="+" onClick={this.clickHandler}>+</button>
-                    <button name="-" onClick={this.clickHandler}>-</button>
+                    <span><strong>Timer increments: {this.state.time/1000} seconds</strong></span>
+                    <div>
+                        <button name="+" onClick={this.clickHandler}>+</button>
+                        <button name="-" onClick={this.clickHandler}>-</button>
+                    </div>
                 </div>
                 <div className="buttons">
                     <button name="start" onClick={this.clickHandler}>start</button>
@@ -257,8 +259,13 @@ const GridDiv = styled.div`
     h6{
         text-align: center;
     }
+    .timer{
+        margin: 10px 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
     .buttons{
-        border: 1px solid green;
         display: flex;
         flex-direction: row;
         justify-items: center;
@@ -268,7 +275,7 @@ const GridDiv = styled.div`
         }
     }
     .cubesBin{
-        border: 1px solid blue;
+        border: 1px solid gray;
         box-sizing: border-box;
         width: 392px;
         display: flex;
