@@ -340,7 +340,7 @@ class Game extends React.Component {
 
         if (!this.state.continueAnimating) {
             let xCoord = Number((Math.ceil((event.pageX - rect.left) / this.state.cellSize))) - 1;
-            let yCoord = Number((Math.ceil((event.pageY - rect.top) / this.state.cellSize))) - 1;
+            let yCoord = Number((Math.ceil((event.pageY - rect.top - window.scrollY) / this.state.cellSize))) - 1;
             console.log("rect.left: ", rect.left);
             console.log("rect.top: ", rect.top);
             console.log("xCoord: ", xCoord);

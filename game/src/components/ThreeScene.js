@@ -288,7 +288,7 @@ class ThreeScene extends React.Component {
             for (let j = 0; j < 20; j++) {
                 let cubeName = `cube.${i}.${j}`;
                 let objName = `object.${i}.${j}`;
-                if (matrix[i][j]) {
+                if (matrix[i][j] === 1) {
                     const geometry = new THREE.BoxGeometry(.05, .05, .05);
                     let material;
                     if (layer === 1) {
@@ -337,9 +337,8 @@ class ThreeScene extends React.Component {
                 layer3First[i][j] = Math.round(Math.random());
             }
         }
-        this.setState({array1: layer1First});
-        this.setState({array2: layer2First});
-        this.setState({array3: layer3First});
+        this.setState({array1: layer1First, array2: layer2First, array3: layer3First});
+        this.componentDidUpdate();
     }
 
     clearBoard = () => {
