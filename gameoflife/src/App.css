@@ -1,5 +1,5 @@
 .App {
-    max-width: 890px;
+    max-width: 1200px;
     margin: 60px auto;
   }
   
@@ -16,12 +16,13 @@
   
   .canvas {
     border: 10px solid black;
-    width: 500px;
-    height: 500px;
+    width: 1000px;
+    height: 1000px;
     display:flex;
     flex-wrap: wrap;
     outline: 1px solid black;
     outline-offset: -11px;
+    margin: 0 0 0 450px;
   }
   
   .buttons-body {

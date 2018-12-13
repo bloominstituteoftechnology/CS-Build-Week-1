@@ -26,16 +26,17 @@ export default class Canvas extends Component {
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     ctx.lineWidth = 1;
+    ctx.strokeStyle = "white";
     ctx.beginPath();
-    for (let x = 0; x < 510; x += 10) {
+    for (let x = 0; x < 1005; x += 5) {
       ctx.moveTo(x, 0);
-      ctx.lineTo(x, 510);
+      ctx.lineTo(x, 1005);
       ctx.stroke();
     }
 
-    for (let y = 0; y < 510; y += 10) {
+    for (let y = 0; y < 1005; y += 5) {
       ctx.moveTo(0, y);
-      ctx.lineTo(510, y);
+      ctx.lineTo(1005, y);
       ctx.stroke();
     }
     ctx.closePath();
@@ -72,8 +73,8 @@ export default class Canvas extends Component {
     function getSquare(canvas, x, y) {
       var rect = canvas.getBoundingClientRect();
       return {
-        x: 1 + (x - rect.left) - ((x - rect.left)%10),
-        y: 1 + (y - rect.top) - ((y - rect.top)%10)
+        x: 1 + (x - rect.left) - ((x - rect.left)%5),
+        y: 1 + (y - rect.top) - ((y - rect.top)%5)
       };
     }
 
@@ -81,11 +82,11 @@ export default class Canvas extends Component {
 
     function fillSquare(ctx, x, y) {
       ctx.fillStyle = "blue";
-      ctx.fillRect(x, y, 8, 8);
+      ctx.fillRect(x, y, 3, 3);
     }
 
     function emptySquare(ctx, x, y) {
-      ctx.clearRect(x, y, 8, 8);
+      ctx.clearRect(x, y, 3, 3);
     }
 
     let mousePosX = mousePos.x;
@@ -126,11 +127,11 @@ export default class Canvas extends Component {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
     function emptySquare(ctx, x, y) {
-      ctx.clearRect(x, y, 8, 8);
+      ctx.clearRect(x, y, 3, 3);
     }
 
-    for (let xCheck = 1; xCheck <= 492; xCheck += 10) {
-      for (let yCheck = 1; yCheck <= 492; yCheck += 10) {
+    for (let xCheck = 1; xCheck <= 996; xCheck += 5) {
+      for (let yCheck = 1; yCheck <= 996; yCheck += 5) {
         let pixelCheck = this.getPixel(imageData, xCheck, yCheck);
         if (pixelCheck[2] === 255) {
           emptySquare(ctx, xCheck, yCheck);
@@ -153,8 +154,8 @@ export default class Canvas extends Component {
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    for (let xCheck = 1; xCheck <= 492; xCheck += 10) {
-      for (let yCheck = 1; yCheck <= 492; yCheck += 10) {
+    for (let xCheck = 1; xCheck <= 996; xCheck += 5) {
+      for (let yCheck = 1; yCheck <= 996; yCheck += 5) {
         let pixelCheck = this.getPixel(imageData, xCheck, yCheck);
         if (pixelCheck[2] === 255) {
           presetBuild.push({ x: xCheck, y: yCheck });
@@ -188,7 +189,7 @@ export default class Canvas extends Component {
 
     this.state.preset1.map(cell => {
       ctx.fillStyle = "blue";
-      ctx.fillRect(cell.x, cell.y, 8, 8);
+      ctx.fillRect(cell.x, cell.y, 3, 3);
     });
   };
 
@@ -205,7 +206,7 @@ export default class Canvas extends Component {
 
     this.state.preset2.map(cell => {
       ctx.fillStyle = "blue";
-      ctx.fillRect(cell.x, cell.y, 8, 8);
+      ctx.fillRect(cell.x, cell.y, 3, 3);
     });
   };
 
@@ -222,7 +223,7 @@ export default class Canvas extends Component {
 
     this.state.preset3.map(cell => {
       ctx.fillStyle = "blue";
-      ctx.fillRect(cell.x, cell.y, 8, 8);
+      ctx.fillRect(cell.x, cell.y, 3, 3);
     });
   };
 
@@ -243,8 +244,8 @@ export default class Canvas extends Component {
     const ctx = canvas.getContext("2d");
     let random = [];
 
-    for (let xCheck = 1; xCheck <= 492; xCheck += 10) {
-      for (let yCheck = 1; yCheck <= 492; yCheck += 10) {
+    for (let xCheck = 1; xCheck <= 996; xCheck += 5) {
+      for (let yCheck = 1; yCheck <= 996; yCheck += 5) {
         let randomNumber = Math.random();
         if (randomNumber > 0.5) {
           random.push({ x: xCheck, y: yCheck });
@@ -265,7 +266,7 @@ export default class Canvas extends Component {
 
       this.state.random.map(cell => {
         ctx.fillStyle = "blue";
-        ctx.fillRect(cell.x, cell.y, 8, 8);
+        ctx.fillRect(cell.x, cell.y, 3, 3);
       });
     }, 500);
   };
@@ -295,18 +296,18 @@ export default class Canvas extends Component {
       let nextGenDies = [];
       let nextGenLives = [];
 
-      for (let xCheck = 1; xCheck <= 492; xCheck += 10) {
-        for (let yCheck = 1; yCheck <= 492; yCheck += 10) {
+      for (let xCheck = 1; xCheck <= 996; xCheck += 5) {
+        for (let yCheck = 1; yCheck <= 996; yCheck += 5) {
           let pixelCheck = this.getPixel(imageData, xCheck, yCheck);
           if (pixelCheck[2] === 255) {
-            let neighbor1 = this.getPixel(imageData, xCheck - 10, yCheck - 10);
-            let neighbor2 = this.getPixel(imageData, xCheck, yCheck - 10);
-            let neighbor3 = this.getPixel(imageData, xCheck + 10, yCheck - 10);
-            let neighbor4 = this.getPixel(imageData, xCheck + 10, yCheck);
-            let neighbor5 = this.getPixel(imageData, xCheck + 10, yCheck + 10);
-            let neighbor6 = this.getPixel(imageData, xCheck, yCheck + 10);
-            let neighbor7 = this.getPixel(imageData, xCheck - 10, yCheck + 10);
-            let neighbor8 = this.getPixel(imageData, xCheck - 10, yCheck);
+            let neighbor1 = this.getPixel(imageData, xCheck - 5, yCheck - 5);
+            let neighbor2 = this.getPixel(imageData, xCheck, yCheck - 5);
+            let neighbor3 = this.getPixel(imageData, xCheck + 5, yCheck - 5);
+            let neighbor4 = this.getPixel(imageData, xCheck + 5, yCheck);
+            let neighbor5 = this.getPixel(imageData, xCheck + 5, yCheck + 5);
+            let neighbor6 = this.getPixel(imageData, xCheck, yCheck + 5);
+            let neighbor7 = this.getPixel(imageData, xCheck - 5, yCheck + 5);
+            let neighbor8 = this.getPixel(imageData, xCheck - 5, yCheck);
 
             let count = 0;
 
@@ -355,14 +356,14 @@ export default class Canvas extends Component {
               nextGenDies.push({ x: xCheck, y: yCheck });
             }
           } else {
-            let neighbor11 = this.getPixel(imageData, xCheck - 10, yCheck - 10);
-            let neighbor22 = this.getPixel(imageData, xCheck, yCheck - 10);
-            let neighbor33 = this.getPixel(imageData, xCheck + 10, yCheck - 10);
-            let neighbor44 = this.getPixel(imageData, xCheck + 10, yCheck);
-            let neighbor55 = this.getPixel(imageData, xCheck + 10, yCheck + 10);
-            let neighbor66 = this.getPixel(imageData, xCheck, yCheck + 10);
-            let neighbor77 = this.getPixel(imageData, xCheck - 10, yCheck + 10);
-            let neighbor88 = this.getPixel(imageData, xCheck - 10, yCheck);
+            let neighbor11 = this.getPixel(imageData, xCheck - 5, yCheck - 5);
+            let neighbor22 = this.getPixel(imageData, xCheck, yCheck - 5);
+            let neighbor33 = this.getPixel(imageData, xCheck + 5, yCheck - 5);
+            let neighbor44 = this.getPixel(imageData, xCheck + 5, yCheck);
+            let neighbor55 = this.getPixel(imageData, xCheck + 5, yCheck + 5);
+            let neighbor66 = this.getPixel(imageData, xCheck, yCheck + 5);
+            let neighbor77 = this.getPixel(imageData, xCheck - 5, yCheck + 5);
+            let neighbor88 = this.getPixel(imageData, xCheck - 5, yCheck);
 
             let count2 = 0;
 
@@ -418,10 +419,10 @@ export default class Canvas extends Component {
 
     function nextGeneration(nextGenDies, nextGenLives) {
       nextGenDies.map(cell => {
-        ctx.clearRect(cell.x, cell.y, 8, 8);
+        ctx.clearRect(cell.x, cell.y, 3, 3);
       });
       nextGenLives.map(cell => {
-        ctx.fillRect(cell.x, cell.y, 8, 8);
+        ctx.fillRect(cell.x, cell.y, 3, 3);
       });
     }
   };
@@ -437,8 +438,8 @@ export default class Canvas extends Component {
           <div className="canvas">
             <canvas
               ref="canvas"
-              width={500}
-              height={500}
+              width={1000}
+              height={1000}
               onClick={this.mouseDown}
             />
           </div>
