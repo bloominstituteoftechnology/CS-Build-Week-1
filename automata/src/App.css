@@ -31,3 +31,19 @@
     transform: rotate(360deg);
   }
 }
+
+.top-contain {
+  display: flex;
+  justify-content: center;
+}
+
+.rules {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  /* align-items: flex-end; */
+  max-width: 35%;
+  text-align: left;
+  margin-left: 40px;
+  font-size: 13px;
+}

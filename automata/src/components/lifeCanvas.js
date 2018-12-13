@@ -293,31 +293,43 @@ class Canvas extends Component {
     render() {
         return (
             <div className="GameOfLife" >
-                <canvas 
-                ref="canvas" 
-                onClick={this.handleClick}
-                onDoubleClick={this.handleDoubleClick}
-                />
-                <p>Generation: {this.state.cycleCount}</p>
-                <div className='controls' >
-                    <button onClick={this.runSimulation}>Start Simulation</button>
-                    <button onClick={this.pauseGame}>Stop </button>
-                    <button onClick={this.clearCanvas}>Clear Board</button>
-                    <button onClick={this.stepOnce}>Step</button>
+                <h2>Conway's Game of Life</h2>
+                <div className="top-contain" >
+                    <div className="canvas" >
+                        <p>Generation: {this.state.cycleCount}</p>
+                        <canvas 
+                        ref="canvas" 
+                        onClick={this.handleClick}
+                        onDoubleClick={this.handleDoubleClick}
+                        />
+                        <div className='controls' >
+                            <button onClick={this.runSimulation}>Start Simulation</button>
+                            <button onClick={this.pauseGame}>Stop </button>
+                            <button onClick={this.clearCanvas}>Clear Board</button>
+                            <button onClick={this.stepOnce}>Step</button>
+                        </div>
+                        <p>Sample Configurations</p>
+                        <div>
+                            <button onClick={this.pulsar}>Pulsar</button>
+                            <button onClick={this.toad}>Toad</button>
+                            <button onClick={this.beacon}>Beacon</button>
+                        </div>
+                        <div>
+                            <input type="radio" id="slow" name="speed" value="slow" onClick={this.slow} />
+                            <label >slow</label>
+                            <input type="radio" id="fast" name="speed" value="fast" onClick={this.fast}/>
+                            <label >fast</label>
+                        </div>
+                    </div>
+                    <div className="rules" >
+                        <h3>RULES</h3>
+                        <p>Any live cell with fewer than two live neighbors dies, as if by underpopulation.</p>
+                        <p>Any live cell with two or three live neighbors lives on to the next generation.</p>
+                        <p>Any live cell with more than three live neighbors dies, as if by overpopulation.</p>
+                        <p>Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</p>
+                    </div>
+                </div>
 
-                </div>
-                <p>Sample Configurations</p>
-                <div>
-                    <button onClick={this.pulsar}>Pulsar</button>
-                    <button onClick={this.toad}>Toad</button>
-                    <button onClick={this.beacon}>Beacon</button>
-                </div>
-                <div>
-                    <input type="radio" id="slow" name="speed" value="slow" onClick={this.slow} />
-                    <label >slow</label>
-                    <input type="radio" id="fast" name="speed" value="fast" onClick={this.fast}/>
-                    <label >fast</label>
-                </div>
             </div>
         )
     }
