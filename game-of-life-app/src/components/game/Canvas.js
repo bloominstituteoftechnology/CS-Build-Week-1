@@ -296,8 +296,146 @@ class Canvas extends React.Component {
           nextNodes[i].isLiving = false;
           console.log("Dead")
         }
-      } // end Living node check
-      // {} uncomment and start
+      } // end living node check
+      // Check the dead nodes/cells
+      if (!currentNodes[i].isLiving) {
+        // set check
+        let check = 0;
+        // check corner edge cases
+        if (i === 0) {
+          if (currentNodes[i + 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 21].isLiving) {
+            check++;
+          }
+        } else if (i >= 1 && i <= 18) {
+          if (currentNodes[i - 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 19].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 21].isLiving) {
+            check++;
+          }
+        } else if (LEFT.includes(i)) {
+          if (currentNodes[i - 20 ].isLiving) {
+            check++;
+            console.log("LEFT i is:", i)
+          }
+          if (currentNodes[i - 19].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 1].isLiving) {
+            check++;
+            console.log(check);
+          }
+          if (currentNodes[i + 20].isLiving) {
+            check++;
+            console.log(check);
+          }
+          if (currentNodes[i + 21].isLiving) {
+            check++;
+            console.log(check);
+          }
+        } else if (RIGHT.includes(i)) {
+          if (currentNodes[i + 20 ].isLiving) {
+            check++;
+            console.log("RIGHT i is:", i)
+          }
+          if (currentNodes[i + 19].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 1].isLiving) {
+            check++;
+            console.log(check);
+          }
+          if (currentNodes[i - 20].isLiving) {
+            check++;
+            console.log(check);
+          }
+          if (currentNodes[i - 21].isLiving) {
+            check++;
+            console.log(check);
+          }
+        } else if (i >= 381 && i <= 398) {
+          if (currentNodes[i - 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 19].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 21].isLiving) {
+            check++;
+          }
+        } else  if (i === 380) {
+          if (currentNodes[i + 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 21].isLiving) {
+            check++;
+          }  
+
+        } else  if (i === 399) {
+          if (currentNodes[i - 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 21].isLiving) {
+            check++;
+          }
+        } else {
+          if (currentNodes[i - 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 19].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 21].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 19].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 21].isLiving) {
+            check++;
+          }
+        }
+        if (check === 3) {
+          nextNodes[i].isLiving = true;
+          console.log("Alive")
+        } 
+      } // end dead node check
     } // end massive for loop
 
     console.log("nextNodes", nextNodes);
