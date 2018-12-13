@@ -250,7 +250,7 @@ class GOL extends React.Component {
           <h2>The Rules</h2>
           <ul style={{ textAlign: "left", listStyleType: "None" }}>
             <h4>For a cell that is alive(blue):</h4>
-            <li>Each cell with one or no neighbors dies, as if by solitude.</li>
+            <li>Each cell with one or fewer live neighbors dies, as if by underpopulation.</li>
             <li>
               Each cell with four or more neighbors dies, as if by
               overpopulation.
@@ -259,9 +259,14 @@ class GOL extends React.Component {
           </ul>
           <ul style={{ textAlign: "left", listStyleType: "None" }}>
             <h4>For a cell that is dead(yellow):</h4>
-            <li>Each cell with three neighbors becomes populated.</li>
+            <li>Each cell with three neighbors becomes a live cell as if by reproduction.</li>
           </ul>
+
+          <h1>Origins of Conway's Game of Life</h1>
+          <a href = 'https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life'>Historical Perspective....</a>
         </div>
+
+        
       </React.Fragment>
     );
   }
