@@ -7,6 +7,7 @@ export default class GridObject extends Component {
         super(props)
         this.state = {
             width: 15,
+            time: 2000, 
             length: this.width*this.width,
             preset: null,
             presets: [
@@ -173,10 +174,17 @@ export default class GridObject extends Component {
         e.preventDefault();
         switch(e.target.name){
             case "start":
-                start = setInterval(() => this.buildNext(), 2000)
+                // start = setInterval(() => this.buildNext(), this.state.time)
+                start = setInterval(() => console.log("this timeer"), this.state.time)
+                this.setState({
+                    lock: true
+                })
                 break;
             case "stop":
                 clearInterval(start)
+                this.setState({
+                    lock: false
+                })
                 break;
             case "next":
                 this.buildNext();
@@ -184,8 +192,22 @@ export default class GridObject extends Component {
             case "clear":
                 this.init();
                 break;
+            case "+":
+                this.setState({
+                    time: this.state.time+1000
+                })
+                break;
+            case "-":
+                if(this.state.time !== 0){
+                    this.setState({
+                        time: this.state.time-1000
+                    })
+                }
+                break;
             default: 
-                this.toggle(e.target.name);
+                if(!this.state.lock){
+                    this.toggle(e.target.name);
+                }
                 break;
         }
     }
@@ -200,7 +222,12 @@ export default class GridObject extends Component {
     render(){
         return(
             <GridDiv> 
-                Generation: {this.state.generations}
+                <h6>Generation: {this.state.generations}</h6>
+                <div className="timer">
+                    <h6>Timer increments: {this.state.time/1000} seconds</h6>
+                    <button name="+" onClick={this.clickHandler}>+</button>
+                    <button name="-" onClick={this.clickHandler}>-</button>
+                </div>
                 <div className="buttons">
                     <button name="start" onClick={this.clickHandler}>start</button>
                     <button name="stop" onClick={this.clickHandler}>stop</button>
@@ -212,7 +239,7 @@ export default class GridObject extends Component {
                         return <Cube key={num} color={this.props.color} clickHandler={this.clickHandler} name={num} active={this.state.curObj[num]} />
                     }): null}
                 </div>
-                <div className="preset">
+                <div className="buttons">
                     <button onClick={this.selectPreset} name="1">Preset 1</button>
                     <button onClick={this.selectPreset} name="2">Preset 2</button>
                     <button onClick={this.selectPreset} name="3">Preset 3</button>
@@ -226,6 +253,20 @@ export default class GridObject extends Component {
 let start;
 
 const GridDiv = styled.div`
+    margin: 10px;
+    h6{
+        text-align: center;
+    }
+    .buttons{
+        border: 1px solid green;
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        align-content: center;
+        button{
+            width: 100%;
+        }
+    }
     .cubesBin{
         border: 1px solid blue;
         box-sizing: border-box;
