@@ -6,7 +6,10 @@ import {
   ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Modal,
+  ModalHeader,
+  ModalBody
 } from "reactstrap";
 import LifeCanvas from "./components/LifeCanvas";
 import "./App.css";
@@ -23,19 +26,36 @@ class App extends Component {
       gridFull: Array(this.rows).fill(Array(this.cols).fill(false)),
       isPlaying: false,
       dropdownOpen: false,
-      dropdownOpen2: false
+      dropdownOpen2: false,
+      modal: false,
+      modal2: false
     };
   }
+
   toggle = () => {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
     }));
   };
+
   toggle2 = () => {
     this.setState(prevState => ({
       dropdownOpen2: !prevState.dropdownOpen2
     }));
   };
+
+  toggleModal = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
+
+  toggleModal2 = () => {
+    this.setState({
+      modal2: !this.state.modal2
+    });
+  };
+
   selectBox = (row, col) => {
     if (this.state.isPlaying === false) {
       let gridCopy = arrayClone(this.state.gridFull);
@@ -135,14 +155,14 @@ class App extends Component {
     this.rows = 20;
     this.cols = 40;
     this.clearButton();
-  }
+  };
 
   gridLarge = () => {
     this.rows = 30;
     this.cols = 50;
     this.clearButton();
-  }
-  
+  };
+
   playButton = () => {
     clearInterval(this.intervalId);
     this.intervalId = setInterval(this.playGame, this.speed);
@@ -253,6 +273,59 @@ class App extends Component {
             </DropdownMenu>
           </ButtonDropdown>
         </ButtonGroup>
+        <span>
+          <Button className="modals" color="danger" onClick={this.toggleModal}>
+            Rules
+          </Button>
+          <Modal
+            isOpen={this.state.modal}
+            toggle={this.toggleModal}
+            className={this.props.className}
+          >
+            <ModalHeader toggle={this.toggleModal}>Rules</ModalHeader>
+            <ModalBody>
+              <ol>
+                <li>
+                  Any live cell with fewer than two live neighbors dies, as if
+                  by underpopulation.
+                </li>
+                <li>
+                  Any live cell with two or three live neighbors lives on to the
+                  next generation.
+                </li>
+                <li>
+                  Any live cell with more than three live neighbors dies, as if
+                  by overpopulation.
+                </li>
+                <li>
+                  Any dead cell with exactly three live neighbors becomes a live
+                  cell, as if by reproduction
+                </li>
+              </ol>
+            </ModalBody>
+          </Modal>
+        </span>
+        <span>
+          <Button className="modals" color="danger" onClick={this.toggleModal2}>
+            About
+          </Button>
+          <Modal
+            isOpen={this.state.modal2}
+            toggle={this.toggleModal2}
+            className={this.props.className}
+          >
+            <ModalHeader toggle={this.toggleModal2}>About</ModalHeader>
+            <ModalBody>
+              The Game of Life, also known simply as Life, is a cellular
+              automaton devised by the British mathematician John Horton Conway
+              in 1970. The game is a zero-player game, meaning that its
+              evolution is determined by its initial state, requiring no further
+              input. One interacts with the Game of Life by creating an initial
+              configuration and observing how it evolves, or, for advanced
+              players, by creating patterns with particular properties.
+            </ModalBody>
+          </Modal>
+        </span>
       </div>
     );
   }
