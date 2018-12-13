@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Controls, OptionsSection, RangeSlider, GenerationSection } from './ControlSectionStyles';
+import { Controls, OptionsSection, PresetSection, RangeSlider, GenerationSection } from './ControlSectionStyles';
 
 
 class ControlSection extends Component {
@@ -16,7 +16,7 @@ class ControlSection extends Component {
         </section>
 
         <OptionsSection>
-          <section>
+          <PresetSection>
             <label htmlFor="gridPresets">Choose a preset:</label>
             <select onChange={this.props.canClick? this.props.selectGridPreset: null} id="gridPresets">
               <option value="">-- Select --</option>
@@ -26,7 +26,7 @@ class ControlSection extends Component {
               <option value="gridPresetThree">Preset 3</option>
               <option value="gridPresetFour">Preset 4</option>
             </select>
-          </section>
+          </PresetSection>
 
           <RangeSlider className="range-slider">
             <label htmlFor="gridSizeSlider">Choose a grid size:</label>

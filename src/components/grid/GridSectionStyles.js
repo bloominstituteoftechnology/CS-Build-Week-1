@@ -12,9 +12,6 @@ export const Row = styled.section`
   justify-content: center;
   width: 100%;
   height: 38.5px;
-  &:last-child {
-    border-bottom: .2px solid rgba(238,130,238, .9);
-  }
   margin-bottom: 1.3px;
 `;
 

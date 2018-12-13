@@ -6,14 +6,19 @@ export const Controls = styled.main`
 `;
 
 
-export const OptionsSection = styled.main`
+export const OptionsSection = styled.section`
   display: flex;
   justify-content: space-between;
 `;
 
 
+export const PresetSection = styled.section`
+  width: 50%;
+`;
+
+
 export const RangeSlider = styled.section`
-  width: 100%;
+  width: 50%;
 
   &,
   &:before,
