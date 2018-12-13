@@ -8,7 +8,10 @@
 }
 
 .main{
-  margin: 10px 5% 0 5%;
+  margin: 10px 5% 10px 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .box {
@@ -32,12 +35,6 @@
   background:rgb(126, 126, 126);
 }
 
-.center {
-  margin: auto;
-  display: table;
-  margin-top: 10px;
-}
-
 .grid {
   width: 150px;
   line-height: 0;
@@ -46,14 +43,18 @@
 }
 
 .side-panel{
-  width: 20%;
-  margin-top: 50px;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.controls {
+  margin: auto;
+  display: table;
 }
 
 .buttons{
   display: flex;
   flex-direction: column;
-  width: 150px;
 }
 
 button{
@@ -62,6 +63,7 @@ button{
   background-color: white;
   border: 1px solid grey;
   border-radius: 4px;
+  width: 120px;
 }
 
 button:hover{
@@ -88,6 +90,9 @@ p{
 
 .text-block{
   text-align: left;
+  padding: 10px 0 10px 5%;
+  margin-top: 5px;
+  border-top: 1px solid gray;
 }
 
 .game-info{
@@ -97,7 +102,6 @@ p{
   align-items: center;
   width: 80%;
   margin: 0 10%;
-  border: 1px solid red;
 }
 
 i{

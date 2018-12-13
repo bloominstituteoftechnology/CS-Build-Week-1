@@ -26,7 +26,7 @@ class Grid extends Component{
 
   render(){
     //set a constant width equal to the number columns, consider the border which is one pixel
-    const width = this.props.cols * 16;
+    const width = this.props.cols * 14;
     //array of all rows in the grid
     let rowArray = []; //add everything that will show up in the grid to this array
 
@@ -71,10 +71,11 @@ class Controls extends Component{
 
   render () {
     return(
-      <div className = "center">
+      <div className = "controls">
         <h4>
           Game Controls
         </h4>
+        <ButtonToolbar>
         <button className = "play-button" onClick = {this.props.playButton}>
           Play
         </button>
@@ -88,10 +89,10 @@ class Controls extends Component{
           Random
         </button>
         <button onClick = {this.props.slow}>
-          Slow
+          Slower
         </button>
         <button onClick = {this.props.fast}>
-          Fast
+          Faster
         </button>
         <DropdownButton 
                 title = "Grid Size"
@@ -100,33 +101,34 @@ class Controls extends Component{
                 <MenuItem eventKey = "1">Small Grid</MenuItem>
                 <MenuItem eventKey = "2">Large Grid</MenuItem>
         </DropdownButton>
+        </ButtonToolbar>
       </div>
 
     );
   }
 }
 
-class Info extends Component{
-  render(){
-    return(
-      <div className = "game-info">
-      <Link to = '/rules'>
-        <button>
-          Rules
-        </button>
-      </Link>
-      <Link to = '/about'>
-        <button>
-          About
-        </button>
-      </Link>
-      <Link to = '/'>
-        <i class="fas fa-times"></i>
-      </Link>
-      </div>
-    );
-  }
-}
+// class Info extends Component{
+//   render(){
+//     return(
+//       <div className = "game-info">
+//       <Link to = '/rules'>
+//         <button>
+//           Rules
+//         </button>
+//       </Link>
+//       <Link to = '/about'>
+//         <button>
+//           About
+//         </button>
+//       </Link>
+//       <Link to = '/'>
+//         <i class="fas fa-times"></i>
+//       </Link>
+//       </div>
+//     );
+//   }
+// }
 
 class App extends Component {
   constructor() {
@@ -137,7 +139,7 @@ class App extends Component {
     this.rows = 30;
     this.cols = 50;
 
-    this.speed = 500;
+    this.speed = 400;
 
     this.state = {
       generation: 0, //this variable serves as a counter to track which generation the game is on
@@ -180,13 +182,13 @@ class App extends Component {
     for (let i = 0; i<this.rows; i++){
       for (let j=0; j<this.cols; j++){
         /* Math.random generates a random number between 0 and 1, 
-        when multiplied by 2 we get a random number between 0 and 2,
+        when multiplied by 4 we get a random number between 0 and 4,
         we round down to the nearest integer. This method will generate
-        a 1 50% of the time.  
+        a 1 25% of the time.  
         */
-        if (Math.floor(Math.random()*2) === 1){
+        if (Math.floor(Math.random()*4) === 1){
           //if the random number is a 1, we fill the grid
-          gridCopy[i][j] = true; //50% chance of filling in the square
+          gridCopy[i][j] = true; //25% chance of filling in the square
         }
       }
     }
@@ -257,7 +259,7 @@ play = () => {
       //if we are not at the top-left-corner, add to count if cell at top-left-corner is full 
       if (i > 0 && j > 0) if (g[i-1][j-1]) count++; 
       //if we are not at the top-right-corner, add to count if cell at top-right-corner is full
-      if (i > 0 && j > this.cols - 1) if (g[i-1][j+1]) count++;
+      if (i > 0 && j < this.cols - 1) if (g[i-1][j+1]) count++;
       //if we are not at the far right column, add to the count if the cell to the right is full
       if (j < this.cols-1) if (g[i][j+1]) count++;
       //if we are not at the far left column, add to the count if the cell to the left is full
@@ -313,9 +315,11 @@ fast = () => {
         <h4>
           Generations: {this.state.generation}
         </h4>
-        <Info />
+        {/* <Info />
         <Route path='/about' component={About}/>
-        <Route path='/rules' component={Rules}/>
+        <Route path='/rules' component={Rules}/> */}
+        <Rules />
+        <About />
         </div>
 
         <div className = "side-panel">

@@ -11,16 +11,13 @@ class About extends Component {
             </h4>
             <p>
                 Conway's Game of Life is a model for cellular automata, which is a simplified model of cellular population growth and decline.
-                The game is known as a "zero player" game meaning that, aside from specifying an initial state, a player contributes nothing to the game's progression.
+                Invented by John Conway, the game is known as a "zero player" game meaning that, aside from specifying an initial state, a player contributes nothing to the game's progression.
                 The initial state is an arrangement of "live" and "dead" cells indicated by squares that are either filled or empty. 
                 Once the game has begun, the cells change state based on four simple rules.  
                 The paradigm of Conway's Game has captivated the interest of enthusiasts who enjoyt the simplicity and the logical puzzle it presents.
                 Some have figured out unique patterns that will traverse the grid in interesting ways.
                 <a href = "https://en.wikipedia.org/wiki/Conway's_Game_of_Life">Read more.</a>
             </p>  
-            <h4>
-                About John Conway
-            </h4>
             <p> 
                 John Conway's contributions are not limited to the creation of the game of life, yet this seems to be one of the most popular associations with his name.
                 He is a renowned mathemetician whose contributions center around the topics of finite groups, knot theory, number theory, combinatorial game theory and coding theory.  
