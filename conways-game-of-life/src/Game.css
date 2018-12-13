@@ -1,4 +1,4 @@
-.graphBoard {
+ /* .graphBoard {
     background-color: #9D6B84	;
     position: relative;
     margin: 0 auto;
@@ -10,6 +10,24 @@
 .indivCell {
     background: #e0babc;
     position: absolute;
-  } 
+} */
 
+.gameBoard {
+    position: relative;
+    margin: 0 auto;
+    background-color: #9D6B84;
+    background-image:
+        linear-gradient(#aca2b0 1px, transparent 1px),
+        linear-gradient(90deg, #aca2b0 1px, transparent 1px);
+
+}
+
+.Cell {
+    background: #e0babc;
+    position: absolute;
+}
+
+.container {
+
+}
 
