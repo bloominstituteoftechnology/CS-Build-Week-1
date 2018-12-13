@@ -3,23 +3,23 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    matrix: {},//using this for the grid. 
+    matrix: {}, //using this for the grid.
     //grid set up
-    matrixMirror: {},//using for clearing the grid will be set to a all dead cell grid. 
-    matrixUsing: [],//using this to iterate over and show the grid on the screen. 
-    mirror: [], // mirror for clearing the grid. 
-    row_count: 15, //default amount of rows on the grid can be changed. 
-    col_count: 15, //default amount of columns on the grid can be changed. 
+    matrixMirror: {}, //using for clearing the grid will be set to a all dead cell grid.
+    matrixUsing: [], //using this to iterate over and show the grid on the screen.
+    mirror: [], // mirror for clearing the grid.
+    row_count: 15, //default amount of rows on the grid can be changed.
+    col_count: 15, //default amount of columns on the grid can be changed.
 
-    width: "330px", //width of the grid can be changed. 
+    width: "330px", //width of the grid can be changed.
     //presets
     //cell choices
-    if_one_color: "black",// if one the cell is alive 
-    if_zero_color: "white", // if zero the cell is dead 
+    if_one_color: "black", // if one the cell is alive
+    if_zero_color: "white", // if zero the cell is dead
     //game instructions
-    gameRunning: false,//used to show game has started. 
-    generation: 0,// keeps count of generations
-    gameSpeed: 125 // default game speed can be changed. 
+    gameRunning: false, //used to show game has started.
+    generation: 0, // keeps count of generations
+    gameSpeed: 125 // default game speed can be changed.
   };
 
   componentWillMount() {
@@ -27,14 +27,14 @@ class App extends Component {
   }
 
   reset = () => {
-    //resets gameRunning and generation count. 
+    //resets gameRunning and generation count.
     this.setState({ generation: 0, gameRunning: false });
     // this.updateRowCol();
-    this.setMatrixUp(); 
+    this.setMatrixUp();
   };
 
   generateRandom = () => {
-    //generates a random grid to start with. 
+    //generates a random grid to start with.
     const keys = Object.keys(this.state.matrix);
     const matrix = { ...this.state.matrixMirror }; //creates a copy
 
@@ -87,18 +87,18 @@ class App extends Component {
     }
     // Object.entries(matrix).forEach(entry => {
     //   for (let x of entry[1]) {
-        // const temp_hash = {
-        //   row: 0,
-        //   position_in_row: 0,
-        //   actual_number: 0,
-        //   color: this.state.if_zero_color
-        // };
-        // temp_hash.row = Number(entry[0]);
-        // temp_hash.position_in_row = count % this.state.col_count;
-        // temp_hash.actual_number = count;
-        // temp_hash.value = x; //just to get rid of the warning.
-        // matrixUsing.push(temp_hash);
-        // count++;
+    // const temp_hash = {
+    //   row: 0,
+    //   position_in_row: 0,
+    //   actual_number: 0,
+    //   color: this.state.if_zero_color
+    // };
+    // temp_hash.row = Number(entry[0]);
+    // temp_hash.position_in_row = count % this.state.col_count;
+    // temp_hash.actual_number = count;
+    // temp_hash.value = x; //just to get rid of the warning.
+    // matrixUsing.push(temp_hash);
+    // count++;
     //   }
     // });
     const width_size = 22 * this.state.col_count;
@@ -148,7 +148,7 @@ class App extends Component {
     }
   };
   // Game functions being declared below this line.
-  
+
   handleChange = event => {
     //Will handle changing the columns. and columns
     //function allows user to change the amount of columns that is being used.
@@ -172,7 +172,6 @@ class App extends Component {
   //   this.setMatrixUp();
   // };
 
-  //CURRENTLY WORKING ON THIS FUNCTION
   runGamne = () => {
     this.nextGeneration();
   };
