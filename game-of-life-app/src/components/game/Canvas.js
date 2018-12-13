@@ -49,6 +49,8 @@ const ControlSelect = styled.select`
   appearance: none;
 `;
 
+const LEFT = [20, 40, 60, 80, 100, 120, 140, 180, 200, 220, 240, 260, 280, 300, 320, 340, 360];
+
 class Canvas extends React.Component {
   state = {
     cells: 400,
@@ -169,9 +171,12 @@ class Canvas extends React.Component {
             check++;
           }
         }
-        // edge case
-        if (i === 19) {
+        // top edge case
+        if (i >= 1 && i <= 18) {
           if (currentNodes[i - 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 1].isLiving) {
             check++;
           }
           if (currentNodes[i + 19].isLiving) {
@@ -179,9 +184,37 @@ class Canvas extends React.Component {
           }
           if (currentNodes[i + 20].isLiving) {
             check++;
+          }
+          if (currentNodes[i + 21].isLiving) {
+            check++;
+          }
+        }
+        // left edge case
+        if (LEFT.includes(i)) {
+          if (currentNodes[i - 20 ].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 19].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 1].isLiving) {
+            check++;
+            console.log(check);
+          }
+          if (currentNodes[i + 20].isLiving) {
+            check++;
+            console.log(check);
+          }
+          if (currentNodes[i + 21].isLiving) {
+            check++;
             console.log(check);
           }
         }
+        // TODO
+        // right edge case
+        // bottom edge case
+        // add other numbers case
+
         // edge case
         if (i === 380) {
           if (currentNodes[i + 1].isLiving) {
