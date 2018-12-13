@@ -1,0 +1,33 @@
+.page{
+  margin: auto;
+  display: grid;
+  justify-content: center;
+  max-width: 700px;
+}
+
+.Board {
+  position: relative;
+  margin: 0 auto;
+  background-color: #000;
+  background-image:
+    linear-gradient(#333 1px, transparent 1px),
+    linear-gradient(90deg, #333 1px, transparent 1px);
+}
+.Cell {
+  position: absolute;
+}
+.rules{
+  display: grid;
+  justify-content: center;
+}
+.live {
+  color:red;
+}
+.dead {
+  color:blue;
+}
+.about{
+  margin: auto;
+  max-width: 80%;
+  justify-self:stretch;
+}
