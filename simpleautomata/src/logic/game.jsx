@@ -74,18 +74,23 @@ class Game extends React.Component {
   }
 
   handleClick = (event) => {
-    const elemOffset = this.getElementOffset();
-    const offsetX = event.clientX - elemOffset.x;
-    const offsetY = event.clientY - elemOffset.y;
+    if(this.state.isRunning == false){
+      const elemOffset = this.getElementOffset();
+      const offsetX = event.clientX - elemOffset.x;
+      const offsetY = event.clientY - elemOffset.y;
 
-    const x = Math.floor(offsetX / CELL_SIZE);
-    const y = Math.floor(offsetY / CELL_SIZE);
+      const x = Math.floor(offsetX / CELL_SIZE);
+      const y = Math.floor(offsetY / CELL_SIZE);
 
-    if(x>= 0 && x <= this.cols && y>= 0 && y<= this.rows){
-      this.board[y][x] = !this.board[y][x];
+      if(x>= 0 && x <= this.cols && y>= 0 && y<= this.rows){
+        this.board[y][x] = !this.board[y][x];
+      }
+
+      this.setState({ cells: this.makeCells() });
     }
-
-    this.setState({ cells: this.makeCells() });
+    else{
+      console.log("noclick");
+    }
   }
 
   //helper functions to run the game:
