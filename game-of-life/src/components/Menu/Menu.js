@@ -8,7 +8,7 @@ class Menu extends Component {
         <button onClick={this.props.generateRandom}>random</button>
         <button>start</button>
         <button>stop</button>
-        <button>clear</button>
+        <button onClick={this.props.clearGrid}>clear</button>
       </div>
     );
   }

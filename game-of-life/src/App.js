@@ -37,6 +37,19 @@ class App extends Component {
     });
   }
 
+  clearGrid = () => {
+    console.log("this is trying to clear");
+    let gridCopy = arrayClone(this.state.gridFull);
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.cols; j++) {
+        gridCopy[i][j] = false;
+      }
+    }
+    this.setState({
+      gridFull: gridCopy
+    })
+  }
+
   // componentDidMount() {
   //   this.generateRandom();
   // }
@@ -62,6 +75,7 @@ class App extends Component {
         />
         <Menu
           generateRandom={this.generateRandom}
+          clearGrid={this.clearGrid}
         />
       </div>
     );
