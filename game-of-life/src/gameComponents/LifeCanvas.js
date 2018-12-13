@@ -18,8 +18,8 @@ class LifeCanvas extends Component{
     } 
     draw() {
         const ctx = this.refs.canvas.getContext('2d');
-        for(let i = 0; i <= 375; i += 25){
-            for(let j = 0 ; j <= 375; j+= 25){
+        for(let i = 0; i <=375; i += 15){
+            for(let j = 0; j <=375; j+= 15){
               ctx.moveTo(i,0);
               ctx.lineTo(i,j);
               ctx.moveTo(0,j);
@@ -38,8 +38,8 @@ class LifeCanvas extends Component{
       }
     }
     toggleState(x,y){
-        const x_index=Math.floor(x/25);
-        const y_index=Math.floor(y/25);
+        const x_index=Math.floor(x/15);
+        const y_index=Math.floor(y/15);
         this.life.grid[x_index][y_index]===0? 
         this.life.grid[x_index][y_index]=1: 
         this.life.grid[x_index][y_index]=0;
@@ -48,11 +48,11 @@ class LifeCanvas extends Component{
     fillsquares=()=>{
         const ctx = this.refs.canvas.getContext('2d');
         for (let i=0; i<this.life.grid.length;i++) {
-          for (let j=0; j<this.life.grid[0].length; j++) {
+          for (let j=0; j<this.life.grid.length; j++) {
             if (this.life.grid[i][j]) {
-              ctx.fillRect(i*25, j*25, 25, 25);
+              ctx.fillRect(i*15, j*15, 15, 15);
             } else {
-              ctx.clearRect(i*25,j*25,25,25);
+              ctx.clearRect(i*15, j*15, 15, 15);
             }
           }
         }
@@ -90,7 +90,7 @@ class LifeCanvas extends Component{
     render(){
         return (
           <div>
-            <canvas ref="canvas" width={380} height={380} onClick={(e)=>this.getPosition(e)}/>
+            <canvas ref="canvas" width={375} height={375} onClick={(e)=>this.getPosition(e)}/>
             <p className='generationHeader'>Current generation: {this.state.generation}</p>
             <div className='button-container'>
               <button className='btn waves-effect waves-light' onClick={()=>this.oneStep()}>Step</button>

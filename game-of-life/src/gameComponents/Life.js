@@ -3,11 +3,10 @@ const Life=class{
         this.grid=[];
     }
     runIteration(board){
-        const newBoard = board.map(arr=>[...arr]);
-         const height=board.length;
-         const width=board[0].length;
-         for (let i=0; i<height; i++) {
-           for (let j=0; j<width; j++) {
+         const newBoard = board.map(arr=>[...arr]);
+         const length=board.length;
+         for (let i=0; i<length; i++) {
+           for (let j=0; j<length; j++) {
              const neighbors=this.getNeighbors(board,i,j);
              if (neighbors===3 && !board[i][j]) {
                newBoard[i][j]=1;
@@ -21,18 +20,17 @@ const Life=class{
         this.grid=newBoard;
        };
        getNeighbors=(board,i,j)=>{
-         const height=board.length;
-         const width=board[0].length;
+         const length=board.length;
          let count=0;
          for (let x=-1;x<=1;x++) {
            for (let y=-1;y<=1;y++) {
              if (!x && !y) {
                continue;
              }
-             const x_index=x+i;
-             const y_index=y+j;
-             if (x_index>=0 && x_index<width && y_index>=0 && y_index<=height) {
-               if (board[x_index][y_index]) {
+             const ix=i+x;
+             const jy=j+y;
+             if (ix>=0 && ix<length && jy>=0 && jy<length) {
+               if (board[ix][jy]) {
                  count++;
                }
              }
@@ -42,18 +40,19 @@ const Life=class{
        }
     createBlankGrid(){
         this.grid=[];
-            for (let i=0; i<15; i++) {
+            for (let i=0; i<25; i++) {
                 this.grid[i]=[];
-                for (let j=0; j<15; j++) {
+                for (let j=0; j<25; j++) {
                     this.grid[i].push(0);
                 }
             }
+            console.log(this.grid);
         }
     createRandomizedGrid(){
       this.grid=[];
-      for (let i=0; i<15;i++) {
+      for (let i=0; i<25; i++) {
         this.grid[i]=[];
-        for (let j=0; j<15; j++) {
+        for (let j=0; j<25; j++) {
           this.grid[i].push(Math.round(Math.random()));
         }
       }
