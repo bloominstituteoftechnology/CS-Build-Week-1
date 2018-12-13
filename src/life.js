@@ -13,7 +13,7 @@ export default class GameLife {
       let y = this.row * this.size;
       this.ctx.fillStyle = this.currentState;
       this.ctx.fillRect(x, y, this.size, this.size);
-      this.ctx.strokeStyle = "lightgray";
+      this.ctx.strokeStyle = "orange";
       this.ctx.strokeRect(x, y, this.size, this.size);
     }
   }

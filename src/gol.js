@@ -108,7 +108,7 @@ class GOL extends React.Component {
         if (board[x1][y1].currentState === "blue") neighbors++;
       }
     }
-    // console.log(x, y, neighbors);
+    console.log(x, y, neighbors);
     return neighbors;
   }
 
