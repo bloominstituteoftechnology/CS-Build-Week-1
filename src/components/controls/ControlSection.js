@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import Modal from '../modal/Modal';
+
 import { 
   Controls,
   Button,
@@ -7,7 +9,6 @@ import {
   RangeSlider,
   GenerationSection
 } from './ControlSectionStyles';
-import Modal from '../modal/Modal';
 
 
 class ControlSection extends Component {
@@ -38,11 +39,8 @@ class ControlSection extends Component {
             <label htmlFor="gridPresets">Choose a preset:</label>
             <select onChange={this.props.canClick? this.props.selectGridPreset: null} id="gridPresets">
               <option value="">-- Select --</option>
-              <option value="clearPresets">Clear Grid</option>
               <option value="Glider">Glider</option>
               <option value="Acorn">Acorn</option>
-              <option value="gridPresetThree">Preset 3</option>
-              <option value="gridPresetFour">Preset 4</option>
             </select>
           </PresetSection>
 
@@ -76,6 +74,5 @@ class ControlSection extends Component {
     )
   }
 }
-
 
 export default ControlSection;

@@ -10,7 +10,6 @@ export const Main = styled.main`
 
 export const MainHeader = styled.header`
   padding: 20px;
-
   h1 {
     font-size: 5rem;
     color: rgba(248,205,218, .7);

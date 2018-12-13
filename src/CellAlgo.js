@@ -32,9 +32,6 @@ export const cellPresetAlgo = (currentNodeHolder, target) => {
     }
   }
   switch(target) {
-    case 'clearPresets':
-      console.log('CLEAR');
-    break;
     case 'Glider':
       currentNodeHolder[middleOfGrid][middleOfGrid].isAlive = true;
       currentNodeHolder[middleOfGrid][middleOfGrid + 1].isAlive = true;
@@ -50,12 +47,6 @@ export const cellPresetAlgo = (currentNodeHolder, target) => {
       currentNodeHolder[middleOfGrid][middleOfGrid + 6].isAlive = true;
       currentNodeHolder[middleOfGrid - 2][middleOfGrid + 1].isAlive = true;
       currentNodeHolder[middleOfGrid - 1][middleOfGrid + 3].isAlive = true;
-    break;
-    case 'gridPresetThree':
-      console.log('THREE');
-    break;
-    case 'gridPresetFour':
-      console.log('FOUR');
     break;
     default:
     break;

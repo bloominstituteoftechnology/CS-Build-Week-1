@@ -23,11 +23,11 @@ export const Button = styled.button`
   box-shadow: .5px .5px 10px .5px rgba(238,130,238, .3);
   &:hover {
     cursor: pointer;
-    color: #434343;
-    background-color: rgba(248,205,218, .8);
+    background: #134e5e; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #134e5e, #71b280); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #134e5e, #71b280); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
 `;
-
 
 export const OptionsSection = styled.section`
   margin-top: 30px;
@@ -47,21 +47,29 @@ export const OptionsSection = styled.section`
   }
 `;
 
-
 export const PresetSection = styled.section`
   width: 50%;
+  select {
+    font-family: 'Space Mono', monospace;
+    font-size: 2rem;
+    padding: 5px 25px;
+    color: rgba(248,205,218, .8);
+    text-shadow: 1px 1px 8px rgba(238,130,238, .7);
+    background-color: rgba(248,205,218, .1);
+    border-radius: 3px;
+    option {
+      color: #222;
+    }
+  }
 `;
-
 
 export const RangeSlider = styled.section`
   width: 50%;
-  
   &,
   &:before,
   &:after {
     box-sizing: border-box;
   }
-  
   .range-slider__range {
     -webkit-appearance: none;
     width: 50%;
@@ -83,14 +91,12 @@ export const RangeSlider = styled.section`
       transition: background .15s ease-in-out;
       
       &:hover {
-        background: #1abc9c;
+        background: #71b280;
       }
     }
-    
     &:active::-webkit-slider-thumb {
-      background: #1abc9c;
+      background: #71b280;
     }
-    
     &::-moz-range-thumb {
       width: 20px;
       height: 20px;
@@ -99,25 +105,21 @@ export const RangeSlider = styled.section`
       background: #2c3e50;
       cursor: pointer;
       transition: background .15s ease-in-out;
-      
       &:hover {
-        background: #1abc9c;
+        background: #71b280;
       }
     }
-    
     &:active::-moz-range-thumb {
-      background: #1abc9c;
+      background: #71b280;
     }
-    
     &:focus {
-      
       &::-webkit-slider-thumb {
         box-shadow: 0 0 0 3px #fff,
-        0 0 0 6px #1abc9c;
+        0 0 0 6px #71b280;
       }
     }
   }
-  
+
   .range-slider__value {
     display: inline-block;
     position: relative;
@@ -129,7 +131,6 @@ export const RangeSlider = styled.section`
     background-color: rgba(248,205,218, .8);
     padding: 5px 10px;
     margin-left: 10px;
-
     &:after {
       position: absolute;
       top: 8px;
@@ -142,22 +143,20 @@ export const RangeSlider = styled.section`
       content: '';
     }
   }
-  
+
   /*modzilla overrides*/
   ::-moz-range-track {
     background: #d7dcdf;
     border: 0;
   }
-  
   input::-moz-focus-inner,
   input::-moz-focus-outer { 
     border: 0; 
   }
 `;
 
-
 export const GenerationSection = styled.main`
-  margin-top: 40px;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
