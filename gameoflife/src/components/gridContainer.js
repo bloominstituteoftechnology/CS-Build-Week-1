@@ -255,6 +255,7 @@ class GridContainer extends Component {
 // change timing function
   changeGameTiming = (event) => {
     event.preventDefault();
+    this.setState({gameTiming: this.state.gameTiming});
   }
 
   render() {
@@ -295,6 +296,20 @@ class GridContainer extends Component {
             YELLOW
           </div>
         </div>
+        <div className="change-timing">
+          <h2>Input Run Speed (in millseconds)</h2>
+          <input
+            className="input-custom"
+            type="text"
+            placeholder="Game Speed"
+            name="gameTiming"
+            value={this.state.gameTiming}
+            onChange={this.onChange}
+          />          
+          <div className="button" onClick={this.changeGameTiming}>
+            SUBMIT
+          </div>
+        </div>
         {/* <form className="customize-grid">
           <input
             className="input-custom"
@@ -316,7 +331,7 @@ class GridContainer extends Component {
             CUSTOMIZE
           </div>
         </form> */}
-      </div>
+        </div>
     );
   }
 }
