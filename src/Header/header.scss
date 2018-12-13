@@ -10,7 +10,7 @@
   background: none;
   border-radius: 0 0 10px 10px;
   display: flex;
-  top: 35%;
+  top: 42%;
   left: 52%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
@@ -23,7 +23,7 @@
   }
 }
 .hide-container {
-  opacity: 1;
+  opacity: 0;
 }
 
 .header-container-small {
