@@ -120,6 +120,22 @@ class Canvas extends React.Component {
     );
     this.playGame();
   };
+  
+  /* 
+  EDGE CASES:
+  
+  TOP 1 - 18
+  BOTTOM 381 -399
+  LEFT  0, 20, 40, 60, 80, 100, 120, 140, 180, 200, 220, 240, 260, 280, 300, 320, 340, 360, 380
+  RIGHT 19, 38, 57, 76, 95, 114, 133, 152, 171, 190, 209, 228, 247, 266, 285, 304, 323, 342, 361, 380
+  
+  ALL CASES (Other than edge cases)
+  [i - 21]        | [i - 20        |  [i - 19]
+  -----------------------------------------------
+  [i - 1]        |       [21]     |  [i + 1] 
+  -----------------------------------------------
+  [i + 19]       |      [i + 20]  |   [i + 21]
+  */
   // PLAY GAME 
   playGame = () => {
     console.log('test')
@@ -128,16 +144,27 @@ class Canvas extends React.Component {
     console.log(length);
     
     for (let i = 0; i < length; i++) {
+      // IF NOT LIVING AKA DEAD
       if (!nextNode[i].isLiving) {
         let check = 0;
-        console.log("He ded")
-      }
-    }
+        if (i >= 0 && i < 20 && nextNode[i - 1].isLiving) {
+          check++
+        }
+        if (i < 399 && nextNode[i + 1].isLiving) {
+          check++
+        }
+        if (check === 3) {
+          nextNode[i].isLiving = true;
+          console.log(check)
+        }
+      } // end dead if checks 
+    } // end massive for loop
   }
   
   // Todo
   handlePauseGame = () => {};
 
+  // generationCounter method is set within handleStartGame
   handleResetGame = () => {
     this.setState({
       currentNode: this.state.currentNode.map(cell =>
