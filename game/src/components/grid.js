@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Cell from "./cell";
+// import Cell from "./cell";
 import "./grid.css";
 
 let gen_count = 0;
@@ -9,8 +9,8 @@ class Grid extends Component {
     super(props);
     this.state = {
       cell_size: 20,
-      grid_width_cells: 5,
-      grid_height_cells: 5,
+      grid_width_cells: 15,
+      grid_height_cells: 15,
       grid: [],
       grid_empty: true,
       game_running: false,
@@ -19,14 +19,17 @@ class Grid extends Component {
 
   componentDidMount() {
     requestAnimationFrame(this.tick);
+    
+    //set grid array size and set all values to false
+    this.grid_init(this.state.grid_width_cells, this.state.grid_height_cells);
+    
+  }
+
+  draw_grid() {
     let size = this.state.cell_size;
     let height = this.state.grid_height_cells * size;
     let width = this.state.grid_width_cells * size;
 
-    //set grid array size and set all values to false
-    this.grid_init(this.state.grid_width_cells, this.state.grid_height_cells);
-
-    //render the canvas
     let canvas = this.refs.canvas.getContext("2d");
 
     canvas.lineWidth = 1;
@@ -62,17 +65,17 @@ class Grid extends Component {
     for (let y = 0; y < height; y++) {
       grid[y] = [];
       for (let x = 0; x < width; x++) {
-        grid[y][x] = new Cell({
-          is_alive: false
-        });
+        grid[y][x] = false;
       }
     }
     this.setState({ grid });
+    this.draw_grid();
+    console.log(this.state.grid_height_cells, this.state.grid_width_cells);
   }
 
   //create a new grid based on the game rules being applied to the current grid, then setting the new grid to the current grid in state.
-  grid_update() {
-    const grid = this.state.grid;
+  grid_update = () =>{
+    const grid = new Array(this.state.grid_height_cells).fill(0).map(x => new Array(this.state.grid_width_cells).fill(false));
     const neighbors = [
       [-1, -1],
       [-1, 0],
@@ -83,6 +86,7 @@ class Grid extends Component {
       [1, -1],
       [0, -1]
     ];
+    console.log(grid);
     let counter = 0;
     for (let y = 0; y < this.state.grid_height_cells; y++) {
       for (let x = 0; x < this.state.grid_width_cells; x++) {
@@ -95,30 +99,26 @@ class Grid extends Component {
             x1 < this.state.grid_width_cells &&
             y1 >= 0 &&
             y1 < this.state.grid_height_cells &&
-            this.state.grid[y1][x1].is_alive
+            this.state.grid[y1][x1]
           ) {
             counter++;
           }
-          console.log("Cell", y, x, counter);
+          console.log(y, x, counter);
         }
-        if (this.state.grid[y][x].is_alive) {
+        if (this.state.grid[y][x]) {
           if (counter === 2 || counter === 3) {
-            grid[y][x].is_alive = true;
-          } else {
-            grid[y][x].is_alive = false;
+            grid[y][x] = true;
           }
-        } else {
-          if (!this.state.grid[y][x].is_alive && counter === 3) {
-            grid[y][x].is_alive = true;
+        }else {
+          if (counter === 3) {
+            grid[y][x] = true;
           }
         }
         counter = 0;
       }
     }
     this.setState({grid});
-    console.log("Gen 1", gen_count);
     gen_count++;
-    console.log("Gen 2", gen_count);
     console.log(this.state.grid);
   }
 
@@ -135,10 +135,10 @@ class Grid extends Component {
     let currentsquareX = Math.floor(x / cellSize);
     let currentsquareY = Math.floor(y / cellSize);
     let grid = this.state.grid.slice(0);
-    if (grid[currentsquareY][currentsquareX].is_alive === true) {
-      grid[currentsquareY][currentsquareX].is_alive = false;
+    if (grid[currentsquareY][currentsquareX] === true) {
+      grid[currentsquareY][currentsquareX] = false;
     } else {
-      grid[currentsquareY][currentsquareX].is_alive = true;
+      grid[currentsquareY][currentsquareX] = true;
     }
     this.setState({ grid }, () =>
       this.grid_update_draw(currentsquareY, currentsquareX, cellSize)
@@ -149,7 +149,7 @@ class Grid extends Component {
     let canvas = this.refs.canvas.getContext("2d");
     for (let y = 0; y < this.state.grid_height_cells; y++) {
       for (let x = 0; x < this.state.grid_width_cells; x++) {
-        if (this.state.grid[y][x].is_alive === true) {
+        if (this.state.grid[y][x] === true) {
           canvas.fillStyle = "green";
           canvas.fillRect(
             x * this.state.cell_size + 1,
@@ -185,14 +185,16 @@ class Grid extends Component {
   };
 
   grid_reset =() => {
+    // this.setState({ game_running: false });
+    this.stop_game();
     const grid = this.state.grid;
     for (let y = 0; y < this.state.grid_height_cells; y++) {
       for (let x = 0; x < this.state.grid_width_cells; x++) {
-        grid[y][x].is_alive = false;
-        this.grid_update_draw(y, x, this.state.cell_size);
+        grid[y][x] = false;
       }
     }
     this.setState({ grid });
+    this.grid_update_draw();
     gen_count = 0;
   }
 
@@ -202,17 +204,47 @@ class Grid extends Component {
     requestAnimationFrame(this.tick);
   }
 
+  random_board = () => {
+    const grid = this.state.grid;
+    for (let y = 0; y < this.state.grid_height_cells; y++) {
+      for (let x = 0; x < this.state.grid_width_cells; x++) {
+        if((Math.floor(Math.random() * 10) + 1) <= 5) {
+          grid[y][x] = false;
+        } else {
+          grid[y][x] = true;
+        }
+      }
+    }
+    this.setState({ grid });
+    this.grid_update_draw();
+  }
+
+  resize_grid(width, height) {
+    const grid = [];
+    for (let y = 0; y < height; y++) {
+      grid[y] = [];
+      for (let x = 0; x < width; x++) {
+        grid[y][x] = false;
+      }
+    }
+    this.setState({ grid });
+    this.grid_update_draw();
+  }
+
+  handleDimensionChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
   render() {
     return (
       <div className="gridContainer">
-        <canvas
-          id="canvas"
-          ref="canvas"
-          width={this.state.grid_width_cells * this.state.cell_size}
-          height={this.state.grid_height_cells * this.state.cell_size}
-          onClick={this.get_cursor}
-        />
+        <div>
+          <h3>Generation: {gen_count}</h3>
+        </div>
         <div className="headerButtons">
+          <button className="submit" onClick={this.random_board}>
+            Randomize
+          </button>
           <button className="submit" onClick={this.next_step}>
             Next
           </button>
@@ -227,8 +259,22 @@ class Grid extends Component {
           </button>
         </div>
         <div>
-          <h3>Generation: {gen_count}</h3>
-        </div>
+          <canvas
+            id="canvas"
+            ref="canvas"
+            width={this.state.grid_width_cells * this.state.cell_size}
+            height={this.state.grid_height_cells * this.state.cell_size}
+            onClick={this.get_cursor}
+          />
+        </div>        
+          <h4>Change Grid Dimensions: </h4>
+          Width:
+          <input type="number" min="3" max="40"placeholder="Width" onChange={this.handleDimensionChange} name="grid_width_cells" value={this.state.grid_width_cells}/>
+          Height:
+          <input type="number" min="3" max="40"placeholder="Height" onChange={this.handleDimensionChange} name="grid_height_cells" value={this.state.grid_height_cells}/> 
+          <button className="submit" onClick={() => this.grid_init(this.state.grid_width_cells,this.state.grid_height_cells)}>
+            Set
+          </button>
       </div>
     );
   }
