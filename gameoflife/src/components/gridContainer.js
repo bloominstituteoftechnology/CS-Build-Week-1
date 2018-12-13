@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import {
-  fourRules
-} from "../algorithms/gameFunctions";
+import { fourRules } from "../algorithms/gameFunctions";
 
 class GridContainer extends Component {
   constructor() {
@@ -10,8 +8,7 @@ class GridContainer extends Component {
       width: 15,
       height: 15,
       grid: [...Array(15)].map(rows => Array(15).fill(0)),
-      running: false,
-
+      running: false
     };
   }
   // This is a visual of the data structure above
@@ -42,14 +39,14 @@ class GridContainer extends Component {
 
   componentDidMount() {
     // drawing the grid
-    
+
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     // const w = this.state.width * this.state.height;
     // const h = this.state.width * this.state.height;
     // ctx.canvas.width = w;
     // ctx.canvas.height = h;
-
+    
     this.drawingGrid();
     // alivecheck
   }
@@ -85,7 +82,7 @@ class GridContainer extends Component {
 
   drawingGrid = () => {
     // drawing the grid
-   console.log(this.state.grid);
+    console.log(this.state.grid);
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     const w = this.state.width;
@@ -103,10 +100,10 @@ class GridContainer extends Component {
         // console.log(j,k);
         if (this.state.grid[j / h][k / w]) {
           // this.getMousePos()
-          console.log("fire", k, j*h);
+          console.log("fire", k, j * h);
           // ctx.fillStyle = "#000";
           ctx.fillRect(k, j, w, h);
-        } 
+        }
         // else {
         //   ctx.clearRect(k * w, j * h, w, h);
         //   ctx.strokeRect(k * w, j * h, w, h);
@@ -154,40 +151,29 @@ class GridContainer extends Component {
     // console.log(`y: ${Math.floor(pos.y / 15)} x: ${Math.floor(pos.x / 15)}`);
   }
 
-  handleClear = (event) => {
+  handleClear = event => {
     event.preventDefault();
     const w = 15;
     const h = 15;
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
 
-    for(let i = 0; i < this.state.grid.length; i++) {
-      for( let j = 0; j < this.state.grid[i].length; j++){
-          if(this.state.grid[i][j] === 1){
-            // Set back to 0
-            this.state.grid[i][j] = 0;
-            // Erase lit square from canvas
-            ctx.fillStyle = "white";
-            ctx.fillRect(j * w, i * h, w, h);
-            ctx.strokeRect(j * w, i * h, w, h);
-          }
+    for (let i = 0; i < this.state.grid.length; i++) {
+      for (let j = 0; j < this.state.grid[i].length; j++) {
+        if (this.state.grid[i][j] === 1) {
+          // Set back to 0
+          this.state.grid[i][j] = 0;
+          // Erase lit square from canvas
+          ctx.fillStyle = "white";
+          ctx.fillRect(j * w, i * h, w, h);
+          ctx.strokeRect(j * w, i * h, w, h);
+        }
       }
-  }
-  }
-
-  // runGame = () => {
-  //   this.setState({ grid: fourRules(this.state.grid) });
-  //   this.draw()
-  //   if (this.running) {
-  //     setTimeout(() => {
-  //       this.runGame();
-  //     }, 30);
-  //   }
-  // };
-
+    }
+  };
 
   // Run function
-  runGame = (event) => {
+  runGame = event => {
     // checkingNeighbors(this.state.grid, );
     // if(!this.state.running) {
     //   this.setState({running: true})
@@ -195,34 +181,36 @@ class GridContainer extends Component {
     let generation = 0;
     // console.log("old GRid", this.state.grid);
     const newGrid = fourRules(this.state.grid);
-    this.setState({grid: newGrid}, () => {
-      this.drawingGrid()
+    this.setState({ grid: newGrid }, () => {
+      this.drawingGrid();
       // console.log("newGrid", this.state.grid);
-    }
-     
-    );
-    
-    // this.drawingGrid();
-    if(this.state.running) {
-      console.log("we are playing")
-      setTimeout( () => {
-        this.runGame();
+    });
 
+    // this.drawingGrid();
+    if (this.state.running) {
+      console.log("we are playing");
+      setTimeout(() => {
+        this.runGame();
       }, 300);
-      
-    
     }
   };
 
-  startGame = (event) => {
-    this.setState({running: true});
+  startGame = event => {
+    this.setState({ running: true });
     this.runGame();
   };
 
-  stopGame = (event) => {
-    this.setState({running: false});
+  stopGame = event => {
+    this.setState({ running: false });
   };
-  
+
+
+  customizeGrid = () => {
+
+  }
+
+
+
   // stop function
 
   render() {
@@ -232,14 +220,18 @@ class GridContainer extends Component {
           <canvas
             className="grid"
             ref="canvas"
-            onClick={(event => this.handleClick(event))}
+            onClick={event => this.handleClick(event)}
             width={this.state.height * this.state.width}
             height={this.state.height * this.state.width}
           />
         </div>
         <div className="buttons-container">
-          <div className="button" onClick={this.startGame}>START</div>
-          <div className="button" onClick={this.stopGame}>STOP</div>
+          <div className="button" onClick={this.startGame}>
+            START
+          </div>
+          <div className="button" onClick={this.stopGame}>
+            STOP
+          </div>
           <div className="button" onClick={this.handleClear}>
             CLEAR
           </div>
@@ -247,6 +239,13 @@ class GridContainer extends Component {
             NEXT
           </div>
         </div>
+          <form className="customize-grid">
+            <input type="text" placeholder="width" />
+            <input type="text" placeholder="height" />
+            <div className="button" onClick={this.customizeGrid}>
+              CUSTOMIZE
+            </div>
+          </form>
       </div>
     );
   }
