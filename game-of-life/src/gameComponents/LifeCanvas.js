@@ -3,10 +3,10 @@ import Life from './Life.js';
 
 class Grid extends Component{
     constructor(){
-        super();
-        this.state={
-          generation: 0
-        }
+      super();
+      this.state={
+        generation:0
+      }
     }
     componentDidMount() {
         this.draw();
@@ -69,8 +69,7 @@ class Grid extends Component{
       }
       const elapsed=timestamp-this.start;
       if (elapsed>=500) {
-        this.life.runIteration(this.life.grid);
-        this.setState({generation: this.state.generation+1},()=>{this.isClickable=false; this.fillsquares()});
+        this.oneStep();
         this.start=timestamp;
       }
     }
