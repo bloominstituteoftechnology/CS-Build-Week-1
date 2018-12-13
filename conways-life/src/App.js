@@ -15,19 +15,25 @@ import arrayClone from "./helpers";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.speed = 100;
+    this.speed = 1;
     this.rows = 30;
-    this.cols = 50;
+    this.cols = 60;
     this.state = {
       generation: 0,
       gridFull: Array(this.rows).fill(Array(this.cols).fill(false)),
       isPlaying: false,
-      dropdownOpen: false
+      dropdownOpen: false,
+      dropdownOpen2: false
     };
   }
   toggle = () => {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
+    }));
+  };
+  toggle2 = () => {
+    this.setState(prevState => ({
+      dropdownOpen2: !prevState.dropdownOpen2
     }));
   };
   selectBox = (row, col) => {
@@ -125,6 +131,18 @@ class App extends Component {
     }
   };
 
+  gridSmall = () => {
+    this.rows = 20;
+    this.cols = 40;
+    this.clearButton();
+  }
+
+  gridLarge = () => {
+    this.rows = 30;
+    this.cols = 60;
+    this.clearButton();
+  }
+  
   playButton = () => {
     clearInterval(this.intervalId);
     this.intervalId = setInterval(this.playGame, this.speed);
@@ -221,6 +239,17 @@ class App extends Component {
             <DropdownMenu>
               <DropdownItem onClick={this.gliderGun}>Glider Gun</DropdownItem>
               <DropdownItem onClick={this.acorn}>Acorn</DropdownItem>
+            </DropdownMenu>
+          </ButtonDropdown>
+          <ButtonDropdown
+            className="dropup"
+            isOpen={this.state.dropdownOpen2}
+            toggle={this.toggle2}
+          >
+            <DropdownToggle caret>Size</DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={this.gridSmall}>Small</DropdownItem>
+              <DropdownItem onClick={this.gridLarge}>Large</DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>
         </ButtonGroup>
