@@ -258,7 +258,7 @@ class App extends Component {
             isOpen={this.state.dropdownOpen}
             toggle={this.toggle}
           >
-            <DropdownToggle>Patterns</DropdownToggle>
+            <DropdownToggle caret>Patterns</DropdownToggle>
             <DropdownMenu>
               <DropdownItem onClick={this.gliderGun}>Glider Gun</DropdownItem>
               <DropdownItem onClick={this.acorn}>Acorn</DropdownItem>
@@ -269,7 +269,7 @@ class App extends Component {
             isOpen={this.state.dropdownOpen2}
             toggle={this.toggle2}
           >
-            <DropdownToggle>Size</DropdownToggle>
+            <DropdownToggle caret>Size</DropdownToggle>
             <DropdownMenu>
               <DropdownItem onClick={this.gridSmall}>Small</DropdownItem>
               <DropdownItem onClick={this.gridLarge}>Large</DropdownItem>
