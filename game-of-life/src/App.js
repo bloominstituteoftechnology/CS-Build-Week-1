@@ -71,11 +71,10 @@ class Controls extends Component{
 
   render () {
     return(
-      <div className = "buttons">
+      <div className = "center">
         <h4>
           Game Controls
         </h4>
-    <ButtonToolbar>
         <button className = "play-button" onClick = {this.props.playButton}>
           Play
         </button>
@@ -88,13 +87,12 @@ class Controls extends Component{
         <button className = "random-pattern" onClick = {this.props.random}>
           Random
         </button>
-        <DropdownButton 
-                title = "Speed"
-                id = "speed-menu"
-                onSelect = {this.handleSpeed} >
-                <MenuItem eventKey = "1">Slow</MenuItem>
-                <MenuItem eventKey = "2">Fast</MenuItem>
-        </DropdownButton>
+        <button onClick = {this.props.slow}>
+          Slow
+        </button>
+        <button onClick = {this.props.fast}>
+          Fast
+        </button>
         <DropdownButton 
                 title = "Grid Size"
                 id = "size-menu"
@@ -102,7 +100,6 @@ class Controls extends Component{
                 <MenuItem eventKey = "1">Small Grid</MenuItem>
                 <MenuItem eventKey = "2">Large Grid</MenuItem>
         </DropdownButton>
-      </ButtonToolbar>
       </div>
 
     );
@@ -140,12 +137,15 @@ class App extends Component {
     this.rows = 30;
     this.cols = 50;
 
+    this.speed = 500;
+
     this.state = {
       generation: 0, //this variable serves as a counter to track which generation the game is on
       /* create an array the size of the row variable and fill it with a map containing an array
       the size of the columns variable where each element in that array is false (cells start as turned-off)
       */
       gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false))
+
     }
   }
 
@@ -180,13 +180,13 @@ class App extends Component {
     for (let i = 0; i<this.rows; i++){
       for (let j=0; j<this.cols; j++){
         /* Math.random generates a random number between 0 and 1, 
-        when multiplied by 4 we get a random number between 0 and 4,
+        when multiplied by 2 we get a random number between 0 and 2,
         we round down to the nearest integer. This method will generate
-        a 1 25% of the time.  
+        a 1 50% of the time.  
         */
-        if (Math.floor(Math.random()*4) === 1){
+        if (Math.floor(Math.random()*2) === 1){
           //if the random number is a 1, we fill the grid
-          gridCopy[i][j] = true;
+          gridCopy[i][j] = true; //50% chance of filling in the square
         }
       }
     }
@@ -198,8 +198,10 @@ class App extends Component {
 
   //play button function to start game 
   playButton = () => {
+    //this line is to start the game over once someone clicks the playButton
     clearInterval(this.intervalId);
-    this.intervalId = setInterval(this.play);
+    //this will run the play function at the specified rate
+    this.intervalId = setInterval(this.play, this.speed);
   }
 
   pauseButton = () => {
@@ -277,6 +279,16 @@ play = () => {
   });
 }
 
+slow = () => {
+  this.speed = 1000;
+  this.playButton();
+}
+
+fast = () => {
+  this.speed = 100;
+  this.playButton();
+}
+
   render(){
 
     return (
@@ -311,6 +323,8 @@ play = () => {
           playButton = {this.playButton}
           pauseButton = {this.pauseButton}
           clearButton = {this.clear}
+          slow = {this.slow}
+          fast = {this.fast}
           random = {this.random}
           gridSize = {this.gridSize}
         />
