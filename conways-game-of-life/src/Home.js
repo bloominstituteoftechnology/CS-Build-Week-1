@@ -11,7 +11,7 @@ class Home extends React.Component {
  
         <div>
         <h2>Go Play!</h2>
-        <Link to='/Game' className="game-link"><button className="play-button">Play Game!</button></Link></div>
+        <Link to='/Game' className="game-link"><button className="play-button button">Play Game!</button></Link></div>
         <div>
             <h3>Rules of the Game</h3>
                 <p>Any live cell with fewer than two live neighbors dies, as if by underpopulation.</p>

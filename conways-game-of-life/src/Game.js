@@ -6,8 +6,8 @@ import {Link} from 'react-router-dom';
 
 
 const game_cell = 20;
-const game_width = 660;
-const game_height = 460;
+const game_width = 620;
+const game_height = 420;
 
 
 class Game extends React.Component {
@@ -170,9 +170,8 @@ class Game extends React.Component {
     const { gamecells } = this.state;
     return (
       <div>
-        <div><h1>Conway's Game of Life</h1></div>
         <div>
-        <div> <Link to='/' className="home-link"><button className="home-button">Go Back Home!</button></Link></div>
+        <div> <Link to='/' className="home-link"><button className="home-button button">Go Home!</button></Link></div>
         </div>
         <div><h3>Generation: {this.state.generationNum}</h3></div>
         <div class="container">
@@ -194,12 +193,14 @@ class Game extends React.Component {
           ))}
         </div>
         <div className="controls">
-          Update every{" "}
+        <div>
+          Update Every{" "}
           <input
             value={this.state.interval}
             onChange={this.handleInterval}
           />{" "}
           milliseconds
+          </div>
           {this.state.isEngaged ? (
             <button className="button" onClick={this.stopGame}>
               Stop Game

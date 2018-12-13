@@ -26,8 +26,18 @@
     background: #e0babc;
     position: absolute;
 }
-
-.container {
-
+.home-button {
+    width: 75px;
+    height: 25px;
+    font-family: 'Noto Serif TC', serif;
+    font-weight: bold;
+    font-size: 12px;
+    color: #72587F;
+    background-color: #EED2EE;
+    border: 2px solid #4F2F4F;
 }
 
+.container {
+    width: 100%;
+    height: 800px;
+}
