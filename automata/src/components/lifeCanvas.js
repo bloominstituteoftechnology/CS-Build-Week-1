@@ -21,7 +21,7 @@ class Canvas extends Component {
             const ctx = canvo.getContext("2d");
             const pos = canvo.getBoundingClientRect()
             const squareSize = 20
-            ctx.fillStyle = "lightgrey";
+            // ctx.fillStyle = "lightgrey";
             ctx.fillRect(e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
             e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
             squareSize,
@@ -44,7 +44,7 @@ class Canvas extends Component {
             let yStart = e.clientY - pos.y - ((e.clientY - pos.y) % squareSize);
             ctx.clearRect(xStart, yStart, squareSize, squareSize);
             ctx.strokeRect(xStart, yStart, squareSize, squareSize);
-            ctx.strokeStyle = 'rgba(111, 111, 111, 0.8)';
+            // ctx.strokeStyle = 'rgba(111, 111, 111, 0.8)';
             let tempCoord = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
             this.setState({[`${tempCoord}`]: "deadite"});
         } else {console.log('Grid is not interactive while simulation is running');}
