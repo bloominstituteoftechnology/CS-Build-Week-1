@@ -13,6 +13,7 @@ class App extends Component {
     this.state = {
       generation: 0,
       gridFull: Array(this.rows).fill(Array(this.cols).fill(false))
+      //isPlaying: false;
     };
   }
   selectBox = (row, col) => {
@@ -24,6 +25,7 @@ class App extends Component {
   };
 
   seedGame = () => {
+    //if isPlaying = false; then do the rest of this stuff 
     let gridCopy = arrayClone(this.state.gridFull);
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
@@ -44,6 +46,30 @@ class App extends Component {
 
   pauseButton = () => {
     clearInterval(this.intervalId);
+  };
+
+  slowButton = () => {
+    this.speed = 1000;
+    this.playButton();
+  }
+
+  fastButton = () => {
+    this.speed = 100;
+    this.playButton();
+  }
+
+  clearButton = () => {
+    clearInterval(this.intervalId);
+    let gridCopy = arrayClone(this.state.gridFull);
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.cols; j++) {
+        gridCopy[i][j] = false;
+      }
+    }
+    this.setState({
+      gridFull: gridCopy,
+      generation: 0
+    });
   };
 
   playGame = () => {
@@ -91,7 +117,10 @@ class App extends Component {
         <h2>Generations: {this.state.generation}</h2>
         <button onClick={this.playButton}>Play</button>
         <button onClick={this.pauseButton}>Pause</button>
-
+        <button onClick={this.clearButton}>Clear</button>
+        <button onClick={this.seedGame}>Seed</button>
+        <button onClick={this.slowButton}>Slow</button>
+        <button onClick={this.fastButton}>Fast</button>
       </div>
     );
   }
