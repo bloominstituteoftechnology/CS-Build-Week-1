@@ -49,8 +49,46 @@ const ControlSelect = styled.select`
   appearance: none;
 `;
 
-const LEFT = [20, 40, 60, 80, 100, 120, 140, 180, 200, 220, 240, 260, 280, 300, 320, 340, 360];
-const RIGHT = [19, 39, 59, 79, 99, 119, 139, 159, 179, 199, 219, 239, 259, 279, 299, 319, 339, 359, 379]
+const LEFT = [
+  20,
+  40,
+  60,
+  80,
+  100,
+  120,
+  140,
+  180,
+  200,
+  220,
+  240,
+  260,
+  280,
+  300,
+  320,
+  340,
+  360
+];
+const RIGHT = [
+  19,
+  39,
+  59,
+  79,
+  99,
+  119,
+  139,
+  159,
+  179,
+  199,
+  219,
+  239,
+  259,
+  279,
+  299,
+  319,
+  339,
+  359,
+  379
+];
 
 class Canvas extends React.Component {
   state = {
@@ -74,6 +112,7 @@ class Canvas extends React.Component {
     this.setState({ currentNodes });
   }
 
+  // If isClickable is true, set state and map through current nodes and toggle id of node that was clicked
   toggleCellLife = id => {
     if (this.state.isClickable) {
       this.setState(prevState => {
@@ -91,13 +130,6 @@ class Canvas extends React.Component {
     }
   };
 
-  // killCell = () => {
-  //   this.isLiving = false;
-  // };
-
-  // giveLife = () => {
-  //   this.isLiving = true;
-  // };
 
   handleChange = event => {
     const { name, value, type, checked } = event.target;
@@ -106,7 +138,7 @@ class Canvas extends React.Component {
       : this.setState({ [name]: value });
   };
 
-  // START GAME HANDLER
+  // Start game 
   handleStartGame = () => {
     this.setState({
       isClickable: false,
@@ -124,32 +156,19 @@ class Canvas extends React.Component {
     this.playGame();
   };
 
-  /* 
-  EDGE CASES:
   
-  TOP 1 - 18
-  BOTTOM 381 -398
-  LEFT  0, 20, 40, 60, 80, 100, 120, 140, 180, 200, 220, 240, 260, 280, 300, 320, 340, 360, 380
-  RIGHT = [19, 39, 59, 79, 99, 119, 139, 159, 179, 199, 219, 239, 259, 279, 299, 319, 339, 359, 379]
-  
-  ALL CASES (Other than edge cases)
-  [i - 21]        | [i - 20        |  [i - 19]
-  -----------------------------------------------
-  [i - 1]        |       [21]     |  [i + 1] 
-  -----------------------------------------------
-  [i + 19]       |      [i + 20]  |   [i + 21]
-  */
-  // PLAY GAME
+  // Play game
   playGame = () => {
-    console.log("test");
+    console.log("Game has started");
     let currentNodes = this.state.currentNodes.slice();
     let length = currentNodes.length;
     let endOfArray = currentNodes.length - 1;
     let nextNodes = [];
 
-    for (let i = 0; i < length; i++) {
-      nextNodes.push([]);
-    }
+    // // loop through the length of currentNodes Array and 
+    // for (let i = 0; i < length; i++) {
+    //   nextNodes.push([]);
+    // }
 
     for (let i = 0; i < length; i++) {
       nextNodes[i] = Object.assign({}, currentNodes[i]);
@@ -188,9 +207,9 @@ class Canvas extends React.Component {
             check++;
           }
         } else if (LEFT.includes(i)) {
-          if (currentNodes[i - 20 ].isLiving) {
+          if (currentNodes[i - 20].isLiving) {
             check++;
-            console.log("LEFT i is:", i)
+            console.log("LEFT i is:", i);
           }
           if (currentNodes[i - 19].isLiving) {
             check++;
@@ -208,9 +227,9 @@ class Canvas extends React.Component {
             console.log(check);
           }
         } else if (RIGHT.includes(i)) {
-          if (currentNodes[i + 20 ].isLiving) {
+          if (currentNodes[i + 20].isLiving) {
             check++;
-            console.log("RIGHT i is:", i)
+            console.log("RIGHT i is:", i);
           }
           if (currentNodes[i + 19].isLiving) {
             check++;
@@ -243,7 +262,7 @@ class Canvas extends React.Component {
           if (currentNodes[i - 21].isLiving) {
             check++;
           }
-        } else  if (i === 380) {
+        } else if (i === 380) {
           if (currentNodes[i + 1].isLiving) {
             check++;
           }
@@ -252,9 +271,8 @@ class Canvas extends React.Component {
           }
           if (currentNodes[i - 21].isLiving) {
             check++;
-          }  
-
-        } else  if (i === 399) {
+          }
+        } else if (i === 399) {
           if (currentNodes[i - 1].isLiving) {
             check++;
           }
@@ -291,10 +309,10 @@ class Canvas extends React.Component {
           }
         }
         if (check === 2 || check === 3) {
-          console.log("Alive")
+          console.log("Alive");
         } else {
           nextNodes[i].isLiving = false;
-          console.log("Dead")
+          console.log("Dead");
         }
       } // end living node check
       // Check the dead nodes/cells
@@ -329,44 +347,38 @@ class Canvas extends React.Component {
             check++;
           }
         } else if (LEFT.includes(i)) {
-          if (currentNodes[i - 20 ].isLiving) {
+          if (currentNodes[i - 20].isLiving) {
             check++;
-            console.log("LEFT i is:", i)
+            console.log("LEFT i is:", i);
           }
           if (currentNodes[i - 19].isLiving) {
             check++;
           }
           if (currentNodes[i + 1].isLiving) {
             check++;
-            console.log(check);
           }
           if (currentNodes[i + 20].isLiving) {
             check++;
-            console.log(check);
           }
           if (currentNodes[i + 21].isLiving) {
             check++;
-            console.log(check);
           }
         } else if (RIGHT.includes(i)) {
-          if (currentNodes[i + 20 ].isLiving) {
+          if (currentNodes[i + 20].isLiving) {
             check++;
-            console.log("RIGHT i is:", i)
+            console.log("RIGHT i is:", i);
           }
           if (currentNodes[i + 19].isLiving) {
             check++;
           }
           if (currentNodes[i - 1].isLiving) {
             check++;
-            console.log(check);
           }
           if (currentNodes[i - 20].isLiving) {
             check++;
-            console.log(check);
           }
           if (currentNodes[i - 21].isLiving) {
             check++;
-            console.log(check);
           }
         } else if (i >= 381 && i <= 398) {
           if (currentNodes[i - 1].isLiving) {
@@ -384,7 +396,7 @@ class Canvas extends React.Component {
           if (currentNodes[i - 21].isLiving) {
             check++;
           }
-        } else  if (i === 380) {
+        } else if (i === 380) {
           if (currentNodes[i + 1].isLiving) {
             check++;
           }
@@ -393,9 +405,8 @@ class Canvas extends React.Component {
           }
           if (currentNodes[i - 21].isLiving) {
             check++;
-          }  
-
-        } else  if (i === 399) {
+          }
+        } else if (i === 399) {
           if (currentNodes[i - 1].isLiving) {
             check++;
           }
@@ -433,12 +444,13 @@ class Canvas extends React.Component {
         }
         if (check === 3) {
           nextNodes[i].isLiving = true;
-          console.log("Alive")
-        } 
+          console.log("Alive");
+        }
       } // end dead node check
     } // end massive for loop
-
-    console.log("nextNodes", nextNodes);
+    this.setState(prevState => {
+      return { currentNodes: nextNodes, generation: prevState.generation + 1 };
+    });
   };
 
   // Todo
