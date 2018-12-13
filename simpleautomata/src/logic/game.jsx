@@ -141,6 +141,7 @@ class Game extends React.Component {
     this.setState({ gen: this.state.gen +1});
     this.board = newBoard;
     this.setState({ cells: this.makeCells() });
+    //timeout handler just feed in state variable
     this.timeoutHandler = window.setTimeout(() => {
       this.runIteration();
     }, this.state.interval);
@@ -169,7 +170,7 @@ class Game extends React.Component {
          if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
            //if we are still inbounds
              neighbors++;
-             
+
          }
          //else do nothing breaks loop
          /// TO:DO//
@@ -178,7 +179,7 @@ class Game extends React.Component {
      //reutrns the number of live neighbors
      return neighbors;
   }
-
+  //overwrite interval
   handleIntervalChange = (event) => {
     this.setState({ interval: event.target.value });
   }
@@ -253,7 +254,7 @@ class Game extends React.Component {
   render() {
     const { cells } = this.state;
     return (
-      <div>
+      <div className="page">
         <div>current gen: {this.state.gen}</div>
         <div className="Board"
           style = {{ width: WIDTH, height: HEIGHT,
@@ -277,6 +278,8 @@ class Game extends React.Component {
             <button className="button" onClick={this.handleEater}>Eater</button>
             <button className="button" onClick={this.handleClear}>Clear</button>
           </div>
+        </div>
+        <div className="rules">
           <div>
             <h1>Rules:</h1>
             <p>1. <strong>Births</strong>: Each <strong className = "dead"> dead </strong> cell adjacent to exactly three live neighbors will become <strong className = "live">live</strong> in the next generation.

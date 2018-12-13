@@ -1,3 +1,10 @@
+.page{
+  margin: auto;
+  display: grid;
+  justify-content: center;
+  max-width: 700px;
+}
+
 .Board {
   position: relative;
   margin: 0 auto;
@@ -9,6 +16,10 @@
 .Cell {
   position: absolute;
 }
+.rules{
+  display: grid;
+  justify-content: center;
+}
 .live {
   color:red;
 }
@@ -16,7 +27,7 @@
   color:blue;
 }
 .about{
-  max-width: 400px;
-  left: 750px;
-  position: absolute;
+  margin: auto;
+  max-width: 80%;
+  justify-self:stretch;
 }
