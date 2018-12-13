@@ -183,23 +183,25 @@ class App extends Component {
     let bornCells = 0;
     let totalLiveCells = 0;
 
-    this.state.grid.forEach(cell => {
-      grid.push({ ...cell });
-    });
+    this.state.grid.forEach((cell, index) => {
+      grid.push({
+        ...cell,
+        isAlive: false,
+        color: this.emptyColor,
+        altColor: this.emptyColor
+      });
 
-    for (let i = 0; i < this.state.totalCells; i++) {
       randomNum = Math.floor(Math.random() * Math.floor(5));
-      grid[i].isAlive = randomNum === 0 ? true : false;
-      if (grid[i].isAlive) {
-        grid[i].color = this.bornColor;
-        grid[i].altColor = this.liveColor;
+      grid[index].isAlive = randomNum === 0 ? true : false;
+
+      if (grid[index].isAlive) {
+        grid[index].color = this.bornColor;
+        grid[index].altColor = this.liveColor;
 
         bornCells++;
         totalLiveCells++;
-      } else {
-        grid[i].color = this.emptyColor;
       }
-    }
+    });
 
     this.setState({
       grid: grid,
