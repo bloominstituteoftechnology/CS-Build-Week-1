@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 
-import { Button, ButtonGroup } from "reactstrap";
+import {
+  Button,
+  ButtonGroup,
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
 import LifeCanvas from "./components/LifeCanvas";
 import "./App.css";
 import arrayClone from "./helpers";
@@ -14,9 +21,15 @@ class App extends Component {
     this.state = {
       generation: 0,
       gridFull: Array(this.rows).fill(Array(this.cols).fill(false)),
-      isPlaying: false
+      isPlaying: false,
+      dropdownOpen: false
     };
   }
+  toggle = () => {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
+  };
   selectBox = (row, col) => {
     if (this.state.isPlaying === false) {
       let gridCopy = arrayClone(this.state.gridFull);
@@ -197,10 +210,19 @@ class App extends Component {
           <Button onClick={this.pauseButton}>Pause</Button>
           <Button onClick={this.clearButton}>Clear</Button>
           <Button onClick={this.seedGame}>Seed</Button>
-          <Button onClick={this.gliderGun}>Glider Gun</Button>
-          <Button onClick={this.acorn}>Acorn</Button>
           <Button onClick={this.slowButton}>Slow</Button>
           <Button onClick={this.fastButton}>Fast</Button>
+          <ButtonDropdown
+            className="dropup"
+            isOpen={this.state.dropdownOpen}
+            toggle={this.toggle}
+          >
+            <DropdownToggle caret>Patterns</DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={this.gliderGun}>Glider Gun</DropdownItem>
+              <DropdownItem onClick={this.acorn}>Acorn</DropdownItem>
+            </DropdownMenu>
+          </ButtonDropdown>
         </ButtonGroup>
       </div>
     );
