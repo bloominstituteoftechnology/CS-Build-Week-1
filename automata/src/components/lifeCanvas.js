@@ -196,6 +196,7 @@ class Canvas extends Component {
     }
 
     pulsar = () => {
+        this.clearCanvas();
         this.setState({
             '0,10': "living",
             '0,4': "living",
@@ -261,6 +262,7 @@ class Canvas extends Component {
     }
 
     toad = () => {
+        this.clearCanvas();
         this.setState({
             '5,6': "living",
             '6,6': "living",
@@ -276,6 +278,7 @@ class Canvas extends Component {
     }
 
     beacon = () => {
+        this.clearCanvas();
         this.setState({
             '5,4': "living",
             '6,4': "living",
