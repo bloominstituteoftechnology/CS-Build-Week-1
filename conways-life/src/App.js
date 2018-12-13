@@ -110,7 +110,7 @@ class App extends Component {
     } else {
       alert("Simulation in progress – cannot seed game!");
     }
-  }
+  };
 
   playButton = () => {
     clearInterval(this.intervalId);
@@ -119,7 +119,6 @@ class App extends Component {
 
   pauseButton = () => {
     clearInterval(this.intervalId);
-
   };
 
   slowButton = () => {
@@ -162,7 +161,8 @@ class App extends Component {
         if (j > 0) if (g[i][j - 1]) count++;
         if (i < this.rows - 1) if (g[i + 1][j]) count++;
         if (i < this.rows - 1 && j > 0) if (g[i + 1][j - 1]) count++;
-        if (i < this.rows - 1 && j < this.cols - 1) if (g[i + 1][j + 1]) count++;
+        if (i < this.rows - 1 && j < this.cols - 1)
+          if (g[i + 1][j + 1]) count++;
         if (g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
         if (!g[i][j] && count === 3) g2[i][j] = true;
       }
@@ -188,7 +188,10 @@ class App extends Component {
           cols={this.cols}
           selectBox={this.selectBox}
         />
-        <h2>Generations: <span>{this.state.generation}</span></h2>
+
+        <h2>
+          Generations:<div className="innerbox">{this.state.generation}</div>
+        </h2>
         <ButtonGroup>
           <Button onClick={this.playButton}>Play</Button>
           <Button onClick={this.pauseButton}>Pause</Button>

@@ -2,9 +2,12 @@
   text-align: center;
 }
 
-span {
-  padding-left: 5px
-}
 
+.innerbox
+{
+   width:50px; 
+   max-width:50px; 
+   display: inline-block;
+}
 
 
