@@ -279,7 +279,9 @@ class Game extends React.Component {
           <div>
             <h2>About the algorithm</h2>
             <p>This implementation uses a double buffering technique with a 2d array. Cells are loaded onto a secondary matrix and states of life and death are kept track on the old matrix. Neighbors are caclulated by using a directional array to check the rectangle around squares. Then for each iteration the algorithim checks to see the number of live neighbors and implements the rules accordingly. </p>
-            <p>Conways Game of life was written in the 70s as a solution to John VonNoumen's hypothetical self replicating machine.</p>
+            <p>Conways Game of life was written in the 70s as a solution to John VonNoumen's hypothetical self replicating machine. It is of theortical interest because the game of life has the power of a universal turing machine which means any computation that can be computed algoritimically can be computed using the game of life. </p>
+            <p>Paul randall impleneted a Turing complete version which can be found <a href = "http://rendell-attic.org/gol/tm.htm">here</a></p>
+
           </div>
         </div>
       </div>
