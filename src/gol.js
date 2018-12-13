@@ -47,8 +47,20 @@ class GOL extends React.Component {
       board[2][0].currentState = "blue";
       board[2][1].currentState = "blue";
       board[2][2].currentState = "blue";
+      console.log(board[0][1].currentState);
     } else if (config === "exploder") {
-    
+      board[18][37].currentState = "blue";
+      board[19][37].currentState = "blue";
+      board[20][37].currentState = "blue";
+      board[21][37].currentState = "blue";
+      board[22][37].currentState = "blue";
+      board[18][39].currentState = "blue";
+      board[22][39].currentState = "blue";
+      board[18][41].currentState = "blue";
+      board[19][41].currentState = "blue";
+      board[20][41].currentState = "blue";
+      board[21][41].currentState = "blue";
+      board[22][41].currentState = "blue";
     } else if (config === "random") {
       for (let row = 0; row < this.rows; row++) {
         for (let col = 0; col < this.cols; col++) {
@@ -233,7 +245,7 @@ class GOL extends React.Component {
             <option value="clear">Clear</option>
             <option value="glider">Glider</option>
             <option value="exploder">Exploder</option>
-            <option value="ggun">Gospel Glider Gun</option>
+            {/* <option value="ggun">Gospel Glider Gun</option> */}
             <option value="random">Random</option>
           </select>
           <button onClick={this.step}>Step</button>
