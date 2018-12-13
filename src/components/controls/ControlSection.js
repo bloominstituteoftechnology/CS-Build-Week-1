@@ -13,7 +13,7 @@ import {
 
 class ControlSection extends Component {
   state = {
-    isModalOpen: false
+    isModalOpen: true
   }
 
   handleModal = () => {
