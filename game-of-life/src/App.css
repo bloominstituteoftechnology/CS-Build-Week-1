@@ -40,3 +40,14 @@ p{
   -ms-user-select: none; 
   user-select: none;
 }
+ul{
+  width:350px;
+  margin:0 auto;
+}
+ul li{
+  padding-bottom:10px;
+  text-align:left;
+}
+li:before {
+  padding-left: 10px;
+}

@@ -4,7 +4,6 @@ import Life from './Life.js';
 class Grid extends Component{
     constructor(){
         super();
-        this.continueAnimation=true;
         this.state={
           generation:0,
           isClickable:true
@@ -15,9 +14,6 @@ class Grid extends Component{
         this.life=new Life();
         this.life.createBlankGrid();
     } 
-    componentWillUnmount() {
-      this.continueAnimation = false;
-    }
     draw() {
         const ctx = this.refs.canvas.getContext('2d');
         for(let i = 0; i <= 375; i += 25){
@@ -66,6 +62,9 @@ class Grid extends Component{
       this.setState({generation: this.state.generation+1,isClickable:false},()=>this.fillsquares());
     }
     animate=()=>{
+      
+    }
+    stopAnimation=()=>{
 
     }
     clear=()=>{
@@ -78,6 +77,7 @@ class Grid extends Component{
             <p>Current generation: {this.state.generation}</p>
             <button onClick={()=>this.oneStep()}>Step</button>
             <button onClick={()=>this.animate()}>Start</button>
+            <button onClick={()=>this.stopAnimation()}>Stop</button>
             <button onClick={()=>this.clear()}>Clear</button>
           </div>
         );

@@ -3,7 +3,7 @@ let Life=class {
         this.grid=[];
     }
     runIteration(board){
-        const newBoard = board.map(arr=>arr.slice());
+        const newBoard = board.map(arr=>[...arr]);
          const height=board.length;
          const width=board[0].length;
          for (let i=0; i<height; i++) {
@@ -17,9 +17,8 @@ let Life=class {
                newBoard[i][j]=0;
              }
            }
-         }
-       this.grid=newBoard;
-       return this.grid;
+        }
+        this.grid=newBoard;
        };
        getNeighbors=(board,i,j)=>{
          const height=board.length;
