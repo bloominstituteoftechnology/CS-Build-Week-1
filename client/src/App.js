@@ -596,8 +596,16 @@ class App extends Component {
           <h5>Current Speed {this.state.gameSpeed}</h5>
           <p>Stop the game and then click start to notice speed change.</p>
           <div className="presetsDiv">
-
-            <input type="range" min="125" max = "2000" value={this.state.gameSpeed} className="slider" id="myRange" name = "gameSpeed" onChange={this.handleChange}/>
+            <input
+              type="range"
+              min="125"
+              max="2000"
+              value={this.state.gameSpeed}
+              className="slider"
+              id="myRange"
+              name="gameSpeed"
+              onChange={this.handleChange}
+            />
           </div>
 
           <div className="slidecontainer">
@@ -735,7 +743,24 @@ class App extends Component {
           <br />
           <br />
           <h5>About Conway's Game</h5>
-          <p>The game was devised by John Horton Conway in 1970. It is a cellular automaton where each cell is in one of finite number of states. For example the states for the cells  in this program is dead or alive.  The basics of celluar automaton is to use complex systems composed of simple units. This program is turing completre which basically is saying that  the different generations can be simulated. What this means if we start off at the same exact grid it will eventaully get to a certain state that we can predict with 100% certainity. Take the presets for example,  the first 5 do not change. However Jon changes and gets to about 110 before being unchangeable. This state can be simulated and predicted. Turing completness comes from turing machines. A turing machine can take a set of rules and determine a result from a set of variables inputed. Thus the grid if it starts off as  ABC567 and we have rules stating what each input should change to next we can predict what the input will be after  x amount of generations.</p>
+          <p>
+            The game was devised by John Horton Conway in 1970. It is a cellular
+            automaton where each cell is in one of finite number of states. For
+            example the states for the cells in this program is dead or alive.
+            The basics of celluar automaton is to use complex systems composed
+            of simple units. This program is turing completre which basically is
+            saying that the different generations can be simulated. What this
+            means if we start off at the same exact grid it will eventaully get
+            to a certain state that we can predict with 100% certainity. Take
+            the presets for example, the first 5 do not change. However Jon
+            changes and gets to about 110 before being unchangeable. This state
+            can be simulated and predicted. Turing completness comes from turing
+            machines. A turing machine can take a set of rules and determine a
+            result from a set of variables inputed. Thus the grid if it starts
+            off as ABC567 and we have rules stating what each input should
+            change to next we can predict what the input will be after x amount
+            of generations.
+          </p>
         </div>
       </div>
     );
