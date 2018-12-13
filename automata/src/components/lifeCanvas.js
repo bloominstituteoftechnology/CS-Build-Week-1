@@ -58,7 +58,7 @@ class Canvas extends Component {
     }
 
     clearCanvas = (e) => {
-        this.setState({simRun: false});
+        this.setState({simRun: false, cycleCount: 0});
         const canvas = this.refs.canvas;
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0,0,canvas.width, canvas.height);
@@ -91,20 +91,15 @@ class Canvas extends Component {
         const canvas = this.refs.canvas;
         const ctx = canvas.getContext('2d');
         const squareSize = 20
-        // ctx.canvas.width = 300;
-        // ctx.canvas.height = 300;
-        // ctx.lineWidth = .1;
-        // ctx.beginPath();
-        // ctx.strokeStyle = 'blue';
-        // ctx.strokeStyle = 'rgba(111, 111, 111, 0.8)';
         for (let item in this.state) {
             let xVal = parseInt(item.substring(0, item.indexOf(',')));
             let yVal = parseInt(item.substring(item.indexOf(',')+1));
             // console.log(`${item},${xVal+1},${yVal}`);
+            ctx.strokeRect(xVal*20, yVal*20, squareSize, squareSize);
             if (this.state[item] === "deadite") {
                 ctx.clearRect(xVal*20, yVal*20, squareSize, squareSize);
             } else if (this.state[item] === "living") {
-                ctx.strokeRect(xVal*20, yVal*20, squareSize, squareSize);
+                ctx.fillRect(xVal*20, yVal*20, squareSize, squareSize);
             }
             
         }
@@ -127,28 +122,28 @@ class Canvas extends Component {
                     let botN = `${x/20},${y/20+1}`;
                     let botRightN = `${x/20+1},${y/20+1}`;
                     if (this.state[topLeftN] === "living") {
-                        LNC++;
+                        ++LNC;
                     }
                     if (this.state[topN] === "living") {
-                        LNC++;
+                        ++LNC;
                     }
                     if (this.state[topRightN] === "living") {
-                        LNC++;
+                        ++LNC;
                     }
                     if (this.state[leftN] === "living") {
-                        LNC++;
+                        ++LNC;
                     }
                     if (this.state[rightN] === "living") {
-                        LNC++;
+                        ++LNC;
                     }
                     if (this.state[botLeftN] === "living") {
-                        LNC++;
+                        ++LNC;
                     }
                     if (this.state[botN] === "living") {
-                        LNC++;
+                        ++LNC;
                     }
                     if (this.state[botRightN] === "living") {
-                        LNC++;
+                        ++LNC;
                     }
                     if (this.state[`${x/20},${y/20}`] === "living" && (LNC != 2||3)) {
                         console.log(`Welcome to the deadites ${x/20},${y/20}`);
