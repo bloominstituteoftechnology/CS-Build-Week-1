@@ -25,6 +25,8 @@ Over the course of this week, students will work on creating their own applicati
 
 ## Trello Set Up:
 
+https://trello.com/b/zCFFRiR1/gameoflife-liz
+
 - [ ] Create a Trello account if you don't have one already
 - [ ] Create a new board called "GameOfLife - {Your Name}"
 - [ ] Create lists titled `backlog`,`To Do`, `In Progress`, and `Done`
