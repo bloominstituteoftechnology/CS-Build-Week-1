@@ -484,7 +484,12 @@ class App extends Component {
               by John Horton Conway. The game is played by creating an initial
               configuration of cells which evolves based on the rules specified.
               Advanced configurations will create patterns that will appear as
-              animations or graphics.
+              animations or graphics. Patterns can start scattered and
+              eventually settle in into "still images" or oscillating patterns.
+              The game has garnered much interest because of the many patterns
+              that have been found and their unique characteristics. Some of the
+              more popular patterns include guns and gliders, the latter of
+              which can be used to create a turing machine.
             </p>
           </div>
         </div>
