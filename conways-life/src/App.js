@@ -17,7 +17,7 @@ class App extends Component {
     super(props);
     this.speed = 1;
     this.rows = 30;
-    this.cols = 60;
+    this.cols = 50;
     this.state = {
       generation: 0,
       gridFull: Array(this.rows).fill(Array(this.cols).fill(false)),
@@ -139,7 +139,7 @@ class App extends Component {
 
   gridLarge = () => {
     this.rows = 30;
-    this.cols = 60;
+    this.cols = 50;
     this.clearButton();
   }
   
