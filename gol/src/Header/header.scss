@@ -5,12 +5,18 @@
   max-width: 1000px;
   width: 100%;
   height: 183px;
-  top: 100px;
+  top: 250px;
   left: 216px;
   background: none;
   border-radius: 0 0 10px 10px;
-  // display: none;
+  display: inline;
+  transition-property: opacity;
+  transition-duration: 5s;
   img {
+    width: 1000px;
     opacity: 0.5;
   }
+}
+.hide-container {
+  opacity: 0;
 }

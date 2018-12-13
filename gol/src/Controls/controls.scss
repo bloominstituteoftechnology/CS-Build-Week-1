@@ -9,7 +9,10 @@
   left: 316px;
   color: #cc527a;
   border-radius: 10px 10px 0 0;
-
+  opacity: 0;
+  transition-property: opacity;
+  transition-delay: 5s;
+  
   .controls-btn {
     width: 200px;
     height: 122px;
@@ -26,4 +29,7 @@
       color: #cc527a;
     }
   }
+}
+.show-container {
+  opacity: 1;
 }

@@ -16,6 +16,15 @@ class Controls extends Component {
     console.log(this.props);
   }
 
+  componentDidMount(){
+    window.setTimeout(()=>{
+      let ctrl = document.querySelector('.controls-container');
+      console.log(ctrl);
+      
+      ctrl.classList.add('show-container');
+    }, 100);
+  }
+
   toggleOnGoing = () => {
     isGoing = (isGoing === false) ? true : false;
     this.props.goBlast();
