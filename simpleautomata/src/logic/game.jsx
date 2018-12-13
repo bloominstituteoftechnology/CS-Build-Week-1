@@ -7,7 +7,7 @@ const HEIGHT = 600;
 
 class Cell extends React.Component {
   render() {
-    let randomColor = Math.floor(Math.random()*16777215).toString(16);
+    let randomColor = Math.floor(100000 + Math.random()*16777215).toString(16);
     const { x, y } = this.props;
     //offseting by x and y for left and top, everything relative to the left and top of grid
     return (
@@ -185,6 +185,7 @@ class Game extends React.Component {
   }
 
   handleClear = () => {
+    this.stopGame();
     this.board = this.makeEmptyBoard();
     this.setState({ cells: this.makeCells() });
     this.setState({ gen:0 });
