@@ -45,6 +45,7 @@ class LifeCanvas extends Component{
         this.life.grid[x_index][y_index]=1: 
         this.life.grid[x_index][y_index]=0;
         this.fillsquares();
+        console.log(x_index,y_index);
     }
     fillsquares=()=>{
         const ctx = this.refs.canvas.getContext('2d');
@@ -98,6 +99,21 @@ class LifeCanvas extends Component{
           case 'queenBee':
             this.life.createQueenBee();
             break;
+          case 'glider':
+            this.life.createGlider();
+            break;
+          case 'smallExploder':
+            this.life.createSmallExploder();
+            break;
+          case 'exploder':
+            this.life.createExploder();
+            break;
+          case '10CellRow':
+            this.life.create10CellRow();
+            break;
+          case 'lightWeightSpaceShip':
+            this.life.createLightWeightSpaceShip();
+            break;
           default:
             this.life.createBlankGrid();
         }
@@ -120,7 +136,12 @@ class LifeCanvas extends Component{
               <option value="none">None</option> 
               <option value="rPentomino">R-pentomino</option>
               <option value="queenBee">Queen Bee</option>
+              <option value="glider">Glider</option>
               <option value="random">Random</option>
+              <option value="smallExploder">Small Exploder</option>
+              <option value="exploder">Exploder</option>
+              <option value="10CellRow">10 Cell Row</option>
+              <option value ="lightWeightSpaceShip">Lightweight Spaceship</option>
             </select>
           </div>
         );

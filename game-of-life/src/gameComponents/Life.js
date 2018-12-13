@@ -79,5 +79,55 @@ const Life=class{
       this.grid[12][14]=1;
       this.grid[11][15]=1;
     }
+    createGlider(){
+      this.createBlankGrid();
+      this.grid[1][0]=1;
+      this.grid[2][1]=1;
+      this.grid[2][2]=1;
+      this.grid[1][2]=1;
+      this.grid[0][2]=1;
+    }
+    createSmallExploder(){
+      this.createBlankGrid();
+      this.grid[11][10]=1;
+      this.grid[11][11]=1;
+      this.grid[10][11]=1;
+      this.grid[12][11]=1;
+      this.grid[10][12]=1;
+      this.grid[12][12]=1;
+      this.grid[11][13]=1;
+    }
+    createExploder(){
+      this.createBlankGrid();
+      this.grid[10][9]=1;
+      this.grid[10][10]=1;
+      this.grid[10][11]=1;
+      this.grid[10][12]=1;
+      this.grid[10][13]=1;
+      this.grid[12][9]=1;
+      this.grid[12][13]=1;
+      this.grid[14][9]=1;
+      this.grid[14][10]=1;
+      this.grid[14][11]=1;
+      this.grid[14][12]=1;
+      this.grid[14][13]=1;
+    }
+    create10CellRow(){
+      this.createBlankGrid();
+      for (let i=8; i<18; i++) {
+        this.grid[i][12]=1;
+      }
+    }
+    createLightWeightSpaceShip(){
+      this.createBlankGrid();
+      this.grid[1][15]=1;
+      for (let i=2; i<6;i++) {
+        this.grid[i][14]=1;
+      }
+      this.grid[5][15]=1;
+      this.grid[5][16]=1;
+      this.grid[4][17]=1;
+      this.grid[1][17]=1;
+    }
 }
 export default Life;
