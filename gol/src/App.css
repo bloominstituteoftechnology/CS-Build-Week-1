@@ -27,12 +27,15 @@
   width: 100%;
   margin-top: 10px;
   padding: 1rem;
+  max-width: 60em;
+
 }
 .game{
   background-color: white;
   border-radius: 10px;
   padding: 1rem;
   width: 100%;
+  max-width: 60em;
 }
 ol li {
   
