@@ -5,12 +5,11 @@ import Cell from "./Cell";
 
 class LifeCanvas extends Component {
   render() {
-    const width = (this.props.cols * 16) +1;
+    const width = (this.props.cols * 14) +1;
     var rowsArr = [];
 
     var boxClass = "";
-    //use map below instead
-    //var doubledArray = array.map(nested => nested.map(element => element * 2));
+
 
     for (let i = 0; i < this.props.rows; i++) {
       for (let j = 0; j < this.props.cols; j++) {
