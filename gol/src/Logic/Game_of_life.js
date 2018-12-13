@@ -47,7 +47,7 @@ class Game_of_life {
             this.newCell(coordinates);
             console.log("New Cell")
         }
-        
+        return new Game_of_life(this.aliveOrganizms, this.generation);
     }
 
     ///////// Game rules goes here///////////
