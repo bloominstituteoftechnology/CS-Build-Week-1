@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+    box-sizing: border-box;
+}
+
+.App {
+  text-align: center;
+  margin: 3% 7% auto 7%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.aboutInfo {
+  width: 37%;
+}
+
+.aboutSection {
+  padding-top: 10%;
+  line-height: 1.5;
+}
+
+.mainContainer {
+  margin: auto;
+}
+
+.gridContainer {
+  height: 475px;
+  width: 500px;
+  margin: 50px auto 30px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cell {
+  height: 30px;
+  width: 30px;
+  background: white;
+  border: 1px solid black;
+}
+
+.controlButtons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.controlButtons button {
+  font-size: 12pt;
+}
+
+.gridOptions div {
+  margin-bottom: 30px;
+}

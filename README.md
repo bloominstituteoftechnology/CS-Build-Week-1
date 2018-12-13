@@ -119,3 +119,7 @@ Implment at least 3 of the following features:
    * Write a how-to guide or blog post that walks readers through the work you did to implement your project
    * Expand your simulation into the third dimension - [check out 3D-ThreeJS](https://github.com/LambdaSchool/3D-ThreeJS)
    * Explore alternate algorithms for finding the nth generation, such as [Hashlife](https://en.wikipedia.org/wiki/Hashlife)
+
+
+Trello Link: https://trello.com/b/MWQclHoe/gameoflife-shannon-atkinson
+Site Link: https://sca4cs.github.io/Conways-Life/
