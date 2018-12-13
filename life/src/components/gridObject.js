@@ -179,21 +179,26 @@ export default class GridObject extends Component {
     }
 
     recursiveTimeout = async () => {
-        while(recursiveCounter < 4){
-            try{
-                console.log("recursive timeout")
-                 this.buildNext().then(res => {
-                     console.log(res)
-                })
-                recursiveCounter+=1;
-                console.log(start)
-                console.log("done")
-              }
-              catch(error){
-                console.log(error)
-              }
-        }
+        // while(recursiveCounter < 4){
+        //     try{
+        //         console.log("recursive timeout")
+        //         this.buildNext().then(res => {
+        //              console.log(res)
+        //              recursiveCounter+=1;
+        //         }).catch(err => {
+        //             console.log(err)
+        //         })
+        //         console.log("done")
+        //     }
+        //     catch(error){
+        //         console.log(error)
+        //     }
+        // }
         //call recursive here?
+        if(this.state.lock){
+            this.buildNext();
+            setTimeout(this.recursiveTimeout, 1000);
+        }
     }
     
     clickHandler = (e) => {
@@ -201,11 +206,14 @@ export default class GridObject extends Component {
         switch(e.target.name){
             case "start":
                 // start = setInterval(() => this.buildNext(), 100)
+                // for(let i = 0; i<4; i++){
+                //     setTimeout(() => this.buildNext(), 1000)
+                // }
                 // start = setInterval(() => console.log("this timeer", this.state.generations+1), this.state.time)
-                this.recursiveTimeout();//broken
+                // this.recursiveTimeout();//broken
                 this.setState({
                     lock: true
-                })
+                }, () => this.recursiveTimeout())
                 break;
             case "stop":
                 clearInterval(start)
