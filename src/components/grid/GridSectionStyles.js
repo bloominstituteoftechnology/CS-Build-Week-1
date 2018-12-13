@@ -14,7 +14,8 @@ export const Row = styled.section`
   height: 38.5px;
   &:last-child {
     border-bottom: .2px solid rgba(238,130,238, .9);
-  } 
+  }
+  margin-bottom: 1.3px;
 `;
 
 export const Col = styled.article`
@@ -23,7 +24,9 @@ export const Col = styled.article`
   &:not(:last-child) {
     border-right: none;
   }
-  box-shadow: inset .1px .1px 7px .1px rgba(238,130,238, .3);
+  border-radius: 3px;
+  margin-right: .1%;
+  box-shadow: .5px .5px 10px .5px rgba(238,130,238, .3);
   height: 38.5px;
   width: 90px;
   background: rgba(29,43,100, .3); /* fallback for old browsers */
