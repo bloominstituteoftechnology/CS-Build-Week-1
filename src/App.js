@@ -330,14 +330,13 @@ class App extends Component {
     this.intervalId = null;
     let grid = [];
     this.state.grid.forEach(cell => {
-      grid.push({ ...cell });
+      grid.push({
+        ...cell,
+        isAlive: false,
+        color: this.emptyColor,
+        altColor: this.emptyColor
+      });
     });
-
-    for (let i = 0; i < this.state.totalCells; i++) {
-      grid[i].isAlive = false;
-      grid[i].color = this.emptyColor;
-      grid[i].altColor = this.emptyColor;
-    }
 
     this.setState({
       grid: grid,
