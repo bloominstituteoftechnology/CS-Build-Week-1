@@ -5,7 +5,7 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 import 'bootstrap/dist/css/bootstrap.css';
 import ReactDOM from 'react-dom';
 
-const Rules = styled.div`
+const Menu = styled.div`
     font-size: 1rem;
     font-weight: 800;
     position: absolute;
@@ -30,6 +30,11 @@ const Button = styled.button`
     border: none;
     border-radius: 0.5rem;
     outline: none;
+`;
+
+const Header = styled.h1`
+    font-size: 3rem;
+    font-weight: 800;
 `;
 
 class Cell extends React.Component{
@@ -181,7 +186,7 @@ class LifeCanvas extends React.Component{
     randomize = e => {
         e.preventDefault();
         if (this.state.random > Math.pow((this.state.height/this.state.cellSize),2)){
-            alert(`Cells to be generated is greater than the board size. Please enter a number less than ${Math.pow((this.state.height/this.state.cellSize),2)}`);
+            alert(`Cells to be generated is greater than the board size. Please enter a number less than or equal to ${Math.pow((this.state.height/this.state.cellSize),2)}`);
             return;
         }
         this.board = this.initializeBoard();
@@ -240,8 +245,8 @@ class LifeCanvas extends React.Component{
     render(){
         return(
             <div>
-                <h1>GAME OF LIFE</h1>
-                <div style={{color:"red", fontWeight:"800"}}>Generation # {this.state.generation}</div>
+                <Header>GAME OF LIFE</Header>
+                <div style={{color:"red", fontSize:"1.5rem", fontWeight:"800"}}>Generation # {this.state.generation}</div>
 
                 <div>
                     <div    
@@ -256,19 +261,31 @@ class LifeCanvas extends React.Component{
                             <Cell cellSize={this.state.cellSize} x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`}/>
                         ))}
                     </div>
-                    <Rules>
-                        <Dropdown direction="left" isOpen={this.state.dropGameRules} toggle={this.toggleGameRules}>
+                    <Menu>
+                        <Dropdown isOpen={this.state.dropGameRules} toggle={this.toggleGameRules}>
                             <DropdownToggle caret style={{background:"black", color: "red", outline:"none", fontSize:"1.2rem", fontWeight:"800"}}>Game of Life Rules</DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem>
-                                    <p>1. Any live cell with fewer than two live neighbors dies, as if caused by under population.</p>
-                                    <p>2. Any live cell with two or three live neighbors lives on to the next generation.</p>
-                                    <p>3. Any live cell with more than three live neighbors dies, as if by overpopulation.</p>
-                                    <p>4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</p>
+                            <DropdownMenu right={true} style={{padding: "0", borderRadius:"0.5rem"}}>
+                                <DropdownItem style={{background:"black", color:"red", fontSize:"1.2rem", fontWeight:"800", borderRadius:"0.5rem", width: "600px", overflowWrap:"normal"}}>
+                                    <p style={{borderRadius:"1rem", width:"100px", padding:"0.2rem"}}>
+                                        1. Any live cell with fewer than two live neighbors dies,<br /> as if caused by under population.<br />
+                                        2. Any live cell with two or three live neighbors<br /> lives on to the next generation.<br />
+                                        3. Any live cell with more than three live neighbors<br /> dies, as if by overpopulation.<br />
+                                        4. Any dead cell with exactly three live neighbors becomes<br /> a live cell, as if by reproduction.<br />
+                                    </p>
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                    </Rules>
+                    </Menu>
+                    <Menu style={{top:"400px"}}>
+                        <Dropdown isOpen={this.state.dropGridSize} toggle={this.toggleGridSize}>
+                            <DropdownToggle caret style={{background:"black", color: "red", outline:"none", fontSize:"1.2rem", fontWeight:"800"}}>Change Grid Size</DropdownToggle>
+                            <DropdownMenu style={{padding: "0", borderRadius:"1rem", width:"200px"}}>
+                                <DropdownItem onClick={this.handleBoardSize} style={{background:"black", color:"red", height: "50px", fontSize:"1.2rem", fontWeight:"800"}} name='small'>Small (15x15)</DropdownItem>
+                                <DropdownItem onClick={this.handleBoardSize} style={{background:"black", color:"red", height: "50px", fontSize:"1.2rem", fontWeight:"800"}} name='medium'>Medium (22x22)</DropdownItem>
+                                <DropdownItem onClick={this.handleBoardSize} style={{background:"black", color:"red", height: "50px", fontSize:"1.2rem", fontWeight:"800"}} name='large'>Large (30x30)</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </Menu>
                 </div>
      
                 <div className="controls">
@@ -281,19 +298,30 @@ class LifeCanvas extends React.Component{
                         <Button onClick={this.clearBoard}>Clear</Button> 
                     </div>
                     <div>
-                        <span># of Random Cells <Input onChange={this.handleChange} name='random' value={this.state.random} /></span>
+                        <p style={{fontSize: "1.2rem"}}># of Random Cells <Input onChange={this.handleChange} name='random' value={this.state.random} /></p>
                         <Button onClick={this.randomize}>Generate</Button>
                     </div>
-                    <Dropdown direction="up" isOpen={this.state.dropGridSize} toggle={this.toggleGridSize}>
-                        <DropdownToggle caret style={{background:"black", color: "red", outline:"none", fontSize:"1.2rem", fontWeight:"800"}}>Change Grid Size</DropdownToggle>
-                        <DropdownMenu>
-                            <DropdownItem onClick={this.handleBoardSize} style={{background: "black", color: "red", fontWeight: "700"}} name='small'>Small (15x15)</DropdownItem>
-                            <DropdownItem onClick={this.handleBoardSize} style={{background: "black", color: "red", fontWeight: "700"}} name='medium'>Medium (22x22)</DropdownItem>
-                            <DropdownItem onClick={this.handleBoardSize} style={{background: "black", color: "red", fontWeight: "700"}} name='large'>Large (30x30)</DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
                 </div>
 
+                <div style={{maxWidth: "800px", margin:"0 auto"}}>
+                    <h1>About This Algorithm</h1>
+                    <p style={{fontWeight: "700"}}>The game is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. One interacts with the Game of Life by creating an initial configuration and observing how it evolves, or, for advanced players, by creating patterns with particular properties.</p>
+                    <p>Each round of the simulation examines the current state of the grid, and then
+                        produces an entirely new grid consisting of the old state. (Remember the
+                        discussion about double buffers earlier--we don't want to modify the same grid
+                        we're examining, lest we munge future results.)
+
+                        This new grid becomes the "current" state of the simulation, and the process
+                        repeats. Each new grid is referred to as a _generation_.
+
+                        The beautiful thing about cellular automata is that sometimes very complex
+                        behavior can emerge from very simple rules.
+
+                        Practically speaking, CAs have been used in biological and chemical simulations
+                        and other areas of research, such as CA-based computer processors, and other
+                        numeric techniques.
+                    </p>
+                </div>
             </div>
         )
     }
