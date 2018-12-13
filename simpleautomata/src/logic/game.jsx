@@ -186,6 +186,7 @@ class Game extends React.Component {
   }
 
   handleGlider = () => {
+    this.handleClear();
     //set the right indices in the 2d array:
     this.board[1][1] = 1;
     this.board[1][3] = 1;
@@ -199,6 +200,7 @@ class Game extends React.Component {
   }
 
   handleBlinker = () => {
+    this.handleClear();
     //set the right indices in the 2d array:
     this.board[14][18] = 1;
     this.board[14][19] = 1;
@@ -208,6 +210,7 @@ class Game extends React.Component {
   }
 
   handleEater = () => {
+    this.handleClear();
     //set the right indices in the 2d array:
     this.board[12][16] = 1;
     this.board[12][17] = 1;
