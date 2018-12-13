@@ -55,6 +55,7 @@ class Canvas extends Component {
     }
 
     clearCanvas = (e) => {
+        this.pauseGame();
         this.setState({simRun: false, cycleCount: 0});
         const canvas = this.refs.canvas;
         const ctx = canvas.getContext('2d');
@@ -149,7 +150,30 @@ class Canvas extends Component {
             cycleCountTemp++;
             this.setState({...stateBuffer, cycleCount: cycleCountTemp});
             this.updateCanvas();
+            
         }
+    }
+
+    pauseGame = () => {
+        this.setState({simRun: false});
+        if (this.handleTimer) {
+            window.clearTimeout(this.handleTimer);
+            this.handleTimer = null;
+        }
+    }
+
+    runSimulation = () => {
+        this.setState({ simRun: true});
+        this.gameCycle();
+        this.handleTimer = window.setTimeout(() => {
+            this.runSimulation();
+        }, 777);
+    }
+
+    stepOnce = () => {
+        this.setState({simRun: true});
+        this.gameCycle();
+        // this.setState({simRun: false});
     }
 
     componentDidMount() {
@@ -167,9 +191,10 @@ class Canvas extends Component {
                 />
                 <p>Generation: {this.state.cycleCount}</p>
                 <div className='controls' >
-                    <button onClick={this.simulationToggle}>Start / Stop simulation</button>
+                    <button onClick={this.runSimulation}>Start Simulation</button>
+                    <button onClick={this.pauseGame}>Stop </button>
                     <button onClick={this.clearCanvas}>Clear Board</button>
-                    <button onClick={this.gameCycle}>Step</button>
+                    <button onClick={this.stepOnce}>Step</button>
                 </div>
             </div>
         )
