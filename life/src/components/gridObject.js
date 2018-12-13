@@ -195,10 +195,19 @@ export default class GridObject extends Component {
         //     }
         // }
         //call recursive here?
-        if(this.state.lock){
-            this.buildNext();
-            setTimeout(this.recursiveTimeout, 1000);
-        }
+
+        //option 1 
+        // if(this.state.lock){
+        //     this.buildNext();
+        //     setTimeout(this.recursiveTimeout, 1000);
+        // }
+
+        //option 2 
+        this.buildNext();
+        const someID = requestAnimationFrame(this.recursiveTimeout);
+        this.setState({
+            anime: someID
+        })
     }
     
     clickHandler = (e) => {
@@ -211,11 +220,25 @@ export default class GridObject extends Component {
                 // }
                 // start = setInterval(() => console.log("this timeer", this.state.generations+1), this.state.time)
                 // this.recursiveTimeout();//broken
+                
+                //option 1
+                // this.setState({
+                //     lock: true
+                // }, () => this.recursiveTimeout())
+
+                //option2
+                let animationStartTime = performance.now();
                 this.setState({
-                    lock: true
+                    lock: true,
+                    animeTime: animationStartTime
                 }, () => this.recursiveTimeout())
+
                 break;
             case "stop":
+                //option 2
+                cancelAnimationFrame(this.state.anime); 
+                
+                //option 1
                 clearInterval(start)
                 this.setState({
                     lock: false
