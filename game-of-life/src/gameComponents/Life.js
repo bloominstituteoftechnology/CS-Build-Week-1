@@ -8,7 +8,7 @@ let Life=class {
          const width=board[0].length;
          for (let i=0; i<height; i++) {
            for (let j=0; j<width; j++) {
-             let neighbors=this.getNeighbors(board,i,j);
+             const neighbors=this.getNeighbors(board,i,j);
              if (neighbors===3 && !board[i][j]) {
                newBoard[i][j]=1;
              } else if ((neighbors===2 || neighbors===3) && board[i][j]) {
@@ -41,7 +41,7 @@ let Life=class {
          }
          return count;
        }
-    createGrid(){
+    createBlankGrid(){
         this.grid=[];
             for (let i=0; i<15; i++) {
                 this.grid[i]=[];
@@ -49,7 +49,6 @@ let Life=class {
                     this.grid[i].push(0);
                 }
             }
-        return this.grid;
         }
 }
 export default Life;
