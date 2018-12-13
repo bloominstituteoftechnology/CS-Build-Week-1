@@ -5,11 +5,6 @@ import { cellInitAlgo, cellPresetAlgo, CellAlgo, clearCellsAlgo } from './CellAl
 
 import { Main, MainHeader } from './AppStyles';
 
-// grid section - dark bg and dead cells, neon dark cell borders for all cells
-// neon bright alive cells
-// 4:3 aspect ratio cells desktop, and more tower-like for mobile
-
-// bottom section - controls, dark colors
 
 let interval;
 

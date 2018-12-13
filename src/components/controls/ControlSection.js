@@ -1,9 +1,19 @@
 import React, { Component } from 'react'
 import { Controls, OptionsSection, PresetSection, RangeSlider, GenerationSection } from './ControlSectionStyles';
+import Modal from '../modal/Modal';
 
 
 class ControlSection extends Component {
+  state = {
+    isModalOpen: false
+  }
 
+  handleModal = () => {
+    this.setState(prevState => {
+      return {isModalOpen: !prevState.isModalOpen}
+    });
+  }
+  
   render() {
     return (
       <Controls>
@@ -13,6 +23,7 @@ class ControlSection extends Component {
           <button onClick={this.props.canClick? this.props.stepGeneration: null}>Step</button>
           <button onClick={this.props.endGame}>Stop</button>
           <button onClick={this.props.canClick? this.props.clearCells: null}>Clear Grid</button>
+          <button onClick={this.handleModal}>Rules</button>
         </section>
 
         <OptionsSection>
@@ -38,7 +49,7 @@ class ControlSection extends Component {
               value={this.props.gridSizeValue}
               onChange={this.props.canClick? this.props.handleGridSizeChange : null}
               min="16"
-              max="50"
+              max="35"
             />
             <span className="range-slider__value">{this.props.gridSizeValue}</span>
           </RangeSlider>
@@ -48,6 +59,12 @@ class ControlSection extends Component {
           <p><strong>Generation: {this.props.generation}</strong></p>
         </GenerationSection>
 
+        {this.state.isModalOpen ? (
+          <Modal 
+            handleModal={this.handleModal}
+            isModalOpen={this.state.isModalOpen}
+          />
+        ) : null}
       </Controls>
     )
   }
