@@ -270,6 +270,7 @@ const GridDiv = styled.div`
         flex-direction: row;
         justify-items: center;
         align-content: center;
+        margin: 5px 0;
         button{
             width: 100%;
         }

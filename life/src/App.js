@@ -25,10 +25,12 @@ class App extends Component {
         <h1>Conways "Game of Life"</h1>
         <div className="main">
           <GridObject color={this.state.color} />
-          <SketchPicker 
-            style={{margin: "10px"}}
-            color={this.state.color}
-            onChangeComplete={ this.selectColor}/>
+          <div className="color"> 
+            <SketchPicker 
+              style={{margin: "10px"}}
+              color={this.state.color}
+              onChangeComplete={ this.selectColor}/>
+          </div>
         </div>
         <div className="rules">
             <h4>Rules</h4>
@@ -48,7 +50,7 @@ class App extends Component {
 export default App;
 
 const AppDiv = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   /* height: 100vh; */
   box-sizing: border-box;
   flex-direction: column;
@@ -56,15 +58,19 @@ const AppDiv = styled.div`
   justify-content: flex-start;
   align-items: center;
   .main{
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     width: 80%;
     padding: 15px;
+    .color{
+      display: flex;
+      align-items: center;
+    }
   }
   .rules{
-    border: 1px solid green;
+    /* border: 1px solid green; */
     width: 80%;
     padding: 15px;
   }
