@@ -50,6 +50,7 @@ const ControlSelect = styled.select`
 `;
 
 const LEFT = [20, 40, 60, 80, 100, 120, 140, 180, 200, 220, 240, 260, 280, 300, 320, 340, 360];
+const RIGHT = [19, 39, 59, 79, 99, 119, 139, 159, 179, 199, 219, 239, 259, 279, 299, 319, 339, 359, 379]
 
 class Canvas extends React.Component {
   state = {
@@ -127,9 +128,9 @@ class Canvas extends React.Component {
   EDGE CASES:
   
   TOP 1 - 18
-  BOTTOM 381 -399
+  BOTTOM 381 -398
   LEFT  0, 20, 40, 60, 80, 100, 120, 140, 180, 200, 220, 240, 260, 280, 300, 320, 340, 360, 380
-  RIGHT 19, 38, 57, 76, 95, 114, 133, 152, 171, 190, 209, 228, 247, 266, 285, 304, 323, 342, 361, 380
+  RIGHT = [19, 39, 59, 79, 99, 119, 139, 159, 179, 199, 219, 239, 259, 279, 299, 319, 339, 359, 379]
   
   ALL CASES (Other than edge cases)
   [i - 21]        | [i - 20        |  [i - 19]
@@ -170,9 +171,7 @@ class Canvas extends React.Component {
           if (currentNodes[i + 21].isLiving) {
             check++;
           }
-        }
-        // top edge case
-        if (i >= 1 && i <= 18) {
+        } else if (i >= 1 && i <= 18) {
           if (currentNodes[i - 1].isLiving) {
             check++;
           }
@@ -188,11 +187,10 @@ class Canvas extends React.Component {
           if (currentNodes[i + 21].isLiving) {
             check++;
           }
-        }
-        // left edge case
-        if (LEFT.includes(i)) {
+        } else if (LEFT.includes(i)) {
           if (currentNodes[i - 20 ].isLiving) {
             check++;
+            console.log("LEFT i is:", i)
           }
           if (currentNodes[i - 19].isLiving) {
             check++;
@@ -209,14 +207,43 @@ class Canvas extends React.Component {
             check++;
             console.log(check);
           }
-        }
-        // TODO
-        // right edge case
-        // bottom edge case
-        // add other numbers case
-
-        // edge case
-        if (i === 380) {
+        } else if (RIGHT.includes(i)) {
+          if (currentNodes[i + 20 ].isLiving) {
+            check++;
+            console.log("RIGHT i is:", i)
+          }
+          if (currentNodes[i + 19].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 1].isLiving) {
+            check++;
+            console.log(check);
+          }
+          if (currentNodes[i - 20].isLiving) {
+            check++;
+            console.log(check);
+          }
+          if (currentNodes[i - 21].isLiving) {
+            check++;
+            console.log(check);
+          }
+        } else if (i >= 381 && i <= 398) {
+          if (currentNodes[i - 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 19].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 21].isLiving) {
+            check++;
+          }
+        } else  if (i === 380) {
           if (currentNodes[i + 1].isLiving) {
             check++;
           }
@@ -225,10 +252,9 @@ class Canvas extends React.Component {
           }
           if (currentNodes[i - 21].isLiving) {
             check++;
-          }
-        }
-        // edge case
-        if (i === 399) {
+          }  
+
+        } else  if (i === 399) {
           if (currentNodes[i - 1].isLiving) {
             check++;
           }
@@ -236,6 +262,31 @@ class Canvas extends React.Component {
             check++;
           }
           if (currentNodes[i - 21].isLiving) {
+            check++;
+          }
+        } else {
+          if (currentNodes[i - 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 1].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 19].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i - 21].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 19].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 20].isLiving) {
+            check++;
+          }
+          if (currentNodes[i + 21].isLiving) {
             check++;
           }
         }
