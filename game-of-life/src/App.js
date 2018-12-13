@@ -21,6 +21,26 @@ class App extends Component {
     }
   }
 
+  generateRandom = () => {
+    console.log("this is random");
+    let gridCopy = arrayClone(this.state.gridFull);
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.cols; j++) {
+        if (Math.floor(Math.random() * 5) === 1) {
+          console.log("Working inside loop");
+          gridCopy[i][j] = true;
+        }
+      }
+    }
+    this.setState({
+      gridFull: gridCopy
+    });
+  }
+
+  // componentDidMount() {
+  //   this.generateRandom();
+  // }
+
   selectBox = (row, col) => {
     let gridCopy = arrayClone(this.state.gridFull);
     gridCopy[row][col] = !gridCopy[row][col];
@@ -40,7 +60,9 @@ class App extends Component {
           gridFull={this.state.gridFull} 
           selectBox={this.selectBox}
         />
-        <Menu/>
+        <Menu
+          generateRandom={this.generateRandom}
+        />
       </div>
     );
   }
