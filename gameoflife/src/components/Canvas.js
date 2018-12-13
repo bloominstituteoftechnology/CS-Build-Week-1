@@ -53,7 +53,7 @@ export default class Canvas extends Component {
 
   mouseDown = e => {
     e.preventDefault();
-    this.setState({ x: e.screenX, y: e.screenY });
+    this.setState({ x: e.clientX, y: e.clientY });
     setTimeout(() => {
       this.cellChange();
     }, 50);
@@ -64,7 +64,7 @@ export default class Canvas extends Component {
       return null;
     }
     let x = this.state.x;
-    let y = this.state.y - 100;
+    let y = this.state.y;
 
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
