@@ -46,7 +46,6 @@ const Life=class{
                     this.grid[i].push(0);
                 }
             }
-            console.log(this.grid);
         }
     createRandomizedGrid(){
       this.grid=[];

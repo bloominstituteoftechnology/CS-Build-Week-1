@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   margin-top:30px;
-  width:390px;
+  width:375px;
   margin:0 auto;
 }
 
@@ -47,8 +47,11 @@ li,h2,h1,p{
   justify-content:space-evenly;
   flex-wrap:wrap;
 }
+li,h2,h1,p{
+  color:#414a4c;
+}
 .btn{
-  margin-bottom:20px;
+  margin-bottom:30px;
 }
 .button-container,.lifeinfo{
   margin:0 auto;

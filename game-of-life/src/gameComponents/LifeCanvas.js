@@ -18,6 +18,7 @@ class LifeCanvas extends Component{
     } 
     draw() {
         const ctx = this.refs.canvas.getContext('2d');
+        ctx.strokeStyle='#414a4c';
         for(let i = 0; i <=375; i += 15){
             for(let j = 0; j <=375; j+= 15){
               ctx.moveTo(i,0);
@@ -47,6 +48,7 @@ class LifeCanvas extends Component{
     }
     fillsquares=()=>{
         const ctx = this.refs.canvas.getContext('2d');
+        ctx.fillStyle='#414a4c';
         for (let i=0; i<this.life.grid.length;i++) {
           for (let j=0; j<this.life.grid.length; j++) {
             if (this.life.grid[i][j]) {
@@ -59,8 +61,10 @@ class LifeCanvas extends Component{
         this.draw();
     }
     oneStep=()=>{
-      this.life.runIteration(this.life.grid);
-      this.setState({generation: this.state.generation+1},()=>{this.isClickable=false; this.fillsquares()});
+      if (!this.myreq && !this.start) {
+        this.life.runIteration(this.life.grid);
+        this.setState({generation: this.state.generation+1},()=>{this.isClickable=false; this.fillsquares()});
+      }
     }
     animate=(timestamp)=>{
       this.myreq=requestAnimationFrame(this.animate);
@@ -69,8 +73,8 @@ class LifeCanvas extends Component{
       }
       const elapsed=timestamp-this.start;
       if (elapsed>=300) {
-        this.oneStep();
-        this.start=timestamp;
+        this.life.runIteration(this.life.grid);
+        this.setState({generation: this.state.generation+1},()=>{this.start=timestamp; this.isClickable=false; this.fillsquares()});
       }
     }
     stopAnimation=()=>{
@@ -82,9 +86,22 @@ class LifeCanvas extends Component{
       this.stopAnimation();
       this.setState({generation:0},()=>{this.isClickable=true; this.life.createBlankGrid(); this.fillsquares();});
     }
-    randomize=()=>{
+    selectHandler=(e)=>{
       if (!this.start && !this.myreq) {
-        this.setState({generation:0},()=>{this.life.createRandomizedGrid();this.fillsquares();});
+        switch(e.target.value) {
+          case 'random':
+            this.life.createRandomizedGrid();
+            break;
+          case 'rPentomino':
+            this.life.createRPentomino();
+            break;
+          case 'queenBee':
+            this.life.createQueenBee();
+            break;
+          default:
+            this.life.createBlankGrid();
+        }
+        this.setState({generation:0},()=>this.fillsquares());
       }
     }
     render(){
@@ -97,8 +114,13 @@ class LifeCanvas extends Component{
               <button className='btn waves-effect waves-light' onClick={()=>{this.myreq=requestAnimationFrame(this.animate)}}>Start</button>
               <button className='btn waves-effect waves-light' onClick={()=>this.stopAnimation()}>Stop</button>
               <button className='btn waves-effect waves-light' onClick={()=>this.clear()}>Clear</button>
-              <button className='btn waves-effect waves-light' onClick={()=>this.randomize()}>Random</button>
             </div>
+            <select className='browser-default' onChange={this.selectHandler} defaultValue='none'>
+              <option value="none">None</option> 
+              <option value="rPentomino">R-pentomino</option>
+              <option value="queenBee">Queen Bee</option>
+              <option value="random">Random</option>
+            </select>
           </div>
         );
     }
