@@ -4,7 +4,7 @@ class Canvas extends Component {
     state = {
         simRun: true,
         cycleCount: 0,
-        runSpeed: 1000,
+        runSpeed: 800,
     }
 
     gridState = () => {
@@ -173,7 +173,10 @@ class Canvas extends Component {
 
     stepOnce = () => {
         this.setState({simRun: true});
-        this.gameCycle();
+        this.timer = window.setTimeout(() => {
+            this.gameCycle();
+        }, 200);
+        
         // this.setState({simRun: false});
     }
 
@@ -184,12 +187,12 @@ class Canvas extends Component {
 
     slow = () => {
         // console.log('test');
-        this.setState({runSpeed: 1200});
+        this.setState({runSpeed: 1100});
     }
 
     fast = () => {
         // console.log('test');
-        this.setState({runSpeed: 400});
+        this.setState({runSpeed: 300});
     }
 
     pulsar = () => {
@@ -254,8 +257,37 @@ class Canvas extends Component {
         this.updateCanvas();
         this.timer = window.setTimeout(() => {
             this.updateCanvas();
-        }, this.state.runSpeed);
-        
+        }, 500);        
+    }
+
+    toad = () => {
+        this.setState({
+            '5,6': "living",
+            '6,6': "living",
+            '7,6': "living",
+            '6,5': "living",
+            '7,5': "living",
+            '8,5': "living",
+        })
+        this.updateCanvas();
+        this.timer = window.setTimeout(() => {
+            this.updateCanvas();
+        })
+    }
+
+    beacon = () => {
+        this.setState({
+            '5,4': "living",
+            '6,4': "living",
+            '5,5': "living",
+            '8,6': "living",
+            '7,7': "living",
+            '8,7': "living",
+        })
+        this.updateCanvas();
+        this.timer = window.setTimeout(() => {
+            this.updateCanvas();
+        })
     }
 
     render() {
@@ -272,7 +304,13 @@ class Canvas extends Component {
                     <button onClick={this.pauseGame}>Stop </button>
                     <button onClick={this.clearCanvas}>Clear Board</button>
                     <button onClick={this.stepOnce}>Step</button>
+
+                </div>
+                <p>Sample Configurations</p>
+                <div>
                     <button onClick={this.pulsar}>Pulsar</button>
+                    <button onClick={this.toad}>Toad</button>
+                    <button onClick={this.beacon}>Beacon</button>
                 </div>
                 <div>
                     <input type="radio" id="slow" name="speed" value="slow" onClick={this.slow} />
