@@ -12,6 +12,23 @@ class GameBoard extends React.Component{
       }
   }
 
+  nextStep = () => {
+    const canvas = this.refs.canvas;
+    const context = canvas.getContext('2d');
+    const squareSize = 20
+    for (let item in this.state) {
+        let x = parseInt(item.substring(0, item.indexOf(',')));
+        let y = parseInt(item.substring(item.indexOf(',')+1));
+        context.strokeRect(x*20, y*20, squareSize, squareSize);
+        if (this.state[item] === "dead") {
+            context.clearRect(x*20, y*20, squareSize, squareSize);
+        } else if (this.state[item] === "alive") {
+            context.fillRect(x*20, y*20, squareSize, squareSize);
+        }
+        
+    }
+}
+
   drawCanvas = () => {
       this.gridState();
       let canvas = this.refs.canvas.getContext('2d');
@@ -82,6 +99,7 @@ class GameBoard extends React.Component{
       let gameCount = this.state.count;
       gameCount++;
       this.setState({...gameState, count: gameCount});
+      this.nextStep();
              }
          } 
 
@@ -152,6 +170,7 @@ playToggle = (e) => {
               width={this.state.width} 
               /> 
               <div className = 'buttons'>
+              <button onClick = {this.simulateGame}>Start</button>
               <button onClick = {this.playToggle}>Play/Pause</button>
               <button onClick={this.clearGrid}>Clear</button>
               <button >Randomize</button>
