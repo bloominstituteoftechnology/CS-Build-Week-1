@@ -167,15 +167,16 @@ class App extends Component {
       grid: grid,
       currGen: 1,
       bornCells: bornCells,
-      totalLiveCells: totalLiveCells
+      totalLiveCells: totalLiveCells,
+      deadCells: 0
     });
   };
 
   calculateNextGen = () => {
     let grid = [];
-    let bornCells = 0;
-    let deadCells = 0;
-    let totalLiveCells = 0;
+    let bornCells = this.state.bornCells;
+    let deadCells = this.state.deadCells;
+    let totalLiveCells = this.state.totalLiveCells;
 
     this.state.grid.forEach(cell => {
       grid.push({ ...cell });
@@ -196,20 +197,31 @@ class App extends Component {
         this.state.grid[i].isAlive &&
         (activeNeighbors !== 2 && activeNeighbors !== 3)
       ) {
+        if (this.state.grid[i].color === this.bornColor) {
+          bornCells--;
+        }
+
+        totalLiveCells--;
+        deadCells++;
+
         grid[i].isAlive = false;
         grid[i].color = this.deadColor;
-        deadCells++;
       }
-      // Living cell
+      // set to living cell
       else if (
         this.state.grid[i].isAlive &&
         (activeNeighbors === 2 || activeNeighbors === 3)
       ) {
+        if (this.state.grid[i].color === this.bornColor) {
+          bornCells--;
+        }
         grid[i].color = this.liveColor;
-        bornCells--;
       }
       // Newly born cell
       else if (!this.state.grid[i].isAlive && activeNeighbors === 3) {
+        if (this.state.grid[i].color === this.deadColor) {
+          deadCells--;
+        }
         grid[i].isAlive = true;
         grid[i].color = this.bornColor;
         bornCells++;
@@ -279,7 +291,10 @@ class App extends Component {
     this.setState({
       grid: grid,
       currGen: 0,
-      isClickable: true
+      isClickable: true,
+      totalLiveCells: 0,
+      bornCells: 0,
+      deadCells: 0
     });
   };
 
@@ -386,7 +401,14 @@ class App extends Component {
               <div className="legend-box box-green" />{' '}
               <span>Newly Born Cell</span>
               <div className="legend-box box-yellow" /> <span>Living Cell</span>
-              <div className="legend-box box-black" /> <span>Dead Cell</span>
+              <div className="legend-box box-black" />{' '}
+              <span>Newly Dead Cell</span>
+            </div>
+            <div className="game-stats">
+              <h3>Generation #{this.state.currGen} Stats</h3>
+              <p>Total Live Cells: {this.state.totalLiveCells}</p>
+              <p>Born Cells: {this.state.bornCells}</p>
+              <p>Dead Cells: {this.state.deadCells}</p>
             </div>
           </div>
           <div className="about-game">
