@@ -49,6 +49,8 @@ const ControlSelect = styled.select`
   appearance: none;
 `;
 
+let interval;
+
 const LEFT = [
   20,
   40,
@@ -90,12 +92,12 @@ const RIGHT = [
   379
 ];
 
+
 class Canvas extends React.Component {
   state = {
     cells: 400,
     currentNodes: [],
     isClickable: true,
-    isPlaying: false,
     generation: 0,
     paused: false,
     preset: "none",
@@ -140,20 +142,24 @@ class Canvas extends React.Component {
 
   // Start game 
   handleStartGame = () => {
+    this.setState({isClickable: false});
+    interval = setInterval(() => {
+      this.playGame();
+    }, 1000);
+  };
+  // Todo
+  handlePauseGame = () => {};
+
+  // generationCounter method is set within handleStartGame
+  handleResetGame = () => {
     this.setState({
-      isClickable: false,
-      isPlaying: true,
-      generation: this.state.generation,
-      paused: false
+      currentNodes: this.state.currentNodes.map(cell =>
+        cell.isLiving ? !cell.isLiving : cell
+      ),
+      isClickable: true,
+      generation: 0
     });
-    this.generationCounter = setInterval(
-      () =>
-        this.setState({
-          generation: this.state.generation + 1
-        }),
-      1000
-    );
-    this.playGame();
+    clearInterval(interval);
   };
 
   
@@ -451,22 +457,6 @@ class Canvas extends React.Component {
     this.setState(prevState => {
       return { currentNodes: nextNodes, generation: prevState.generation + 1 };
     });
-  };
-
-  // Todo
-  handlePauseGame = () => {};
-
-  // generationCounter method is set within handleStartGame
-  handleResetGame = () => {
-    this.setState({
-      currentNodes: this.state.currentNodes.map(cell =>
-        cell.isLiving ? !cell.isLiving : cell
-      ),
-      isClickable: true,
-      isPlaying: false,
-      generation: 0
-    });
-    clearInterval(this.generationCounter);
   };
 
   render() {
