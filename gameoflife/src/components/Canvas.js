@@ -105,28 +105,16 @@ export default class Canvas extends Component {
 
   onClickStart = () => {
     this.setState({ start: 1 });
-<<<<<<< HEAD
-    this.timer();
-  }
-
-  timer = () => {
-    let timer = setInterval( () => {
-      if(this.state.start === 0) {
-        return clearInterval(timer); 
-      } else if(this.state.start === 1) {
-          this.startFunction(this.state.start);
-          }
-      }, this.state.speed);
-  }
-  
-=======
     let speed = this.state.speed;
 
-    setInterval(() => {
-      this.startFunction();
+    let timer = setInterval(() => {
+        if(this.state.start === 0) {
+            clearInterval(timer)
+        } else if(this.state.start === 1) {
+            this.startFunction();
+        }
     }, speed);
   };
->>>>>>> 05c3d4c... fixed speed
 
   onClickStop = () => {
     this.setState({ start: 0 });
@@ -482,7 +470,6 @@ export default class Canvas extends Component {
               <div className="speedtext-body">
                   Speed (ms): {this.state.speed}
               </div>
-
           </div>
         </div>
         <div>
@@ -492,19 +479,36 @@ export default class Canvas extends Component {
               onClickClear={this.onClickClear}
             />
         </div>
-        <div className="about">
-            <h2>About this Algorithm</h2>
-            <p>A bunch of stuff about the game of life. A bunch of stuff about the game of life. A bunch of stuff about the game of life. A bunch of stuff about the game of life. A bunch of stuff about the game of life. </p>
-            <p>To save a preset, color the cells you want and click preset, which will assign to the next free preset slot. If no presets are free, your preset will not be saved.</p>
+        <div className="howto">
+            <h2>Instructions:</h2>
+            <p>Begin by clicking on cells to indicate if they are alive or dead. You may also click on the Random button to generate a random pattern. The system defaults to one generation per second. You may change this by entering a new speed in milleseconds.</p>
+            <p>Start: Begins the lifecycle.</p>
+            <p>Stop: Pauses the lifecycle. You will need to stop if you want to change the speed.</p>
+            <p>Clear: Kills all generations and sets the speed back to 1 second.</p>
+            <p>Presets: Clicking "Save Preset" will load the current pattern into the next available preset. If all presets are full, then the pattern will not save.</p>
+            <p>Clear Preset: You may clear space in any individaul preset.</p>
         </div>
         <div>
             <h2>Rules:</h2>
-            <li>Any live cell with fewer than two live neighbors dies, as if by underpopulation.</li>
-            <li>Any live cell with two or three live neighbors lives on to the next generation.</li>
-            <li>Any live cell with more than three live neighbors dies, as if by overpopulation.</li>
-            <li>Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</li>
+            <li>Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.</li>
+            <li>Any live cell with two or three live neighbours lives on to the next generation.</li>
+            <li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
+            <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
+        </div>
+        <div className="about">
+            <h2>About this Algorithm:</h2>
+            <p>First created in 1970 by the British mathematician, John Horton Conway, 
+                "Conway's Game of Life" provides a platform for studying and better understanding 
+                the cellular atomaton model. The system has been widely studied throughout the years, 
+                and patterns continue to be discovered. Most notably, in 2010, Andrew J. Wade built a self-replicating 
+                structure, named Gemini, that replicates a child, which then consumes the parent. </p>
+            <p>It is also important to note that Conway's Game of Life provides a system that is Turing complete in that
+                the world of structures that exist within it can be used to create computational structures that function
+                like a computer. More can be found 
+             <a target="_blank" href='https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life'> here.</a>
+             </p>
         </div>
       </div>
     );
-  }
+    }
 }
