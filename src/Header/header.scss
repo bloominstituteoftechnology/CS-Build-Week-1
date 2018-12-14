@@ -10,8 +10,8 @@
   background: none;
   border-radius: 0 0 10px 10px;
   display: flex;
-  top: 35%;
-  left: 52%;
+  top: 44%;
+  left: 54%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
   transition-property: opacity;
@@ -27,7 +27,7 @@
 }
 
 .header-container-small {
-  opacity: 0.5;
+  opacity: 1;
   display: flex;
   flex-flow: row;
   justify-content: flex-end;
@@ -42,6 +42,6 @@
   transition-duration: 5s;
   img {
     width: 200px;
-    opacity: 0.9;
+    opacity: 0.6;
   }
 }
