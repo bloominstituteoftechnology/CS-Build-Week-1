@@ -17,11 +17,8 @@
   opacity: 0;
   transition-property: opacity;
   transition-delay: 7s;
-  /* bring your own prefixes */
   transform: translate(-50%, -50%);
-  // animation-name: grow;
-  // animation-duration: 1s;
-  // animation-delay: 7.3s;
+  
   &:nth-child(3) {
     text-indent: 30px;
   }

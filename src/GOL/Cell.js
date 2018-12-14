@@ -6,6 +6,9 @@ matte pink: #cc527a
 brite pink: #e8175d
 med gray: #474747
 dark gray: #363636
+burgundy: #96153e
+lite burgundy: #a02e50
+dark matte pink: #b74366, a83c5e
  */
 
 class Cell {
@@ -19,7 +22,7 @@ class Cell {
     this.height = 20;
     this.p = p;
     this.activeFill = "#e8175d";
-    this.inactiveFill = "#d11554";
+    this.inactiveFill = "#a83c5e";
     this.generation = 0;
     this.centaFill = "#F1FFC0";
     this.hoverFill = "#363636";
