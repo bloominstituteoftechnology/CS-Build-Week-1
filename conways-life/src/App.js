@@ -18,7 +18,7 @@ import arrayClone from "./helpers";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.speed = 1;
+    this.speed = 100;
     this.rows = 30;
     this.cols = 50;
     this.state = {
@@ -158,8 +158,8 @@ class App extends Component {
   };
 
   gridLarge = () => {
-    this.rows = 30;
-    this.cols = 50;
+    this.rows = 100;
+    this.cols = 80;
     this.clearButton();
   };
 
@@ -176,7 +176,7 @@ class App extends Component {
   };
 
   slowButton = () => {
-    this.speed = 800;
+    this.speed = 500;
     this.playButton();
   };
 
@@ -254,7 +254,7 @@ class App extends Component {
           <Button onClick={this.slowButton}>Slow</Button>
           <Button onClick={this.fastButton}>Fast</Button>
           <ButtonDropdown
-            className="dropup"
+            // className="dropup"
             isOpen={this.state.dropdownOpen}
             toggle={this.toggle}
           >
@@ -265,7 +265,7 @@ class App extends Component {
             </DropdownMenu>
           </ButtonDropdown>
           <ButtonDropdown
-            className="dropup"
+            // className="dropup"
             isOpen={this.state.dropdownOpen2}
             toggle={this.toggle2}
           >
