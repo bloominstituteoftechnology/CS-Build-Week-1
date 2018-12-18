@@ -158,8 +158,8 @@ class App extends Component {
   };
 
   gridLarge = () => {
-    this.rows = 100;
-    this.cols = 80;
+    this.rows = 80;
+    this.cols = 100;
     this.clearButton();
   };
 
@@ -177,6 +177,11 @@ class App extends Component {
 
   slowButton = () => {
     this.speed = 500;
+    this.playButton();
+  };
+
+  normalButton = () => {
+    this.speed = 100;
     this.playButton();
   };
 
@@ -252,6 +257,7 @@ class App extends Component {
           <Button onClick={this.clearButton}>Clear</Button>
           <Button onClick={this.seedGame}>Seed</Button>
           <Button onClick={this.slowButton}>Slow</Button>
+          <Button onClick={this.normalButton}>Normal</Button>
           <Button onClick={this.fastButton}>Fast</Button>
           <ButtonDropdown
             // className="dropup"
