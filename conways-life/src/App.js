@@ -158,8 +158,8 @@ class App extends Component {
   };
 
   gridLarge = () => {
-    this.rows = 80;
-    this.cols = 100;
+    this.rows = 30;
+    this.cols = 50;
     this.clearButton();
   };
 
