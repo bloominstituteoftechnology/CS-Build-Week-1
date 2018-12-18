@@ -6,8 +6,8 @@ class Menu extends Component {
     return (
       <div className="menu">
         <button onClick={this.props.generateRandom}>random</button>
-        <button>start</button>
-        <button>stop</button>
+        <button onClick={this.props.playGame}>start</button>
+        <button onClick={this.props.stopGame}>stop</button>
         <button onClick={this.props.clearGrid}>clear</button>
       </div>
     );
