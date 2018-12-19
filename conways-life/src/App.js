@@ -152,15 +152,23 @@ class App extends Component {
   };
 
   gridSmall = () => {
-    this.rows = 20;
-    this.cols = 40;
-    this.clearButton();
+    if (this.state.isPlaying === false) {
+      this.rows = 20;
+      this.cols = 40;
+      this.clearButton();
+    } else {
+      alert("Simulation in progress – cannot change game size!");
+    }
   };
 
   gridLarge = () => {
-    this.rows = 30;
-    this.cols = 50;
-    this.clearButton();
+    if (this.state.isPlaying === false) {
+      this.rows = 40;
+      this.cols = 80;
+      this.clearButton();
+    } else {
+      alert("Simulation in progress – cannot change game size!");
+    }
   };
 
   playButton = () => {
@@ -191,13 +199,8 @@ class App extends Component {
   };
 
   clearButton = () => {
-    clearInterval(this.intervalId);
-    let gridCopy = arrayClone(this.state.gridFull);
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.cols; j++) {
-        gridCopy[i][j] = false;
-      }
-    }
+    let gridCopy = Array(this.rows).fill(Array(this.cols).fill(false));
+
     this.setState({
       gridFull: gridCopy,
       generation: 0,
