@@ -163,8 +163,8 @@ class App extends Component {
 
   gridLarge = () => {
     if (this.state.isPlaying === false) {
-      this.rows = 40;
-      this.cols = 80;
+      this.rows = 60;
+      this.cols = 100;
       this.clearButton();
     } else {
       alert("Simulation in progress – cannot change game size!");
