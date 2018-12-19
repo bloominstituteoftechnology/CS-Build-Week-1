@@ -7,6 +7,8 @@ class Menu extends Component {
       <div className="menu">
         <button onClick={this.props.generateRandom}>random</button>
         <button onClick={this.props.playGame}>start</button>
+        <button onClick={this.props.increaseSpeed}>+</button>
+        <button onClick={this.props.decreaseSpeed}>-</button>
         <button onClick={this.props.stopGame}>stop</button>
         <button onClick={this.props.clearGrid}>clear</button>
       </div>

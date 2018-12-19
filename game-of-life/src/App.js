@@ -14,11 +14,11 @@ class App extends Component {
     super();
     this.rows = 20;
     this.cols = 40;
-    this.speed = 100;
     
     this.state = {
       generation: 0,
-      gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false))
+      gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false)),
+      speed: 200
     }
   }
 
@@ -47,13 +47,14 @@ class App extends Component {
     }
     this.setState({
       gridFull: gridCopy,
-      generation: 0
+      generation: 0,
+      speed: 200
     });
   }
 
   playGame = () => {
     clearInterval(this.intervalId);
-    this.intervalId = setInterval(this.gameAlgorithm, this.speed);
+    this.intervalId = setInterval(this.gameAlgorithm, this.state.speed);
   }
 
   stopGame = () => {
@@ -99,6 +100,24 @@ class App extends Component {
     });
   }
 
+  increaseSpeed = () => {
+    let increaseSpeed = this.state.speed - 50;
+    this.setState({
+      speed: increaseSpeed
+    });
+    console.log("Increasing speed: " + this.state.speed);
+    this.playGame();
+  }
+
+  decreaseSpeed =() => {
+    let decreaseSpeed = this.state.speed + 50;
+    this.setState({
+      speed: decreaseSpeed
+    });
+    console.log("Decreasing speed: " + this.state.speed);
+    this.playGame();
+  }
+
   render() {
     return (
       <div className="App">
@@ -115,6 +134,8 @@ class App extends Component {
           clearGrid={this.clearGrid}
           playGame={this.playGame}
           stopGame={this.stopGame}
+          increaseSpeed={this.increaseSpeed}
+          decreaseSpeed={this.decreaseSpeed}
         />
         <h5>>> If a cell is alive and it has exactly 2 or 3 living neigbors, it stays alive</h5>
         <h5>>> If a cell is dead and it has exactly 3 living neigbors, it rises again</h5>
