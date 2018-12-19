@@ -5,7 +5,7 @@ import Cell from "./Cell";
 
 class LifeCanvas extends Component {
   render() {
-    const width = (this.props.cols * 9) +1;
+    const width = (this.props.cols * 4) +1;
     var rowsArr = [];
 
     var boxClass = "";
