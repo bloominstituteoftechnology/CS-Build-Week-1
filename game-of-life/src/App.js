@@ -121,7 +121,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Game of Life</h1>
+        <h1>GAME OF LIFE</h1>
         <h4>Generation: {this.state.generation} </h4>
         <Grid 
           rows={this.rows} 
