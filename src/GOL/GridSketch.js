@@ -29,11 +29,12 @@ function sketch (p){
   const createCells = () => {
     for (let i=0; i<cols; i++){
         currGrid[i] = [];
+        nextGrid[i] = [];
         for(let j=0; j<rows; j++){
-          currGrid[i][j] = new Cell(p, i, j, cellFill);
+          currGrid[i][j] = new Cell(p, i, j);
+          nextGrid[i][j] = new Cell(p, i, j);
         }
     }
-    nextGrid = currGrid;
   };
 
   const stirChaos = () => {
@@ -142,6 +143,7 @@ function sketch (p){
             nextGrid[i][j].setActiveToFalse();
           }
         } else if (theLoving == 3) {
+          console.log(currGrid[i][j].getActivity());
           if(currGrid[i][j].getActivity() == false){
             nextGrid[i][j].setActiveToTrue();
           }
@@ -156,9 +158,11 @@ function sketch (p){
   };
 
   const swapJudgement = () => {
-    let temp = currGrid;
-    currGrid = nextGrid;
-    nextGrid = temp;
+    for(let i=0; i<cols; i++){
+      for (let j = 0; j < rows; j++) {
+        currGrid[i][j].setActivity(nextGrid[i][j].getActivity());
+      }
+    }
   }
 
   const incrementGenerations = () => {
