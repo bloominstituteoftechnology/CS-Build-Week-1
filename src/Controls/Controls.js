@@ -15,12 +15,12 @@ class Controls extends Component {
 
   componentDidMount(){
     let ctrl = document.querySelector('.controls-container');
-    // window.setTimeout(()=>{
-    //   ctrl.classList.add('show-container');
-    // }, 100);
-    // window.setTimeout(()=>{
-    //   ctrl.classList.add('show-container');
-    // }, 5500);
+    window.setTimeout(()=>{
+      ctrl.classList.add('show-container');
+    }, 100);
+    window.setTimeout(()=>{
+      ctrl.classList.add('show-container');
+    }, 5500);
   }
 
   toggleOnGoing = () => {

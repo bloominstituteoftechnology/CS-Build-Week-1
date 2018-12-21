@@ -53,9 +53,9 @@ class Cell {
   }
 
   randomActive = () => {
-    let min = Math.floor(1), max = Math.floor(9);
+    let min = Math.floor(1), max = Math.floor(11);
     let rndmDigit = Math.floor(Math.random() * (max - min + 1)) + min;
-    if(rndmDigit % 5 == 0){
+    if(rndmDigit % 10 == 0){
       this.active = true;
     }
   }
