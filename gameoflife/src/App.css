@@ -1,0 +1,72 @@
+.App {
+    max-width: 1200px;
+    margin: 60px auto;
+  }
+  
+  .title {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .canvas-presets {
+    width: 750px;
+    display:flex;
+    justify-content: center;
+  }
+  
+  .canvas {
+    border: 10px solid black;
+    width: 1000px;
+    height: 1000px;
+    display:flex;
+    flex-wrap: wrap;
+    outline: 1px solid black;
+    outline-offset: -11px;
+    margin: 0 0 0 450px;
+  }
+  
+  .buttons-body {
+    display: flex; 
+    justify-content: space-around;
+    width: 500px;
+  }
+  
+  .presets-body {
+    width: 200px;
+  }
+  
+  .presets {
+    margin: 10px 0 0 10px;
+  }
+  
+  .preset-group1 {
+    display:flex;
+  }
+  
+  .preset-group2 {
+    display:flex;
+  }
+  
+  .preset-group3 {
+    display:flex;
+  }
+  
+  .preset-group4 {
+    display:flex;
+  }
+  
+  .random-body {
+    margin: 10px 0 0 10px;
+  }
+  
+  .generation-body {
+    margin: 10px 0 0 10px;
+  }
+  
+  .speed-body {
+    margin: 10px 0 0 10px;
+  }
+  
+  .speedtext-body {
+    margin: 10px 0 0 10px;
+  }
