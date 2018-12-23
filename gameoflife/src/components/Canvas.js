@@ -10,6 +10,10 @@ export default class Canvas extends Component {
     this.state = {
       x: 0,
       y: 0,
+      height: 1005, 
+      width: 1005,
+      xCheck: 996,
+      yCheck: 996,
       start: 0,
       generationNumber: 0,
       presetBuild: null,
@@ -28,13 +32,13 @@ export default class Canvas extends Component {
     ctx.lineWidth = 1;
     ctx.strokeStyle = "white";
     ctx.beginPath();
-    for (let x = 0; x < 1005; x += 5) {
+    for (let x = 0; x < this.state.width; x += 5) {
       ctx.moveTo(x, 0);
       ctx.lineTo(x, 1005);
       ctx.stroke();
     }
 
-    for (let y = 0; y < 1005; y += 5) {
+    for (let y = 0; y < this.state.width; y += 5) {
       ctx.moveTo(0, y);
       ctx.lineTo(1005, y);
       ctx.stroke();
@@ -130,8 +134,8 @@ export default class Canvas extends Component {
       ctx.clearRect(x, y, 3, 3);
     }
 
-    for (let xCheck = 1; xCheck <= 996; xCheck += 5) {
-      for (let yCheck = 1; yCheck <= 996; yCheck += 5) {
+    for (let xCheck = 1; xCheck <= this.state.xCheck; xCheck += 5) {
+      for (let yCheck = 1; yCheck <= this.state.yCheck; yCheck += 5) {
         let pixelCheck = this.getPixel(imageData, xCheck, yCheck);
         if (pixelCheck[2] === 255) {
           emptySquare(ctx, xCheck, yCheck);
@@ -154,8 +158,8 @@ export default class Canvas extends Component {
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    for (let xCheck = 1; xCheck <= 996; xCheck += 5) {
-      for (let yCheck = 1; yCheck <= 996; yCheck += 5) {
+    for (let xCheck = 1; xCheck <= this.state.xCheck; xCheck += 5) {
+      for (let yCheck = 1; yCheck <= this.state.yCheck; yCheck += 5) {
         let pixelCheck = this.getPixel(imageData, xCheck, yCheck);
         if (pixelCheck[2] === 255) {
           presetBuild.push({ x: xCheck, y: yCheck });
@@ -244,8 +248,8 @@ export default class Canvas extends Component {
     const ctx = canvas.getContext("2d");
     let random = [];
 
-    for (let xCheck = 1; xCheck <= 996; xCheck += 5) {
-      for (let yCheck = 1; yCheck <= 996; yCheck += 5) {
+    for (let xCheck = 1; xCheck <= this.state.xCheck; xCheck += 5) {
+      for (let yCheck = 1; yCheck <= this.state.yCheck; yCheck += 5) {
         let randomNumber = Math.random();
         if (randomNumber > 0.5) {
           random.push({ x: xCheck, y: yCheck });
@@ -296,8 +300,8 @@ export default class Canvas extends Component {
       let nextGenDies = [];
       let nextGenLives = [];
 
-      for (let xCheck = 1; xCheck <= 996; xCheck += 5) {
-        for (let yCheck = 1; yCheck <= 996; yCheck += 5) {
+      for (let xCheck = 1; xCheck <= this.state.xCheck; xCheck += 5) {
+        for (let yCheck = 1; yCheck <= 996; this.state.yCheck += 5) {
           let pixelCheck = this.getPixel(imageData, xCheck, yCheck);
           if (pixelCheck[2] === 255) {
             let neighbor1 = this.getPixel(imageData, xCheck - 5, yCheck - 5);
