@@ -10,10 +10,11 @@ import styled from "styled-components";
 const AppContainer = styled.div`
   background-color: black;
   height: 100vh;
-  min-height: 500px;
+  min-height: 900px;
   width: 100%;
   background-color: black;
   margin-top: -22px;
+  padding-left: 20px;
   h1 {
     color: palegoldenrod;
   }
@@ -210,18 +211,10 @@ class App extends Component {
 
   gridSetup = (x, y, element) => {
     // this.setState({ grid: JSON.parse(JSON.stringify(this.state.view)) });
-    if (this.state.random === 1) {
-      return (
-        <Grid
-          onClick={() => this.toggleActive(x, y)}
-          data={element}
-          grid={this.state.grid}
-        />
-      );
-    }
     if (this.state.play === 0) {
+      console.log(`it${y}, ${x}, and it should be set to ${element}`);
       return (
-        <Grid
+        <Grid // each individual cell
           onClick={() => this.toggleActive(x, y)}
           data={element}
           grid={this.state.grid}
@@ -241,9 +234,9 @@ class App extends Component {
 
   clear = () => {
     const newGrid = [...Array(25)].map(e => Array(25).fill(0));
-    this.setState({ grid: newGrid, gen: 0 });
+    this.setState({ grid: newGrid, gen: 0, random: 0 });
     if (this.state.play === 1) {
-      this.setState({ play: 0, gen: 0 });
+      this.setState({ play: 0, gen: 0, random: 0 });
       if (this.timeoutHandler) {
         window.clearTimeout(this.timeoutHandler);
         this.timeoutHandler = null;
@@ -290,11 +283,16 @@ class App extends Component {
   }
 
   randomGrid = () => {
-    let num = this.getRandomInt(2);
-    this.setState({ random: 1 });
-    this.state.grid.forEach((nested, y) =>
-      nested.forEach((element, x) => this.gridSetup(x, y, num))
+    let num;
+    let newGrid = [...Array(25)].map(e => Array(25).fill(0));
+    newGrid.forEach((nested, y) =>
+      nested.forEach((element, x) => {
+        num = this.getRandomInt(2); // output 0 or 1
+        newGrid[y][x] = num;
+        console.log(`inside of random grid call : ${y}, ${x}, ${num}`);
+      })
     );
+    this.setState({ grid: newGrid });
   };
 
   render() {
