@@ -45,7 +45,6 @@ class LifeCanvas extends Component{
         this.life.grid[x_index][y_index]=1: 
         this.life.grid[x_index][y_index]=0;
         this.fillsquares();
-        console.log(x_index,y_index);
     }
     fillsquares=()=>{
         const ctx = this.refs.canvas.getContext('2d');

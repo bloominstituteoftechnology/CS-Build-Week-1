@@ -3,9 +3,10 @@ const Life=class{
         this.grid=[];
     }
     runIteration(board){
-         const newBoard = board.map(arr=>[...arr]);
+         const newBoard = [];
          const length=board.length;
          for (let i=0; i<length; i++) {
+           newBoard.push([]);
            for (let j=0; j<length; j++) {
              const neighbors=this.getNeighbors(board,i,j);
              if (neighbors===3 && !board[i][j]) {
