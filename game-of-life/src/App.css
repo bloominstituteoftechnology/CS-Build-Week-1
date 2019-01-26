@@ -5,35 +5,6 @@
   margin:0 auto;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 ul li{
   padding-bottom:10px;
   text-align:left;
@@ -68,4 +39,16 @@ h1{
 .lifeInfo{
   text-align:left;
   margin-bottom:30px;
+}
+button{
+  margin-bottom:20px;
+  height:30px;
+  width:50px;
+  border-radius:5px;
+  outline:none;
+  border-color:transparent;
+}
+select {
+  height:30px;
+  outline:none;
 }
