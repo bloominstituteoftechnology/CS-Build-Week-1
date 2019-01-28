@@ -154,7 +154,7 @@ export default class GridObject extends Component {
     }
 
     buildNext = () => {
-        console.log("buildNext")
+        // console.log("buildNext")
         
         return new Promise(res => {
             // return setTimeout(() => res("waiting"), 1000)
@@ -281,16 +281,16 @@ export default class GridObject extends Component {
         return(
             <GridDiv> 
                 <h4>Generation: {this.state.generations}</h4>
-                <div className="timer">
+                {/* <div className="timer">
                     <span><strong>Timer increments: ~{this.state.time/1000}</strong></span>
                     <div>
                         <button name="+" onClick={this.clickHandler}>+</button>
                         <button name="-" onClick={this.clickHandler}>-</button>
                     </div>
-                </div>
+                </div> */}
                 <div className="buttons">
-                    <button name="start" onClick={this.clickHandler} style={{border: this.state.lock?"2px solid black": null}}>start</button>
-                    <button name="stop" onClick={this.clickHandler} style={{border: this.state.lock?null:"2px solid black"}}>stop</button>
+                    {/* <button name="start" onClick={this.clickHandler} style={{border: this.state.lock?"2px solid black": null}}>start</button>
+                    <button name="stop" onClick={this.clickHandler} style={{border: this.state.lock?null:"2px solid black"}}>stop</button> */}
                     <button name="next" onClick={this.clickHandler}>next</button>
                     <button name="clear" onClick={this.clickHandler}>clear</button>
                 </div>
