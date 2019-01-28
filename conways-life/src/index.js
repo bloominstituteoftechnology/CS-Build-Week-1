@@ -179,7 +179,6 @@ class Main extends React.Component {
 		return (
 			<div>
         <h1>The Game of Life</h1>
-        <br />
 				<Grid
 					gridFull={this.state.gridFull}
 					rows={this.rows}
