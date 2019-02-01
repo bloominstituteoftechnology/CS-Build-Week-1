@@ -12,4 +12,3 @@ ID = "fdb2b779-93a5-4963-985b-aa6b345da3fc"
   publish = "life/build/"
   # This will be your default build command
   command = "npm run build"
-
