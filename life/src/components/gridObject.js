@@ -311,8 +311,8 @@ export default class GridObject extends Component {
 }
 
 let start;
-let ran;
-let recursiveCounter = 0;
+// let ran;
+// let recursiveCounter = 0;
 
 const GridDiv = styled.div`
     margin: 10px;
