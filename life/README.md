@@ -1,0 +1,1 @@
+http://game-of-life.kerble.ski/
