@@ -1,9 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
 import Buttons from "./components/Buttons/Buttons";
 import Instructions from "./components/Copy/Intructions";
-import History from "./components/Copy/History";
 import Grid from "./components/Grid/Grid";
 
 import "./index.css";
@@ -139,7 +137,6 @@ class App extends React.Component {
           gridSize={this.gridSize}
         />
         <Instructions />
-        <History />
       </div>
     );
   }
