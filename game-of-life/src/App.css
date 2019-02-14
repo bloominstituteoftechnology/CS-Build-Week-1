@@ -1,0 +1,124 @@
+.App {
+  display: flex;
+  justify-content: center;
+}
+
+.Welcome {
+  background-image: url("./imgs/galaxy1.jpg");
+  background-size: cover;
+  height: 650px;
+  width: 85%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Welcome button {
+  color: white;
+  background: black;
+  margin: 10px;
+}
+
+.WelcomeInner {
+  width: 400px;
+  height: 300px;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.GameContainer {
+  background-image: url("./imgs/galaxy1.jpg");
+  background-size: cover;
+  background-position: center center;
+  width: 85%;
+  color: white;
+  text-align: center;
+  /* display: flex; */
+}
+
+.GameHeader {
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 180px;
+  width: 350px;
+  margin: 0 auto;
+}
+
+.GameHeader button{
+  background: black;
+  color: white;
+}
+
+.Game {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: -150px;
+
+}
+
+.Buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-right: 10px;
+}
+
+.Config {
+  color: white;
+  background-color: #0c3175;
+}
+
+.RulesContainer {
+  background-image: url("./imgs/galaxy1.jpg");
+  background-size: cover;
+  background-position: center center;
+  width: 85%;
+  height: 100vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.Rules {
+  width: 500px;
+  height: 300px;
+  background-color: rgba(0, 0, 0, 0.4);
+  text-align: center;
+  margin-top: 40px;
+}
+
+.Rules button{
+  color: white;
+  background: black;
+}
+
+.AboutContainer {
+  background-image: url("./imgs/galaxy1.jpg");
+  background-size: cover;
+  background-position: center center;
+  width: 85%;
+  height: 100vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.About {
+  width: 700px;
+  height: 300px;
+  background-color: rgba(0, 0, 0, 0.4);
+  text-align: center;
+  margin-top: 40px;
+}
+
+.About button{
+  color: white;
+  background: black;
+}
