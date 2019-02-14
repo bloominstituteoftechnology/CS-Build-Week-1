@@ -355,20 +355,27 @@ export default class LifeCanvas extends Component {
 
   render() {
         return (
-          <div>
-            <h3>Jordan's Game of Life</h3>
-            <p>Generations: {this.state.generation}</p>
-            <canvas ref="canvas" width={this.width} height={this.height} onClick = {this.clickListener} /> <br/>
-            <button onClick = {this.start}>Start</button>
-            <button onClick = {this.stop}>Stop</button>
-            <button onClick = {this.randomize}>Randomize</button>
-            <button onClick = {this.clearGrid}>Clear</button>
-            <button onClick = {this.stepBy1Gen}>Next Generation</button>
-            <button onClick = {this.sample1}>Sample 1</button>
-            <button onClick = {this.sample2}>Sample 2</button>
-            <button onClick = {this.sample3}>Sample 3</button><br/>
-            <Link to='/rules'><button>Rules of the Game</button></Link>
-            <Link to='/about'><button>About the Algorithm</button></Link>
+          <div className="GameContainer">
+            <div className="GameHeader">
+              <h1>Jordan's Game of Life</h1>
+              <p>Click squares or pick a preset to begin:</p>
+              <Link to='/rules'><button>Rules of the Game</button></Link>
+              <Link to='/about'><button>About the Algorithm</button></Link>
+              <p>Generations: {this.state.generation}</p>
+            </div>
+            <div className="Game">
+              <div className="Buttons">
+                <button className="Config" onClick = {this.sample1}>Preset 1</button>
+                <button className="Config" onClick = {this.sample2}>Preset 2</button>
+                <button className="Config" onClick = {this.sample3}>Preset 3</button>
+                <button className="Config" onClick = {this.randomize}>Randomize</button>
+                <button onClick = {this.start}>Start</button>
+                <button onClick = {this.stop}>Stop</button>
+                <button onClick = {this.clearGrid}>Clear</button>
+                <button onClick = {this.stepBy1Gen}>Next Generation</button>
+              </div>
+              <canvas ref="canvas" width={this.width} height={this.height} onClick = {this.clickListener} /> <br/>
+            </div>
           </div>
         )
     }
