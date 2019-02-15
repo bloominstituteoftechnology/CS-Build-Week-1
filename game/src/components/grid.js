@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Modal } from "reactstrap";
 import "./grid.css";
 
 let gen_count = 0;
