@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+}
+
+.center {
+  margin: auto;
+  display: table;
+  margin-top: 10px;
+}
+
+h1, h2, h3 , h4 , h5{
+  color: white;
+  margin: auto;
+  text-align: center;
+  width: 50%;
+  margin-top: 10px;
+}
+
+h5 {
+  margin-top: 30px;
+  margin-bottom: 0;
+}

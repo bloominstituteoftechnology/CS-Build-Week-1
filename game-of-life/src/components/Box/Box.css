@@ -1,0 +1,21 @@
+.box {
+    display: inline-block;
+    border: 1px solid rgba(183, 43, 226, 0.575);
+    width: 15px;
+    height: 15px;
+    margin-left: -1px;
+    margin-bottom: -1px;
+    transition: all .2s;
+  }
+  
+  .off {
+    background-color: black;
+  }
+  
+  .on {
+    background-color: rgb(98, 43, 226);
+  }
+
+  .box:hover {
+    background-color: rgb(162, 226, 43);
+  }
