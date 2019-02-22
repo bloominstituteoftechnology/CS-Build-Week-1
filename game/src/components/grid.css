@@ -34,3 +34,11 @@
     text-align: left;
     margin: 0 auto;
 }
+
+h5 {
+    margin: 5px 0;
+}
+
+button{
+    margin: 10px;
+}

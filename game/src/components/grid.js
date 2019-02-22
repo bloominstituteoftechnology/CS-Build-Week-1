@@ -241,34 +241,8 @@ class Grid extends Component {
           <div className="gen-counter">
             <h3>Generation: {gen_count}</h3>
           </div>
-          <div className="control-buttons">
-            <button className="submit" onClick={this.random_board}>
-              Randomize
-            </button>
-            <button className="submit" onClick={this.next_step}>
-              Next
-            </button>
-            <button className="submit" onClick={this.start_game}>
-              Start
-            </button>
-            <button className="submit" onClick={this.stop_game}>
-              Stop
-            </button>
-            <button className="submit" onClick={this.grid_reset}>
-              Clear
-            </button>
-          </div>
-          <div className="canvas">
-            <canvas
-              id="canvas"
-              ref="canvas"
-              width={this.state.grid_width_cells * this.state.cell_size}
-              height={this.state.grid_height_cells * this.state.cell_size}
-              onClick={this.get_cursor}
-            />
-          </div>
           <div className="grid-change">
-            <h4>Change Grid Dimensions: </h4>
+            <h5>Change Grid Dimensions: </h5>
             Width:
             <input
               type="number"
@@ -301,6 +275,32 @@ class Grid extends Component {
               Set
             </button>
           </div>
+          <div className="control-buttons">
+            <button className="submit" onClick={this.random_board}>
+              Randomize
+            </button>
+            <button className="submit" onClick={this.next_step}>
+              Next
+            </button>
+            <button className="submit" onClick={this.start_game}>
+              Start
+            </button>
+            <button className="submit" onClick={this.stop_game}>
+              Stop
+            </button>
+            <button className="submit" onClick={this.grid_reset}>
+              Clear
+            </button>
+          </div>
+          <div className="canvas">
+            <canvas
+              id="canvas"
+              ref="canvas"
+              width={this.state.grid_width_cells * this.state.cell_size}
+              height={this.state.grid_height_cells * this.state.cell_size}
+              onClick={this.get_cursor}
+            />
+          </div>
         </div>
         <div className="extras-container">
           <div className="rules">
@@ -321,10 +321,10 @@ class Grid extends Component {
             <div className="about-body">
               <p>
                 In this learning project we explore Conway's Game of Life. The
-                game involves an (infinite) two-dimensional grid with black
-                and white squares, which may be represented as 1 and 0. One
-                may think of them as "live cells" or "dead cells". The grid
-                evolves. The evolution rule is as follows:
+                game involves an (infinite) two-dimensional grid with black and
+                white squares, which may be represented as 1 and 0. One may
+                think of them as "live cells" or "dead cells". The grid evolves.
+                The evolution rule is as follows:
               </p>
               <p>All cells evolve simultaneously</p>
               <p>Each cell has eight neighbours</p>
@@ -337,15 +337,14 @@ class Grid extends Component {
               </p>
               <p>
                 From these simple forms it is possible to create stable and
-                recursive patterns, such as the Gosper Glider Gun
-                (illustrated).
+                recursive patterns, such as the Gosper Glider Gun (illustrated).
               </p>
               <p>
                 The Game of Life is a prototypical example of a cellular
                 automaton, an automatic machine of cells. It has attracted the
-                interest of researchers in diverse fields. Patterns in
-                Conway's Game of Life have been shown to be capable of
-                emulating a universal Turing machine.
+                interest of researchers in diverse fields. Patterns in Conway's
+                Game of Life have been shown to be capable of emulating a
+                universal Turing machine.
               </p>
             </div>
           </div>
