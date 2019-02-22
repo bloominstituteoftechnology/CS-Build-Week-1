@@ -306,14 +306,16 @@ class Grid extends Component {
           <div className="rules">
             <h3>Game Rules</h3>
             <div className="rules-body">
-              <p>
-                If the cell is alive **and** has 2 or 3 neighbors, then it
-                remains alive. Else it dies.
-              </p>
-              <p>
-                If the cell is dead **and** has exactly 3 neighbors, then it
-                comes to life. Else if remains dead.
-              </p>
+              <ul>
+                <li>
+                  If the cell is alive **and** has 2 or 3 neighbors, then it
+                  remains alive. Else it dies.
+                </li>
+                <li>
+                  If the cell is dead **and** has exactly 3 neighbors, then it
+                  comes to life. Else if remains dead.
+                </li>
+              </ul>
             </div>
           </div>
           <div className="about">
@@ -326,15 +328,17 @@ class Grid extends Component {
                 think of them as "live cells" or "dead cells". The grid evolves.
                 The evolution rule is as follows:
               </p>
-              <p>All cells evolve simultaneously</p>
-              <p>Each cell has eight neighbours</p>
-              <p>
-                An alive cell with two or three neighbours continues to live.
-                Otherwise it dies.
-              </p>
-              <p>
-                A dead cell with exactly three neighbours will become alive.
-              </p>
+              <ul>
+                <li>All cells evolve simultaneously</li>
+                <li>Each cell has eight neighbours</li>
+                <li>
+                  An alive cell with two or three neighbours continues to live.
+                  Otherwise it dies.
+                </li>
+                <li>
+                  A dead cell with exactly three neighbours will become alive.
+                </li>
+              </ul>
               <p>
                 From these simple forms it is possible to create stable and
                 recursive patterns, such as the Gosper Glider Gun (illustrated).
