@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Route exact path="conways-life" component={LifeCanvas} />
+        <Route exact path="/conways-life" component={LifeCanvas} />
       </div>
     );
   }
