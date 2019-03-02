@@ -165,6 +165,12 @@ class Canvas extends Component {
       cycleCountTemp++;
       this.setState({ ...stateBuffer, cycleCount: cycleCountTemp });
       this.updateCanvas();
+
+      if (Object.values(this.state).every(entry => entry !== "living")) {
+        this.timer = window.setTimeout(() => {
+          this.pauseGame();
+        });
+      }
     }
   };
 
@@ -199,12 +205,10 @@ class Canvas extends Component {
   }
 
   slow = () => {
-    // console.log('test');
     this.setState({ runSpeed: 1100 });
   };
 
   fast = () => {
-    // console.log('test');
     this.setState({ runSpeed: 375 });
   };
 
@@ -375,16 +379,6 @@ class Canvas extends Component {
               >> Any dead cell with exactly three live neighbors becomes a live
               cell
             </p>
-            {/* <h3>History</h3>
-            <p>
-              The game made its first public appearance in a 1970 issue of
-              Scientific American. Since then, it has attracted plenty of
-              interest due in part because of the vast ways the patterns can
-              evolve. The game has been used by scientists to illustrate the
-              possible evolution of complex contructs. The game's "popularity"
-              was bolstered by its appearance just as computer access became
-              more prevalent and affordable.
-            </p> */}
           </div>
         </div>
       </div>
