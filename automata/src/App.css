@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #909497;
 }
 
 .App-logo {
@@ -8,7 +9,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #ffffff;
   min-height: 15vh;
   display: flex;
   flex-direction: column;
@@ -47,4 +48,14 @@
   /* margin-left: 40px; */
   font-size: 13px;
   padding-left: 50px;
+}
+
+.radio-group {
+  margin-bottom: 40px;
+  margin-top: 8px;
+}
+
+.canvas-grid {
+  background-color: #041180;
+  box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, 0.75);
 }
