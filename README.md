@@ -1,6 +1,6 @@
 ﻿Trello Link: https://trello.com/b/mOvmCiAe/gameoflife-francis-tse
 
-Deployed Site: https://francistse23.github.io/Conways-Life/
+Deployed Site: https://francistse-conways-life.netlify.com/
 
 # Cellular Automata and Conway's "Game of Life"
 
