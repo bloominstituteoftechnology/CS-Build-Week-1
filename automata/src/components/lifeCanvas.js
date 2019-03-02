@@ -320,16 +320,30 @@ class Canvas extends Component {
               onDoubleClick={this.handleDoubleClick}
             />
             <div className="controls">
-              <button onClick={this.runSimulation}>Start Simulation</button>
-              <button onClick={this.pauseGame}>Stop </button>
-              <button onClick={this.clearCanvas}>Clear Board</button>
-              <button onClick={this.stepOnce}>Step</button>
+              <button className="button" onClick={this.runSimulation}>
+                Start
+              </button>
+              <button className="button" onClick={this.pauseGame}>
+                Stop{" "}
+              </button>
+              <button className="button" onClick={this.clearCanvas}>
+                Clear Board
+              </button>
+              <button className="button" onClick={this.stepOnce}>
+                Step
+              </button>
             </div>
             <p>Sample Configurations</p>
             <div>
-              <button onClick={this.pulsar}>Pulsar</button>
-              <button onClick={this.toad}>Toad</button>
-              <button onClick={this.beacon}>Beacon</button>
+              <button className="button" onClick={this.pulsar}>
+                Pulsar
+              </button>
+              <button className="button" onClick={this.toad}>
+                Toad
+              </button>
+              <button className="button" onClick={this.beacon}>
+                Beacon
+              </button>
             </div>
             <div className="radio-group">
               <input
@@ -338,6 +352,7 @@ class Canvas extends Component {
                 name="speed"
                 value="slow"
                 onClick={this.slow}
+                className="radio"
               />
               <label>slow</label>
               <input
@@ -346,29 +361,21 @@ class Canvas extends Component {
                 name="speed"
                 value="fast"
                 onClick={this.fast}
+                className="radio"
               />
               <label>fast</label>
             </div>
           </div>
           <div className="rules">
             <h3>RULES</h3>
+            <p>>> Any live cell with fewer than two live neighbors dies</p>
+            <p>>> Any live cell with two or three live neighbors lives on</p>
+            <p>>> Any live cell with more than three live neighbors dies</p>
             <p>
-              1. Any live cell with fewer than two live neighbors dies, as if by
-              underpopulation.
+              >> Any dead cell with exactly three live neighbors becomes a live
+              cell
             </p>
-            <p>
-              2. Any live cell with two or three live neighbors lives on to the
-              next generation.
-            </p>
-            <p>
-              3. Any live cell with more than three live neighbors dies, as if
-              by overpopulation.
-            </p>
-            <p>
-              4. Any dead cell with exactly three live neighbors becomes a live
-              cell, as if by reproduction.
-            </p>
-            <h3>History</h3>
+            {/* <h3>History</h3>
             <p>
               The game made its first public appearance in a 1970 issue of
               Scientific American. Since then, it has attracted plenty of
@@ -377,7 +384,7 @@ class Canvas extends Component {
               possible evolution of complex contructs. The game's "popularity"
               was bolstered by its appearance just as computer access became
               more prevalent and affordable.
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
