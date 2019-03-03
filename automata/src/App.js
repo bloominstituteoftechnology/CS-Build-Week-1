@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import flower from "./flower.svg";
 import "./App.css";
 import Canvas from "./components/lifeCanvas";

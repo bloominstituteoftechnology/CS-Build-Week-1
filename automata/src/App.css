@@ -43,10 +43,8 @@
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
-  /* align-items: flex-end; */
   max-width: 25%;
   text-align: left;
-  /* margin-left: 40px; */
   font-size: 1rem;
   padding-left: 50px;
   padding-top: 40px;
