@@ -1,0 +1,81 @@
+.App {
+  text-align: center;
+  /* background-color: #909497; */
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 12vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.top-contain {
+  display: flex;
+  justify-content: center;
+}
+
+.rules {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  max-width: 25%;
+  text-align: left;
+  font-size: 1rem;
+  padding-left: 50px;
+  padding-top: 40px;
+}
+
+.radio-group {
+  margin-bottom: 40px;
+  margin-top: 8px;
+}
+
+.canvas-grid {
+  background-color: #041180;
+  box-shadow: 0px 0px 15px 5px #282c34;
+  /* box-shadow: 0px 0px 15px 5px #f39c12; */
+  margin-bottom: 18px;
+}
+.button {
+  margin: 5px;
+  border-radius: 5px;
+  background-color: #282c34;
+  color: white;
+  border: 1px solid rgba(241, 0, 0, 0);
+  font-size: 1.2rem;
+  transition: all 0.3s;
+}
+.button:hover {
+  background-color: #f39c12;
+  cursor: pointer;
+  color: #041180;
+}
+.radio {
+  margin-left: 9px;
+}

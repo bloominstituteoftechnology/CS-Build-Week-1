@@ -1,0 +1,6 @@
+[build]
+    base = "automata/"
+
+    publish = "automata/build/"
+
+    command = "yarn build"
