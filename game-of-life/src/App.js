@@ -94,13 +94,6 @@ class Controls extends Component{
         <button onClick = {this.props.fast}>
           Faster
         </button>
-        <DropdownButton 
-                title = "Grid Size"
-                id = "size-menu"
-                onSelect = {this.handleGridSize} >
-                <MenuItem eventKey = "1">Small Grid</MenuItem>
-                <MenuItem eventKey = "2">Large Grid</MenuItem>
-        </DropdownButton>
         </ButtonToolbar>
       </div>
 
@@ -108,27 +101,7 @@ class Controls extends Component{
   }
 }
 
-// class Info extends Component{
-//   render(){
-//     return(
-//       <div className = "game-info">
-//       <Link to = '/rules'>
-//         <button>
-//           Rules
-//         </button>
-//       </Link>
-//       <Link to = '/about'>
-//         <button>
-//           About
-//         </button>
-//       </Link>
-//       <Link to = '/'>
-//         <i class="fas fa-times"></i>
-//       </Link>
-//       </div>
-//     );
-//   }
-// }
+
 
 class App extends Component {
   constructor() {
