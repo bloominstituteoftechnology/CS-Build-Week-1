@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Grid from './Grid'
+import Grid from './Grid';
+import Buttons from './Buttons';
 
 
 class App extends Component {
@@ -38,7 +39,7 @@ class App extends Component {
   // Starts the simulation
   start = () => {
     clearInterval(this.intervalId);
-    this.intervalId = setInterval(this.play, this.speed);
+    this.intervalId = setInterval(this.play);
   }
 
 
@@ -100,6 +101,7 @@ class App extends Component {
           cols={this.cols}
           selectBox={this.selectBox}
         />
+        <Buttons />
       </div>
     );
   }
