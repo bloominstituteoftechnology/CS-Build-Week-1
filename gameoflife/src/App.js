@@ -42,6 +42,10 @@ class App extends Component {
     this.intervalId = setInterval(this.play);
   }
 
+  stop = () => {
+    clearInterval(this.intervalId);
+  }
+
 
   play = () => {
     // Initialize grid and make a clone for changes made
@@ -101,7 +105,10 @@ class App extends Component {
           cols={this.cols}
           selectBox={this.selectBox}
         />
-        <Buttons />
+        <Buttons 
+          start={this.start}
+          stop={this.stop}
+        />
       </div>
     );
   }
