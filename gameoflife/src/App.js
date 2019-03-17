@@ -42,10 +42,12 @@ class App extends Component {
     this.intervalId = setInterval(this.play);
   }
 
+  // Stops the simulation
   stop = () => {
     clearInterval(this.intervalId);
   }
 
+  //Clears the grid
   clear = () => {
     var grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
     this.setState({
@@ -117,6 +119,7 @@ class App extends Component {
           start={this.start}
           stop={this.stop}
           clear={this.clear}
+          randomizer={this.randomizer}
         />
       </div>
     );
