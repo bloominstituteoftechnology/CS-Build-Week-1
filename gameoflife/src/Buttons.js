@@ -4,10 +4,10 @@ class Buttons extends Component {
   
   render() {
     return (
-      <div classname="buttons">
+      <div className="buttons">
         <button onClick={this.props.start}>Start</button>
         <button onClick={this.props.stop}>Stop</button>
-        <button>Clear</button>
+        <button onClick={this.props.clear}>Clear</button>
       </div>
     );
   }

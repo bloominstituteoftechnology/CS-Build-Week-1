@@ -46,6 +46,14 @@ class App extends Component {
     clearInterval(this.intervalId);
   }
 
+  clear = () => {
+    var grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
+    this.setState({
+      gridFull: grid,
+      generation: 0,
+    });
+  }
+
 
   play = () => {
     // Initialize grid and make a clone for changes made
@@ -108,6 +116,7 @@ class App extends Component {
         <Buttons 
           start={this.start}
           stop={this.stop}
+          clear={this.clear}
         />
       </div>
     );
