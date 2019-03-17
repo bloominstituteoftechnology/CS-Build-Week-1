@@ -108,7 +108,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Conway's Game of Life</h1>
-        <h2>Generations: {this.state.generation}</h2>
+        <h2 className="generation">Generations: {this.state.generation}</h2>
         <Grid 
           gridFull={this.state.gridFull}
           rows={this.rows}
