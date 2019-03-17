@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Grid from './Grid'
+import Grid from './Grid';
+import Buttons from './Buttons';
 
 
 class App extends Component {
@@ -38,7 +39,19 @@ class App extends Component {
   // Starts the simulation
   start = () => {
     clearInterval(this.intervalId);
-    this.intervalId = setInterval(this.play, this.speed);
+    this.intervalId = setInterval(this.play);
+  }
+
+  stop = () => {
+    clearInterval(this.intervalId);
+  }
+
+  clear = () => {
+    var grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
+    this.setState({
+      gridFull: grid,
+      generation: 0,
+    });
   }
 
 
@@ -99,6 +112,11 @@ class App extends Component {
           rows={this.rows}
           cols={this.cols}
           selectBox={this.selectBox}
+        />
+        <Buttons 
+          start={this.start}
+          stop={this.stop}
+          clear={this.clear}
         />
       </div>
     );
