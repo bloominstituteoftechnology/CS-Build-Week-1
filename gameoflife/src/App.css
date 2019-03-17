@@ -28,4 +28,17 @@
   line-height: 0;
   margin: auto;
   margin-top: 0px;
+  position: absolute;
+  margin-left: 150px;
+}
+
+.generation {
+  position: relative;
+  right: 200px;
+}
+
+.buttons {
+  position: relative;
+  top: 350px;
+  right: 200px;
 }

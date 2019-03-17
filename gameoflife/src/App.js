@@ -42,10 +42,12 @@ class App extends Component {
     this.intervalId = setInterval(this.play);
   }
 
+  // Stops the simulation
   stop = () => {
     clearInterval(this.intervalId);
   }
 
+  //Clears the grid
   clear = () => {
     var grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
     this.setState({
@@ -106,7 +108,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Conway's Game of Life</h1>
-        <h2>Generations: {this.state.generation}</h2>
+        <h2 className="generation">Generations: {this.state.generation}</h2>
         <Grid 
           gridFull={this.state.gridFull}
           rows={this.rows}
@@ -117,6 +119,7 @@ class App extends Component {
           start={this.start}
           stop={this.stop}
           clear={this.clear}
+          randomizer={this.randomizer}
         />
       </div>
     );
