@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './grid.css'
 
 export default class Grid extends Component {
     constructor(props) {
@@ -181,12 +182,12 @@ export default class Grid extends Component {
                 if(this.state[cell] === 'black' && livC < 2) {
                     buffer[cell] = 'white';
                     ctx.fillStyle = buffer[cell];
-                    ctx.fillRect(xVal * 20, yVal *20, 20, 20)
+                    ctx.fillRect(xVal * 20.07, yVal *20, 18.9, 18.9)
                 }
                 if(this.state[cell] === 'black' && livC > 3) {
                     buffer[cell] = 'white';
                     ctx.fillStyle = buffer[cell];
-                    ctx.fillRect(xVal * 20, yVal *20, 20, 20)
+                    ctx.fillRect(xVal * 20.07, yVal *20, 18.9, 18.9)
                 }
                 else if(this.state[cell] === 'white' && livC === 3) {
                     buffer[cell] = 'black';
@@ -362,7 +363,7 @@ export default class Grid extends Component {
 
     render() {
         return(
-            <div>
+            <div className="grid">
                 <h1>Generation: {this.state.generation}</h1>
                 <canvas className='canvas' ref='canvas' />
                 <div>
