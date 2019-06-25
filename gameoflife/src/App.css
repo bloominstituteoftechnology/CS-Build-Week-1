@@ -1,0 +1,44 @@
+.App {
+  text-align: center;
+}
+  
+.box {
+  display: inline-block;       
+  border: 1px solid black;
+  width: 10px;
+  height: 10px;
+  margin-left: -1px;
+  margin-bottom: -1px;
+  }
+
+.off {
+  background-color: lightgray;
+}
+
+.on {
+  background-color: rgb(0, 29, 82);
+}
+  
+.box:hover { 
+  background: rgb(90, 87, 255);
+}
+
+.grid {
+  width: 150px;
+  line-height: 0;
+  margin: auto;
+  margin-top: 0px;
+  position: absolute;
+  margin-left: 150px;
+}
+
+.generation {
+  position: relative;
+  right: 200px;
+}
+
+.buttons {
+  position: relative;
+  top: 350px;
+  right: 200px;
+}
