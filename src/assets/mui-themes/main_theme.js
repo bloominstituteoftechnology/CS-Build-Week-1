@@ -13,20 +13,20 @@ export default createMuiTheme({
     }
   },
   palette: {
-    a: {
-      // teal
-      light: '#8bffff',
-      main: '#53d3d1',
-      dark: '#00a1a0',
-      xdark: '#006666'
+    main: 'white',
+    alive: {
+      // green
+      a: '#00ff00',
+      b: '#00e600',
+      c: '#00cc00',
+      d: '#00b300'
     },
-    // pink
-    b: {
-      light: '#ffffff',
-      main: '#FBECEB',
-      dark: '#c8bab9'
-    },
-    alive: 'black',
-    dead: 'white'
+    // blue
+    dead: {
+      a: '#00ffff',
+      b: '#00e6e6',
+      c: '#00cccc',
+      d: '#00b3b3'
+    }
   }
 });
