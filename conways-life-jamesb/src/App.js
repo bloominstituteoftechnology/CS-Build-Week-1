@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import GridContainer from './components/GridContainer/GridContainer';
 
 function App() {
   return (
@@ -10,6 +11,9 @@ function App() {
           Cellular Automata
         </p>
       </header>
+      <div className="game-container">
+        <GridContainer />
+      </div>
     </div>
   );
 }
