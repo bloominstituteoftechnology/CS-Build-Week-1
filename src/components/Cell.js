@@ -65,8 +65,6 @@ export default function Cell({ index, status, toggleCellManual }) {
           ? classes.dead4
           : null
       )}
-    >
-      <p>{index}</p>
-    </div>
+    />
   );
 }

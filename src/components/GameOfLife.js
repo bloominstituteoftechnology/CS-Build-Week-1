@@ -25,7 +25,7 @@ export default function GameOfLife() {
 
   const [cellData, setCellData] = useState([]);
   const [cellDataNext, setCellDataNext] = useState([]);
-  const [gridSize, setGridSize] = useState(5);
+  const [gridSize, setGridSize] = useState(30);
   const [speed, setSpeed] = useState(5);
   const [generation, setGeneration] = useState(0);
 
@@ -61,26 +61,36 @@ export default function GameOfLife() {
     }
   };
 
+  const ageCells = array => {
+    return array.map(cell => {
+      if (cell < 32) {
+        return cell + 10;
+      } else {
+        return cell;
+      }
+    });
+  };
+
   const life = () => {
-    const tempCellData = Array.from(cellData).map((cell, index) => {
+    // const tempCellData = Array.from(cellData);
+    // console.log('before life', cellData);
+    const tempCellData = cellData.map((cell, index) => {
       let neighbors = [];
       // handle corners first
       if (index === 0) {
         // upper left corner
-        console.log('upper left corner');
         neighbors = [
           cellData[cellData.length - 1],
           cellData[cellData.length - gridSize],
-          cellData[cellData.length - gridSize + 1],
+          cellData[cellData.length - (gridSize - 1)],
           cellData[gridSize - 1],
           cellData[1],
-          cellData[gridSize - 1],
           cellData[2 * gridSize - 1],
+          cellData[gridSize],
           cellData[gridSize + 1]
         ];
       } else if (index === gridSize - 1) {
         // upper right corner
-        console.log('upper right corner');
         neighbors = [
           cellData[cellData.length - 2],
           cellData[cellData.length - 1],
@@ -93,7 +103,6 @@ export default function GameOfLife() {
         ];
       } else if (index === cellData.length - gridSize) {
         // lower left corner
-        console.log('lower left corner');
         neighbors = [
           cellData[index - 1],
           cellData[index - gridSize],
@@ -106,7 +115,6 @@ export default function GameOfLife() {
         ];
       } else if (index === cellData.length - 1) {
         // lower right corner
-        console.log('lower right corner');
         neighbors = [
           cellData[index - (gridSize + 1)],
           cellData[index - gridSize],
@@ -120,7 +128,6 @@ export default function GameOfLife() {
         // now handle non-corner edges
       } else if (index < gridSize - 1) {
         // non-corner upper edges
-        console.log('non-corner upper edge');
         neighbors = [
           cellData[index + gridSize * (gridSize - 1) - 1],
           cellData[index + gridSize * (gridSize - 1)],
@@ -133,7 +140,6 @@ export default function GameOfLife() {
         ];
       } else if (index % gridSize === 0) {
         // non-corner left edges
-        console.log('non-corner left edge');
         neighbors = [
           cellData[index - 1],
           cellData[index - gridSize],
@@ -146,7 +152,6 @@ export default function GameOfLife() {
         ];
       } else if ((index + 1) % gridSize === 0) {
         // non-corner right edges
-        console.log('non-corner right edge');
         neighbors = [
           cellData[index - (gridSize + 1)],
           cellData[index - gridSize],
@@ -162,7 +167,6 @@ export default function GameOfLife() {
         index < cellData.length
       ) {
         // non-corner lower edges
-        console.log('non-corner lower edge');
         neighbors = [
           cellData[index - (gridSize + 1)],
           cellData[index - gridSize],
@@ -175,7 +179,6 @@ export default function GameOfLife() {
         ];
         // now handle non-corner, non-edges
       } else {
-        console.log('non-corner, non-edge');
         neighbors = [
           cellData[index - (gridSize + 1)],
           cellData[index - gridSize],
@@ -187,8 +190,31 @@ export default function GameOfLife() {
           cellData[index + (gridSize + 1)]
         ];
       }
-    });
 
+      // console.log('neighbors: ', neighbors);
+      const liveNeighbors = neighbors.filter(neighbor => neighbor % 10 === 1);
+      // console.log('liveNeighbors: ', liveNeighbors);
+      if (cell % 10 === 1) {
+        if (liveNeighbors.length < 2 || liveNeighbors.length > 3) {
+          // console.log('dying');
+          return 0;
+        } else {
+          // console.log('staying alive');
+          return cell;
+        }
+      } else {
+        if (liveNeighbors.length === 3) {
+          // console.log('reborn');
+          return 1;
+        } else {
+          return cell;
+        }
+      }
+    });
+    // console.log('after life', tempCellData);
+    const agedCellData = ageCells(tempCellData);
+    // console.log('agedCellData', agedCellData);
+    setCellData(agedCellData);
     setGeneration(generation + 1);
   };
 
