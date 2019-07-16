@@ -4,31 +4,35 @@ import makeStyles from '@material-ui/styles/makeStyles';
 
 import Cell from './Cell';
 
-const useStyles = makeStyles((theme, gridX, gridY) => ({
-  root: {
-    width: '100%',
-    height: '100%'
-  },
+const useStyles = makeStyles(theme => ({
   grid: {
+    border: '3px dashed red',
+    width: '100%',
+    height: '100%',
     display: 'grid'
-    // gridTemplateColumns: `repeat(${gridX}, 40px)`,
-    // gridTemplateRows: 'repeat(gridY, 40px)'
   }
 }));
 
-export default function Grid({ cellData, gridX, gridY }) {
-  const classes = useStyles(gridX, gridY);
+export default function Grid({ cellData, gridSize, toggleCellManual }) {
+  const classes = useStyles();
   // const theme = useTheme();
 
   return (
     <div
       className={classes.grid}
       style={{
-        gridTemplate: `repeat(${gridY}, 40px) / repeat(${gridX}, 40px)`
+        gridTemplate: `repeat(${gridSize}, 1fr) / repeat(${gridSize}, 1fr)`
       }}
     >
       {cellData.map((cell, index) => {
-        return <Cell key={index} status={cell} />;
+        return (
+          <Cell
+            key={index}
+            index={index}
+            status={cell}
+            toggleCellManual={toggleCellManual}
+          />
+        );
       })}
     </div>
   );

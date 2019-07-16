@@ -4,50 +4,47 @@ import makeStyles from '@material-ui/styles/makeStyles';
 // import useTheme from '@material-ui/styles/useTheme';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    height: '100%'
-  },
   cell: {
-    width: '40px',
-    height: '40px',
+    width: '100%',
+    height: '100%',
     border: '1px grey solid'
   },
   alive1: {
-    background: [theme.palette.alive.d]
-  },
-  alive2: {
-    background: [theme.palette.alive.c]
-  },
-  alive3: {
-    background: [theme.palette.alive.b]
-  },
-  alive4: {
     background: [theme.palette.alive.a]
   },
+  alive2: {
+    background: [theme.palette.alive.b]
+  },
+  alive3: {
+    background: [theme.palette.alive.c]
+  },
+  alive4: {
+    background: [theme.palette.alive.d]
+  },
   dead1: {
-    background: [theme.palette.dead.d]
+    background: [theme.palette.dead.a]
   },
   dead2: {
-    background: [theme.palette.dead.c]
-  },
-  dead3: {
     background: [theme.palette.dead.b]
   },
+  dead3: {
+    background: [theme.palette.dead.c]
+  },
   dead4: {
-    background: [theme.palette.dead.a]
+    background: [theme.palette.dead.d]
   },
   title: {
     fontSize: '4em'
   }
 }));
 
-export default function Cell({ status }) {
+export default function Cell({ index, status, toggleCellManual }) {
   const classes = useStyles();
   // const theme = useTheme();
-  console.log(status);
+
   return (
     <div
+      onClick={e => toggleCellManual(e, index)}
       className={classNames(
         classes.cell,
         status === 11
