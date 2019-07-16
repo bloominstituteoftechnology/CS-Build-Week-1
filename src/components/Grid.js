@@ -7,8 +7,8 @@ import Cell from './Cell';
 const useStyles = makeStyles(theme => ({
   grid: {
     border: '3px dashed red',
-    width: '100%',
-    height: '100%',
+    width: '80%',
+    height: '80%',
     display: 'grid'
   }
 }));
