@@ -1,0 +1,45 @@
+import React from 'react';
+import makeStyles from '@material-ui/styles/makeStyles';
+// import useTheme from '@material-ui/styles/useTheme';
+
+import { MemoCell } from './Cell';
+
+const useStyles = makeStyles(theme => ({
+  grid: {
+    border: '3px dashed red',
+    width: '80%',
+    height: '80%',
+    display: 'grid'
+  }
+}));
+
+export default function Grid({
+  cellData,
+  gridSize,
+  toggleCellManual,
+  isRunning
+}) {
+  const classes = useStyles();
+  // const theme = useTheme();
+
+  return (
+    <div
+      className={classes.grid}
+      style={{
+        gridTemplate: `repeat(${gridSize}, 1fr) / repeat(${gridSize}, 1fr)`
+      }}
+    >
+      {cellData.map((cell, index) => {
+        return (
+          <MemoCell
+            key={index}
+            index={index}
+            status={cell}
+            toggleCellManual={toggleCellManual}
+            isRunning={isRunning}
+          />
+        );
+      })}
+    </div>
+  );
+}
