@@ -38,13 +38,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Cell({ index, status, toggleCellManual }) {
+export default function Cell({ index, status, toggleCellManual, isRunning }) {
   const classes = useStyles();
   // const theme = useTheme();
 
   return (
     <div
-      onClick={e => toggleCellManual(e, index)}
+      onClick={isRunning ? null : e => toggleCellManual(e, index)}
       className={classNames(
         classes.cell,
         status === 11

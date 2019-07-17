@@ -4,7 +4,10 @@ import makeStyles from '@material-ui/styles/makeStyles';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
+import useInterval from '../utilities/useInterval';
+
 import Grid from './Grid';
+// import Canvas from './Canvas';
 import Buttons from './Buttons';
 
 const useStyles = makeStyles(theme => ({
@@ -24,10 +27,10 @@ export default function GameOfLife() {
   // const theme = useTheme();
 
   const [cellData, setCellData] = useState([]);
-  const [cellDataNext, setCellDataNext] = useState([]);
-  const [gridSize, setGridSize] = useState(30);
-  const [speed, setSpeed] = useState(5);
+  const [gridSize, setGridSize] = useState(40);
   const [generation, setGeneration] = useState(0);
+  const [delay, setDelay] = useState(2000);
+  const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
     setCellData(
@@ -123,8 +126,8 @@ export default function GameOfLife() {
     setCellData(tempCellData);
   };
 
-  const life = () => {
-    console.log('generate', generation);
+  const generate = () => {
+    console.log('generation: ', generation);
     const tempCellData = cellData.map((cell, index) => {
       let neighbors = 0;
       // handle corners first
@@ -333,31 +336,30 @@ export default function GameOfLife() {
       }
     });
     setCellData(tempCellData);
-    console.log('gen complete');
     setGeneration(generation + 1);
-    console.log('generation: ', generation);
   };
 
-  // const life = () => {
-  //   // const generator = setInterval(() => {
-  //   //   generate();
-  //   // }, 500);
+  useInterval(() => generate(), isRunning ? delay : null);
 
-  //   let generator = setTimeout(function gen() {
-  //     generate();
-  //     generator = setTimeout(gen, 500); // (*)
-  //   }, 500);
-  // };
+  const playPause = () => {
+    setIsRunning(!isRunning);
+  };
 
   return (
     <Box className={classes.container}>
       <Typography className={classes.title}>Game of Life</Typography>
+      {/* <Grid2
+        cellData={cellData}
+        gridSize={gridSize}
+        toggleCellManual={toggleCellManual}
+      /> */}
       <Grid
         cellData={cellData}
         gridSize={gridSize}
         toggleCellManual={toggleCellManual}
+        isRunning={isRunning}
       />
-      <Buttons life={life} gosper={gosper} random={random} />
+      <Buttons playPause={playPause} gosper={gosper} random={random} />
     </Box>
   );
 }

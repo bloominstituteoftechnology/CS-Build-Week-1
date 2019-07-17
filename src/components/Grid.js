@@ -13,7 +13,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Grid({ cellData, gridSize, toggleCellManual }) {
+export default function Grid({
+  cellData,
+  gridSize,
+  toggleCellManual,
+  isRunning
+}) {
   const classes = useStyles();
   // const theme = useTheme();
 
@@ -31,6 +36,7 @@ export default function Grid({ cellData, gridSize, toggleCellManual }) {
             index={index}
             status={cell}
             toggleCellManual={toggleCellManual}
+            isRunning={isRunning}
           />
         );
       })}
