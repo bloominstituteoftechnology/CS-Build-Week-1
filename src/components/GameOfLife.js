@@ -48,175 +48,306 @@ export default function GameOfLife() {
       tempCellData[index] = 40;
       setCellData(tempCellData);
     }
+    // const alive = [];
+    // tempCellData.forEach((cell, index) => {
+    //   if (cell % 10 === 1) {
+    //     alive.push(index);
+    //   }
+    // });
   };
 
-  const toggleCell = index => {
-    const tempCellData = Array.from(cellData);
-    if (cellData[index] % 10 === 0) {
-      tempCellData[index] = 1;
-      setCellData(tempCellData);
-    } else {
-      tempCellData[index] = 0;
-      setCellData(tempCellData);
-    }
+  const random = () => {
+    setCellData(
+      cellData.map(cell => {
+        return Math.round(Math.random()) === 1 ? 41 : 40;
+      })
+    );
   };
 
-  const ageCells = array => {
-    return array.map(cell => {
-      if (cell < 32) {
-        return cell + 10;
+  const gosper = () => {
+    setGridSize(40);
+    const gosper = [
+      652,
+      692,
+      693,
+      694,
+      695,
+      733,
+      734,
+      735,
+      736,
+      747,
+      748,
+      762,
+      763,
+      773,
+      776,
+      786,
+      788,
+      802,
+      803,
+      813,
+      814,
+      815,
+      816,
+      825,
+      826,
+      827,
+      836,
+      837,
+      852,
+      853,
+      854,
+      855,
+      864,
+      865,
+      866,
+      876,
+      877,
+      892,
+      905,
+      906,
+      907,
+      946,
+      948,
+      987,
+      988
+    ];
+    const tempCellData = cellData.map((cell, index) => {
+      if (gosper.includes(index)) {
+        return 41;
       } else {
         return cell;
       }
     });
+    setCellData(tempCellData);
   };
 
   const life = () => {
-    // const tempCellData = Array.from(cellData);
-    // console.log('before life', cellData);
+    console.log('generate', generation);
     const tempCellData = cellData.map((cell, index) => {
-      let neighbors = [];
+      let neighbors = 0;
       // handle corners first
       if (index === 0) {
         // upper left corner
-        neighbors = [
-          cellData[cellData.length - 1],
-          cellData[cellData.length - gridSize],
-          cellData[cellData.length - (gridSize - 1)],
-          cellData[gridSize - 1],
-          cellData[1],
-          cellData[2 * gridSize - 1],
-          cellData[gridSize],
-          cellData[gridSize + 1]
-        ];
+        cellData[cellData.length - 1] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[cellData.length - gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[cellData.length - (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[gridSize - 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[2 * gridSize - 1] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[gridSize] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[gridSize + 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
       } else if (index === gridSize - 1) {
         // upper right corner
-        neighbors = [
-          cellData[cellData.length - 2],
-          cellData[cellData.length - 1],
-          cellData[cellData.length - gridSize],
-          cellData[index - 1],
-          cellData[0],
-          cellData[index + (gridSize - 1)],
-          cellData[index + gridSize],
-          cellData[index + 1]
-        ];
+        cellData[cellData.length - 2] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[cellData.length - 1] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[cellData.length - gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[0] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[index + (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
       } else if (index === cellData.length - gridSize) {
         // lower left corner
-        neighbors = [
-          cellData[index - 1],
-          cellData[index - gridSize],
-          cellData[index - (gridSize - 1)],
-          cellData[cellData.length - 1],
-          cellData[index + 1],
-          cellData[gridSize - 1],
-          cellData[0],
-          cellData[1]
-        ];
+        cellData[index - 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[index - gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[cellData.length - 1] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[gridSize - 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[0] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
       } else if (index === cellData.length - 1) {
         // lower right corner
-        neighbors = [
-          cellData[index - (gridSize + 1)],
-          cellData[index - gridSize],
-          cellData[index - (2 * gridSize - 1)],
-          cellData[index - 1],
-          cellData[index - (gridSize - 1)],
-          cellData[gridSize - 2],
-          cellData[gridSize - 1],
-          cellData[0]
-        ];
+        cellData[index - (gridSize + 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - (2 * gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[index - (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[gridSize - 2] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[gridSize - 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[0] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
         // now handle non-corner edges
       } else if (index < gridSize - 1) {
         // non-corner upper edges
-        neighbors = [
-          cellData[index + gridSize * (gridSize - 1) - 1],
-          cellData[index + gridSize * (gridSize - 1)],
-          cellData[index + gridSize * (gridSize - 1) + 1],
-          cellData[index - 1],
-          cellData[index + 1],
-          cellData[index + (gridSize - 1)],
-          cellData[index + gridSize],
-          cellData[index + (gridSize + 1)]
-        ];
+        cellData[index + gridSize * (gridSize - 1) - 1] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + gridSize * (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + gridSize * (gridSize - 1) + 1] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[index + 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[index + (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + (gridSize + 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
       } else if (index % gridSize === 0) {
         // non-corner left edges
-        neighbors = [
-          cellData[index - 1],
-          cellData[index - gridSize],
-          cellData[index - (gridSize - 1)],
-          cellData[index + (gridSize - 1)],
-          cellData[index + 1],
-          cellData[index + (2 * gridSize - 1)],
-          cellData[index + gridSize],
-          cellData[index + (gridSize + 1)]
-        ];
+        cellData[index - 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[index - gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[index + (2 * gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + (gridSize + 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
       } else if ((index + 1) % gridSize === 0) {
         // non-corner right edges
-        neighbors = [
-          cellData[index - (gridSize + 1)],
-          cellData[index - gridSize],
-          cellData[index - (2 * gridSize - 1)],
-          cellData[index - 1],
-          cellData[index - (gridSize - 1)],
-          cellData[index + (gridSize - 1)],
-          cellData[index + gridSize],
-          cellData[index + 1]
-        ];
+        cellData[index - (gridSize + 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - (2 * gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[index - (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
       } else if (
         index > cellData.length - gridSize &&
         index < cellData.length
       ) {
         // non-corner lower edges
-        neighbors = [
-          cellData[index - (gridSize + 1)],
-          cellData[index - gridSize],
-          cellData[index - (gridSize - 1)],
-          cellData[index - 1],
-          cellData[index + 1],
-          cellData[index - (gridSize * (gridSize - 1) - 1)],
-          cellData[index - gridSize * (gridSize - 1)],
-          cellData[index - (gridSize * (gridSize - 1) + 1)]
-        ];
+        cellData[index - (gridSize + 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[index + 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[index - (gridSize * (gridSize - 1) - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - gridSize * (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - (gridSize * (gridSize - 1) + 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
         // now handle non-corner, non-edges
       } else {
-        neighbors = [
-          cellData[index - (gridSize + 1)],
-          cellData[index - gridSize],
-          cellData[index - (gridSize - 1)],
-          cellData[index - 1],
-          cellData[index + 1],
-          cellData[index + (gridSize - 1)],
-          cellData[index + gridSize],
-          cellData[index + (gridSize + 1)]
-        ];
+        cellData[index - (gridSize + 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index - 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[index + 1] % 10 === 1 ? (neighbors += 1) : (neighbors += 0);
+        cellData[index + (gridSize - 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + gridSize] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
+        cellData[index + (gridSize + 1)] % 10 === 1
+          ? (neighbors += 1)
+          : (neighbors += 0);
       }
 
-      // console.log('neighbors: ', neighbors);
-      const liveNeighbors = neighbors.filter(neighbor => neighbor % 10 === 1);
-      // console.log('liveNeighbors: ', liveNeighbors);
       if (cell % 10 === 1) {
-        if (liveNeighbors.length < 2 || liveNeighbors.length > 3) {
-          // console.log('dying');
-          return 0;
+        if (neighbors < 2 || neighbors > 3) {
+          return 10;
+        } else if (cell < 32) {
+          return cell + 10;
         } else {
-          // console.log('staying alive');
           return cell;
         }
+      } else if (neighbors === 3) {
+        return 11;
+      } else if (cell < 32) {
+        return cell + 10;
       } else {
-        if (liveNeighbors.length === 3) {
-          // console.log('reborn');
-          return 1;
-        } else {
-          return cell;
-        }
+        return cell;
       }
     });
-    // console.log('after life', tempCellData);
-    const agedCellData = ageCells(tempCellData);
-    // console.log('agedCellData', agedCellData);
-    setCellData(agedCellData);
+    setCellData(tempCellData);
+    console.log('gen complete');
     setGeneration(generation + 1);
+    console.log('generation: ', generation);
   };
+
+  // const life = () => {
+  //   // const generator = setInterval(() => {
+  //   //   generate();
+  //   // }, 500);
+
+  //   let generator = setTimeout(function gen() {
+  //     generate();
+  //     generator = setTimeout(gen, 500); // (*)
+  //   }, 500);
+  // };
 
   return (
     <Box className={classes.container}>
@@ -226,7 +357,7 @@ export default function GameOfLife() {
         gridSize={gridSize}
         toggleCellManual={toggleCellManual}
       />
-      <Buttons life={life} />
+      <Buttons life={life} gosper={gosper} random={random} />
     </Box>
   );
 }

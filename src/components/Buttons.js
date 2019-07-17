@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
-export default function GroupedButtons({ life }) {
+export default function GroupedButtons({ life, gosper, random }) {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6}>
@@ -16,8 +16,8 @@ export default function GroupedButtons({ life }) {
               aria-label='Large contained secondary button group'
             >
               <Button onClick={() => life()}>Go</Button>
-              <Button>filler</Button>
-              <Button>filler</Button>
+              <Button onClick={() => gosper()}>gosper</Button>
+              <Button onClick={() => random()}>random</Button>
             </ButtonGroup>
           </Grid>
         </Grid>
