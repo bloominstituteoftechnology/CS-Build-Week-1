@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Cell from './Cell.js';
 import './grid.css';
 
@@ -7,12 +7,13 @@ const Row = (props) => {
 		<div className="row">
 			{props.cells.map((cell, idx) => (
 				<Cell
+					key={idx}
 					// true or false
 					value={cell}
 					// row number
-					xCoord={props.xCoord}
+					yCoord={props.yCoord}
 					// column number
-					yCoord={idx}
+					xCoord={idx}
 					// whether game is running
 					running={props.running}
 					// drill down the toggle method

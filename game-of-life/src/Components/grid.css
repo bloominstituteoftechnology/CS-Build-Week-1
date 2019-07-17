@@ -1,3 +1,8 @@
 .row {
-    display: inline-block
+    display: inline-block;
+    margin: 5px
+}
+
+.cell {
+    margin: 5px;
 }

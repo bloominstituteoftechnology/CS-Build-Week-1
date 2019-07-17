@@ -54,12 +54,15 @@ class Grid extends Component {
 		}
 	}
 
-	findNeighbors(x, y, arr) {
+	findNeighbors(x, y, arr) { // pass in coordinates and an array
+		// create an array to map through later
 		const neighbors = [];
+		// this is likely unnecessary, as you just need to know alive, but this is what will be returned
 		const count = {
 			alive: 0,
 			dead: 0
 		};
+	// push all neighbor values into the neighbors array
 		// north
 		neighbors.push(arr[x - 1][y]);
 		// east
@@ -76,6 +79,7 @@ class Grid extends Component {
 		neighbors.push(arr[x + 1][y - 1]);
 		// north west
 		neighbors.push(arr[x - 1][y - 1]);
+		// check the value of each neighor, increment alive if True and Dead if not.
 		neighbors.forEach(neighbor => {
 			neighbor ? count.alive++ : count.dead++;
 		});
@@ -83,32 +87,41 @@ class Grid extends Component {
 		return count;
 	}
 
-	createGrid = e => {
-		e.preventDefault();
-		const int = this.state.size;
-		const cell = false;
+	gridHelper() {
+		const int = parseInt(this.state.size)
+
 		const row = [];
 		const grid = [];
-		// i miss python
+		// for (let i = 0; i < int; i++) {
+		// 	row.push(false);
+		// }
 		for (let i = 0; i < int; i++) {
-			row.push(cell);
+
+			grid[i] = new Array(int).fill(0)
+			console.log('loop number: ', i);
 		}
-		for (let i = 0; i < int; i++) {
-			grid.push(row);
-		}
+		console.log(grid)
+		return grid
+	}
+
+	createGrid = e => {
+		e.preventDefault();
+		const newGrid = this.gridHelper()
 		this.setState({
-			grid: grid,
+			grid: newGrid,
 			generation: 1
 		});
 	};
 
 	toggleCell = (x, y) => {
-		
-		//create a copy of grid
+		// y = row, x = column
+		// create a new grid with all false values NOTE this isn't going to work for multiple 
 		const newGrid = this.state.grid
 		// edit cell at x,y to == true
-		console.log('x = ', x, 'y = ', y)
-		newGrid[y][x] = !this.state.grid[y][x]
+		console.log('row = ', y, 'column = ', x)
+		console.log('target value: ', newGrid[y][x])
+		// toggle value in copy of grid
+		newGrid[y][x] = (!newGrid[y][x])
 		console.log(newGrid)
 		// setState w/ updated grid
 		this.setState({
@@ -130,7 +143,7 @@ class Grid extends Component {
 			return (
 				<form onSubmit={this.createGrid}>
 					<input
-						type="text"
+						type="number"
 						value={this.state.size}
 						name="size"
 						placeholder="how big would you like your square?"
@@ -142,10 +155,11 @@ class Grid extends Component {
 		} else {
 			return this.state.grid.map((row, idx) => (
 				<Row 
+					key={idx}
 					// pass in the row values
 					cells={row} 
 					// pass down the row coordinate
-					xCoord={idx} 
+					yCoord={idx} 
 					// whether the game is running
 					running={this.state.running}
 					// drill down the toggle method
