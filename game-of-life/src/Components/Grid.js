@@ -86,20 +86,37 @@ class Grid extends Component {
 	createGrid = e => {
 		e.preventDefault();
 		const int = this.state.size;
-		const cell = false
-		const row = []
-		const grid = []
+		const cell = false;
+		const row = [];
+		const grid = [];
 		// i miss python
-		for (let i = 0; i < int; i++){
-			row.push(cell)
+		for (let i = 0; i < int; i++) {
+			row.push(cell);
 		}
-		for (let i = 0; i < int; i++){
-			grid.push(row)
+		for (let i = 0; i < int; i++) {
+			grid.push(row);
 		}
 		this.setState({
 			grid: grid,
-			generation: 1 
+			generation: 1
 		});
+	};
+
+	toggleCell = (x, y) => {
+		
+		//create a copy of grid
+		const newGrid = this.state.grid
+		// edit cell at x,y to == true
+		console.log('x = ', x, 'y = ', y)
+		newGrid[y][x] = !this.state.grid[y][x]
+		console.log(newGrid)
+		// setState w/ updated grid
+		this.setState({
+			grid : newGrid,
+			running : true
+		})
+		// incremement generation
+		// toggle running
 	};
 
 	changeHandler = e => {
@@ -111,20 +128,30 @@ class Grid extends Component {
 	render() {
 		if (this.state.generation === 0) {
 			return (
-				<form onSubmit={this.createGrid} >
+				<form onSubmit={this.createGrid}>
 					<input
 						type="text"
 						value={this.state.size}
 						name="size"
 						placeholder="how big would you like your square?"
 						onChange={this.changeHandler}
-						
 					/>
 					<button type="submit">SUBMIT</button>
 				</form>
 			);
 		} else {
-			return this.state.grid.map(row => <Row cells={row} running={this.state.running} />);
+			return this.state.grid.map((row, idx) => (
+				<Row 
+					// pass in the row values
+					cells={row} 
+					// pass down the row coordinate
+					xCoord={idx} 
+					// whether the game is running
+					running={this.state.running}
+					// drill down the toggle method
+					toggle={this.toggleCell} 
+				/>
+			));
 		}
 	}
 }

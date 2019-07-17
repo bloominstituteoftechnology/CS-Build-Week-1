@@ -1,34 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Cell extends Component {
-    state = {
-        alive: false
-    }
-
-    toggleState = () => {
-        const toggle = !this.state.alive
-        this.setState({
-            alive: toggle
-        })
-    }
-
-
-
-    render() {
-        if (this.props.value){
-            return (
-                <div>
-                    TRUE      
-                </div>
-            );
-        } else { 
-            return (
-                <div>
-                    FALSE
-                </div>
-            )
-        }
-    }
-}
+const Cell = props => {
+	// show one thing if the value is true
+	if (props.value) {
+		return <div>TRUE</div>;
+		// show another if the value is false
+	} else {
+		return (
+			<div
+				onClick={() => {
+                    // if (!props.running) 
+                    {
+						props.toggle(props.xCoord, props.yCoord);
+					}
+				}}
+			>
+				FALSE
+			</div>
+		);
+	}
+};
 
 export default Cell;
