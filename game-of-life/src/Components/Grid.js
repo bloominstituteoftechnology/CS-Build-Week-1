@@ -5,49 +5,56 @@ class Grid extends Component {
 	state = {
 		grid: [[]],
 		size: 0,
-		generation: 0
+		generation: 0,
+		running: false
 	};
 
 	componentDidMount() {
 		this.updateGrid();
 	}
-	// any live cell with < 2 live neighbors dies
-	// any live cell with 2 or 3 live neighbors lives on to next gen
-	// any live cell with > 3 live neighbors dies
-	// any dead cell with >=3 live neighbors becomes alive
+
 	updateGrid() {
 		// O(n^2) but capped at size of grid.
-		if (this.state.size>0) {
+		// check that the grid has been configured
+		if (this.state.size > 0) {
+			// declare variables that you'll manipulate and eventually set to state
+			const newGrid = this.state.grid;
+			const newGen = this.state.generation + 1;
 			// loop through outer array
-			for (let i = 0; i < this.state.grid.length; i++) {
+			for (let i = 0; i < newGrid.length; i++) {
 				// loop through each inner array
-				for (let j = 0; j < this.state.grid[i].length; j++) {
+				for (let j = 0; j < newGrid[i].length; j++) {
 					// call helper function, returns an object with { alive: #, dead: # }
-					const count = this.findNeighbors(i, j, this.state.grid);
+					const count = this.findNeighbors(i, j, newGrid);
 					// if this cell is alive check the Conway conditions
-					if (this.state.grid[i][j]) {
+					if (newGrid[i][j]) {
 						// live cell with two live neighbors, kill it
 						if (count.alive < 2) {
-							this.state.grid[i][j] = false;
+							newGrid[i][j] = false;
 						}
 						// live cell with three live neighbors, kill it
 						if (3 < count.alive) {
-							this.state.grid[i][j] = false;
+							newGrid[i][j] = false;
 						}
 					}
 					// else the cell is dead, check the Conway conditions
 					else {
 						// dead cell with 3 live neighbors, lazarous
 						if (count.alive > 3) {
-							this.state.grid[i][j] = true;
+							newGrid[i][j] = true;
 						}
 					}
 				}
 			}
+			// update state with the new grid, increment the generation
+			this.setState({
+				grid: newGrid,
+				generation: newGen
+			});
 		}
 	}
 
-	findNeighbors = (x, y, arr) => {
+	findNeighbors(x, y, arr) {
 		const neighbors = [];
 		const count = {
 			alive: 0,
@@ -74,41 +81,50 @@ class Grid extends Component {
 		});
 
 		return count;
-	};
+	}
 
-	createGrid = int => {
-		const row = Array(int).fill(false);
-		const grid = Array(int).fill(row);
+	createGrid = e => {
+		e.preventDefault();
+		const int = this.state.size;
+		const cell = false
+		const row = []
+		const grid = []
+		// i miss python
+		for (let i = 0; i < int; i++){
+			row.push(cell)
+		}
+		for (let i = 0; i < int; i++){
+			grid.push(row)
+		}
 		this.setState({
 			grid: grid,
-			size: int // not sure we'll need this
+			generation: 1 
 		});
 	};
 
 	changeHandler = e => {
-
 		this.setState({
 			[e.target.name]: e.target.value
 		});
 	};
 
 	render() {
-		if (this.state.size == 0) {
+		if (this.state.generation === 0) {
 			return (
-				<form>
+				<form onSubmit={this.createGrid} >
 					<input
 						type="text"
 						value={this.state.size}
 						name="size"
 						placeholder="how big would you like your square?"
 						onChange={this.changeHandler}
-						onSubmit={this.setSize}
+						
 					/>
 					<button type="submit">SUBMIT</button>
 				</form>
 			);
 		} else {
-			return this.state.grid.map(row => <Row cells={row} />);
+			return this.state.grid.map(row => <Row cells={row} running={this.state.running} />);
 		}
 	}
 }
