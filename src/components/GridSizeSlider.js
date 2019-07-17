@@ -3,6 +3,29 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 
+const marks = [
+  {
+    value: 10,
+    label: '10x10'
+  },
+  {
+    value: 20,
+    label: '20x20'
+  },
+  {
+    value: 30,
+    label: '30x30'
+  },
+  {
+    value: 40,
+    label: '40x40'
+  },
+  {
+    value: 50,
+    label: '50x50'
+  }
+];
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: 300
@@ -31,9 +54,9 @@ export default function GridSizeSlider({ gridSize, updateGridSize }) {
         aria-labelledby='discrete-slider'
         valueLabelDisplay='auto'
         step={10}
-        marks
+        marks={marks}
         min={10}
-        max={100}
+        max={50}
       />
     </div>
   );

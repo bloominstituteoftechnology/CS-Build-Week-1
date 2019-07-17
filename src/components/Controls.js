@@ -9,10 +9,11 @@ import GridSizeSlider from './GridSizeSlider';
 export default function Controls({
   generation,
   playPause,
-  generate,
+  step,
   gosper,
   random,
   gridSize,
+  cellData,
   updateGridSize,
   clear
 }) {
@@ -31,7 +32,7 @@ export default function Controls({
                 aria-label='Large contained secondary button group'
               >
                 <Button onClick={e => playPause(e)}>Play / Pause</Button>
-                <Button onClick={e => generate(e)}>Step</Button>
+                <Button onClick={e => step(e)}>Step</Button>
                 <Button onClick={e => gosper(e)}>Gosper</Button>
                 <Button onClick={e => random(e)}>Random</Button>
                 <Button onClick={e => clear(e)}>Clear</Button>
