@@ -38,7 +38,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Cell({ index, status, toggleCellManual, isRunning }) {
+export const MemoCell = React.memo(function Cell({
+  index,
+  status,
+  toggleCellManual,
+  isRunning
+}) {
   const classes = useStyles();
   // const theme = useTheme();
 
@@ -67,4 +72,4 @@ export default function Cell({ index, status, toggleCellManual, isRunning }) {
       )}
     />
   );
-}
+});

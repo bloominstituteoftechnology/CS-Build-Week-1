@@ -8,7 +8,7 @@ import useInterval from '../utilities/useInterval';
 
 import Grid from './Grid';
 // import Canvas from './Canvas';
-import Buttons from './Buttons';
+import Controls from './Controls';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -59,7 +59,8 @@ export default function GameOfLife() {
     // });
   };
 
-  const random = () => {
+  const random = e => {
+    e.preventDefault();
     setCellData(
       cellData.map(cell => {
         return Math.round(Math.random()) === 1 ? 41 : 40;
@@ -67,8 +68,24 @@ export default function GameOfLife() {
     );
   };
 
-  const gosper = () => {
-    setGridSize(40);
+  const updateGridSize = (e, value) => {
+    e.preventDefault();
+    setGridSize(value);
+  };
+
+  const clear = e => {
+    e.preventDefault();
+    setCellData(
+      Array.apply(null, Array(gridSize * gridSize)).map(
+        Number.prototype.valueOf,
+        40
+      )
+    );
+  };
+
+  const gosper = e => {
+    e.preventDefault();
+    updateGridSize(e, 40);
     const gosper = [
       652,
       692,
@@ -127,7 +144,6 @@ export default function GameOfLife() {
   };
 
   const generate = () => {
-    console.log('generation: ', generation);
     const tempCellData = cellData.map((cell, index) => {
       let neighbors = 0;
       // handle corners first
@@ -341,25 +357,30 @@ export default function GameOfLife() {
 
   useInterval(() => generate(), isRunning ? delay : null);
 
-  const playPause = () => {
+  const playPause = e => {
+    e.preventDefault();
     setIsRunning(!isRunning);
   };
 
   return (
     <Box className={classes.container}>
       <Typography className={classes.title}>Game of Life</Typography>
-      {/* <Grid2
-        cellData={cellData}
-        gridSize={gridSize}
-        toggleCellManual={toggleCellManual}
-      /> */}
       <Grid
         cellData={cellData}
         gridSize={gridSize}
         toggleCellManual={toggleCellManual}
         isRunning={isRunning}
       />
-      <Buttons playPause={playPause} gosper={gosper} random={random} />
+      <Controls
+        gridSize={gridSize}
+        updateGridSize={updateGridSize}
+        generation={generation}
+        playPause={playPause}
+        generate={generate}
+        gosper={gosper}
+        random={random}
+        clear={clear}
+      />
     </Box>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import makeStyles from '@material-ui/styles/makeStyles';
 // import useTheme from '@material-ui/styles/useTheme';
 
-import Cell from './Cell';
+import { MemoCell } from './Cell';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -31,7 +31,7 @@ export default function Grid({
     >
       {cellData.map((cell, index) => {
         return (
-          <Cell
+          <MemoCell
             key={index}
             index={index}
             status={cell}
