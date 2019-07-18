@@ -30,9 +30,9 @@ export default function DelaySlider({ delay, updateDelay }) {
         getAriaValueText={valuetext}
         aria-labelledby='discrete-slider'
         valueLabelDisplay='auto'
-        step={50}
+        step={25}
         marks
-        min={50}
+        min={25}
         max={2000}
       />
     </div>

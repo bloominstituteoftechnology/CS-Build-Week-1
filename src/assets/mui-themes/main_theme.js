@@ -16,17 +16,27 @@ export default createMuiTheme({
     main: 'white',
     alive: {
       // green
-      a: '#00ff00',
-      b: '#00e600',
-      c: '#00cc00',
-      d: '#00b300'
+      a: '#00ffd5',
+      b: '#24ffd9',
+      c: '#40ffde',
+      d: '#5effe3',
+      e: '#87ffeb',
+      f: '#adfff1',
+      g: '#c4fff5',
+      h: '#dbfff9',
+      i: '#ffffff'
     },
     // blue
     dead: {
-      a: '#00ffff',
-      b: '#00e6e6',
-      c: '#00cccc',
-      d: '#00b3b3'
+      a: '#0000ff',
+      b: '#0000e3',
+      c: '#0000c4',
+      d: '#0000a8',
+      e: '#00008a',
+      f: '#000066',
+      g: '#00004a',
+      h: '#00002e',
+      i: '#000000'
     }
   }
 });

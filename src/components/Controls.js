@@ -8,11 +8,12 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 import GridSizeSlider from './GridSizeSlider';
 import DelaySlider from './DelaySlider';
-import gosper from '../utilities/gosper';
-import oscillators from '../utilities/oscillators';
-import gliders from '../utilities/gliders';
-import MWSSs from '../utilities/MWSSs';
-import LWSSs from '../utilities/LWSSs';
+import gosper from '../presets/gosper';
+import oscillators from '../presets/oscillators';
+import gliders from '../presets/gliders';
+import LWSSs from '../presets/LWSSs';
+import MWSSs from '../presets/MWSSs';
+import HWSSs from '../presets/HWSSs';
 
 const useStyles = makeStyles(theme => ({
   topRow: {
@@ -54,18 +55,23 @@ export default function Controls({
               >
                 <Button onClick={e => playPause(e)}>Play / Pause</Button>
                 <Button onClick={e => step(e)}>Step</Button>
-                <Button onClick={e => preset(e, gosper, 40)}>Gosper</Button>
-                <Button onClick={e => preset(e, oscillators, 30)}>
+                <Button onClick={e => preset(e, gosper, 40, 500)}>
+                  Gosper
+                </Button>
+                <Button onClick={e => preset(e, oscillators, 30, 100)}>
                   Oscillators
                 </Button>
-                <Button onClick={e => preset(e, gliders, 20)}>
+                <Button onClick={e => preset(e, gliders, 20, 25)}>
                   School of Gliders
                 </Button>
-                <Button onClick={e => preset(e, LWSSs, 20)}>
+                <Button onClick={e => preset(e, LWSSs, 20, 25)}>
                   Lightweight Spaceships
                 </Button>
-                <Button onClick={e => preset(e, MWSSs, 20)}>
+                <Button onClick={e => preset(e, MWSSs, 20, 25)}>
                   Middleweight Spaceships
+                </Button>
+                <Button onClick={e => preset(e, HWSSs, 20, 25)}>
+                  Heavyweight Spaceships
                 </Button>
                 <Button onClick={e => random(e)}>Random</Button>
                 <Button onClick={e => clear(e)}>Clear</Button>

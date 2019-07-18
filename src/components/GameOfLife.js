@@ -34,7 +34,7 @@ export default function GameOfLife() {
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
-    const tempCellData = Array(gridSize * gridSize).fill(40);
+    const tempCellData = Array(gridSize * gridSize).fill(90);
     setCellData(tempCellData);
     cellDataRef.current = tempCellData;
   }, [gridSize]);
@@ -43,10 +43,10 @@ export default function GameOfLife() {
     e.preventDefault();
     const tempCellData = Array.from(cellData);
     if (cellData[index] % 10 === 0) {
-      tempCellData[index] = 41;
+      tempCellData[index] = 91;
       setCellData(tempCellData);
     } else {
-      tempCellData[index] = 40;
+      tempCellData[index] = 90;
       setCellData(tempCellData);
     }
     const alive = [];
@@ -70,60 +70,30 @@ export default function GameOfLife() {
     setDelay(value);
   };
 
-  const preset = (e, preset, size) => {
+  const preset = (e, preset, size, delay) => {
     e.preventDefault();
+    setIsRunning(false);
     setGeneration(0);
     setGridSize(size);
+    setDelay(delay);
     setTimeout(() => {
       const tempCellData = cellDataRef.current.map((cell, index) => {
         if (preset.includes(index)) {
-          return 41;
+          return 91;
         } else {
-          return 40;
+          return 90;
         }
       });
       setCellData(tempCellData);
     }, 500);
   };
 
-  // const gosper = e => {
-  //   e.preventDefault();
-  //   setGeneration(0);
-  //   setGridSize(40);
-  //   setTimeout(() => {
-  //     const tempCellData = cellDataRef.current.map((cell, index) => {
-  //       if (gosperCoords.includes(index)) {
-  //         return 41;
-  //       } else {
-  //         return 40;
-  //       }
-  //     });
-  //     setCellData(tempCellData);
-  //   }, 500);
-  // };
-
-  // const oscillator = e => {
-  //   e.preventDefault();
-  //   setGeneration(0);
-  //   setGridSize(30);
-  //   setTimeout(() => {
-  //     const tempCellData = cellDataRef.current.map((cell, index) => {
-  //       if (oscillatorCoords.includes(index)) {
-  //         return 41;
-  //       } else {
-  //         return 40;
-  //       }
-  //     });
-  //     setCellData(tempCellData);
-  //   }, 500);
-  // };
-
   const random = e => {
     e.preventDefault();
     setGeneration(0);
     setCellData(
       cellData.map(cell => {
-        return Math.round(Math.random()) === 1 ? 41 : 40;
+        return Math.round(Math.random()) === 1 ? 91 : 90;
       })
     );
   };
@@ -134,15 +104,19 @@ export default function GameOfLife() {
     setCellData(
       Array.apply(null, Array(gridSize * gridSize)).map(
         Number.prototype.valueOf,
-        40
+        90
       )
     );
   };
 
   const next = (gridSize, cellData) => {
     const tempCellData = generate(gridSize, cellData);
-    setCellData(tempCellData);
-    setGeneration(generation + 1);
+    if (!tempCellData) {
+      setIsRunning(false);
+    } else {
+      setCellData(tempCellData);
+      setGeneration(generation + 1);
+    }
   };
 
   useInterval(() => next(gridSize, cellData), isRunning ? delay : null);

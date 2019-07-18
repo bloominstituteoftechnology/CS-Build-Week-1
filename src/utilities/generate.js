@@ -1,6 +1,8 @@
 export default function generate(gridSize, cellData) {
+  let life = false;
   const tempCellData = cellData.map((cell, index) => {
     let neighbors = 0;
+
     // handle corners first
     if (index === 0) {
       // upper left corner
@@ -186,21 +188,31 @@ export default function generate(gridSize, cellData) {
         ? (neighbors += 1)
         : (neighbors += 0);
     }
+
     if (cell % 10 === 1) {
       if (neighbors < 2 || neighbors > 3) {
+        life = true;
         return 10;
-      } else if (cell < 32) {
+      } else if (cell < 82) {
+        life = true;
         return cell + 10;
       } else {
         return cell;
       }
     } else if (neighbors === 3) {
+      life = true;
       return 11;
-    } else if (cell < 32) {
+    } else if (cell < 82) {
+      life = true;
       return cell + 10;
     } else {
       return cell;
     }
   });
-  return tempCellData;
+
+  if (life) {
+    return tempCellData;
+  } else {
+    return null;
+  }
 }
