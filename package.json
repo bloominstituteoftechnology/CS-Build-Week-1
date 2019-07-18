@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "https://github.com/jbasile6/Conways-Life.git",
   "author": "James Basile <jbasile145@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "styled-components": "^4.3.2"
+  }
 }
