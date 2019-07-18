@@ -52,7 +52,7 @@ export default function GridSizeSlider({ gridSize, updateGridSize }) {
         value={gridSize}
         getAriaValueText={valuetext}
         aria-labelledby='discrete-slider'
-        valueLabelDisplay='auto'
+        valueLabelDisplay='off'
         step={10}
         marks={marks}
         min={10}

@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Grid({ cellData, gridSize, toggleCellManual }) {
+export default function Canvas({ cellData, gridSize, toggleCellCanvas }) {
   const classes = useStyles();
   // const theme = useTheme();
 
