@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 import GridSizeSlider from './GridSizeSlider';
-import SpeedSlider from './SpeedSlider';
+import DelaySlider from './DelaySlider';
 
 const useStyles = makeStyles(theme => ({
   topRow: {
@@ -22,6 +22,7 @@ export default function Controls({
   playPause,
   step,
   gosper,
+  oscillator,
   random,
   gridSize,
   delay,
@@ -36,7 +37,7 @@ export default function Controls({
       <div className={classes.topRow}>
         <Typography>Generation: {generation}</Typography>
         <GridSizeSlider gridSize={gridSize} updateGridSize={updateGridSize} />
-        <SpeedSlider delay={delay} updateDelay={updateDelay} />
+        <DelaySlider delay={delay} updateDelay={updateDelay} />
       </div>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
@@ -51,6 +52,7 @@ export default function Controls({
                 <Button onClick={e => playPause(e)}>Play / Pause</Button>
                 <Button onClick={e => step(e)}>Step</Button>
                 <Button onClick={e => gosper(e)}>Gosper</Button>
+                <Button onClick={e => oscillator(e)}>Oscillators</Button>
                 <Button onClick={e => random(e)}>Random</Button>
                 <Button onClick={e => clear(e)}>Clear</Button>
               </ButtonGroup>

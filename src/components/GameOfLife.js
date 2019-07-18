@@ -6,10 +6,10 @@ import Typography from '@material-ui/core/Typography';
 
 import useInterval from '../utilities/useInterval';
 import gosperCoords from '../utilities/gosperCoords';
+import oscillatorCoords from '../utilities/oscillatorCoords';
 import generate from '../utilities/generate';
 
 import Grid from './Grid';
-// import Canvas from './Canvas';
 import Controls from './Controls';
 
 const useStyles = makeStyles(theme => ({
@@ -49,12 +49,13 @@ export default function GameOfLife() {
       tempCellData[index] = 40;
       setCellData(tempCellData);
     }
-    // const alive = [];
-    // tempCellData.forEach((cell, index) => {
-    //   if (cell % 10 === 1) {
-    //     alive.push(index);
-    //   }
-    // });
+    const alive = [];
+    tempCellData.forEach((cell, index) => {
+      if (cell % 10 === 1) {
+        alive.push(index);
+      }
+    });
+    console.log(alive);
   };
 
   const updateGridSize = (e, value) => {
@@ -75,6 +76,20 @@ export default function GameOfLife() {
     setGridSize(40);
     const tempCellData = cellData.map((cell, index) => {
       if (gosperCoords.includes(index)) {
+        return 41;
+      } else {
+        return 40;
+      }
+    });
+    setCellData(tempCellData);
+  };
+
+  const oscillator = e => {
+    e.preventDefault();
+    setGeneration(0);
+    setGridSize(30);
+    const tempCellData = cellData.map((cell, index) => {
+      if (oscillatorCoords.includes(index)) {
         return 41;
       } else {
         return 40;
@@ -143,6 +158,7 @@ export default function GameOfLife() {
         playPause={playPause}
         step={step}
         gosper={gosper}
+        oscillator={oscillator}
         random={random}
         clear={clear}
       />

@@ -16,7 +16,7 @@ function valuetext(value) {
   return `${value}`;
 }
 
-export default function SpeedSlider({ delay, updateDelay }) {
+export default function DelaySlider({ delay, updateDelay }) {
   const classes = useStyles();
 
   return (

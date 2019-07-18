@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import makeStyles from '@material-ui/styles/makeStyles';
 // import useTheme from '@material-ui/styles/useTheme';
 
 const useStyles = makeStyles(theme => ({
   canvas: {
     border: '3px dashed orange',
-    width: '90%',
+    width: 'auto',
     height: 'auto',
     background: 'white'
   }
@@ -14,6 +14,8 @@ const useStyles = makeStyles(theme => ({
 export default function Canvas({ cellData, gridSize, toggleCellCanvas }) {
   const classes = useStyles();
   // const theme = useTheme();
+
+  const [pixel, setPixel] = useState(0);
   const gridCanvas = useRef();
   const canvas = gridCanvas.current;
 
@@ -21,33 +23,62 @@ export default function Canvas({ cellData, gridSize, toggleCellCanvas }) {
   let imageData;
   let screenBuffer;
 
-  if (canvas !== undefined) {
+  const getPixel = e => {
+    var x = e.layerX;
+    var y = e.layerY;
+    console.log(imageData);
+    var pixel = ctx.getImageData(x, y, 1, 1);
+    var data = pixel.data;
+    console.log('pixel.data:', pixel.data);
+    var rgba =
+      'rgba(' +
+      data[0] +
+      ', ' +
+      data[1] +
+      ', ' +
+      data[2] +
+      ', ' +
+      data[3] / 255 +
+      ')';
+    setPixel(rgba);
+  };
+
+  let counter = 0;
+
+  if (canvas !== undefined && counter === 0) {
+    counter += 1;
     ctx = canvas.getContext('2d');
-    imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    // ctx.scale(8, 8);
+    imageData = ctx.getImageData(0, 0, gridSize, gridSize);
     screenBuffer = imageData.data;
+    // console.log('screenBuffer: ', screenBuffer);
     const allDead = ctx.createImageData(imageData);
 
     for (let i = 0; i < allDead.data.length; i += 4) {
-      // Modify pixel data
       allDead.data[i + 0] = 0; // R value
       allDead.data[i + 1] = 179; // G value
       allDead.data[i + 2] = 179; // B value
       allDead.data[i + 3] = 255; // A value
     }
-
     ctx.putImageData(allDead, 0, 0);
-    console.log('allDead: ', allDead);
+    // console.log(
+    //   'after dead',
+    //   ctx.getImageData(0, 0, canvas.width, canvas.height)
+    // );
+
+    canvas.addEventListener('mousedown', getPixel);
   }
 
-  // console.log(allDead);
-
   return (
-    <canvas
-      className={classes.canvas}
-      id='gridCanvas'
-      ref={gridCanvas}
-      width={gridSize}
-      height={gridSize}
-    />
+    <>
+      <p>{pixel}</p>
+      <canvas
+        className={classes.canvas}
+        id='gridCanvas'
+        ref={gridCanvas}
+        width='800px'
+        height='800px'
+      />
+    </>
   );
 }
