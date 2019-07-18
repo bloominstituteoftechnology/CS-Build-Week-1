@@ -52,7 +52,7 @@ class Grid extends Component {
 		}
 		// East
 		if (x < this.state.size - 1 && y < this.state.size - 1) {
-			if (arr[x + 1][y + 1]) {
+			if (arr[x + 1][y]) {
 				count.alive++;
 			}
 		}
@@ -139,7 +139,7 @@ class Grid extends Component {
 					console.log('5th conditional - dead cell');
 					console.log('live neighbors: ', alive);
 					// dead cell with 3 live neighbors, lazarous
-					if (alive > 3) {
+					if (alive >= 3) {
 						console.log('6th conditional - it rises');
 						newGrid[i][j] = true;
 						continue;
@@ -199,9 +199,14 @@ class Grid extends Component {
 		clearInterval(this.gameInterval);
 	};
 
+	takeStep = e => {
+		e.preventDefault();
+		this.updateGrid()
+	}
+
 	resetGrid = e => {
 		e.preventDefault();
-		
+		console.log('here')
 		const newGrid = this.gridHelper(this.state.size);
 		this.setState({
 			grid: newGrid,
@@ -245,9 +250,10 @@ class Grid extends Component {
 						))}
 					</div>
 					<div className="control-container">
+					<button onClick={this.takeStep}>Take One Step</button>
 						<button onClick={this.startGame}>START IT</button>
 						<button onClick={this.endGame}>END IT</button>
-						<button onClick={this.endGame}>RESET IT</button>
+						<button onClick={this.resetGrid}>RESET IT</button>
 						<p>Generation: {this.state.generation}</p>
 					</div>
 				</div>
