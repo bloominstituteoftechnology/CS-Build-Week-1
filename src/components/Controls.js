@@ -55,22 +55,51 @@ export default function Controls({
               >
                 <Button onClick={e => playPause(e)}>Play / Pause</Button>
                 <Button onClick={e => step(e)}>Step</Button>
-                <Button onClick={e => preset(e, gosper, 40, 500)}>
+                <Button
+                  onClick={e =>
+                    preset(e, gosper.gridSize, gosper.delay, gosper.data)
+                  }
+                >
                   Gosper
                 </Button>
-                <Button onClick={e => preset(e, oscillators, 30, 100)}>
+                <Button
+                  onClick={e =>
+                    preset(
+                      e,
+                      oscillators.gridSize,
+                      oscillators.delay,
+                      oscillators.data
+                    )
+                  }
+                >
                   Oscillators
                 </Button>
-                <Button onClick={e => preset(e, gliders, 20, 25)}>
+                <Button
+                  onClick={e =>
+                    preset(e, gliders.gridSize, gliders.delay, gliders.data)
+                  }
+                >
                   School of Gliders
                 </Button>
-                <Button onClick={e => preset(e, LWSSs, 20, 25)}>
+                <Button
+                  onClick={e =>
+                    preset(e, LWSSs.gridSize, LWSSs.delay, LWSSs.data)
+                  }
+                >
                   Lightweight Spaceships
                 </Button>
-                <Button onClick={e => preset(e, MWSSs, 20, 25)}>
+                <Button
+                  onClick={e =>
+                    preset(e, MWSSs.gridSize, MWSSs.delay, MWSSs.data)
+                  }
+                >
                   Middleweight Spaceships
                 </Button>
-                <Button onClick={e => preset(e, HWSSs, 20, 25)}>
+                <Button
+                  onClick={e =>
+                    preset(e, HWSSs.gridSize, HWSSs.delay, HWSSs.data)
+                  }
+                >
                   Heavyweight Spaceships
                 </Button>
                 <Button onClick={e => random(e)}>Random</Button>

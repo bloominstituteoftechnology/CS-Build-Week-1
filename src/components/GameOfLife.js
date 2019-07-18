@@ -70,15 +70,15 @@ export default function GameOfLife() {
     setDelay(value);
   };
 
-  const preset = (e, preset, size, delay) => {
+  const preset = (e, gridSize, delay, data) => {
     e.preventDefault();
     setIsRunning(false);
     setGeneration(0);
-    setGridSize(size);
+    setGridSize(gridSize);
     setDelay(delay);
     setTimeout(() => {
       const tempCellData = cellDataRef.current.map((cell, index) => {
-        if (preset.includes(index)) {
+        if (data.includes(index)) {
           return 91;
         } else {
           return 90;
