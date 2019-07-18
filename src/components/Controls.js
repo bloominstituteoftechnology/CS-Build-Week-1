@@ -10,6 +10,9 @@ import GridSizeSlider from './GridSizeSlider';
 import DelaySlider from './DelaySlider';
 import gosper from '../utilities/gosper';
 import oscillators from '../utilities/oscillators';
+import gliders from '../utilities/gliders';
+import MWSSs from '../utilities/MWSSs';
+import LWSSs from '../utilities/LWSSs';
 
 const useStyles = makeStyles(theme => ({
   topRow: {
@@ -27,7 +30,6 @@ export default function Controls({
   gridSize,
   delay,
   updateDelay,
-  cellData,
   preset,
   updateGridSize,
   clear
@@ -55,6 +57,15 @@ export default function Controls({
                 <Button onClick={e => preset(e, gosper, 40)}>Gosper</Button>
                 <Button onClick={e => preset(e, oscillators, 30)}>
                   Oscillators
+                </Button>
+                <Button onClick={e => preset(e, gliders, 20)}>
+                  School of Gliders
+                </Button>
+                <Button onClick={e => preset(e, LWSSs, 20)}>
+                  Lightweight Spaceships
+                </Button>
+                <Button onClick={e => preset(e, MWSSs, 20)}>
+                  Middleweight Spaceships
                 </Button>
                 <Button onClick={e => random(e)}>Random</Button>
                 <Button onClick={e => clear(e)}>Clear</Button>

@@ -28,9 +28,9 @@ export default function GameOfLife() {
 
   const [cellData, setCellData] = useState([]);
   const cellDataRef = useRef();
-  const [gridSize, setGridSize] = useState(40);
+  const [gridSize, setGridSize] = useState(20);
   const [generation, setGeneration] = useState(0);
-  const [delay, setDelay] = useState(2000);
+  const [delay, setDelay] = useState(50);
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
