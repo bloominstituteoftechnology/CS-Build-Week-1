@@ -3,6 +3,13 @@ import Cell from './Cell.js';
 import './grid.css';
 
 const Row = (props) => {
+
+	const height = (1/props.size*100).toString()
+	// const rowStyles = {
+	// 	height: height+'%',
+	// 	width: '100%'
+	// }
+
 	return (
 		<div className="row">
 			{props.cells.map((cell, idx) => (
@@ -18,6 +25,8 @@ const Row = (props) => {
 					running={props.running}
 					// drill down the toggle method
 					toggle={props.toggle}
+					// drill down the grid size
+					size={props.size}
 				/>
 			))}
 		</div>

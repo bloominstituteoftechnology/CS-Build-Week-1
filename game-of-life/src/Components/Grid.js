@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Row from './Row.js';
+import './grid.css';
 
 class Grid extends Component {
 	state = {
@@ -10,12 +11,15 @@ class Grid extends Component {
 	};
 
 	componentDidMount() {
-		// this.updateGrid();
+		const newGrid = this.gridHelper(25);
+		this.setState({
+			size: 25,
+			generation: 1,
+			grid: newGrid
+		});
 	}
 
-	gridHelper() {
-		// pull the size off of state
-		const int = parseInt(this.state.size);
+	gridHelper(int) {
 		// create the grid array
 		const grid = [];
 		// fill the grid with arrays of length int, each item in which is false
@@ -94,11 +98,9 @@ class Grid extends Component {
 
 	updateGrid() {
 		// O(n^2) but capped at size of grid.
-		// check that the grid has been configured
 
-		console.log('updating');
 		// declare variables that you'll manipulate and eventually set to state
-		const newGrid = this.gridHelper();
+		const newGrid = this.gridHelper(this.state.size);
 		const newGen = this.state.generation + 1;
 		// loop through outer array
 		for (let i = 0; i < newGrid.length; i++) {
@@ -115,18 +117,21 @@ class Grid extends Component {
 						console.log('second conditional - kill it');
 
 						newGrid[i][j] = false;
+						continue;
 					}
 					// live cell with greater than three live neighbors, kill it
-					if (3 < alive) {
+					if (alive > 3) {
 						console.log('third conditional - kill it');
 
 						newGrid[i][j] = false;
+						continue;
 					}
 					// live cell with 2 or three live neighbors, it lives on
 					else {
 						console.log('4th conditional - it lives on');
 
 						newGrid[i][j] = true;
+						continue;
 					}
 				}
 				// else the cell is dead, check the Conway conditions
@@ -137,6 +142,7 @@ class Grid extends Component {
 					if (alive > 3) {
 						console.log('6th conditional - it rises');
 						newGrid[i][j] = true;
+						continue;
 					}
 				}
 			}
@@ -185,7 +191,7 @@ class Grid extends Component {
 
 	startGame = e => {
 		e.preventDefault();
-		this.gameInterval = setInterval(()=>this.updateGrid(), 25);
+		this.gameInterval = setInterval(() => this.updateGrid(), 25);
 	};
 
 	endGame = e => {
@@ -193,7 +199,18 @@ class Grid extends Component {
 		clearInterval(this.gameInterval);
 	};
 
+	resetGrid = e => {
+		e.preventDefault();
+		
+		const newGrid = this.gridHelper(this.state.size);
+		this.setState({
+			grid: newGrid,
+			generation: 1
+		});
+	};
+
 	render() {
+		// Conditional to allow users to choose their own grid size - will implement this eventually by eliminating the function calls in CDM above
 		if (this.state.generation === 0) {
 			return (
 				<form onSubmit={this.createGrid}>
@@ -209,22 +226,30 @@ class Grid extends Component {
 			);
 		} else {
 			return (
-				<div>
-					{this.state.grid.map((row, idx) => (
-						<Row
-							key={idx}
-							// pass in the row values
-							cells={row}
-							// pass down the row coordinate
-							yCoord={idx}
-							// whether the game is running
-							running={this.state.running}
-							// drill down the toggle method
-							toggle={this.toggleCell}
-						/>
-					))}
-					<button onClick={this.startGame}>START IT</button>
-					<button onClick={this.endGame}>END IT</button>
+				<div className="main-container">
+					<div className="grid-container">
+						{this.state.grid.map((row, idx) => (
+							<Row
+								className="row"
+								key={idx}
+								// pass in the row values
+								cells={row}
+								// pass down the row coordinate
+								yCoord={idx}
+								// whether the game is running
+								running={this.state.running}
+								// drill down the toggle method
+								toggle={this.toggleCell}
+								size={this.state.size}
+							/>
+						))}
+					</div>
+					<div className="control-container">
+						<button onClick={this.startGame}>START IT</button>
+						<button onClick={this.endGame}>END IT</button>
+						<button onClick={this.endGame}>RESET IT</button>
+						<p>Generation: {this.state.generation}</p>
+					</div>
 				</div>
 			);
 		}
@@ -232,16 +257,3 @@ class Grid extends Component {
 }
 
 export default Grid;
-// this.state.grid.map((row, idx) =>
-// 	<Row
-// 		key={idx}
-// 		// pass in the row values
-// 		cells={row}
-// 		// pass down the row coordinate
-// 		yCoord={idx}
-// 		// whether the game is running
-// 		running={this.state.running}
-// 		// drill down the toggle method
-// 		toggle={this.toggleCell}
-// 		/>
-// )
