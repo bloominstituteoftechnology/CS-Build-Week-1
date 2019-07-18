@@ -13,46 +13,17 @@ class Grid extends Component {
 		// this.updateGrid();
 	}
 
-	updateGrid() {
-		// O(n^2) but capped at size of grid.
-		// check that the grid has been configured
-		do {
-			console.log('updating');
-			// declare variables that you'll manipulate and eventually set to state
-			const newGrid = this.gridHelper();
-			const newGen = this.state.generation + 1;
-			// loop through outer array
-			for (let i = 0; i < newGrid.length; i++) {
-				// loop through each inner array
-				for (let j = 0; j < newGrid[i].length; j++) {
-					// call helper function to inspect grid in state, returns an object with { alive: #, dead: # }
-					const count = this.findNeighbors(j, i, this.state.grid);
-					// if this cell is alive check the Conway conditions
-					if (newGrid[i][j]) {
-						// live cell with two live neighbors, kill it
-						if (count.alive < 2) {
-							newGrid[i][j] = false;
-						}
-						// live cell with three live neighbors, kill it
-						if (3 < count.alive) {
-							newGrid[i][j] = false;
-						}
-					}
-					// else the cell is dead, check the Conway conditions
-					else {
-						// dead cell with 3 live neighbors, lazarous
-						if (count.alive > 3) {
-							newGrid[i][j] = true;
-						}
-					}
-				}
-			}
-			// update state with the new grid, increment the generation
-			this.setState({
-				grid: newGrid,
-				generation: newGen
-			});
-		} while (this.state.running);
+	gridHelper() {
+		// pull the size off of state
+		const int = parseInt(this.state.size);
+		// create the grid array
+		const grid = [];
+		// fill the grid with arrays of length int, each item in which is false
+		for (let i = 0; i < int; i++) {
+			grid[i] = new Array(int).fill(false);
+		}
+		// send it back to the function that called it
+		return grid;
 	}
 
 	findNeighbors(x, y, arr) {
@@ -70,13 +41,13 @@ class Grid extends Component {
 		// check each direction and increment count if necessary n(1)
 
 		// North
-		if (y < this.state.size-1) {
+		if (y < this.state.size - 1) {
 			if (arr[x][y + 1]) {
 				count.alive++;
 			}
 		}
 		// East
-		if (x < this.state.size-1 && y < this.state.size-1) {
+		if (x < this.state.size - 1 && y < this.state.size - 1) {
 			if (arr[x + 1][y + 1]) {
 				count.alive++;
 			}
@@ -94,19 +65,19 @@ class Grid extends Component {
 			}
 		}
 		// Northwest
-		if (x >= 1 && y < this.state.size-1) {
+		if (x >= 1 && y < this.state.size - 1) {
 			if (arr[x - 1][y + 1]) {
 				count.alive++;
 			}
 		}
 		// Northeast
-		if (x < this.state.size-1 && y < this.state.size-1) {
+		if (x < this.state.size - 1 && y < this.state.size - 1) {
 			if (arr[x + 1][y + 1]) {
 				count.alive++;
 			}
 		}
 		// Southeast
-		if (y >= 1 && x < this.state.size-1) {
+		if (y >= 1 && x < this.state.size - 1) {
 			if (arr[x + 1][y - 1]) {
 				count.alive++;
 			}
@@ -121,17 +92,62 @@ class Grid extends Component {
 		return count;
 	}
 
-	gridHelper() {
-		// pull the size off of state
-		const int = parseInt(this.state.size);
-		// create the grid array
-		const grid = [];
-		// fill the grid with arrays of length int, each item in which is false
-		for (let i = 0; i < int; i++) {
-			grid[i] = new Array(int).fill(false);
+	updateGrid() {
+		// O(n^2) but capped at size of grid.
+		// check that the grid has been configured
+
+		console.log('updating');
+		// declare variables that you'll manipulate and eventually set to state
+		const newGrid = this.gridHelper();
+		const newGen = this.state.generation + 1;
+		// loop through outer array
+		for (let i = 0; i < newGrid.length; i++) {
+			// loop through each inner array
+			for (let j = 0; j < newGrid[i].length; j++) {
+				// call helper function to inspect grid in state, returns an object with { alive: #, dead: # }
+				const { alive } = this.findNeighbors(i, j, this.state.grid);
+				// if this cell is alive check the Conway conditions
+				if (this.state.grid[i][j]) {
+					console.log('first conditional - live cell');
+					console.log('live neighbors: ', alive);
+					// live cell with fewer than two live neighbors, kill it
+					if (alive < 2) {
+						console.log('second conditional - kill it');
+
+						newGrid[i][j] = false;
+					}
+					// live cell with greater than three live neighbors, kill it
+					if (3 < alive) {
+						console.log('third conditional - kill it');
+
+						newGrid[i][j] = false;
+					}
+					// live cell with 2 or three live neighbors, it lives on
+					else {
+						console.log('4th conditional - it lives on');
+
+						newGrid[i][j] = true;
+					}
+				}
+				// else the cell is dead, check the Conway conditions
+				else {
+					console.log('5th conditional - dead cell');
+					console.log('live neighbors: ', alive);
+					// dead cell with 3 live neighbors, lazarous
+					if (alive > 3) {
+						console.log('6th conditional - it rises');
+						newGrid[i][j] = true;
+					}
+				}
+			}
 		}
-		// send it back to the function that called it
-		return grid;
+		console.log('grid in state: ', this.state.grid);
+		console.log('new grid: ', newGrid);
+		// update state with the new grid, increment the generation
+		this.setState({
+			grid: newGrid,
+			generation: newGen
+		});
 	}
 
 	// called by submitting the form, which sets the size of the grid in state
@@ -169,17 +185,12 @@ class Grid extends Component {
 
 	startGame = e => {
 		e.preventDefault();
-		this.setState({
-			running: true
-		});
-		this.updateGrid();
+		this.gameInterval = setInterval(()=>this.updateGrid(), 25);
 	};
 
 	endGame = e => {
 		e.preventDefault();
-		this.setState({
-			running: false
-		});
+		clearInterval(this.gameInterval);
 	};
 
 	render() {
