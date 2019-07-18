@@ -8,6 +8,8 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 import GridSizeSlider from './GridSizeSlider';
 import DelaySlider from './DelaySlider';
+import gosper from '../utilities/gosper';
+import oscillators from '../utilities/oscillators';
 
 const useStyles = makeStyles(theme => ({
   topRow: {
@@ -21,13 +23,12 @@ export default function Controls({
   generation,
   playPause,
   step,
-  gosper,
-  oscillator,
   random,
   gridSize,
   delay,
   updateDelay,
   cellData,
+  preset,
   updateGridSize,
   clear
 }) {
@@ -51,8 +52,10 @@ export default function Controls({
               >
                 <Button onClick={e => playPause(e)}>Play / Pause</Button>
                 <Button onClick={e => step(e)}>Step</Button>
-                <Button onClick={e => gosper(e)}>Gosper</Button>
-                <Button onClick={e => oscillator(e)}>Oscillators</Button>
+                <Button onClick={e => preset(e, gosper, 40)}>Gosper</Button>
+                <Button onClick={e => preset(e, oscillators, 30)}>
+                  Oscillators
+                </Button>
                 <Button onClick={e => random(e)}>Random</Button>
                 <Button onClick={e => clear(e)}>Clear</Button>
               </ButtonGroup>

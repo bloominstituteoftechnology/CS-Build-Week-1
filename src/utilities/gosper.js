@@ -1,4 +1,4 @@
-const gosperCoords = [
+const gosper = [
   652,
   692,
   693,
@@ -46,4 +46,4 @@ const gosperCoords = [
   988
 ];
 
-export default gosperCoords;
+export default gosper;

@@ -1,4 +1,4 @@
-const oscillatorCoords = [
+const oscillators = [
   134,
   135,
   153,
@@ -82,4 +82,4 @@ const oscillatorCoords = [
   764
 ];
 
-export default oscillatorCoords;
+export default oscillators;

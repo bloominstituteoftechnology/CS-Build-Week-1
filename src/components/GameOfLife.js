@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import makeStyles from '@material-ui/styles/makeStyles';
 // import useTheme from '@material-ui/styles/useTheme';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
 import useInterval from '../utilities/useInterval';
-import gosperCoords from '../utilities/gosperCoords';
-import oscillatorCoords from '../utilities/oscillatorCoords';
 import generate from '../utilities/generate';
 
 import Grid from './Grid';
@@ -29,6 +27,7 @@ export default function GameOfLife() {
   // const theme = useTheme();
 
   const [cellData, setCellData] = useState([]);
+  const cellDataRef = useRef();
   const [gridSize, setGridSize] = useState(40);
   const [generation, setGeneration] = useState(0);
   const [delay, setDelay] = useState(2000);
@@ -37,6 +36,7 @@ export default function GameOfLife() {
   useEffect(() => {
     const tempCellData = Array(gridSize * gridSize).fill(40);
     setCellData(tempCellData);
+    cellDataRef.current = tempCellData;
   }, [gridSize]);
 
   const toggleCellManual = (e, index) => {
@@ -70,35 +70,53 @@ export default function GameOfLife() {
     setDelay(value);
   };
 
-  const gosper = e => {
+  const preset = (e, preset, size) => {
     e.preventDefault();
     setGeneration(0);
-    setGridSize(40);
-    const tempCellData = cellData.map((cell, index) => {
-      if (gosperCoords.includes(index)) {
-        return 41;
-      } else {
-        return 40;
-      }
-    });
-    setCellData(tempCellData);
-  };
-
-  const oscillator = e => {
-    e.preventDefault();
-    setGeneration(0);
-    setGridSize(30);
+    setGridSize(size);
     setTimeout(() => {
-      const tempCellData = cellData.map((cell, index) => {
-        if (oscillatorCoords.includes(index)) {
+      const tempCellData = cellDataRef.current.map((cell, index) => {
+        if (preset.includes(index)) {
           return 41;
         } else {
           return 40;
         }
       });
       setCellData(tempCellData);
-    }, 2000);
+    }, 500);
   };
+
+  // const gosper = e => {
+  //   e.preventDefault();
+  //   setGeneration(0);
+  //   setGridSize(40);
+  //   setTimeout(() => {
+  //     const tempCellData = cellDataRef.current.map((cell, index) => {
+  //       if (gosperCoords.includes(index)) {
+  //         return 41;
+  //       } else {
+  //         return 40;
+  //       }
+  //     });
+  //     setCellData(tempCellData);
+  //   }, 500);
+  // };
+
+  // const oscillator = e => {
+  //   e.preventDefault();
+  //   setGeneration(0);
+  //   setGridSize(30);
+  //   setTimeout(() => {
+  //     const tempCellData = cellDataRef.current.map((cell, index) => {
+  //       if (oscillatorCoords.includes(index)) {
+  //         return 41;
+  //       } else {
+  //         return 40;
+  //       }
+  //     });
+  //     setCellData(tempCellData);
+  //   }, 500);
+  // };
 
   const random = e => {
     e.preventDefault();
@@ -159,8 +177,7 @@ export default function GameOfLife() {
         cellData={cellData}
         playPause={playPause}
         step={step}
-        gosper={gosper}
-        oscillator={oscillator}
+        preset={preset}
         random={random}
         clear={clear}
       />
