@@ -8,8 +8,7 @@ import useInterval from '../utilities/useInterval';
 import gosperCoords from '../utilities/gosperCoords';
 import generate from '../utilities/generate';
 
-import Grid from './Grid';
-// import Canvas from './Canvas';
+import Canvas from './Canvas';
 import Controls from './Controls';
 
 const useStyles = makeStyles(theme => ({
@@ -126,7 +125,7 @@ export default function GameOfLife() {
   return (
     <Box className={classes.container}>
       <Typography className={classes.title}>Game of Life</Typography>
-      <Grid
+      <Canvas
         cellData={cellData}
         gridSize={gridSize}
         toggleCellManual={toggleCellManual}
