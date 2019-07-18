@@ -1,10 +1,21 @@
 import React from 'react';
+import makeStyles from '@material-ui/styles/makeStyles';
+// import useTheme from '@material-ui/styles/useTheme';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 import GridSizeSlider from './GridSizeSlider';
+import SpeedSlider from './SpeedSlider';
+
+const useStyles = makeStyles(theme => ({
+  topRow: {
+    display: 'grid',
+    gridTemplateColumns: '20% 35% 35%',
+    justifyContent: 'space-between'
+  }
+}));
 
 export default function Controls({
   generation,
@@ -13,14 +24,20 @@ export default function Controls({
   gosper,
   random,
   gridSize,
+  delay,
+  updateDelay,
   cellData,
   updateGridSize,
   clear
 }) {
+  const classes = useStyles();
   return (
     <div>
-      <Typography>Generation: {generation}</Typography>
-      <GridSizeSlider gridSize={gridSize} updateGridSize={updateGridSize} />
+      <div className={classes.topRow}>
+        <Typography>Generation: {generation}</Typography>
+        <GridSizeSlider gridSize={gridSize} updateGridSize={updateGridSize} />
+        <SpeedSlider delay={delay} updateDelay={updateDelay} />
+      </div>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Grid container spacing={1} direction='column' alignItems='center'>
