@@ -7,16 +7,18 @@ class Grid extends Component {
 		grid: [[]],
 		size: 0,
 		generation: 0,
-		running: false
+		running: false,
+
+		random: 0
 	};
 
 	componentDidMount() {
-		const newGrid = this.gridHelper(25);
-		this.setState({
-			size: 25,
-			generation: 1,
-			grid: newGrid
-		});
+		// const newGrid = this.gridHelper(25);
+		// this.setState({
+		// 	size: 25,
+		// 	generation: 1,
+		// 	grid: newGrid
+		// });
 	}
 
 	gridHelper(int) {
@@ -67,6 +69,7 @@ class Grid extends Component {
 			if (arr[x - 1][y]) {
 				count.alive++;
 			}
+		
 		}
 		// Northwest
 		if (x >= 1 && y < this.state.size - 1) {
@@ -100,7 +103,7 @@ class Grid extends Component {
 		// O(n^2) but capped at size of grid.
 
 		// declare variables that you'll manipulate and eventually set to state
-		const newGrid = this.gridHelper(this.state.size);
+		const newGrid = this.gridHelper(parseInt(this.state.size));
 		const newGen = this.state.generation + 1;
 		// loop through outer array
 		for (let i = 0; i < newGrid.length; i++) {
@@ -157,10 +160,12 @@ class Grid extends Component {
 	}
 
 	// called by submitting the form, which sets the size of the grid in state
-	createGrid = e => {
-		e.preventDefault();
-		// create a new empty grid
-		const newGrid = this.gridHelper();
+	createGrid = () => {
+		// e.preventDefault();
+	
+	
+		const newGrid = this.gridHelper(parseInt(this.state.size));
+		console.log('new grid: ', newGrid)
 		// set it to state
 		this.setState({
 			grid: newGrid,
@@ -201,12 +206,24 @@ class Grid extends Component {
 
 	takeStep = e => {
 		e.preventDefault();
-		this.updateGrid()
-	}
+		this.updateGrid();
+	};
+	// toggleCellAsync(x,y) {
+	// 	return new Promise ((resolve)=> {
+	// 		this.toggleCell((x,y), resolve)
+	// 	});
+	// }
+	// randomSelection = int => {
+	// 	for (let i = 0; i < int; i++) {
+	// 		let x = Math.floor(Math.random() * this.state.size);
+	// 		let y = Math.floor(Math.random() * this.state.size);
+	// 		this.toggleCellAsync(x, y);
+	// 	}
+	// };
 
 	resetGrid = e => {
 		e.preventDefault();
-		console.log('here')
+		console.log('here');
 		const newGrid = this.gridHelper(this.state.size);
 		this.setState({
 			grid: newGrid,
@@ -221,6 +238,8 @@ class Grid extends Component {
 				<form onSubmit={this.createGrid}>
 					<input
 						type="number"
+						min="10"
+						max="50"
 						value={this.state.size}
 						name="size"
 						placeholder="how big would you like your square?"
@@ -250,12 +269,21 @@ class Grid extends Component {
 						))}
 					</div>
 					<div className="control-container">
-					<button onClick={this.takeStep}>Take One Step</button>
+						<button onClick={this.takeStep}>Take One Step</button>
 						<button onClick={this.startGame}>START IT</button>
 						<button onClick={this.endGame}>END IT</button>
 						<button onClick={this.resetGrid}>RESET IT</button>
 						<p>Generation: {this.state.generation}</p>
 					</div>
+					{/* <form onSubmit={this.randomSelection(this.state.random)}>
+						<input
+							type="number"
+							value={this.state.random}
+							name="random"
+							placeholder="Pick a number of random squares"
+							onChange={this.changeHandler}
+						/>
+					</form> */}
 				</div>
 			);
 		}
