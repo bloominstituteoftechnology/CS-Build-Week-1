@@ -51,15 +51,40 @@ class App extends React.Component {
 
     componentDidUpdate() {
       console.log('Current Grid:', this.state.currentGrid)
+      console.log('Grid Dimensions:', this.state.gridDimensions)
+    }
+
+    randomizeGrid = () => {
+      let newGrid = []
+      for (let x = 0; x < this.state.gridDimensions; x++) {
+          let rowOfCells = []
+          for (let y = 0; y < this.state.gridDimensions; y++) {
+            const random = !!Math.round(Math.random());
+              rowOfCells.push({
+                  xVal: y,
+                  yVal: x,
+                  isAlive: random,
+              });
+          }
+          newGrid.push(rowOfCells);
+      }
+      this.setState({
+          currentGrid: newGrid
+      })
     }
 
 
     render() {
         return (
             <div className="App">
-                <p>GRID CONTAINER COMPONENT</p>
+                <p>James Basile: Conway's Game of Life</p>
                 <Grid
                 currentGrid={this.state.currentGrid}
+                size={this.state.gridDimensions}
+                />
+                <ControlBar
+                gridReset={this.setNewDimensions}
+                randomizeGrid={this.randomizeGrid}
                 />
             </div>
         )
