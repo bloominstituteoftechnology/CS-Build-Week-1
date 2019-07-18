@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     border: '3px dashed orange',
     width: '90%',
     height: 'auto',
-    background: 'teal'
+    background: 'white'
   }
 }));
 
@@ -25,8 +25,21 @@ export default function Canvas({ cellData, gridSize, toggleCellCanvas }) {
     ctx = canvas.getContext('2d');
     imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     screenBuffer = imageData.data;
-    console.log(screenBuffer);
+    const allDead = ctx.createImageData(imageData);
+
+    for (let i = 0; i < allDead.data.length; i += 4) {
+      // Modify pixel data
+      allDead.data[i + 0] = 0; // R value
+      allDead.data[i + 1] = 179; // G value
+      allDead.data[i + 2] = 179; // B value
+      allDead.data[i + 3] = 255; // A value
+    }
+
+    ctx.putImageData(allDead, 0, 0);
+    console.log('allDead: ', allDead);
   }
+
+  // console.log(allDead);
 
   return (
     <canvas
