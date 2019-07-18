@@ -2,7 +2,7 @@ import React from 'react';
 import makeStyles from '@material-ui/styles/makeStyles';
 // import useTheme from '@material-ui/styles/useTheme';
 
-import { MemoCell } from './Cell';
+import MemoCell from './MemoCell';
 
 const useStyles = makeStyles(theme => ({
   grid: {

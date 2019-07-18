@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const MemoCell = React.memo(function Cell({
+const MemoCell = React.memo(function Cell({
   index,
   status,
   toggleCellManual,
@@ -73,3 +73,5 @@ export const MemoCell = React.memo(function Cell({
     />
   );
 });
+
+export default MemoCell;
