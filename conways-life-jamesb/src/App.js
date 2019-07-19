@@ -10,7 +10,9 @@ class App extends React.Component {
   state = {
     currentGrid: [],
     gridDimensions: 15,
-    generation: 0
+    generation: 0,
+    gameOn: false,
+    gameSpeed: 250
   };
 
   createGrid = (newGridSize) => {
@@ -106,24 +108,16 @@ class App extends React.Component {
   gameAlgo = () => {
     //start from neighbor on top and work clockwise around each cell
     //first count up the neighbors
-    let nextGenGrid = []
-
-
-
+    let nextGenGrid = [];
     const size = this.state.gridDimensions;
     const curGrid = this.state.currentGrid;
     //send the current state into a mutable variable
     nextGenGrid.push(...curGrid);
-
-
-
     //this loops down each column, starting at the top left, first if will be right, then move clockwise
     //the first if statement is to avoid errors for when cell does not have a neighbor to a specific direction
     for (let x = 0; x < size; x++) {
       for (let y = 0; y < size; y++) {
         let liveNeighbors = 0;
-
-
         //right neighbor
         if (x < size - 1) {
           if (curGrid[y][x + 1].isAlive) {
@@ -131,7 +125,6 @@ class App extends React.Component {
             console.log('right works!!!!', liveNeighbors, x, y)
           }
         }
-
         //bottom-right neighbor
         if (y < size - 1 && x < size - 1) {
           if (curGrid[y + 1][x + 1].isAlive) {
@@ -139,7 +132,6 @@ class App extends React.Component {
             console.log('bottom-right works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
-
         //bottom neighbor
         if (y < size - 1) {
           if (curGrid[y + 1][x].isAlive) {
@@ -147,7 +139,6 @@ class App extends React.Component {
             console.log('bottom works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
-
         //bottom-left
         if (y < size - 1 && x > 0) {
           if (curGrid[y + 1][x - 1].isAlive) {
@@ -155,7 +146,6 @@ class App extends React.Component {
             console.log('bottom-left works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
-
         //left
         if (x > 0) {
           if (curGrid[y][x - 1].isAlive) {
@@ -163,7 +153,6 @@ class App extends React.Component {
             console.log('left works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
-
         //top-left
         if (x > 0 && y > 0) {
           if (curGrid[y - 1][x - 1].isAlive) {
@@ -171,7 +160,6 @@ class App extends React.Component {
             console.log('top-left works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
-
         // above neighbor
         if (y > 0) {
           if (curGrid[y - 1][x].isAlive) {
@@ -179,7 +167,6 @@ class App extends React.Component {
             console.log('top works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
-
         // top right neighbor
         if (y > 0 && x < size - 1) {
           if (curGrid[y - 1][x + 1].isAlive) {
@@ -187,15 +174,12 @@ class App extends React.Component {
             console.log('top-right works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
-
         // apply life/death rules based on neighbor count
-
         //life
         //cell is dead and has 3 neighbors it comes to life
         if (curGrid[y][x].isAlive === false && liveNeighbors === 3) {
           nextGenGrid[y][x].isAlive = true;
         }
-
         //death
         // less than 2 neighbors, dies of underpopulation
         // more than 3 neighbors, dies of overpopulation
@@ -204,9 +188,6 @@ class App extends React.Component {
         }
       }
     }
-
-
-
     // increse generation by 1
     this.setState({
       generation: this.state.generation + 1,
@@ -214,6 +195,34 @@ class App extends React.Component {
     })
   }
   //Game algo^^^-----------------------------------------------------------------------------------------------
+
+
+  //start game-- has button on controlbar
+  startGame = () => {
+    this.setState({
+      gameOn: true
+    });
+    this.nextGeneration()
+  }
+
+  //game continues-- no button on control bar
+  nextGeneration = () => {
+    this.gameAlgo();
+    setTimeout(() => {
+      if (this.state.gameOn) {
+        this.nextGeneration()
+      }
+    }, this.state.gameSpeed)
+  };
+
+  //stop game--- has button on CB
+  stopGame = () => {
+    this.setState({
+      gameOn: false
+    });
+  };
+
+
 
   render() {
     return (
@@ -230,6 +239,8 @@ class App extends React.Component {
           randomizeGrid={this.randomizeGrid}
           clearGrid={this.clearGrid}
           nextGen={this.gameAlgo}
+          startGame={this.startGame}
+          stopGame={this.stopGame}
         />
       </div>
     )

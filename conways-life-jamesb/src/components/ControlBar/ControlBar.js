@@ -3,7 +3,9 @@ import React from 'react';
 export default function Grid(props) {
     return (
         <>
-            <button onClick={() => props.nextGen()}>Start Game</button>
+            <button onClick={() => props.startGame()}>Start Game</button>
+            <button onClick={() => props.stopGame()}>Stop Game</button>
+            <button onClick={() => props.nextGen()}>Next Generation</button>
             <button onClick={() => props.gridReset(15)}>15x15</button>
             <button onClick={() => props.gridReset(30)}>30x30</button>
             <button onClick={() => props.gridReset(45)}>45x45</button>
