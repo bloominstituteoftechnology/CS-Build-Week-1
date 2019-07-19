@@ -12,6 +12,9 @@ export default function Cell(props) {
     const cellSize = 100/props.size;
     return (
         <CellContainer
+            onClick={() => {
+                props.toggleCell(props.cell)
+            }}
             style={{width: `${cellSize}%`, height: `${cellSize}%`, background: `${cellColor}`  }}
         >
             <p>{props.cell.xVal}, {props.cell.yVal} </p>
@@ -23,5 +26,5 @@ export default function Cell(props) {
 const CellContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
-    
+    border: 1px solid gray;
 `

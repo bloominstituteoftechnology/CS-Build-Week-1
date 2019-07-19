@@ -8,6 +8,7 @@ export default function Grid(props) {
             <button onClick={() => props.gridReset(45)}>45x45</button>
             <button onClick={() => props.gridReset(60)}>60x60</button>
             <button onClick={() => props.randomizeGrid()}>Randomize!</button>
+            <button onClick={() => props.clearGrid()}>Clear Grid!</button>
         </>
     )
 }

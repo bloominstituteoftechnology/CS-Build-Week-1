@@ -9,7 +9,8 @@ class App extends React.Component {
     // on load, state should be a 15x15 grid with all cells set to dead
     state = {
         currentGrid: [],
-        gridDimensions: 15
+        gridDimensions: 15,
+        generation: 0
     };
 
     createGrid = (newGridSize) => {
@@ -73,18 +74,48 @@ class App extends React.Component {
       })
     }
 
+    clearGrid = () => {
+      let newGrid = []
+      for (let x = 0; x < this.state.gridDimensions; x++) {
+          let rowOfCells = []
+          for (let y = 0; y < this.state.gridDimensions; y++) {
+              rowOfCells.push({
+                  xVal: y,
+                  yVal: x,
+                  isAlive: false,
+              });
+          }
+          newGrid.push(rowOfCells);
+      }
+      this.setState({
+          currentGrid: newGrid
+      })
+    }
+
+    toggleCell = cell => {
+      let curGrid = this.state.currentGrid;
+
+      curGrid[cell.yVal][cell.xVal].isAlive = !cell.isAlive
+      this.setState({
+        currentGrid: curGrid
+      });
+    };
+
 
     render() {
         return (
             <div className="App">
                 <p>James Basile: Conway's Game of Life</p>
+                <p>Generation: {this.state.generation}</p>
                 <Grid
                 currentGrid={this.state.currentGrid}
                 size={this.state.gridDimensions}
+                toggleCell={this.toggleCell}
                 />
                 <ControlBar
                 gridReset={this.setNewDimensions}
                 randomizeGrid={this.randomizeGrid}
+                clearGrid={this.clearGrid}
                 />
             </div>
         )
