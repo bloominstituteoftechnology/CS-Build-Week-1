@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   topRow: {
     padding: '10px 0',
     display: 'grid',
-    gridTemplateColumns: '20% 35% 35%',
+    gridTemplateColumns: '30% 35% 35%',
     justifyContent: 'space-between',
     alignItems: 'center'
   },

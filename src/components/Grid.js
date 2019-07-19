@@ -7,6 +7,7 @@ import MemoCell from './MemoCell';
 const useStyles = makeStyles(theme => ({
   grid: {
     border: `2px solid ${theme.palette.dead.b}`,
+    borderRadius: '8px',
     width: '75%',
     height: '75%',
     display: 'grid'

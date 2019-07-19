@@ -10,13 +10,13 @@ import generate from '../utilities/generate';
 import Grid from './Grid';
 import Controls from './Controls';
 import About from './About';
+import title from '../presets/title';
 
 const useStyles = makeStyles(theme => ({
   container: {
     margin: '0 auto',
-    width: '100vmin',
-    height: '100vmin',
-    background: [theme.palette.main],
+    width: '90vmin',
+    height: '90vmin',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
@@ -37,6 +37,10 @@ export default function GameOfLife() {
   const [generation, setGeneration] = useState(0);
   const [delay, setDelay] = useState(50);
   const [isRunning, setIsRunning] = useState(false);
+
+  useEffect(() => {
+    preset(null, title.gridSize, title.delay, title.data);
+  }, []);
 
   useEffect(() => {
     const tempCellData = Array(gridSize * gridSize).fill(90);
@@ -77,7 +81,9 @@ export default function GameOfLife() {
   };
 
   const preset = (e, gridSize, delay, data) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     setIsRunning(false);
     setGeneration(0);
     setGridSize(gridSize);
@@ -140,7 +146,7 @@ export default function GameOfLife() {
 
   return (
     <Box className={classes.container}>
-      <Typography className={classes.title}>Conway's Game of Life</Typography>
+      <Typography className={classes.title}>Conway's Life</Typography>
       <Grid
         className={classes.grid}
         cellData={cellData}
