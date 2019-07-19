@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  border: 1px solid gray;
+  margin: 20px auto;
 }
 
 code {
@@ -16,6 +19,3 @@ code {
   box-sizing: border-box
 }
 
-div {
-  border: 1px solid red;
-}

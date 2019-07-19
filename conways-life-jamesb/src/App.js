@@ -1,7 +1,9 @@
 import React from 'react'
 import './App.css'
 import Grid from '../src/components/Grid/Grid'
+import TopBar from '../src/components/TopBar/TopBar'
 import ControlBar from '../src/components/ControlBar/ControlBar'
+import styled from 'styled-components'
 
 
 
@@ -12,7 +14,8 @@ class App extends React.Component {
     gridDimensions: 15,
     generation: 0,
     gameOn: false,
-    gameSpeed: 250
+    gameSpeed: 1000,
+    displaySpeed: 1
   };
 
   createGrid = (newGridSize) => {
@@ -89,7 +92,8 @@ class App extends React.Component {
     }
     this.setState({
       currentGrid: newGrid,
-      generation: 0
+      generation: 0,
+      gameOn: false
     })
   }
   // clear grid^^^^^^^------------------------------------------------------------------------------------------
@@ -110,9 +114,15 @@ class App extends React.Component {
     //first count up the neighbors
     let nextGenGrid = [];
     const size = this.state.gridDimensions;
-    const curGrid = this.state.currentGrid;
+    
     //send the current state into a mutable variable
-    nextGenGrid.push(...curGrid);
+    for (let x = 0; x < size; x++) {
+      let gridRow = []
+      for (let y = 0; y < size; y++) {
+        gridRow.push({...this.state.currentGrid[x][y]})
+      }
+      nextGenGrid.push(gridRow);
+    }
     //this loops down each column, starting at the top left, first if will be right, then move clockwise
     //the first if statement is to avoid errors for when cell does not have a neighbor to a specific direction
     for (let x = 0; x < size; x++) {
@@ -120,56 +130,56 @@ class App extends React.Component {
         let liveNeighbors = 0;
         //right neighbor
         if (x < size - 1) {
-          if (curGrid[y][x + 1].isAlive) {
+          if (this.state.currentGrid[y][x+1].isAlive) {
             liveNeighbors++
             console.log('right works!!!!', liveNeighbors, x, y)
           }
         }
         //bottom-right neighbor
         if (y < size - 1 && x < size - 1) {
-          if (curGrid[y + 1][x + 1].isAlive) {
+          if (this.state.currentGrid[y+1][x+1].isAlive) {
             liveNeighbors++
             console.log('bottom-right works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         //bottom neighbor
         if (y < size - 1) {
-          if (curGrid[y + 1][x].isAlive) {
+          if (this.state.currentGrid[y+1][x].isAlive) {
             liveNeighbors++
             console.log('bottom works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         //bottom-left
         if (y < size - 1 && x > 0) {
-          if (curGrid[y + 1][x - 1].isAlive) {
+          if (this.state.currentGrid[y+1][x-1].isAlive) {
             liveNeighbors++
             console.log('bottom-left works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         //left
         if (x > 0) {
-          if (curGrid[y][x - 1].isAlive) {
+          if (this.state.currentGrid[y][x-1].isAlive) {
             liveNeighbors++
             console.log('left works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         //top-left
         if (x > 0 && y > 0) {
-          if (curGrid[y - 1][x - 1].isAlive) {
+          if (this.state.currentGrid[y-1][x-1].isAlive) {
             liveNeighbors++
             console.log('top-left works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         // above neighbor
         if (y > 0) {
-          if (curGrid[y - 1][x].isAlive) {
+          if (this.state.currentGrid[y-1][x].isAlive) {
             liveNeighbors++
             console.log('top works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         // top right neighbor
         if (y > 0 && x < size - 1) {
-          if (curGrid[y - 1][x + 1].isAlive) {
+          if (this.state.currentGrid[y-1][x+1].isAlive) {
             liveNeighbors++
             console.log('top-right works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
@@ -177,14 +187,14 @@ class App extends React.Component {
         // apply life/death rules based on neighbor count
         //life
         //cell is dead and has 3 neighbors it comes to life
-        if (curGrid[y][x].isAlive === false && liveNeighbors === 3) {
+        if (this.state.currentGrid[y][x].isAlive === false && liveNeighbors === 3) {
           nextGenGrid[y][x].isAlive = true;
         }
         //death
         // less than 2 neighbors, dies of underpopulation
         // more than 3 neighbors, dies of overpopulation
-        if (curGrid[y][x].isAlive === true && (liveNeighbors < 2 || liveNeighbors > 3)) {
-          nextGenGrid[y][x].isAlive = false;
+        if (this.state.currentGrid[y][x].isAlive === true && (liveNeighbors > 3 || liveNeighbors < 2)) {
+            nextGenGrid[y][x].isAlive = false;
         }
       }
     }
@@ -222,26 +232,61 @@ class App extends React.Component {
     });
   };
 
+  increaseSpeed = () => {
+    if (this.state.gameSpeed === 100) {
+      window.alert('You\'ve reached the speed limit!')
+    } else {
+      this.setState({
+        gameSpeed: this.state.gameSpeed - 100,
+        displaySpeed: this.state.displaySpeed + 1
+      })
+    }
+  }
+
+  decreaseSpeed = () => {
+    if( this.state.gameSpeed === 1000) {
+      window.alert('Cannot go any slower!')
+    } else {
+      this.setState({
+        gameSpeed: this.state.gameSpeed + 100,
+        displaySpeed: this.state.displaySpeed -1
+      })
+    }
+  }
+
 
 
   render() {
     return (
       <div className="App">
         <p>James Basile: Conway's Game of Life</p>
+
+      <AppWrapper>
+        <GameWrapper>
         <p>Generation: {this.state.generation}</p>
+        <p>Game Speed: {this.state.displaySpeed}</p>
         <Grid
           currentGrid={this.state.currentGrid}
           size={this.state.gridDimensions}
           toggleCell={this.toggleCell}
         />
+        </GameWrapper>
+        <ControlWrapper>
+        <TopBar
+          startGame={this.startGame}
+          stopGame={this.stopGame}
+          nextGen={this.gameAlgo}
+          increaseSpeed={this.increaseSpeed}
+          decreaseSpeed={this.decreaseSpeed}
+        />
         <ControlBar
           gridReset={this.setNewDimensions}
           randomizeGrid={this.randomizeGrid}
           clearGrid={this.clearGrid}
-          nextGen={this.gameAlgo}
-          startGame={this.startGame}
           stopGame={this.stopGame}
         />
+        </ControlWrapper>
+        </AppWrapper>
       </div>
     )
   }
@@ -251,3 +296,20 @@ class App extends React.Component {
 
 
 export default App;
+
+const AppWrapper = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+`
+
+const GameWrapper = styled.div`
+  display: flex;
+  width: 48%; 
+  flex-wrap: wrap;
+`
+
+
+const ControlWrapper = styled.div`
+  width: 48%;
+  flex-direction: column;
+`
