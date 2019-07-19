@@ -1,6 +1,6 @@
 const gosper = {
   gridSize: 40,
-  delay: 100,
+  delay: 25,
   data: [
     652,
     692,
