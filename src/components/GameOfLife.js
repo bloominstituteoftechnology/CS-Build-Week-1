@@ -9,16 +9,21 @@ import generate from '../utilities/generate';
 
 import Grid from './Grid';
 import Controls from './Controls';
+import About from './About';
 
 const useStyles = makeStyles(theme => ({
   container: {
-    border: '3px dashed teal',
-    width: '85vmin',
-    height: '85vmin',
-    background: [theme.palette.main]
+    margin: '0 auto',
+    width: '100vmin',
+    height: '100vmin',
+    background: [theme.palette.main],
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   title: {
-    fontSize: '2em'
+    color: [theme.palette.alive.c],
+    fontSize: '4em'
   }
 }));
 
@@ -49,6 +54,7 @@ export default function GameOfLife() {
       tempCellData[index] = 90;
       setCellData(tempCellData);
     }
+    // The following is useful in devloping presets:
     const alive = [];
     tempCellData.forEach((cell, index) => {
       if (cell % 10 === 1) {
@@ -134,8 +140,9 @@ export default function GameOfLife() {
 
   return (
     <Box className={classes.container}>
-      <Typography className={classes.title}>Game of Life</Typography>
+      <Typography className={classes.title}>Conway's Game of Life</Typography>
       <Grid
+        className={classes.grid}
         cellData={cellData}
         gridSize={gridSize}
         toggleCellManual={toggleCellManual}
@@ -155,6 +162,7 @@ export default function GameOfLife() {
         random={random}
         clear={clear}
       />
+      <About />
     </Box>
   );
 }

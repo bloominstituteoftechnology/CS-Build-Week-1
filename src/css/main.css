@@ -130,5 +130,6 @@ html {
   font-family: 'Roboto', sans-serif;
 }
 body {
+  background: #333333;
   margin: 10px;
 }

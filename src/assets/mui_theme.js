@@ -12,10 +12,14 @@ export default createMuiTheme({
       xl: 1800
     }
   },
+  slider: {
+    trackColor: 'yellow',
+    selectionColor: 'green'
+  },
   palette: {
-    main: 'white',
+    main: '#242424',
     alive: {
-      // green
+      // mint
       a: '#00ffd5',
       b: '#24ffd9',
       c: '#40ffde',
