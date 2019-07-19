@@ -110,7 +110,7 @@ export default function Controls({
           size='small'
           onClick={e => preset(e, gosper.gridSize, gosper.delay, gosper.data)}
         >
-          Gosper
+          Gosper Gun
         </Button>
         <Button
           className={classes.button}
