@@ -28,6 +28,10 @@ export default function Grid(props) {
                 props.stopGame();
                 props.clearGrid();
             }}>Clear Grid!</button>
+            <button onClick={() => {
+                props.gridReset(15);
+                props.robotPreset();
+            }}>Preset Grid: Robot</button>
         </>
     )
 }
