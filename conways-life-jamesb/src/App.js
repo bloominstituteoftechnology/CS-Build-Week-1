@@ -86,7 +86,8 @@ class App extends React.Component {
       newGrid.push(rowOfCells);
     }
     this.setState({
-      currentGrid: newGrid
+      currentGrid: newGrid,
+      generation: 0
     })
   }
   // clear grid^^^^^^^------------------------------------------------------------------------------------------
@@ -105,17 +106,15 @@ class App extends React.Component {
   gameAlgo = () => {
     //start from neighbor on top and work clockwise around each cell
     //first count up the neighbors
-    let nextGenGrid = this.state.currentGrid;
+    let nextGenGrid = []
+
+
 
     const size = this.state.gridDimensions;
     const curGrid = this.state.currentGrid;
-    // for (let x = 0; x < this.state.gridDimensions; x++) {
-    //   let gridRow = [];
-    //   for (let y = 0; y < this.state.gridDimensions; y++) {
-    //     gridRow.push({...this.state.currentGrid[x][y]})
-    //   }
-    //   nextGenGrid.push(gridRow)
-    // }
+    //send the current state into a mutable variable
+    nextGenGrid.push(...curGrid);
+
 
 
     //this loops down each column, starting at the top left, first if will be right, then move clockwise
@@ -166,13 +165,11 @@ class App extends React.Component {
         }
 
         //top-left
-        if(x > 0 && y > 0) {
-          if(curGrid[y-1][x-1].isAlive) {
+        if (x > 0 && y > 0) {
+          if (curGrid[y - 1][x - 1].isAlive) {
             liveNeighbors++
             console.log('top-left works!!!!', liveNeighbors, '     X,Y:', x, y)
-
           }
-
         }
 
         // above neighbor
@@ -190,17 +187,30 @@ class App extends React.Component {
             console.log('top-right works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
+
+        // apply life/death rules based on neighbor count
+
+        //life
+        //cell is dead and has 3 neighbors it comes to life
+        if (curGrid[y][x].isAlive === false && liveNeighbors === 3) {
+          nextGenGrid[y][x].isAlive = true;
+        }
+
+        //death
+        // less than 2 neighbors, dies of underpopulation
+        // more than 3 neighbors, dies of overpopulation
+        if (curGrid[y][x].isAlive === true && (liveNeighbors < 2 || liveNeighbors > 3)) {
+          nextGenGrid[y][x].isAlive = false;
+        }
       }
     }
 
 
 
-
-    // apply life/death rules based on neighbor count
-
     // increse generation by 1
     this.setState({
       generation: this.state.generation + 1,
+      currentGrid: nextGenGrid
     })
   }
   //Game algo^^^-----------------------------------------------------------------------------------------------
