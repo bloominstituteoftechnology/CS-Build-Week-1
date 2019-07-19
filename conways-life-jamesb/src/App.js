@@ -132,56 +132,56 @@ class App extends React.Component {
         if (x < size - 1) {
           if (this.state.currentGrid[y][x+1].isAlive) {
             liveNeighbors++
-            console.log('right works!!!!', liveNeighbors, x, y)
+            //console.log('right works!!!!', liveNeighbors, x, y)
           }
         }
         //bottom-right neighbor
         if (y < size - 1 && x < size - 1) {
           if (this.state.currentGrid[y+1][x+1].isAlive) {
             liveNeighbors++
-            console.log('bottom-right works!!!!', liveNeighbors, '     X,Y:', x, y)
+            //console.log('bottom-right works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         //bottom neighbor
         if (y < size - 1) {
           if (this.state.currentGrid[y+1][x].isAlive) {
             liveNeighbors++
-            console.log('bottom works!!!!', liveNeighbors, '     X,Y:', x, y)
+            //console.log('bottom works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         //bottom-left
         if (y < size - 1 && x > 0) {
           if (this.state.currentGrid[y+1][x-1].isAlive) {
             liveNeighbors++
-            console.log('bottom-left works!!!!', liveNeighbors, '     X,Y:', x, y)
+            //console.log('bottom-left works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         //left
         if (x > 0) {
           if (this.state.currentGrid[y][x-1].isAlive) {
             liveNeighbors++
-            console.log('left works!!!!', liveNeighbors, '     X,Y:', x, y)
+            //console.log('left works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         //top-left
         if (x > 0 && y > 0) {
           if (this.state.currentGrid[y-1][x-1].isAlive) {
             liveNeighbors++
-            console.log('top-left works!!!!', liveNeighbors, '     X,Y:', x, y)
+            //console.log('top-left works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         // above neighbor
         if (y > 0) {
           if (this.state.currentGrid[y-1][x].isAlive) {
             liveNeighbors++
-            console.log('top works!!!!', liveNeighbors, '     X,Y:', x, y)
+            //console.log('top works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         // top right neighbor
         if (y > 0 && x < size - 1) {
           if (this.state.currentGrid[y-1][x+1].isAlive) {
             liveNeighbors++
-            console.log('top-right works!!!!', liveNeighbors, '     X,Y:', x, y)
+            //console.log('top-right works!!!!', liveNeighbors, '     X,Y:', x, y)
           }
         }
         // apply life/death rules based on neighbor count
@@ -217,6 +217,7 @@ class App extends React.Component {
 
   //game continues-- no button on control bar
   nextGeneration = () => {
+    console.log(this.state.currentGrid)
     this.gameAlgo();
     setTimeout(() => {
       if (this.state.gameOn) {

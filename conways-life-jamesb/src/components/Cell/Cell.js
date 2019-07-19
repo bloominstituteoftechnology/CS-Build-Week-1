@@ -17,7 +17,6 @@ export default function Cell(props) {
             }}
             style={{width: `${cellSize}%`, height: `${cellSize}%`, background: `${cellColor}`  }}
         >
-            <p>{props.cell.xVal}, {props.cell.yVal} </p>
         </CellContainer>
     )
 }
