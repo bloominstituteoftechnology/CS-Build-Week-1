@@ -4,6 +4,7 @@ import Grid from '../src/components/Grid/Grid'
 import TopBar from '../src/components/TopBar/TopBar'
 import ControlBar from '../src/components/ControlBar/ControlBar'
 import styled from 'styled-components'
+import Info from './components/Info/Info';
 
 
 
@@ -105,7 +106,7 @@ class App extends React.Component {
     this.setState({
       currentGrid: curGrid
     });
-    console.log(this.state.currentGrid)
+    // console.log(this.state.currentGrid)
   };
   // toggle dead/alive^^^^^^^------------------------------------------------------------------------------------------
 
@@ -524,6 +525,10 @@ class App extends React.Component {
     return (
       <div className="App">
         <p>James Basile: Conway's Game of Life</p>
+        <nav>
+          <a href='https://github.com/jbasile6/Conways-Life/blob/master/objectives/rules-game-life'>Game Rules</a>
+          <a href='#info'>Info Section</a>
+        </nav>
 
         <AppWrapper>
           <GameWrapper>
@@ -553,6 +558,9 @@ class App extends React.Component {
             />
           </ControlWrapper>
         </AppWrapper>
+        <InfoWrapper id="info">
+            <Info />
+          </InfoWrapper>
       </div>
     )
   }
@@ -566,10 +574,13 @@ export default App;
 const AppWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
+  border: 2px solid gray;
+  padding: 10px 10px;
 `
 
 const GameWrapper = styled.div`
   display: flex;
+  justify-content: center;
   width: 48%; 
   flex-wrap: wrap;
 `
@@ -578,4 +589,9 @@ const GameWrapper = styled.div`
 const ControlWrapper = styled.div`
   width: 48%;
   flex-direction: column;
+`
+
+const InfoWrapper = styled.div`
+  width: 95%;
+  margin: 0 auto;
 `
