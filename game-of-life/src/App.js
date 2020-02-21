@@ -43,25 +43,8 @@ class App extends Component {
     gen: 0,
     speed: 500,
     random: 0
-
-    // grid: [
-    //   [1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    // ]
   };
+
   togglePlay = e => {
     console.log("togglePlay fired!");
     if (this.state.play === 0) {
@@ -73,11 +56,6 @@ class App extends Component {
         this.timeoutHandler = null;
       }
     }
-    // if(this.state.play == 1) {
-    //   console.log('we are in toggleplay about to start gameloop');
-    //   this.gameLoop();
-
-    // }
   };
 
   toggleActive = (x, y) => {
@@ -119,40 +97,9 @@ class App extends Component {
   }
 
   logic = (view, arr, x, y) => {
-    // console.log("got into logic")
     let val = this.state.grid[y][x];
-    // console.log("value of val: ", val)
     if (this.isDefined(this.state.grid, y, x) != -1) {
-      // console.log("got into if statement");
-      // if ((arr.length < 2) || (arr.length > 3) && (val !== 0)) {
-      //   view[y][x] = 0;
-
-      //   //logic similar to toggleActive but first put it in view and then when finished checking each cell the grid becomes view view will do maths and state becomes view
-      // } else if (arr.length == 3) {
-      //   if (val == 0) {
-      //     view[y][x] = 1;
-      //   }
-
-      //   // } else if( y == arr[y].length - 1 && x ==  arr[y].length - 1) {
-      //   //   this.gridSetup(x,y, this.state.view[y][x]);
-      //   // } // R: i think we should switch between the two arrays in a different way rather than this k I was just seeing what it would throw
-      //   // console.log(this.state.view);
-      // }
-      // console.log(`\t\tarr.length: ${arr.length} ${val}`);
-      // console.log(arr); // idk why it's just picking up two neighbors
-
       if (val === 1) {
-        //   if (arr.length < 2 || arr.length > 3) {
-        //     console.log("val true condition OK");
-        //     view[y][x] = 0;
-        //   }
-        // }
-        // else {
-        //   if (arr.length === 3) {
-        //     console.log("val false condition OK");
-        //     view[y][x] = 1;
-        //   }
-        // }
         view[y][x] = arr.length < 2 || arr.length > 3 ? 0 : 1;
       } else {
         view[y][x] = arr.length === 3 ? 1 : 0;
@@ -199,18 +146,13 @@ class App extends Component {
           -1 &&
         this.state.grid[neighbors[i][0]][neighbors[i][1]] === 1
       ) {
-        // console.log("this is i", neighbors[i]);
-        // console.log("this neighbor should be pushed:", neighbors[i]);
         newNeighbors.push(neighbors[i]);
-        // console.log("new Nayyyyy", newNeighbors);
       }
     }
-    // console.log(`these are the neighbors ${newNeighbors} of ${y},${x}`);
     return newNeighbors;
   };
 
   gridSetup = (x, y, element) => {
-    // this.setState({ grid: JSON.parse(JSON.stringify(this.state.view)) });
     if (this.state.play === 0) {
       console.log(`it${y}, ${x}, and it should be set to ${element}`);
       return (
@@ -299,8 +241,7 @@ class App extends Component {
     return (
       <AppContainer>
         <h1>Game of Life</h1>
-        <h1>{this.state.gen}</h1>
-        <button onClick={() => this.gameLoop()}>Next</button>
+        <h1>{this.state.play ? "Game is running..." : "Game is stopped"}</h1>
         <GridWrapper>
           {this.state.grid.map((nested, y) =>
             nested.map((element, x) => this.gridSetup(x, y, element))
@@ -339,11 +280,3 @@ class App extends Component {
 }
 
 export default App;
-
-//  under   under/left  under/right
-// neighbors
-// under   under/left under/right  right   left    up        up/left    up/right
-//[y-1][x] [y-1][x-1] [y-1][x+1] [y][x+1] [y][x-1] [y+1][x] [y+1][x-1] [y+1][x+1]
-
-//
-//
