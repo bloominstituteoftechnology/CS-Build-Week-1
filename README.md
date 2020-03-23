@@ -1,5 +1,9 @@
 # Cellular Automata and Conway's "Game of Life"
 
+Trello Board:
+https://trello.com/b/2odQOgae/gameoflife-vance-leon
+
+
 Over the course of this week, students will work on creating their own application in which users will be able to run different "Game of Life" scenarios. This module leads the reader through the fundamentals of Conways's "Game of Life" and will guide them through the process of creating an app utilizing tools and frameworks that have been taught over the course of their specific track.
 
 ![example-patterns](https://media.giphy.com/media/4VVZTvTqzRR0BUwNIH/giphy.gif)
@@ -25,9 +29,9 @@ Over the course of this week, students will work on creating their own applicati
 
 ## Trello Set Up:
 
-- [ ] Create a Trello account if you don't have one already
-- [ ] Create a new board called "GameOfLife - {Your Name}"
-- [ ] Create lists titled `backlog`,`To Do`, `In Progress`, and `Done`
+- [x] Create a Trello account if you don't have one already
+- [x] Create a new board called "GameOfLife - {Your Name}"
+- [x] Create lists titled `backlog`,`To Do`, `In Progress`, and `Done`
 - [ ] Fill in the `To Do` list with the MVP features listed below
 - [ ] Fill in the `backlog` list with all the extra features listed below
 - [ ] Share your board with the project manager that has been assigned to you. If you have not been assigned yet, reach out to your lead PM for guidance

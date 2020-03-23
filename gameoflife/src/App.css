@@ -1,0 +1,185 @@
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+.container {
+  max-width: 100%;
+}
+
+
+.banner {
+  background: #171427;
+  color: white;
+
+}
+
+.game-title {
+  display: flex; 
+  justify-content: center;
+  font-size: 50px;
+  font-family: 'Archivo', sans-serif;
+}
+
+.details-container {
+  display: flex;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+.rules-container {
+  width: 500px;
+  padding: 20px;
+}
+
+.rules-container li {
+  padding: 5px 0;
+}
+
+.history-container {
+  width: 500px;
+  padding: 20px;
+}
+
+.details-container h2 {
+  font-size: 40px;
+  padding: 20px 0;
+}
+
+.game-container {
+  /* display: flex; */
+  justify-content: center;
+}
+
+.grid-container {
+  margin: 50px;
+  justify-content: center;
+  align-content: center;
+  border-radius: 10px;
+}
+
+.buttons-container {
+  margin: 50px 0;
+  display: flex;
+
+}
+.game-functions {
+  margin: 0 10px;
+  width: 150px;
+}
+.game-functions h2 {
+  margin: 0 0 10px 0;
+  font-size:1.6em;
+}
+
+.button {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:#033A4D;
+  color:#fff;
+  border:none;
+  height:10px;
+  font-size:1.6em;
+  padding:1.5em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+  border-radius: 20px;
+  width: 100px;
+}
+
+.button:hover{
+  background:#fff;
+  color:#033A4D;
+}
+.button:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+button:hover:before,button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+
+
+.square {
+  width: 15px;
+  height: 15px;
+  border: 1px solid black;
+  flex-wrap: wrap;
+}
+
+.toggled {
+  background-color: black;
+}
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
