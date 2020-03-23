@@ -106,25 +106,34 @@ table {
 
 .buttons-container {
   margin: 50px 0;
-  /* width: 100px */
+  display: flex;
+
+}
+.game-functions {
+  margin: 0 10px;
+  width: 150px;
+}
+.game-functions h2 {
+  margin: 0 0 10px 0;
+  font-size:1.6em;
 }
 
 .button {
-  margin: 20px 0;
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background:#033A4D;
   color:#fff;
   border:none;
-  position:relative;
-  height:60px;
+  height:10px;
   font-size:1.6em;
-  padding:0 2em;
+  padding:1.5em;
   cursor:pointer;
   transition:800ms ease all;
   outline:none;
-  text-align: center;
-  align-content: center;
   border-radius: 20px;
-  width: 200px
+  width: 100px;
 }
 
 .button:hover{

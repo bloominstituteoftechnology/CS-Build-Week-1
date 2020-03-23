@@ -215,39 +215,46 @@ class GridContainer extends Component {
           />
         </div>
         <div className='buttons-container'>
-          <div className='button' onClick={this.startGame}>
-            START
+          <div className='game-functions'>
+            <h2>Game Controls</h2>
+            <div className='button' onClick={this.startGame}>
+              START
+            </div>
+            <div className='button' onClick={this.stopGame}>
+              STOP
+            </div>
+            <div className='button' onClick={this.handleClear}>
+              CLEAR
+            </div>
+            <div className='button' onClick={this.runGame}>
+              NEXT
+            </div>
           </div>
-          <div className='button' onClick={this.stopGame}>
-            STOP
+          <div className='game-functions'>
+            <h2>Change the Color here</h2>
+            <div className='button' onClick={this.blueFill}>
+              BLUE
+            </div>
+            <div className='button' onClick={this.redFill}>
+              RED
+            </div>
+            <div className='button' onClick={this.yellowFill}>
+              YELLOW
+            </div>
           </div>
-          <div className='button' onClick={this.handleClear}>
-            CLEAR
-          </div>
-          <div className='button' onClick={this.runGame}>
-            NEXT
-          </div>
-          <h2>Change the Color here</h2>
-          <div className='button' onClick={this.blueFill}>
-            BLUE
-          </div>
-          <div className='button' onClick={this.redFill}>
-            RED
-          </div>
-          <div className='button' onClick={this.yellowFill}>
-            YELLOW
-          </div>
-          <h2>Input Run Speed (in millseconds)</h2>
-          <input
-            className='input-custom'
-            type='text'
-            placeholder='Game Speed'
-            name='gameTiming'
-            value={this.state.gameTiming}
-            onChange={this.onChange}
-          />
-          <div className='button' onClick={this.changeGameTiming}>
-            SUBMIT
+          <div className='game-functions'>
+            <h2>Input Run Speed (in millseconds)</h2>
+            <input
+              className='input-custom'
+              type='text'
+              placeholder='Game Speed'
+              name='gameTiming'
+              value={this.state.gameTiming}
+              onChange={this.onChange}
+            />
+            <div className='button' onClick={this.changeGameTiming}>
+              SUBMIT
+            </div>
           </div>
         </div>
       </div>
