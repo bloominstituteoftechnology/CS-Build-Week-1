@@ -93,14 +93,12 @@ table {
 }
 
 .game-container {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
 }
 
 .grid-container {
   margin: 50px;
-  width: 500px;
-  height: 500px; 
   justify-content: center;
   align-content: center;
   border-radius: 10px;
@@ -108,6 +106,7 @@ table {
 
 .buttons-container {
   margin: 50px 0;
+  /* width: 100px */
 }
 
 .button {
@@ -125,6 +124,7 @@ table {
   text-align: center;
   align-content: center;
   border-radius: 20px;
+  width: 200px
 }
 
 .button:hover{
