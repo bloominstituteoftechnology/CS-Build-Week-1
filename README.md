@@ -1,5 +1,13 @@
 # Cellular Automata and Conway's "Game of Life"
 
+---
+
+**NOTE: This is not a data science project.** If you're in the data
+science track, jump to the [Data Science Build Week
+Repo](https://github.com/LambdaSchool/CS-Data-Science-Build-Week-I).
+
+---
+
 Over the course of this week, students will work on creating their own
 application in which users will be able to run different "Game of Life"
 scenarios. This module leads the reader through the fundamentals of
