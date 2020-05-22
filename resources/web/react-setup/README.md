@@ -383,6 +383,20 @@ class Button extends Component {
 export default Button; // Don’t forget to use export default!
 ```
 
+## Functional Component
+
+```js
+import React from 'react';
+
+const Button = () => {
+  return (
+    // ...
+  )
+}
+
+export default Button; // Don’t forget to use export default!
+```
+
 ### `DangerButton.js`
 
 
@@ -533,6 +547,17 @@ Generally, we recommend that you don’t reuse the same CSS classes across diffe
 Following this rule often makes CSS preprocessors less useful, as features like mixins and nesting are replaced by component composition. You can, however, integrate a CSS preprocessor if you find it valuable. In this walkthrough, we will be using Sass, but you can also use Less, or another alternative.
 
 First, let’s install the command-line interface for Sass:
+
+```sh
+npm install --save node-sass
+```
+
+Convert your .css files to .scss
+Import your .scss files in your component
+React and babel will handle all the compiling and building behind the scenes. 
+
+Or alternatively you can install node-sass-chokidar
+
 
 ```sh
 npm install --save node-sass-chokidar

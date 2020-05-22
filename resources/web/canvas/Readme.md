@@ -118,11 +118,16 @@ export const useAnimeFrame = ( timestamp, doAnimationCallBack ) => {
   // set the prev time stamp
   const [ prevTimeStamp, setTimeStamp ] = useState( timestamp - 30 );
   const [ continueAnimation, setContinueAnimation ] = useState( true );
-  const [ cb, setCB ] = useState( doAnimationCallBack );
+  const [ started, setStarted ] = useState( false );
   
   useEffect( () => {
-    requestAnimationFrame( onFrame );
-  }, [] );
+    
+    // only start the animation frame if we haven't in the past
+    if( !started ){
+      setStarted( true );
+      requestAnimationFrame( onFrame );
+    }
+  }, [ started ] );
   
   // Request the first animation frame to kick things off
   const onFrame = ( timestamp ) => {
@@ -136,7 +141,7 @@ export const useAnimeFrame = ( timestamp, doAnimationCallBack ) => {
     console.log( `Current time: ${ timestamp } ms, frame time: ${ elapsed } ms` );
     
     //call callback and pass it the elapsed time
-    cb( elapsed );
+    doAnimationCallBack( elapsed );
     
   };
   
@@ -155,33 +160,31 @@ export const useAnimeFrame = ( timestamp, doAnimationCallBack ) => {
 ### Implement a React Component, useAnimeFrame, and Animated Canvas
 
 ```javascript
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { useAnimeFrame } from "../customHooks/useAnimeFrame.js";
-import moment from 'moment';
+import moment from "moment";
 
-const MyComponent = (props) => {
+const MyComponent = ( props ) => {
   
   const canvasRef = useRef( null );
   
-  const [cancelAnimationFrame] = useAnimeFrame(moment.now(), doAnimation)
+  const [ stopAnimation, setStopAnimation ] = useState( false );
   
-  const doAnimation = (elapsedTime) => {
-      // handle all animation stuff here.
-    
-    // if you ever decide to cancel animation
-    if(something){
-      cancelAnimationFrame()
-    }
-  }
+  const doAnimation = ( elapsedTime ) => {
+    console.log( "elapsed time:", elapsedTime );
+    console.log( canvasRef.current );
+  };
+  
+  const [ cancelAnimationFrame ] = useAnimeFrame( moment.now(), doAnimation );
   
   /**
    * Render the canvas
    */
-  return(
-     <canvas ref={canvasRef} width={ props.width }
-                   height={ props.height }/>
-  )
+  return ( <canvas ref={ canvasRef } width={ props.width }
+                   height={ props.height }/> );
 };
+
+export default MyComponent;
 ```
 
 ### Animate a Pixel Across the Screen
