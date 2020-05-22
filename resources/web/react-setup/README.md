@@ -431,8 +431,8 @@ export { moduleA };
 ```js
 import React, { Component } from 'react';
 
-class App extends Component {
-  handleClick = () => {
+const App = (props) => {
+  const handleClick = () => {
     import('./moduleA')
       .then(({ moduleA }) => {
         // Use moduleA
@@ -442,13 +442,12 @@ class App extends Component {
       });
   };
 
-  render() {
     return (
       <div>
-        <button onClick={this.handleClick}>Load</button>
+        <button onClick={handleClick}>Load</button>
       </div>
     );
-  }
+  
 }
 
 export default App;
@@ -480,11 +479,11 @@ This project setup uses [Webpack](https://webpack.js.org/) for handling all asse
 import React, { Component } from 'react';
 import './Button.css'; // Tell Webpack that Button.js uses these styles
 
-class Button extends Component {
-  render() {
-    // You can use them as regular CSS styles
-    return <div className="Button" />;
-  }
+const Button = () => {
+  // You can use them as regular CSS styles
+  return(
+    <div className="Button" />;
+  )
 }
 ```
 
@@ -636,11 +635,8 @@ import React from 'react';
 import logo from './logo.png'; // Tell Webpack this JS file uses this image
 
 console.log(logo); // /logo.84287d09.png
-
-function Header() {
-  // Import result is the URL of your image
-  return <img src={logo} alt="Logo" />;
-}
+ // Import result is the URL of your image
+const Header = () =>  <img src={logo} alt="Logo" />
 
 export default Header;
 ```

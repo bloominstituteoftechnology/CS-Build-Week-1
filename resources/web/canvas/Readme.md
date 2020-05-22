@@ -57,17 +57,17 @@ component.
 Having a canvas in a react component is pretty easy:
 
 ```javascript
-class MyComponent extends Component {
+const MyComponent = (props) => {
+    const canvasRef = useRef(null)
 
     // ...
 
     /**
      * Render the canvas
      */
-    render() {
-        return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
-    }
-
+    
+    return <canvas ref={canvasRef} width={props.width} height={props.height} />
+    
     // ...
 }
 ```
@@ -80,7 +80,7 @@ was rendered. This will be very useful when we actually want to draw on it.
 Inside the `requestAnimationFrame()` handler, you can refer to the canvas with:
 
 ```javascript
-const canvas = this.refs.canvas; // refers to the ref attribute in render()
+const canvas = canvasRef.current; // refers to the ref attribute in render()
 
 const context = canvas.getContext('2d'); // etc.
 ```
@@ -94,68 +94,94 @@ We need to call `requestAnimationFrame()` one time to kick off the process, and
 then we need to call it from our callback if we're still showing the component.
 
 Fortunately, in the [React component
-lifecycle](https://reactjs.org/docs/react-component.html), there are a couple
-handlers we can make use of to control the process.
+lifecycle](https://reactjs.org/docs/react-component.html)
 
-We'll request an initial animation frame in the `componentDidMount()` handler,
-and we'll stop animating in the `componentWillUnmount()` handler.
+We may want to even use this in many spots of our application or in other
+ applications. So let's create a custom hook for it.
 
-All `componentDidMount()` needs to do is call `requestAnimationFrame()`. But
-since the decision to keep animating or not is made in the callback,
-`componentWillUnmount()` just needs to set a flag to stop animating.
+We'll request an initial animation frame in the `useEffect()` hook,
+and we'll stop animating in the `cancelAnimation()` handler.
 
+All `useEffect()` needs to do is call `requestAnimationFrame()`. We will then
+ create and pass a cancelAnimation function to the component.
+`canelAnimation()` just needs to set a continueAnimation to false which will
+ stop the recursion.
+ 
+## Exercise
+### Create useAnimationCustomHook 
+```javascript
+import React, { useEffect, useState } from "react";
+
+// custom hook for using animation frame
+export const useAnimeFrame = ( timestamp, doAnimationCallBack ) => {
+  
+  // set the prev time stamp
+  const [ prevTimeStamp, setTimeStamp ] = useState( timestamp - 30 );
+  const [ continueAnimation, setContinueAnimation ] = useState( true );
+  const [ cb, setCB ] = useState( doAnimationCallBack );
+  
+  useEffect( () => {
+    requestAnimationFrame( onFrame );
+  }, [] );
+  
+  // Request the first animation frame to kick things off
+  const onFrame = ( timestamp ) => {
+    
+    // if we want to do more ask for the next frame
+    if( continueAnimation ){
+      requestAnimationFrame( onFrame );
+    }
+    const elapsed = prevTimeStamp - timestamp;
+    setTimeStamp( timestamp );
+    console.log( `Current time: ${ timestamp } ms, frame time: ${ elapsed } ms` );
+    
+    //call callback and pass it the elapsed time
+    cb( elapsed );
+    
+  };
+  
+  // this wills stop the hook from calling the next animation frame
+  const cancelAnimation = () => {
+    setContinueAnimation( false );
+  };
+  
+  return [ cancelAnimation ];
+  
+};
+```
 
 ## Exercises
 
-### Implement a React App with Animated Canvas
+### Implement a React Component, useAnimeFrame, and Animated Canvas
 
 ```javascript
-class MyComponent extends Component {
+import React, { useRef, useEffect } from "react";
+import { useAnimeFrame } from "../customHooks/useAnimeFrame.js";
+import moment from 'moment';
 
-    /**
-     * Constructor
-     */
-    constructor(props) {
-        super(props);
-
-        this.continueAnimation = true;
+const MyComponent = (props) => {
+  
+  const canvasRef = useRef( null );
+  
+  const [cancelAnimationFrame] = useAnimeFrame(moment.now(), doAnimation)
+  
+  const doAnimation = (elapsedTime) => {
+      // handle all animation stuff here.
+    
+    // if you ever decide to cancel animation
+    if(something){
+      cancelAnimationFrame()
     }
-
-    /**
-     * After the component has mounted
-     */
-    componentDidMount() {
-        // Request initial animation frame
-        requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
-    }
-
-    /**
-     * When the component is about to unmount
-     */
-    componentWillUnmount() {
-        // Stop animating
-        this.continueAnimation = false;
-    }
-
-    /**
-     * Called every frame of animation
-     */
-    onAnimFrame(timestamp) {
-        // If desired, request another anim frame for later
-        if (this.continueAnimation) {
-            requestAnimationFrame((timestamp) => { this.onAnimFrame(timestamp); });
-        }
-
-        // TODO animate stuff
-    }
-
-    /**
-     * Render the canvas
-     */
-    render() {
-        return <canvas ref="canvas" width={this.props.width} height={this.props.height} />
-    }
-}
+  }
+  
+  /**
+   * Render the canvas
+   */
+  return(
+     <canvas ref={canvasRef} width={ props.width }
+                   height={ props.height }/>
+  )
+};
 ```
 
 ### Animate a Pixel Across the Screen
