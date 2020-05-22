@@ -110,7 +110,7 @@ Write an algorithm that:
 
 ### Custom Features
 
-Implment at least 3 of the following features:
+Implement at least 3 of the following features:
 
 * Create a few sample cell configurations that users can load and run
 * Add an option that creates a random cell configuration that users can
