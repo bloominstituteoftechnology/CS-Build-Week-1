@@ -1,9 +1,17 @@
 # iOS Hints and Resources
 
-It might be useful to start with your analog clock project. It's similar in
-some regards:
+Please refer to [this Training Kit module](https://learn.lambdaschool.com/ios2/module/recEEqjQwd10wS6Wl/) for references to custom drawing.
 
-* It has animation.
-* It draws primitive shapes on a bitmap.
+To create your grid for drawing, use a UIView subclass and the `draw` method.
 
+Hint: Open the Color Picker Xcode guided project for this module to get hints about how to create a grid of squares (these will be white or black). Ask an iOS instructor for the completed guided project if you don't have it.
 
+The app needs to be comprised of 2 screens:
+
+* A main screen with the custom view for the simulation, buttons to play/pause the simulation, run the simulation 1 generation at a time, and a stop button that resets the simulation to a new random field of alive/dead squares.
+    * The preset buttons are part of a stretch goal and may be omitted.
+
+* An about screen, triggered however you wish, that lists the rules of the game, and a textview containing information about what learned from researching and implementing the game.
+
+![mockup of main iOS view]()
+![mockup of about view]()
