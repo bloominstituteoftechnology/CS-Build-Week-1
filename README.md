@@ -19,6 +19,19 @@ over the course of their specific track.
 
 [from Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Examples_of_patterns)
 
+## Collaboration
+
+This is a solo project, not a team project. Each person will be expected
+to make their own repo and do their own coding.
+
+That said, we _encourage_ cooperation during the Understand, Plan, and
+Reflect phases of UPER. It's the Execution that everyone will have to do
+their own work for.
+
+This doesn't mean you can't ask for help during coding. Definitely feel
+free to reach out. But there won't be any pair programming or splitting
+the project into different chunks for different people.
+
 ## Objectives
 
 * Student should be able to create a unique, high-quality project that
