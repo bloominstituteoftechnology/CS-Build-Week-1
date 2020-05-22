@@ -119,8 +119,9 @@ Implment at least 3 of the following features:
 ## Stretch Goals
 
 * Implement 2+ additional custom features, above
-* Deploy your app to a hosting service or the App Store. Web devs can
-  see [more deployment info here](resources/deployment).
+* Deploy your app to a hosting service or, for iOS, to TestFlight (or
+  the App Store!). Web devs can see [more deployment info
+  here](resources/deployment).
 * Write a how-to guide or blog post that walks readers through the
   work you did to implement your project
 * Expand your simulation into the third dimension. Google `3D Conways
