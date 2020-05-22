@@ -13,5 +13,5 @@ The app needs to be comprised of 2 screens:
 
 * An about screen, triggered however you wish, that lists the rules of the game, and a textview containing information about what learned from researching and implementing the game.
 
-![mockup of main iOS view]()
-![mockup of about view]()
+![mockup of main iOS view](https://raw.githubusercontent.com/LambdaSchool/CS-Build-Week-I/master/resources/ios/game-of-life-iOS-mock-1.png)
+![mockup of about view](https://raw.githubusercontent.com/LambdaSchool/CS-Build-Week-I/master/resources/ios/game-of-life-iOS-mock-2.png)
