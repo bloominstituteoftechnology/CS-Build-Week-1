@@ -104,6 +104,9 @@ Write an algorithm that:
 * Breaks down above steps into appropriate sub-tasks implemented with
   helper functions to improve readability
 * Uses double buffering to update grid with next generation.
+* Does something well-documented with the edge of the grid. (e.g. wrap
+  around to the far side--most fun!--or assumes all edge cells are
+  permanently dead.)
 
 ### Custom Features
 
