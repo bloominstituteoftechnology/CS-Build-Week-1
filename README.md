@@ -141,17 +141,12 @@ Implement at least 3 of the following features:
   or link to another page or popup that describes the two main rules
   (birth & death) of Conway’s Game of Life
 
-### Deployment
-
-* Deploy your app using a tool like [GitHub Pages or
-  Heroku](resources/deployment)
-
 ## Stretch Goals
 
 * Implement 2+ additional custom features, above
 * Deploy your app to a hosting service or, for iOS, to TestFlight (or
   the App Store!). Web devs can see [more deployment info
-  here](resources/deployment).
+  here](resources/web/deployment).
 * Write a how-to guide or blog post that walks readers through the
   work you did to implement your project
 * Expand your simulation into the third dimension. Google `3D Conways
