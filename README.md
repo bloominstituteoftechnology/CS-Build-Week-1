@@ -57,9 +57,9 @@ informational repo in yours.
   life](objectives/explain-describe-ca)
 * [Student should be able to correctly analyze the ‘Turing Completeness’
   of Conway’s “Game of Life”](objectives/turing-complete)
-* [Student should be able to implement a visualization of Conway’s “Game
+* Student should be able to implement a visualization of Conway’s “Game
   of Life” using technologies related to their specific
-  track](objectives/visualization)
+  track.
 * [Student should be able to utilize "double buffering" to implement
   the game](objectives/double-buffer)
 
