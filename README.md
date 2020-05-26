@@ -175,6 +175,35 @@ iOS example, could also inspire mobile web.
 
 ![wireframe](wireframes/wireframe_1.png)
 
+
+## Code and Repo Quality
+
+Though this is not currently a requirement, it is a strong suggestion.
+
+### Code
+
+* Make your code look sharp and professional if you think anyone will
+  see it.
+  * Comments that say what part of the problem a function or block of
+    code solves.
+    * Only comment on what a single line does if that single line is
+      unclear.
+  * Blank lines to visually break up logical sections of code, analogous
+    to paragraph breaks.
+
+### Repo
+
+* Well-organized directories.
+* Good file names that let a reader quickly determine which file is
+  where.
+* Good `README.md` files that help the reader with code navigation and
+  installation.
+  * What is the project?
+  * What problem does it solve?
+  * Exceptional difficulties and solutions, if any.
+  * TODO list/wishlist. What do you want to add to it if you have more
+    time?
+
 ## Rubric
 
 **Your simulation will receive a 2 when it satisfies the following:**
