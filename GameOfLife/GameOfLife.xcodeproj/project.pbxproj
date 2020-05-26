@@ -11,6 +11,8 @@
 		63BCD155247D6E3B00E34EC4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BCD154247D6E3B00E34EC4 /* SceneDelegate.swift */; };
 		63BCD15C247D6E3C00E34EC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63BCD15B247D6E3C00E34EC4 /* Assets.xcassets */; };
 		63BCD15F247D6E3C00E34EC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63BCD15D247D6E3C00E34EC4 /* LaunchScreen.storyboard */; };
+		63BCD16B247D6F3A00E34EC4 /* PreviewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BCD16A247D6F3A00E34EC4 /* PreviewExtensions.swift */; };
+		63BCD16E247D745400E34EC4 /* GameOfLifeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BCD16D247D745400E34EC4 /* GameOfLifeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		63BCD15B247D6E3C00E34EC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63BCD15E247D6E3C00E34EC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63BCD160247D6E3C00E34EC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63BCD16A247D6F3A00E34EC4 /* PreviewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewExtensions.swift; sourceTree = "<group>"; };
+		63BCD16D247D745400E34EC4 /* GameOfLifeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOfLifeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 			isa = PBXGroup;
 			children = (
 				63BCD167247D6EA600E34EC4 /* View */,
+				63BCD16C247D743A00E34EC4 /* Controller */,
+				63BCD169247D6F2900E34EC4 /* Extensions */,
 				63BCD166247D6E4A00E34EC4 /* Support */,
 			);
 			path = GameOfLife;
@@ -83,6 +89,22 @@
 				63BCD15D247D6E3C00E34EC4 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		63BCD169247D6F2900E34EC4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				63BCD16A247D6F3A00E34EC4 /* PreviewExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		63BCD16C247D743A00E34EC4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				63BCD16D247D745400E34EC4 /* GameOfLifeViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +179,8 @@
 			files = (
 				63BCD153247D6E3B00E34EC4 /* AppDelegate.swift in Sources */,
 				63BCD155247D6E3B00E34EC4 /* SceneDelegate.swift in Sources */,
+				63BCD16B247D6F3A00E34EC4 /* PreviewExtensions.swift in Sources */,
+				63BCD16E247D745400E34EC4 /* GameOfLifeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
