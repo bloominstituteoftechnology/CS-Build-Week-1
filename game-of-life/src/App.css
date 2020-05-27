@@ -1,0 +1,54 @@
+.App {
+  text-align: center;
+  margin-top:30px;
+  width:375px;
+  margin:0 auto;
+}
+
+ul li{
+  padding-bottom:10px;
+  text-align:left;
+}
+li,h2,h1,p{
+  padding-left: 10px;
+  padding-right:10px;
+}
+.button-container{
+  display:flex;
+  justify-content:space-evenly;
+  flex-wrap:wrap;
+}
+li,h2,h1,p{
+  color:#414a4c;
+}
+.btn{
+  margin-bottom:30px;
+}
+.button-container,.lifeinfo{
+  margin:0 auto;
+}
+h2{
+  font-size:22px;
+}
+h1{
+  font-size:28px;
+}
+.generationHeader{
+  font-size:22px;
+}
+.lifeInfo{
+  text-align:left;
+  margin-bottom:30px;
+}
+button{
+  margin-bottom:20px;
+  height:30px;
+  width:50px;
+  border-radius:5px;
+  outline:none;
+  border-color:transparent;
+}
+select {
+  height:30px;
+  outline:none;
+}
