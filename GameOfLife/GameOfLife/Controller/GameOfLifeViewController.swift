@@ -11,8 +11,8 @@ import UIKit
 
 class GameOfLifeViewController: UIViewController {
 	
-	let gameView: UIView = {
-		let view = UIView()
+	let gameView: GameView = {
+		let view = GameView(worldSize: 200, cellSize: 10)
 		view.translatesAutoresizingMaskIntoConstraints = false
 		view.backgroundColor = .label
 		return view
