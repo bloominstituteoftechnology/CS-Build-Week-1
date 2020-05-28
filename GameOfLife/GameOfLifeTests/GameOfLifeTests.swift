@@ -32,4 +32,11 @@ class GameOfLifeTests: XCTestCase {
 		XCTAssertFalse(firstCell.isNeighbor(to: secondCell))
 		// false - Same row, same column.
 	}
+	
+	func testWorldInitializesCorrectAmountOfCells() {
+		let world = World(size: 4)
+		// world creates size^2 cells
+		// for a world of size 4 it should be 4^2 = 16
+		XCTAssertEqual(16, world.cells.count)
+	}
 }
