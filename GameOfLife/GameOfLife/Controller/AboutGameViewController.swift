@@ -76,7 +76,7 @@ class AboutGameViewController: UIViewController {
 		textView.isEditable = false
 		textView.text =
 		"""
-			This is going to be filled with some rudimentary text regarding my research and involvement in finding an efficient solution for solving the game of life and implementing it within an iOS app.
+			I initially started out researching projects on this topic. I learned about the founder John Conway andnthat he was a British Mathematician. He came up with this simple concept, that given a set of simple rules, a cell can handle it's own state. The result of that process is an automated cell that when combined with other cells, creates some interesting geometric shapes. The concept of Turing-completeness is expecially interesting as it states that anything that's considered Turing-complete is able to recognize or decide other data-manipulation rule sets.
 		"""
 		textView.textColor = .label
 		textView.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
