@@ -34,14 +34,7 @@ class World {
 	
 	init(size: Int) {
 		self.size = size
-		
-		for x in 0 ..< (size / 6) {
-			for y in 0 ..< (size / 6) {
-				let randomState = Int.random(in: 0...2)
-				let cell = Cell(x: x, y: y, state: randomState == 0 ? .alive : .dead)
-				cells.append(cell)
-			}
-		}
+		createRandom()
 	}
 	
 	func updateCells() {
@@ -63,5 +56,15 @@ class World {
 		}
 		
 		cells = updatedCells
+	}
+	
+	func createRandom() {
+		for x in 0 ..< (size / 6) {
+			for y in 0 ..< (size / 6) {
+				let randomState = Int.random(in: 0...2)
+				let cell = Cell(x: x, y: y, state: randomState == 0 ? .alive : .dead)
+				cells.append(cell)
+			}
+		}
 	}
 }

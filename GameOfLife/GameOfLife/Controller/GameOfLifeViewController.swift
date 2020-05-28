@@ -70,6 +70,21 @@ class GameOfLifeViewController: UIViewController {
 		return button
 	}()
 	
+	let stopButton: UIButton = {
+		let button = UIButton()
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.isUserInteractionEnabled = true
+		let attributes = [
+			NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .semibold),
+			NSAttributedString.Key.foregroundColor: UIColor.systemBackground
+		]
+		button.setAttributedTitle(NSAttributedString(string: "Stop", attributes: attributes), for: .normal)
+		button.addTarget(self, action: #selector(stopGame), for: .touchUpInside)
+		button.backgroundColor = .label
+		button.layer.cornerRadius = 8
+		return button
+	}()
+	
 	var timer: CADisplayLink!
 	
 	override func viewDidLoad() {
@@ -83,6 +98,7 @@ class GameOfLifeViewController: UIViewController {
 		view.addSubview(stepButton)
 		view.addSubview(playButton)
 		view.addSubview(resetButton)
+		view.addSubview(stopButton)
 		view.bringSubviewToFront(gameView)
 		NSLayoutConstraint.activate([
 			gameView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -103,21 +119,36 @@ class GameOfLifeViewController: UIViewController {
 			playButton.topAnchor.constraint(equalTo: gameView.bottomAnchor, constant: 20),
 			playButton.heightAnchor.constraint(equalToConstant: 40),
 			playButton.trailingAnchor.constraint(equalTo: gameView.trailingAnchor),
-			playButton.widthAnchor.constraint(equalTo: gameView.widthAnchor, multiplier: 0.3)
+			playButton.widthAnchor.constraint(equalTo: gameView.widthAnchor, multiplier: 0.3),
+			
+			stopButton.topAnchor.constraint(equalTo: resetButton.bottomAnchor, constant: 20),
+			stopButton.leadingAnchor.constraint(equalTo: resetButton.leadingAnchor),
+			stopButton.heightAnchor.constraint(equalToConstant: 40),
+			stopButton.trailingAnchor.constraint(equalTo: resetButton.trailingAnchor)
 		])
 	}
 	
 	@objc private func stepGame() {
+		if gameView.world.cells == [] {
+			gameView.world.createRandom()
+		}
 		gameView.world.updateCells()
 		gameView.setNeedsDisplay()
 	}
 	
 	@objc private func runGame() {
+		gameView.state = .running
 		gameView.autoRun()
+	}
+	
+	@objc private func stopGame() {
+		gameView.state = .stopped
+		gameView.setNeedsDisplay()
 	}
 	
 	@objc private func resetGame() {
 		gameView.world.cells = []
+		gameView.state = .stopped
 		gameView.setNeedsDisplay()
 	}
 }

@@ -8,9 +8,15 @@
 
 import UIKit
 
+enum GameViewState {
+	case running, stopped
+}
+
 class GameView: UIView {
 	var world: World = World(size: 0)
 	var cellSize = 40
+	
+	var state: GameViewState = .running
 	
 	convenience init(worldSize: Int, cellSize: Int) {
 		let frame = CGRect(x: 0, y: 0, width: worldSize * worldSize, height: worldSize * worldSize)
@@ -51,9 +57,11 @@ class GameView: UIView {
 	
 	func autoRun() {
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-			self.world.updateCells()
-			self.setNeedsDisplay()
-			self.autoRun()
+			if self.state == .running {
+				self.world.updateCells()
+				self.setNeedsDisplay()
+				self.autoRun()
+			}
 		}
 	}
 }
