@@ -6,7 +6,6 @@
 //  Copyright © 2020 Chad Rutherford. All rights reserved.
 //
 
-import SwiftUI
 import UIKit
 
 class AboutGameViewController: UIViewController {
@@ -141,14 +140,5 @@ class AboutGameViewController: UIViewController {
 			copyrightLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
 			copyrightLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
 		])
-	}
-}
-
-@available(iOS 13, *)
-struct AboutGamePreview: PreviewProvider {
-	static var previews: some View {
-		AboutGameViewController().asPreview()
-			.edgesIgnoringSafeArea(.all)
-			.colorScheme(.dark)
 	}
 }

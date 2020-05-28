@@ -14,6 +14,11 @@ class World {
 	// MARK: - Properties
 	var cells = [Cell]()
 	let size: Int
+	var generation = 0 {
+		didSet {
+			NotificationCenter.default.post(name: .generationChanged, object: self, userInfo: nil)
+		}
+	}
 	
 	// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 	// MARK: - Computed Properties
@@ -56,9 +61,11 @@ class World {
 		}
 		
 		cells = updatedCells
+		generation += 1
 	}
 	
 	func createRandom() {
+		generation = 0
 		cells = []
 		for x in 0 ..< (size / 6) {
 			for y in 0 ..< (size / 6) {
@@ -70,6 +77,7 @@ class World {
 	}
 	
 	func createBlinker() {
+		generation = 0
 		cells = []
 		let center = ((size / 6) / 2) - 2
 		for x in 0 ..< (size / 6) {
@@ -93,6 +101,7 @@ class World {
 	}
 	
 	func createToad() {
+		generation = 0
 		cells = []
 		let center = ((size / 6) / 2) - 2
 		for x in 0 ..< (size / 6) {
@@ -125,6 +134,7 @@ class World {
 	}
 	
 	func createPulsar() {
+		generation = 0
 		cells = []
 		let center = ((size / 6) / 2) - 2
 		for x in 0 ..< (size / 6) {
@@ -251,6 +261,7 @@ class World {
 	}
 	
 	func createGlider() {
+		generation = 0
 		cells = []
 		let center = ((size / 6) / 2) - 2
 		for x in 0 ..< (size / 6) {

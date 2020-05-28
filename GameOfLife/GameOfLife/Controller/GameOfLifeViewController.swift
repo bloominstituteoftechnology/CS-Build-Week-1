@@ -6,6 +6,7 @@
 //  Copyright © 2020 Chad Rutherford. All rights reserved.
 //
 
+import SwiftUI
 import UIKit
 
 class GameOfLifeViewController: UIViewController {
@@ -169,16 +170,27 @@ class GameOfLifeViewController: UIViewController {
 		return stack
 	}()
 	
+	let generationLabel: UILabel = {
+		let label = UILabel()
+		label.translatesAutoresizingMaskIntoConstraints = false
+		label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+		label.text = "Generation: 0"
+		label.textColor = .label
+		return label
+	}()
+	
 	var timer: CADisplayLink!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
 		setupNavController()
+		NotificationCenter.default.addObserver(self, selector: #selector(updateGeneration), name: .generationChanged, object: nil)
 	}
 	
 	private func setupUI() {
 		view.backgroundColor = .systemBackground
+		view.addSubview(generationLabel)
 		view.addSubview(gameView)
 		view.addSubview(stepButton)
 		view.addSubview(playButton)
@@ -192,7 +204,10 @@ class GameOfLifeViewController: UIViewController {
 		innerBottomStackView.addArrangedSubview(pulsarButton)
 		innerBottomStackView.addArrangedSubview(gliderButton)
 		NSLayoutConstraint.activate([
-			gameView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+			generationLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+			generationLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			
+			gameView.topAnchor.constraint(equalTo: generationLabel.bottomAnchor, constant: 16),
 			gameView.widthAnchor.constraint(equalToConstant: 300),
 			gameView.heightAnchor.constraint(equalTo: gameView.widthAnchor, multiplier: 1),
 			gameView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -282,5 +297,18 @@ class GameOfLifeViewController: UIViewController {
 	@objc private func presentAboutScreen() {
 		let aboutGameVC = AboutGameViewController(nibName: nil, bundle: nil)
 		navigationController?.pushViewController(aboutGameVC, animated: true)
+	}
+	
+	@objc private func updateGeneration() {
+		generationLabel.text = "Generation: \(gameView.world.generation)"
+	}
+}
+
+@available(iOS 13, *)
+struct AboutGamePreview: PreviewProvider {
+	static var previews: some View {
+		GameOfLifeViewController().asPreview()
+			.edgesIgnoringSafeArea(.all)
+			.colorScheme(.dark)
 	}
 }
