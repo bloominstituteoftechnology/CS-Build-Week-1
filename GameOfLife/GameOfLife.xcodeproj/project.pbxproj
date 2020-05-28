@@ -15,6 +15,8 @@
 		63BCD16B247D6F3A00E34EC4 /* PreviewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BCD16A247D6F3A00E34EC4 /* PreviewExtensions.swift */; };
 		63BCD16E247D745400E34EC4 /* GameOfLifeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BCD16D247D745400E34EC4 /* GameOfLifeViewController.swift */; };
 		63C910CD247F51D900490508 /* GameOfLifeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C910CC247F51D900490508 /* GameOfLifeTests.swift */; };
+		63C910D5247F534F00490508 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C910D4247F534F00490508 /* World.swift */; };
+		63C910D7247F54A800490508 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C910D6247F54A800490508 /* GameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 		63C910CA247F51D900490508 /* GameOfLifeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameOfLifeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C910CC247F51D900490508 /* GameOfLifeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOfLifeTests.swift; sourceTree = "<group>"; };
 		63C910CE247F51D900490508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63C910D4247F534F00490508 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		63C910D6247F54A800490508 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				635CEFA9247F4E4700167BB7 /* Cell.swift */,
+				63C910D4247F534F00490508 /* World.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -112,6 +117,7 @@
 		63BCD167247D6EA600E34EC4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				63C910D8247F54B500490508 /* Custom Views */,
 				63BCD168247D6EAD00E34EC4 /* Storyboards */,
 			);
 			path = View;
@@ -148,6 +154,14 @@
 				63C910CE247F51D900490508 /* Info.plist */,
 			);
 			path = GameOfLifeTests;
+			sourceTree = "<group>";
+		};
+		63C910D8247F54B500490508 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				63C910D6247F54A800490508 /* GameView.swift */,
+			);
+			path = "Custom Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,11 +286,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63C910D5247F534F00490508 /* World.swift in Sources */,
 				63BCD153247D6E3B00E34EC4 /* AppDelegate.swift in Sources */,
 				63BCD155247D6E3B00E34EC4 /* SceneDelegate.swift in Sources */,
 				635CEFAA247F4E4700167BB7 /* Cell.swift in Sources */,
 				63BCD16B247D6F3A00E34EC4 /* PreviewExtensions.swift in Sources */,
 				63BCD16E247D745400E34EC4 /* GameOfLifeViewController.swift in Sources */,
+				63C910D7247F54A800490508 /* GameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
