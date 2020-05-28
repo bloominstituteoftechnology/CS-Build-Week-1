@@ -101,6 +101,7 @@ class AboutGameViewController: UIViewController {
 	private func setupUI() {
 		title = "About"
 		view.backgroundColor = .systemBackground
+		navigationController?.navigationBar.tintColor = .label
 		view.addSubview(rulesLabel)
 		view.addSubview(rule1Label)
 		view.addSubview(rule2Label)

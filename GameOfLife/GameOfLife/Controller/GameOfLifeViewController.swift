@@ -254,7 +254,7 @@ class GameOfLifeViewController: UIViewController {
 	}
 	
 	@objc private func resetGame() {
-		gameView.world.cells = []
+		gameView.world.createRandom()
 		gameView.state = .stopped
 		gameView.setNeedsDisplay()
 	}
