@@ -12,7 +12,7 @@ enum State {
 	case alive, dead
 }
 
-struct Cell {
+struct Cell: Hashable {
 	let x: Int
 	let y: Int
 	var state: State
@@ -21,6 +21,11 @@ struct Cell {
 		self.x = x
 		self.y = y
 		self.state = state
+	}
+	
+	func hash(into hasher: inout Hasher) {
+		let hash = x + y * 1_0000
+		hasher.combine(hash)
 	}
 	
 	func isNeighbor(to cell: Cell) -> Bool {
@@ -32,6 +37,15 @@ struct Cell {
 			return true
 		default:
 			return false
+		}
+	}
+	
+	mutating func toggle() {
+		switch state {
+		case .alive:
+			self.state = .dead
+		case .dead:
+			self.state = .alive
 		}
 	}
 }
