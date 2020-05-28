@@ -59,11 +59,222 @@ class World {
 	}
 	
 	func createRandom() {
+		cells = []
 		for x in 0 ..< (size / 6) {
 			for y in 0 ..< (size / 6) {
 				let randomState = Int.random(in: 0...2)
 				let cell = Cell(x: x, y: y, state: randomState == 0 ? .alive : .dead)
 				cells.append(cell)
+			}
+		}
+	}
+	
+	func createBlinker() {
+		cells = []
+		let center = ((size / 6) / 2) - 2
+		for x in 0 ..< (size / 6) {
+			for y in 0 ..< (size / 6) {
+				switch (x, y) {
+				case (center, center):
+					let centerCell = Cell(x: center, y: center, state: .alive)
+					cells.append(centerCell)
+				case (center - 1, center):
+					let leftCell = Cell(x: center - 1, y: center, state: .alive)
+					cells.append(leftCell)
+				case (center + 1, center):
+					let rightCell = Cell(x: center + 1, y: center, state: .alive)
+					cells.append(rightCell)
+				default:
+					let cell = Cell(x: x, y: y, state: .dead)
+					cells.append(cell)
+				}
+			}
+		}
+	}
+	
+	func createToad() {
+		cells = []
+		let center = ((size / 6) / 2) - 2
+		for x in 0 ..< (size / 6) {
+			for y in 0 ..< (size / 6) {
+				switch (x, y) {
+				case (center, center):
+					let centerCell = Cell(x: center, y: center, state: .alive)
+					cells.append(centerCell)
+				case (center - 1, center):
+					let leftCell = Cell(x: center - 1, y: center, state: .alive)
+					cells.append(leftCell)
+				case (center + 1, center):
+					let rightCell = Cell(x: center + 1, y: center, state: .alive)
+					cells.append(rightCell)
+				case (center, center - 1):
+					let topLeftCell = Cell(x: center, y: center - 1, state: .alive)
+					cells.append(topLeftCell)
+				case (center + 1, center - 1):
+					let topMiddleCell = Cell(x: center + 1, y: center - 1, state: .alive)
+					cells.append(topMiddleCell)
+				case (center + 2, center - 1):
+					let topRightCell = Cell(x: center + 2, y: center - 1, state: .alive)
+					cells.append(topRightCell)
+				default:
+					let cell = Cell(x: x, y: y, state: .dead)
+					cells.append(cell)
+				}
+			}
+		}
+	}
+	
+	func createPulsar() {
+		cells = []
+		let center = ((size / 6) / 2) - 2
+		for x in 0 ..< (size / 6) {
+			for y in 0 ..< (size / 6) {
+				switch (x, y) {
+				case (center - 1, center - 2), (center - 1, center - 3), (center - 1, center - 4):
+					let cell1 = Cell(x: center - 1, y: center - 2, state: .alive)
+					let cell2 = Cell(x: center - 1, y: center - 3, state: .alive)
+					let cell3 = Cell(x: center - 1, y: center - 4, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center - 2, center - 6), (center - 3, center - 6), (center - 4, center - 6):
+					let cell1 = Cell(x: center - 2, y: center - 6, state: .alive)
+					let cell2 = Cell(x: center - 3, y: center - 6, state: .alive)
+					let cell3 = Cell(x: center - 4, y: center - 6, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center - 2, center - 1), (center - 3, center - 1), (center - 4, center - 1):
+					let cell1 = Cell(x: center - 2, y: center - 1, state: .alive)
+					let cell2 = Cell(x: center - 3, y: center - 1, state: .alive)
+					let cell3 = Cell(x: center - 4, y: center - 1, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center - 6, center - 2), (center - 6, center - 3), (center - 6, center - 4):
+					let cell1 = Cell(x: center - 6, y: center - 2, state: .alive)
+					let cell2 = Cell(x: center - 6, y: center - 3, state: .alive)
+					let cell3 = Cell(x: center - 6, y: center - 4, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center + 1, center - 2), (center + 1, center - 3), (center + 1, center - 4):
+					let cell1 = Cell(x: center + 1, y: center - 2, state: .alive)
+					let cell2 = Cell(x: center + 1, y: center - 3, state: .alive)
+					let cell3 = Cell(x: center + 1, y: center - 4, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center + 2, center - 1), (center + 3, center - 1), (center + 4, center - 1):
+					let cell1 = Cell(x: center + 2, y: center - 1, state: .alive)
+					let cell2 = Cell(x: center + 3, y: center - 1, state: .alive)
+					let cell3 = Cell(x: center + 4, y: center - 1, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center + 6, center - 2), (center + 6, center - 3), (center + 6, center - 4):
+					let cell1 = Cell(x: center + 6, y: center - 2, state: .alive)
+					let cell2 = Cell(x: center + 6, y: center - 3, state: .alive)
+					let cell3 = Cell(x: center + 6, y: center - 4, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center + 2, center - 6), (center + 3, center - 6), (center + 4, center - 6):
+					let cell1 = Cell(x: center + 2, y: center - 6, state: .alive)
+					let cell2 = Cell(x: center + 3, y: center - 6, state: .alive)
+					let cell3 = Cell(x: center + 4, y: center - 6, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center - 2, center + 1), (center - 3, center + 1), (center - 4, center + 1):
+					let cell1 = Cell(x: center - 2, y: center + 1, state: .alive)
+					let cell2 = Cell(x: center - 3, y: center + 1, state: .alive)
+					let cell3 = Cell(x: center - 4, y: center + 1, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center - 1, center + 2), (center - 1, center + 3), (center - 1, center + 4):
+					let cell1 = Cell(x: center - 1, y: center + 2, state: .alive)
+					let cell2 = Cell(x: center - 1, y: center + 3, state: .alive)
+					let cell3 = Cell(x: center - 1, y: center + 4, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center + 2, center + 1), (center + 3, center + 1), (center + 4, center + 1):
+					let cell1 = Cell(x: center + 2, y: center + 1, state: .alive)
+					let cell2 = Cell(x: center + 3, y: center + 1, state: .alive)
+					let cell3 = Cell(x: center + 4, y: center + 1, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center + 1, center + 2), (center + 1, center + 3), (center + 1, center + 4):
+					let cell1 = Cell(x: center + 1, y: center + 2, state: .alive)
+					let cell2 = Cell(x: center + 1, y: center + 3, state: .alive)
+					let cell3 = Cell(x: center + 1, y: center + 4, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center + 2, center + 6), (center + 3, center + 6), (center + 4, center + 6):
+					let cell1 = Cell(x: center + 2, y: center + 6, state: .alive)
+					let cell2 = Cell(x: center + 3, y: center + 6, state: .alive)
+					let cell3 = Cell(x: center + 4, y: center + 6, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center + 6, center + 2), (center + 6, center + 3), (center + 6, center + 4):
+					let cell1 = Cell(x: center + 6, y: center + 2, state: .alive)
+					let cell2 = Cell(x: center + 6, y: center + 3, state: .alive)
+					let cell3 = Cell(x: center + 6, y: center + 4, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center - 2, center + 6), (center - 3, center + 6), (center - 4, center + 6):
+					let cell1 = Cell(x: center - 2, y: center + 6, state: .alive)
+					let cell2 = Cell(x: center - 3, y: center + 6, state: .alive)
+					let cell3 = Cell(x: center - 4, y: center + 6, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				case (center - 6, center + 2), (center - 6, center + 3), (center - 6, center + 4):
+					let cell1 = Cell(x: center - 6, y: center + 2, state: .alive)
+					let cell2 = Cell(x: center - 6, y: center + 3, state: .alive)
+					let cell3 = Cell(x: center - 6, y: center + 4, state: .alive)
+					cells.append(cell1)
+					cells.append(cell2)
+					cells.append(cell3)
+				default:
+					let cell = Cell(x: x, y: y, state: .dead)
+					cells.append(cell)
+				}
+			}
+		}
+	}
+	
+	func createGlider() {
+		cells = []
+		let center = ((size / 6) / 2) - 2
+		for x in 0 ..< (size / 6) {
+			for y in 0 ..< (size / 6) {
+				switch (x, y) {
+				case (center, center):
+					let centerCell = Cell(x: center, y: center, state: .alive)
+					cells.append(centerCell)
+				case (center - 1, center):
+					let leftCell = Cell(x: center - 1, y: center, state: .alive)
+					cells.append(leftCell)
+				case (center - 2, center - 1):
+					let spacedCell = Cell(x: center - 2, y: center - 1, state: .alive)
+					cells.append(spacedCell)
+				case (center, center - 1):
+					let midCell = Cell(x: center, y: center - 1, state: .alive)
+					cells.append(midCell)
+				case (center, center - 2):
+					let topCell = Cell(x: center, y: center - 2, state: .alive)
+					cells.append(topCell)
+				default:
+					let cell = Cell(x: x, y: y, state: .dead)
+					cells.append(cell)
+				}
 			}
 		}
 	}

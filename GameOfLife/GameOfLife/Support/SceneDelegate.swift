@@ -19,7 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let windowScene = scene as? UIWindowScene else { return }
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
 		window?.windowScene = windowScene
-		window?.rootViewController = GameOfLifeViewController(nibName: nil, bundle: nil)
+		let golVC = GameOfLifeViewController(nibName: nil, bundle: nil)
+		let navController = UINavigationController(rootViewController: golVC)
+		window?.rootViewController = navController
 		window?.makeKeyAndVisible()
 	}
 

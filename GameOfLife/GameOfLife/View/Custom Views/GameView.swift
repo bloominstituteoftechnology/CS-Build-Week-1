@@ -47,7 +47,7 @@ class GameView: UIView {
 		context?.saveGState()
 		for cell in world.cells {
 			let rect = CGRect(x: cell.x * cellSize, y: cell.y * cellSize, width: cellSize, height: cellSize)
-			let color = cell.state == .alive ? UIColor.label.cgColor : UIColor.systemBackground.cgColor
+			let color = cell.state == .alive ? UIColor.systemBackground.cgColor : UIColor.label.cgColor
 			context?.addRect(rect)
 			context?.setFillColor(color)
 			context?.fill(rect)

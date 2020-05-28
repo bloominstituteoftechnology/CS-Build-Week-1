@@ -15,7 +15,9 @@ disabled_rules: # rule identifiers to exclude from running
   - todo
   - trailing_comma
   - first_where
+  - function_body_length
   - force_cast
+  - cyclomatic_complexity
   - vertical_parameter_alignment # does not work with tab indentation: https://github.com/realm/SwiftLint/issues/1573
 
 excluded: # paths to ignore during linting.
@@ -71,7 +73,7 @@ file_length:
   warning: 800
   error: 1000
 line_length:
-  warning: 160
+  warning: 200
   ignores_comments: true
   ignores_interpolated_strings: true
 multiline_arguments:

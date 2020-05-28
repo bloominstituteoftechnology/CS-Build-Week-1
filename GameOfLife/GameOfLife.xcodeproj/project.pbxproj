@@ -17,6 +17,7 @@
 		63C910CD247F51D900490508 /* GameOfLifeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C910CC247F51D900490508 /* GameOfLifeTests.swift */; };
 		63C910D5247F534F00490508 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C910D4247F534F00490508 /* World.swift */; };
 		63C910D7247F54A800490508 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C910D6247F54A800490508 /* GameView.swift */; };
+		63FF0E60248062D20080CF20 /* AboutGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF0E5F248062D20080CF20 /* AboutGameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		63C910CE247F51D900490508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63C910D4247F534F00490508 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		63C910D6247F54A800490508 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		63FF0E5F248062D20080CF20 /* AboutGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutGameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				63BCD16D247D745400E34EC4 /* GameOfLifeViewController.swift */,
+				63FF0E5F248062D20080CF20 /* AboutGameViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				63BCD153247D6E3B00E34EC4 /* AppDelegate.swift in Sources */,
 				63BCD155247D6E3B00E34EC4 /* SceneDelegate.swift in Sources */,
 				635CEFAA247F4E4700167BB7 /* Cell.swift in Sources */,
+				63FF0E60248062D20080CF20 /* AboutGameViewController.swift in Sources */,
 				63BCD16B247D6F3A00E34EC4 /* PreviewExtensions.swift in Sources */,
 				63BCD16E247D745400E34EC4 /* GameOfLifeViewController.swift in Sources */,
 				63C910D7247F54A800490508 /* GameView.swift in Sources */,
