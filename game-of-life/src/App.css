@@ -14,3 +14,7 @@ a {
   color: #333;
   text-decoration: none;
 }
+
+.appname {
+  text-align: center;
+}
