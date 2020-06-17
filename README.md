@@ -59,7 +59,6 @@ Implment at least 3 of the following features:
 #
 Conway's Game of Life is a cellular automatron devised by John Horton Conway. This is my rendition of the classic Conway's Game of Life but built strictly with React. 
 **[Link](https://conways-life-custom.netlify.com/)**  
-**[Github](https://github.com/rushman7/Conways-Life)**
 
 ##### Stack:
 - React.js:
