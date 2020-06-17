@@ -66,5 +66,3 @@ Conway's Game of Life is a cellular automatron devised by John Horton Conway. Th
     - Based on **reusable components** to build an entire app
     - High performance with the **virtual DOM**
     - Powerful **dev tools** for faster debugging
-
-<img src="https://media.giphy.com/media/1dLOO8lNO8pmNSlJRE/giphy.gif"/>
