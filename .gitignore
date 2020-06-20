@@ -20,3 +20,15 @@
 **yarn-debug.log*
 **yarn-error.log*
 **yarn.lock
+
+.idea/CS-Build-Week-1.iml
+
+.idea/inspectionProfiles/profiles_settings.xml
+
+.idea/inspectionProfiles/Project_Default.xml
+
+.idea/misc.xml
+
+.idea/modules.xml
+
+.idea/vcs.xml
