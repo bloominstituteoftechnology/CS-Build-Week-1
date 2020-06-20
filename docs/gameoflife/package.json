@@ -1,0 +1,31 @@
+{
+  "name": "gameoflife",
+  "version": "0.1.0",
+  "homepage": "https://dirupt.github.io/Conways-Life/",
+  "private": true,
+  "dependencies": {
+    "gh-pages": "^2.0.1",
+    "lodash.debounce": "^4.0.8",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-input-autosize": "^2.2.1",
+    "react-scripts": "2.0.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

@@ -1,0 +1,118 @@
+.canvas-options {
+    background: #999999;
+    max-height: 100px;
+    height: 100px;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas-options canvas {
+    margin: 15px;
+}
+
+.canvas-options i {
+    color: black;
+    margin: 0 9.6px;
+    font-size: 18px;
+}
+
+.canvas-options i:hover {
+    opacity: 0.75;
+}
+
+.canvas-options-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas-options-form input {
+    min-width: 20px;
+    background: #999999;
+    border: none;
+    text-align: center;
+    font-size: 15px;
+}
+
+.canvas-options-form input:focus {
+    outline: none;
+}
+
+.canvas-options-form input::placeholder {
+    color: black;
+}
+
+.canvas-options-form input::-moz-placeholder {
+    color: black;
+}
+
+.canvas-options-form input::-webkit-input-placeholder {
+    color: black;
+}
+
+.canvas-options-form input:-ms-input-placeholder {
+    color: black;
+}
+
+.canvas-options-form input:-moz-placeholder {
+    color: black;
+}
+
+.canvas-options-input {
+    margin: 0 10px;
+}
+
+.canvas-options-input-range {
+    width: 75px;
+    margin-left: 10px;
+}
+
+.canvas-header {
+    max-height: 100px;
+    height: 100px;
+    width: 100vw;
+
+    background: url('https://dirupt.github.io/Conways-Life/gameoflife.png') no-repeat, url('https://dirupt.github.io/Conways-Life/gameoflife-bg.png') repeat-x;
+    background-size: contain;
+
+    border-bottom: 3px solid #2A4E97;
+}
+
+.canvas-header-links {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    margin: 0 20px;
+}
+
+.canvas-header-rules {
+    font-size: 20px;
+    cursor: pointer;
+    margin: 8px 0;
+    text-decoration: none;
+    color: black;
+}
+
+.canvas-header-about {
+    font-size: 18px;
+    cursor: pointer;
+    margin: 8px 0;
+    text-decoration: none;
+    color: black;
+}
+
+.canvas-container {
+    background: #999999;
+}
+
+canvas {
+    display: block;
+}
+
+
+
+

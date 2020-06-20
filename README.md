@@ -1,3 +1,5 @@
+﻿https://trello.com/b/cphzphQ2/conways-life-brandon-aguirre
+
 # Cellular Automata and Conway's "Game of Life"
 
 ---
