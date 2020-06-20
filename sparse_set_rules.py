@@ -1,3 +1,5 @@
+from rule import Rule
+
 class SparseSetRules(Rule):
     def apply_rules(self,  grid, max_size, get_neighbours):
         counter = {}

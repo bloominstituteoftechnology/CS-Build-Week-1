@@ -1,4 +1,5 @@
 from copy import copy
+from state import State
 
 class SparseSetState(State):
     def __init__(self, grid):
