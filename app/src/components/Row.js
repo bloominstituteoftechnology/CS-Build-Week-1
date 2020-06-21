@@ -7,7 +7,7 @@ export default function Row(props) {
         <RowWrapper>
             {
                 props.arr.map((cell, idx) => {
-                    return <Cell key={`${idx}`} data={cell} />
+                    return <Cell key={`${idx}`} data={cell} toggleAliveState={props.toggleAliveState} />
                 })
             }
         </RowWrapper>
@@ -16,5 +16,5 @@ export default function Row(props) {
 }
 
 const RowWrapper = styled.div`
-	display: flex;
+    display: flex;
 `;

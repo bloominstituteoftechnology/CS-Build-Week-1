@@ -12,6 +12,7 @@ export default function Board(props) {
                     <Row
                         key={`${idx}`}
                         arr={arr}
+                        toggleAliveState={props.toggleAliveState}
                     />
                 )
             })}
