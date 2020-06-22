@@ -38,13 +38,25 @@ def find_neighbors(i, j, arr):
 
     return total
 
-def print_board(grid):
-    for m in grid:
+def print_board(board):
+    for m in board:
         for o in m:
             print(o, end='\t')
         print()
 
+def update_board(max, board):
+    new_arr = copy.deepcopy(board)
+    for y in range(max):
+        for x in range(max):
+            new_total = find_neighbors(y, x, board)
+            if board[y][x] == 1:
+                if new_total < 2 or new_total > 3:
+                    new_arr[y][x] = 0
+            else:
+                if new_total == 3:
+                    new_arr[y][x] = 1
 
+    return new_arr
 
 def main():
     gen = 0
@@ -62,23 +74,12 @@ def main():
     l[2][5] = 1
     l[3][6] = 1
 
-    new_arr = copy.deepcopy(l)
+
 
     while True:
         _ = system('cls')
         print(f"GENERATION {gen}")
         print_board(new_arr)
-
-
-        for y in range(max):
-            for x in range(max):
-                new_total = find_neighbors(y, x, l)
-                if l[y][x] == 1:
-                    if new_total < 2 or new_total > 3:
-                        new_arr[y][x] = 0
-                else:
-                    if new_total == 3:
-                        new_arr[y][x] = 1
 
         l = copy.deepcopy(new_arr)
         gen += 1
