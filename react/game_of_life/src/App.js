@@ -1,24 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Game of Life</h1> 
+
+      {/* 
+        
+        TODO - Either create a gameboard grid within
+        the main home page (reduce need to navigate to other pages)
+        OR 
+        create a link to gameboard as a seperate component
+        
+      */}
+
+      {/* TODO - create a section for game rules */}
+      <div className="game-rules">
+        {/* TODO - add game rules here as numerical steps */}
+      </div>
+
+      {/* TODO - create a section that explains purpose/origination of game */}
+      <div className="game-origin">
+        {/* TODO - game purpose/origination */}
+      </div>
+
     </div>
   );
 }
