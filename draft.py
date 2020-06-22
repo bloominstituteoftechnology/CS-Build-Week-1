@@ -1,7 +1,7 @@
-import pygame
 import copy
 import time
 from os import system
+import pygame
 
 def find_neighbors(i, j, arr, max):
     neighbors = []
@@ -66,11 +66,16 @@ def update_board(max, board):
 
 def main():
     gen = 0
-    max = 10
-    l = [ [0] * 10 for i in range(max) ]
+    max = 100
+    l = [ [0] * max for i in range(max) ]
 
     #PyGame
     pygame.init()
+    pygame.display.set_caption("Hector Ledesma - Conway's Game of Life")
+    screen = pygame.display.set_mode((500, 500))
+
+    size = (500 / max) - 5
+
 
     # print(l)
     # l[4][4] = 1
@@ -85,9 +90,17 @@ def main():
     l[3][6] = 1
 
     while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return 0
         _ = system('cls')
         print(f"GENERATION {gen}")
         print_board(l)
+        for i  in range(max):
+            for j in range(max):
+                pygame.draw.rect(screen, pygame.Color('white'), pygame.Rect(j*(5+size), i*(5+size), size, size))
+
+        pygame.display.flip()
         l = update_board(max, l)
         gen += 1
         time.sleep(1)
