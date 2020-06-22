@@ -12,18 +12,32 @@ function App() {
         the main home page (reduce need to navigate to other pages)
         OR 
         create a link to gameboard as a seperate component
-        
+
       */}
 
-      {/* TODO - create a section for game rules */}
-      <div className="game-rules">
-        {/* TODO - add game rules here as numerical steps */}
+      {/* Game origination and purpose */}
+      <div className="game-specs">
+          <h2>Welcome to John Conway's "Game of Life"!</h2>
+          <p>This is a computer science classic from 1970, a program that simulates a _cellular automaton_
+(plural _automata_). It has connections to all kinds of different
+aspects of computer science and nature.
+          </p>
       </div>
 
-      {/* TODO - create a section that explains purpose/origination of game */}
-      <div className="game-origin">
-        {/* TODO - game purpose/origination */}
+      {/* Game specifications */}
+      <div className="game-specs">
+        <h2>Rules of the game</h2>
+
+        <p>In the Game of Life, these rules examine each cell of the grid. For each
+        cell, it counts that cell's eight neighbors (up, down, left, right, and
+        diagonals), and then act on that result.</p>
+
+        <li> If the cell is alive AND has 2 or 3 neighbors, then it remains
+          alive. Else it dies.</li>
+        <li> If the cell is dead AND has exactly 3 neighbors, then it comes to
+          life</li>
       </div>
+
 
     </div>
   );
