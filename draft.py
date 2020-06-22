@@ -41,6 +41,7 @@ def find_neighbors(i, j, arr):
 
 
 def main():
+    gen = 0
     max = 10
     l = [ [0] * 10 for i in range(max) ]
     # print(l)
@@ -59,6 +60,7 @@ def main():
 
     while True:
         _ = system('cls')
+        print(f"GENERATION {gen}")
         for m in new_arr:
             for o in m:
                 print(o, end='\t')
@@ -75,6 +77,7 @@ def main():
                         new_arr[y][x] = 1
 
         l = copy.deepcopy(new_arr)
+        gen += 1
         time.sleep(1)
 
 if __name__ == '__main__':
