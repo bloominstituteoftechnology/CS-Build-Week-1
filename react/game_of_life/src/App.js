@@ -1,19 +1,12 @@
 import React from 'react';
 import './App.css';
+import Board from './components/Board';
+
 
 function App() {
   return (
     <div className="App">
       <h1>Game of Life</h1> 
-
-      {/* 
-        
-        TODO - Either create a gameboard grid within
-        the main home page (reduce need to navigate to other pages)
-        OR 
-        create a link to gameboard as a seperate component
-
-      */}
 
       {/* Game origination and purpose */}
       <div className="game-specs">
@@ -36,8 +29,11 @@ aspects of computer science and nature.
           alive. Else it dies.</li>
         <li> If the cell is dead AND has exactly 3 neighbors, then it comes to
           life</li>
-      </div>
+      </div> 
 
+      <div className="game-specs start-game">
+          {/* TODO - button that will render board game below instructions */}
+      </div>
 
     </div>
   );

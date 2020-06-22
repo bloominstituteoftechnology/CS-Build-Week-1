@@ -1,0 +1,7 @@
+.Board {
+  margin: 0 auto;
+  text-align: center;
+  width: 85%;
+  height: 25vh;
+  background-color:red;
+}
