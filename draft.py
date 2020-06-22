@@ -66,7 +66,7 @@ def update_board(max, board):
 
 def main():
     gen = 0
-    max = 100
+    max = 25
     l = [ [0] * max for i in range(max) ]
 
     #PyGame
@@ -98,7 +98,8 @@ def main():
         print_board(l)
         for i  in range(max):
             for j in range(max):
-                pygame.draw.rect(screen, pygame.Color('white'), pygame.Rect(j*(5+size), i*(5+size), size, size))
+                color = 'red' if l[i][j] == 1 else 'white'
+                pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+size), i*(5+size), size, size))
 
         pygame.display.flip()
         l = update_board(max, l)
