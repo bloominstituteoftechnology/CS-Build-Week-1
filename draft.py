@@ -3,9 +3,8 @@ import copy
 import time
 from os import system
 
-def find_neighbors(i, j, arr):
+def find_neighbors(i, j, arr, max):
     neighbors = []
-    MAX = len(arr)
     total = 0
 
     #Find top left
@@ -15,22 +14,22 @@ def find_neighbors(i, j, arr):
     if i - 1 >= 0:
         neighbors.append(arr[i-1][j])
     #Find top right
-    if i - 1 >= 0 and j + 1 < MAX:
+    if i - 1 >= 0 and j + 1 < max:
         neighbors.append(arr[i-1][j+1])
     #Find left
     if j - 1 >= 0:
         neighbors.append(arr[i][j-1])
     #Find right
-    if j + 1 < MAX:
+    if j + 1 < max:
         neighbors.append(arr[i][j+1])
     #Find bottom left
-    if i + 1 < MAX and j - 1 >= 0:
+    if i + 1 < max and j - 1 >= 0:
         neighbors.append(arr[i+1][j-1])
     #Find bottom middle
-    if i + 1 < MAX:
+    if i + 1 < max:
         neighbors.append(arr[i+1][j])
     #Find bottom right
-    if i + 1 < MAX and j + 1 < MAX:
+    if i + 1 < max and j + 1 < max:
         neighbors.append(arr[i+1][j+1])
 
     for num in neighbors:
@@ -45,15 +44,23 @@ def print_board(board):
         print()
 
 def update_board(max, board):
+    # Make a full copy of our board.
+    # This allows us to make a proper update,
+    # as otherwise we'd be trying to make updates with the wrong values
     new_arr = copy.deepcopy(board)
     for y in range(max):
         for x in range(max):
-            new_total = find_neighbors(y, x, board)
+            # Using values 0 and 1 lets us simply add up all living cells
+            # can use this value to apply the rules of conway's game of life very easily
+            neighbors = find_neighbors(y, x, board, max)
+
+            # If cell is alive
             if board[y][x] == 1:
-                if new_total < 2 or new_total > 3:
+                if neighbors < 2 or neighbors > 3:
                     new_arr[y][x] = 0
+            # If cell is dead
             else:
-                if new_total == 3:
+                if neighbors == 3:
                     new_arr[y][x] = 1
     return new_arr
 
@@ -61,6 +68,10 @@ def main():
     gen = 0
     max = 10
     l = [ [0] * 10 for i in range(max) ]
+
+    #PyGame
+    pygame.init()
+
     # print(l)
     # l[4][4] = 1
     # l[4][3] = 1
@@ -72,8 +83,6 @@ def main():
     l[2][4] = 1
     l[2][5] = 1
     l[3][6] = 1
-
-
 
     while True:
         _ = system('cls')
