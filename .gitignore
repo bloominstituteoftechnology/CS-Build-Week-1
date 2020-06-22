@@ -32,3 +32,9 @@
 .idea/modules.xml
 
 .idea/vcs.xml
+
+__pycache__/
+
+Pipfile
+
+Pipfile.lock
