@@ -1,12 +1,11 @@
 # Cellular Automata and The Game of Life
 
-
 ## The Game of Life
 
 A very famous cellular automaton is John Conway's [Game of
 Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
 app. This game is a class of discrete model known as a *[Cellular
-Automaton](https://en.wikipedia.org/wiki/Cellular_automaton)*, abbreviated *CA*.
+Automaton](https://en.wikipedia.org/wiki/Cellular_automaton)*, abbreviated*CA*.
 
 It's made up of a grid of cells (usually 2D, but can be any dimension)
 that follow a simple set of rules from which complex behaviors can
@@ -21,7 +20,7 @@ diagonals), and then act on that result.
 * If the cell is alive **and** has 2 or 3 neighbors, then it remains
   alive. Else it dies.
 * If the cell is dead **and** has exactly 3 neighbors, then it comes to
-  life. Else if remains dead.
+  life. Else it remains dead.
 
 From those two rules, many types of "creatures" can be created that
 [move around the
