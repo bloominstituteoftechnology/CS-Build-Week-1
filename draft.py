@@ -119,8 +119,8 @@ def main():
         else:
             l = update_board(max, l)
             gen += 1
+            time.sleep(1)
         pygame.display.flip()
-        time.sleep(1)
 
 if __name__ == '__main__':
     main()
