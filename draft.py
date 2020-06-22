@@ -66,7 +66,7 @@ def update_board(max, board):
 
 def main():
     gen = 0
-    max = 25
+    max = 10
     l = [ [0] * max for i in range(max) ]
     window = 500
 
@@ -90,18 +90,36 @@ def main():
     l[mid-2][mid+1] = 1
     l[mid-1][mid+2] = 1
 
+    edit = True
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return 0
+            if event.type == pygame.MOUSEBUTTONUP:
+                x = pygame.mouse.get_pos()[0]
+                y = pygame.mouse.get_pos()[1]
+                if y > window:
+                    print(f"X: {x} Y: {y}")
+                    edit = not edit
+                if edit and y < window:
+                    x2 = int(x / (size + 5))
+                    y2 = int(y / (size + 5))
+                    print(f"X:{x2} Y:{y2}")
+                    l[y2][x2] = 0 if l[y2][x2] is 1 else 1
+
+
         for i  in range(max):
             for j in range(max):
                 color = 'green' if l[i][j] == 1 else 'white'
                 pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+size), i*(5+size), size, size))
 
+        if edit:
+            print("Edit mode is ON")
+
+        else:
+            l = update_board(max, l)
+            gen += 1
         pygame.display.flip()
-        l = update_board(max, l)
-        gen += 1
         time.sleep(1)
 
 if __name__ == '__main__':
