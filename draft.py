@@ -68,37 +68,35 @@ def main():
     gen = 0
     max = 25
     l = [ [0] * max for i in range(max) ]
+    window = 500
 
     #PyGame
     pygame.init()
     pygame.display.set_caption("Hector Ledesma - Conway's Game of Life")
-    screen = pygame.display.set_mode((500, 500))
+    screen = pygame.display.set_mode((window, window + 100))
 
-    size = (500 / max) - 5
+    size = (window / max) - 5
 
-
+    mid = int(max / 2 - 1)
     # print(l)
     # l[4][4] = 1
     # l[4][3] = 1
     # l[4][5] = 1
 
     #glider pattern
-    l[4][4] = 1
-    l[3][4] = 1
-    l[2][4] = 1
-    l[2][5] = 1
-    l[3][6] = 1
+    l[mid][mid] = 1
+    l[mid-1][mid] = 1
+    l[mid-2][mid] = 1
+    l[mid-2][mid+1] = 1
+    l[mid-1][mid+2] = 1
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return 0
-        _ = system('cls')
-        print(f"GENERATION {gen}")
-        print_board(l)
         for i  in range(max):
             for j in range(max):
-                color = 'red' if l[i][j] == 1 else 'white'
+                color = 'green' if l[i][j] == 1 else 'white'
                 pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+size), i*(5+size), size, size))
 
         pygame.display.flip()
