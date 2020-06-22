@@ -38,6 +38,12 @@ def find_neighbors(i, j, arr):
 
     return total
 
+def print_board(grid):
+    for m in grid:
+        for o in m:
+            print(o, end='\t')
+        print()
+
 
 
 def main():
@@ -61,10 +67,8 @@ def main():
     while True:
         _ = system('cls')
         print(f"GENERATION {gen}")
-        for m in new_arr:
-            for o in m:
-                print(o, end='\t')
-            print()
+        print_board(new_arr)
+
 
         for y in range(max):
             for x in range(max):
