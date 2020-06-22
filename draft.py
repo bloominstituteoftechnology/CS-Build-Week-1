@@ -55,7 +55,6 @@ def update_board(max, board):
             else:
                 if new_total == 3:
                     new_arr[y][x] = 1
-
     return new_arr
 
 def main():
@@ -79,9 +78,8 @@ def main():
     while True:
         _ = system('cls')
         print(f"GENERATION {gen}")
-        print_board(new_arr)
-
-        l = copy.deepcopy(new_arr)
+        print_board(l)
+        l = update_board(max, l)
         gen += 1
         time.sleep(1)
 
