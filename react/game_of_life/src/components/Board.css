@@ -1,7 +1,31 @@
-.Board {
+.main {
+  /* background */
+}
+.main h1 {
+  margin: 4%;
+  font-family: Permanent Marker, cursive;
+}
+.home {
+  background-color: rgb(221, 10, 52);
+  color: black;
+  margin: 4% auto;
+  width: 15%;
+  padding: 2%;
+}
+.home button {
+/* add button styles */
+}
+.board {
+  display: flex;
+  justify-content: space-between;
+  max-width: 80%;
   margin: 0 auto;
-  text-align: center;
-  width: 85%;
-  height: 25vh;
-  background-color:red;
+  background-color: black;
+  color: rgb(221, 10, 52);
+  padding: 4%;
+}
+.grid {
+  margin: 0 auto;
+  width: 45%;
+  border: 2px solid rgb(221, 10, 52);
 }

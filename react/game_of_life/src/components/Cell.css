@@ -1,0 +1,11 @@
+.cell {
+  width: 5%;
+  height: 5vh;
+  border: 1px solid;
+}
+.cell#front {
+  background-color:rgb(175, 18, 18);
+}
+.cell#back {
+  background-color: grey;
+}

@@ -1,4 +1,5 @@
 import React, {useState} from 'react'; 
+import {Link} from 'react-router-dom';
 import './Board.css';
 
 // initial state of game board
@@ -17,9 +18,21 @@ function Board() {
   const [cellData, setCellData] = useState(initCellState);
 
   return (
-    <div className="Board">
-      {/* display a 25x25 grid */}
-      <h1>I am a header inside the Board</h1>
+    <div className="main">
+      <h1>Conway's Game of Life</h1>
+
+      <div className="board">
+        {/* TODO - extract grid to individual component maybe */}
+        {/* <Grid /> maybe some props passed down */}
+        <div className="grid">
+          <p>inside grid</p>
+        </div>   
+
+        <div className="home">
+          <Link to="/"><button>Home</button></Link>
+        </div>
+      </div>
+
     </div>
   );
 }
