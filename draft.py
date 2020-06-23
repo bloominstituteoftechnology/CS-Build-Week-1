@@ -66,7 +66,7 @@ def main():
     gen = 0
     max = 25
     l = [ [0] * max for i in range(max) ]
-    WINDOW = 1000
+    WINDOW = 750
     CELL_SIZE = int(WINDOW / max) - 5
     BOTTOM_PADDING = int(WINDOW / 5)
     TOP_PADDING = CELL_SIZE * 3
@@ -96,6 +96,7 @@ def main():
     edit = True
 
     while True:
+        screen.fill((0,0,0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return 0
@@ -108,15 +109,15 @@ def main():
                     edit = not edit
                 elif edit and CLEAR_BUTTON.collidepoint(x,y):
                     l = [ [0] * max for i in range(max) ]
-                elif edit and y < WINDOW + TOP_PADDING:
+                elif edit and y < WINDOW + TOP_PADDING and y > TOP_PADDING:
                     x2 = int(x / (CELL_SIZE + 5))
-                    y2 = int(y / (CELL_SIZE )) - 3
+                    y2 = int((y - TOP_PADDING) / (CELL_SIZE + 5))
                     print(f"X:{x2} Y2:{y} Y2:{y2}")
                     l[y2][x2] = 0 if l[y2][x2] is 1 else 1
 
         for i  in range(max):
             for j in range(max):
-                color = 'green' if l[i][j] == 1 else 'white'
+                color = 'magenta' if l[i][j] == 1 else 'white'
                 pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+CELL_SIZE), i*(5+CELL_SIZE) + TOP_PADDING, CELL_SIZE, CELL_SIZE))
 
         if edit:
@@ -127,9 +128,15 @@ def main():
             gen += 1
             pygame.time.wait(1000)
 
+        font = pygame.font.SysFont('Arial', 25)
+        text_surface = font.render(f'Generation: {gen}', True, (255, 255, 255))
+        text_rect = text_surface.get_rect()
+        text_rect.center = (10, 10)
+        screen.blit(text_surface, (50, 40))
+
         pygame.draw.rect(screen, pygame.Color('white'), PLAYBACK_BUTTON)
         pygame.draw.rect(screen, pygame.Color('white'), CLEAR_BUTTON)
-        pygame.display.flip()
+        pygame.display.update()
 
 if __name__ == '__main__':
     main()
