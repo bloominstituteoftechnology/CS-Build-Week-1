@@ -73,8 +73,8 @@ const App = () => {
 
   return (
     <>
-      <div>
-        <h1>Conway's Game of Life</h1>
+      <h1>Conway's Game of Life</h1>
+      <div className="grid">
         <div
           style={{
             display: "grid",
@@ -193,8 +193,28 @@ const App = () => {
         </li>
       </div>
 
-      <div>
+      <div className="algo">
         <h3>About this Algorithm:</h3>
+        <p>
+          In principle, the Game of Life field is infinite, but computers have
+          finite memory. This leads to problems when the active area encroaches
+          on the border of the array. Programmers have used several strategies
+          to address these problems. The simplest strategy is to assume that
+          every cell outside the array is dead. This is easy to program but
+          leads to inaccurate results when the active area crosses the boundary.
+          A more sophisticated trick is to consider the left and right edges of
+          the field to be stitched together, and the top and bottom edges also,
+          yielding a toroidal array. The result is that active areas that move
+          across a field edge reappear at the opposite edge. Inaccuracy can
+          still result if the pattern grows too large, but there are no
+          pathological edge effects. Techniques of dynamic storage allocation
+          may also be used, creating ever-larger arrays to hold growing
+          patterns. The Game of Life on a finite field is sometimes explicitly
+          studied; some implementations, such as Golly, support a choice of the
+          standard infinite field, a field infinite only in one dimension, or a
+          finite field, with a choice of topologies such as a cylinder, a torus,
+          or a Möbius strip.
+        </p>
       </div>
     </>
   );
