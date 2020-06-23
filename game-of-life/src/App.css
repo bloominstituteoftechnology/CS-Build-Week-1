@@ -1,0 +1,42 @@
+.main {
+  max-width: 1600px;
+  border: 1px solid red;
+  margin: 0 auto;
+}
+h1 {
+  text-align: center;
+  margin: 2% 0;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.grid {
+  border: 1px solid pink;
+  width: 48%;
+}
+
+.rules {
+  border: 1px solid yellow;
+  width: 48%;
+}
+
+.rules h2 {
+  text-align: center;
+  padding-bottom: 2%;
+}
+
+.rules li {
+  padding: 2%;
+}
+
+.algo h3 {
+  text-align: center;
+  padding: 1%;
+}
+
+.algo {
+  margin: 2%;
+}
