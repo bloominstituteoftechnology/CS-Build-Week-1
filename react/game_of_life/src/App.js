@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Board from './components/Board';
+import Game from './components/Game';
 import Home from './components/Home';
 
 import {Route} from 'react-router-dom';
@@ -13,7 +13,7 @@ function App() {
         <Home />
       </Route>
       <Route path="/game">
-        <Board />
+        <Game />
       </Route>
     </div>
   );

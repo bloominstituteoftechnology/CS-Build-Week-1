@@ -59,14 +59,14 @@ function Home () {
           cell, it counts that cell's eight neighbors (up, down, left, right, and
           diagonals), and then act on that result.
         </p>
-        <li> 
-          If the cell is alive AND has 2 or 3 neighbors, then it remains
-          alive. Else it dies.
-        </li>
-        <li>
-          If the cell is dead AND has exactly 3 neighbors, then it comes to
-          life
-        </li>
+        <ul>
+          <li> 
+            If the cell is alive AND has 2 or 3 neighbors, then it remains alive. Else it dies.
+          </li>
+          <li>
+            If the cell is dead AND has exactly 3 neighbors then it comes to life.
+          </li>
+        </ul>
       </div> 
 
       <div className="game-specs start-game">

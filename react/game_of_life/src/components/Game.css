@@ -1,0 +1,31 @@
+.Main {
+  /* background */
+}
+.Main h1 {
+  margin: 4%;
+  font-family: Permanent Marker, cursive;
+}
+.Home {
+  background-color: rgb(221, 10, 52);
+  color: black;
+  margin: 4% auto;
+  width: 15%;
+  padding: 2%;
+}
+.Home button {
+/* add button styles */
+}
+.Board {
+  position: relative; 
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* max-width: 80%; */
+  margin: 0 auto;
+  background-color: rgb(221, 10, 52);
+  background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px);
+}
+.Grid {
+  margin: 0 auto;
+  width: 45%;
+  border: 2px solid rgb(221, 10, 52);
+}
