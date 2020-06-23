@@ -67,17 +67,18 @@ def main():
     max = 25
     l = [ [0] * max for i in range(max) ]
     WINDOW = 1000
-    BOTTOM = int(WINDOW / 5)
     CELL_SIZE = int(WINDOW / max) - 5
-    BUTTON_SIZE = int(BOTTOM / 3)
+    BOTTOM_PADDING = int(WINDOW / 5)
+    TOP_PADDING = CELL_SIZE * 3
+    BUTTON_SIZE = int(BOTTOM_PADDING / 3)
 
-    CLEAR_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 2 + 25)*2, WINDOW + (BUTTON_SIZE), BUTTON_SIZE * 2, BUTTON_SIZE)
-    PLAYBACK_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 2) - 25, WINDOW + (BUTTON_SIZE), BUTTON_SIZE * 2, BUTTON_SIZE)
+    CLEAR_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 2 + 25)*2, WINDOW + (BUTTON_SIZE) + TOP_PADDING, BUTTON_SIZE * 2, BUTTON_SIZE)
+    PLAYBACK_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 2) - 25, WINDOW + (BUTTON_SIZE) + TOP_PADDING, BUTTON_SIZE * 2, BUTTON_SIZE)
 
     #PyGame
     pygame.init()
     pygame.display.set_caption("Hector Ledesma - Conway's Game of Life")
-    screen = pygame.display.set_mode((WINDOW, WINDOW + BOTTOM))
+    screen = pygame.display.set_mode((WINDOW, WINDOW + BOTTOM_PADDING + TOP_PADDING))
 
     mid = int(max / 2 - 1)
     # print(l)
@@ -107,19 +108,19 @@ def main():
                     edit = not edit
                 elif edit and CLEAR_BUTTON.collidepoint(x,y):
                     l = [ [0] * max for i in range(max) ]
-                elif edit and y < WINDOW:
+                elif edit and y < WINDOW + TOP_PADDING:
                     x2 = int(x / (CELL_SIZE + 5))
-                    y2 = int(y / (CELL_SIZE + 5))
-                    print(f"X:{x2} Y:{y2}")
+                    y2 = int(y / (CELL_SIZE )) - 3
+                    print(f"X:{x2} Y2:{y} Y2:{y2}")
                     l[y2][x2] = 0 if l[y2][x2] is 1 else 1
 
         for i  in range(max):
             for j in range(max):
                 color = 'green' if l[i][j] == 1 else 'white'
-                pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+CELL_SIZE), i*(5+CELL_SIZE), CELL_SIZE, CELL_SIZE))
+                pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+CELL_SIZE), i*(5+CELL_SIZE) + TOP_PADDING, CELL_SIZE, CELL_SIZE))
 
         if edit:
-            print("Edit mode is ON")
+            pass
 
         else:
             l = update_board(max, l)
