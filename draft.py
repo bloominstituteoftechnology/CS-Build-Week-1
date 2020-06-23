@@ -99,12 +99,15 @@ def main():
             if event.type == pygame.QUIT:
                 return 0
             if event.type == pygame.MOUSEBUTTONUP:
-                x = pygame.mouse.get_pos()[0]
-                y = pygame.mouse.get_pos()[1]
-                if y > WINDOW:
+                pos = pygame.mouse.get_pos()
+                x = pos[0]
+                y = pos[1]
+                if PLAYBACK_BUTTON.collidepoint(x, y):
                     print(f"X: {x} Y: {y}")
                     edit = not edit
-                if edit and y < WINDOW:
+                elif edit and CLEAR_BUTTON.collidepoint(x,y):
+                    l = [ [0] * max for i in range(max) ]
+                elif edit and y < WINDOW:
                     x2 = int(x / (CELL_SIZE + 5))
                     y2 = int(y / (CELL_SIZE + 5))
                     print(f"X:{x2} Y:{y2}")
