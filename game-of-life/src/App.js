@@ -29,8 +29,13 @@ const App = () => {
     return generateEmptyGrid();
   });
 
+  const [running, setRunning] = useState(false);
+
   return (
     <>
+      <button onClick={setRunning(!running)}>
+        {running ? "stop" : "start"}
+      </button>
       <div
         style={{
           display: "grid",
