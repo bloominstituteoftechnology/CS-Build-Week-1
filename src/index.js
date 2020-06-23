@@ -1,33 +1,48 @@
 var width = 50;
 var height = 50;
 var canvasArr = [];
-
+var speed = 150;
 var running = false;
 
-var canvas = document.getElementById('canvas')
-for(i = 0; i < height; i++){
-    canvasArr.push([])
-    var row = document.createElement('tr');
-    for(j = 0; j < width; j++){
-        canvasArr[i].push(0)
-        var cell = document.createElement('td')
-        cell.id = `r${i}c${j}`
-        row.appendChild(cell)
-    }
-    canvas.appendChild(row)
-}
-function randomize(){
-    for(i = 0; i < height; i++){
-        for(j = 0; j < width; j++){
-            canvasArr[i][j] = 0
-            item = document.getElementById(`r${i}c${j}`)
-            item.classList.remove('on')
-            if(Math.random() > .8 ){
-                canvasArr[i][j] = 1
-                item.classList.add('on')
-            }
+function handleCellClick(e){
+    if (!running){
+        var pos = e.target.id.split('r')
+        pos = pos[1].split('c')
+        pos[0] = parseInt(pos[0])
+        pos[1] = parseInt(pos[1])
+        if(canvasArr[pos[0]][pos[1]] === 0){
+            canvasArr[pos[0]][pos[1]] = 1 
+        }else{
+            canvasArr[pos[0]][pos[1]] = 0
         }
+        
+        var cell = e.target
+        cell.classList.toggle('on')
     }
+    
+ }
+var canvas = document.getElementById('canvas')
+function initialize(){
+    for(i = 0; i < height; i++){
+        canvasArr.push([])
+        var row = document.createElement('tr');
+        for(j = 0; j < width; j++){
+            canvasArr[i].push(0)
+            var cell = document.createElement('td') 
+            cell.id = `r${i}c${j}`
+            cell.addEventListener('click', handleCellClick)
+            row.appendChild(cell)
+        }
+        canvas.appendChild(row)
+    }
+}
+initialize()
+
+function reinitialize(){
+    while(canvas.firstChild){
+        canvas.removeChild(canvas.firstChild)
+    }
+    initialize()
 }
 function checkAlive(x,y,arr){
     var count = 0
@@ -61,7 +76,7 @@ function checkAlive(x,y,arr){
         } 
         return {alive:false, data: arr}
     }else{ 
-        if(canvasArr[y][x] == 0 && count == 3){
+        if(canvasArr[y][x] < 1 && count == 3){
             arr[y][x] = 1
             return {alive: true, data: arr, counter: count}
         }else if(canvasArr[y][x] == 0 && count !== 3){
@@ -89,67 +104,5 @@ function sim(){
             }
         }
         canvasArr = newArr
-    }
-                      
-}
- 
-function togglePlay(){
-    let button = document.querySelector('#play')
-    running = !running    
-    if(running){
-        button.innerHTML = 'Pause'
-        timer = setInterval(()=>{sim(); console.log('ticking')},150)
-    }else{
-        clearInterval(timer)
-        button.innerHTML = 'Play'
-    }
-}
-function next(){
-    running = true
-    sim()
-    running = !running
-}
-
-function clearBoard(){
-    for(y = 0; y < height; y++){
-        for(x = 0; x < width; x++){
-            let item = document.getElementById(`r${y}c${x}`)
-            canvasArr[y][x] = 0
-            item.classList.remove('on')
-        }
-    }
-}
-
-function beacon(){
-    let startx = width/2
-    let starty = height/2
-    
-    canvasArr[starty][startx] = 1
-    document.getElementById(`r${starty}c${startx}`).classList.add('on')
-    canvasArr[starty+1][startx] = 1
-    document.getElementById(`r${starty+1}c${startx}`).classList.add('on')
-    canvasArr[starty+1][startx+1] = 1
-    document.getElementById(`r${starty+1}c${startx+1}`).classList.add('on')
-    canvasArr[starty][startx+1] = 1
-    document.getElementById(`r${starty}c${startx+1}`).classList.add('on')
-
-    canvasArr[starty+2][startx+2] = 1
-    document.getElementById(`r${starty+2}c${startx+2}`).classList.add('on')
-    canvasArr[starty+2][startx+3] = 1
-    document.getElementById(`r${starty+2}c${startx+3}`).classList.add('on')
-    canvasArr[starty+3][startx+2] = 1
-    document.getElementById(`r${starty+3}c${startx+2}`).classList.add('on')
-    canvasArr[starty+3][startx+3] = 1
-    document.getElementById(`r${starty+3}c${startx+3}`).classList.add('on')
-}
-
-function blinker(){
-    let startx = width/2
-    let starty = height/2
-    canvasArr[starty][startx] = 1
-    document.getElementById(`r${starty}c${startx}`).classList.add('on')
-    canvasArr[starty-1][startx] = 1
-    document.getElementById(`r${starty-1}c${startx}`).classList.add('on')
-    canvasArr[starty+1][startx] = 1
-    document.getElementById(`r${starty+1}c${startx}`).classList.add('on')
+    }                 
 }

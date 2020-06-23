@@ -6,16 +6,57 @@
 
 </head>
 <body>
-    <h1>Hello</h1>
+    <h1>Conways Game of Life</h1>
     <table id='canvas' style='background: black'>
     </table>
     <script src="./index.js"></script>
-    <button id='play' onclick="togglePlay()">Play</button>
-    <button id='next' onclick="next()">Next</button>
-    <button id='random' onclick="randomize()">Randomize</button>
-    <button onclick="beacon()">Beacon</button>
-    <button onclick="blinker()">Blinker</button>
-    <button onclick="clearBoard()">Clear</button>
-<script src="./listeners.js"></script>
+    <script src="./shapes.js"></script>
+    <script src='./buttons.js'></script>
+    
+    <div class='main-controls'>
+         <button id='play' onclick="togglePlay()">Play</button>
+        <button id='next' onclick="next()">Next</button>
+        <button onclick="clearBoard()">Clear</button>
+        <button id='random' onclick="randomize()">Randomize</button>
+    </div>
+   
+    <div class='secondary-controls'>
+        <p id='speedTracker'>speed: 150ms</p>
+        <p>**to slow down or speed up pause the simulation theb adjust speed**</p>
+        <div class='control-box'>
+            <button onclick="lowerSpeed()">Slow Down <<</button>
+            <button onclick="increaseSpeed()">Speed Up >></button>
+        </div>
+        <div class='control-box'>
+            <h2>Shapes</h2>
+            <button class='other-button' onclick="centerStart()">Center objects</button>
+            <button onclick="beacon()">Beacon</button>
+            <button onclick="blinker()">Blinker</button>
+            <button onclick="hammerHead()">Hammer Head</button>
+        </div>
+        <div class='control-box'>
+            <p id='xwidth'>Width: 50</p>
+            <button onclick="increment('x', 10)">Increase Width ^</button>
+            <button onclick="increment('x', -10)">Decrease Width v</button>
+        </div>
+        <div class='control-box'>
+            <p id='yheight'>Height: 50</p>
+            <button onclick="increment('y', 10)">Increase Height ^</button>
+            <button onclick="increment('y', -10)">Decrease Height v</button>
+        </div>
+    
+        
+        
+        
+        <h2>Rules:</h2>
+        <p>If the cell is alive and has 2 or 3 neighbors, then it remains
+            alive. Else it dies.</p>
+        <p>If the cell is dead and has exactly 3 neighbors, then it comes to
+            life. Else if remains dead.</p>
+    </div>
+    <
+    <div id='canvas2'></div>
+    <div id = 'v2'></div>
+    <script src="./v2index.js"></script>
 </body>
 </html>
