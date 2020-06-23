@@ -66,16 +66,20 @@ def update_board(max, board):
 
 def main():
     gen = 0
-    max = 10
+    max = 25
     l = [ [0] * max for i in range(max) ]
-    window = 500
+    WINDOW = 1000
+    BOTTOM = int(WINDOW / 5)
+    SIZE = (WINDOW / max) - 5
+
+    # CLEAR = pygame.Rect(j*(5+size), i*(5+size), size, size)
+    # PLAY = pygame.Rect(j*(5+size), i*(5+size), size, size)
 
     #PyGame
     pygame.init()
     pygame.display.set_caption("Hector Ledesma - Conway's Game of Life")
-    screen = pygame.display.set_mode((window, window + 100))
+    screen = pygame.display.set_mode((WINDOW, WINDOW + BOTTOM))
 
-    size = (window / max) - 5
 
     mid = int(max / 2 - 1)
     # print(l)
@@ -98,12 +102,12 @@ def main():
             if event.type == pygame.MOUSEBUTTONUP:
                 x = pygame.mouse.get_pos()[0]
                 y = pygame.mouse.get_pos()[1]
-                if y > window:
+                if y > WINDOW:
                     print(f"X: {x} Y: {y}")
                     edit = not edit
-                if edit and y < window:
-                    x2 = int(x / (size + 5))
-                    y2 = int(y / (size + 5))
+                if edit and y < WINDOW:
+                    x2 = int(x / (SIZE + 5))
+                    y2 = int(y / (SIZE + 5))
                     print(f"X:{x2} Y:{y2}")
                     l[y2][x2] = 0 if l[y2][x2] is 1 else 1
 
@@ -111,7 +115,7 @@ def main():
         for i  in range(max):
             for j in range(max):
                 color = 'green' if l[i][j] == 1 else 'white'
-                pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+size), i*(5+size), size, size))
+                pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+SIZE), i*(5+SIZE), SIZE, SIZE))
 
         if edit:
             print("Edit mode is ON")
@@ -119,7 +123,7 @@ def main():
         else:
             l = update_board(max, l)
             gen += 1
-            time.sleep(1)
+            pygame.time.wait(1000)
         pygame.display.flip()
 
 if __name__ == '__main__':
