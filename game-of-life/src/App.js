@@ -103,77 +103,79 @@ const App = () => {
               ))
             )}
           </div>
-          <button
-            onClick={() => {
-              setRunning(!running);
-              if (!running) {
-                runningRef.current = true;
-                runSim();
-              }
-            }}
-          >
-            {running ? "stop" : "start"}
-          </button>
-          <button
-            onClick={() => {
-              setGrid(generateEmptyGrid());
-            }}
-          >
-            clear
-          </button>
-          <button
-            onClick={() => {
-              const rows = [];
-              for (let i = 0; i < numRows; i++) {
-                rows.push(
-                  Array.from(Array(numCols), () =>
-                    Math.random() > 0.7 ? 1 : 0
-                  )
-                );
-              }
+          <div className="buttons">
+            <button
+              onClick={() => {
+                setRunning(!running);
+                if (!running) {
+                  runningRef.current = true;
+                  runSim();
+                }
+              }}
+            >
+              {running ? "stop" : "start"}
+            </button>
+            <button
+              onClick={() => {
+                setGrid(generateEmptyGrid());
+              }}
+            >
+              clear
+            </button>
+            <button
+              onClick={() => {
+                const rows = [];
+                for (let i = 0; i < numRows; i++) {
+                  rows.push(
+                    Array.from(Array(numCols), () =>
+                      Math.random() > 0.7 ? 1 : 0
+                    )
+                  );
+                }
 
-              setGrid(rows);
-            }}
-          >
-            random
-          </button>
-          <DropdownButton
-            id="dropdown-basic-button"
-            title={bgColor === "Orange" ? "Choose a Color" : bgColor}
-          >
-            <Dropdown.Item
-              href="#/action-1"
-              onClick={() => {
-                setBgColor("Orange");
+                setGrid(rows);
               }}
             >
-              Default (Orange)
-            </Dropdown.Item>
-            <Dropdown.Item
-              href="#/action-2"
-              onClick={() => {
-                setBgColor("Purple");
-              }}
+              random
+            </button>
+            <DropdownButton
+              id="dropdown-basic-button"
+              title={bgColor === "Orange" ? "Choose a Color" : bgColor}
             >
-              Purple
-            </Dropdown.Item>
-            <Dropdown.Item
-              href="#/action-3"
-              onClick={() => {
-                setBgColor("Yellow");
-              }}
-            >
-              Yellow
-            </Dropdown.Item>
-            <Dropdown.Item
-              href="#/action-4"
-              onClick={() => {
-                setBgColor("Pink");
-              }}
-            >
-              Pink
-            </Dropdown.Item>
-          </DropdownButton>
+              <Dropdown.Item
+                href="#/action-1"
+                onClick={() => {
+                  setBgColor("Orange");
+                }}
+              >
+                Default (Orange)
+              </Dropdown.Item>
+              <Dropdown.Item
+                href="#/action-2"
+                onClick={() => {
+                  setBgColor("Purple");
+                }}
+              >
+                Purple
+              </Dropdown.Item>
+              <Dropdown.Item
+                href="#/action-3"
+                onClick={() => {
+                  setBgColor("Yellow");
+                }}
+              >
+                Yellow
+              </Dropdown.Item>
+              <Dropdown.Item
+                href="#/action-4"
+                onClick={() => {
+                  setBgColor("Pink");
+                }}
+              >
+                Pink
+              </Dropdown.Item>
+            </DropdownButton>
+          </div>
         </div>
 
         <div className="rules">

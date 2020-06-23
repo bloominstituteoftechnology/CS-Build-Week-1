@@ -1,6 +1,5 @@
 .main {
   max-width: 1600px;
-  border: 1px solid red;
   margin: 0 auto;
 }
 h1 {
@@ -14,12 +13,17 @@ h1 {
 }
 
 .grid {
-  border: 1px solid pink;
   width: 48%;
 }
 
+.buttons {
+  margin: 1% 0;
+  display: flex;
+  width: 500px;
+  justify-content: space-evenly;
+}
+
 .rules {
-  border: 1px solid yellow;
   width: 48%;
 }
 
@@ -30,6 +34,7 @@ h1 {
 
 .rules li {
   padding: 2%;
+  margin-left: 5%;
 }
 
 .algo h3 {
