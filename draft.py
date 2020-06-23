@@ -1,6 +1,4 @@
 import copy
-import time
-from os import system
 import pygame
 
 def find_neighbors(i, j, arr, max):
@@ -70,16 +68,16 @@ def main():
     l = [ [0] * max for i in range(max) ]
     WINDOW = 1000
     BOTTOM = int(WINDOW / 5)
-    SIZE = (WINDOW / max) - 5
+    CELL_SIZE = int(WINDOW / max) - 5
+    BUTTON_SIZE = int(BOTTOM / 3)
 
-    # CLEAR = pygame.Rect(j*(5+size), i*(5+size), size, size)
-    # PLAY = pygame.Rect(j*(5+size), i*(5+size), size, size)
+    CLEAR_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 2 + 25)*2, WINDOW + (BUTTON_SIZE), BUTTON_SIZE * 2, BUTTON_SIZE)
+    PLAYBACK_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 2) - 25, WINDOW + (BUTTON_SIZE), BUTTON_SIZE * 2, BUTTON_SIZE)
 
     #PyGame
     pygame.init()
     pygame.display.set_caption("Hector Ledesma - Conway's Game of Life")
     screen = pygame.display.set_mode((WINDOW, WINDOW + BOTTOM))
-
 
     mid = int(max / 2 - 1)
     # print(l)
@@ -95,6 +93,7 @@ def main():
     l[mid-1][mid+2] = 1
 
     edit = True
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -106,16 +105,15 @@ def main():
                     print(f"X: {x} Y: {y}")
                     edit = not edit
                 if edit and y < WINDOW:
-                    x2 = int(x / (SIZE + 5))
-                    y2 = int(y / (SIZE + 5))
+                    x2 = int(x / (CELL_SIZE + 5))
+                    y2 = int(y / (CELL_SIZE + 5))
                     print(f"X:{x2} Y:{y2}")
                     l[y2][x2] = 0 if l[y2][x2] is 1 else 1
-
 
         for i  in range(max):
             for j in range(max):
                 color = 'green' if l[i][j] == 1 else 'white'
-                pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+SIZE), i*(5+SIZE), SIZE, SIZE))
+                pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+CELL_SIZE), i*(5+CELL_SIZE), CELL_SIZE, CELL_SIZE))
 
         if edit:
             print("Edit mode is ON")
@@ -124,6 +122,9 @@ def main():
             l = update_board(max, l)
             gen += 1
             pygame.time.wait(1000)
+
+        pygame.draw.rect(screen, pygame.Color('white'), PLAYBACK_BUTTON)
+        pygame.draw.rect(screen, pygame.Color('white'), CLEAR_BUTTON)
         pygame.display.flip()
 
 if __name__ == '__main__':
