@@ -62,11 +62,15 @@ def update_board(max, board):
                     new_arr[y][x] = 1
     return new_arr
 
+def clear_board(max):
+    empty = [ [0] * max for i in range(max) ]
+    return empty
+
 def main():
     gen = 0
     max = 25
     l = [ [0] * max for i in range(max) ]
-    WINDOW = 750
+    WINDOW = 500
     CELL_SIZE = int(WINDOW / max) - 5
     BOTTOM_PADDING = int(WINDOW / 5)
     TOP_PADDING = CELL_SIZE * 3
@@ -74,6 +78,9 @@ def main():
 
     CLEAR_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 2 + 25)*2, WINDOW + (BUTTON_SIZE) + TOP_PADDING, BUTTON_SIZE * 2, BUTTON_SIZE)
     PLAYBACK_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 2) - 25, WINDOW + (BUTTON_SIZE) + TOP_PADDING, BUTTON_SIZE * 2, BUTTON_SIZE)
+    PRESET_BUTTON1 = pygame.Rect(20, WINDOW + BUTTON_SIZE + TOP_PADDING, BUTTON_SIZE, BUTTON_SIZE)
+    PRESET_BUTTON2 = pygame.Rect(40 + BUTTON_SIZE, WINDOW + BUTTON_SIZE + TOP_PADDING, BUTTON_SIZE, BUTTON_SIZE)
+    PRESET_BUTTON3 = pygame.Rect(60 + BUTTON_SIZE * 2, WINDOW + BUTTON_SIZE + TOP_PADDING, BUTTON_SIZE, BUTTON_SIZE)
 
     #PyGame
     pygame.init()
@@ -108,7 +115,7 @@ def main():
                     print(f"X: {x} Y: {y}")
                     edit = not edit
                 elif edit and CLEAR_BUTTON.collidepoint(x,y):
-                    l = [ [0] * max for i in range(max) ]
+                    l = clear_board(max)
                 elif edit and y < WINDOW + TOP_PADDING and y > TOP_PADDING:
                     x2 = int(x / (CELL_SIZE + 5))
                     y2 = int((y - TOP_PADDING) / (CELL_SIZE + 5))
@@ -137,6 +144,9 @@ def main():
 
         pygame.draw.rect(screen, pygame.Color('white'), PLAYBACK_BUTTON)
         pygame.draw.rect(screen, pygame.Color('white'), CLEAR_BUTTON)
+        pygame.draw.rect(screen, pygame.Color('white'), PRESET_BUTTON1)
+        pygame.draw.rect(screen, pygame.Color('white'), PRESET_BUTTON2)
+        pygame.draw.rect(screen, pygame.Color('white'), PRESET_BUTTON3)
         pygame.display.update()
 
 if __name__ == '__main__':
