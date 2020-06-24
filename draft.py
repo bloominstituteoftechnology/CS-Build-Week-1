@@ -80,9 +80,21 @@ def board_preset(option, max):
         preset[mid - 1][mid + 2] = 1
     # --- preset
     elif option is 2:
-        preset[mid][mid] = 1
-        preset[mid][mid-1] = 1
-        preset[mid][mid+1] = 1
+        # preset[mid][mid] = 1
+        # preset[mid][mid-1] = 1
+        # preset[mid][mid+1] = 1
+        preset[mid - 2][mid] = 1
+        preset[mid - 2][mid - 2] = 1
+        preset[mid - 1][mid - 2] = 1
+        preset[mid][mid - 2] = 1
+        preset[mid + 2][mid] = 1
+        preset[mid + 2][mid - 2] = 1
+        preset[mid + 1][mid - 2] = 1
+        preset[mid - 2][mid + 2] = 1
+        preset[mid - 1][mid + 2] = 1
+        preset[mid][mid + 2] = 1
+        preset[mid + 1][mid + 2] = 1
+        preset[mid + 2][mid + 2] = 1
     # Small Exploder preset
     elif option is 3:
         preset[mid][mid] = 1
@@ -133,6 +145,8 @@ def main():
     time_base = 1
     speed_multiplier = 1
 
+    l[int(max / 2 - 1)][int(max / 2 - 1)] = 1
+
     start_time = time.time()
     while True:
         screen.fill((0,0,0))
@@ -154,7 +168,24 @@ def main():
                     gen = 0
                     x2 = int(x / (CELL_SIZE + 5))
                     y2 = int((y - TOP_PADDING) / (CELL_SIZE + 5))
-                    print(f"X:{x2} Y2:{y} Y2:{y2}")
+
+                    mid = int(max / 2 - 1)
+                    where_x = ""
+                    where_y = ""
+
+                    if x2 > mid:
+                        where_x = f'+ {x2 - mid}'
+                    elif x2 < mid:
+                        where_x = f'- {mid - x2}'
+
+                    if y2 > mid:
+                        where_y = f'+ {y2 - mid}'
+                    elif y2 < mid:
+                        where_y = f'- {mid - y2}'
+
+                    print(f'preset[mid {where_y}][mid {where_x}] = 1')
+
+                    # print(f"X:{x2} Y2:{y} Y2:{y2}")
                     l[y2][x2] = 0 if l[y2][x2] is 1 else 1
                 elif edit and RANDOM_BUTTON.collidepoint(x, y):
                     l = random_board(max)
