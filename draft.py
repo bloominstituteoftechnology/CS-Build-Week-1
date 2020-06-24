@@ -149,14 +149,18 @@ def main():
                     edit = not edit
                 elif edit and CLEAR_BUTTON.collidepoint(x,y):
                     l = clear_board(max)
+                    gen = 0
                 elif edit and y < WINDOW + TOP_PADDING and y > TOP_PADDING:
+                    gen = 0
                     x2 = int(x / (CELL_SIZE + 5))
                     y2 = int((y - TOP_PADDING) / (CELL_SIZE + 5))
                     print(f"X:{x2} Y2:{y} Y2:{y2}")
                     l[y2][x2] = 0 if l[y2][x2] is 1 else 1
                 elif edit and RANDOM_BUTTON.collidepoint(x, y):
                     l = random_board(max)
+                    gen = 0
                 elif edit and (PRESET_BUTTON1.collidepoint(x, y) or PRESET_BUTTON2.collidepoint(x, y) or PRESET_BUTTON3.collidepoint(x, y)):
+                    gen = 0
                     if PRESET_BUTTON1.collidepoint(x, y):
                         l = board_preset(1, max)
                     elif PRESET_BUTTON2.collidepoint(x, y):
