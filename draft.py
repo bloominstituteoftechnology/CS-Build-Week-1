@@ -105,7 +105,7 @@ def main():
     gen = 0
     max = 25
     l = [ [0] * max for i in range(max) ]
-    WINDOW = 1000
+    WINDOW = 750
     CELL_SIZE = int(WINDOW / max) - 5
     BOTTOM_PADDING = int(WINDOW / 5)
     TOP_PADDING = CELL_SIZE * 3
