@@ -1,5 +1,6 @@
 import copy
 import pygame
+from random import randint
 
 def find_neighbors(i, j, arr, max):
     neighbors = []
@@ -92,22 +93,35 @@ def board_preset(option, max):
         preset[mid+2][mid] = 1
     return preset
 
+def random_board(max):
+    random = clear_board(max)
+    for row in range(max):
+        for column in range(max):
+            random[row][column] = randint(0, 1)
+    return random
 
 def main():
     gen = 0
     max = 25
     l = [ [0] * max for i in range(max) ]
-    WINDOW = 500
+    WINDOW = 1000
     CELL_SIZE = int(WINDOW / max) - 5
     BOTTOM_PADDING = int(WINDOW / 5)
     TOP_PADDING = CELL_SIZE * 3
     BUTTON_SIZE = int(BOTTOM_PADDING / 3)
+    FONT_SIZE = int(WINDOW * 0.050)
+    WHITE = (255, 255, 255)
+    BLACK = (0, 0, 0)
 
-    CLEAR_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 2 + 25)*2, WINDOW + (BUTTON_SIZE) + TOP_PADDING, BUTTON_SIZE * 2, BUTTON_SIZE)
     PLAYBACK_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 2) - 25, WINDOW + (BUTTON_SIZE) + TOP_PADDING, BUTTON_SIZE * 2, BUTTON_SIZE)
+    CLEAR_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 2 + 25)*2, WINDOW + (BUTTON_SIZE) + TOP_PADDING, BUTTON_SIZE * 2, BUTTON_SIZE)
+    RANDOM_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 2 + 25)*3, WINDOW + (BUTTON_SIZE) + TOP_PADDING, BUTTON_SIZE * 2, BUTTON_SIZE)
     PRESET_BUTTON1 = pygame.Rect(20, WINDOW + BUTTON_SIZE + TOP_PADDING, BUTTON_SIZE, BUTTON_SIZE)
     PRESET_BUTTON2 = pygame.Rect(40 + BUTTON_SIZE, WINDOW + BUTTON_SIZE + TOP_PADDING, BUTTON_SIZE, BUTTON_SIZE)
     PRESET_BUTTON3 = pygame.Rect(60 + BUTTON_SIZE * 2, WINDOW + BUTTON_SIZE + TOP_PADDING, BUTTON_SIZE, BUTTON_SIZE)
+    SPEEDUP_BUTTON = pygame.Rect(WINDOW - BUTTON_SIZE - 20, TOP_PADDING / 10, BUTTON_SIZE, BUTTON_SIZE)
+    SPEEDDOWN_BUTTON = pygame.Rect(WINDOW - (BUTTON_SIZE + 20) * 3, TOP_PADDING / 10, BUTTON_SIZE, BUTTON_SIZE)
+    SPEED_BUTTON = pygame.Rect(WINDOW - (BUTTON_SIZE + 20) * 2, TOP_PADDING / 10, BUTTON_SIZE, BUTTON_SIZE)
 
     #PyGame
     pygame.init()
@@ -115,9 +129,11 @@ def main():
     screen = pygame.display.set_mode((WINDOW, WINDOW + BOTTOM_PADDING + TOP_PADDING))
 
     edit = True
+    time = 1
+    speed = 1
 
     while True:
-        screen.fill((255,0,0))
+        screen.fill((0,0,0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return 0
@@ -135,6 +151,8 @@ def main():
                     y2 = int((y - TOP_PADDING) / (CELL_SIZE + 5))
                     print(f"X:{x2} Y2:{y} Y2:{y2}")
                     l[y2][x2] = 0 if l[y2][x2] is 1 else 1
+                elif edit and RANDOM_BUTTON.collidepoint(x, y):
+                    l = random_board(max)
                 elif edit and (PRESET_BUTTON1.collidepoint(x, y) or PRESET_BUTTON2.collidepoint(x, y) or PRESET_BUTTON3.collidepoint(x, y)):
                     if PRESET_BUTTON1.collidepoint(x, y):
                         l = board_preset(1, max)
@@ -142,11 +160,16 @@ def main():
                         l = board_preset(2, max)
                     elif PRESET_BUTTON3.collidepoint(x, y):
                         l = board_preset(3, max)
+                elif edit and (SPEEDUP_BUTTON.collidepoint(x, y) or SPEEDDOWN_BUTTON.collidepoint(x, y)):
+                    if SPEEDUP_BUTTON.collidepoint(x,y):
+                        speed += 1
+                    if SPEEDDOWN_BUTTON.collidepoint(x,y):
+                        speed = speed - 1 if speed - 1 != 0 else speed
 
 
         for i  in range(max):
             for j in range(max):
-                color = 'magenta' if l[i][j] == 1 else 'gold'
+                color = 'magenta' if l[i][j] == 1 else 'white'
                 pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+CELL_SIZE), i*(5+CELL_SIZE) + TOP_PADDING, CELL_SIZE, CELL_SIZE))
 
         if edit:
@@ -155,20 +178,61 @@ def main():
         else:
             l = update_board(max, l)
             gen += 1
-            pygame.time.wait(1000)
+            pygame.time.wait(int((time / speed) * 1000))
 
-        font = pygame.font.SysFont('Arial', int(WINDOW * 0.050))
-        text_surface = font.render(f'Generation: {gen}', True, (255, 255, 255))
+        #Generation text
+        gen_font = pygame.font.SysFont('Arial', FONT_SIZE)
+        text_surface = gen_font.render(f'Generation: {gen}', True, WHITE)
         text_rect = text_surface.get_rect()
         text_rect.centery = TOP_PADDING/2
         text_rect.left = 20
         screen.blit(text_surface, text_rect)
 
+        #Preset 1 text
+        pre1_surface = gen_font.render('1', True, BLACK)
+
+        # Preset 2 text
+        pre2_surface = gen_font.render('2', True, BLACK)
+
+        # Preset 3 text
+        pre3_surface = gen_font.render('3', True, BLACK)
+
+        # Speed text
+        speed_surface = gen_font.render(f'x {speed}', True, BLACK)
+
+        # Speed Up text
+        speedup_surface = gen_font.render(f'>>', True, BLACK)
+
+        # Speed Down text
+        speeddown_surface = gen_font.render(f'<<', True, BLACK)
+
+        # Random text
+        random_surface = gen_font.render(f'Random', True, BLACK)
+
+        # Clear text
+        clear_surface = gen_font.render(f'Clear', True, BLACK)
+
+        # Playback Button
+        playback_surface = gen_font.render(f'► / ❚❚', True, BLACK)
+
         pygame.draw.rect(screen, pygame.Color('white'), PLAYBACK_BUTTON)
+        screen.blit(playback_surface, PLAYBACK_BUTTON)
         pygame.draw.rect(screen, pygame.Color('white'), CLEAR_BUTTON)
+        screen.blit(clear_surface, CLEAR_BUTTON)
+        pygame.draw.rect(screen, pygame.Color('white'), RANDOM_BUTTON)
+        screen.blit(random_surface, RANDOM_BUTTON)
         pygame.draw.rect(screen, pygame.Color('white'), PRESET_BUTTON1)
+        screen.blit(pre1_surface, PRESET_BUTTON1)
         pygame.draw.rect(screen, pygame.Color('white'), PRESET_BUTTON2)
+        screen.blit(pre2_surface, PRESET_BUTTON2)
         pygame.draw.rect(screen, pygame.Color('white'), PRESET_BUTTON3)
+        screen.blit(pre3_surface, PRESET_BUTTON3)
+        pygame.draw.rect(screen, pygame.Color('white'), SPEEDUP_BUTTON)
+        screen.blit(speedup_surface, SPEEDUP_BUTTON)
+        pygame.draw.rect(screen, pygame.Color('white'), SPEEDDOWN_BUTTON)
+        screen.blit(speeddown_surface, SPEEDDOWN_BUTTON)
+        pygame.draw.rect(screen, pygame.Color('white'), SPEED_BUTTON)
+        screen.blit(speed_surface, SPEED_BUTTON)
         pygame.display.update()
 
 if __name__ == '__main__':
