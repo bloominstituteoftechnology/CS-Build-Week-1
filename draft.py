@@ -1,5 +1,6 @@
 import copy
 import pygame
+import time
 from random import randint
 
 def find_neighbors(i, j, arr, max):
@@ -129,9 +130,10 @@ def main():
     screen = pygame.display.set_mode((WINDOW, WINDOW + BOTTOM_PADDING + TOP_PADDING))
 
     edit = True
-    time = 1
-    speed = 1
+    time_base = 1
+    speed_multiplier = 1
 
+    start_time = time.time()
     while True:
         screen.fill((0,0,0))
         for event in pygame.event.get():
@@ -142,7 +144,8 @@ def main():
                 x = pos[0]
                 y = pos[1]
                 if PLAYBACK_BUTTON.collidepoint(x, y):
-                    print(f"X: {x} Y: {y}")
+                    if not edit:
+                        start_time = time.time()
                     edit = not edit
                 elif edit and CLEAR_BUTTON.collidepoint(x,y):
                     l = clear_board(max)
@@ -162,9 +165,9 @@ def main():
                         l = board_preset(3, max)
                 elif edit and (SPEEDUP_BUTTON.collidepoint(x, y) or SPEEDDOWN_BUTTON.collidepoint(x, y)):
                     if SPEEDUP_BUTTON.collidepoint(x,y):
-                        speed += 1
+                        speed_multiplier += 1
                     if SPEEDDOWN_BUTTON.collidepoint(x,y):
-                        speed = speed - 1 if speed - 1 != 0 else speed
+                        speed_multiplier = speed_multiplier - 1 if speed_multiplier - 1 != 0 else speed_multiplier
 
 
         for i  in range(max):
@@ -172,13 +175,14 @@ def main():
                 color = 'magenta' if l[i][j] == 1 else 'white'
                 pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+CELL_SIZE), i*(5+CELL_SIZE) + TOP_PADDING, CELL_SIZE, CELL_SIZE))
 
-        if edit:
-            pass
-
-        else:
-            l = update_board(max, l)
-            gen += 1
-            pygame.time.wait(int((time / speed) * 1000))
+        if not edit:
+            current_time = time.time()
+            print(f'start: {start_time}\ncurrent: {current_time}\n{current_time - start_time}\n')
+            if current_time - start_time >= (time_base / speed_multiplier):
+                l = update_board(max, l)
+                gen += 1
+                start_time = time.time()
+            # pygame.time.wait(int((time_base / speed) * 1000))
 
         #Generation text
         gen_font = pygame.font.SysFont('Arial', FONT_SIZE)
@@ -198,7 +202,7 @@ def main():
         pre3_surface = gen_font.render('3', True, BLACK)
 
         # Speed text
-        speed_surface = gen_font.render(f'x {speed}', True, BLACK)
+        speed_surface = gen_font.render(f'x {speed_multiplier}', True, BLACK)
 
         # Speed Up text
         speedup_surface = gen_font.render(f'>>', True, BLACK)
