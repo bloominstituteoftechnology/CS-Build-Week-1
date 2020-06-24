@@ -2,6 +2,14 @@
   margin: 4%;
   font-family: Permanent Marker, cursive;
 }
+.Header{
+  margin-bottom: 2%;
+}
+.Body {
+  display: flex;
+  justify-content: space-between;
+  margin: 2%;
+}
 .Home {
   background-color: rgb(221, 10, 52);
   color: black;
@@ -20,10 +28,19 @@
   position: absolute;
 }
 .Controls {
-  /* margin-top: 20px; */
-  width: 50%;
+  width: 20%;
   background-color: black;
   color: rgb(221, 10, 52);
-  padding: 2%;
-  margin: 2% auto;
+  padding: 1%;
+}
+.Controls h2 {
+  font-family: Permanent Marker, cursive;
+  color:rgb(221, 10, 52);
+  margin-top: 0;
+  margin-bottom: 10%;
+}
+.control-btm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

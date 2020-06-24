@@ -2,12 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './Game.css';
 
-// initial state of game board
-const initGameState = {
-  cells: [],
-  isRunning: false,
-  interval: 100,
-}
 
 // Default game board values
 const CELL_SIZE = 20;
@@ -181,29 +175,35 @@ class Game extends React.Component {
     const { cells, interval, isRunning } = this.state;
     return (
       <div className="Main">
-        <h1>Conway's Game of Life</h1>
-
-        <Link to="/"><button>Home</button></Link>
-
-        <div 
-          className="Board"
-          style={{ width: WIDTH, height: HEIGHT, backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}}
-          onClick={this.handleClick}
-          ref={(n) => { this.boardRef = n }}
-          >
-          {cells.map(cell => (
-            <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`}/>
-            ))}
+        <div className="Header">
+          <h1>Conway's Game of Life</h1>
+          <Link to="/"><button>Home</button></Link>
         </div>
 
-        <div className="Controls">
+        <div className="Body">
+          <div 
+            className="Board"
+            style={{ width: WIDTH, height: HEIGHT, backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}}
+            onClick={this.handleClick}
+            ref={(n) => { this.boardRef = n }}
+            >
+            {cells.map(cell => (
+              <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`}/>
+              ))}
+          </div>
+
+          <div className="Controls">
+            <h2>Controls</h2>
             Update every <input value={interval} onChange={this.handleIntervalChange} /> msec
             {isRunning ?
                 <button className="button" onClick={this.stopGame}>Stop</button> :
                 <button className="button" onClick={this.runGame}>Run</button>
-            }
-            <button className="button" onClick={this.handleRandom}>Random</button>
-            <button className="button" onClick={this.handleClear}>Clear</button>
+              }
+            <div className="control-btm">
+              <button className="button" onClick={this.handleRandom}>Random</button>
+              <button className="button" onClick={this.handleClear}>Clear</button>
+            </div>
+          </div>
         </div>
       </div>
     );
