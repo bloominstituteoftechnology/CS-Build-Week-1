@@ -1,48 +1,13 @@
-// TODO - Look into how to create a autofill for situations like functions
-/*
-  function [name] () {
-    return (
-      <div className="">
-      
-      </div>
-    );
-  }
-*/
-
-// TODO - Look into similar situation for above but in this case, a prefilled react component .js file
-/*
-  import react from 'react';
-
-  function [name] () { 
-    return (
-      <div className="">
-      
-      </div>
-    );
-  }
-
-  export defaul [name];
-*/
-
-
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './Home.css';
 
-// declare an intial state, if needed, here...
-const initState = {
-  foo: "bar",
-  bar: "foobar"
-};
 
 function Home () { 
-  const [someData, setSomeData] = useState(initState);
-
   return (
     <div className="main">
       <h1>Conway's Game of Life</h1> 
 
-      {/* Game origination and purpose */}
       <div className="game-specs">
           <h2>Welcome to John Conway's "Game of Life"!</h2>
           <p>
@@ -51,7 +16,6 @@ function Home () {
           </p>
       </div>
 
-      {/* Game specifications */}
       <div className="game-specs">
         <h2>Rules of the game</h2>
         <p>
