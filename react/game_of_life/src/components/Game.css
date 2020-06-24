@@ -1,0 +1,46 @@
+.Main h1 {
+  margin: 4%;
+  font-family: Permanent Marker, cursive;
+}
+.Header{
+  margin-bottom: 2%;
+}
+.Body {
+  display: flex;
+  justify-content: space-between;
+  margin: 2%;
+}
+.Home {
+  background-color: rgb(221, 10, 52);
+  color: black;
+  margin: 4% auto;
+  width: 15%;
+  padding: 2%;
+}
+.Board {
+  position: relative; 
+  margin: 0 auto;
+  background-color: rgb(221, 10, 52);
+  background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px);
+}
+.Cell {
+  background: #ccc;
+  position: absolute;
+}
+.Controls {
+  width: 20%;
+  background-color: black;
+  color: rgb(221, 10, 52);
+  padding: 1%;
+}
+.Controls h2 {
+  font-family: Permanent Marker, cursive;
+  color:rgb(221, 10, 52);
+  margin-top: 0;
+  margin-bottom: 10%;
+}
+.control-btm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

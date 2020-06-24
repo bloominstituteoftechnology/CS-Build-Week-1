@@ -4,7 +4,7 @@ One approach to implementing the Game of Life could be to build a collection of 
 
 ## Component Hierarchy
 
-The main component of the visualization we want to display is  a grid. We should create the grid as
+The main component of the visualization we want to display is a grid. We should create the grid as
 a React Component with any necessary state variables that allow it to be displayed as we wish. Below
 are some thoughts about items to add to your grid component.
 

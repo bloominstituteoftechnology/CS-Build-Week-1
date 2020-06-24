@@ -78,7 +78,7 @@ informational repo in yours.
 The main entry point of your application should house the visualization
 of this cellular automaton. Include necessary components, such as:
 
-* Grid to display cells. 
+* Grid to display cells.
 * Cell objects or components that, at a minimum, should have:
   * Properties
     * current state: (alive, dead), (black, white)
