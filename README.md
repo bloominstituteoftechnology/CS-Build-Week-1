@@ -1,4 +1,3 @@
-# Deploy to Netlify
 
 # Cellular Automata and Conway's "Game of Life"
 
