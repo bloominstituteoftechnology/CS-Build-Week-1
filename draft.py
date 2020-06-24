@@ -66,6 +66,33 @@ def clear_board(max):
     empty = [ [0] * max for i in range(max) ]
     return empty
 
+def board_preset(option, max):
+    mid = int(max / 2 - 1)
+    preset = clear_board(max)
+    # Glider preset
+    if option is 1:
+        preset[mid][mid] = 1
+        preset[mid - 1][mid] = 1
+        preset[mid - 2][mid] = 1
+        preset[mid - 2][mid + 1] = 1
+        preset[mid - 1][mid + 2] = 1
+    # --- preset
+    elif option is 2:
+        preset[mid][mid] = 1
+        preset[mid][mid-1] = 1
+        preset[mid][mid+1] = 1
+    # Small Exploder preset
+    elif option is 3:
+        preset[mid][mid] = 1
+        preset[mid-1][mid] = 1
+        preset[mid][mid-1] = 1
+        preset[mid][mid+1] = 1
+        preset[mid+1][mid-1] = 1
+        preset[mid+1][mid+1] = 1
+        preset[mid+2][mid] = 1
+    return preset
+
+
 def main():
     gen = 0
     max = 25
@@ -86,19 +113,6 @@ def main():
     pygame.init()
     pygame.display.set_caption("Hector Ledesma - Conway's Game of Life")
     screen = pygame.display.set_mode((WINDOW, WINDOW + BOTTOM_PADDING + TOP_PADDING))
-
-    mid = int(max / 2 - 1)
-    # print(l)
-    # l[4][4] = 1
-    # l[4][3] = 1
-    # l[4][5] = 1
-
-    #glider pattern
-    l[mid][mid] = 1
-    l[mid-1][mid] = 1
-    l[mid-2][mid] = 1
-    l[mid-2][mid+1] = 1
-    l[mid-1][mid+2] = 1
 
     edit = True
 
@@ -121,6 +135,14 @@ def main():
                     y2 = int((y - TOP_PADDING) / (CELL_SIZE + 5))
                     print(f"X:{x2} Y2:{y} Y2:{y2}")
                     l[y2][x2] = 0 if l[y2][x2] is 1 else 1
+                elif edit and (PRESET_BUTTON1.collidepoint(x, y) or PRESET_BUTTON2.collidepoint(x, y) or PRESET_BUTTON3.collidepoint(x, y)):
+                    if PRESET_BUTTON1.collidepoint(x, y):
+                        l = board_preset(1, max)
+                    elif PRESET_BUTTON2.collidepoint(x, y):
+                        l = board_preset(2, max)
+                    elif PRESET_BUTTON3.collidepoint(x, y):
+                        l = board_preset(3, max)
+
 
         for i  in range(max):
             for j in range(max):
