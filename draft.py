@@ -96,7 +96,7 @@ def main():
     edit = True
 
     while True:
-        screen.fill((0,0,0))
+        screen.fill((255,0,0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return 0
@@ -117,7 +117,7 @@ def main():
 
         for i  in range(max):
             for j in range(max):
-                color = 'magenta' if l[i][j] == 1 else 'white'
+                color = 'magenta' if l[i][j] == 1 else 'gold'
                 pygame.draw.rect(screen, pygame.Color(color), pygame.Rect(j*(5+CELL_SIZE), i*(5+CELL_SIZE) + TOP_PADDING, CELL_SIZE, CELL_SIZE))
 
         if edit:
@@ -128,11 +128,12 @@ def main():
             gen += 1
             pygame.time.wait(1000)
 
-        font = pygame.font.SysFont('Arial', 25)
+        font = pygame.font.SysFont('Arial', int(WINDOW * 0.050))
         text_surface = font.render(f'Generation: {gen}', True, (255, 255, 255))
         text_rect = text_surface.get_rect()
-        text_rect.center = (10, 10)
-        screen.blit(text_surface, (50, 40))
+        text_rect.centery = TOP_PADDING/2
+        text_rect.left = 20
+        screen.blit(text_surface, text_rect)
 
         pygame.draw.rect(screen, pygame.Color('white'), PLAYBACK_BUTTON)
         pygame.draw.rect(screen, pygame.Color('white'), CLEAR_BUTTON)
