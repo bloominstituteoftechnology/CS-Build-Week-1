@@ -26,7 +26,11 @@ class ViewController: UIViewController {
     }
 
     @IBAction func presetsButton(_ sender: Any) {
-        let alertController = UIAlertController(title: "Example Patterns", message: "Select a common Game of Life pattern.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Example Patterns", message: "Select a Game of Life pattern:", preferredStyle: .alert)
+
+        alertController.addAction(UIAlertAction(title: "Behive", style: .default) { (_) in
+            self.gameGrid.useExamplePattern(pattern: .behive)
+        })
 
         alertController.addAction(UIAlertAction(title: "Blinker", style: .default) { (_) in
             self.gameGrid.useExamplePattern(pattern: .blinker)
@@ -38,6 +42,14 @@ class ViewController: UIViewController {
 
         alertController.addAction(UIAlertAction(title: "Beacon", style: .default) { (_) in
             self.gameGrid.useExamplePattern(pattern: .beacon)
+        })
+
+        alertController.addAction(UIAlertAction(title: "Pulsar", style: .default) { (_) in
+            self.gameGrid.useExamplePattern(pattern: .pulsar)
+        })
+
+        alertController.addAction(UIAlertAction(title: "Pentadecathlon", style: .default) { (_) in
+            self.gameGrid.useExamplePattern(pattern: .pentadecathlon)
         })
 
         alertController.addAction(UIAlertAction(title: "Glider", style: .default) { (_) in
