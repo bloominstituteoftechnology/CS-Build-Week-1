@@ -35,19 +35,60 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ar6-IX-5gZ">
                                         <rect key="frame" x="78" y="0.0" width="62" height="22"/>
                                         <state key="normal" image="play" catalog="system"/>
+                                        <connections>
+                                            <action selector="playPausebutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BTr-W9-eWO"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ERe-oA-A1h">
                                         <rect key="frame" x="156" y="0.0" width="62" height="22"/>
                                         <state key="normal" image="arrowshape.turn.up.right" catalog="system"/>
+                                        <connections>
+                                            <action selector="stepButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Xp-oP-8RW"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abq-qa-mT4">
                                         <rect key="frame" x="234" y="0.0" width="62" height="22"/>
                                         <state key="normal" image="clear" catalog="system"/>
+                                        <connections>
+                                            <action selector="clearButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eWA-xx-9Gg"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T5O-T7-RTW">
                                         <rect key="frame" x="312" y="0.0" width="62" height="22"/>
                                         <state key="normal" image="book" catalog="system"/>
+                                        <connections>
+                                            <action selector="presetsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FHo-Nc-pVB"/>
+                                        </connections>
                                     </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dOV-zT-9sj">
+                                <rect key="frame" x="20" y="554" width="374" height="112"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KqM-8y-SyD">
+                                        <rect key="frame" x="145" y="0.0" width="84.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exw-RJ-F4P">
+                                        <rect key="frame" x="182" y="30.5" width="10.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Population" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9TJ-UT-cLA">
+                                        <rect key="frame" x="146.5" y="61" width="81" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pvv-DA-ltl">
+                                        <rect key="frame" x="182" y="91.5" width="10.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -58,11 +99,18 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="vQh-bT-bI2" secondAttribute="bottom" constant="20" id="MBe-TV-Kqd"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vQh-bT-bI2" secondAttribute="trailing" constant="20" id="Rgq-Xg-E1t"/>
                             <constraint firstItem="vQh-bT-bI2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="fDK-aP-HZO"/>
+                            <constraint firstItem="dOV-zT-9sj" firstAttribute="top" secondItem="9fs-OX-1iP" secondAttribute="bottom" constant="20" id="hqp-Kn-m8R"/>
+                            <constraint firstItem="dOV-zT-9sj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="kXc-No-0VB"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dOV-zT-9sj" secondAttribute="trailing" constant="20" id="ve6-u4-JTR"/>
                             <constraint firstItem="9fs-OX-1iP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="xBg-cx-WGm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Game of Life" id="wuJ-LV-035"/>
+                    <connections>
+                        <outlet property="generationLabel" destination="exw-RJ-F4P" id="Bwv-ix-6nR"/>
+                        <outlet property="populationLabel" destination="Pvv-DA-ltl" id="IDt-pR-PsV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
