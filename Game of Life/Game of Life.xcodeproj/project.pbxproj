@@ -64,9 +64,8 @@
 			children = (
 				92841AE724A519DA00C7B39F /* Models */,
 				92841AE324A45E7E00C7B39F /* Resources */,
-				92841AE524A50F2800C7B39F /* RulesViewController.swift */,
 				92841AE424A45E8D00C7B39F /* Storyboards */,
-				92841AD324A45E1700C7B39F /* ViewController.swift */,
+				92841AEC24A53CA600C7B39F /* View Controllers */,
 			);
 			path = "Game of Life";
 			sourceTree = "<group>";
@@ -98,6 +97,15 @@
 				92841AE824A51A1100C7B39F /* GameGrid.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		92841AEC24A53CA600C7B39F /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				92841AE524A50F2800C7B39F /* RulesViewController.swift */,
+				92841AD324A45E1700C7B39F /* ViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
