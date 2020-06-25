@@ -1,6 +1,7 @@
 import copy
 import pygame
 import time
+import os
 from random import randint
 
 def find_neighbors(i, j, arr, max):
@@ -135,6 +136,7 @@ def main():
     SPEEDUP_BUTTON = pygame.Rect(WINDOW - BUTTON_SIZE - 20, TOP_PADDING / 10, BUTTON_SIZE, BUTTON_SIZE)
     SPEEDDOWN_BUTTON = pygame.Rect(WINDOW - (BUTTON_SIZE + 20) * 3, TOP_PADDING / 10, BUTTON_SIZE, BUTTON_SIZE)
     SPEED_BUTTON = pygame.Rect(WINDOW - (BUTTON_SIZE + 20) * 2, TOP_PADDING / 10, BUTTON_SIZE, BUTTON_SIZE)
+    RULES_BUTTON = pygame.Rect(WINDOW - (BUTTON_SIZE + 20) * 4, TOP_PADDING / 10, BUTTON_SIZE, BUTTON_SIZE)
 
     #PyGame
     pygame.init()
@@ -203,6 +205,8 @@ def main():
                         speed_multiplier += 1
                     if SPEEDDOWN_BUTTON.collidepoint(x,y):
                         speed_multiplier = speed_multiplier - 1 if speed_multiplier - 1 != 0 else speed_multiplier
+                elif RULES_BUTTON.collidepoint(x, y):
+                    os.startfile('rules.txt')
 
 
         for i  in range(max):
@@ -252,7 +256,10 @@ def main():
         clear_surface = gen_font.render(f'Clear', True, BLACK)
 
         # Playback Button
-        playback_surface = gen_font.render(f'► / ❚❚', True, BLACK)
+        playback_surface = gen_font.render(f'   ► / ❚❚', True, BLACK)
+
+        # Info Button
+        rules_surface = gen_font.render(f' i', True, BLACK)
 
         pygame.draw.rect(screen, pygame.Color('white'), PLAYBACK_BUTTON)
         screen.blit(playback_surface, PLAYBACK_BUTTON)
@@ -272,6 +279,8 @@ def main():
         screen.blit(speeddown_surface, SPEEDDOWN_BUTTON)
         pygame.draw.rect(screen, pygame.Color('white'), SPEED_BUTTON)
         screen.blit(speed_surface, SPEED_BUTTON)
+        pygame.draw.rect(screen, pygame.Color('white'), RULES_BUTTON)
+        screen.blit(rules_surface, RULES_BUTTON)
         pygame.display.update()
 
 if __name__ == '__main__':

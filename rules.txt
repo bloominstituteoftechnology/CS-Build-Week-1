@@ -1,0 +1,6 @@
+For a cell that is alive:
+    - Each cell with one or no neighbors dies   ->  Solitude
+    - Each cell with four or more neighbors dies -> Overpopulation
+    - Each cell with two or three neighbors survives.
+For a cell that is dead:
+    - Each cell with three neighbors becomes populated.
