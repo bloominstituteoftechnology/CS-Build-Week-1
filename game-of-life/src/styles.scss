@@ -1,0 +1,40 @@
+.grid-container{
+    display: flex;
+
+    #presets{
+        position: fixed;
+        left: 83%;
+        display: flex;
+        flex-direction: column;
+        width: 17%;
+        align-items: center;
+
+        button{
+            width: 40%;
+            margin: 4% 0%;
+        }
+
+        form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        button{
+            width: 80%;
+        }
+        
+            input{
+                margin: 3% 0;
+            }
+        }
+    }
+}
+
+#top-container{
+    display: flex;
+    
+    #rules{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

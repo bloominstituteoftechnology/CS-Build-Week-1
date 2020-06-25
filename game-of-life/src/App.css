@@ -1,0 +1,37 @@
+.grid-container {
+  display: flex;
+}
+.grid-container #presets {
+  position: fixed;
+  left: 83%;
+  display: flex;
+  flex-direction: column;
+  width: 17%;
+  align-items: center;
+}
+.grid-container #presets button {
+  width: 40%;
+  margin: 4% 0%;
+}
+.grid-container #presets form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.grid-container #presets form button {
+  width: 80%;
+}
+.grid-container #presets form input {
+  margin: 3% 0;
+}
+
+#top-container {
+  display: flex;
+}
+#top-container #rules {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*# sourceMappingURL=App.css.map */
