@@ -1,17 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default function BottomBar() {
+export default function BottomBar(props) {
     return (
 
         <ButtonWrapper>
-            <button>
+            <button onClick={() =>
+                props.playGame()
+            }>
                 Play
             </button>
-            <button>
-                Pause
+            <button onClick={()=>props.clearBoard()}>
+                Clear the Board
             </button>
-            <button>
+            <button onClick={() =>
+                props.stopGame()
+            }>
                 Stop
             </button>
 
