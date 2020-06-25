@@ -29,7 +29,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="62" height="22"/>
                                         <state key="normal" image="info.circle" catalog="system"/>
                                         <connections>
-                                            <segue destination="mOI-hx-xCI" kind="presentation" id="FZ7-Pi-DfR"/>
+                                            <segue destination="mOI-hx-xCI" kind="showDetail" id="FZ7-Pi-DfR"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ar6-IX-5gZ">
@@ -68,10 +68,10 @@
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="137.94642857142856"/>
         </scene>
-        <!--View Controller-->
+        <!--Rules View Controller-->
         <scene sceneID="K9b-Cw-ipq">
             <objects>
-                <viewController id="mOI-hx-xCI" sceneMemberID="viewController">
+                <viewController id="mOI-hx-xCI" customClass="RulesViewController" customModule="Game_of_Life" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="poP-Wj-dF3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -79,9 +79,13 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Svh-ag-dYB">
                                 <rect key="frame" x="145" y="758" width="124" height="30"/>
                                 <state key="normal" title="Play Game of Life!"/>
+                                <connections>
+                                    <action selector="okButton:" destination="mOI-hx-xCI" eventType="touchUpInside" id="FGj-cp-EXa"/>
+                                    <action selector="okButton:" destination="Gow-hg-WKR" eventType="touchUpInside" id="cLC-ft-Y80"/>
+                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c0m-rS-ck3">
-                                <rect key="frame" x="20" y="20" width="374" height="718"/>
+                                <rect key="frame" x="20" y="81" width="374" height="657"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <mutableString key="text">1. Any live cell with fewer than two live neighbours dies, as if by underpopulation. 
 2. Any live cell with two or three live neighbours lives on to the next generation.
@@ -91,6 +95,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rules" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SlW-sl-Xlb">
+                                <rect key="frame" x="166.5" y="20" width="81" height="41"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -98,13 +108,17 @@
                             <constraint firstItem="qNB-Uv-xDu" firstAttribute="bottom" secondItem="Svh-ag-dYB" secondAttribute="bottom" constant="20" id="OSt-ju-TBX"/>
                             <constraint firstItem="c0m-rS-ck3" firstAttribute="leading" secondItem="qNB-Uv-xDu" secondAttribute="leading" constant="20" id="Vxk-Yz-dKP"/>
                             <constraint firstItem="Svh-ag-dYB" firstAttribute="centerX" secondItem="poP-Wj-dF3" secondAttribute="centerX" id="Yng-HN-vvC"/>
-                            <constraint firstItem="c0m-rS-ck3" firstAttribute="top" secondItem="qNB-Uv-xDu" secondAttribute="top" constant="20" id="tvu-I1-vDn"/>
+                            <constraint firstItem="c0m-rS-ck3" firstAttribute="top" secondItem="SlW-sl-Xlb" secondAttribute="bottom" constant="20" id="ZrO-Qx-RLa"/>
+                            <constraint firstItem="SlW-sl-Xlb" firstAttribute="centerX" secondItem="poP-Wj-dF3" secondAttribute="centerX" id="bx1-fm-aAM"/>
                             <constraint firstItem="Svh-ag-dYB" firstAttribute="top" secondItem="c0m-rS-ck3" secondAttribute="bottom" constant="20" id="wVG-2i-4N2"/>
+                            <constraint firstItem="SlW-sl-Xlb" firstAttribute="top" secondItem="qNB-Uv-xDu" secondAttribute="top" constant="20" id="z5N-8x-MfB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qNB-Uv-xDu"/>
                     </view>
+                    <navigationItem key="navigationItem" id="ACw-3I-1G9"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k8K-w0-uvy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="Gow-hg-WKR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1760.8695652173915" y="137.94642857142856"/>
         </scene>
