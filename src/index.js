@@ -3,7 +3,8 @@ var height = 50;
 var canvasArr = [];
 var speed = 150;
 var running = false;
-
+var count = 0
+var gen = document.getElementById('counter')
 function handleCellClick(e){
     if (!running){
         var pos = e.target.id.split('r')
@@ -90,6 +91,8 @@ function checkAlive(x,y,arr){
 }
 function sim(){
     if(running){
+        count++
+        gen.innerHTML = `Generation: ${count}`
         var newArr = JSON.parse(JSON.stringify(canvasArr))
         for(y = 0; y < height; y++){
             for(x = 0; x < width; x++){

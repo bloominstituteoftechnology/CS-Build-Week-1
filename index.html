@@ -2,19 +2,20 @@
 <html>
 <head>
 <title>The Game of Life</title>
-<link rel="stylesheet" type="text/css" href="index.css">
+<link rel="stylesheet" type="text/css" href="./src/index.css">
 
 </head>
 <body>
     <h1>Conways Game of Life</h1>
+    <p id='counter'>Generation: 0</p>
     <table id='canvas' style='background: black'>
     </table>
-    <script src="./index.js"></script>
-    <script src="./shapes.js"></script>
-    <script src='./buttons.js'></script>
+    <script src="./src/index.js"></script>
+    <script src="./src/shapes.js"></script>
+    <script src='./src/buttons.js'></script>
     
     <div class='main-controls'>
-         <button id='play' onclick="togglePlay()">Play</button>
+        <button id='play' onclick="togglePlay()">Play</button>
         <button id='next' onclick="next()">Next</button>
         <button onclick="clearBoard()">Clear</button>
         <button id='random' onclick="randomize()">Randomize</button>
@@ -54,9 +55,5 @@
         <p>If the cell is dead and has exactly 3 neighbors, then it comes to
             life. Else if remains dead.</p>
     </div>
-    <
-    <div id='canvas2'></div>
-    <div id = 'v2'></div>
-    <script src="./v2index.js"></script>
 </body>
 </html>

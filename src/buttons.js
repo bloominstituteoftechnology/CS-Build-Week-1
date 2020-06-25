@@ -1,4 +1,9 @@
+function resetGen(){
+    counter = 0
+    gen.innerHTML = 'Generation: 0'
+}
 function randomize(){
+    resetGen();
     for(i = 0; i < height; i++){
         for(j = 0; j < width; j++){
             canvasArr[i][j] = 0
@@ -49,7 +54,7 @@ function next(){
 }
 
 function clearBoard(){
-    console.log(height)
+    resetGen()
     starty = 0
     startx = 0
     if(running){
