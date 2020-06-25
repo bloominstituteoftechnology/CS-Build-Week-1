@@ -56,15 +56,31 @@
 		92841ACE24A45E1700C7B39F /* Game of Life */ = {
 			isa = PBXGroup;
 			children = (
-				92841ACF24A45E1700C7B39F /* AppDelegate.swift */,
-				92841AD124A45E1700C7B39F /* SceneDelegate.swift */,
+				92841AE324A45E7E00C7B39F /* Resources */,
+				92841AE424A45E8D00C7B39F /* Storyboards */,
 				92841AD324A45E1700C7B39F /* ViewController.swift */,
-				92841AD524A45E1700C7B39F /* Main.storyboard */,
-				92841AD824A45E1B00C7B39F /* Assets.xcassets */,
-				92841ADA24A45E1B00C7B39F /* LaunchScreen.storyboard */,
-				92841ADD24A45E1B00C7B39F /* Info.plist */,
 			);
 			path = "Game of Life";
+			sourceTree = "<group>";
+		};
+		92841AE324A45E7E00C7B39F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				92841ACF24A45E1700C7B39F /* AppDelegate.swift */,
+				92841AD824A45E1B00C7B39F /* Assets.xcassets */,
+				92841ADD24A45E1B00C7B39F /* Info.plist */,
+				92841AD124A45E1700C7B39F /* SceneDelegate.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		92841AE424A45E8D00C7B39F /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				92841ADA24A45E1B00C7B39F /* LaunchScreen.storyboard */,
+				92841AD524A45E1700C7B39F /* Main.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,7 +302,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4ZDYKHFRDV;
-				INFOPLIST_FILE = "Game of Life/Info.plist";
+				INFOPLIST_FILE = "Game of Life/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,7 +320,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4ZDYKHFRDV;
-				INFOPLIST_FILE = "Game of Life/Info.plist";
+				INFOPLIST_FILE = "Game of Life/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
