@@ -8,7 +8,7 @@
 
 import UIKit
 
-public enum Examples {
+public enum Patterns {
     // Still Lifes
     case behive
 
@@ -54,6 +54,26 @@ class GameGrid: NSObject {
     func clearGrid() {
         for cell in cells {
             cell.state = .dead
+        }
+    }
+
+    public func useExamplePattern(pattern: Patterns = .glider) {
+        clearGrid()
+        switch pattern {
+        case .behive:
+            print(pattern)
+        case .blinker:
+            print(pattern)
+        case .toad:
+            print(pattern)
+        case .beacon:
+            print(pattern)
+        case .pulsar:
+            print(pattern)
+        case .pentadecathlon:
+            print(pattern)
+        case .glider:
+            print(pattern)
         }
     }
 }

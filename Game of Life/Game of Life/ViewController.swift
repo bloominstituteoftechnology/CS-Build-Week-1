@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     // MARK: - Properites
+    var gameGrid = GameGrid(size: 25)
 
     // MARK: - Actions
 
@@ -21,25 +22,26 @@ class ViewController: UIViewController {
     }
 
     @IBAction func clearButton(_ sender: UIButton) {
+        gameGrid.clearGrid()
     }
 
     @IBAction func presetsButton(_ sender: Any) {
         let alertController = UIAlertController(title: "Example Patterns", message: "Select a common Game of Life pattern.", preferredStyle: .alert)
 
         alertController.addAction(UIAlertAction(title: "Blinker", style: .default) { (_) in
-            print("Blinker")
+            self.gameGrid.useExamplePattern(pattern: .blinker)
         })
 
         alertController.addAction(UIAlertAction(title: "Toad", style: .default) { (_) in
-            print("Toad")
+            self.gameGrid.useExamplePattern(pattern: .toad)
         })
 
         alertController.addAction(UIAlertAction(title: "Beacon", style: .default) { (_) in
-            print("Beacon")
+            self.gameGrid.useExamplePattern(pattern: .beacon)
         })
 
         alertController.addAction(UIAlertAction(title: "Glider", style: .default) { (_) in
-            print("Glider")
+            self.gameGrid.useExamplePattern(pattern: .glider)
         })
 
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
