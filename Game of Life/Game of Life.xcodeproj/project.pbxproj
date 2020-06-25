@@ -16,6 +16,7 @@
 		92841AE624A50F2800C7B39F /* RulesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92841AE524A50F2800C7B39F /* RulesViewController.swift */; };
 		92841AE924A51A1100C7B39F /* GameGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92841AE824A51A1100C7B39F /* GameGrid.swift */; };
 		92841AEB24A51AB600C7B39F /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92841AEA24A51AB600C7B39F /* Cell.swift */; };
+		92841AEE24A53CE700C7B39F /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92841AED24A53CE700C7B39F /* GridView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		92841AE524A50F2800C7B39F /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesViewController.swift; sourceTree = "<group>"; };
 		92841AE824A51A1100C7B39F /* GameGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGrid.swift; sourceTree = "<group>"; };
 		92841AEA24A51AB600C7B39F /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		92841AED24A53CE700C7B39F /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		92841ACE24A45E1700C7B39F /* Game of Life */ = {
 			isa = PBXGroup;
 			children = (
+				92841AED24A53CE700C7B39F /* GridView.swift */,
 				92841AE724A519DA00C7B39F /* Models */,
 				92841AE324A45E7E00C7B39F /* Resources */,
 				92841AE424A45E8D00C7B39F /* Storyboards */,
@@ -182,6 +185,7 @@
 				92841AD424A45E1700C7B39F /* ViewController.swift in Sources */,
 				92841AD024A45E1700C7B39F /* AppDelegate.swift in Sources */,
 				92841AE924A51A1100C7B39F /* GameGrid.swift in Sources */,
+				92841AEE24A53CE700C7B39F /* GridView.swift in Sources */,
 				92841AE624A50F2800C7B39F /* RulesViewController.swift in Sources */,
 				92841AD224A45E1700C7B39F /* SceneDelegate.swift in Sources */,
 				92841AEB24A51AB600C7B39F /* Cell.swift in Sources */,
