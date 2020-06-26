@@ -28,6 +28,7 @@ const emptyGrid = () => {
 
 function App() {
   const [running, setRunning] = useState(false);
+  const [speed, setSpeed] = useState(1000);
   const [grid, setGrid] = useState(() => {
     return emptyGrid();
   });
@@ -74,7 +75,7 @@ function App() {
       });
     });
 
-    setTimeout(runGame, 250);
+    setTimeout(runGame, speed);
   }, []);
 
   return (
@@ -111,6 +112,16 @@ function App() {
         )}
       </div>
       <div class="button-container">
+        <button
+          onClick={() => {
+            if (speed <= 5000) {
+              setSpeed(speed + 100);
+              console.log(speed);
+            }
+          }}
+        >
+          <i class="fas fa-backward" />
+        </button>
         {/*changes the state to determine whether the game is running or not*/}
         <button
           onClick={() => {
@@ -122,6 +133,16 @@ function App() {
           }}
         >
           {running ? <i class="fas fa-pause" /> : <i class="fas fa-play" />}
+        </button>
+        <button
+          onClick={() => {
+            if (speed >= 100) {
+              setSpeed(speed - 100);
+              console.log(speed);
+            }
+          }}
+        >
+          <i class="fas fa-fast-forward" />
         </button>
         <button
           onClick={() => {

@@ -8,6 +8,7 @@ body {
 
 h1 {
   font-family: "Raleway", sans-serif;
+  color: white;
 }
 
 .page-container {
@@ -25,4 +26,8 @@ h1 {
   color: grey;
   border: 10px;
   margin: 1%;
+  button {
+    width: 200px;
+    height: 30px;
+  }
 }
