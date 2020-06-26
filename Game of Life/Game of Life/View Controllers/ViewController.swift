@@ -97,8 +97,9 @@ class ViewController: UIViewController {
         var topOffset = CGFloat(0)
         var leadingOffset = CGFloat(0)
 
-        for _ in 0..<gridView.gameGrid.size {
-            for _ in 0..<gridView.gameGrid.size {
+        for y in 0..<gridView.gameGrid.size {
+            for x in 0..<gridView.gameGrid.size {
+                print(x, y)
                 let button = UIButton()
                 button.tag = index
                 index += 1
@@ -118,12 +119,12 @@ class ViewController: UIViewController {
                 ])
                 buttons.append(button)
 
-                topOffset += 15
-                if topOffset >= 375 {
-                    topOffset = 0
+                leadingOffset += 15
+                if leadingOffset >= 375 {
+                    leadingOffset = 0
                 }
             }
-            leadingOffset += 15
+            topOffset += 15
         }
     }
 
