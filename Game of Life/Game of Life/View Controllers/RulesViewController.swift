@@ -12,8 +12,20 @@ class RulesViewController: UIViewController {
 
     // MARK: - Properites
     var gridView: GridView?
+    var viewController: ViewController?
 
     // MARK: - Actions
+    @IBAction func colorSegmentedControl(_ sender: UISegmentedControl) {
+        switch(sender.selectedSegmentIndex) {
+        case 1:
+            viewController?.buttonColor = UIColor.systemGreen
+        case 2:
+            viewController?.buttonColor = UIColor.systemYellow
+        default:
+            viewController?.buttonColor = UIColor.systemTeal
+        }
+    }
+
     @IBAction func okButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }

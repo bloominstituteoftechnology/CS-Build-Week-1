@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 
     // MARK: - Properites
     var buttons: [UIButton] = []
+    var buttonColor = UIColor.systemTeal
 
     // MARK: - Outlets
 
@@ -119,7 +120,7 @@ class ViewController: UIViewController {
 
                 button.backgroundColor = .clear
                 button.layer.borderWidth = 0.5
-                button.layer.borderColor = UIColor.systemTeal.cgColor
+                button.layer.borderColor = UIColor.systemGray6.cgColor
                 button.translatesAutoresizingMaskIntoConstraints = false
                 button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
 
@@ -145,6 +146,7 @@ class ViewController: UIViewController {
         if segue.identifier == "RulesSegue" {
             guard let vc = segue.destination as? RulesViewController else { return }
             vc.gridView = gridView
+            vc.viewController = self
         }
     }
 }
@@ -154,7 +156,7 @@ extension ViewController: GameStatsDelegate {
         var index = 0
         for cell in gridView.gameGrid.cells {
             if cell.state == .alive {
-                buttons[index].backgroundColor = UIColor.systemTeal
+                buttons[index].backgroundColor = buttonColor
             } else {
                 buttons[index].backgroundColor = .clear
             }
