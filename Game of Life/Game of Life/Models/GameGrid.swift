@@ -67,6 +67,7 @@ class GameGrid: NSObject {
         for cell in cells {
             cell.state = .dead
         }
+        generation = 0
     }
 
     public func useExamplePattern(pattern: Patterns = .glider) {
@@ -229,6 +230,16 @@ class GameGrid: NSObject {
         return cells[absolutePosition]
     }
 
+    func cellCoordinates(index: Int) -> (x: Int, y: Int) {
+        var y = 0
+        var x = 0
+
+        y = index / size
+        x = index - (y * size)
+
+        return (x, y)
+    }
+
     func cellTapped(at index: Int) {
         if cells[index].state == .alive {
             cells[index].state = .dead
@@ -240,6 +251,79 @@ class GameGrid: NSObject {
     }
 
     func performGameTurn() {
+        var index = 0
+        for cell in cells {
+            var count = 0
+            let coordinates = cellCoordinates(index: index)
+
+            // West
+            if coordinates.x != 0 {
+                if cellAt(x: coordinates.x - 1, y: coordinates.y).state == .alive {
+                    count = count + 1
+                }
+            }
+
+            // North West
+            if coordinates.x != 0 && coordinates.y != 0 {
+                if cellAt(x: coordinates.x - 1, y: coordinates.y - 1).state == .alive {
+                    count = count + 1
+                }
+            }
+
+            // North
+            if coordinates.y != 0 {
+                if cellAt(x: coordinates.x, y: coordinates.y - 1).state == .alive {
+                    count = count + 1
+                }
+            }
+
+            // North East
+            if coordinates.y != 0 && coordinates.x < (size - 1) {
+                if cellAt(x: coordinates.x + 1, y: coordinates.y - 1).state == .alive {
+                    count = count + 1
+                }
+            }
+
+            // East
+            if coordinates.x < (size - 1) {
+                if cellAt(x: coordinates.x + 1, y: coordinates.y).state == .alive {
+                    count = count + 1
+                }
+            }
+
+            // South East
+            if coordinates.x < (size - 1) && coordinates.y < (size - 1) {
+                if cellAt(x: coordinates.x + 1, y: coordinates.y + 1).state == .alive {
+                    count = count + 1
+                }
+            }
+
+            // South
+            if coordinates.y < (size - 1) {
+                if cellAt(x: coordinates.x, y: coordinates.y + 1).state == .alive {
+                    count = count + 1
+                }
+            }
+
+            // South West
+            if coordinates.y < (size - 1) && coordinates.x != 0 {
+                if cellAt(x: coordinates.x - 1, y: coordinates.y + 1).state == .alive {
+                    count = count + 1
+                }
+            }
+
+            if cell.state == .alive {
+                if count < 2 || count > 3 {
+                    cell.state = .dead
+                }
+            } else { // cell.state == .dead
+                if count == 3 {
+                    cell.state = .alive
+                }
+            }
+            index = index + 1
+        }
+
         generation += 1
         delegate?.showGeneration()
     }
