@@ -57,7 +57,7 @@
                                         <rect key="frame" x="312" y="0.0" width="62" height="22"/>
                                         <state key="normal" image="book" catalog="system"/>
                                         <connections>
-                                            <action selector="presetsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FHo-Nc-pVB"/>
+                                            <action selector="patternsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FHo-Nc-pVB"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -109,6 +109,7 @@
                     <navigationItem key="navigationItem" title="Game of Life" id="wuJ-LV-035"/>
                     <connections>
                         <outlet property="generationLabel" destination="exw-RJ-F4P" id="Bwv-ix-6nR"/>
+                        <outlet property="gridView" destination="9fs-OX-1iP" id="1bH-iz-K3v"/>
                         <outlet property="populationLabel" destination="Pvv-DA-ltl" id="IDt-pR-PsV"/>
                     </connections>
                 </viewController>
@@ -135,10 +136,10 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c0m-rS-ck3">
                                 <rect key="frame" x="20" y="81" width="374" height="657"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <mutableString key="text">1. Any live cell with fewer than two live neighbours dies, as if by underpopulation. 
+                                <string key="text">1. Any live cell with fewer than two live neighbours dies, as if by underpopulation. 
 2. Any live cell with two or three live neighbours lives on to the next generation.
  3. Any live cell with more than three live neighbours dies, as if by overpopulation.
- 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</mutableString>
+ 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

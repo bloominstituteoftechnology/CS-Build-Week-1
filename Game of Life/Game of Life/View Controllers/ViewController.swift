@@ -11,49 +11,49 @@ import UIKit
 class ViewController: UIViewController {
 
     // MARK: - Properites
-    var gameGrid = GameGrid(size: 25)
+    var buttons: [UIButton] = []
+
+    // MARK: - Outlets
+
+    @IBOutlet weak var generationLabel: UILabel!
+    @IBOutlet weak var populationLabel: UILabel!
+    @IBOutlet weak var gridView: GridView!
 
     // MARK: - Actions
 
-    @IBAction func playPausebutton(_ sender: Any) {
-    }
-
-    @IBAction func stepButton(_ sender: UIButton) {
-    }
-
     @IBAction func clearButton(_ sender: UIButton) {
-        gameGrid.clearGrid()
+        gridView.clearGrid()
     }
 
-    @IBAction func presetsButton(_ sender: Any) {
+    @IBAction func patternsButton(_ sender: Any) {
         let alertController = UIAlertController(title: "Example Patterns", message: "Select a Game of Life pattern:", preferredStyle: .alert)
 
         alertController.addAction(UIAlertAction(title: "Behive", style: .default) { (_) in
-            self.gameGrid.useExamplePattern(pattern: .behive)
+            self.gridView.useExamplePattern(pattern: .behive)
         })
 
         alertController.addAction(UIAlertAction(title: "Blinker", style: .default) { (_) in
-            self.gameGrid.useExamplePattern(pattern: .blinker)
+            self.gridView.useExamplePattern(pattern: .blinker)
         })
 
         alertController.addAction(UIAlertAction(title: "Toad", style: .default) { (_) in
-            self.gameGrid.useExamplePattern(pattern: .toad)
+            self.gridView.useExamplePattern(pattern: .toad)
         })
 
         alertController.addAction(UIAlertAction(title: "Beacon", style: .default) { (_) in
-            self.gameGrid.useExamplePattern(pattern: .beacon)
+            self.gridView.useExamplePattern(pattern: .beacon)
         })
 
         alertController.addAction(UIAlertAction(title: "Pulsar", style: .default) { (_) in
-            self.gameGrid.useExamplePattern(pattern: .pulsar)
+            self.gridView.useExamplePattern(pattern: .pulsar)
         })
 
         alertController.addAction(UIAlertAction(title: "Pentadecathlon", style: .default) { (_) in
-            self.gameGrid.useExamplePattern(pattern: .pentadecathlon)
+            self.gridView.useExamplePattern(pattern: .pentadecathlon)
         })
 
         alertController.addAction(UIAlertAction(title: "Glider", style: .default) { (_) in
-            self.gameGrid.useExamplePattern(pattern: .glider)
+            self.gridView.useExamplePattern(pattern: .glider)
         })
 
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
@@ -61,18 +61,59 @@ class ViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
 
-    // MARK: - Outlets
+    @IBAction func playPausebutton(_ sender: Any) {
+    }
 
-    @IBOutlet weak var generationLabel: UILabel!
-    @IBOutlet weak var populationLabel: UILabel!
+    @IBAction func stepButton(_ sender: UIButton) {
+        gridView.step()
+    }
 
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        setupButtons()
     }
 
     // MARK: - Private
-}
+    private func setupButtons() {
+        var index = 0
+        var topOffset = CGFloat(0)
+        var leadingOffset = CGFloat(0)
 
+        for _ in 0..<gridView.gameGrid.size {
+            for _ in 0..<gridView.gameGrid.size {
+                let button = UIButton()
+                button.tag = index
+                index += 1
+
+                button.backgroundColor = .clear
+                button.layer.borderWidth = 0.5
+                button.layer.borderColor = UIColor.systemTeal.cgColor
+                button.translatesAutoresizingMaskIntoConstraints = false
+                button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+
+                gridView.addSubview(button)
+                NSLayoutConstraint.activate([
+                    button.topAnchor.constraint(equalTo: gridView.topAnchor, constant: topOffset),
+                    button.leadingAnchor.constraint(equalTo: gridView.leadingAnchor, constant: leadingOffset),
+                    button.heightAnchor.constraint(equalToConstant: 15),
+                    button.widthAnchor.constraint(equalToConstant: 15)
+                ])
+                buttons.append(button)
+
+                topOffset += 15
+                if topOffset >= 375 {
+                    topOffset = 0
+                }
+            }
+            leadingOffset += 15
+        }
+    }
+
+    @objc private func buttonTapped(_ sender: UIButton) {
+        print(sender.tag)
+        gridView.cellTapped(at: sender.tag)
+    }
+}

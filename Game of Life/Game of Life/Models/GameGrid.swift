@@ -32,8 +32,8 @@ class GameGrid: NSObject {
         cells.filter{ $0.state == .alive }.count
     }
 
-    public init(size: Int) {
-        self.size = size
+    public init(gridSize: Int) {
+        self.size = gridSize
 
         // Create grid
         for x in 0..<size {
@@ -122,8 +122,8 @@ class GameGrid: NSObject {
             cellAt(x: 7, y: 8).state = .alive
 
             cellAt(x: 10, y: 6).state = .alive
-            cellAt(x: 11, y: 7).state = .alive
-            cellAt(x: 10, y: 6).state = .alive
+            cellAt(x: 11, y: 6).state = .alive
+            cellAt(x: 10, y: 7).state = .alive
             cellAt(x: 12, y: 7).state = .alive
             cellAt(x: 11, y: 8).state = .alive
             cellAt(x: 12, y: 8).state = .alive
@@ -209,8 +209,23 @@ class GameGrid: NSObject {
 
     func cellAt(x: Int, y: Int) -> Cell {
         var absolutePosition: Int
-        absolutePosition = x + ((y / size) * size) + (y % size)
+        // 3, 2 on 25 x 25 grid
+        absolutePosition = ((x) * size) + y
         return cells[absolutePosition]
+    }
+
+    func cellTapped(at index: Int) {
+        if cells[index].state == .alive {
+            cells[index].state = .dead
+        } else {
+            cells[index].state = .alive
+        }
+        // Recompute population
+        print("population = \(population)")
+    }
+
+    func performGameTurn() {
+        generation += 1
     }
 
 }
