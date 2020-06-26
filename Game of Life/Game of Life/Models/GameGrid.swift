@@ -262,6 +262,9 @@ class GameGrid: NSObject {
 
     func performGameTurn() {
         var index = 0
+        var cellsToKill: [Cell] = []
+        var cellsToBirth: [Cell] = []
+
         for cell in cells {
             var count = 0
             let coordinates = cellCoordinates(index: index)
@@ -324,14 +327,22 @@ class GameGrid: NSObject {
 
             if cell.state == .alive {
                 if count < 2 || count > 3 {
-                    cell.state = .dead
+                    cellsToKill.append(cell)
                 }
             } else { // cell.state == .dead
                 if count == 3 {
-                    cell.state = .alive
+                    cellsToBirth.append(cell)
                 }
             }
             index = index + 1
+        }
+
+        for cell in cellsToKill {
+            cell.state = .dead
+        }
+
+        for cell in cellsToBirth {
+            cell.state = .alive
         }
 
         generation += 1
