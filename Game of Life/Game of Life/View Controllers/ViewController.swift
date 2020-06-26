@@ -29,35 +29,35 @@ class ViewController: UIViewController {
     @IBAction func patternsButton(_ sender: Any) {
         let alertController = UIAlertController(title: "Example Patterns", message: "Select a Game of Life pattern:", preferredStyle: .alert)
 
-        alertController.addAction(UIAlertAction(title: "Random Pattern", style: .default) { (_) in
+        alertController.addAction(UIAlertAction(title: "Random Pattern", style: .default) { _ in
             self.gridView.useExamplePattern(pattern: .random)
         })
 
-        alertController.addAction(UIAlertAction(title: "Behive", style: .default) { (_) in
+        alertController.addAction(UIAlertAction(title: "Behive", style: .default) { _ in
             self.gridView.useExamplePattern(pattern: .behive)
         })
 
-        alertController.addAction(UIAlertAction(title: "Blinker", style: .default) { (_) in
+        alertController.addAction(UIAlertAction(title: "Blinker", style: .default) { _ in
             self.gridView.useExamplePattern(pattern: .blinker)
         })
 
-        alertController.addAction(UIAlertAction(title: "Toad", style: .default) { (_) in
+        alertController.addAction(UIAlertAction(title: "Toad", style: .default) { _ in
             self.gridView.useExamplePattern(pattern: .toad)
         })
 
-        alertController.addAction(UIAlertAction(title: "Beacon", style: .default) { (_) in
+        alertController.addAction(UIAlertAction(title: "Beacon", style: .default) { _ in
             self.gridView.useExamplePattern(pattern: .beacon)
         })
 
-        alertController.addAction(UIAlertAction(title: "Pulsar", style: .default) { (_) in
+        alertController.addAction(UIAlertAction(title: "Pulsar", style: .default) { _ in
             self.gridView.useExamplePattern(pattern: .pulsar)
         })
 
-        alertController.addAction(UIAlertAction(title: "Pentadecathlon", style: .default) { (_) in
+        alertController.addAction(UIAlertAction(title: "Pentadecathlon", style: .default) { _ in
             self.gridView.useExamplePattern(pattern: .pentadecathlon)
         })
 
-        alertController.addAction(UIAlertAction(title: "Glider", style: .default) { (_) in
+        alertController.addAction(UIAlertAction(title: "Glider", style: .default) { _ in
             self.gridView.useExamplePattern(pattern: .glider)
         })
 
@@ -72,7 +72,7 @@ class ViewController: UIViewController {
             gridView.cancelTimer()
         } else {
             playButtonOutlet.isSelected = true
-            gridView.start()
+            gridView.startTimer()
         }
     }
 

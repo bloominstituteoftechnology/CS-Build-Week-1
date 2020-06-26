@@ -79,7 +79,7 @@ class GridView: UIView {
         self.setNeedsDisplay()
     }
 
-    public func start() {
+    public func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 0.25,
                                      target: self,
                                      selector: #selector(performGameTurn),
