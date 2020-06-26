@@ -170,7 +170,7 @@
                                     <segment title="1.0"/>
                                 </segments>
                                 <connections>
-                                    <action selector="secondsSegmentedControl:" destination="mOI-hx-xCI" eventType="valueChanged" id="Wyh-5h-8JJ"/>
+                                    <action selector="speedSegmentedControl:" destination="mOI-hx-xCI" eventType="valueChanged" id="Wyh-5h-8JJ"/>
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Animation Speed (in Seconds)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vB-vD-PLU">
@@ -224,6 +224,10 @@
                         <viewLayoutGuide key="safeArea" id="qNB-Uv-xDu"/>
                     </view>
                     <navigationItem key="navigationItem" id="ACw-3I-1G9"/>
+                    <connections>
+                        <outlet property="colorSegmentedControl" destination="EjP-43-LM8" id="RCA-qB-23e"/>
+                        <outlet property="speedSegmentedControl" destination="5wD-7n-W1u" id="EYF-YO-DAk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k8K-w0-uvy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="Gow-hg-WKR" userLabel="Exit" sceneMemberID="exit"/>

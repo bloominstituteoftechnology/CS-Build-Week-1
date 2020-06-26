@@ -30,7 +30,7 @@ class RulesViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func secondsSegmentedControl(_ sender: UISegmentedControl) {
+    @IBAction func speedSegmentedControl(_ sender: UISegmentedControl) {
         switch(sender.selectedSegmentIndex) {
         case 1:
             gridView?.timeInterval = 0.50
@@ -44,11 +44,33 @@ class RulesViewController: UIViewController {
     }
 
     // MARK: - Outlets
+    @IBOutlet weak var speedSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var colorSegmentedControl: UISegmentedControl!
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Load current speed
+        switch(gridView?.timeInterval) {
+        case 0.50:
+            speedSegmentedControl.selectedSegmentIndex = 1
+        case 0.75:
+            speedSegmentedControl.selectedSegmentIndex = 2
+        case 1.00:
+            speedSegmentedControl.selectedSegmentIndex = 3
+        default:
+            speedSegmentedControl.selectedSegmentIndex = 0
+        }
+
+        // Load current color
+        switch(viewController?.buttonColor) {
+        case UIColor.systemGreen:
+            colorSegmentedControl.selectedSegmentIndex = 1
+        case UIColor.systemYellow:
+            colorSegmentedControl.selectedSegmentIndex = 2
+        default: // UIColor.systemTeal
+            colorSegmentedControl.selectedSegmentIndex = 0
+        }
     }
 }
