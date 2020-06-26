@@ -140,6 +140,13 @@ class ViewController: UIViewController {
             topOffset += 15
         }
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "RulesSegue" {
+            guard let vc = segue.destination as? RulesViewController else { return }
+            vc.gridView = gridView
+        }
+    }
 }
 
 extension ViewController: GameStatsDelegate {

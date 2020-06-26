@@ -29,7 +29,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="62" height="22"/>
                                         <state key="normal" image="info.circle" catalog="system"/>
                                         <connections>
-                                            <segue destination="mOI-hx-xCI" kind="showDetail" id="FZ7-Pi-DfR"/>
+                                            <segue destination="mOI-hx-xCI" kind="showDetail" identifier="RulesSegue" id="FZ7-Pi-DfR"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ar6-IX-5gZ">
@@ -136,8 +136,11 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c0m-rS-ck3">
-                                <rect key="frame" x="20" y="81" width="374" height="657"/>
+                                <rect key="frame" x="20" y="81" width="374" height="374"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="c0m-rS-ck3" secondAttribute="height" multiplier="1:1" id="QMX-sG-eTj"/>
+                                </constraints>
                                 <string key="text">1. Any live cell with fewer than two live neighbours dies, as if by underpopulation. 
 2. Any live cell with two or three live neighbours lives on to the next generation.
  3. Any live cell with more than three live neighbours dies, as if by overpopulation.
@@ -152,16 +155,47 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5C8-qk-qwF">
+                                <rect key="frame" x="146.5" y="475" width="121" height="41"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5wD-7n-W1u">
+                                <rect key="frame" x="20" y="577" width="374" height="32"/>
+                                <segments>
+                                    <segment title="0.25"/>
+                                    <segment title="0.50"/>
+                                    <segment title="0.75"/>
+                                    <segment title="1.0"/>
+                                </segments>
+                                <connections>
+                                    <action selector="secondsSegmentedControl:" destination="mOI-hx-xCI" eventType="valueChanged" id="Wyh-5h-8JJ"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Animation Speed (in Seconds)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vB-vD-PLU">
+                                <rect key="frame" x="20" y="536" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="qNB-Uv-xDu" firstAttribute="trailing" secondItem="c0m-rS-ck3" secondAttribute="trailing" constant="20" id="0da-hD-140"/>
                             <constraint firstItem="qNB-Uv-xDu" firstAttribute="bottom" secondItem="Svh-ag-dYB" secondAttribute="bottom" constant="20" id="OSt-ju-TBX"/>
+                            <constraint firstItem="5wD-7n-W1u" firstAttribute="top" secondItem="7vB-vD-PLU" secondAttribute="bottom" constant="20" id="QWD-Ud-3eZ"/>
                             <constraint firstItem="c0m-rS-ck3" firstAttribute="leading" secondItem="qNB-Uv-xDu" secondAttribute="leading" constant="20" id="Vxk-Yz-dKP"/>
                             <constraint firstItem="Svh-ag-dYB" firstAttribute="centerX" secondItem="poP-Wj-dF3" secondAttribute="centerX" id="Yng-HN-vvC"/>
                             <constraint firstItem="c0m-rS-ck3" firstAttribute="top" secondItem="SlW-sl-Xlb" secondAttribute="bottom" constant="20" id="ZrO-Qx-RLa"/>
+                            <constraint firstItem="5wD-7n-W1u" firstAttribute="leading" secondItem="qNB-Uv-xDu" secondAttribute="leading" constant="20" id="aii-YU-7vH"/>
+                            <constraint firstItem="qNB-Uv-xDu" firstAttribute="trailing" secondItem="7vB-vD-PLU" secondAttribute="trailing" constant="20" id="awI-AI-6mw"/>
                             <constraint firstItem="SlW-sl-Xlb" firstAttribute="centerX" secondItem="poP-Wj-dF3" secondAttribute="centerX" id="bx1-fm-aAM"/>
-                            <constraint firstItem="Svh-ag-dYB" firstAttribute="top" secondItem="c0m-rS-ck3" secondAttribute="bottom" constant="20" id="wVG-2i-4N2"/>
+                            <constraint firstItem="5C8-qk-qwF" firstAttribute="centerX" secondItem="poP-Wj-dF3" secondAttribute="centerX" id="crp-cQ-VGI"/>
+                            <constraint firstItem="5C8-qk-qwF" firstAttribute="top" secondItem="c0m-rS-ck3" secondAttribute="bottom" constant="20" id="ezv-3D-eBs"/>
+                            <constraint firstItem="7vB-vD-PLU" firstAttribute="leading" secondItem="qNB-Uv-xDu" secondAttribute="leading" constant="20" id="s0U-Wi-aVc"/>
+                            <constraint firstItem="7vB-vD-PLU" firstAttribute="top" secondItem="5C8-qk-qwF" secondAttribute="bottom" constant="20" id="utQ-xK-t5Z"/>
+                            <constraint firstItem="qNB-Uv-xDu" firstAttribute="trailing" secondItem="5wD-7n-W1u" secondAttribute="trailing" constant="20" id="vzu-mg-UcR"/>
                             <constraint firstItem="SlW-sl-Xlb" firstAttribute="top" secondItem="qNB-Uv-xDu" secondAttribute="top" constant="20" id="z5N-8x-MfB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qNB-Uv-xDu"/>

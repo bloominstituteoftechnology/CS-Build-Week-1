@@ -13,7 +13,9 @@ class GridView: UIView {
     // MARK: - Properties
     var gameGrid = GameGrid(gridSize: 25)
     private var cellSize: Int = 15
+
     private var timer: Timer?
+    var timeInterval = 0.25
     var timerRunning: Bool {
         timer == nil ? false : true
     }
@@ -61,7 +63,7 @@ class GridView: UIView {
     }
 
     public func startTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 0.25,
+        timer = Timer.scheduledTimer(timeInterval: timeInterval,
                                      target: self,
                                      selector: #selector(performGameTurn),
                                      userInfo: nil,
