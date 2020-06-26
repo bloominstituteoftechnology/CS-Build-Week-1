@@ -23,10 +23,13 @@ class ViewController: UIViewController {
     // MARK: - Actions
 
     @IBAction func clearButton(_ sender: UIButton) {
+        pauseGame()
         gridView.clearGrid()
     }
 
     @IBAction func patternsButton(_ sender: Any) {
+        pauseGame()
+
         let alertController = UIAlertController(title: "Example Patterns", message: "Select a Game of Life pattern:", preferredStyle: .alert)
 
         alertController.addAction(UIAlertAction(title: "Random Pattern", style: .default) { _ in
@@ -68,8 +71,7 @@ class ViewController: UIViewController {
 
     @IBAction func playPausebutton(_ sender: Any) {
         if gridView.timerRunning {
-            playButtonOutlet.isSelected = false
-            gridView.cancelTimer()
+            pauseGame()
         } else {
             playButtonOutlet.isSelected = true
             gridView.startTimer()
@@ -92,6 +94,16 @@ class ViewController: UIViewController {
     }
 
     // MARK: - Private
+    @objc private func buttonTapped(_ sender: UIButton) {
+        print(sender.tag)
+        gridView.cellTapped(at: sender.tag)
+    }
+
+    private func pauseGame() {
+        playButtonOutlet.isSelected = false
+        gridView.cancelTimer()
+    }
+
     private func setupButtons() {
         var index = 0
         var topOffset = CGFloat(0)
@@ -99,7 +111,7 @@ class ViewController: UIViewController {
 
         for y in 0..<gridView.gameGrid.size {
             for x in 0..<gridView.gameGrid.size {
-                print(x, y)
+                print(index, x, y)
                 let button = UIButton()
                 button.tag = index
                 index += 1
@@ -126,11 +138,6 @@ class ViewController: UIViewController {
             }
             topOffset += 15
         }
-    }
-
-    @objc private func buttonTapped(_ sender: UIButton) {
-        print(sender.tag)
-        gridView.cellTapped(at: sender.tag)
     }
 }
 
