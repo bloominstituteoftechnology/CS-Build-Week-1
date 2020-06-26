@@ -31,3 +31,20 @@ h1 {
     height: 30px;
   }
 }
+
+.description {
+  width: 1000px;
+  background-color: #48d1cc;
+  padding: 1%;
+  border-radius: 5px;
+  margin: 10px;
+  h2 {
+    font-family: "Raleway", sans-serif;
+    margin-left: 20px;
+  }
+  ul {
+    li {
+      font-family: "Raleway", sans-serif;
+    }
+  }
+}

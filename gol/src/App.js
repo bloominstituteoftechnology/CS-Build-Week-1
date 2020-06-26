@@ -168,6 +168,34 @@ function App() {
           <i class="fas fa-question" />
         </button>
       </div>
+      <div class="description">
+        <div>
+          <h2>Description</h2>
+          <ul>
+            <li>Any live cell with two or three live neighbours survives.</li>
+            <li>
+              Any dead cell with three live neighbours becomes a live cell.
+            </li>
+            <li>
+              All other live cells die in the next generation. Similarly, all
+              other dead cells stay dead.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="description">
+        <div>
+          <h2>Instructions</h2>
+          <ul>
+            <li>Click on any cell to make it "alive".</li>
+            <li>Click play to see how your simulation plays out!</li>
+            <li>
+              Change the speed, and even create a random simulation using the
+              buttons.
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
