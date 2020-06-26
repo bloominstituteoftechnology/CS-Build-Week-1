@@ -43,9 +43,9 @@ class GameGrid: NSObject {
     public init(gridSize: Int) {
         self.size = gridSize
 
-        // Create grid
-        for x in 0..<size {
-            for y in 0..<size {
+        // Create grid ttt
+        for y in 0..<size {
+            for x in 0..<size {
                 let cell = Cell(x: x, y: y)
                 cells.append(cell)
             }
