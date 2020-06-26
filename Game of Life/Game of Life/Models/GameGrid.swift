@@ -236,7 +236,7 @@ class GameGrid: NSObject {
     func cellAt(x: Int, y: Int) -> Cell {
         var absolutePosition: Int
         // 3, 2 on 25 x 25 grid
-        absolutePosition = ((x) * size) + y
+        absolutePosition = (y * size) + x
         return cells[absolutePosition]
     }
 
