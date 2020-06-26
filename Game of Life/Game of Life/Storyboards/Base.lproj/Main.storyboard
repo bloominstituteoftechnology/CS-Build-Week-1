@@ -35,6 +35,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ar6-IX-5gZ">
                                         <rect key="frame" x="78" y="0.0" width="62" height="22"/>
                                         <state key="normal" image="play" catalog="system"/>
+                                        <state key="selected" image="pause" catalog="system"/>
                                         <connections>
                                             <action selector="playPausebutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BTr-W9-eWO"/>
                                         </connections>
@@ -110,6 +111,7 @@
                     <connections>
                         <outlet property="generationLabel" destination="exw-RJ-F4P" id="Bwv-ix-6nR"/>
                         <outlet property="gridView" destination="9fs-OX-1iP" id="1bH-iz-K3v"/>
+                        <outlet property="playButtonOutlet" destination="Ar6-IX-5gZ" id="PLH-7S-IUC"/>
                         <outlet property="populationLabel" destination="Pvv-DA-ltl" id="IDt-pR-PsV"/>
                     </connections>
                 </viewController>
@@ -195,6 +197,7 @@
         <image name="book" catalog="system" width="128" height="101"/>
         <image name="clear" catalog="system" width="128" height="114"/>
         <image name="info.circle" catalog="system" width="128" height="121"/>
+        <image name="pause" catalog="system" width="88" height="128"/>
         <image name="play" catalog="system" width="120" height="128"/>
     </resources>
 </document>

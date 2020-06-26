@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var generationLabel: UILabel!
     @IBOutlet weak var populationLabel: UILabel!
     @IBOutlet weak var gridView: GridView!
+    @IBOutlet weak var playButtonOutlet: UIButton!
 
     // MARK: - Actions
 
@@ -66,6 +67,13 @@ class ViewController: UIViewController {
     }
 
     @IBAction func playPausebutton(_ sender: Any) {
+        if gridView.timerRunning {
+            playButtonOutlet.isSelected = false
+            gridView.cancelTimer()
+        } else {
+            playButtonOutlet.isSelected = true
+            gridView.start()
+        }
     }
 
     @IBAction func stepButton(_ sender: UIButton) {
