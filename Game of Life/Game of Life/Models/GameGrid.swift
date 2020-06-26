@@ -9,6 +9,8 @@
 import UIKit
 
 public enum Patterns {
+    case random
+
     // Still Lifes
     case behive
 
@@ -46,7 +48,7 @@ class GameGrid: NSObject {
 
     func randomizeGrid() {
         for cell in cells {
-            let randomState = Int.random(in: 0...1)
+            let randomState = Int.random(in: 0...5)
             cell.state = randomState == 0 ? .alive : .dead
         }
     }
@@ -63,6 +65,9 @@ class GameGrid: NSObject {
         clearGrid()
 
         switch pattern {
+        case .random:
+            randomizeGrid()
+
         case .behive:
             cellAt(x: 3, y: 2).state = .alive
             cellAt(x: 4, y: 2).state = .alive

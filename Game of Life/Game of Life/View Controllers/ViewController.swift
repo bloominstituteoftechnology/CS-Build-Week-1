@@ -28,6 +28,10 @@ class ViewController: UIViewController {
     @IBAction func patternsButton(_ sender: Any) {
         let alertController = UIAlertController(title: "Example Patterns", message: "Select a Game of Life pattern:", preferredStyle: .alert)
 
+        alertController.addAction(UIAlertAction(title: "Random Pattern", style: .default) { (_) in
+            self.gridView.useExamplePattern(pattern: .random)
+        })
+
         alertController.addAction(UIAlertAction(title: "Behive", style: .default) { (_) in
             self.gridView.useExamplePattern(pattern: .behive)
         })
