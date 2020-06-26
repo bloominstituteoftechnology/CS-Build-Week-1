@@ -288,8 +288,8 @@ class GameGrid: NSObject {
             }
 
             // North East
-            if coordinates.x != 0 && coordinates.y != 0 {
-                if cellAt(x: coordinates.x - 1, y: coordinates.y - 1).state == .alive {
+            if coordinates.x < (size - 1) && coordinates.y != 0 {
+                if cellAt(x: coordinates.x + 1, y: coordinates.y - 1).state == .alive {
                     count = count + 1
                 }
             }
