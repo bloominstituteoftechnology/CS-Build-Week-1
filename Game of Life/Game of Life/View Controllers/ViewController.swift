@@ -12,7 +12,11 @@ class ViewController: UIViewController {
 
     // MARK: - Properites
     var buttons: [UIButton] = []
-    var buttonColor = UIColor.systemTeal
+    var buttonColor = UIColor.systemTeal {
+        didSet {
+            gridUpdated()
+        }
+    }
 
     // MARK: - Outlets
 
