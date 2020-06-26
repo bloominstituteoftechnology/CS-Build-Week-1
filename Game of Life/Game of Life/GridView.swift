@@ -38,25 +38,6 @@ class GridView: UIView {
         super.init(frame: frame)
     }
 
-    override func draw(_ rect: CGRect) {
-        let context = UIGraphicsGetCurrentContext()
-        context?.saveGState()
-
-        for cell in gameGrid.cells {
-            let color = cell.state == .dead ? UIColor.white.cgColor : UIColor.systemTeal.cgColor
-            context?.setFillColor(color)
-
-            let rect = CGRect(x: cell.x * cellSize,
-                              y: cell.y * cellSize,
-                              width: cellSize,
-                              height: cellSize)
-            context?.addRect(rect)
-            context?.fill(rect)
-        }
-
-        context?.restoreGState()
-    }
-
     // MARK: - Public Interface
 
     public func cancelTimer() {

@@ -91,6 +91,7 @@ class ViewController: UIViewController {
         gridView.gameGrid.delegate = self
         showGeneration()
         showPopulation()
+        gridUpdated()
     }
 
     // MARK: - Private
@@ -142,6 +143,18 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: GameStatsDelegate {
+    func gridUpdated() {
+        var index = 0
+        for cell in gridView.gameGrid.cells {
+            if cell.state == .alive {
+                buttons[index].backgroundColor = UIColor.systemTeal
+            } else {
+                buttons[index].backgroundColor = .clear
+            }
+            index = index + 1
+        }
+    }
+
     func showGeneration() {
         generationLabel.text = "\(gridView.gameGrid.generation)"
     }

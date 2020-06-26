@@ -28,6 +28,7 @@ public enum Patterns {
 protocol GameStatsDelegate {
     func showGeneration()
     func showPopulation()
+    func gridUpdated()
 }
 
 class GameGrid: NSObject {
@@ -53,10 +54,10 @@ class GameGrid: NSObject {
 
         super.init()
 
-        self.randomizeGrid()
+        self.useExamplePattern(pattern: .random)
     }
 
-    func randomizeGrid() {
+    private func randomizeGrid() {
         for cell in cells {
             let randomState = Int.random(in: 0...5)
             cell.state = randomState == 0 ? .alive : .dead
@@ -68,10 +69,8 @@ class GameGrid: NSObject {
             cell.state = .dead
         }
         generation = 0
-        delegate?.showGeneration()
 
-        // Tell delegate to display population
-        delegate?.showPopulation()
+        notifyDelegate()
     }
 
     public func useExamplePattern(pattern: Patterns = .glider) {
@@ -227,10 +226,8 @@ class GameGrid: NSObject {
         }
 
         generation = 0
-        delegate?.showGeneration()
 
-        // Tell delegate to display population
-        delegate?.showPopulation()
+        notifyDelegate()
     }
 
     func cellAt(x: Int, y: Int) -> Cell {
@@ -256,8 +253,7 @@ class GameGrid: NSObject {
         } else {
             cells[index].state = .alive
         }
-        // Tell delegate to display population
-        delegate?.showPopulation()
+        notifyDelegate()
     }
 
     func performGameTurn() {
@@ -346,10 +342,12 @@ class GameGrid: NSObject {
         }
 
         generation += 1
-        delegate?.showGeneration()
-
-        // Tell delegate to display population
-        delegate?.showPopulation()
+        notifyDelegate()
     }
 
+    private func notifyDelegate() {
+        delegate?.showGeneration()
+        delegate?.showPopulation()
+        delegate?.gridUpdated()
+    }
 }
