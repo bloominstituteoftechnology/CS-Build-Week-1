@@ -1,0 +1,28 @@
+html {
+  height: 100%;
+}
+
+body {
+  background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
+}
+
+h1 {
+  font-family: "Raleway", sans-serif;
+}
+
+.page-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.grid-display {
+  width: 1000px;
+}
+
+.button-container {
+  z-index: 10;
+  color: grey;
+  border: 10px;
+  margin: 1%;
+}

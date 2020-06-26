@@ -2,8 +2,8 @@ import React, { useState, useCallback, useRef } from "react";
 import produce from "immer";
 import "./App.css";
 
-const numRows = 50;
-const numColumns = 70;
+const numRows = 30;
+const numColumns = 50;
 
 //operations for checking neighbors across the grid
 const neighborOps = [
@@ -19,7 +19,7 @@ const neighborOps = [
 
 const emptyGrid = () => {
   const rows = [];
-  // creating the grid
+  // creating the grid!
   for (let i = 0; i < numRows; i++) {
     rows.push(Array.from(Array(numColumns), () => 0));
   }
@@ -74,45 +74,14 @@ function App() {
       });
     });
 
-    setTimeout(runGame, 800);
+    setTimeout(runGame, 250);
   }, []);
 
   return (
-    <>
-      {/*changes the state to determine whether the game is running or not*/}
-      <button
-        onClick={() => {
-          setRunning(!running);
-          if (!running) {
-            runningRef.current = true;
-            runGame();
-          }
-        }}
-      >
-        {running ? "Stop" : "Start"}
-      </button>
-      <button
-        onClick={() => {
-          setGrid(emptyGrid());
-        }}
-      >
-        Clear
-      </button>
-      <button
-        onClick={() => {
-          const rows = [];
-          for (let i = 0; i < numRows; i++) {
-            rows.push(
-              Array.from(Array(numColumns), () => (Math.random() > 0.8 ? 1 : 0))
-            );
-          }
-
-          setGrid(rows);
-        }}
-      >
-        Random
-      </button>
+    <div class="page-container">
+      <h1>Game Of Life</h1>
       <div
+        class="grid-display"
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${numColumns}, 20px`,
@@ -134,14 +103,51 @@ function App() {
               style={{
                 width: 20,
                 height: 20,
-                backgroundColor: grid[i][c] ? "green" : undefined,
+                backgroundColor: grid[i][c] ? "black" : undefined,
                 border: "solid 1px black",
               }}
             />
           ))
         )}
       </div>
-    </>
+      <div class="button-container">
+        {/*changes the state to determine whether the game is running or not*/}
+        <button
+          onClick={() => {
+            setRunning(!running);
+            if (!running) {
+              runningRef.current = true;
+              runGame();
+            }
+          }}
+        >
+          {running ? <i class="fas fa-pause" /> : <i class="fas fa-play" />}
+        </button>
+        <button
+          onClick={() => {
+            setGrid(emptyGrid());
+          }}
+        >
+          <i class="fas fa-redo" />
+        </button>
+        <button
+          onClick={() => {
+            const rows = [];
+            for (let i = 0; i < numRows; i++) {
+              rows.push(
+                Array.from(Array(numColumns), () =>
+                  Math.random() > 0.8 ? 1 : 0
+                )
+              );
+            }
+
+            setGrid(rows);
+          }}
+        >
+          <i class="fas fa-question" />
+        </button>
+      </div>
+    </div>
   );
 }
 
