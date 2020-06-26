@@ -78,6 +78,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setupButtons()
+        gridView.gameGrid.delegate = self
+        showGeneration()
+        showPopulation()
     }
 
     // MARK: - Private
@@ -119,5 +122,15 @@ class ViewController: UIViewController {
     @objc private func buttonTapped(_ sender: UIButton) {
         print(sender.tag)
         gridView.cellTapped(at: sender.tag)
+    }
+}
+
+extension ViewController: GameStatsDelegate {
+    func showGeneration() {
+        generationLabel.text = "\(gridView.gameGrid.generation)"
+    }
+
+    func showPopulation() {
+        populationLabel.text = "\(gridView.gameGrid.population)"
     }
 }

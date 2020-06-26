@@ -25,9 +25,15 @@ public enum Patterns {
     case glider
 }
 
+protocol GameStatsDelegate {
+    func showGeneration()
+    func showPopulation()
+}
+
 class GameGrid: NSObject {
     let size: Int
     var cells: [Cell] = []
+    var delegate: GameStatsDelegate?
 
     var generation = 0
     var population: Int {
@@ -44,6 +50,10 @@ class GameGrid: NSObject {
                 cells.append(cell)
             }
         }
+
+        super.init()
+
+        self.randomizeGrid()
     }
 
     func randomizeGrid() {
@@ -225,12 +235,13 @@ class GameGrid: NSObject {
         } else {
             cells[index].state = .alive
         }
-        // Recompute population
-        print("population = \(population)")
+        // Tell delegate to display population
+        delegate?.showPopulation()
     }
 
     func performGameTurn() {
         generation += 1
+        delegate?.showGeneration()
     }
 
 }
