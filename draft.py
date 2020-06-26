@@ -118,7 +118,8 @@ def main():
     gen = 0
     max = 25
     l = [ [0] * max for i in range(max) ]
-    WINDOW = 750
+    # Window Formulas
+    WINDOW = 1000
     CELL_SIZE = int(WINDOW / max) - 5
     BOTTOM_PADDING = int(WINDOW / 5)
     TOP_PADDING = CELL_SIZE * 3
@@ -127,6 +128,7 @@ def main():
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
 
+    # Buttons
     PLAYBACK_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 3) - 25, WINDOW + (BUTTON_SIZE) + TOP_PADDING, BUTTON_SIZE * 3, BUTTON_SIZE)
     CLEAR_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 3 + 25)*2, WINDOW + (BUTTON_SIZE) + TOP_PADDING, BUTTON_SIZE * 3, BUTTON_SIZE)
     RANDOM_BUTTON = pygame.Rect(WINDOW - int(BUTTON_SIZE * 3 + 25)*3, WINDOW + (BUTTON_SIZE) + TOP_PADDING, BUTTON_SIZE * 3, BUTTON_SIZE)
@@ -208,7 +210,7 @@ def main():
                 elif RULES_BUTTON.collidepoint(x, y):
                     os.startfile('rules.txt')
 
-
+        # Renders grid onto screen
         for i  in range(max):
             for j in range(max):
                 color = 'magenta' if l[i][j] == 1 else 'white'
