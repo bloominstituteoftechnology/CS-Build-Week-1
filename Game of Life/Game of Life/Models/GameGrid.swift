@@ -68,6 +68,10 @@ class GameGrid: NSObject {
             cell.state = .dead
         }
         generation = 0
+        delegate?.showGeneration()
+
+        // Tell delegate to display population
+        delegate?.showPopulation()
     }
 
     public func useExamplePattern(pattern: Patterns = .glider) {
@@ -221,6 +225,12 @@ class GameGrid: NSObject {
             cellAt(x: 3, y: 4).state = .alive
             cellAt(x: 2, y: 4).state = .alive
         }
+
+        generation = 0
+        delegate?.showGeneration()
+
+        // Tell delegate to display population
+        delegate?.showPopulation()
     }
 
     func cellAt(x: Int, y: Int) -> Cell {
@@ -326,6 +336,9 @@ class GameGrid: NSObject {
 
         generation += 1
         delegate?.showGeneration()
+
+        // Tell delegate to display population
+        delegate?.showPopulation()
     }
 
 }
