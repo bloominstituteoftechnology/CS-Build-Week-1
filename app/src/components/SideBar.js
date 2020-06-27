@@ -5,39 +5,57 @@ export default function PresetBoard(props) {
 
     return (
         <PresetBoardWrapper>
-            <div>
-
-                <button onClick={() => props.randomBoard()}>
-                    Random Preset
+            <button onClick={() =>
+                props.playGame()
+            }>
+                Play
             </button>
-            </div>
-            <div>
-
-                <button onClick={() => {
-                    props.stopGame()
-                    props.boardResize(15)
-                }}>
-                    15 X 15
+            <button onClick={() => props.clearBoard()}>
+                Clear the Board
             </button>
-            </div>
-            <div>
-
-                <button onClick={() => {
-                    props.stopGame()
-                    props.boardResize(25)
-                }}>
-                    25 X 25
+            <button onClick={() =>
+                props.stopGame()
+            }>
+                Stop
             </button>
-            </div>
+            <button onClick={() => props.randomBoard()}>
+                Random Preset
+            </button>
+
+            <button onClick={() => {
+                props.stopGame()
+                props.boardResize(15)
+            }}>
+                15 X 15
+            </button>
+            <button onClick={() => {
+                props.stopGame()
+                props.boardResize(25)
+            }}>
+                25 X 25
+            </button>
+
         </PresetBoardWrapper>
     )
 
 }
 
 const PresetBoardWrapper = styled.div`
-border: 2px solid blue;
-display:flex;
-flex-direction:column;
-align-items: space-around
-
+    display:flex;
+    flex-direction: column;
+    button{
+        margin:2rem;
+        border: 1px solid grey;
+        padding: 5px 20px;
+        background-color: white;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        color: rgb(71, 71, 71);
+        font-family: 'VT323';
+        :hover{
+            background-color: grey;
+            cursor:pointer;
+        }
+    }
+    
 `
