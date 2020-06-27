@@ -214,9 +214,7 @@ class Main extends React.Component {
             <MainWrapper>
                 <TopBar currentGeneration={this.state.generation} />
                 <AppWrapper>
-                    <GameWrapper>
-                        <Board currentBoard={this.state.currentBoard} size={this.state.boardSize} toggleAliveState={this.toggleCell} />
-                    </GameWrapper>
+                    <Board currentBoard={this.state.currentBoard} size={this.state.boardSize} toggleAliveState={this.toggleCell} />
                     <SideBar
                         playGame={this.startGame}
                         stopGame={this.stopGame}
@@ -245,9 +243,3 @@ align-items: center;
 margin-bottom: 20px;
 `
 
-const GameWrapper = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-`
