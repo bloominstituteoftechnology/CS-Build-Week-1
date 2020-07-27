@@ -14,6 +14,9 @@
 		27F9377824CC6AE000A1E9F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F9377724CC6AE000A1E9F3 /* Assets.xcassets */; };
 		27F9377B24CC6AE000A1E9F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27F9377924CC6AE000A1E9F3 /* LaunchScreen.storyboard */; };
 		27F9378924CC7A1200A1E9F3 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F9378824CC7A1200A1E9F3 /* InfoViewController.swift */; };
+		27F9378C24CF2D0C00A1E9F3 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F9378B24CF2D0C00A1E9F3 /* GridView.swift */; };
+		27F9378F24CF2D7E00A1E9F3 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F9378E24CF2D7E00A1E9F3 /* Cell.swift */; };
+		27F9379124CF2E1900A1E9F3 /* GameGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F9379024CF2E1900A1E9F3 /* GameGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		27F9377A24CC6AE000A1E9F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27F9377C24CC6AE000A1E9F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27F9378824CC7A1200A1E9F3 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		27F9378B24CF2D0C00A1E9F3 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		27F9378E24CF2D7E00A1E9F3 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		27F9379024CF2E1900A1E9F3 /* GameGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,9 +64,11 @@
 		27F9376D24CC6AD600A1E9F3 /* Game of Life */ = {
 			isa = PBXGroup;
 			children = (
-				27F9378324CC6B6300A1E9F3 /* Resources */,
+				27F9378D24CF2D6200A1E9F3 /* Models */,
+				27F9378A24CF2CC900A1E9F3 /* Views */,
 				27F9378724CC79EC00A1E9F3 /* View Controllers */,
 				27F9378424CC6B7800A1E9F3 /* Storyboards */,
+				27F9378324CC6B6300A1E9F3 /* Resources */,
 			);
 			path = "Game of Life";
 			sourceTree = "<group>";
@@ -92,6 +100,23 @@
 				27F9378824CC7A1200A1E9F3 /* InfoViewController.swift */,
 			);
 			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		27F9378A24CF2CC900A1E9F3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				27F9378B24CF2D0C00A1E9F3 /* GridView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		27F9378D24CF2D6200A1E9F3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				27F9378E24CF2D7E00A1E9F3 /* Cell.swift */,
+				27F9379024CF2E1900A1E9F3 /* GameGrid.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,7 +193,10 @@
 				27F9377324CC6AD600A1E9F3 /* GameOfLifeViewController.swift in Sources */,
 				27F9376F24CC6AD600A1E9F3 /* AppDelegate.swift in Sources */,
 				27F9378924CC7A1200A1E9F3 /* InfoViewController.swift in Sources */,
+				27F9379124CF2E1900A1E9F3 /* GameGrid.swift in Sources */,
+				27F9378C24CF2D0C00A1E9F3 /* GridView.swift in Sources */,
 				27F9377124CC6AD600A1E9F3 /* SceneDelegate.swift in Sources */,
+				27F9378F24CF2D7E00A1E9F3 /* Cell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
