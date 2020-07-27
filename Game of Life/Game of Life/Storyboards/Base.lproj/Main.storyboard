@@ -129,7 +129,10 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="XX9-Px-ZMD" secondAttribute="height" multiplier="1:1" id="DmP-Bf-gNa"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <mutableString key="text">1. Any live cell with fewer than two live neighbours dies. 
+2. Any live cell with two or three live neighbours lives on to the next generation.
+ 3. Any live cell with more than three live neighbours dies.
+ 4. Any dead cell with exactly three live neighbours becomes a live cell.</mutableString>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -188,11 +191,11 @@
                             <constraint firstItem="TBL-m7-zzx" firstAttribute="leading" secondItem="0No-AL-1mB" secondAttribute="leading" constant="20" id="M1x-9j-lMd"/>
                             <constraint firstItem="Fwh-nB-PBA" firstAttribute="top" secondItem="nQH-9U-YAi" secondAttribute="bottom" constant="20" id="MHs-Pv-1Zr"/>
                             <constraint firstItem="ONz-lb-Ht1" firstAttribute="top" secondItem="0No-AL-1mB" secondAttribute="top" constant="20" id="N26-Sz-OJh"/>
+                            <constraint firstItem="TBL-m7-zzx" firstAttribute="top" secondItem="KgV-aN-ieJ" secondAttribute="bottom" constant="38" id="O22-8K-ftk"/>
                             <constraint firstItem="KgV-aN-ieJ" firstAttribute="top" secondItem="Fwh-nB-PBA" secondAttribute="bottom" constant="20" id="QEE-hN-xQS"/>
                             <constraint firstItem="8zz-oa-qRF" firstAttribute="leading" secondItem="0No-AL-1mB" secondAttribute="leading" constant="20" id="QbM-Yl-iHn"/>
                             <constraint firstItem="0No-AL-1mB" firstAttribute="trailing" secondItem="ONz-lb-Ht1" secondAttribute="trailing" constant="20" id="drc-Cb-I5T"/>
                             <constraint firstItem="nQH-9U-YAi" firstAttribute="leading" secondItem="0No-AL-1mB" secondAttribute="leading" constant="20" id="g5S-1p-lLB"/>
-                            <constraint firstItem="TBL-m7-zzx" firstAttribute="top" secondItem="KgV-aN-ieJ" secondAttribute="bottom" constant="38" id="gFu-vF-cea"/>
                             <constraint firstItem="KgV-aN-ieJ" firstAttribute="leading" secondItem="0No-AL-1mB" secondAttribute="leading" constant="20" id="gi8-OJ-QGr"/>
                             <constraint firstItem="Daf-ee-yLf" firstAttribute="leading" secondItem="0No-AL-1mB" secondAttribute="leading" constant="20" id="j6x-fc-D7Y"/>
                             <constraint firstItem="XX9-Px-ZMD" firstAttribute="top" secondItem="ONz-lb-Ht1" secondAttribute="bottom" constant="20" id="ja1-mx-bFX"/>
