@@ -51,6 +51,8 @@
 		BA43220124CF420700D6B7D0 /* GameOfLifeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameOfLifeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA43220524CF420700D6B7D0 /* GameOfLifeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOfLifeUITests.swift; sourceTree = "<group>"; };
 		BA43220724CF420700D6B7D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BA43221324CF429C00D6B7D0 /* game-of-life-iOS-mock-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game-of-life-iOS-mock-1.png"; path = "../resources/ios/game-of-life-iOS-mock-1.png"; sourceTree = "<group>"; };
+		BA43221424CF42A200D6B7D0 /* game-of-life-iOS-mock-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game-of-life-iOS-mock-2.png"; path = "../resources/ios/game-of-life-iOS-mock-2.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,8 @@
 		BA4321D424CF420600D6B7D0 = {
 			isa = PBXGroup;
 			children = (
+				BA43221324CF429C00D6B7D0 /* game-of-life-iOS-mock-1.png */,
+				BA43221424CF42A200D6B7D0 /* game-of-life-iOS-mock-2.png */,
 				BA4321DF24CF420600D6B7D0 /* GameOfLife */,
 				BA4321F924CF420700D6B7D0 /* GameOfLifeTests */,
 				BA43220424CF420700D6B7D0 /* GameOfLifeUITests */,
