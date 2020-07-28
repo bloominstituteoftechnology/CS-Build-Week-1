@@ -2,7 +2,7 @@
 import sys
 import time
 import random
-
+import datetime as dt
 import pygame
 
 # colors
@@ -11,6 +11,7 @@ red = 255, 0, 0
 cyan = 0, 255, 255
 
 # vars
+MAX_FPS = 10
 BOARD_SIZE = WIDTH, HEIGHT = 640, 480
 CELL_SIZE = 10
 DEAD_COLOR = black
@@ -21,10 +22,10 @@ class GameOfLife():
         pygame.init()
         self.screen = pygame.display.set_mode(BOARD_SIZE)
         self.clear_screen()
+        pygame.display.flip()
         self.cell_size = 10
         self.cell_radius = self.cell_size / 2
-        pygame.display.flip()
-
+        self.last_gen_completed = 0
         self.init_grids()
     
     def init_grids(self):
@@ -35,11 +36,10 @@ class GameOfLife():
         self.num_rows = int(HEIGHT / CELL_SIZE)
         print("Columns: %d\nRows: %d" %(self.num_cols, self.num_rows))
  
-        # self.grids = [[[0] * self.num_rows] * self.num_cols,
-        #               [[0] * self.num_rows] * self.num_cols]
         self.grids = []
         rows = []
-        row_num = 0
+        
+        # create the grid
         for row_num in range(self.num_rows):
             list_of_columns = [0] * self.num_cols
             rows.append(list_of_columns)
@@ -124,8 +124,18 @@ class GameOfLife():
         """
         self.set_grid(None)
 
+    def cap_frame_rate(self):
+        desired_time_between_gens_ms = (1.0 / MAX_FPS) * 1000.0
+        now = pygame.time.get_ticks()
+        time_since_last_gen_ms = now - self.last_gen_completed
+        time_to_sleep = desired_time_between_gens_ms - time_since_last_gen_ms
+        if time_to_sleep > 0:
+            pygame.time.delay(int(time_to_sleep))
+        self.last_gen_completed = now
+
     def run(self):
         """Main loop, runs game of life"""
+        # desired_time_between_gens_ms = (1.0 / MAX_FPS) * 1000000.0
         while True:
             # Handle events, update the generation, and draw the grid.
             self.user_events()
@@ -133,7 +143,8 @@ class GameOfLife():
             # time_checking?
             self.generation_next()
             self.draw_grid()
-            time.sleep(0.5)
+            self.cap_frame_rate()
+
             
 if __name__ == "__main__":
     game = GameOfLife()
