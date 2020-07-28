@@ -9,6 +9,9 @@
 import UIKit
 
 class InfoViewController: UIViewController {
+    
+    var gridView: GridView?
+    var gameOfLifeViewController: GameOfLifeViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()

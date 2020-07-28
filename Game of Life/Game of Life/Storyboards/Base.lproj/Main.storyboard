@@ -29,11 +29,17 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Button" image="play.fill" catalog="system"/>
                                         <state key="selected" image="pause.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="playPauseButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1OL-lE-fKx"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jmX-Sd-eqG">
                                         <rect key="frame" x="94.5" y="0.0" width="79" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Button" image="arrowshape.turn.up.right.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="nextStepButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gMr-a9-thd"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRd-CG-3H8">
                                         <rect key="frame" x="194.5" y="0.0" width="19.5" height="24"/>
@@ -97,13 +103,23 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Conway's Game of Life" id="SOi-7j-r72">
-                        <barButtonItem key="leftBarButtonItem" title="Presets" id="cCs-0X-IKf"/>
+                        <barButtonItem key="leftBarButtonItem" title="Presets" id="cCs-0X-IKf">
+                            <connections>
+                                <action selector="presetButton:" destination="BYZ-38-t0r" id="Tls-ys-bL4"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="info.circle.fill" catalog="system" id="lPL-D7-YcX">
                             <connections>
                                 <segue destination="aoD-Hf-qNY" kind="presentation" identifier="InfoSegue" id="hrU-UH-NUY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="generationLabel" destination="kLi-to-bCw" id="MQl-iu-ePM"/>
+                        <outlet property="gridView" destination="5ek-5y-ORZ" id="vQf-Rt-5B2"/>
+                        <outlet property="playButton" destination="iSi-tT-UHo" id="sIp-Sn-ZtA"/>
+                        <outlet property="populationLabel" destination="w7S-1D-PD6" id="tNX-Qz-pVc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
