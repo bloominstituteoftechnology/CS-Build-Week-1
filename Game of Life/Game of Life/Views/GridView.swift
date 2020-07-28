@@ -47,5 +47,34 @@ class GridView: UIView {
         gameGrid.clearGrid()
         setNeedsDisplay()
     }
+    
+    public func cellTapped(at index: Int) {
+           gameGrid.cellTapped(at: index)
+           setNeedsDisplay()
+       }
+    
+    @objc private func performGameTurn() {
+        self.gameGrid.performGameTurn()
+        self.setNeedsDisplay()
+    }
+
+    public func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: timeInterval,
+                                     target: self,
+                                     selector: #selector(performGameTurn),
+                                     userInfo: nil,
+                                     repeats: true)
+    }
+
+    public func step() {
+        gameGrid.performGameTurn()
+        setNeedsDisplay()
+    }
+
+    public func useExamplePattern(pattern: Patterns) {
+        gameGrid.clearGrid()
+        gameGrid.presetPatterns(pattern: pattern)
+        setNeedsDisplay()
+    }
 
 }
