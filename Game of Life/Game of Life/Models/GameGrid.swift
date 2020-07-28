@@ -8,6 +8,12 @@
 
 import Foundation
 
+protocol GameOfLifeDelegates {
+    func showGeneration()
+    func showPopulation()
+    func gridUpdate()
+}
+
 public enum Patterns {
     case random
     
@@ -28,7 +34,7 @@ public enum Patterns {
 class GameGrid: NSObject {
     let size: Int
     var cells: [Cell] = []
-    
+    var delegates: GameOfLifeDelegates?
     var generation = 0
     var population: Int {
         cells.filter{$0.state == .alive }.count
@@ -37,7 +43,7 @@ class GameGrid: NSObject {
     public init(gridSize: Int) {
         self.size = gridSize
         
-        // Create grid ttt
+        // Create grid
         for y in 0..<size {
             for x in 0..<size {
                 let cell = Cell(x: x, y: y)
@@ -46,6 +52,8 @@ class GameGrid: NSObject {
         }
         
         super.init()
+        
+        self.presetPatterns(pattern: .random)
     }
     
     private func randomizeGrid() {
@@ -60,6 +68,8 @@ class GameGrid: NSObject {
             cell.state = .dead
         }
         generation = 0
+        
+        notifyDelegate()
     }
     
     public func presetPatterns(pattern: Patterns = .behive) {
@@ -220,6 +230,8 @@ class GameGrid: NSObject {
         
         generation = 0
         
+        notifyDelegate()
+        
     }
     
     func cellAt(x: Int, y: Int) -> Cell {
@@ -228,6 +240,120 @@ class GameGrid: NSObject {
         return cells[position]
     }
     
+    func cellCoordinates(index: Int) -> (x: Int, y: Int) {
+        var x = 0
+        var y = 0
+        
+        y = index / size
+        x = index - (y * size)
+        
+        return (x, y)
+    }
+    
+    func cellTapped(at index: Int) {
+        if cells[index].state == .alive {
+            cells[index].state = .dead
+        } else {
+            cells[index].state = .alive
+        }
+        notifyDelegate()
+    }
+    
+    func performGameTurn() {
+        var index = 0
+        var cellsToKill: [Cell] = []
+        var cellsToBirth: [Cell] = []
+        
+        for cell in cells {
+            var count = 0
+            let coordinates = cellCoordinates(index: index)
+            
+            // West
+            if coordinates.x != 0 {
+                if cellAt(x: coordinates.x - 1, y: coordinates.y).state == .alive {
+                    count = count + 1
+                }
+            }
+            
+            // North West
+            if coordinates.x != 0 && coordinates.y != 0 {
+                if cellAt(x: coordinates.x - 1, y: coordinates.y - 1).state == .alive {
+                    count = count + 1
+                }
+            }
+            
+            // North
+            if coordinates.y != 0 {
+                if cellAt(x: coordinates.x, y: coordinates.y - 1).state == .alive {
+                    count = count + 1
+                }
+            }
+            
+            // North East
+            if coordinates.x < (size - 1) && coordinates.y != 0 {
+                if cellAt(x: coordinates.x + 1, y: coordinates.y - 1).state == .alive {
+                    count = count + 1
+                }
+            }
+            
+            // East
+            if coordinates.x < (size - 1) {
+                if cellAt(x: coordinates.x + 1, y: coordinates.y).state == .alive {
+                    count = count + 1
+                }
+            }
+            
+            // South East
+            if coordinates.x < (size - 1) && coordinates.y < (size - 1) {
+                if cellAt(x: coordinates.x + 1, y: coordinates.y + 1).state == .alive {
+                    count = count + 1
+                }
+            }
+            
+            // South
+            if coordinates.y < (size - 1) {
+                if cellAt(x: coordinates.x, y: coordinates.y + 1).state == .alive {
+                    count = count + 1
+                }
+            }
+            
+            // South West
+            if coordinates.x != 0 && coordinates.y < (size - 1) {
+                if cellAt(x: coordinates.x - 1, y: coordinates.y + 1).state == .alive {
+                    count = count + 1
+                }
+            }
+            
+            if cell.state == .alive {
+                if count < 2 || count > 3 {
+                    cellsToKill.append(cell)
+                }
+            } else { // cell.state == .dead
+                if count == 3 {
+                    cellsToBirth.append(cell)
+                }
+            }
+            index = index + 1
+        }
+        
+        for cell in cellsToKill {
+            cell.state = .dead
+        }
+        
+        for cell in cellsToBirth {
+            cell.state = .alive
+        }
+        
+        generation += 1
+        notifyDelegate()
+    }
+    
+    
+    private func notifyDelegate() {
+        delegates?.showGeneration()
+        delegates?.showPopulation()
+        delegates?.gridUpdate()
+    }
     
     
     
