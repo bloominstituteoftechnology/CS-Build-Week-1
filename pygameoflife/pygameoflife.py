@@ -124,11 +124,16 @@ class GameOfLife():
         """
         self.set_grid(None)
 
-    def cap_frame_rate(self):
+    def cap_frame_rate(self, MAX_FPS=10):
+        """
+        Caps the frame rate at a user specified value
+        """
         desired_time_between_gens_ms = (1.0 / MAX_FPS) * 1000.0
         now = pygame.time.get_ticks()
         time_since_last_gen_ms = now - self.last_gen_completed
         time_to_sleep = desired_time_between_gens_ms - time_since_last_gen_ms
+
+        # If program needs to wait, delay from time since last gen to a desired FPS cap
         if time_to_sleep > 0:
             pygame.time.delay(int(time_to_sleep))
         self.last_gen_completed = now
@@ -136,15 +141,13 @@ class GameOfLife():
     def run(self):
         """Main loop, runs game of life"""
         # desired_time_between_gens_ms = (1.0 / MAX_FPS) * 1000000.0
+        FPS_MAX = input("How many FPS should each generation be? ")
         while True:
             # Handle events, update the generation, and draw the grid.
             self.user_events()
-
-            # time_checking?
             self.generation_next()
             self.draw_grid()
-            self.cap_frame_rate()
-
+            self.cap_frame_rate(float(FPS_MAX))
             
 if __name__ == "__main__":
     game = GameOfLife()
