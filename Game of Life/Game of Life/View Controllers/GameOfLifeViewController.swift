@@ -10,17 +10,26 @@ import UIKit
 
 class GameOfLifeViewController: UIViewController {
     
+    
+    // MARK: Properties
     var cells: [UIButton] = []
-    var cellsColor = UIColor.systemPurple {
+    var cellsColor = UIColor.systemTeal {
         didSet {
            gridUpdate()
         }
     }
     
+    // MARK: Outlets
     @IBOutlet weak var generationLabel: UILabel!
     @IBOutlet weak var populationLabel: UILabel!
     @IBOutlet weak var gridView: GridView!
     @IBOutlet weak var playButton: UIButton!
+    
+    //MARK: Actions
+    @IBAction func clearButton(_ sender: UIButton) {
+        pauseGame()
+        gridView.clearGrid()
+    }
     
     @IBAction func presetButton(_ sender: Any) {
         pauseGame()

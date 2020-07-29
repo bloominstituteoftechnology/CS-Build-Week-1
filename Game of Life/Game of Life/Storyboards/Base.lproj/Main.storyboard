@@ -45,6 +45,9 @@
                                         <rect key="frame" x="194.5" y="0.0" width="19.5" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" image="clear.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="clearButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="y3m-qA-Y2W"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -173,6 +176,9 @@
                                     <segment title="0.75"/>
                                     <segment title="1.0"/>
                                 </segments>
+                                <connections>
+                                    <action selector="speedSegmentedControl:" destination="aoD-Hf-qNY" eventType="valueChanged" id="3c4-du-QxI"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick Your Color:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fwh-nB-PBA">
                                 <rect key="frame" x="20" y="624" width="374" height="21"/>
@@ -183,15 +189,21 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KgV-aN-ieJ">
                                 <rect key="frame" x="20" y="665" width="374" height="32"/>
                                 <segments>
-                                    <segment title="Purple"/>
+                                    <segment title="Teal"/>
                                     <segment title="Yellow"/>
                                     <segment title="Orange"/>
-                                    <segment title="Green"/>
+                                    <segment title="Purple"/>
                                 </segments>
+                                <connections>
+                                    <action selector="colorSegmentedControl:" destination="aoD-Hf-qNY" eventType="valueChanged" id="WTZ-6v-Qo6"/>
+                                </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBL-m7-zzx">
                                 <rect key="frame" x="20" y="734" width="374" height="30"/>
                                 <state key="normal" title="Let's Play!"/>
+                                <connections>
+                                    <action selector="letsPlayButton:" destination="aoD-Hf-qNY" eventType="touchUpInside" id="SRL-ha-5xw"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -224,6 +236,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0No-AL-1mB"/>
                     </view>
+                    <connections>
+                        <outlet property="colorSegmentedControl" destination="KgV-aN-ieJ" id="8x8-mn-qPl"/>
+                        <outlet property="speedSegmentedControl" destination="nQH-9U-YAi" id="pZX-yZ-t4y"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Ey-Gn-D2a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
