@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css?family=Droid+Serif');
+
+.App {
+  * {
+    box-sizing: border-box;
+    border-radius: 5px;
+  }
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: 'Droid Serif';
+  
+}
+
+@media screen and (orientation: portrait) {
+  .App {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    .matrix{
+      width: 90vw;
+      button {
+        margin: 3%
+      }
+    }
+    .rules {
+      width: 80vw;
+    }
+  }
+    
+}
+
+@media screen and (max-width: 500px) {
+  .App {
+    width: 100vw;
+  }
+  .matrix{
+    height: 85vh;
+    button {
+      margin: 3%;
+    }
+    .board {
+      width:80vw;
+      height: 80vw;
+    }
+  }
+}
+    
+  
+
+
+.matrix {
+  width: 100%;
+  background: #0e2a3a;
+  margin: auto;
+  margin-top: 2%;
+}
+
+.board {
+  height: 90vh;
+  width: 90vh;
+  margin: auto;
+}   
+.row{
+  height: 5%;
+  display: flex;
+}
+.cell {
+  width: 5%;
+  margin: 0.5%;
+  border-radius: 5px;
+}
+.dead {
+background: #a7e6a7;
+}
+.stageOne {
+  background: #b3a7ec;
+}
+.stageTwo {
+  background: #ba6ae9;
+}
+.stageThree {
+  background: #4b12e9;
+}
+.stageFour {
+  background: #14046e;
+}
+.stageFive {
+  background: #72f506
+}
+
+  
+.controls {
+  margin: 2% auto;
+  width: 50%;
+  padding: 1%;
+  color: white;
+
+  button{
+    background-color: #97a5ad;
+    display:inline-block;
+    padding:0.35em 1.2em;
+    border:0.1em solid #FFFFFF;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:900;
+    color:#FFFFFF;
+    text-align:center;
+    transition: all 0.2s;
+    margin-bottom: 20px;
+  }
+  button:hover{
+    color:#000000;
+    background-color:#FFFFFF;
+  }
+
+}
+
+
+.rules {
+  width: 100%;
+  margin : 2rem;
+  color: #0e2a3a;
+  h1 {
+    
+    font-size: 2rem;
+  }
+  ul{
+    list-style: none;
+  }
+  li {
+    font-size: 1.2rem;
+    margin-bottom: 5%;
+    background: #2a9d9031;
+    border-radius: 10px;
+    padding: 2%;
+  }
+}
+
+footer {
+  color: #0e2a3a;
+  width: 100%;
+  margin: 2% 1.25%;
+  
+  ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    li {
+      border: 2px solid #0e2a3a;
+      padding: .5% 1%;
+    }
+    a {
+      text-decoration: none;
+      color:#0e2a3a;
+
+    }
+  }
+}
