@@ -71,7 +71,7 @@ class GridView: UIView {
         setNeedsDisplay()
     }
 
-    public func useExamplePattern(pattern: Patterns) {
+    public func presetPattern(pattern: Patterns) {
         gameGrid.clearGrid()
         gameGrid.presetPatterns(pattern: pattern)
         setNeedsDisplay()
