@@ -1,13 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "GameOfLife.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
-      "filename" : "GameOfLife (1).png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
