@@ -1,7 +1,7 @@
-const size = 25
+const size = 16
 const newBoardStatus = (cellStatus = ()=> {
     const cell = {
-      status : Math.random() < 0.3,
+      status : Math.random() < 0.2,
       aliveCount: 0
     }
     if (cell.status){cell.aliveCount = 1}

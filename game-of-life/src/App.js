@@ -60,16 +60,13 @@ function App() {
       <section className='rules'>
         <h1>Rules of the Game</h1>
         <ul>
-          <li>Any live cell with fewer than two live neighbors dies (as if by isolation), or with four or more neighbors dies (as if by over population)</li>
-          <li className='second'>Any cell with two or three living neighbors survives to the next generation</li>
-          <li className='third'>Any dead cell with exactly three living neighbors will be resurrected</li>
+          <li>Any live cell with fewer than two live neighbours dies, as if by underpopulation.</li>
+          <li>Any live cell with two or three live neighbours lives on to the next generation.</li>
+          <li className='second'>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
+          <li className='third'>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
         </ul>
       </section>
-      <footer>          
-        <ul>
-          <li><a href='https://github.com/KrishnaDahal' target='_blank' rel="noopener noreferrer">Github</a></li>        
-        </ul>
-        
+      <footer>                  
       </footer>
       
       
