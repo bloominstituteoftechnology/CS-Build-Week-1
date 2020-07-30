@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 public enum Patterns {
     case random
 
@@ -38,6 +39,7 @@ class GridWorld: NSObject {
     var generation = 0
     var population: Int {
         cells.filter{ $0.state == .alive }.count
+    
     }
 
     public init(gridSize: Int) {

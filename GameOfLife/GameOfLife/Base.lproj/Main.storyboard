@@ -17,26 +17,46 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ori-ip-xPu" customClass="CellGridView" customModule="GameOfLife" customModuleProvider="target">
                                 <rect key="frame" x="20" y="160" width="374" height="394"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="S9z-88-vwR">
                                 <rect key="frame" x="20" y="840" width="374" height="22"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Le-D7-2x1">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="22"/>
+                                        <color key="tintColor" red="0.48471182584762573" green="0.91079211235046387" blue="0.51879090070724487" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="info.circle" catalog="system"/>
                                         <connections>
                                             <segue destination="Knx-FX-iTF" kind="show" identifier="RulesSegue" id="ml5-fV-Wrq"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Eu-mh-VsX">
+                                        <rect key="frame" x="88" y="0.0" width="21" height="22"/>
+                                        <state key="normal" image="arrowshape.turn.up.right" catalog="system"/>
+                                        <connections>
+                                            <action selector="stepOver:" destination="sHe-77-XmV" eventType="touchUpInside" id="WEX-jt-HjL"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wNM-sz-6zf">
                                         <rect key="frame" x="179.5" y="0.0" width="15" height="22"/>
+                                        <color key="tintColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="play.fill" catalog="system"/>
+                                        <state key="selected" image="pause.fill" catalog="system"/>
                                         <connections>
                                             <action selector="playButtonTapped:" destination="sHe-77-XmV" eventType="touchUpInside" id="j1K-3J-cKl"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mbw-fH-nbh">
+                                        <rect key="frame" x="265.5" y="0.0" width="19.5" height="22"/>
+                                        <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="clear" catalog="system"/>
+                                        <connections>
+                                            <action selector="clearButtonTapped:" destination="sHe-77-XmV" eventType="touchUpInside" id="gYl-qW-hpH"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CMi-e2-jEi">
                                         <rect key="frame" x="353" y="0.0" width="21" height="22"/>
+                                        <color key="tintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="book.fill" catalog="system"/>
                                         <connections>
                                             <action selector="patternsButtonTapped:" destination="sHe-77-XmV" eventType="touchUpInside" id="eoT-9w-shY"/>
@@ -50,31 +70,31 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GVg-Zt-Gbx">
                                         <rect key="frame" x="154" y="0.0" width="84.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" red="0.48471182584762573" green="0.91079211235046387" blue="0.51879090070724487" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZIP-dW-0ox">
                                         <rect key="frame" x="191" y="39.5" width="10.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Population" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7G-PA-Uv6">
                                         <rect key="frame" x="155.5" y="79" width="81" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fbz-j9-vZN">
                                         <rect key="frame" x="191" y="118.5" width="10.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="mBJ-2q-OU4" firstAttribute="top" secondItem="Ori-ip-xPu" secondAttribute="bottom" constant="20" id="F5B-og-7mZ"/>
                             <constraint firstItem="n4S-en-qOG" firstAttribute="trailing" secondItem="mBJ-2q-OU4" secondAttribute="trailing" constant="2" id="MOl-5k-zNB"/>
@@ -112,12 +132,12 @@
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ex-Sf-T9e">
                                 <rect key="frame" x="20" y="140" width="374" height="259"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">1. Any live cell with fewer than two live neighbours dies, as if by underpopulation. 
 2. Any live cell with two or three live neighbours lives on to the next generation.
  3. Any live cell with more than three live neighbours dies, as if by overpopulation.
  4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</string>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -170,7 +190,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="I7D-iZ-1g8" firstAttribute="top" secondItem="ybR-7Z-aJc" secondAttribute="bottom" constant="37" id="2Ga-YK-PiU"/>
                             <constraint firstItem="q7r-2M-45c" firstAttribute="top" secondItem="I7D-iZ-1g8" secondAttribute="bottom" constant="33" id="2jw-vL-Ag2"/>
@@ -213,6 +233,13 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="I0Y-F4-cBW">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -225,8 +252,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrowshape.turn.up.right" catalog="system" width="128" height="106"/>
         <image name="book.fill" catalog="system" width="128" height="100"/>
+        <image name="clear" catalog="system" width="128" height="114"/>
         <image name="info.circle" catalog="system" width="128" height="121"/>
+        <image name="pause.fill" catalog="system" width="116" height="128"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
     </resources>
 </document>

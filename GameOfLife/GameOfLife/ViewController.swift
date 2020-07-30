@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import AVFoundation
 class ViewController: UIViewController {
 
     @IBOutlet weak var generationLabel: UILabel!
@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var gridView: CellGridView!
     @IBOutlet weak var playButtonOutlet: UIButton!
     
+    var audioPlayer = AVAudioPlayer()
     var buttons: [UIButton] = []
        var buttonColor = UIColor.systemTeal {
            didSet {
@@ -28,18 +29,28 @@ class ViewController: UIViewController {
         showGeneration()
         showPopulation()
         gridUpdated()
-        
+        correctAndWrongAudio()
         // Do any additional setup after loading the view.
     }
     @IBAction func playButtonTapped(_ sender: Any) {
+        
         if gridView.timerRunning {
             pauseGame()
+            audioPlayer.stop()
         } else {
             playButtonOutlet.isSelected = true
             gridView.startTimer()
+            audioPlayer.play()
         }
     }
+    @IBAction func clearButtonTapped(_ sender: UIButton) {
+        pauseGame()
+        gridView.gridWorld.clearGrid()
+    }
     
+    @IBAction func stepOver(_ sender: UIButton) {
+        gridView.step()
+    }
     @IBAction func patternsButtonTapped(_ sender: UIButton) {
         pauseGame()
 
@@ -155,5 +166,24 @@ extension ViewController: GameStatsDelegate {
 
     func showPopulation() {
         populationLabel.text = "\(gridView.gridWorld.population)"
+        if gridView.gridWorld.population >= 70 {
+            populationLabel.textColor = UIColor.green
+        } else if gridView.gridWorld.population >= 50 {
+            populationLabel.textColor = UIColor.yellow
+        } else {
+            populationLabel.textColor = .red
+        }
+    }
+    
+    private func correctAndWrongAudio() {
+        let sound = Bundle.main.path(forResource: "Sky", ofType: "mp3")
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: sound!))
+            
+            try AVAudioSession.sharedInstance().setCategory(.playback, options: .mixWithOthers)
+            
+        } catch {
+            print(error)
+        }
     }
 }
