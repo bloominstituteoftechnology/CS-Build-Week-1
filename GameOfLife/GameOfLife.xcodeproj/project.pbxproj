@@ -11,11 +11,14 @@
 		BA4321E324CF420600D6B7D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4321E224CF420600D6B7D0 /* SceneDelegate.swift */; };
 		BA4321E524CF420600D6B7D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4321E424CF420600D6B7D0 /* ViewController.swift */; };
 		BA4321E824CF420600D6B7D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA4321E624CF420600D6B7D0 /* Main.storyboard */; };
-		BA4321EB24CF420600D6B7D0 /* GameOfLife.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BA4321E924CF420600D6B7D0 /* GameOfLife.xcdatamodeld */; };
 		BA4321ED24CF420700D6B7D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA4321EC24CF420700D6B7D0 /* Assets.xcassets */; };
 		BA4321F024CF420700D6B7D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA4321EE24CF420700D6B7D0 /* LaunchScreen.storyboard */; };
 		BA4321FB24CF420700D6B7D0 /* GameOfLifeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4321FA24CF420700D6B7D0 /* GameOfLifeTests.swift */; };
 		BA43220624CF420700D6B7D0 /* GameOfLifeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA43220524CF420700D6B7D0 /* GameOfLifeUITests.swift */; };
+		BA43221A24CF77A700D6B7D0 /* CellGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA43221924CF77A700D6B7D0 /* CellGridView.swift */; };
+		BA43221C24CF77FB00D6B7D0 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA43221B24CF77FB00D6B7D0 /* Cell.swift */; };
+		BA54CBE324D086A9008FE187 /* GridWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54CBE224D086A9008FE187 /* GridWorld.swift */; };
+		BA54CBE524D0CF9A008FE187 /* GameRulesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA54CBE424D0CF9A008FE187 /* GameRulesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +44,6 @@
 		BA4321E224CF420600D6B7D0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BA4321E424CF420600D6B7D0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BA4321E724CF420600D6B7D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		BA4321EA24CF420600D6B7D0 /* GameOfLife.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GameOfLife.xcdatamodel; sourceTree = "<group>"; };
 		BA4321EC24CF420700D6B7D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA4321EF24CF420700D6B7D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BA4321F124CF420700D6B7D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -53,6 +55,10 @@
 		BA43220724CF420700D6B7D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA43221324CF429C00D6B7D0 /* game-of-life-iOS-mock-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game-of-life-iOS-mock-1.png"; path = "../resources/ios/game-of-life-iOS-mock-1.png"; sourceTree = "<group>"; };
 		BA43221424CF42A200D6B7D0 /* game-of-life-iOS-mock-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game-of-life-iOS-mock-2.png"; path = "../resources/ios/game-of-life-iOS-mock-2.png"; sourceTree = "<group>"; };
+		BA43221924CF77A700D6B7D0 /* CellGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellGridView.swift; sourceTree = "<group>"; };
+		BA43221B24CF77FB00D6B7D0 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		BA54CBE224D086A9008FE187 /* GridWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridWorld.swift; sourceTree = "<group>"; };
+		BA54CBE424D0CF9A008FE187 /* GameRulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRulesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,11 +114,13 @@
 				BA4321E024CF420600D6B7D0 /* AppDelegate.swift */,
 				BA4321E224CF420600D6B7D0 /* SceneDelegate.swift */,
 				BA4321E424CF420600D6B7D0 /* ViewController.swift */,
+				BA54CBE424D0CF9A008FE187 /* GameRulesViewController.swift */,
+				BA43221D24CF7A0300D6B7D0 /* Model */,
+				BA43221924CF77A700D6B7D0 /* CellGridView.swift */,
 				BA4321E624CF420600D6B7D0 /* Main.storyboard */,
 				BA4321EC24CF420700D6B7D0 /* Assets.xcassets */,
 				BA4321EE24CF420700D6B7D0 /* LaunchScreen.storyboard */,
 				BA4321F124CF420700D6B7D0 /* Info.plist */,
-				BA4321E924CF420600D6B7D0 /* GameOfLife.xcdatamodeld */,
 			);
 			path = GameOfLife;
 			sourceTree = "<group>";
@@ -133,6 +141,15 @@
 				BA43220724CF420700D6B7D0 /* Info.plist */,
 			);
 			path = GameOfLifeUITests;
+			sourceTree = "<group>";
+		};
+		BA43221D24CF7A0300D6B7D0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BA43221B24CF77FB00D6B7D0 /* Cell.swift */,
+				BA54CBE224D086A9008FE187 /* GridWorld.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,9 +284,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA4321E524CF420600D6B7D0 /* ViewController.swift in Sources */,
+				BA43221A24CF77A700D6B7D0 /* CellGridView.swift in Sources */,
+				BA54CBE524D0CF9A008FE187 /* GameRulesViewController.swift in Sources */,
+				BA54CBE324D086A9008FE187 /* GridWorld.swift in Sources */,
 				BA4321E124CF420600D6B7D0 /* AppDelegate.swift in Sources */,
-				BA4321EB24CF420600D6B7D0 /* GameOfLife.xcdatamodeld in Sources */,
 				BA4321E324CF420600D6B7D0 /* SceneDelegate.swift in Sources */,
+				BA43221C24CF77FB00D6B7D0 /* Cell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,19 +618,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		BA4321E924CF420600D6B7D0 /* GameOfLife.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				BA4321EA24CF420600D6B7D0 /* GameOfLife.xcdatamodel */,
-			);
-			currentVersion = BA4321EA24CF420600D6B7D0 /* GameOfLife.xcdatamodel */;
-			path = GameOfLife.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = BA4321D524CF420600D6B7D0 /* Project object */;
 }

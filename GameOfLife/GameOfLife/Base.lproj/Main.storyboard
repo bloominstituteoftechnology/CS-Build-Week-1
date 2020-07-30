@@ -10,14 +10,13 @@
         <!--Convey's Game Of Life-->
         <scene sceneID="ctX-Iw-Zhc">
             <objects>
-                <viewController id="sHe-77-XmV" sceneMemberID="viewController">
+                <viewController id="sHe-77-XmV" customClass="ViewController" customModule="GameOfLife" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="q1Q-nO-Sup">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ori-ip-xPu">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ori-ip-xPu" customClass="CellGridView" customModule="GameOfLife" customModuleProvider="target">
                                 <rect key="frame" x="20" y="160" width="374" height="394"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="S9z-88-vwR">
                                 <rect key="frame" x="20" y="840" width="374" height="22"/>
@@ -26,16 +25,22 @@
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="22"/>
                                         <state key="normal" image="info.circle" catalog="system"/>
                                         <connections>
-                                            <segue destination="Knx-FX-iTF" kind="show" id="ml5-fV-Wrq"/>
+                                            <segue destination="Knx-FX-iTF" kind="show" identifier="RulesSegue" id="ml5-fV-Wrq"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wNM-sz-6zf">
                                         <rect key="frame" x="179.5" y="0.0" width="15" height="22"/>
                                         <state key="normal" image="play.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="playButtonTapped:" destination="sHe-77-XmV" eventType="touchUpInside" id="j1K-3J-cKl"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CMi-e2-jEi">
                                         <rect key="frame" x="353" y="0.0" width="21" height="22"/>
                                         <state key="normal" image="book.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="patternsButtonTapped:" destination="sHe-77-XmV" eventType="touchUpInside" id="eoT-9w-shY"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -86,6 +91,12 @@
                         <viewLayoutGuide key="safeArea" id="n4S-en-qOG"/>
                     </view>
                     <navigationItem key="navigationItem" title="Convey's Game Of Life" id="oS7-kN-sTt"/>
+                    <connections>
+                        <outlet property="generationLabel" destination="ZIP-dW-0ox" id="8sJ-vG-i3v"/>
+                        <outlet property="gridView" destination="Ori-ip-xPu" id="1wS-Nw-NKc"/>
+                        <outlet property="playButtonOutlet" destination="wNM-sz-6zf" id="pzM-gN-yyb"/>
+                        <outlet property="populationLabel" destination="Fbz-j9-vZN" id="xVh-cc-31F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TOj-ca-ZYv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -94,7 +105,7 @@
         <!--Rules-->
         <scene sceneID="DBI-1e-dgh">
             <objects>
-                <viewController id="Knx-FX-iTF" sceneMemberID="viewController">
+                <viewController id="Knx-FX-iTF" customClass="GameRulesViewController" customModule="GameOfLife" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7sh-gz-hos">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -102,10 +113,10 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ex-Sf-T9e">
                                 <rect key="frame" x="20" y="140" width="374" height="259"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <mutableString key="text">1. Any live cell with fewer than two live neighbours dies, as if by underpopulation. 
+                                <string key="text">1. Any live cell with fewer than two live neighbours dies, as if by underpopulation. 
 2. Any live cell with two or three live neighbours lives on to the next generation.
  3. Any live cell with more than three live neighbours dies, as if by overpopulation.
- 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</mutableString>
+ 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -124,6 +135,9 @@
                                     <segment title="0.75"/>
                                     <segment title="1.0"/>
                                 </segments>
+                                <connections>
+                                    <action selector="speedSegmentedController:" destination="Knx-FX-iTF" eventType="valueChanged" id="aBM-lM-xC1"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Animation Speed (In Seconds)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XBk-yK-l5a">
                                 <rect key="frame" x="20" y="523" width="374" height="21"/>
@@ -144,10 +158,16 @@
                                     <segment title="Teal"/>
                                     <segment title="Yellow"/>
                                 </segments>
+                                <connections>
+                                    <action selector="colorSegmentedController:" destination="Knx-FX-iTF" eventType="valueChanged" id="wFS-II-3Em"/>
+                                </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="77u-DD-xPa">
                                 <rect key="frame" x="151.5" y="805" width="111" height="30"/>
                                 <state key="normal" title="Update Settings"/>
+                                <connections>
+                                    <action selector="okButton:" destination="Knx-FX-iTF" eventType="touchUpInside" id="8Gm-C6-g6H"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -176,6 +196,10 @@
                         <viewLayoutGuide key="safeArea" id="K79-nh-PE9"/>
                     </view>
                     <navigationItem key="navigationItem" title="Rules" id="PQQ-nW-sWz"/>
+                    <connections>
+                        <outlet property="colorOutlet" destination="q7r-2M-45c" id="7F8-cm-qPA"/>
+                        <outlet property="speedOutlet" destination="ybR-7Z-aJc" id="kf0-uJ-DFh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EOL-kW-jV6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
