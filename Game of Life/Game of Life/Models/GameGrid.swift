@@ -53,7 +53,7 @@ class GameGrid: NSObject {
         
         super.init()
         
-        self.presetPatterns(pattern: .random)
+        self.presetPatterns(pattern: .glider)
     }
     
     private func randomizeGrid() {
