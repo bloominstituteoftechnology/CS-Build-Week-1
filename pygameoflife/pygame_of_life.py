@@ -1,9 +1,9 @@
 import random
 import sys
 import pygame
+import numpy as np
 
-
-class LifeGame:
+class GameOfLife:
 
     def __init__(self, screen_width=800, screen_height=600, cell_size=10, alive_color=(0, 255, 255),
                  dead_color=(0, 0, 0), max_fps=10):
@@ -27,7 +27,9 @@ class LifeGame:
         self.clear_screen()
         pygame.display.flip()
 
-        self.max_fps = max_fps
+        # FPS gen-to-gen (allow for user input?)
+        # self.max_fps = max_fps
+        self.max_fps = float(input("Enter your desired FPS between generations (sugested 1-10) "))
 
         self.active_grid = 0
         self.num_cols = int(self.screen_width / self.cell_size)
@@ -97,12 +99,44 @@ class LifeGame:
                                    0)
         pygame.display.flip()
 
+    # def glider_gun(self):
+    #     glider_gun =[
+    #         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
+    #         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
+    #         [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+    #         [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+    #         [1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #         [1,1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
+    #         [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
+    #         [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #         [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    #         ]
+    #     self.screen_width = 700
+    #     self.screen_height = 500
+    #     self.cell_size = 10
+    #     self.init_grids()
+    #     padding_row = 10
+    #     padding_col = 10
+    #     row = 0
+    #     col = 0
+    #     for row in range(0, 9):
+    #         for col in range(0, 36):
+    #             # overwrite current cell state with those in glider_gun variable
+    #             print("CC: ", self.grids[self.active_grid][row + padding_row][col + padding_col])
+    #             print("GG: ", glider_gun[row][col])
+    #             self.grids[self.active_grid][row + padding_row][col + padding_col] = glider_gun[row][col]
+    #     # X = np.zeros((int(self.screen_width/self.cell_size), int(self.screen_height/self.cell_size)))
+    #     # X = np.array(X)
+    #     # X[1:10,1:37] = glider_gun
+    #     pygame.display.flip()
+        
     def clear_screen(self):
         """
         Fill whole screen with dead color
         :return:
         """
         self.screen.fill(self.dead_color)
+        pygame.display.flip()
 
     def get_cell(self, row_num, col_num):
         """
@@ -172,29 +206,64 @@ class LifeGame:
     def handle_events(self):
         """
         Handle any keypresses
-        s - start/stop (pause) the game
+        p - pause the game
         q - quit
         r - randomize grid
+
+        #TODO
+        s - change size of screen
+        f - change fps max between gens
+        g - initialize glider gun input
+        i - interact with screen with mouse events (click to turn cells alive)
         :return:
         """
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 print("key pressed")
-                if event.unicode == 's':
+                if event.unicode == 'p':        # toggle pause
                     print("Toggling pause.")
                     if self.paused:
                         self.paused = False
                     else:
                         self.paused = True
-                elif event.unicode == 'r':
+                elif event.unicode == 'c':      # clear screen (set all dead)
+                    print("Clearing screen.")
+                    self.clear_screen()
+                elif event.unicode == 'r':      # randomize grid
                     print("Randomizing grid.")
                     self.active_grid = 0
                     self.set_grid(None, self.active_grid)  # randomize
                     self.set_grid(0, self.inactive_grid())  # set to 0
                     self.draw_grid()
-                elif event.unicode == 'q':
+                elif event.unicode == 'q':      # quit
                     print("Exiting.")
                     self.game_over = True
+                elif event.unicode == 'n':      # next generation
+                    print("Stepping forward 1 generation.")
+                    self.update_generation()
+                    self.draw_grid()
+                elif event.unicode == 'j':      # jump forward x generations
+                    skip_step = int(input("Enter # of gens to skip ahead. "))
+                    # print(f"Jumping forward {skip_step} generations. ")
+                    i = 0
+                    last_skip = skip_step - 1
+                    for i in range(0, skip_step):
+                        if i != last_skip:
+                            self.update_generation()
+                        else:
+                            self.update_generation()
+                            self.draw_grid()
+                # elif event.unicode == 's':
+                #     # change size of the screen in init
+                # elif event.unicode == 'g':
+                #     # initialize glider grid
+                #     print("Cosper Glider-Gun grid.")
+                #     self.active_grid = self.glider_gun()
+                #     # self.set_grid(None, self.active_grid)  # randomize
+                #     # self.set_grid(0, self.inactive_grid())  # set to 0
+                #     self.draw_grid()
+                # elif event.unicode == 'i':
+                #     # interact via mouse events (turn cells off and on with : and R-click)
             if event.type == pygame.QUIT:
                 sys.exit()
 
@@ -222,4 +291,4 @@ if __name__ == "__main__":
     """
     Launch a game of life
     """
-    LifeGame().run()
+    GameOfLife().run()
