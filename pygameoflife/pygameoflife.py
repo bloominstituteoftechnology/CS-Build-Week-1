@@ -5,7 +5,7 @@ import numpy as np
 
 class GameOfLife:
 
-    def __init__(self, screen_width=800, screen_height=600, cell_size=10, alive_color=(0, 255, 255),
+    def __init__(self, screen_width=1000, screen_height=800, cell_size=30, alive_color=(0, 255, 255),
                  dead_color=(0, 0, 0), max_fps=10):
         """
         Initialize grid, set default game state, initialize screen
@@ -201,6 +201,28 @@ class GameOfLife:
         :return:
         """
         for event in pygame.event.get():
+            if self.paused:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if(event.button==1):
+                        mousepos_x, mousepos_y = event.pos
+                        c, r = (int((mousepos_x - self.cell_size / 2) // self.cell_size),
+                                int((mousepos_y - self.cell_size / 2) // self.cell_size))
+                        #print(event.pos, '->', (r, c))  # Show result.
+                        if r in range(self.num_rows) and c in range(self.num_cols):
+                            # Toggle state of cell: active <--> inactive
+                            if self.grids[self.active_grid][r][c] == 1:
+                                self.grids[self.active_grid][r][c] = 0
+                                color = self.dead_color
+                            else:
+                                self.grids[self.active_grid][r][c] = 1
+                                color = self.alive_color
+                            # Redraw cell in its new color.
+                            posn = (int(c * self.cell_size + self.cell_size / 2),
+                                    int(r * self.cell_size + self.cell_size / 2))
+                            #print('  posn:', posn)
+                            pygame.draw.circle(self.screen, color, posn, int(self.cell_size / 2), 0)
+
+                            pygame.display.flip()
             if event.type == pygame.KEYDOWN:
                 print("key pressed")
                 if event.unicode == 'p':        # toggle pause
