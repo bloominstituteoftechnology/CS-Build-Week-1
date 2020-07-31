@@ -1,4 +1,4 @@
-const size = 16
+const size = 25
 const newBoardStatus = (cellStatus = ()=> {
     const cell = {
       status : Math.random() < 0.2,

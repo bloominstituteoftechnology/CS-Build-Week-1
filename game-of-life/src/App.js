@@ -7,7 +7,7 @@ import newBoardStatus from './builds/newBoardStatus'
 import runGame from './builds/runGame'
 
 
-const size = 16
+const size = 25
 
 function App() {
   const [gameStatus, setGameStatus] = useState({
@@ -43,22 +43,21 @@ function App() {
   
   return (
     <div className="App">
-      <section className='matrix'>
-        <div className='controls'>
-          <div>
+          <div className="buttons">
             <button onClick={toggleRun}>{gameStatus.isGameRunning?'Pause':'Start'}</button>
             <button onClick={clearBoard}>Clear</button>
             <button onClick={newGame}>Start New</button>
           </div>
-          
-          <label>Interval Steps<Slider speed={gameStatus.speed} onSpeedChange={changeSpeed}/>{gameStatus.speed}ms</label>
+          <div className="interval">
+          <label>Interval Steps<Slider speed={gameStatus.speed} onSpeedChange={changeSpeed}/>{gameStatus.speed}ms
+          </label>
+          </div>
           <div className="gen">Generation: {gameStatus.generation}</div>
-        </div>
         
         <BoardGrid gameStatus={gameStatus} setGameStatus={setGameStatus} size={size}/>
-      </section>
       <section className='rules'>
-        <h1>Rules of the Game</h1>
+        <h1><a href='https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life' target='_blank' rel="noopener noreferrer">
+Rules of the Game</a></h1>
         <ul>
           <li>Any live cell with fewer than two live neighbours dies, as if by underpopulation.</li>
           <li>Any live cell with two or three live neighbours lives on to the next generation.</li>
@@ -66,8 +65,6 @@ function App() {
           <li className='third'>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
         </ul>
       </section>
-      <footer>                  
-      </footer>
       
       
       

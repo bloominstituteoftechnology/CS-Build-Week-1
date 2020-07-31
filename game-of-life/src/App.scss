@@ -6,10 +6,10 @@
     border-radius: 5px;
   }
   text-align: center;
-  display: flex;
+  display: flexbox ;
+  align-content: center;
   flex-wrap: wrap;
-  font-family: 'Droid Serif';
-  
+  font-family: 'Droid Serif';  
 }
 
 @media screen and (orientation: portrait) {
@@ -51,7 +51,7 @@
 
 .matrix {
   width: 100%;
-  background: rgb(243, 234, 234);
+  background: rgb(20, 19, 19);
   margin: auto;
   margin-top: 2%;
 }
@@ -62,66 +62,80 @@
   margin: auto;
 }   
 .row{
-  height: 5%;
+  height: 3%;
   display: flex;
 }
 .cell {
-  width: 5%;
+  width: 3%;
   margin: 0.5%;
   border-radius: 5px;
 }
 .dead {
-background: #a7e6a7;
+background: #020202;
 }
 .stageOne {
   background: #b3a7ec;
 }
 .stageTwo {
-  background: #ba6ae9;
+  background: #b3a7ec;
 }
 .stageThree {
-  background: #4b12e9;
+  background: #b3a7ec;
 }
 .stageFour {
-  background: #14046e;
+  background: #b3a7ec;
 }
 .stageFive {
-  background: #72f506
+  background: #b3a7ec
 }
 
   
-.controls {
-  margin: 2% auto;
-  width: 50%;
-  padding: 1%;
-  color: rgb(24, 22, 22);
-
-  button{
-    background-color: #97a5ad;
-    display:inline-block;
-    padding:0.35em 1.2em;
+.buttons{
+    
+    background-color: #121213;
+    display:flexbox;
+    justify-content: center;
+    padding:1em 1.2em;
     border:0.1em solid #FFFFFF;
-    margin:0 0.3em 0.3em 0;
-    border-radius:0.12em;
+    border-radius: 5px;
     box-sizing: border-box;
     text-decoration:none;
     font-family:'Roboto',sans-serif;
     font-weight:900;
-    color:#0c0b0b;
+    color:#f5f4f8;
     text-align:center;
     transition: all 0.2s;
     margin-bottom: 20px;
   }
-  button:hover{
-    color:#000000;
-    background-color:#FFFFFF;
+  button {
+    padding:0.5em 1.2em;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-left: 3rem;
   }
+  button:hover{
+    color:#FFFFFF;
+    background-color:#5d0cf3;
+}
+
+.interval {
+    display:flexbox;
+  justify-content: center;
+  border-radius: 5px;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:500;
+  color:#020202;
+  text-align:center;
+  transition: all 0.2s;
+  margin-bottom: 15px;
 
 }
 
 
 .rules {
-  width: 100%;
+  width: 90%;
   margin : 2rem;
   color: #0e2a3a;
   h1 {
