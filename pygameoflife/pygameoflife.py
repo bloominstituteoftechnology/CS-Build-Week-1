@@ -186,19 +186,30 @@ class GameOfLife:
         """
         return (self.active_grid + 1) % 2
 
+    def help(self):
+        print(
+        """
+        p (pause) - Toggle pause for game state.
+        c (clear) - Clears the screen, setting all cells to dead.
+        r (randomize) - Randomizes the grid, setting all cells to either alive or dead.
+        h (help) - Displays helper functions listed here inside the terminal window.
+        q (quit) - Exits the Game.
+        n (next) - Jump 1 generation forward.
+        j (jump) - Jump X generations forward. Specified with user input in terminal
+        mouse-click (toggle-value) - If the game is paused, user can toggle cells alive and dead by clicking on them.
+        """)
+
     def handle_events(self):
         """
         Handle any keypresses
-        p - pause the game
-        q - quit
-        r - randomize grid
-
-        #TODO
-        s - change size of screen
-        f - change fps max between gens
-        g - initialize glider gun input
-        i - interact with screen with mouse events (click to turn cells alive)
-        :return:
+        p (pause) - Toggle pause for game state.
+        c (clear) - Clears the screen, setting all cells to dead.
+        r (randomize) - Randomizes the grid, setting all cells to either alive or dead.
+        h (help) - Displays helper functions listed here inside the terminal window.
+        q (quit) - Exits the Game.
+        n (next) - Jump 1 generation forward.
+        j (jump) - Jump X generations forward. Specified with user input in terminal
+        mouse-click (toggle-value) - If the game is paused, user can toggle cells alive and dead by clicking on them.
         """
         for event in pygame.event.get():
             if self.paused:
@@ -243,6 +254,9 @@ class GameOfLife:
                 elif event.unicode == 'q':      # quit
                     print("Exiting.")
                     self.game_over = True
+                elif event.unicode == 'h':
+                    print('User Events Help Below:')
+                    self.help()
                 elif event.unicode == 'n':      # next generation
                     print("Stepping forward 1 generation.")
                     self.update_generation()

@@ -22,6 +22,7 @@ Key Press | Action | Explanation
 p | pause | Toggle pause for game state.
 c | clear | Clears the screen, setting all cells to dead.
 r | randomize | Randomizes the grid, setting all cells to either alive or dead.
+h | help | Displays helper functions listed here inside the terminal window.
 q | quit | Exits the Game.
 n | next | Jump 1 generation forward.
 j | jump | Jump X generations forward. Specified with user input in terminal
