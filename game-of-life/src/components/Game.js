@@ -1,12 +1,12 @@
 import React from 'react';
-import {mediumClear} from './mediumClear';
-import {mediumFirst} from './mediumFirst';
-import {mediumSecond} from './mediumSecond';
+import { mediumClear } from './mediumClear';
+import { mediumFirst } from './mediumFirst';
+import { mediumSecond } from './mediumSecond';
 
 
 let myReq;
 let myInt;
-let speed = 1000;
+let speed = 800;
 let clearMatrix = mediumClear;
 let firstMatrix = mediumFirst;
 let secondMatrix = mediumSecond;
@@ -40,7 +40,7 @@ class Game extends React.Component {
     }
 
     componentWillUnmount = () => {
-        this.setState({continueAnimating: false});
+        this.setState({ continueAnimating: false });
     }
 
     drawBoard = () => {
@@ -49,12 +49,12 @@ class Game extends React.Component {
 
         for (let x = 0.5; x < this.state.numX * this.state.cellSize + 1; x += this.state.cellSize) {
             context.moveTo(x, 0);
-            context.lineTo(x, (this.state.numX +1) * this.state.cellSize);
+            context.lineTo(x, (this.state.numX + 1) * this.state.cellSize);
         }
 
         for (let y = 0.5; y < (this.state.numY + 1) * this.state.cellSize; y += this.state.cellSize) {
             context.moveTo(0, y);
-            context.lineTo((this.state.numX +1) * this.state.cellSize, y);
+            context.lineTo((this.state.numX + 1) * this.state.cellSize, y);
         }
 
         context.strokeStyle = "#000";
@@ -69,10 +69,10 @@ class Game extends React.Component {
             for (let j = 0; j <= this.state.numX; j++) {
                 if (this.state.array1[i][j]) {
                     context.fillStyle = "forestgreen";
-                    context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, this.state.cellSize-1, this.state.cellSize-1);
+                    context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, this.state.cellSize - 1, this.state.cellSize - 1);
                 } else {
                     context.fillStyle = "lightgray";
-                    context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, this.state.cellSize-1, this.state.cellSize-1);
+                    context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, this.state.cellSize - 1, this.state.cellSize - 1);
                 }
             }
         }
@@ -81,18 +81,18 @@ class Game extends React.Component {
     onAnimFrame = (timestamp) => {
         if (this.state.cycle === 'A') {
             if (this.state.continueAnimating === true) {
-                myReq = requestAnimationFrame((timestamp) => {myInt = setTimeout(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
-                
+                myReq = requestAnimationFrame((timestamp) => { myInt = setTimeout(() => { this.onAnimFrame(timestamp) }, this.state.speed) });
+
                 const canvas = this.refs.canvas;
                 const context = canvas.getContext('2d');
                 for (let i = 0; i < this.state.numY; i++) {
                     for (let j = 0; j <= this.state.numX; j++) {
                         if (this.state.array1[i][j]) {
                             context.fillStyle = "forestgreen";
-                            context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, this.state.cellSize-1, this.state.cellSize-1);
+                            context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, this.state.cellSize - 1, this.state.cellSize - 1);
                         } else {
                             context.fillStyle = "lightgray";
-                            context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, this.state.cellSize-1, this.state.cellSize-1);
+                            context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, this.state.cellSize - 1, this.state.cellSize - 1);
                         }
                     }
                 }
@@ -162,26 +162,26 @@ class Game extends React.Component {
                         }
                     }
                 }
-                this.setState({array1: secondMatrix});
-                this.setState({cycle: 'B'});
+                this.setState({ array1: secondMatrix });
+                this.setState({ cycle: 'B' });
                 generationCount++;
             } else {
                 cancelAnimationFrame(myReq);
             }
         } else {
             if (this.state.continueAnimating === true) {
-                myReq = requestAnimationFrame((timestamp) => {myInt = setTimeout(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
-            
+                myReq = requestAnimationFrame((timestamp) => { myInt = setTimeout(() => { this.onAnimFrame(timestamp) }, this.state.speed) });
+
                 const canvas = this.refs.canvas;
                 const context = canvas.getContext('2d');
                 for (let i = 0; i < this.state.numY; i++) {
                     for (let j = 0; j <= this.state.numX; j++) {
                         if (this.state.array1[i][j]) {
                             context.fillStyle = "forestgreen";
-                            context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, this.state.cellSize-1, this.state.cellSize-1);
+                            context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, this.state.cellSize - 1, this.state.cellSize - 1);
                         } else {
                             context.fillStyle = "lightgray";
-                            context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, this.state.cellSize-1, this.state.cellSize-1);
+                            context.fillRect(j * this.state.cellSize + 1, i * this.state.cellSize + 1, this.state.cellSize - 1, this.state.cellSize - 1);
                         }
                     }
                 }
@@ -251,8 +251,8 @@ class Game extends React.Component {
                         }
                     }
                 }
-                this.setState({array1: firstMatrix});
-                this.setState({cycle: 'A'});
+                this.setState({ array1: firstMatrix });
+                this.setState({ cycle: 'A' });
                 generationCount++;
             } else {
                 cancelAnimationFrame(myReq);
@@ -262,17 +262,17 @@ class Game extends React.Component {
 
     toggleButton = () => {
         if (this.state.continueAnimating === true) {
-            this.setState({continueAnimating: false});
+            this.setState({ continueAnimating: false });
             cancelAnimationFrame(myReq);
             clearInterval(myInt);
         } else {
-            this.setState({continueAnimating: true});
-            myReq = requestAnimationFrame((timestamp) => {myInt = setTimeout(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
+            this.setState({ continueAnimating: true });
+            myReq = requestAnimationFrame((timestamp) => { myInt = setTimeout(() => { this.onAnimFrame(timestamp) }, this.state.speed) });
         }
         if (this.state.buttonTag === 'Start') {
-            this.setState({buttonTag: 'Stop'});
+            this.setState({ buttonTag: 'Stop' });
         } else {
-            this.setState({buttonTag: 'Start'});
+            this.setState({ buttonTag: 'Start' });
         }
     }
 
@@ -281,20 +281,20 @@ class Game extends React.Component {
             firstMatrix[i] = clearMatrix[i].slice();
             secondMatrix[i] = clearMatrix[i].slice();
         }
-        this.setState({array1: clearMatrix});
+        this.setState({ array1: clearMatrix });
         generationCount = 1;
     }
 
     changeSpeed = (newSpeed) => {
         speed = newSpeed;
-        this.setState(function() {
-            return {speed: speed}
+        this.setState(function () {
+            return { speed: speed }
         });
         console.log("Speed: ", this.state.speed);
         clearInterval(myInt);
         cancelAnimationFrame(myReq);
         if (this.state.continueAnimating) {
-            myReq = requestAnimationFrame((timestamp) => {myInt = setTimeout(() => {this.onAnimFrame(timestamp)}, this.state.speed)});
+            myReq = requestAnimationFrame((timestamp) => { myInt = setTimeout(() => { this.onAnimFrame(timestamp) }, this.state.speed) });
         }
     }
 
@@ -312,8 +312,8 @@ class Game extends React.Component {
             console.log("yCoord: ", yCoord);
             console.log("pageY:", event.pageY);
             firstMatrix[yCoord][xCoord] = firstMatrix[yCoord][xCoord] === 1 ? 0 : 1;
-            this.setState({array1: firstMatrix});
-            }
+            this.setState({ array1: firstMatrix });
+        }
     }
 
     generateRandom = () => {
@@ -323,7 +323,7 @@ class Game extends React.Component {
                     firstMatrix[i][j] = Math.round(Math.random());
                 }
             }
-            this.setState({array1: firstMatrix});
+            this.setState({ array1: firstMatrix });
         }
     }
 
@@ -331,7 +331,7 @@ class Game extends React.Component {
         return (
             <div className="gameDiv">
                 <div>
-                    <canvas ref="canvas" id="gameCanvas" width={(this.state.numX) *this.state.cellSize + 1} height={this.state.numY * this.state.cellSize + 1} onClick={this.canvasOnClick} />
+                    <canvas ref="canvas" id="gameCanvas" width={(this.state.numX) * this.state.cellSize + 1} height={this.state.numY * this.state.cellSize + 1} onClick={this.canvasOnClick} />
                 </div>
                 <div>
                     <button onClick={this.toggleButton}>{this.state.buttonTag}</button>
