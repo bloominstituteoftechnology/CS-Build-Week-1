@@ -8,12 +8,12 @@ function App() {
   const { height, width } = useWindowDimensions();
   return (
     <div className="App">
-      <header className="App-header">
-        <AnimationTest width="900" height="900" />
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>cONWAYGAME zzzzz</p>
-        fefef
-      </header>
+      <div>
+        <h1>Generation: X</h1>
+        <AnimationTest width="700" height="700" />
+      </div>
+      <div className="presets"> z z z z</div>
+      <img src={logo} className="App-logo" alt="logo" />
     </div>
   );
 }

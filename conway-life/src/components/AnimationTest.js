@@ -7,16 +7,14 @@ import { drawGrid } from "../utils/drawGrid";
 const AnimationTest = (props) => {
   const canvasRef = useRef(null);
   const { width, height } = props;
-  console.log(props);
-  const [stopAnimation, setStopAnimation] = useState(false);
-  console.log(width);
+  const [stopAnimation, setStopAnimation] = useState(true);
   const draw = (context, canvas) => {
-    let imageData = context.getImageData(0, 0, width, height);
-    context.putImageData(imageData, 0, 0);
-    drawGrid(context, { gridWidth: width, gridHeight: height }, canvas);
-
-    // const pixelRGBA = getPixel(imageData, x, y);
-    // console.log(pixelRGBA);
+    drawGrid(
+      context,
+      { gridWidth: width, gridHeight: height },
+      canvas,
+      stopAnimation
+    );
   };
 
   const doAnimation = (elapsedTime) => {
@@ -26,19 +24,40 @@ const AnimationTest = (props) => {
     console.log(canvasRef.current);
     draw(context, canvas);
   };
-  const [cancelAnimation] = useAnimationFrame(moment.now(), doAnimation);
-  //  setStopAnimation(true);
-  // window.addEventListener("click", function (event) {
-  //   let x = event.pageX,
-  //     y = event.pageY;
-  //   cancelAnimation();
+  const cancelAnimation = useAnimationFrame(moment.now(), doAnimation);
 
-  //   console.log("you clicked the coords: ", x, y);
-  // });
+  useEffect(() => {
+    if (stopAnimation === true) {
+      cancelAnimation();
+    } else {
+      console.log("you're in the useEffect at least");
+    }
+  }, [stopAnimation]);
+
   /**
    * Render the canvas
    */
-  return <canvas ref={canvasRef} width={props.width} height={props.height} />;
+  return (
+    <>
+      <canvas ref={canvasRef} width={props.width} height={props.height} />{" "}
+      <button
+        onClick={() => {
+          console.log("starting?");
+          setStopAnimation(false);
+        }}
+      >
+        START
+      </button>{" "}
+      <button
+        onClick={() => {
+          console.log("stopping?");
+          setStopAnimation(true);
+        }}
+      >
+        STOP
+      </button>
+    </>
+  );
 };
 
 export default AnimationTest;

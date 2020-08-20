@@ -24,6 +24,7 @@ export const useAnimationFrame = (timestamp, doAnimationCallBack) => {
     const elapsed = prevTimeStamp - timestamp;
     setTimeStamp(timestamp);
     console.log(`Current time: ${timestamp} ms, frame time: ${elapsed} ms`);
+    setTimeout(function () {}, 17);
 
     //call callback and pass it the elapsed time
     doAnimationCallBack(elapsed);
@@ -32,7 +33,7 @@ export const useAnimationFrame = (timestamp, doAnimationCallBack) => {
   // this wills stop the hook from calling the next animation frame
   const cancelAnimation = () => {
     setContinueAnimation(false);
+    console.log("we're in here somehow");
   };
-
-  return [cancelAnimation];
+  return cancelAnimation;
 };

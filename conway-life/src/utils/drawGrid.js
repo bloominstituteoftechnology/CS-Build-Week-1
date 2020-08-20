@@ -1,8 +1,11 @@
 import { Cell } from "./cell";
 
-export const drawGrid = (context, props, canvas) => {
+export const drawGrid = (context, props, canvas, stopAnimation) => {
+  let cells = {};
   let { gridHeight, gridWidth } = props;
-  let s = 44;
+  let imageData = context.getImageData(0, 0, gridWidth, gridHeight);
+
+  let s = 34;
   let nX = Math.floor(gridWidth / s) - 2;
   let nY = Math.floor(gridHeight / s) - 2;
   let pX = gridWidth - nX * s;
@@ -15,9 +18,25 @@ export const drawGrid = (context, props, canvas) => {
     cellTop = canvas.offsetTop;
   context.strokeStyle = "lightgrey";
   context.beginPath();
+
+  //recalcuate offsets to avoid hellish nightmare
+  function reOffset() {
+    let BB = canvas.getBoundingClientRect();
+    console.log("changing ", cellLeft, " to ", window.pageXOffset);
+    cellLeft = canvas.offsetLeft - window.pageXOffset;
+    cellTop = canvas.offsetTop;
+  }
+
+  window.onscroll = function (e) {
+    reOffset();
+    console.log("resetti");
+  };
+  window.onresize = function (e) {
+    reOffset();
+  };
+
   for (let x = pL; x <= gridWidth - pR; x += s) {
     context.moveTo(x, pT);
-    context.fillStyle = "red";
     for (let y = pT; y < gridHeight - pB; y += s) {}
     context.lineTo(x, gridHeight - pB);
   }
@@ -27,29 +46,46 @@ export const drawGrid = (context, props, canvas) => {
   }
   context.stroke();
   canvas.addEventListener("click", function (event) {
-    let xClick = event.clientX - cellLeft,
-      yClick = event.clientY - cellTop;
-    let relX = xClick - pR,
-      relY = yClick - pT;
-    console.log("you clicked the coords: ", relX, relY);
-    if (
-      pL <= xClick &&
-      xClick <= gridWidth - pR &&
-      pB <= yClick &&
-      yClick <= gridWidth - pT
-    ) {
-      let xNum = Math.ceil(relX / s);
-      let yNum = Math.ceil(relY / s);
+    if (stopAnimation == true) {
+      let xClick = event.pageX - cellLeft,
+        yClick = event.pageY - cellTop;
+      let relX = xClick - pL,
+        relY = yClick - pT;
+      console.log("you clicked the coords: ", relX, relY);
+      if (
+        pL < xClick &&
+        xClick <= gridWidth - pR &&
+        pB <= yClick &&
+        yClick <= gridWidth - pT
+      ) {
+        let xNum = Math.ceil(relX / s);
+        let yNum = Math.ceil(relY / s);
 
-      console.log(`x pos: ${xNum}`);
-      console.log(`y pos: ${yNum}`);
+        console.log(`x pos: ${xNum}`);
+        console.log(`y pos: ${yNum}`);
+        let gridX = xNum * s + pL - s + 1;
+        let gridY = yNum * s + pT - s + 1;
+        let squareNum = xNum + nX * (yNum - 1);
+        console.log("you clicked square number ", squareNum);
+        if (squareNum in cells) {
+          cells[squareNum].alive = false;
+          cells[squareNum].draw();
+          delete cells[squareNum];
+        } else {
+          let cell = new Cell(context, gridX, gridY, s - 2, squareNum);
+          cell.draw();
+          cells[squareNum] = cell;
+        }
 
-      context.fillRect(
-        xNum * s + pL - s + 1,
-        yNum * s + pT - s + 1,
-        s - 2,
-        s - 2
-      );
+        // context.fillRect(
+        //   xNum * s + pL - s + 1,
+        //   yNum * s + pT - s + 1,
+        //   s - 2,
+        //   s - 2
+        // );
+      }
+    } else {
+      console.log("You cannot modify units while in play!");
     }
   });
   // function createArray(rows) {

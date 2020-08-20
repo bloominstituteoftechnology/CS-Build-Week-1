@@ -1,27 +1,25 @@
 export class Cell {
   // Set the size for each cell
-  static width = 10;
-  static height = 10;
 
-  constructor(context, gridX, gridY) {
+  constructor(context, gridX, gridY, size) {
     this.context = context;
 
     // Store the position of this cell in the grid
     this.gridX = gridX;
     this.gridY = gridY;
+    this.size = size;
 
-    // Make random squares alive
-    this.alive = Math.random() > 0.5;
+    // Make  squares alive
+    this.alive = true;
   }
 
   draw() {
     // Draw a square, let the state determine the color
-    this.context.fillStyle = this.alive ? "#ff8080" : "#303030";
-    this.context.fillRect(
-      this.gridX * Cell.width,
-      this.gridY * Cell.height,
-      Cell.width,
-      Cell.height
-    );
+    if (this.alive) {
+      this.context.fillStyle = "red";
+      this.context.fillRect(this.gridX, this.gridY, this.size, this.size);
+    } else {
+      this.context.clearRect(this.gridX, this.gridY, this.size, this.size);
+    }
   }
 }
