@@ -1,10 +1,17 @@
 import { Cell } from "./cell";
+import { useEffect } from "react";
 
-export const drawGrid = (context, props, canvas, stopAnimation) => {
-  let cells = {};
+export const drawGrid = (
+  context,
+  props,
+  canvas,
+  stopAnimation,
+  cells,
+  setCells
+) => {
   let { gridHeight, gridWidth } = props;
   let imageData = context.getImageData(0, 0, gridWidth, gridHeight);
-
+  context.clearRect(0, 0, gridWidth, gridHeight);
   let s = 34;
   let nX = Math.floor(gridWidth / s) - 2;
   let nY = Math.floor(gridHeight / s) - 2;
@@ -45,6 +52,9 @@ export const drawGrid = (context, props, canvas, stopAnimation) => {
     context.lineTo(gridWidth - pR, y);
   }
   context.stroke();
+  for (const cell in cells) {
+    console.log(cell);
+  }
   canvas.addEventListener("click", function (event) {
     if (stopAnimation == true) {
       let xClick = event.pageX - cellLeft,
@@ -70,11 +80,23 @@ export const drawGrid = (context, props, canvas, stopAnimation) => {
         if (squareNum in cells) {
           cells[squareNum].alive = false;
           cells[squareNum].draw();
-          delete cells[squareNum];
+          console.log("falseyS");
+          setCells({ ...cells, [squareNum]: 0 });
         } else {
           let cell = new Cell(context, gridX, gridY, s - 2, squareNum);
           cell.draw();
-          cells[squareNum] = cell;
+          console.log(
+            "modifying ",
+            cells,
+            "with squarenum ",
+            squareNum,
+            " and cell ",
+            cell
+          );
+          let bells = { frogs: "seventy two" };
+          let testObj = { ...bells, [squareNum]: cell };
+          console.log("test obj is ", testObj);
+          setCells({ ...bells, [squareNum]: cell });
         }
 
         // context.fillRect(

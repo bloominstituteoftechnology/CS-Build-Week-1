@@ -6,16 +6,23 @@ import setPixel from "../utils/setPixel";
 import { drawGrid } from "../utils/drawGrid";
 const AnimationTest = (props) => {
   const canvasRef = useRef(null);
-  const { width, height } = props;
+  const { width, height, cells, setCells } = props;
   const [stopAnimation, setStopAnimation] = useState(true);
+
   const draw = (context, canvas) => {
     drawGrid(
       context,
       { gridWidth: width, gridHeight: height },
       canvas,
-      stopAnimation
+      stopAnimation,
+      cells,
+      setCells
     );
   };
+
+  useEffect(() => {
+    console.log(cells);
+  }, [cells]);
 
   const doAnimation = (elapsedTime) => {
     const canvas = canvasRef.current; // refers to the ref attribute in render()
@@ -24,13 +31,16 @@ const AnimationTest = (props) => {
     console.log(canvasRef.current);
     draw(context, canvas);
   };
-  const cancelAnimation = useAnimationFrame(moment.now(), doAnimation);
+  const [cancelAnimation, resumeAnimation] = useAnimationFrame(
+    moment.now(),
+    doAnimation
+  );
 
   useEffect(() => {
     if (stopAnimation === true) {
       cancelAnimation();
     } else {
-      console.log("you're in the useEffect at least");
+      resumeAnimation();
     }
   }, [stopAnimation]);
 
