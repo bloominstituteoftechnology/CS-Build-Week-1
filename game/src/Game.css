@@ -8,8 +8,9 @@
 }
  
 .Cell {
-    background: #ccc;
+    background: blue;
     position: absolute;
+    border: 1px solid black;
 }
 .button{
     background-color: chartreuse;

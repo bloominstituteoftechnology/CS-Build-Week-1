@@ -1,6 +1,6 @@
  body {
   background-image: url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/squares.png) 
-} 
+}  
   
 /* .box {
   display: inline-block;       
@@ -47,4 +47,8 @@ h1, h2, h3, h4 {
 
 h4 {
   margin-top: 0px;
+} */
+
+/* .Cells {
+  border: 1px solid white;
 } */

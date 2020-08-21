@@ -41,6 +41,18 @@ const App = () => {
  
   const runningRef = useRef(running);
   runningRef.current = running
+  
+  const speeds = {med:100,fast:10 ,slow:1000}
+
+  const [speed ,setSpeed] = useState(100)
+ 
+
+  const speedRef = useRef(speed)
+  speedRef.current = speed
+
+
+  console.log('SPEED', speed )
+
 
   const runSimulation = useCallback(()=> {
     if(!runningRef.current){
@@ -81,11 +93,21 @@ const App = () => {
 
     //   }
     // }
-    setTimeout(runSimulation,1000);
+    setTimeout(runSimulation,speeds[speedRef.current]);
   },[])
 
+  const [color, setColor]= useState( 'dodgerblue')
+   
 
-  return (
+
+  // const changeSpeed =(e)=> {
+  //   e.preventDefault()
+  //   setSpeed({time:1000})
+  //   console.log('NEWSPEED', speed)
+  // }
+
+  const colors = ['red', 'orange', 'yellow', 'yellowgreen', 'dodgerblue', 'white', 'magenta','cyan', 'chartreuse','#39FF14']
+   return (
     <>
       <button
         onClick={() => {
@@ -119,6 +141,70 @@ const App = () => {
        }}>
           Random
        </button>
+
+       {/* Change Color */}
+
+
+       
+
+      <form type = "submit"
+       className = 'colors'
+       >
+         <label htmlFor ="color"> 
+         <h4 style = {{color: `${color}`}}
+         >Color</h4>
+      <select
+        id = 'type' 
+        value = {color}
+        onChange = {e => setColor(e.target.value)}
+        // onBlur ={submitSearch}
+        >
+      <option style = {{color: `${color}`}}> {color.color}</option>
+       {colors.map (color => (
+        <option  style = {{backgroundColor:`${color}` }}key ={color} value = {color}>
+          {color}
+        </option>
+       ))}
+
+
+
+        </select>
+        </label>
+
+ 
+
+
+
+       </form>
+        
+       <form type = "submit"
+       className = 'speedForm'
+       >
+         <label htmlFor ="speed"> 
+         <h3 >Speed</h3> 
+      <select
+        id = 'type' 
+        value = {speed}
+        onChange = {e => setSpeed(e.target.value)}
+         >
+           <option value = {speed.med}> 
+          
+          med
+       </option>
+      <option value = {speed.fast}> fast</option>
+         
+        <option value = {speed.slow}>slow</option>
+       
+
+
+        </select>
+        </label>
+
+ 
+
+
+
+       </form>
       <div
         style={{
           display: "grid",
@@ -138,7 +224,7 @@ const App = () => {
               style={{
                 width: 20,
                 height: 20,
-                backgroundColor: grid[i][k] ? "dodgerBlue" : undefined,
+                backgroundColor: grid[i][k] ?  `${color}` : undefined,
                 border: "solid 1px black",
               }}
             />
