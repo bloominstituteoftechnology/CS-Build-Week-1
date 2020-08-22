@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useRef} from 'react';
 import produce from 'immer'
 
 const Rows = 25;
 const Col = 25;
 
 function App() {
+    // State for square toggle
     const [grid, setGrid] = useState(() => {
         const rows = [];
         
@@ -17,8 +18,23 @@ function App() {
 
     const [start, setStart] = useState(false);
 
+    const runningRef = useRef();
+    runningRef.current = start
+
+    const runSimulation = useCallback(() => {
+        if (!runningRef.current) {
+            return;
+        }
+        // simulate
+        for (let i = 0; i < Rows; i++) {
+            for ()
+        }
+        setTimeout(runSimulation, 1000);
+    }, []);
+
     return (
         <>
+            // Button used to start and pause simulation
             <button 
                 onClick={() => {
                     setStart(!start);
@@ -26,7 +42,7 @@ function App() {
                 {start ? 'pause' : 'start'}
             </button>
 
-            {/* Possible component */}
+            {/* Possible component. Used to generate the grid and toggle squares */}
             <div 
                 style={{
                     display: 'grid',
