@@ -41,22 +41,21 @@ function App() {
                     // checking for neighbors
                     for (let j = 0; j < Col; j++) {
                         let neighbors = 0;
-                        
-                            surround.forEach(([x, y]) => {
-                                const genI = i + x;
-                                const genJ = j + y;
-                                // making sure we are in the grib and not out of it
-                                if (genI >= 0 && genI < Rows && genJ >= 0 && genJ < Col) {
-                                    neighbors += g[genI][genJ]
-                                }
-                            })
+                        surround.forEach(([x, y]) => {
+                            const genI = i + x;
+                            const genJ = j + y;
+                            // making sure we are in the grib and not out of it
+                            if (genI >= 0 && genI < Rows && genJ >= 0 && genJ < Col) {
+                                 neighbors += g[genI][genJ]
+                            }
+                        })
 
-                            // determines if a cell dies or is born depending on above condition
-                            if (neighbors < 2 || neighbors > 3) {
-                                gridCopy[i][j] = 0;
-                            } else if (g[i][j] === 0 && neighbors === 3) {
-                                gridCopy[i][j] = 1;
-                            }                        
+                        // determines if a cell dies or is born depending on above condition
+                        if (neighbors < 2 || neighbors > 3) {
+                            gridCopy[i][j] = 0;
+                        } else if (g[i][j] === 0 && neighbors === 3) {
+                            gridCopy[i][j] = 1;
+                        }                        
                           
                     }
                 }
