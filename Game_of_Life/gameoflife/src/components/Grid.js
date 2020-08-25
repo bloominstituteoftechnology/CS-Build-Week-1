@@ -116,6 +116,14 @@ const Grid = () => {
             >
                 Clear Board
             </button>
+
+            <button>
+                +
+            </button>
+
+            <button>
+                -
+            </button>
         </>
     )
 }
