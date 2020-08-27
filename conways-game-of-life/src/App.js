@@ -2,8 +2,8 @@ import React, { useState, useCallback, useRef } from "react";
 import "./App.css";
 import produce from "immer";
 
-const numRows = 100;
-const numCols = 100;
+const numRows = 30;
+const numCols = 30;
 
 const operations = [
   [0, 1],
@@ -63,69 +63,89 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          setRunning(!running);
-          if (!running) {
-            runningRef.current = true;
-            generator();
-          }
-        }}
-      >
-        {running ? "Pause" : "Generate"}
-      </button>
-      <button
-        onClick={() => {
-          setCount(0);
-          setGrid(setDefaultGrid());
-        }}
-      >
-        Reset
-      </button>
-      <button
-        onClick={() => {
-          const rows = [];
-          for (let i = 0; i < numRows; i++) {
-            rows.push(
-              Array.from(Array(numCols), () => (Math.random() > 0.5 ? 1 : 0))
-            );
-          }
+    <div className="App">
+      <div className="left">
+        <h1>Conway's Game Of Life</h1>
+        <div className="ButtonContainer">
+          <button
+            className="Button"
+            onClick={() => {
+              setRunning(!running);
+              if (!running) {
+                runningRef.current = true;
+                generator();
+              }
+            }}
+          >
+            {running ? "Pause" : "Play"}
+          </button>
+          <button
+            className="Button"
+            onClick={() => {
+              setCount(0);
+              setGrid(setDefaultGrid());
+            }}
+          >
+            Reset
+          </button>
+          <button
+            className="Button"
+            onClick={() => {
+              const rows = [];
+              for (let i = 0; i < numRows; i++) {
+                rows.push(
+                  Array.from(Array(numCols), () =>
+                    Math.random() > 0.5 ? 1 : 0
+                  )
+                );
+              }
 
-          setGrid(rows);
-          setCount(1);
-        }}
-      >
-        Random
-      </button>
-      <p>Generation:{count}</p>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${numCols},20px)`,
-        }}
-      >
-        {grid.map((rows, rowIndex) =>
-          rows.map((col, colIndex) => (
-            <div
-              key={`${rowIndex}-${colIndex}`}
-              onClick={() => {
-                const newGrid = produce(grid, (producedgrid) => {
-                  producedgrid[rowIndex][colIndex] = grid[rowIndex][colIndex]
-                    ? 0
-                    : 1;
-                });
-                setGrid(newGrid);
-              }}
-              style={{
-                width: 20,
-                height: 20,
-                backgroundColor: grid[rowIndex][colIndex] ? "black" : "white",
-                border: "solid 1px black",
-              }}
-            ></div>
-          ))
-        )}
+              setGrid(rows);
+              setCount(1);
+            }}
+          >
+            Random
+          </button>
+        </div>
+        <div className="Rules"></div>
+        <h2>Rules:</h2>
+        <p>Any live cell with two or three live neighbours survives.</p>
+        <p>Any dead cell with three live neighbours becomes a live cell.</p>
+        <p>
+          All other live cells die in the next generation. Similarly, all other
+          dead cells stay dead.
+        </p>
+      </div>
+      <div className="right">
+        <p>Generation:{count}</p>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${numCols},20px)`,
+          }}
+        >
+          {grid.map((rows, rowIndex) =>
+            rows.map((col, colIndex) => (
+              <div
+                key={`${rowIndex}-${colIndex}`}
+                onClick={() => {
+                  const newGrid = produce(grid, (producedgrid) => {
+                    producedgrid[rowIndex][colIndex] = grid[rowIndex][colIndex]
+                      ? 0
+                      : 1;
+                  });
+                  setGrid(newGrid);
+                }}
+                style={{
+                  width: 20,
+                  height: 20,
+                  backgroundColor: grid[rowIndex][colIndex] ? "black" : "white",
+                  border: "solid 1px black",
+                }}
+              ></div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
