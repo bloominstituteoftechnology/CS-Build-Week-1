@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import logo from "./CONWAYFACE.png";
 import "./App.css";
 import AnimationTest from "./components/AnimationTest";
@@ -6,17 +6,14 @@ import useWindowDimensions from "./hooks/getWindowDimensions";
 
 function App() {
   const { height, width } = useWindowDimensions();
-  const [cells, setCells] = useState({});
-
   return (
     <div className="App">
       <div>
-        <h1>Generation: X</h1>
         <AnimationTest
-          width="700"
-          height="700"
-          cells={cells}
-          setCells={setCells}
+          width="650"
+          height="650"
+          cellSizePx={30}
+          generations={300}
         />
       </div>
       <div className="presets"> z z z z</div>
