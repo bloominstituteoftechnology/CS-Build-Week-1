@@ -11,6 +11,9 @@ const AnimationTest = (props) => {
   const { width, height, cellSizePx, generations } = props;
   let maxGenerations = generations;
   let [gens, setGens] = useState(0);
+  let [clickable, setClickable] = useState(true);
+  let [listenerToggle, setListenerToggle] = useState(true);
+  let [msDelay, setMsDelay] = useState(0);
   const canvasRef = useRef(null);
   let cells = [];
   let nX = Math.floor(width / cellSizePx) - 2;
@@ -39,23 +42,26 @@ const AnimationTest = (props) => {
     cells = grid.thing;
     let canvas = canvasRef.current;
     draw(canvas.getContext("2d"), canvasRef.current);
-    createEventListeners({
-      canvas,
-      pL,
-      pT,
-      pR,
-      pB,
-      height,
-      width,
-      cellSizePx,
-      nX,
-      nY,
-      cells,
-      stopAnimation,
-      update,
-    });
+    setListenerToggle(
+      createEventListeners({
+        canvas,
+        pL,
+        pT,
+        pR,
+        pB,
+        height,
+        width,
+        cellSizePx,
+        nX,
+        nY,
+        cells,
+        update,
+        clickable,
+      })
+    );
     grid.drawAll(canvas.getContext("2d"));
   }, []);
+
   const [stopAnimation, setStopAnimation] = useState(true);
   const draw = (context, canvas) => {
     drawGrid({
@@ -89,7 +95,7 @@ const AnimationTest = (props) => {
     newGen();
     gens += 1;
   };
-  const cancelAnimation = useAnimationFrame(moment.now(), doAnimation);
+  const cancelAnimation = useAnimationFrame(moment.now(), doAnimation, msDelay);
 
   function newGen() {
     let queueToKill = [];
@@ -178,6 +184,7 @@ const AnimationTest = (props) => {
         onClick={() => {
           // console.log("starting?");
           cancelAnimation(false);
+          listenerToggle[0](false);
         }}
       >
         START
@@ -186,31 +193,28 @@ const AnimationTest = (props) => {
         onClick={() => {
           // console.log("stopping?");
           cancelAnimation(true);
+          // console.log(listenerToggle);
+          listenerToggle[0](true);
+
           // setPlay(false);
         }}
       >
         STOP
       </button>
-      {/* <button
+      <button
         onClick={() => {
-          for (let i = 0; i < 100; i++)
-            setTimeout(function () {
-              newGen();
-            }, 1000);
+          grid.clearAll(canvasRef.current.getContext("2d"));
         }}
       >
-        NEXT
+        CLEAR
       </button>
       <button
         onClick={() => {
-          // console.log("readin?");
-          // console.log("cells", cells);
-          // console.log("celBuffer", cellBuffer);
-          // console.log("grid", grid.thing);
+          setMsDelay(msDelay + 100);
         }}
       >
-        READIT
-      </button> */}
+        'crease
+      </button>
     </>
   );
 };

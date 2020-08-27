@@ -38,6 +38,13 @@ export class Grid {
       }
     }
   }
+  clearAll(context) {
+    for (let i = 0; i < this.l; i++) {
+      for (let j = 0; j < this.w; j++) {
+        this.thing[i][j].kill(context);
+      }
+    }
+  }
   setUp() {
     for (let i = 0; i < this.l; i++) {
       this.thing.push([]);

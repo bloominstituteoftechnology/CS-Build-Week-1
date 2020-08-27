@@ -1,4 +1,6 @@
-export function createEventListeners({
+import React, { useRef, useState, useEffect } from "react";
+
+export const createEventListeners = ({
   canvas,
   pL,
   pT,
@@ -10,9 +12,11 @@ export function createEventListeners({
   nX,
   nY,
   cells,
-  stopAnimation,
   update,
-}) {
+  clickable,
+}) => {
+  console.log("creatin");
+  // let [event, setEvent] = useState();
   let cellLeft = canvas.offsetLeft - window.pageXOffset;
   let cellTop = canvas.offsetTop;
   let context = canvas.getContext("2d");
@@ -28,11 +32,17 @@ export function createEventListeners({
   window.onresize = function (e) {
     reOffset();
   };
-  canvas.addEventListener("click", function (event) {
-    console.log("click registered");
+  // canvas.removeEventListener("click", function (event) {
+  //   clickHandler(event, true);
+  // });
+  // canvas.removeEventListener("click", function (event) {
+  //   clickHandler(event, true);
+  // });
+
+  function clickHandler(event, clickable) {
     let cellLeft = canvas.offsetLeft,
       cellTop = canvas.offsetTop;
-    if (stopAnimation == true) {
+    if (clickable === true) {
       let xClick = event.pageX - cellLeft,
         yClick = event.pageY - cellTop;
       let relX = xClick - pL,
@@ -64,7 +74,24 @@ export function createEventListeners({
         }
       }
     } else {
-      //   console.log("You cannot modify units while in play!");
+      console.log("You cannot modify units while in play!");
     }
+  }
+
+  canvas.addEventListener("click", function (event) {
+    clickHandler(event, clickable);
   });
-}
+
+  function allowListener(bool) {
+    if (bool === true) {
+      console.log("you can click now");
+      clickable = true;
+    }
+    if (bool === false) {
+      console.log("no more clicking for you");
+      clickable = false;
+    }
+  }
+
+  return [allowListener];
+};
