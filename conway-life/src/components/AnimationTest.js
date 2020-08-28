@@ -5,7 +5,8 @@ import { drawGrid } from "../utils/drawGrid";
 import { Grid } from "../utils/grid";
 import { createEventListeners } from "../utils/createEventListeners";
 const AnimationTest = (props) => {
-  const { width, height, cellSizePx, setAlert, setCellSizePx } = props;
+  const { width, height, cellSizePx } = props;
+  // setAlert, setCellSizePx used to be included for changing grid size.
   // let maxGenerations = generations;
   let [gens, setGens] = useState(0);
   let [clickable] = useState(true);
