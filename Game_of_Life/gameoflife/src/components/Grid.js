@@ -6,6 +6,7 @@ import produce from 'immer';
 const Rows = 25;
 const Col = 25;
 
+// this is for finding the surrounding cells around an cell that is alive
 const surround = [
     [0, 1],
     [0, -1],
@@ -17,6 +18,7 @@ const surround = [
     [-1, -1]
 ];
 
+// Clearing grid. 
 const clearGrid = () => {
     const rows = [];
     for (let i = 0; i < Rows; i++) {
@@ -68,7 +70,7 @@ const Grid = () => {
             })
         })
     
-        // return Populate;
+        setTimeout(Populate, 500);
     }, []);
 
     return (
@@ -100,6 +102,7 @@ const Grid = () => {
                 )}
             </div>
 
+            {/* Button starts and pauses the simulation */}
             <button 
                 onClick={() => {
                     setStart(!start);
@@ -112,6 +115,7 @@ const Grid = () => {
                 {start ? 'pause' : 'start'}
             </button>
 
+            {/* Clear grid button */}
             <button
                 onClick={() => {
                     setGrid(clearGrid());
@@ -120,6 +124,7 @@ const Grid = () => {
                 Clear Board
             </button>
 
+            {/* Radoize button */}
             <button onClick={() => {
                 const rows = [];
                 for (let i = 0; i < Rows; i++) {
@@ -130,6 +135,7 @@ const Grid = () => {
                 Randomize
             </button>
 
+            {/* Not working */}
             <div>
                 Speed:
                 <input
