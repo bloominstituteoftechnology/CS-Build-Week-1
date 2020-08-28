@@ -4,10 +4,10 @@
 }
 h1 {
   letter-spacing: 3px;
+  margin-left: 15%;
 }
 .left {
-  text-align: center;
-  border: 2px solid red;
+  padding-top: 15%;
 }
 
 .ButtonContainer {
@@ -40,4 +40,11 @@ h1 {
   background-color: #3e8e41;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+
+h2 {
+  margin-left: 15%;
+}
+p {
+  margin-left: 15%;
 }

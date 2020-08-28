@@ -2,8 +2,8 @@ import React, { useState, useCallback, useRef } from "react";
 import "./App.css";
 import produce from "immer";
 
-const numRows = 30;
-const numCols = 30;
+const numRows = 40;
+const numCols = 40;
 
 const operations = [
   [0, 1],
@@ -117,7 +117,10 @@ function App() {
         </p>
       </div>
       <div className="right">
-        <p>Generation:{count}</p>
+        <h3>
+          Generation:{"  "}
+          {count}
+        </h3>
         <div
           style={{
             display: "grid",
