@@ -14,83 +14,63 @@ export class Grid {
     this.pT = pT;
   }
 
-  getPattern(patName, context) {
+  getPattern(patName, context, retObj) {
     if (patName in patterns) {
-      this.clearAll(context);
-      let centerCoords = {
-        x: parseInt(this.w / 2 - 1),
-        y: parseInt(this.l / 2 - 1),
-      };
-      console.log("center coords are", centerCoords);
-      let width = patterns[patName].width;
-      let length = patterns[patName].length;
-      let patternStart = {
-        x: centerCoords.x - parseInt(width / 2),
-        y: centerCoords.y - parseInt(length / 2),
-      };
-      console.log("pattern starts at", patternStart);
-      console.log("pattern ois ", width, " wide");
-      console.log(
-        "x should never be greater than ",
-        patternStart.x + width,
-        " wide"
-      );
-      console.log(
-        "y should never be greater than ",
-        patternStart.y + length,
-        " tall"
-      );
-      let maxY = patternStart.y + length;
-      let maxX = patternStart.x + width;
-      let pString = patterns[patName].pattern;
-      let currentCoords = { ...patternStart };
-      for (let i = 0; i <= pString.length; i++) {
-        console.log(pString.charAt(i));
-        if (pString.charAt(i) === "*") {
-          // console.log("comapring ", currentCoords.x, " to ", maxX);
-          this.thing[currentCoords.x][currentCoords.y].resurrect(context);
-        }
-        if (currentCoords.x < maxX) {
-          console.log(currentCoords);
-          currentCoords.x += 1;
-        } else {
-          // console.log("resetting X to", patternStart.x);
-          currentCoords.x = patternStart.x;
+      if (
+        patterns[patName].width < this.w &&
+        patterns[patName].length < this.l
+      ) {
+        this.clearAll(context);
+        let centerCoords = {
+          x: parseInt(this.w / 2 - 1),
+          y: parseInt(this.l / 2 - 1),
+        };
+        console.log("center coords are", centerCoords);
+        let width = patterns[patName].width;
+        let length = patterns[patName].length;
 
-          if (currentCoords.y < maxY) {
-            currentCoords.y += 1;
+        let patternStart = {
+          x: centerCoords.x - parseInt(width / 2),
+          y: centerCoords.y - parseInt(length / 2),
+        };
+
+        let maxY = patternStart.y + length;
+        let maxX = patternStart.x + width;
+        let pString = patterns[patName].pattern;
+        let currentCoords = { ...patternStart };
+        for (let i = 0; i <= pString.length; i++) {
+          if (pString.charAt(i) === "*") {
+            this.thing[currentCoords.x][currentCoords.y].resurrect(context);
+          }
+          if (currentCoords.x < maxX) {
+            currentCoords.x += 1;
+          } else {
+            currentCoords.x = patternStart.x;
+
+            if (currentCoords.y < maxY) {
+              currentCoords.y += 1;
+            }
           }
         }
-      }
 
-      //do stuff
+        //do stuff
+      } else {
+        retObj = {
+          minWidth: patterns[patName].width + 1,
+          minHeight: patterns[patName].length + 1,
+        };
+      }
     } else {
       //pattern not found or you mistyped it somewhere
     }
+    return retObj;
   }
 
-  update() {
-    // cell.livingNeighbors = livingNeighbors;
-    // livingNeighbors = 0;
-    // console.log("new ", cell);
-    // console.log("old ", this.thing[i][j]);
-    // if (cell.alive === true) {
-    //   if (cell.livingNeighbors < 2 || cell.livingNeighbors > 3) {
-    //     console.log(cell);
-    //     console.log("he gotta die sorry");
-    //     cell.die();
-    //   }
-    // } else {
-    //   if (cell.livingNeighbors === 3) {
-    //     // cell.resurrect();
-    //   }
-    // }
-    // newThing[i][j] = cell;
-  }
+  update() {}
 
   randomize(context) {
-    for (let i = 0; i < this.l; i++) {
-      for (let j = 0; j < this.w; j++) {
+    for (let i = 0; i < this.w; i++) {
+      for (let j = 0; j < this.l; j++) {
         this.thing[i][j].alive = Math.random() > 0.5;
         this.thing[i][j].draw(context);
       }
@@ -98,25 +78,25 @@ export class Grid {
   }
 
   drawAll(context) {
-    for (let i = 0; i < this.l; i++) {
-      for (let j = 0; j < this.w; j++) {
+    for (let i = 0; i < this.w; i++) {
+      for (let j = 0; j < this.l; j++) {
         this.thing[i][j].draw(context);
       }
     }
   }
   clearAll(context) {
-    for (let i = 0; i < this.l; i++) {
-      for (let j = 0; j < this.w; j++) {
+    for (let i = 0; i < this.w; i++) {
+      for (let j = 0; j < this.l; j++) {
         this.thing[i][j].kill(context);
       }
     }
   }
   setUp() {
-    for (let i = 0; i < this.l; i++) {
+    for (let i = 0; i < this.w; i++) {
       this.thing.push([]);
       // console.log(this.thing);
       // console.log("we pushin ", this.thing.length);
-      for (let j = 0; j < this.w; j++) {
+      for (let j = 0; j < this.l; j++) {
         this.thing[i][j] = new Cell({
           context: this.context,
           x: i,

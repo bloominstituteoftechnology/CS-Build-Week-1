@@ -5,7 +5,7 @@ import { drawGrid } from "../utils/drawGrid";
 import { Grid } from "../utils/grid";
 import { createEventListeners } from "../utils/createEventListeners";
 const AnimationTest = (props) => {
-  const { width, height, cellSizePx } = props;
+  const { width, height, cellSizePx, setAlert, setCellSizePx } = props;
   // let maxGenerations = generations;
   let [gens, setGens] = useState(0);
   let [clickable] = useState(true);
@@ -32,7 +32,6 @@ const AnimationTest = (props) => {
     })
   );
   const cells = useRef({
-    // cells: grid.current.thing,
     pL,
     pT,
     pR,
@@ -48,7 +47,6 @@ const AnimationTest = (props) => {
   const drawRef = useRef({ draw });
   useEffect(() => {
     grid.current.setUp();
-    // console.log("grid is MADE");
     let canvas = canvasRef.current;
     drawRef.current.draw(canvas.getContext("2d"), canvasRef.current);
     cells.current.cells = grid.current.thing;
@@ -83,8 +81,6 @@ const AnimationTest = (props) => {
     let genz = gens;
     setGens(genz + 1);
 
-    // console.log(canvas);
-
     newGen();
     gens += 1;
   };
@@ -93,11 +89,6 @@ const AnimationTest = (props) => {
   function newGen() {
     let queueToKill = [];
     let queueToRes = [];
-    // console.log(
-    //   "okay... so here's the cellbuffer before we loop through it ",
-    //   cellBuffer
-    // );
-    // console.log("and here's grid.... ", grid);
     for (const x in grid.current.thing) {
       for (const y in grid.current.thing[x]) {
         let thisCell = grid.current.thing[x][y];
@@ -131,21 +122,12 @@ const AnimationTest = (props) => {
         if (thisCell.alive === true) {
           if (livingNeighbors < 2 || livingNeighbors > 3) {
             queueToKill.push(grid.current.thing[thisCell.x][thisCell.y]);
-
-            // grid.current.thing[thisCell.x][thisCell.y].kill(
-            //   canvasRef.current.getContext("2d")
-            // );
           }
         } else {
           if (livingNeighbors === 3) {
             queueToRes.push(grid.current.thing[thisCell.x][thisCell.y]);
-
-            // grid.current.thing[thisCell.x][thisCell.y].resurrect(
-            //   canvasRef.current.getContext("2d")
           }
         }
-        // );
-        // console.log("he had ", livingNeighbors, " neighbors");
       }
     }
 
@@ -158,13 +140,6 @@ const AnimationTest = (props) => {
       // cellsToScan[squareNum] = queueToRes[i];
       queueToRes[i].resurrect(canvasRef.current.getContext("2d"));
     }
-
-    // for (const i in neighborLifeQueue) {
-    //   console.log("he's a neighbor");
-    //   neighborLifeQueue[i].neighborToLiving = false;
-    // }
-    // console.log("gonna kill ", queueToKill);
-    // console.log("gonna res ", queueToRes);
   }
 
   /**
@@ -226,34 +201,63 @@ const AnimationTest = (props) => {
         </button>
         <button
           onClick={() => {
+            let retObj = false;
+
             grid.current.getPattern(
               "glider",
-              canvasRef.current.getContext("2d")
+              canvasRef.current.getContext("2d"),
+              retObj
             );
+            console.log(retObj);
+            if (retObj !== false) {
+            }
           }}
         >
           DEMONOID
         </button>
         <button
           onClick={() => {
-            grid.current.getPattern(
+            let retObj = false;
+            retObj = grid.current.getPattern(
               "Spaceship_119P4H1V0",
-              canvasRef.current.getContext("2d")
+              canvasRef.current.getContext("2d"),
+              retObj
             );
+            console.log(retObj);
           }}
         >
           SPACESHIP
         </button>
         <button
           onClick={() => {
-            grid.current.getPattern(
+            let retObj = false;
+
+            retObj = grid.current.getPattern(
               "Spaceship_295P5H1V1",
-              canvasRef.current.getContext("2d")
+              canvasRef.current.getContext("2d"),
+              retObj
             );
+            console.log(retObj);
+            //setAlert(`Structure is too large! Try increasing your grid size`);
           }}
         >
           MOTHERSHIP
         </button>
+        {/* <br />
+        <button
+          onClick={() => {
+            //      this.context.clearRect(this.gridX, this.gridY, this.size, this.size);
+            grid.current = {};
+            canvasRef.current.getContext("2d").clearRect(0, 0, width, height);
+            cancelAnimation(true);
+            listenerToggle[0](true);
+            setCellSizePx(cellSizePx - 2);
+            setAlert(``);
+          }}
+        >
+          Grid Density (-)
+        </button>
+        <button>Grid Density (+)</button> */}
       </div>
     </>
   );

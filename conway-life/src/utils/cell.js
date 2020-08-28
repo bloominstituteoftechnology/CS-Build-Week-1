@@ -15,7 +15,7 @@ export class Cell {
 
     // Make  squares alive
     if (alive === undefined) {
-      this.alive = Math.random() > 0.5;
+      this.alive = false;
     } else {
     }
   } //when a cell updates n stuff u definitely gotta like set the neighbor to the cell so that it points to the
