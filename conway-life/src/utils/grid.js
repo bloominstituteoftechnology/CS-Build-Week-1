@@ -17,31 +17,53 @@ export class Grid {
   getPattern(patName, context) {
     if (patName in patterns) {
       this.clearAll(context);
-      let centerCoords = { x: this.w / 2 - 1, y: this.l / 2 - 1 };
-      console.log(centerCoords);
+      let centerCoords = {
+        x: parseInt(this.w / 2 - 1),
+        y: parseInt(this.l / 2 - 1),
+      };
+      console.log("center coords are", centerCoords);
       let width = patterns[patName].width;
       let length = patterns[patName].length;
       let patternStart = {
-        x: centerCoords.x - width / 2,
-        y: centerCoords.y - length / 2,
+        x: centerCoords.x - parseInt(width / 2),
+        y: centerCoords.y - parseInt(length / 2),
       };
-      console.log(patternStart);
+      console.log("pattern starts at", patternStart);
+      console.log("pattern ois ", width, " wide");
+      console.log(
+        "x should never be greater than ",
+        patternStart.x + width,
+        " wide"
+      );
+      console.log(
+        "y should never be greater than ",
+        patternStart.y + length,
+        " tall"
+      );
+      let maxY = patternStart.y + length;
+      let maxX = patternStart.x + width;
       let pString = patterns[patName].pattern;
-      let currentCoords = patternStart;
+      let currentCoords = { ...patternStart };
+      let rowCount = 1;
       for (let i = 0; i < pString.length; i++) {
         console.log(pString.charAt(i));
-        if (i % width === 0) {
-          currentCoords.y += 1;
-        }
+
+        console.log("comapring ", currentCoords.y, " to ", maxY);
         if (pString.charAt(i) === "*") {
-          console.log(currentCoords.x);
           this.thing[currentCoords.x][currentCoords.y].resurrect(context);
         }
-        if (currentCoords.x < patternStart.x + width) {
-          console.log(currentCoords.x);
+        if (currentCoords.x <= maxX) {
+          console.log(currentCoords);
           currentCoords.x += 1;
         } else {
+          console.log("resetti", patternStart);
           currentCoords.x = patternStart.x;
+          if (currentCoords.y < maxY) {
+            currentCoords.y += 1;
+          } else if (i === pString.length - 1) {
+            console.log("DONE", patternStart);
+            currentCoords.y = patternStart.y;
+          }
         }
       }
 

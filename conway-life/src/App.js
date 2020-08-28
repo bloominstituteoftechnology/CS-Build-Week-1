@@ -9,9 +9,9 @@ function App() {
     <div className="App">
       <div className="gameContainer">
         <AnimationTest
-          width="650"
-          height="650"
-          cellSizePx={16}
+          width="900"
+          height="900"
+          cellSizePx={10}
           generations={300}
         />
       </div>

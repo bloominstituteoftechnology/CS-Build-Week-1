@@ -58,7 +58,7 @@ export const createEventListeners = ({
         //use xnum and ynum to point to squares you absolute loon
 
         let squareNum = xNum + 1 + nX * yNum;
-        console.log("you clicked square number ", squareNum);
+        console.log("you clicked square number ", cells[xNum][yNum]);
         if (cells[xNum][yNum].alive) {
           cells[xNum][yNum].alive = false;
           cells[xNum][yNum].context = context;
