@@ -80,7 +80,7 @@ class Game extends React.Component {
         const elemOffset = this.getElementOffset();
         const offsetX = event.clientX - elemOffset.x;
         const offsetY = event.clientY - elemOffset.y;
-        
+
         const x = Math.floor(offsetX / CELL_SIZE);
         const y = Math.floor(offsetY / CELL_SIZE);
 
@@ -106,6 +106,7 @@ class Game extends React.Component {
 
     runIteration() {
         let newBoard = this.makeEmptyBoard();
+        
 
         for (let y = 0; y < this.rows; y++) {
             for (let x = 0; x < this.cols; x++) {
@@ -122,6 +123,10 @@ class Game extends React.Component {
                     }
                 }
             }
+            this.setState({
+                generation: this.state.generation + 1
+            });
+
         }
 
         this.board = newBoard;
@@ -160,7 +165,7 @@ class Game extends React.Component {
 
     handleClear = () => {
         this.board = this.makeEmptyBoard();
-        this.setState({ cells: this.makeCells() });
+        this.setState({ cells: this.makeCells() , generation: this.state.generation = 0 });
     }
 
     handleRandom = () => {
@@ -177,7 +182,7 @@ class Game extends React.Component {
         const { cells, interval, isRunning } = this.state;
         return (
             <div>
-                <div className ="gen">Gen:{this.generation} </div>
+                <div className ="gen">Gen:{this.state.generation} </div>
                 <div className="Board"
                     style={{ width: WIDTH, height: HEIGHT, backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}}
                     onClick={this.handleClick}
