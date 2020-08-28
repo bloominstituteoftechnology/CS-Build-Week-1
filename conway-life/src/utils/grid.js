@@ -1,4 +1,5 @@
 import { Cell } from "./cell";
+import { patterns } from "./patterns";
 
 export class Grid {
   // Set the size for each Grid
@@ -11,6 +12,43 @@ export class Grid {
     this.cellSize = cellSize;
     this.pL = pL;
     this.pT = pT;
+  }
+
+  getPattern(patName, context) {
+    if (patName in patterns) {
+      this.clearAll(context);
+      let centerCoords = { x: this.w / 2 - 1, y: this.l / 2 - 1 };
+      console.log(centerCoords);
+      let width = patterns[patName].width;
+      let length = patterns[patName].length;
+      let patternStart = {
+        x: centerCoords.x - width / 2,
+        y: centerCoords.y - length / 2,
+      };
+      console.log(patternStart);
+      let pString = patterns[patName].pattern;
+      let currentCoords = patternStart;
+      for (let i = 0; i < pString.length; i++) {
+        console.log(pString.charAt(i));
+        if (i % width === 0) {
+          currentCoords.y += 1;
+        }
+        if (pString.charAt(i) === "*") {
+          console.log(currentCoords.x);
+          this.thing[currentCoords.x][currentCoords.y].resurrect(context);
+        }
+        if (currentCoords.x < patternStart.x + width) {
+          console.log(currentCoords.x);
+          currentCoords.x += 1;
+        } else {
+          currentCoords.x = patternStart.x;
+        }
+      }
+
+      //do stuff
+    } else {
+      //pattern not found or you mistyped it somewhere
+    }
   }
 
   update() {

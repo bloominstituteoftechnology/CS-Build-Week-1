@@ -224,6 +224,16 @@ const AnimationTest = (props) => {
         >
           RANDOMIZE
         </button>
+        <button
+          onClick={() => {
+            grid.current.getPattern(
+              "glider",
+              canvasRef.current.getContext("2d")
+            );
+          }}
+        >
+          GLIDER
+        </button>
       </div>
     </>
   );

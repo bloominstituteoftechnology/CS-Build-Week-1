@@ -11,7 +11,7 @@ function App() {
         <AnimationTest
           width="650"
           height="650"
-          cellSizePx={20}
+          cellSizePx={16}
           generations={300}
         />
       </div>
