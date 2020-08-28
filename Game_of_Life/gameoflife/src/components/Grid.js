@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
 
+// This component hold all logic and displays the grid
+
 const Rows = 25;
 const Col = 25;
 
@@ -29,6 +31,7 @@ const Grid = () => {
     });
 
     const [start, setStart] = useState(false);
+    const [interval, setInterval] = useState(100);
 
     const runningRef = useRef();
     runningRef.current = start
@@ -65,7 +68,7 @@ const Grid = () => {
             })
         })
     
-        setTimeout(Populate, 1000);
+        // return Populate;
     }, []);
 
     return (
@@ -117,12 +120,35 @@ const Grid = () => {
                 Clear Board
             </button>
 
-            <button>
-                +
+            <button onClick={() => {
+                const rows = [];
+                for (let i = 0; i < Rows; i++) {
+                    rows.push(Array.from(Array(Col), () => Math.random() > .7 ? 1 : 0));
+                };
+                setGrid(rows);
+            }}>
+                Randomize
             </button>
 
-            <button>
-                -
+            <div>
+                Speed:
+                <input
+                    onChange={e => setInterval(e.target.value)}
+                    type="range"
+                    min="10"
+                    max="1000"
+                    value={interval}
+                />
+            </div>
+
+            <button onClick={() => {
+                const color = [];
+                for (let i = 0; i < Rows; i++) {
+                    color.push(Array.from(Array(Col), () => Math.random() > .7 ? 1 : 0));
+                };
+                setGrid(color);
+            }}>
+                Change Color
             </button>
         </>
     )
