@@ -1,7 +1,7 @@
 export class Cell {
   // Set the size for each cell
 
-  constructor({ context, gridX, gridY, size, squareNum, x, y }) {
+  constructor({ context, gridX, gridY, size, squareNum, x, y, alive }) {
     this.context = context;
     //console.log("context is uhhhh in the cell ", context);
     this.squareNum = squareNum;
@@ -14,26 +14,84 @@ export class Cell {
     this.neighborToLiving = false;
 
     // Make  squares alive
-    this.alive = Math.random() > 0.5;
+    if (alive === undefined) {
+      this.alive = Math.random() > 0.5;
+    } else {
+    }
   } //when a cell updates n stuff u definitely gotta like set the neighbor to the cell so that it points to the
   //actual object but remember that the other cell is not really being updated lmao so reach into that other object
   //and run its find neighbors as well by passing the new cells-grid-thing
   findNeighbors(l, w) {
     // console.log(this.x, this.y);
+
+    //this is so we actually point to the right coords since we're going to an array and counting
+    //from zero based off of our specified dimensions
+    l -= 1;
+    w -= 1;
     // console.log(cells[this.x][this.y]);
     //instead of storing the cell, store the xy gridpos of all neighbors, with -1 indicating no neighbor (out of range)
-    let leftNeigh = this.x > 0 ? { x: this.x - 1, y: this.y } : -1;
-    let rightNeigh = this.x <= w ? { x: this.x + 1, y: this.y } : -1;
-    let topNeigh = this.y > 0 ? { x: this.x, y: this.y - 1 } : -1;
-    let bottomNeigh = this.y < l ? { x: this.x, y: this.y + 1 } : -1;
-    let tLNeigh =
-      this.y > 0 && this.x > 0 ? { x: this.x - 1, y: this.y - 1 } : -1;
-    let tRNeigh =
-      this.y > 0 && this.x <= w ? { x: this.x + 1, y: this.y - 1 } : -1;
-    let bLNeigh =
-      this.y < l && this.x > 0 ? { x: this.x - 1, y: this.y + 1 } : -1;
-    let bRNeigh =
-      this.y < l && this.x <= w ? { x: this.x + 1, y: this.y + 1 } : -1;
+    let leftNeigh =
+      this.x > 0 ? { x: this.x - 1, y: this.y } : { x: w, y: this.y };
+    let rightNeigh =
+      this.x < w ? { x: this.x + 1, y: this.y } : { x: 0, y: this.y };
+    let topNeigh =
+      this.y > 0 ? { x: this.x, y: this.y - 1 } : { x: this.x, y: l };
+    let bottomNeigh =
+      this.y < l ? { x: this.x, y: this.y + 1 } : { x: this.x, y: 0 };
+    let tLNeigh = {};
+    if (this.y > 0) {
+      tLNeigh.y = this.y - 1;
+    } else {
+      tLNeigh.y = l;
+    }
+    if (this.x > 0) {
+      tLNeigh.x = this.x - 1;
+    } else {
+      tLNeigh.x = w;
+    }
+    // this.y > 0 && this.x > 0
+    //   ? { x: this.x - 1, y: this.y - 1 }
+    //   : { x: w, y: l };
+    let tRNeigh = {};
+
+    if (this.y > 0) {
+      tRNeigh.y = this.y - 1;
+    } else {
+      tRNeigh.y = l;
+    }
+    if (this.x < w) {
+      tRNeigh.x = this.x + 1;
+    } else {
+      tRNeigh.x = 0;
+    }
+
+    let bLNeigh = {};
+
+    if (this.y < l) {
+      bLNeigh.y = this.y + 1;
+    } else {
+      bLNeigh.y = 0;
+    }
+    if (this.x > 0) {
+      bLNeigh.x = this.x - 1;
+    } else {
+      bLNeigh.x = w;
+    }
+
+    let bRNeigh = {};
+    if (this.y < l) {
+      bRNeigh.y = this.y + 1;
+    } else {
+      bRNeigh.y = 0;
+    }
+    if (this.x < w) {
+      bRNeigh.x = this.x + 1;
+    } else {
+      bRNeigh.x = 0;
+    }
+    // this.y < l && this.x <= w
+    //   ? { x: this.x + 1, y: this.y + 1 }
+    //   : { x: 0, y: 0 };
     let neighbors = {
       leftNeigh,
       rightNeigh,

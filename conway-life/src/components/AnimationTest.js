@@ -10,7 +10,7 @@ const AnimationTest = (props) => {
   let [gens, setGens] = useState(0);
   let [clickable] = useState(true);
   let [listenerToggle, setListenerToggle] = useState(true);
-  let [msDelay, setMsDelay] = useState(0);
+  let [msDelay, setMsDelay] = useState(150);
   const canvasRef = useRef(null);
   let nX = Math.floor(width / cellSizePx) - 2;
   let nY = Math.floor(height / cellSizePx) - 2;
@@ -114,7 +114,6 @@ const AnimationTest = (props) => {
         neighRay.push(neighbors.tRNeigh);
         neighRay.push(neighbors.bLNeigh);
         neighRay.push(neighbors.bRNeigh);
-
         for (const i in neighRay) {
           let neigh = neighRay[i];
           if (
@@ -175,41 +174,57 @@ const AnimationTest = (props) => {
     <>
       <h1>Generation: {gens}</h1>
       <canvas ref={canvasRef} width={props.width} height={props.height} />{" "}
-      <button
-        onClick={() => {
-          // console.log("starting?");
-          cancelAnimation(false);
-          listenerToggle[0](false);
-        }}
-      >
-        START
-      </button>{" "}
-      <button
-        onClick={() => {
-          // console.log("stopping?");
-          cancelAnimation(true);
-          // console.log(listenerToggle);
-          listenerToggle[0](true);
+      <div>
+        <button
+          onClick={() => {
+            // console.log("starting?");
+            cancelAnimation(false);
+            listenerToggle[0](false);
+          }}
+        >
+          START
+        </button>{" "}
+        <button
+          onClick={() => {
+            // console.log("stopping?");
+            cancelAnimation(true);
+            // console.log(listenerToggle);
+            listenerToggle[0](true);
 
-          // setPlay(false);
-        }}
-      >
-        STOP
-      </button>
-      <button
-        onClick={() => {
-          grid.current.clearAll(canvasRef.current.getContext("2d"));
-        }}
-      >
-        CLEAR
-      </button>
-      <button
-        onClick={() => {
-          setMsDelay(msDelay + 100);
-        }}
-      >
-        'crease
-      </button>
+            // setPlay(false);
+          }}
+        >
+          STOP
+        </button>
+        <button
+          onClick={() => {
+            grid.current.clearAll(canvasRef.current.getContext("2d"));
+          }}
+        >
+          CLEAR
+        </button>
+        <button
+          onClick={() => {
+            setMsDelay(msDelay + 50);
+          }}
+        >
+          SPEED (-)
+        </button>
+        <button
+          onClick={() => {
+            setMsDelay(msDelay - 50);
+          }}
+        >
+          SPEED (+)
+        </button>
+        <button
+          onClick={() => {
+            grid.current.randomize(canvasRef.current.getContext("2d"));
+          }}
+        >
+          RANDOMIZE
+        </button>
+      </div>
     </>
   );
 };

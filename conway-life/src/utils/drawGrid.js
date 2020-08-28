@@ -15,7 +15,7 @@ export const drawGrid = ({
   context.beginPath();
 
   //recalcuate offsets to avoid hellish nightmare --- move this to live with event listener
-
+  context.lineWidth = 1;
   for (let x = pL; x <= gridWidth - pR; x += s) {
     context.moveTo(x, pT);
     for (let y = pT; y < gridHeight - pB; y += s) {}

@@ -40,7 +40,8 @@ export const createEventListeners = ({
   function clickHandler(event, clickable) {
     cellLeft = canvas.offsetLeft;
     cellTop = canvas.offsetTop;
-    if (clickable === true) {
+    //  if (clickable === true)  --- PUT THIS HERE FOR LAMBDA
+    if (true) {
       let xClick = event.pageX - cellLeft,
         yClick = event.pageY - cellTop;
       let relX = xClick - pL,

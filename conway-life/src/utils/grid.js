@@ -31,6 +31,16 @@ export class Grid {
     // }
     // newThing[i][j] = cell;
   }
+
+  randomize(context) {
+    for (let i = 0; i < this.l; i++) {
+      for (let j = 0; j < this.w; j++) {
+        this.thing[i][j].alive = Math.random() > 0.5;
+        this.thing[i][j].draw(context);
+      }
+    }
+  }
+
   drawAll(context) {
     for (let i = 0; i < this.l; i++) {
       for (let j = 0; j < this.w; j++) {
@@ -61,10 +71,10 @@ export class Grid {
           squareNum: i + 1 + this.w * j,
         });
         this.thing[i][j].findNeighbors(this.l, this.w);
-
         // console.log("created cell: ", this.thing[i][j]);
       }
     }
+    console.log(this.thing);
 
     // console.log(
     //   "------------------------------------------------------------------------------------------------------------"
