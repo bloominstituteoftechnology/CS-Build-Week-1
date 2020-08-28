@@ -124,7 +124,7 @@ class Game extends React.Component {
                 }
             }
             this.setState({
-                generation: this.state.generation + 1
+                generation: this.state.generation += 1
             });
 
         }
@@ -182,7 +182,7 @@ class Game extends React.Component {
         const { cells, interval, isRunning } = this.state;
         return (
             <div>
-                <div className ="gen">Gen:{this.state.generation} </div>
+                <div className ="gen">Generation:{this.state.generation} </div>
                 <div className="Board"
                     style={{ width: WIDTH, height: HEIGHT, backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}}
                     onClick={this.handleClick}
