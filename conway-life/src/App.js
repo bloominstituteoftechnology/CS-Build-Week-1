@@ -5,7 +5,7 @@ import AnimationTest from "./components/AnimationTest";
 import useWindowDimensions from "./hooks/getWindowDimensions";
 
 function App() {
-  const { height, width } = useWindowDimensions();
+  // const { height, width } = useWindowDimensions();
   return (
     <div className="App">
       <div>

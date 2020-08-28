@@ -1,5 +1,3 @@
-import { Cell } from "./cell";
-
 export const drawGrid = ({
   context,
   grid,

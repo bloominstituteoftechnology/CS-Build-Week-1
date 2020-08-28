@@ -1,5 +1,3 @@
-import React, { useRef, useState, useEffect } from "react";
-
 export const createEventListeners = ({
   canvas,
   pL,
@@ -21,7 +19,6 @@ export const createEventListeners = ({
   let cellTop = canvas.offsetTop;
   let context = canvas.getContext("2d");
   function reOffset() {
-    let BB = canvas.getBoundingClientRect();
     cellLeft = canvas.offsetLeft - window.pageXOffset;
     cellTop = canvas.offsetTop;
   }
@@ -40,8 +37,8 @@ export const createEventListeners = ({
   // });
 
   function clickHandler(event, clickable) {
-    let cellLeft = canvas.offsetLeft,
-      cellTop = canvas.offsetTop;
+    cellLeft = canvas.offsetLeft;
+    cellTop = canvas.offsetTop;
     if (clickable === true) {
       let xClick = event.pageX - cellLeft,
         yClick = event.pageY - cellTop;

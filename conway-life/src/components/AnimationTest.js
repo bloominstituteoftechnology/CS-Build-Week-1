@@ -1,17 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useAnimationFrame } from "../hooks/useAnimationFrame";
 import moment from "moment";
-import getPixel from "../utils/getPixel";
-import setPixel from "../utils/setPixel";
 import { drawGrid } from "../utils/drawGrid";
-import { Cell } from "../utils/cell";
 import { Grid } from "../utils/grid";
 import { createEventListeners } from "../utils/createEventListeners";
 const AnimationTest = (props) => {
   const { width, height, cellSizePx, generations } = props;
-  let maxGenerations = generations;
+  // let maxGenerations = generations;
   let [gens, setGens] = useState(0);
-  let [clickable, setClickable] = useState(true);
+  let [clickable] = useState(true);
   let [listenerToggle, setListenerToggle] = useState(true);
   let [msDelay, setMsDelay] = useState(0);
   const canvasRef = useRef(null);
@@ -25,7 +22,7 @@ const AnimationTest = (props) => {
   let pT = pY / 2;
   let pB = pY / 2;
 
-  let [grid, setGrid] = useState(
+  let [grid] = useState(
     new Grid({
       w: nX,
       l: nY,
@@ -62,14 +59,12 @@ const AnimationTest = (props) => {
     grid.drawAll(canvas.getContext("2d"));
   }, []);
 
-  const [stopAnimation, setStopAnimation] = useState(true);
   const draw = (context, canvas) => {
     drawGrid({
       context,
       gridWidth: width,
       gridHeight: height,
       canvas,
-      stopAnimation,
       grid,
       s: cellSizePx,
       pL,
@@ -80,7 +75,6 @@ const AnimationTest = (props) => {
       nY,
     });
   };
-  const firstUpdate = useRef(true);
   function update() {}
   const doAnimation = (elapsedTime) => {
     if (canvasRef === null) {
@@ -88,8 +82,7 @@ const AnimationTest = (props) => {
 
     let genz = gens;
     setGens(genz + 1);
-    const canvas = canvasRef.current; // refers to the ref attribute in render()
-    const context = canvas.getContext("2d"); // etc.
+
     // console.log(canvas);
 
     newGen();
@@ -124,7 +117,7 @@ const AnimationTest = (props) => {
 
         for (const i in neighRay) {
           let neigh = neighRay[i];
-          if (neigh != -1 && neigh.y < grid.l && neigh.x < grid.w) {
+          if (neigh !== -1 && neigh.y < grid.l && neigh.x < grid.w) {
             if (grid.thing[neigh.x][neigh.y].alive === true) {
               livingNeighbors += 1;
             }
@@ -154,8 +147,6 @@ const AnimationTest = (props) => {
     }
 
     for (const i in queueToKill) {
-      let squareNum = queueToKill[i].squareNum;
-
       queueToKill[i].kill(canvasRef.current.getContext("2d"));
     }
     for (const i in queueToRes) {
