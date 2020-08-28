@@ -5,14 +5,13 @@ import { drawGrid } from "../utils/drawGrid";
 import { Grid } from "../utils/grid";
 import { createEventListeners } from "../utils/createEventListeners";
 const AnimationTest = (props) => {
-  const { width, height, cellSizePx, generations } = props;
+  const { width, height, cellSizePx } = props;
   // let maxGenerations = generations;
   let [gens, setGens] = useState(0);
   let [clickable] = useState(true);
   let [listenerToggle, setListenerToggle] = useState(true);
   let [msDelay, setMsDelay] = useState(0);
   const canvasRef = useRef(null);
-  let cells = [];
   let nX = Math.floor(width / cellSizePx) - 2;
   let nY = Math.floor(height / cellSizePx) - 2;
   let pX = width - nX * cellSizePx;
@@ -32,11 +31,11 @@ const AnimationTest = (props) => {
       pT,
     })
   );
+  const cells = useRef({ cells: grid.thing });
 
   useEffect(() => {
     grid.setUp();
     // console.log("grid is MADE");
-    cells = grid.thing;
     let canvas = canvasRef.current;
     draw(canvas.getContext("2d"), canvasRef.current);
     setListenerToggle(

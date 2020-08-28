@@ -2,7 +2,7 @@ import React from "react";
 import logo from "./CONWAYFACE.png";
 import "./App.css";
 import AnimationTest from "./components/AnimationTest";
-import useWindowDimensions from "./hooks/getWindowDimensions";
+// import useWindowDimensions from "./hooks/getWindowDimensions";
 
 function App() {
   // const { height, width } = useWindowDimensions();

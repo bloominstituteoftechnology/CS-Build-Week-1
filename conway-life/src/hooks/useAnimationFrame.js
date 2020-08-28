@@ -5,11 +5,7 @@ export const useAnimationFrame = (timestamp, doAnimationCallBack, msDelay) => {
   // set the prev time stamp
   // const [prevTimeStamp, setTimeStamp] = useState(timestamp - 30);
   const [continueAnimation, setContinueAnimation] = useState(false);
-  // const [started, setStarted] = useState(false);
-  useEffect(() => {
-    // only start the animation frame if we haven't in the past
-    requestAnimationFrame(doAnimationCallBack);
-  }, []);
+
   useEffect(() => {
     if (continueAnimation === true) {
       setTimeout(() => {
