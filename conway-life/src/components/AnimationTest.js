@@ -21,7 +21,7 @@ const AnimationTest = (props) => {
   let pT = pY / 2;
   let pB = pY / 2;
 
-  let [grid] = useState(
+  let grid = useRef(
     new Grid({
       w: nX,
       l: nY,
@@ -31,34 +31,35 @@ const AnimationTest = (props) => {
       pT,
     })
   );
-  const cells = useRef({ cells: grid.thing });
-
+  const cells = useRef({
+    // cells: grid.current.thing,
+    pL,
+    pT,
+    pR,
+    pB,
+    height,
+    width,
+    cellSizePx,
+    nX,
+    nY,
+    update,
+    clickable,
+  });
+  const drawRef = useRef({ draw });
   useEffect(() => {
-    grid.setUp();
+    grid.current.setUp();
     // console.log("grid is MADE");
     let canvas = canvasRef.current;
-    draw(canvas.getContext("2d"), canvasRef.current);
-    setListenerToggle(
-      createEventListeners({
-        canvas,
-        pL,
-        pT,
-        pR,
-        pB,
-        height,
-        width,
-        cellSizePx,
-        nX,
-        nY,
-        cells,
-        update,
-        clickable,
-      })
-    );
-    grid.drawAll(canvas.getContext("2d"));
+    drawRef.current.draw(canvas.getContext("2d"), canvasRef.current);
+    cells.current.cells = grid.current.thing;
+    cells.current.canvas = canvas;
+
+    console.log(cells.current.canvas);
+    setListenerToggle(createEventListeners({ ...cells.current }));
+    grid.current.drawAll(canvas.getContext("2d"));
   }, []);
 
-  const draw = (context, canvas) => {
+  function draw(context, canvas) {
     drawGrid({
       context,
       gridWidth: width,
@@ -73,7 +74,7 @@ const AnimationTest = (props) => {
       nX,
       nY,
     });
-  };
+  }
   function update() {}
   const doAnimation = (elapsedTime) => {
     if (canvasRef === null) {
@@ -97,9 +98,9 @@ const AnimationTest = (props) => {
     //   cellBuffer
     // );
     // console.log("and here's grid.... ", grid);
-    for (const x in grid.thing) {
-      for (const y in grid.thing[x]) {
-        let thisCell = grid.thing[x][y];
+    for (const x in grid.current.thing) {
+      for (const y in grid.current.thing[x]) {
+        let thisCell = grid.current.thing[x][y];
 
         let neighbors = thisCell.neighbors;
         let livingNeighbors = 0;
@@ -116,8 +117,12 @@ const AnimationTest = (props) => {
 
         for (const i in neighRay) {
           let neigh = neighRay[i];
-          if (neigh !== -1 && neigh.y < grid.l && neigh.x < grid.w) {
-            if (grid.thing[neigh.x][neigh.y].alive === true) {
+          if (
+            neigh !== -1 &&
+            neigh.y < grid.current.l &&
+            neigh.x < grid.current.w
+          ) {
+            if (grid.current.thing[neigh.x][neigh.y].alive === true) {
               livingNeighbors += 1;
             }
           }
@@ -126,17 +131,17 @@ const AnimationTest = (props) => {
         }
         if (thisCell.alive === true) {
           if (livingNeighbors < 2 || livingNeighbors > 3) {
-            queueToKill.push(grid.thing[thisCell.x][thisCell.y]);
+            queueToKill.push(grid.current.thing[thisCell.x][thisCell.y]);
 
-            // grid.thing[thisCell.x][thisCell.y].kill(
+            // grid.current.thing[thisCell.x][thisCell.y].kill(
             //   canvasRef.current.getContext("2d")
             // );
           }
         } else {
           if (livingNeighbors === 3) {
-            queueToRes.push(grid.thing[thisCell.x][thisCell.y]);
+            queueToRes.push(grid.current.thing[thisCell.x][thisCell.y]);
 
-            // grid.thing[thisCell.x][thisCell.y].resurrect(
+            // grid.current.thing[thisCell.x][thisCell.y].resurrect(
             //   canvasRef.current.getContext("2d")
           }
         }
@@ -193,7 +198,7 @@ const AnimationTest = (props) => {
       </button>
       <button
         onClick={() => {
-          grid.clearAll(canvasRef.current.getContext("2d"));
+          grid.current.clearAll(canvasRef.current.getContext("2d"));
         }}
       >
         CLEAR

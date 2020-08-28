@@ -13,6 +13,7 @@ export const createEventListeners = ({
   update,
   clickable,
 }) => {
+  console.log(canvas);
   console.log("creatin");
   // let [event, setEvent] = useState();
   let cellLeft = canvas.offsetLeft - window.pageXOffset;
