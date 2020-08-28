@@ -232,7 +232,27 @@ const AnimationTest = (props) => {
             );
           }}
         >
-          GLIDER
+          DEMONOID
+        </button>
+        <button
+          onClick={() => {
+            grid.current.getPattern(
+              "Spaceship_119P4H1V0",
+              canvasRef.current.getContext("2d")
+            );
+          }}
+        >
+          SPACESHIP
+        </button>
+        <button
+          onClick={() => {
+            grid.current.getPattern(
+              "Spaceship_295P5H1V1",
+              canvasRef.current.getContext("2d")
+            );
+          }}
+        >
+          MOTHERSHIP
         </button>
       </div>
     </>

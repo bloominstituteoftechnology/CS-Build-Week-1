@@ -44,25 +44,21 @@ export class Grid {
       let maxX = patternStart.x + width;
       let pString = patterns[patName].pattern;
       let currentCoords = { ...patternStart };
-      let rowCount = 1;
-      for (let i = 0; i < pString.length; i++) {
+      for (let i = 0; i <= pString.length; i++) {
         console.log(pString.charAt(i));
-
-        console.log("comapring ", currentCoords.y, " to ", maxY);
         if (pString.charAt(i) === "*") {
+          // console.log("comapring ", currentCoords.x, " to ", maxX);
           this.thing[currentCoords.x][currentCoords.y].resurrect(context);
         }
-        if (currentCoords.x <= maxX) {
+        if (currentCoords.x < maxX) {
           console.log(currentCoords);
           currentCoords.x += 1;
         } else {
-          console.log("resetti", patternStart);
+          // console.log("resetting X to", patternStart.x);
           currentCoords.x = patternStart.x;
+
           if (currentCoords.y < maxY) {
             currentCoords.y += 1;
-          } else if (i === pString.length - 1) {
-            console.log("DONE", patternStart);
-            currentCoords.y = patternStart.y;
           }
         }
       }
