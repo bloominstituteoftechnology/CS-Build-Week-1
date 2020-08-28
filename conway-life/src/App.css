@@ -24,11 +24,12 @@
   display: flex;
   flex-flow: row;
   flex-wrap: wrap;
-  /* justify-content: space-between; */
+  min-width: 80vw;
 }
 .userButton {
   margin: auto;
   margin-bottom: 2vh;
+  margin-right: 1vw;
 }
 .App-logo {
   height: 30vh;
