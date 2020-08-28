@@ -20,6 +20,16 @@
 .gameWindow {
   margin: 25px;
 }
+.buttonContainer {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
+}
+.userButton {
+  margin: auto;
+  margin-bottom: 2vh;
+}
 .App-logo {
   height: 30vh;
   pointer-events: none;
@@ -34,7 +44,9 @@
 .App-link {
   color: #61dafb;
 }
-
+.alerts {
+  margin-bottom: none;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -43,7 +55,9 @@
     transform: rotate(360deg);
   }
 }
-
+.Button {
+  padding-left: 100px;
+}
 .presets {
   min-width: 30vw;
 }

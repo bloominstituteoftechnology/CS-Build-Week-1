@@ -16,11 +16,12 @@ export class Grid {
 
   getPattern(patName, context, retObj) {
     if (patName in patterns) {
+      this.clearAll(context);
+
       if (
         patterns[patName].width < this.w &&
         patterns[patName].length < this.l
       ) {
-        this.clearAll(context);
         let centerCoords = {
           x: parseInt(this.w / 2 - 1),
           y: parseInt(this.l / 2 - 1),

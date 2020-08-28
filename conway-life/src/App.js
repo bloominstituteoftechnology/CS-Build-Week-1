@@ -48,7 +48,7 @@ function App() {
   return (
     <div className="App">
       <div className="gameContainer">
-        <div className="alert">{alert}</div>
+        <div className="alerts">{alert}</div>
         {gameComponent}
       </div>
     </div>

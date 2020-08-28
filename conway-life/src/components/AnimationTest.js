@@ -4,9 +4,11 @@ import moment from "moment";
 import { drawGrid } from "../utils/drawGrid";
 import { Grid } from "../utils/grid";
 import { createEventListeners } from "../utils/createEventListeners";
+import Button from "react-bootstrap/Button";
+
 const AnimationTest = (props) => {
-  const { width, height, cellSizePx } = props;
-  // setAlert, setCellSizePx used to be included for changing grid size.
+  const { width, height, cellSizePx, setAlert } = props;
+  // , setCellSizePx used to be included for changing grid size.
   // let maxGenerations = generations;
   let [gens, setGens] = useState(0);
   let [clickable] = useState(true);
@@ -150,57 +152,75 @@ const AnimationTest = (props) => {
     <>
       <h1>Generation: {gens}</h1>
       <canvas ref={canvasRef} width={props.width} height={props.height} />{" "}
-      <div>
-        <button
+      <div className="buttonContainer">
+        <Button
+          className="userButton"
+          variant="primary"
           onClick={() => {
             // console.log("starting?");
             cancelAnimation(false);
             listenerToggle[0](false);
+            setAlert(``);
           }}
         >
           START
-        </button>{" "}
-        <button
+        </Button>{" "}
+        <Button
+          className="userButton"
+          variant="danger"
           onClick={() => {
             // console.log("stopping?");
             cancelAnimation(true);
             // console.log(listenerToggle);
             listenerToggle[0](true);
+            setAlert(``);
 
             // setPlay(false);
           }}
         >
           STOP
-        </button>
-        <button
+        </Button>
+        <Button
+          className="userButton"
+          variant="info"
           onClick={() => {
             grid.current.clearAll(canvasRef.current.getContext("2d"));
+            setAlert(``);
           }}
         >
           CLEAR
-        </button>
-        <button
+        </Button>
+        <Button
+          className="userButton"
+          variant="info"
           onClick={() => {
             setMsDelay(msDelay + 50);
+            setAlert(``);
           }}
         >
           SPEED (-)
-        </button>
-        <button
+        </Button>
+        <Button
+          className="userButton"
+          variant="info"
           onClick={() => {
             setMsDelay(msDelay - 50);
+            setAlert(``);
           }}
         >
           SPEED (+)
-        </button>
-        <button
+        </Button>
+        <Button
+          className="userButton"
           onClick={() => {
             grid.current.randomize(canvasRef.current.getContext("2d"));
+            setAlert(``);
           }}
         >
           RANDOMIZE
-        </button>
-        <button
+        </Button>
+        <Button
+          className="userButton"
           onClick={() => {
             let retObj = false;
 
@@ -211,12 +231,16 @@ const AnimationTest = (props) => {
             );
             console.log(retObj);
             if (retObj !== false) {
+              setAlert(`Structure is too large for your display/viewport!`);
+            } else {
+              setAlert(``);
             }
           }}
         >
           DEMONOID
-        </button>
-        <button
+        </Button>
+        <Button
+          className="userButton"
           onClick={() => {
             let retObj = false;
             retObj = grid.current.getPattern(
@@ -225,11 +249,18 @@ const AnimationTest = (props) => {
               retObj
             );
             console.log(retObj);
+            console.log(retObj);
+            if (retObj !== false) {
+              setAlert(`Structure is too large for your display/viewport!`);
+            } else {
+              setAlert(``);
+            }
           }}
         >
           SPACESHIP
-        </button>
-        <button
+        </Button>
+        <Button
+          className="userButton"
           onClick={() => {
             let retObj = false;
 
@@ -239,13 +270,17 @@ const AnimationTest = (props) => {
               retObj
             );
             console.log(retObj);
-            //setAlert(`Structure is too large! Try increasing your grid size`);
+            if (retObj !== false) {
+              setAlert(`Structure is too large for your display/viewport!`);
+            } else {
+              setAlert(``);
+            }
           }}
         >
           MOTHERSHIP
-        </button>
+        </Button>
         {/* <br />
-        <button
+        <Button className="userButton"
           onClick={() => {
             //      this.context.clearRect(this.gridX, this.gridY, this.size, this.size);
             grid.current = {};
@@ -257,8 +292,8 @@ const AnimationTest = (props) => {
           }}
         >
           Grid Density (-)
-        </button>
-        <button>Grid Density (+)</button> */}
+        </Button>
+        <button className="userButton">Grid Density (+)</button> */}
       </div>
     </>
   );
