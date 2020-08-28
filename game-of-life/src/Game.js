@@ -175,7 +175,7 @@ class Game extends React.Component {
             }
         }
 
-        this.setState({ cells: this.makeCells() });
+        this.setState({ cells: this.makeCells(), generation: this.state.generation = 0 });
     }
 
     render() {
