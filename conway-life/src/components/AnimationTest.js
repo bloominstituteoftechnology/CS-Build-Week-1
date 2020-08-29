@@ -11,7 +11,7 @@ const AnimationTest = (props) => {
   // , setCellSizePx used to be included for changing grid size.
   // let maxGenerations = generations;
   let [gens, setGens] = useState(0);
-  let genRef = useRef(gens);
+  // let genRef = useRef(gens);
   let [clickable] = useState(true);
   let [listenerToggle, setListenerToggle] = useState(true);
   let [msDelay, setMsDelay] = useState(150);
@@ -82,8 +82,8 @@ const AnimationTest = (props) => {
     if (canvasRef === null) {
     }
 
-    let genz = genRef.current;
-    console.log(genRef.current);
+    let genz = gens;
+    // console.log(genRef.current);
     setGens(genz + 1);
 
     newGen();
@@ -176,7 +176,7 @@ const AnimationTest = (props) => {
             // console.log(listenerToggle);
             listenerToggle[0](true);
             setAlert(``);
-            genRef.current = 0;
+            // genRef.current = 0;
 
             // setPlay(false);
           }}
