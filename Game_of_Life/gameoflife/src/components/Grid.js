@@ -33,7 +33,33 @@ const Grid = () => {
     });
 
     const [start, setStart] = useState(false);
-    const [interval, setInterval] = useState(100);
+    const [interval, setInterval] = useState(500); // This state is used for increasing the speed of the cells
+    const [color, setColor] = useState([
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "cyan",
+        "blue",
+        "purple",
+        "pink",
+        "gray",
+        "brown"
+    ])
+
+    // This is the function used to increase speed
+    const increaseSpeed = () => {
+        setInterval(interval - 10)
+
+        console.log(interval)
+    }
+
+    // Used to decrease speed
+    const decreaseSpeed = () => {
+        setInterval(interval + 10)
+
+        console.log(interval)
+    }
 
     const runningRef = useRef();
     runningRef.current = start
@@ -70,7 +96,7 @@ const Grid = () => {
             })
         })
     
-        setTimeout(Populate, 500);
+        setTimeout(Populate, interval);
     }, []);
 
     return (
@@ -124,7 +150,7 @@ const Grid = () => {
                 Clear Board
             </button>
 
-            {/* Radoize button */}
+            {/* Randomize button */}
             <button onClick={() => {
                 const rows = [];
                 for (let i = 0; i < Rows; i++) {
@@ -138,22 +164,11 @@ const Grid = () => {
             {/* Not working */}
             <div>
                 Speed:
-                <input
-                    onChange={e => setInterval(e.target.value)}
-                    type="range"
-                    min="10"
-                    max="1000"
-                    value={interval}
-                />
+                <button onClick={increaseSpeed}> + </button>
+                <button onClick={decreaseSpeed}> - </button>
             </div>
 
-            <button onClick={() => {
-                const color = [];
-                for (let i = 0; i < Rows; i++) {
-                    color.push(Array.from(Array(Col), () => Math.random() > .7 ? 1 : 0));
-                };
-                setGrid(color);
-            }}>
+            <button>
                 Change Color
             </button>
         </>
