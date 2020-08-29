@@ -25,8 +25,7 @@ const App = () => {
     return rows;
   });
 
-  const effer = [1, 2, 3, 4, 5, 6, 7, 8];
-
+ 
   const symmetry = (arr, x) => {
     const newArr = [];
     //  const half = arr.length /2;
@@ -104,6 +103,7 @@ const App = () => {
   }, []);
 
   const [color, setColor] = useState("dodgerblue");
+  const [rules, setRules] = useState(false)
 
   const colors = [
     "red",
@@ -118,6 +118,22 @@ const App = () => {
   ];
   return (
     <>
+    <div className = 'Top'> 
+    <h1>Conway's Game of Life</h1>
+    
+       {/* <div className = 'rules'> */}
+       <h3 className = 'Rules'>The Rules</h3>  
+  <p> For a space that is 'populated':</p>
+  <p> Each cell with one or no neighbors dies, as if by solitude.</p>
+  <p> Each cell with four or more neighbors dies, as if by overpopulation.</p>
+  <p> Each cell with two or three neighbors survives.</p>
+  <p> For a space that is 'empty' or 'unpopulated'</p>
+  <p> Each cell with three neighbors becomes populated.</p>
+   
+       {/* </div> */}
+    
+    
+    <div className = 'button-div'> 
       <button
         onClick={() => {
           setRunning(!running);
@@ -156,8 +172,7 @@ const App = () => {
       <button
         onClick={() => {
           const glider = [];
-          const rows2 = [];
-          for (let i = 0; i < numRows; i++) {
+           for (let i = 0; i < numRows; i++) {
             // rows.push(Array.from(Array(numCols), () =>  Math.sqrt(0.064) ));
             glider.push(Array.from(Array(numCols), () => 0));
           }
@@ -231,8 +246,9 @@ const App = () => {
 
         test
       </button>
-
- 
+      
+     
+   
       <form type="submit" className="colors">
         <label htmlFor="color">
           <h4 style={{ color: `${color}` }}>Color</h4>
@@ -270,6 +286,7 @@ const App = () => {
           </select>
         </label>
       </form>
+      </div>
       <div
         style={{
           display: "grid",
@@ -295,7 +312,8 @@ const App = () => {
             />
           ))
         )}
-      </div>
+           </div>
+       </div>
     </>
   );
 };

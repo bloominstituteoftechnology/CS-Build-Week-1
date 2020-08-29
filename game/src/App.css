@@ -38,3 +38,48 @@ h3{
     transform: rotate(360deg);
   }
 }
+.Rules{
+  margin: auto;
+}
+
+p{
+  color: white;
+  margin: auto;
+  }
+ .rules{
+   margin: auto;
+ }
+.Top{
+  display: flex;
+  flex-direction: column;
+  
+}
+h1{
+  margin: auto;
+  color: dodgerblue;
+}
+
+.button-div{
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  border: 2px solid dodgerblue;
+  width: 100%;
+  
+   
+}
+button{
+  height: 75%;
+  margin: auto;
+  padding:10px;
+  border-radius: 5px ;
+  border: 2px solid dodgerblue;
+
+}
+form {
+  height: 75%;
+  margin: top;
+  padding:10px;
+  border-radius: 5px ;
+  /* border: 2px solid dodgerblue; */
+}
