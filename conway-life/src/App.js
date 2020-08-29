@@ -6,7 +6,14 @@ import useWindowDimensions from "./hooks/getWindowDimensions";
 function App() {
   const { height, width } = useWindowDimensions();
   const [alert, setAlert] = useState("");
-  const [cellSizePx, setCellSizePx] = useState(6);
+  let pixelSize;
+  if (width > 1000) {
+    pixelSize = 7;
+  } else {
+    pixelSize = 5;
+  }
+  console.log(pixelSize);
+  const [cellSizePx, setCellSizePx] = useState(pixelSize);
   const [gameComponent] = useState(
     <AnimationTest
       width={(width - 100) % 2 === 0 ? width - 100 : width - 99}
