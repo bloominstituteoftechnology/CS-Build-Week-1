@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
 
+
 // This component hold all logic and displays the grid
 
 const Rows = 25;
@@ -59,6 +60,11 @@ const Grid = () => {
         setInterval(interval + 10)
 
         console.log(interval)
+    }
+
+    // Randomize color
+    const changeColor = () => {
+        setColor()
     }
 
     const runningRef = useRef();
@@ -120,7 +126,7 @@ const Grid = () => {
                             style={{ 
                                 width: 20, 
                                 height: 20,
-                                backgroundColor: grid[x][y] ? "blue" : undefined,
+                                backgroundColor: grid[x][y] ? color : undefined,
                                 border: 'solid 1px black'
                             }}
                         />
@@ -161,16 +167,14 @@ const Grid = () => {
                 Randomize
             </button>
 
-            {/* Not working */}
+            {/* Not working speed button */}
             <div>
                 Speed:
                 <button onClick={increaseSpeed}> + </button>
                 <button onClick={decreaseSpeed}> - </button>
             </div>
 
-            <button>
-                Change Color
-            </button>
+            <button onClick={changeColor}> Change Color </button>
         </>
     )
 }
