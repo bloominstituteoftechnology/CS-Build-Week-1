@@ -16,8 +16,16 @@ const AnimationTest = (props) => {
   let [listenerToggle, setListenerToggle] = useState(true);
   let [msDelay, setMsDelay] = useState(150);
   const canvasRef = useRef(null);
-  let nX = Math.floor(width / cellSizePx) - 2;
-  let nY = Math.floor(height / cellSizePx) - 2;
+  let forcedEvenX = Math.floor(width / cellSizePx) - 3;
+  let forcedEvenY = Math.floor(height / cellSizePx) - 2;
+  if (forcedEvenX % 2 !== 0) {
+    forcedEvenX += 1;
+  }
+  if (forcedEvenY % 2 !== 0) {
+    forcedEvenY += 1;
+  }
+  let nX = forcedEvenX;
+  let nY = forcedEvenY;
   let pX = width - nX * cellSizePx;
   let pY = height - nY * cellSizePx;
   let pL = pX / 2;
@@ -78,6 +86,7 @@ const AnimationTest = (props) => {
     });
   }
   function update() {}
+
   const doAnimation = (elapsedTime) => {
     if (canvasRef === null) {
     }
