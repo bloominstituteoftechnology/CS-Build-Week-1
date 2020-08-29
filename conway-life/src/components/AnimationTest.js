@@ -61,10 +61,6 @@ const AnimationTest = (props) => {
     grid.current.drawAll(canvas.getContext("2d"));
   }, []);
 
-  useEffect(() => {
-    console.log(gens);
-  }, [listenerToggle]);
-
   function draw(context, canvas) {
     drawGrid({
       context,
