@@ -121,7 +121,7 @@ export class Cell {
 
     this.alive = true;
     // console.log("rise from ur gabe");
-    this.context.fillStyle = "red";
+    this.context.fillStyle = "#FF8C00";
 
     this.context.fillRect(this.gridX, this.gridY, this.size, this.size);
   }
@@ -134,7 +134,7 @@ export class Cell {
     if (this.alive) {
       // console.log("alive");
       // console.log("gridpositions, ", this.gridX, this.gridY);
-      this.context.fillStyle = "red";
+      this.context.fillStyle = "#FF8C00";
       this.context.fillRect(this.gridX, this.gridY, this.size, this.size);
     } else {
       // console.log("ded");
