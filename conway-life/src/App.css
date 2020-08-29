@@ -26,11 +26,12 @@
   flex-flow: row;
   flex-wrap: wrap;
   min-width: 80vw;
+  max-width: 100vw;
+  padding: 10px;
 }
 .userButton {
   margin: auto;
   margin-bottom: 2vh;
-  margin-right: 1vw;
 }
 .App-logo {
   height: 30vh;
