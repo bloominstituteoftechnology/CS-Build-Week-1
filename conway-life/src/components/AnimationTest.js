@@ -193,7 +193,7 @@ const AnimationTest = (props) => {
             // console.log(listenerToggle);
             listenerToggle[0](true);
             setAlert(``);
-            setGens(0);
+            // setGens(0);
           }}
         >
           CLEAR
@@ -202,7 +202,7 @@ const AnimationTest = (props) => {
           className="userButton"
           variant="info"
           onClick={() => {
-            setGens(0);
+            // setGens(0);
 
             setMsDelay(msDelay + 50);
             setAlert(``);
@@ -214,7 +214,7 @@ const AnimationTest = (props) => {
           className="userButton"
           variant="info"
           onClick={() => {
-            setGens(0);
+            // setGens(0);
 
             setMsDelay(msDelay - 50);
             setAlert(``);
@@ -225,7 +225,7 @@ const AnimationTest = (props) => {
         <Button
           className="userButton"
           onClick={() => {
-            setGens(0);
+            // setGens(0);
 
             grid.current.randomize(canvasRef.current.getContext("2d"));
             setAlert(``);
@@ -236,7 +236,7 @@ const AnimationTest = (props) => {
         <Button
           className="userButton"
           onClick={() => {
-            setGens(0);
+            // setGens(0);
 
             let retObj = false;
 
@@ -258,7 +258,7 @@ const AnimationTest = (props) => {
         <Button
           className="userButton"
           onClick={() => {
-            setGens(0);
+            // setGens(0);
 
             let retObj = false;
             retObj = grid.current.getPattern(
@@ -281,7 +281,7 @@ const AnimationTest = (props) => {
           className="userButton"
           onClick={() => {
             let retObj = false;
-            setGens(0);
+            // setGens(0);
             retObj = grid.current.getPattern(
               "Spaceship_295P5H1V1",
               canvasRef.current.getContext("2d"),
