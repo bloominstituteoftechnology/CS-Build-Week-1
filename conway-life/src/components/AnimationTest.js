@@ -16,16 +16,8 @@ const AnimationTest = (props) => {
   let [listenerToggle, setListenerToggle] = useState(true);
   let [msDelay, setMsDelay] = useState(150);
   const canvasRef = useRef(null);
-  let forcedEvenX = Math.floor(width / cellSizePx) - 3;
-  let forcedEvenY = Math.floor(height / cellSizePx) - 2;
-  if (forcedEvenX % 2 !== 0) {
-    forcedEvenX += 1;
-  }
-  if (forcedEvenY % 2 !== 0) {
-    forcedEvenY += 1;
-  }
-  let nX = forcedEvenX;
-  let nY = forcedEvenY;
+  let nX = Math.floor(width / cellSizePx) - 2;
+  let nY = Math.floor(height / cellSizePx) - 2;
   let pX = width - nX * cellSizePx;
   let pY = height - nY * cellSizePx;
   let pL = pX / 2;
@@ -202,7 +194,7 @@ const AnimationTest = (props) => {
             // console.log(listenerToggle);
             listenerToggle[0](true);
             setAlert(``);
-            // setGens(0);
+            setGens(0);
           }}
         >
           CLEAR
@@ -211,8 +203,6 @@ const AnimationTest = (props) => {
           className="userButton"
           variant="info"
           onClick={() => {
-            // setGens(0);
-
             setMsDelay(msDelay + 50);
             setAlert(``);
           }}
@@ -223,8 +213,6 @@ const AnimationTest = (props) => {
           className="userButton"
           variant="info"
           onClick={() => {
-            // setGens(0);
-
             setMsDelay(msDelay - 50);
             setAlert(``);
           }}
@@ -234,7 +222,7 @@ const AnimationTest = (props) => {
         <Button
           className="userButton"
           onClick={() => {
-            // setGens(0);
+            setGens(0);
 
             grid.current.randomize(canvasRef.current.getContext("2d"));
             setAlert(``);
@@ -245,7 +233,7 @@ const AnimationTest = (props) => {
         <Button
           className="userButton"
           onClick={() => {
-            // setGens(0);
+            setGens(0);
 
             let retObj = false;
 
@@ -267,7 +255,7 @@ const AnimationTest = (props) => {
         <Button
           className="userButton"
           onClick={() => {
-            // setGens(0);
+            setGens(0);
 
             let retObj = false;
             retObj = grid.current.getPattern(
@@ -290,7 +278,7 @@ const AnimationTest = (props) => {
           className="userButton"
           onClick={() => {
             let retObj = false;
-            // setGens(0);
+            setGens(0);
             retObj = grid.current.getPattern(
               "popover",
               canvasRef.current.getContext("2d"),
@@ -310,7 +298,7 @@ const AnimationTest = (props) => {
           className="userButton"
           onClick={() => {
             let retObj = false;
-            // setGens(0);
+            setGens(0);
             retObj = grid.current.getPattern(
               "Spaceship_295P5H1V1",
               canvasRef.current.getContext("2d"),
@@ -330,7 +318,7 @@ const AnimationTest = (props) => {
           className="userButton"
           onClick={() => {
             let retObj = false;
-            // setGens(0);
+            setGens(0);
             retObj = grid.current.getPattern(
               "volcanoes",
               canvasRef.current.getContext("2d"),
@@ -350,7 +338,7 @@ const AnimationTest = (props) => {
           className="userButton"
           onClick={() => {
             let retObj = false;
-            // setGens(0);
+            setGens(0);
             retObj = grid.current.getPattern(
               "puffership",
               canvasRef.current.getContext("2d"),
@@ -370,7 +358,7 @@ const AnimationTest = (props) => {
           className="userButton"
           onClick={() => {
             let retObj = false;
-            // setGens(0);
+            setGens(0);
             retObj = grid.current.getPattern(
               "orbital",
               canvasRef.current.getContext("2d"),
@@ -390,7 +378,7 @@ const AnimationTest = (props) => {
           className="userButton"
           onClick={() => {
             let retObj = false;
-            // setGens(0);
+            setGens(0);
             retObj = grid.current.getPattern(
               "spacetimeTear",
               canvasRef.current.getContext("2d"),
@@ -407,20 +395,20 @@ const AnimationTest = (props) => {
           RIFT
         </Button>
         {/* <br />
-        <Button className="userButton"
-          onClick={() => {
-            //      this.context.clearRect(this.gridX, this.gridY, this.size, this.size);
-            grid.current = {};
-            canvasRef.current.getContext("2d").clearRect(0, 0, width, height);
-            cancelAnimation(true);
-            listenerToggle[0](true);
-            setCellSizePx(cellSizePx - 2);
-            setAlert(``);
-          }}
-        >
-          Grid Density (-)
-        </Button>
-        <button className="userButton">Grid Density (+)</button> */}
+          <Button className="userButton"
+            onClick={() => {
+              //      this.context.clearRect(this.gridX, this.gridY, this.size, this.size);
+              grid.current = {};
+              canvasRef.current.getContext("2d").clearRect(0, 0, width, height);
+              cancelAnimation(true);
+              listenerToggle[0](true);
+              setCellSizePx(cellSizePx - 2);
+              setAlert(``);
+            }}
+          >
+            Grid Density (-)
+          </Button>
+          <button className="userButton">Grid Density (+)</button> */}
       </div>
     </>
   );
