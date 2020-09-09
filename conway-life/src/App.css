@@ -67,3 +67,10 @@
 .presets {
   min-width: 30vw;
 }
+
+.gens {
+  display: flex;
+  width: auto;
+  justify-content: space-between;
+  min-width: 25vw;
+}

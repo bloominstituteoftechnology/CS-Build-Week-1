@@ -5,7 +5,25 @@ import { drawGrid } from "../utils/drawGrid";
 import { Grid } from "../utils/grid";
 import { createEventListeners } from "../utils/createEventListeners";
 import Button from "react-bootstrap/Button";
+/*TODO:
 
+Add comments and documentation
+
+Add grid density buttons
+
+Implement smart indexing system
+
+fix gen position
+
+Stretch goals:
+
+- Add pattern "drawing" system
+
+
+- Add copy, paste, save/export
+
+
+- Make grid auto rescale pixels to fit clicked pattern (demonoid will look bigger, but mothership will still fit because the grid will dynamically reset and reshape)*/
 const AnimationTest = (props) => {
   const { width, height, cellSizePx, setAlert } = props;
   // , setCellSizePx used to be included for changing grid size.
@@ -155,7 +173,9 @@ const AnimationTest = (props) => {
    */
   return (
     <>
-      <h1>Generation: {gens}</h1>
+      <div className="gens">
+        <h1>Generation:</h1> <h1>{gens}</h1>
+      </div>
       <canvas ref={canvasRef} width={props.width} height={props.height} />{" "}
       <div className="buttonContainer">
         <Button
@@ -179,7 +199,6 @@ const AnimationTest = (props) => {
             // console.log(listenerToggle);
             listenerToggle[0](true);
             setAlert(``);
-            genRef.current = 0;
 
             // setPlay(false);
           }}
