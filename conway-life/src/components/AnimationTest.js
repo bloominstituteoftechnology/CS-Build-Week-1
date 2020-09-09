@@ -196,7 +196,7 @@ const AnimationTest = (props) => {
             // console.log(listenerToggle);
             listenerToggle[0](true);
             setAlert(``);
-            genRef.current = 0;
+            genRef.current = -1;
           }}
         >
           CLEAR
