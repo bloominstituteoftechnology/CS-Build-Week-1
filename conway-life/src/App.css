@@ -67,7 +67,7 @@
 .gens {
   display: flex;
   margin: auto;
-  max-width: 25vw;
+  max-width: 20vw;
   justify-content: space-between;
   min-width: 350px;
 }
