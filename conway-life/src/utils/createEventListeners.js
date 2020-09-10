@@ -90,5 +90,14 @@ export const createEventListeners = ({
     }
   }
 
-  return [allowListener];
+  function getAllowStatus() {
+    if (clickable === true) {
+      return true;
+    }
+    if (clickable === false) {
+      return false;
+    }
+  }
+
+  return [allowListener, getAllowStatus];
 };

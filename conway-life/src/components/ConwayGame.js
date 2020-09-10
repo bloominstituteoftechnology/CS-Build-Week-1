@@ -192,10 +192,19 @@ const ConwayGame = (props) => {
           className="userButton"
           variant="primary"
           onClick={() => {
-            // console.log("starting?");
+            console.log("starting?");
+            console.log(listenerToggle[1]());
+            if (listenerToggle[1]() === true) {
+              console.log(listenerToggle[1]());
+
+              cancelAnimation(true);
+              console.log(listenerToggle);
+              listenerToggle[0](true);
+              setGens(genRef.current);
+            }
             cancelAnimation(false);
             listenerToggle[0](false);
-            // setAlert(``);
+            setAlert(``);
           }}
         >
           START
@@ -206,8 +215,9 @@ const ConwayGame = (props) => {
           onClick={() => {
             // console.log("stopping?");
             cancelAnimation(true);
-            // console.log(listenerToggle);
+            console.log(listenerToggle);
             listenerToggle[0](true);
+
             // setAlert(``);
 
             // setPlay(false);
@@ -220,10 +230,11 @@ const ConwayGame = (props) => {
           variant="info"
           onClick={() => {
             grid.current.clearAll(canvasRef.current.getContext("2d"));
-            // setAlert(``);
-            cancelAnimation(true);
-            // console.log(listenerToggle);
-            listenerToggle[0](true);
+            if (listenerToggle[1]() === false) {
+              cancelAnimation(true);
+              console.log(listenerToggle);
+              listenerToggle[0](true);
+            }
             genRef.current = 0;
             setGens(genRef.current);
           }}
@@ -282,7 +293,7 @@ const ConwayGame = (props) => {
             if (retObj !== false) {
               setAlert(`Structure is too large for your display/viewport!`);
             } else {
-              // setAlert(``);
+              setAlert(``);
             }
           }}
         >
