@@ -14,7 +14,6 @@ export const createEventListeners = ({
   clickable,
 }) => {
   console.log(canvas);
-  console.log("creatin");
   // let [event, setEvent] = useState();
   let cellLeft = canvas.offsetLeft - window.pageXOffset;
   let cellTop = canvas.offsetTop;

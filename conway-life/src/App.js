@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import AnimationTest from "./components/AnimationTest";
+import ConwayGame from "./components/ConwayGame";
 import useWindowDimensions from "./hooks/getWindowDimensions";
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
   console.log(pixelSize);
   const [cellSizePx, setCellSizePx] = useState(pixelSize);
   const [gameComponent] = useState(
-    <AnimationTest
+    <ConwayGame
       width={(width - 100) % 2 === 0 ? width - 100 : width - 99}
       height={
         Math.floor(height * 0.75) % 2 === 0

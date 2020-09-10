@@ -8,17 +8,13 @@
   min-height: 100vh;
   min-width: max-content;
   overflow-x: hidden;
+  flex-direction: column;
 }
 .App h1 {
   margin-bottom: 0;
   margin-top: 0;
 }
-.gameContainer {
-  margin: auto;
-  align-items: center;
-  display: flex;
-  flex-flow: column;
-}
+
 .gameWindow {
   margin: 25px;
 }
@@ -70,7 +66,8 @@
 
 .gens {
   display: flex;
-  width: auto;
+  margin: auto;
+  max-width: 25vw;
   justify-content: space-between;
-  min-width: 325px;
+  min-width: 350px;
 }

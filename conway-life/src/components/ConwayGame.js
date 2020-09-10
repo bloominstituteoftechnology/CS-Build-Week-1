@@ -3,6 +3,7 @@ import { useAnimationFrame } from "../hooks/useAnimationFrame";
 import moment from "moment";
 import { drawGrid } from "../utils/drawGrid";
 import { Grid } from "../utils/grid";
+import Slider from "../utils/Slider";
 import { createEventListeners } from "../utils/createEventListeners";
 import Button from "react-bootstrap/Button";
 /*TODO:
@@ -24,7 +25,7 @@ Stretch goals:
 
 
 - Make grid auto rescale pixels to fit clicked pattern (demonoid will look bigger, but mothership will still fit because the grid will dynamically reset and reshape)*/
-const AnimationTest = (props) => {
+const ConwayGame = (props) => {
   const { width, height, cellSizePx, setAlert } = props;
   // , setCellSizePx used to be included for changing grid size.
   // let maxGenerations = generations;
@@ -80,10 +81,10 @@ const AnimationTest = (props) => {
     grid.current.drawAll(canvas.getContext("2d"));
   }, []);
 
-  useEffect(() => {
-    console.log(msDelayRef.current);
-    genRef.current = gens;
-  }, [gens]);
+  // useEffect(() => {
+  //   console.log(msDelayRef.current);
+  //   genRef.current = gens;
+  // }, [gens]);
 
   function draw(context, canvas) {
     drawGrid({
@@ -219,17 +220,15 @@ const AnimationTest = (props) => {
           variant="info"
           onClick={() => {
             grid.current.clearAll(canvasRef.current.getContext("2d"));
-            setAlert(``);
-            cancelAnimation(true);
             // console.log(listenerToggle);
-            listenerToggle[0](true);
-            setAlert(``);
             genRef.current = 0;
-            setGens(genRef.current);
+            setGens(0);
+            setAlert(``);
           }}
         >
           CLEAR
         </Button>
+        <Slider />
         <Button
           className="userButton"
           variant="info"
@@ -256,7 +255,6 @@ const AnimationTest = (props) => {
           className="userButton"
           onClick={() => {
             genRef.current = 0;
-            setGens(genRef.current);
 
             grid.current.randomize(canvasRef.current.getContext("2d"));
             setAlert(``);
@@ -268,7 +266,6 @@ const AnimationTest = (props) => {
           className="userButton"
           onClick={() => {
             genRef.current = 0;
-            setGens(genRef.current);
 
             let retObj = false;
 
@@ -291,7 +288,6 @@ const AnimationTest = (props) => {
           className="userButton"
           onClick={() => {
             genRef.current = 0;
-            setGens(genRef.current);
 
             let retObj = false;
             retObj = grid.current.getPattern(
@@ -315,7 +311,6 @@ const AnimationTest = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
-            setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "popover",
@@ -337,7 +332,6 @@ const AnimationTest = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
-            setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "Spaceship_295P5H1V1",
@@ -359,7 +353,6 @@ const AnimationTest = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
-            setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "volcanoes",
@@ -381,7 +374,6 @@ const AnimationTest = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
-            setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "puffership",
@@ -403,7 +395,6 @@ const AnimationTest = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
-            setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "orbital",
@@ -425,7 +416,6 @@ const AnimationTest = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
-            setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "spacetimeTear",
@@ -441,6 +431,27 @@ const AnimationTest = (props) => {
           }}
         >
           RIFT
+        </Button>
+        <Button
+          className="userButton"
+          onClick={() => {
+            let retObj = false;
+            genRef.current = 0;
+
+            retObj = grid.current.getPattern(
+              "weird",
+              canvasRef.current.getContext("2d"),
+              retObj
+            );
+            console.log(retObj);
+            if (retObj !== false) {
+              setAlert(`Structure is too large for your display/viewport!`);
+            } else {
+              setAlert(``);
+            }
+          }}
+        >
+          WEIRD
         </Button>
         {/* <br />
           <Button className="userButton"
@@ -462,4 +473,4 @@ const AnimationTest = (props) => {
   );
 };
 
-export default AnimationTest;
+export default ConwayGame;
