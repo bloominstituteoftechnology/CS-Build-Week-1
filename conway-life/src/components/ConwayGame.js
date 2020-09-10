@@ -195,7 +195,7 @@ const ConwayGame = (props) => {
             // console.log("starting?");
             cancelAnimation(false);
             listenerToggle[0](false);
-            setAlert(``);
+            // setAlert(``);
           }}
         >
           START
@@ -208,7 +208,7 @@ const ConwayGame = (props) => {
             cancelAnimation(true);
             // console.log(listenerToggle);
             listenerToggle[0](true);
-            setAlert(``);
+            // setAlert(``);
 
             // setPlay(false);
           }}
@@ -220,10 +220,12 @@ const ConwayGame = (props) => {
           variant="info"
           onClick={() => {
             grid.current.clearAll(canvasRef.current.getContext("2d"));
+            // setAlert(``);
+            cancelAnimation(true);
             // console.log(listenerToggle);
+            listenerToggle[0](true);
             genRef.current = 0;
-            setGens(0);
-            setAlert(``);
+            setGens(genRef.current);
           }}
         >
           CLEAR
@@ -255,9 +257,10 @@ const ConwayGame = (props) => {
           className="userButton"
           onClick={() => {
             genRef.current = 0;
+            // setGens(genRef.current);
 
             grid.current.randomize(canvasRef.current.getContext("2d"));
-            setAlert(``);
+            // setAlert(``);
           }}
         >
           RANDOMIZE
@@ -266,6 +269,7 @@ const ConwayGame = (props) => {
           className="userButton"
           onClick={() => {
             genRef.current = 0;
+            // setGens(genRef.current);
 
             let retObj = false;
 
@@ -278,7 +282,7 @@ const ConwayGame = (props) => {
             if (retObj !== false) {
               setAlert(`Structure is too large for your display/viewport!`);
             } else {
-              setAlert(``);
+              // setAlert(``);
             }
           }}
         >
@@ -288,6 +292,7 @@ const ConwayGame = (props) => {
           className="userButton"
           onClick={() => {
             genRef.current = 0;
+            // setGens(genRef.current);
 
             let retObj = false;
             retObj = grid.current.getPattern(
@@ -300,7 +305,7 @@ const ConwayGame = (props) => {
             if (retObj !== false) {
               setAlert(`Structure is too large for your display/viewport!`);
             } else {
-              setAlert(``);
+              // setAlert(``);
             }
           }}
         >
@@ -311,6 +316,7 @@ const ConwayGame = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
+            // setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "popover",
@@ -321,7 +327,7 @@ const ConwayGame = (props) => {
             if (retObj !== false) {
               setAlert(`Structure is too large for your display/viewport!`);
             } else {
-              setAlert(``);
+              // setAlert(``);
             }
           }}
         >
@@ -332,6 +338,7 @@ const ConwayGame = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
+            // setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "Spaceship_295P5H1V1",
@@ -342,7 +349,7 @@ const ConwayGame = (props) => {
             if (retObj !== false) {
               setAlert(`Structure is too large for your display/viewport!`);
             } else {
-              setAlert(``);
+              // setAlert(``);
             }
           }}
         >
@@ -353,6 +360,7 @@ const ConwayGame = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
+            // setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "volcanoes",
@@ -363,7 +371,7 @@ const ConwayGame = (props) => {
             if (retObj !== false) {
               setAlert(`Structure is too large for your display/viewport!`);
             } else {
-              setAlert(``);
+              // setAlert(``);
             }
           }}
         >
@@ -374,6 +382,7 @@ const ConwayGame = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
+            // setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "puffership",
@@ -384,7 +393,7 @@ const ConwayGame = (props) => {
             if (retObj !== false) {
               setAlert(`Structure is too large for your display/viewport!`);
             } else {
-              setAlert(``);
+              // setAlert(``);
             }
           }}
         >
@@ -395,6 +404,7 @@ const ConwayGame = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
+            // setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "orbital",
@@ -405,7 +415,7 @@ const ConwayGame = (props) => {
             if (retObj !== false) {
               setAlert(`Structure is too large for your display/viewport!`);
             } else {
-              setAlert(``);
+              // setAlert(``);
             }
           }}
         >
@@ -416,6 +426,7 @@ const ConwayGame = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
+            // setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "spacetimeTear",
@@ -426,7 +437,7 @@ const ConwayGame = (props) => {
             if (retObj !== false) {
               setAlert(`Structure is too large for your display/viewport!`);
             } else {
-              setAlert(``);
+              // setAlert(``);
             }
           }}
         >
@@ -437,6 +448,7 @@ const ConwayGame = (props) => {
           onClick={() => {
             let retObj = false;
             genRef.current = 0;
+            // setGens(genRef.current);
 
             retObj = grid.current.getPattern(
               "weird",
@@ -447,7 +459,7 @@ const ConwayGame = (props) => {
             if (retObj !== false) {
               setAlert(`Structure is too large for your display/viewport!`);
             } else {
-              setAlert(``);
+              // setAlert(``);
             }
           }}
         >
@@ -462,7 +474,7 @@ const ConwayGame = (props) => {
               cancelAnimation(true);
               listenerToggle[0](true);
               setCellSizePx(cellSizePx - 2);
-              setAlert(``);
+              // setAlert(``);
             }}
           >
             Grid Density (-)
