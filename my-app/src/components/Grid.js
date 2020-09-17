@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react'
 
-export default class Grid extends Component {
-	render() {
-		const { grid, columns, rows, onToggleCell } = this.props;
+export default function Grid({ grid, columns, rows, onToggleCell }) {
+
 		let display = grid.map((row, j) =>
 			row.map((col, i) => (
 				<div
@@ -13,14 +12,13 @@ export default class Grid extends Component {
 			))
 		);
 
-		return (
-			<div
+  return (
+      <div
 				className="Grid"
 				style={{
-					width: this.props.columns * 14
+					width: columns * 14
 				}}>
 				{display}
 			</div>
-		);
-	}
+  )
 }
