@@ -7,3 +7,7 @@
     background-image: linear-gradient(#333 1px, transparent 1px), 
     linear-gradient(90deg, #333 1px, transparent 1px);
 }
+
+.Cell { 
+    background: #ccc; position: absolute;
+}
