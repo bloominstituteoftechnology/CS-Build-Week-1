@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Grid from './Grid';
+import useSound from 'use-sound';
+import boopSfx from './Canon.mp3';
 
 class Board extends Component {
 	constructor(props) {
