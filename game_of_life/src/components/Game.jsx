@@ -1,6 +1,12 @@
 import React from 'react';
 import Grid from './Grid';
 import Controls from './Controls';
+import Presets from './Presets';
+import "../scss/Game.scss";
+
+function makeEmptyGrid(rows, columns) {
+    return Array(rows).fill().map(() => Array(columns).fill(false))
+}
 
 function copyGrid(arr) {
     return JSON.parse(JSON.stringify(arr));
@@ -16,7 +22,7 @@ class Game extends React.Component {
             // number of cycles, simulation runs through
             generations: 0,
             // inital grid with all cells dead
-            grid: Array(this.rows).fill().map(() => Array(this.columns).fill(false)), 
+            grid: makeEmptyGrid(this.rows, this.columns) 
         }
     }
 
@@ -54,8 +60,17 @@ class Game extends React.Component {
     }
 
     pause = () => {
-		clearInterval(this.intervalId);
-	}
+		clearInterval(this.interval);
+    }
+    
+    stop = () => {
+        clearInterval(this.interval);
+        let emptyGrid = makeEmptyGrid(this.rows, this.columns)
+        this.setState({
+            grid: emptyGrid,
+            generations: 0
+        })
+    }
 
     run = () => {
         let grid = this.state.grid
@@ -100,6 +115,7 @@ class Game extends React.Component {
             }
         }
         this.setState({
+            // set new grid to state and increment generations(cycle)
             grid: newGrid,
             generations: this.state.generations + 1
           });        
@@ -107,19 +123,21 @@ class Game extends React.Component {
     // for now randomly populated
     componentDidMount() {
         this.randomSeed()
-        this.play()
     }
 
     render() {
         return (
-            <div>
+            <div className="game">
                 <h4>Generations: {this.state.generations}</h4>
-                <Grid 
-                    grid={this.state.grid}
-                    rows={this.rows}
-                    columns={this.columns}
-                    selectCell={this.selectCell}
-                />
+                <div className="section">
+                    <Grid 
+                        grid={this.state.grid}
+                        rows={this.rows}
+                        columns={this.columns}
+                        selectCell={this.selectCell}
+                    />
+                    <Presets />
+                </div>
                 <Controls 
                     play={this.play}
                     pause={this.pause}

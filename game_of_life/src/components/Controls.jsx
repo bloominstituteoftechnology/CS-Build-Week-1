@@ -3,14 +3,23 @@ import '../scss/Controls.scss';
 
 const Controls = props => {
     return (
-        <div>
-            <div className="button play">
+        <div className="controls">
+            <div 
+                className="button play"
+                onClick={props.play}
+            >
                 Play
             </div>
-            <div className="button pause">
+            <div 
+                className="button pause"
+                onClick={props.pause}
+            >
                 Pause
             </div>
-            <div className="button stop">
+            <div 
+                className="button stop"
+                onClick={props.stop}
+            >
                 Stop
             </div>
         </div>

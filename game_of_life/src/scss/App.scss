@@ -1,3 +1,8 @@
 .App {
   text-align: center;
+
+  .Main {
+    display: flex;
+    flex-direction: row;
+  }
 }
