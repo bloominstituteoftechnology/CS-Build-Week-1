@@ -55,7 +55,7 @@ class Board extends Component {
 			}
 		}
 		this.setState({ grid: next, generation: generation + 1 });
-		if(generation % 33 == 0){
+		if(generation % 33 === 0){
 			console.log(generation)
 			this.props.boop()
 		}

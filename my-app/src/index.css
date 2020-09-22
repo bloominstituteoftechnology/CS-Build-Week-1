@@ -9,8 +9,10 @@ body {
 }
 
 .Cell {
+	border-radius: 20%;
+	background-color: black;
 	display: inline-block;
-	border: 1px solid black;
+	border: 1px solid #666;
 	width: 15px;
 	height: 15px;
 	margin-left: -1px;
@@ -18,11 +20,11 @@ body {
 }
 
 .Cell:hover {
-	background-color: greenyellow;
+	background-color: #666;
 }
 
 .Cell.isActive {
-	background-color: #61dafb;
+	background-color: #fff;
 }
 
 .Grid {
