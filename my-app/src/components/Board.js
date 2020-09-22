@@ -49,12 +49,17 @@ class Board extends Component {
 					next[i][j] = 1;
 				} else if (state === 1 && (neighbors < 2 || neighbors > 3)) {
 					next[i][j] = 0;
-				} else {
+				}else {
 					next[i][j] = state;
 				}
 			}
 		}
 		this.setState({ grid: next, generation: generation + 1 });
+		if(generation % 33 == 0){
+			console.log(generation)
+			this.props.boop()
+		}
+		
 	}
 
 	count(grid, x, y) {
@@ -64,7 +69,6 @@ class Board extends Component {
 			for (let j = -1; j < 2; j++) {
 				let col = (x + i + columns) % columns;
 				let row = (y + j + rows) % rows;
-
 				sum += grid[col][row];
 			}
 		}
@@ -76,8 +80,10 @@ class Board extends Component {
 	seed() {
 		const { columns, rows, grid } = this.state;
 		for (let i = 0; i < columns; i++) {
+			this.props.boop()
 			for (let j = 0; j < rows; j++) {
 				grid[i][j] = Math.round(Math.random());
+				// this.props.boop()
 			}
 		}
 		this.setState({ grid });
@@ -87,6 +93,7 @@ class Board extends Component {
 		clearInterval(this.state.intervalId);
 		const intervalId = setInterval(this.step, 100);
 		this.setState({ intervalId });
+		this.props.boop()
 	}
 
 	pause() {
@@ -119,7 +126,6 @@ class Board extends Component {
 				<button onClick={this.play}>Play</button>
 				<button onClick={this.pause}>Pause</button>
 				<button onClick={this.reset}>Reset</button>
-				<button onClick={this.props.boop}>Boop</button>
 				<Grid
 					grid={grid}
 					columns={columns}
