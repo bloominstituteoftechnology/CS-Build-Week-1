@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Grid from './Grid';
+import {ButtonGroup, Button } from 'reactstrap';
 
 class Board extends Component {
 	constructor(props) {
@@ -121,6 +122,11 @@ class Board extends Component {
 		const { grid, columns, rows, generation } = this.state;
 		return (
 			<div style={{ textAlign: 'center' }}>
+				<ButtonGroup size="lg">
+  				<Button size="lg">Left</Button>
+  				<Button size="lg">Middle</Button>
+  				<Button size="lg">Right</Button>
+				</ButtonGroup>
 				<button onClick={this.step}>Step</button>
 				<button onClick={this.seed}>Randomize</button>
 				<button onClick={this.play}>Play</button>
