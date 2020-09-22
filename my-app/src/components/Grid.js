@@ -1,13 +1,6 @@
-import React, {useEffect} from 'react'
-import useSound from 'use-sound';
-import boopSfx from './Canon.mp3';
-// import { useEffect } from 'react';
+import React from 'react'
 
 export default function Grid({ grid, columns, rows, onToggleCell }) {
-
-	useEffect(() => {
-		play()
-	}, [])
 
 		let display = grid.map((row, j) =>
 			row.map((col, i) => (
@@ -18,11 +11,6 @@ export default function Grid({ grid, columns, rows, onToggleCell }) {
 				/>
 			))
 		);
-
-
-
-		const [play] = useSound(boopSfx);
-			
 
   return (
       <div
