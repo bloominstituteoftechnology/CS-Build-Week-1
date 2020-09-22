@@ -5,16 +5,16 @@ import boopSfx from './components/Canon.mp3';
 
 function App() {
 
-  const [play] = useSound(boopSfx);
+  const [boop] = useSound(boopSfx);
 
   useEffect(() => {
-		play()
+		boop();
 	}, [])
 
   return (
     <div className="App">
-      <button onClick={play}>boop</button>
-      <Board/>
+      {/* <button onClick={boop}>boop</button> */}
+      <Board boop={boop}/>
     </div>
   );
 }

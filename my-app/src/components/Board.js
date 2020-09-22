@@ -22,6 +22,8 @@ class Board extends Component {
 	}
 
 	componentDidMount() {
+		console.log(this.props.boop)
+		this.props.boop()
 		this.reset();
 	}
 
@@ -117,6 +119,7 @@ class Board extends Component {
 				<button onClick={this.play}>Play</button>
 				<button onClick={this.pause}>Pause</button>
 				<button onClick={this.reset}>Reset</button>
+				<button onClick={this.props.boop}>Boop</button>
 				<Grid
 					grid={grid}
 					columns={columns}
