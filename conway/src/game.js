@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const CELL_SIZE = 20;
+const CELL_SIZE = 26;
 const WIDTH = 800;
 const HEIGHT = 600;
 
