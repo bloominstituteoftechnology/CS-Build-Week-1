@@ -20,7 +20,7 @@ const Controls = props => {
                 className="button stop"
                 onClick={props.stop}
             >
-                Stop
+                Clear
             </div>
         </div>
     )

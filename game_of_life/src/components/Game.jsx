@@ -120,10 +120,6 @@ class Game extends React.Component {
             generations: this.state.generations + 1
           });        
     }
-    // for now randomly populated
-    componentDidMount() {
-        this.randomSeed()
-    }
 
     render() {
         return (
@@ -136,7 +132,9 @@ class Game extends React.Component {
                         columns={this.columns}
                         selectCell={this.selectCell}
                     />
-                    <Presets />
+                    <Presets 
+                        randomSeed={this.randomSeed}
+                    />
                 </div>
                 <Controls 
                     play={this.play}

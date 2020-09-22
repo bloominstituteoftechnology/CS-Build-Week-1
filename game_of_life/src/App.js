@@ -1,6 +1,6 @@
 import React from 'react';
 import Game from './components/Game';
-import Rules from './components/Rules';
+import Info from './components/Info';
 import './scss/App.scss';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
       <h1>Conway's Game of Life</h1>
       <div className="Main">
         <Game />
-        <Rules />
+        <Info />
       </div>
     </div>
   );

@@ -1,7 +1,14 @@
 .presets{
-    padding: 50px;
+    padding: 5px;
+    background-color: lightgray;
 
     .preset {
         width: 200px;
+
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
     }
 }

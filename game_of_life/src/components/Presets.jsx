@@ -1,24 +1,33 @@
 import React from 'react';
+import Question_Mark from '../utils/question_mark.png'
 import "../scss/Presets.scss";
 
-const Presets = () => {
+const Presets = props => {
     return (
         <div className="presets">
-            <div className="preset one">
-                <img src="#" alt="" />
-                <p>Preset 1</p>
+            <div className="preset one"
+                 onClick={props.randomSeed}
+            >
+                <img src={Question_Mark} alt="?" />
+                Random
             </div>
-            <div className="preset two">
+            <div className="preset two"
+                //  onClick={}
+            >
                 <img src="#" alt=""/>
-                <p>Preset 2</p>
+                Preset 2
             </div>
-            <div className="preset three">
+            <div className="preset three"
+                //  onClick={}
+            >
                 <img src="#" alt="" />
-                <p>Preset 3</p>
+                Preset 3
             </div>
-            <div className="preset four">
+            <div className="preset four"
+                //  onClick={}
+            >
                 <img src="#" alt="" />
-                <p>Preset 4</p>
+                Preset 4
             </div>
         </div>
     )
