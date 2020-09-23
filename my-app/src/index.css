@@ -34,3 +34,32 @@ body {
 	box-shadow: 0px 0px 20px white;
 	margin-top: 20px;
 }
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: .75rem;
+  background-color: #efefef;
+  text-align: center;
+}
+
+.social-container{
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+}
+.social{
+  background-color: #fff;
+  border: .9px solid #282c34c5;
+  padding: 1.5px 6px;
+  margin: 3px; 
+  border-radius: 5px;
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+.social:hover {
+  box-shadow: 0 14px 28px rgba(22, 102, 67, 0.336), 0 10px 10px rgba(0,0,0,0.22);
+}

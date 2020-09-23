@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import Board from './components/Board';
 import useSound from 'use-sound';
 import boopSfx from './components/Canon.mp3';
+import Footer from './components/Footer'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
     <div className="App">
       {/* <button onClick={boop}>boop</button> */}
       <Board boop={boop}/>
+      <Footer/>
     </div>
   );
 }
