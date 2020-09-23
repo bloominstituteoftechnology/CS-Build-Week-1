@@ -145,9 +145,16 @@ class Game extends React.Component {
     }
 
     play = () => {
+        this.speed = 100
         clearInterval(this.interval)
         this.interval = setInterval(this.run, this.speed)
     }
+
+    fastforward = () => {
+		this.speed = 10;
+		clearInterval(this.interval)
+        this.interval = setInterval(this.run, this.speed)
+	}
 
     pause = () => {
 		clearInterval(this.interval);
@@ -256,7 +263,7 @@ class Game extends React.Component {
                         play={this.play}
                         pause={this.pause}
                         stop={this.stop}
-                        speed={this.speed}
+                        fastforward={this.fastforward}
                         gridSize={this.gridSize}
                     />
                 </div>

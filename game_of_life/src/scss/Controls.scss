@@ -1,8 +1,9 @@
 .controls {
     display: flex;
     flex-direction: column;
-    height: 400px;
+    height: 450px;
     margin: 0 10px;
+    padding: 5px 20px;
     background-color: black;
     border: 1px solid white;
     border-radius: 40px;
@@ -10,12 +11,18 @@
     .button {
         width: 75px;
         height: 35px;
-        margin: 20px;
-        padding: 10px;
+        margin: 10px;
         font-size: 25px;
         background-color: white;
         border: 1px solid black;
         border-radius: 25px;
+    }
+
+    img {
+        width: 75px;
+        height: 75px;
+        margin: 10px;
+        border-radius: 70%;
     }
 
     .button:hover {
@@ -26,7 +33,7 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        background-color: plum;
+        background-color: white;
     }
       
     .menu {
@@ -45,17 +52,5 @@
 
     .popout:hover .menu {
         display: block;
-    }
-
-    .play {
-        background-color: lightgreen;
-    }
-
-    .pause {
-        background-color: lightblue;
-    }
-
-    .stop {
-        background-color: tomato;
     }
 }

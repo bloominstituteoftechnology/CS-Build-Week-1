@@ -1,4 +1,7 @@
 import React from 'react';
+import Play from '../utils/play_button.jpg';
+import Fastforward from '../utils/fastforward_button.jpg';
+import Pause from '../utils/pause_button.png';
 import '../scss/Controls.scss';
 
 const Controls = props => {
@@ -16,14 +19,18 @@ const Controls = props => {
     
     return (
         <div className="controls">
-            <div 
-                className="button play"
+            <img
                 onClick={props.play}
-            >Play</div>
-            <div 
-                className="button pause"
+                src={Play} 
+            />
+            <img
+                onClick={props.fastforward}
+                src={Fastforward} 
+            />
+            <img
                 onClick={props.pause}
-            >Pause</div>
+                src={Pause} 
+            />
             <div 
                 className="button stop"
                 onClick={props.stop}

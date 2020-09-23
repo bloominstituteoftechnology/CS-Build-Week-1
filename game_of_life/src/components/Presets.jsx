@@ -13,7 +13,7 @@ const Presets = props => {
                  onClick={props.randomSeed}
             >
                 <img src={Question_Mark} alt="?" />
-                _Random
+                Random
             </div>
             <div className="preset two"
                  onClick={props.oscillatorSeed}
