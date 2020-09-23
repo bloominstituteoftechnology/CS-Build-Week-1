@@ -6,11 +6,8 @@ import './scss/App.scss';
 function App() {
   return (
     <div className="App">
-      <h1>Conway's Game of Life</h1>
-      <div className="Main">
-        <Game />
-        <Info />
-      </div>
+      <Game />
+      <Info />
     </div>
   );
 }

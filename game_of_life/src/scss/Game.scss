@@ -1,11 +1,17 @@
 .game {
     display: flex;
     flex-direction: column;
-    // background-image: url("../utils//0_xKTwlgXlZPC7Xv3r.jpg");
     background-position: center;
-    border: 1px solid black;
 
-    .section {
+    .top {
+        width: 55%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: white;
+    }
+
+    .main {
         display: flex;
         flex-direction: row;
     }

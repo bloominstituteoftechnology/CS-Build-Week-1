@@ -1,12 +1,19 @@
 .presets{
-    padding: 5px;
+    height: 400px;
+    margin: 0 10px;
     text-align: left;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+
+    h3 {
+        text-align: center;
+    }
 
     .preset {
         display: flex;
-        width: 200px;
-        padding: 20px;
-        text-align: center;
+        width: 150px;
+        padding: 15px;
 
         img {
             width: 50px;

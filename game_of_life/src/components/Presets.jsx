@@ -9,6 +9,7 @@ import "../scss/Presets.scss";
 const Presets = props => {
     return (
         <div className="presets">
+            <h3>Preset</h3>
             <div className="preset one"
                  onClick={props.randomSeed}
             >

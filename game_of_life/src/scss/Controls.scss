@@ -1,10 +1,11 @@
 .controls {
     display: flex;
-    flex-direction: row;
-    width: 500px;
-    background-color: lightgrey;
-    border-radius: 20px;
-    border: 1px solid black;
+    flex-direction: column;
+    height: 400px;
+    margin: 0 10px;
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 40px;
 
     .button {
         width: 75px;
@@ -18,24 +19,24 @@
     }
 
     .button:hover {
-        box-shadow: 5px 5px black;
+        box-shadow: 5px 5px white;
     }
 
     .popout {
         position: relative;
         display: flex;
-        flex-direction: column-reverse;
-        // background-color: plum;
+        flex-direction: column;
+        background-color: plum;
     }
       
     .menu {
         display: none;
         position: absolute;
-        background-color: white;
-        min-width: 10px;
-        box-shadow: 0px 8px 16px 0px rgba(23, 184, 162, 0.2);
-        padding: 12px 16px;
-        z-index: 1;
+        box-shadow: 0 0 20px 2px white;
+        padding: 20px;
+        color: white;
+        background-color: black;
+        border: 1px solid white;
 
         p:hover {
             text-decoration: underline;
@@ -47,14 +48,14 @@
     }
 
     .play {
-        // background-color: lightgreen;
+        background-color: lightgreen;
     }
 
     .pause {
-        // background-color: lightblue;
+        background-color: lightblue;
     }
 
     .stop {
-        // background-color: tomato;
+        background-color: tomato;
     }
 }

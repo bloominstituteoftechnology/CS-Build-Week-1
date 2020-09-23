@@ -145,8 +145,11 @@ class Game extends React.Component {
     render() {
         return (
             <div className="game">
-                <h4>Generations: {this.state.generations}</h4>
-                <div className="section">
+                <div className="top">
+                    <h4>Generations: {this.state.generations}</h4>
+                    <h2>Conway's Game of Life</h2>
+                </div>
+                <div className="main">
                     <Grid 
                         grid={this.state.grid}
                         rows={this.rows}
@@ -156,13 +159,14 @@ class Game extends React.Component {
                     <Presets 
                         randomSeed={this.randomSeed}
                     />
+                    <Controls 
+                        play={this.play}
+                        pause={this.pause}
+                        stop={this.stop}
+                        gridSize={this.gridSize}
+                    />
                 </div>
-                <Controls 
-                    play={this.play}
-                    pause={this.pause}
-                    stop={this.stop}
-                    gridSize={this.gridSize}
-                />
+                
             </div>
         )
     }
