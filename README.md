@@ -14,8 +14,6 @@ You can take a quick peek at the **live demo** [here](https://cs-build-week-1-ps
 
 To get started developing right away and run the project in Develepment mode, clone this [repository](https://github.com/robertjallen/CS-Build-Week-1)
 * install all project dependencies with `npm install`
-* start the development server with `npm run dev`
-
 
 
 ## Functionality
