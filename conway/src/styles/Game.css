@@ -1,0 +1,43 @@
+
+:root {
+    /* default values */
+    --selected-primary-color: var(--light-primary-color);
+    --selected-disabled-color: var(--light-disabled-color);
+   
+   /* Set the 'light' theme */
+   --light-primary: #007bff;
+   --light-disabled: green;
+ 
+   /* Set the 'dark' theme */
+   --dark-primary: #000000;
+   --dark-disabled: #4a4a4b;
+   }
+
+
+.Board-light {
+    position: relative;
+    margin: 0 auto;
+    background-color: var(--light-disabled);
+    background-image: linear-gradient(#333 1px, transparent 1px), 
+    linear-gradient(90deg, #333 1px, transparent 1px);
+}
+
+.Cell-light { 
+    background: var(--light-primary); 
+    position: absolute;
+}
+
+
+
+.Board {
+    position: relative;
+    margin: 0 auto;
+    background-color: var(--dark-primary);
+    background-image: linear-gradient(#333 1px, transparent 1px), 
+    linear-gradient(90deg, #333 1px, transparent 1px);
+}
+
+.Cell { 
+    background: var(--dark-disabled); 
+    position: absolute;
+}
