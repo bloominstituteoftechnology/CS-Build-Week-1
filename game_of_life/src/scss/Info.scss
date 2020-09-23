@@ -1,0 +1,22 @@
+.info {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    margin: 25px;
+    
+    .rules {
+        width: 800px;
+        color: white;
+        padding: 25px;
+        background-color: black;
+        border: 1px solid white;
+    }
+
+    .about {
+        width: 800px;
+        color: white;
+        padding: 25px;
+        background-color: black;
+        border: 1px solid white;
+    }
+}

@@ -1,24 +1,37 @@
 import React from 'react';
+import Question_Mark from '../utils/question_mark.png';
+import Oscillator from '../utils/preset2.png';
+import Glider from '../utils/preset3.png';
+import SpaceShip from '../utils/preset4.png';
 import "../scss/Presets.scss";
 
-const Presets = () => {
+const Presets = props => {
     return (
         <div className="presets">
-            <div className="preset one">
-                <img src="#" alt="" />
-                <p>Preset 1</p>
+            <h3>Preset</h3>
+            <div className="preset one"
+                 onClick={props.randomSeed}
+            >
+                <img src={Question_Mark} alt="?" />
+                Random
             </div>
-            <div className="preset two">
-                <img src="#" alt=""/>
-                <p>Preset 2</p>
+            <div className="preset two"
+                 onClick={props.oscillatorSeed}
+            >
+                <img src={Oscillator} alt=""/>
+                Oscillator
             </div>
-            <div className="preset three">
-                <img src="#" alt="" />
-                <p>Preset 3</p>
+            <div className="preset three"
+                 onClick={props.gliderSeed}
+            >
+                <img src={Glider} alt="" />
+                Glider
             </div>
-            <div className="preset four">
-                <img src="#" alt="" />
-                <p>Preset 4</p>
+            <div className="preset four"
+                 onClick={props.spaceShipSeed}
+            >
+                <img src={SpaceShip} alt="" />
+                SpaceShip
             </div>
         </div>
     )

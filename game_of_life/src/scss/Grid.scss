@@ -1,7 +1,16 @@
 .grid {
-    width: 400px;
     line-height: 0;
-    margin: auto;
-    box-shadow: 0px 0px 20px white;
-    margin-top: 20px;
+    margin: 0 50px;
+}
+
+.small {
+    width: 160px;
+}
+
+.regular {
+    width: 400px;
+}
+
+.large {
+    width: 650px;
 }

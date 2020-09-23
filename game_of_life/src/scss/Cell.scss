@@ -1,6 +1,6 @@
 .cell {
     display: inline-block;       
-    border: 1px solid black;
+    border: 1px solid white;
     width: 15px;
     height: 15px;
     margin-left: -1px;
@@ -8,13 +8,13 @@
 }
 
 .cell:hover { 
-    background: grey;
+    background: gold;
 } 
 
 .dead {
-    background-color: white;
+    background-color: black;
 }
   
 .live {
-    background-color: black;
+    background-color: white;
 }

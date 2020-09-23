@@ -1,34 +1,56 @@
 .controls {
     display: flex;
-    flex-direction: row;
-    width: 400px;
-    margin-top: 20px;
-    background-color: white;
-    border: 5px solid black;
+    flex-direction: column;
+    height: 450px;
+    margin: 0 10px;
+    padding: 5px 20px;
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 40px;
 
     .button {
         width: 75px;
         height: 35px;
-        margin: 20px;
-        padding: 10px;
+        margin: 10px;
         font-size: 25px;
+        background-color: white;
         border: 1px solid black;
         border-radius: 25px;
     }
 
+    img {
+        width: 75px;
+        height: 75px;
+        margin: 10px;
+        border-radius: 70%;
+    }
+
     .button:hover {
-        box-shadow: 5px 5px grey;
+        box-shadow: 2px 2px 15px white;
     }
 
-    .play {
-        background-color: lightgreen;
+    .popout {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+    }
+      
+    .menu {
+        display: none;
+        position: absolute;
+        box-shadow: 0 0 20px 2px white;
+        padding: 20px;
+        color: white;
+        background-color: black;
+        border: 1px solid white;
+
+        p:hover {
+            text-decoration: underline;
+        }
     }
 
-    .pause {
-        background-color: lightblue;
-    }
-
-    .stop {
-        background-color: tomato;
+    .popout:hover .menu {
+        display: block;
     }
 }

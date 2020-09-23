@@ -1,16 +1,13 @@
 import React from 'react';
 import Game from './components/Game';
-import Rules from './components/Rules';
+import Info from './components/Info';
 import './scss/App.scss';
 
 function App() {
   return (
     <div className="App">
-      <h1>Conway's Game of Life</h1>
-      <div className="Main">
-        <Game />
-        <Rules />
-      </div>
+      <Game />
+      <Info />
     </div>
   );
 }
