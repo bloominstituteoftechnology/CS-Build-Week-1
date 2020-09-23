@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Grid from './Grid';
-import {ButtonGroup, Button } from 'reactstrap';
+import {Badge, ButtonGroup, Button } from 'reactstrap';
 
 class Board extends Component {
 	constructor(props) {
@@ -123,22 +123,20 @@ class Board extends Component {
 		return (
 			<div style={{ textAlign: 'center' }}>
 				<ButtonGroup size="lg">
-  				<Button size="lg">Left</Button>
-  				<Button size="lg">Middle</Button>
-  				<Button size="lg">Right</Button>
+  				<Button size="lg" onClick={this.step}>STEP</Button>
+  				<Button size="lg" onClick={this.seed}>SEED</Button>
+  				<Button size="lg" onClick={this.play}>PLAY</Button>
+					<Button size="lg" onClick={this.pause}>PAUSE</Button>
+  				<Button size="lg" onClick={this.reset}>RESET</Button>
 				</ButtonGroup>
-				<button onClick={this.step}>Step</button>
-				<button onClick={this.seed}>Randomize</button>
-				<button onClick={this.play}>Play</button>
-				<button onClick={this.pause}>Pause</button>
-				<button onClick={this.reset}>Reset</button>
+
 				<Grid
 					grid={grid}
 					columns={columns}
 					rows={rows}
 					onToggleCell={this.toggleCell}
 				/>
-				<p>Generation: {generation}</p>
+				 <Badge color="dark" pill>Generation: {generation}</Badge>
 			</div>
 		);
 	}
