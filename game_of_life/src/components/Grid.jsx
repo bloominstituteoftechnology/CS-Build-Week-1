@@ -24,9 +24,21 @@ const Grid = props => {
         }
         return rowsArray;
     }
+
+    const handleGridSize = () => {
+        if (props.rows === 10 && props.columns === 10) {
+            return "grid small"
+        }
+        else if (props.rows === 25 && props.columns === 25) {
+            return "grid regular"
+        }
+        else if (props.rows === 40 && props.columns === 40) {
+            return "grid large"
+        }
+    }
     
     return (
-        <div className="grid">
+        <div className={handleGridSize()}>
             {handleGrid()}
         </div>
     )

@@ -1,9 +1,12 @@
 .presets{
     padding: 5px;
-    background-color: lightgray;
+    text-align: left;
 
     .preset {
+        display: flex;
         width: 200px;
+        padding: 20px;
+        text-align: center;
 
         img {
             width: 50px;

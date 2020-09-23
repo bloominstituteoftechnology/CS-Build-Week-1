@@ -72,6 +72,27 @@ class Game extends React.Component {
         })
     }
 
+    gridSize = (size) => {
+        switch (size) {
+            case "small":
+                this.rows = 10
+                this.columns = 10
+            break;
+            case "regular":
+                this.rows = 25
+                this.columns = 25
+            break;
+            case "large":
+                this.rows = 40
+                this.columns = 40
+            break;
+            default:
+                this.rows = 25
+                this.columns = 25
+        }
+        this.stop();
+    }
+
     run = () => {
         let grid = this.state.grid
         let newGrid = copyGrid(this.state.grid)
@@ -140,6 +161,7 @@ class Game extends React.Component {
                     play={this.play}
                     pause={this.pause}
                     stop={this.stop}
+                    gridSize={this.gridSize}
                 />
             </div>
         )

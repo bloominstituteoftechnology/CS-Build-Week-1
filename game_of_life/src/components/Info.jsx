@@ -13,6 +13,9 @@ const Info = () => {
             <div className="about">
                 <h2>About:</h2>
                 <p>The creator of this "playerless game" was named John Conway.</p>
+                <p>Turing completeness is used as a way to express the power of such a data-manipulation rule set.</p>
+                <p>Virtually all programming languages today are Turing-complete.</p>
+                <p>The concept is named after English mathematician and computer scientist Alan Turing.</p>
             </div>
         </div>
     )
