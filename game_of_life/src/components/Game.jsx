@@ -54,6 +54,96 @@ class Game extends React.Component {
         })
     }
 
+    oscillatorSeed = () => {
+        let newGrid = copyGrid(this.state.grid)
+        for (let i = 0; i < this.rows; i++) {
+            for(let j = 0; j < this.columns; j++) {
+                //make a quarter of the cells alive at start
+                if (i === 4 && j === 3) {
+                    newGrid[i][j] = true
+                }
+                if (i === 4 && j === 4) {
+                    newGrid[i][j] = true
+                }
+                if (i === 4 && j === 5) {
+                    newGrid[i][j] = true
+                }
+            }
+        }
+        // set new grid to state
+        this.setState({
+            grid: newGrid
+        })
+    }
+
+    gliderSeed = () => {
+        let newGrid = copyGrid(this.state.grid)
+        for (let i = 0; i < this.rows; i++) {
+            for(let j = 0; j < this.columns; j++) {
+                //make a quarter of the cells alive at start
+                if (i === 0 && j === 2) {
+                    newGrid[i][j] = true
+                }
+                if (i === 1 && j === 0) {
+                    newGrid[i][j] = true
+                }
+                if (i === 1 && j === 2) {
+                    newGrid[i][j] = true
+                }
+                if (i === 2 && j === 1) {
+                    newGrid[i][j] = true
+                }
+                if (i === 2 && j === 2) {
+                    newGrid[i][j] = true
+                }
+            }
+        }
+        // set new grid to state
+        this.setState({
+            grid: newGrid
+        })
+    }
+
+    spaceShipSeed = () => {
+        let newGrid = copyGrid(this.state.grid)
+        for (let i = 0; i < this.rows; i++) {
+            for(let j = 0; j < this.columns; j++) {
+                //make a quarter of the cells alive at start
+                if (i === 1 && j === 1) {
+                    newGrid[i][j] = true
+                }
+                if (i === 1 && j === 4) {
+                    newGrid[i][j] = true
+                }
+                if (i === 2 && j === 5) {
+                    newGrid[i][j] = true
+                }
+                if (i === 3 && j === 1) {
+                    newGrid[i][j] = true
+                }
+                if (i === 3 && j === 5) {
+                    newGrid[i][j] = true
+                }
+                if (i === 4 && j === 2) {
+                    newGrid[i][j] = true
+                }
+                if (i === 4 && j === 3) {
+                    newGrid[i][j] = true
+                }
+                if (i === 4 && j === 4) {
+                    newGrid[i][j] = true
+                }
+                if (i === 4 && j === 5) {
+                    newGrid[i][j] = true
+                }
+            }
+        }
+        // set new grid to state
+        this.setState({
+            grid: newGrid
+        })
+    }
+
     play = () => {
         clearInterval(this.interval)
         this.interval = setInterval(this.run, this.speed)
@@ -158,11 +248,15 @@ class Game extends React.Component {
                     />
                     <Presets 
                         randomSeed={this.randomSeed}
+                        oscillatorSeed={this.oscillatorSeed}
+                        gliderSeed={this.gliderSeed}
+                        spaceShipSeed={this.spaceShipSeed}
                     />
                     <Controls 
                         play={this.play}
                         pause={this.pause}
                         stop={this.stop}
+                        speed={this.speed}
                         gridSize={this.gridSize}
                     />
                 </div>

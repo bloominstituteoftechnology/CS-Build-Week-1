@@ -2,6 +2,7 @@ import React from 'react';
 import '../scss/Cell.scss'
 const Cell = props => {
     const handleCell = () => {
+        console.log(props)
         props.selectCell(props.row, props.column)
     }
 
