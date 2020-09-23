@@ -4,7 +4,7 @@
 
 # Project Overview
 
-You can take a quick peek at the **live demo** [here](https://puerta-app.herokuapp.com/)
+You can take a quick peek at the **live demo** [here](https://cs-build-week-1-psi.vercel.app/)
 
 ## Specifications
 
@@ -12,7 +12,7 @@ You can take a quick peek at the **live demo** [here](https://puerta-app.herokua
 
 ### Development Mode
 
-To get started developing right away and run the project in Develepment mode, clone this [repository](https://github.com/PuertaApp/puertaApp)
+To get started developing right away and run the project in Develepment mode, clone this [repository](https://github.com/robertjallen/CS-Build-Week-1)
 * install all project dependencies with `npm install`
 * start the development server with `npm run dev`
 
@@ -27,9 +27,3 @@ aspects of computer science and nature.
 
 ![example-patterns](https://media.giphy.com/media/4VVZTvTqzRR0BUwNIH/giphy.gif)
 
-### Mobile View
-![Mobile View](https://media.giphy.com/media/8VkgrPdxMh0oo/giphy.gif)
-
-**Note at the bottom of the screen in Mobile view the button.**
-
-![Toggle Button to toggle list view and map view in mobile](https://media.giphy.com/media/8VkgrPdxMh0oo/giphy.gif)
