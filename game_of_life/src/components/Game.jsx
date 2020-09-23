@@ -247,6 +247,13 @@ class Game extends React.Component {
                     <h2>Conway's Game of Life</h2>
                 </div>
                 <div className="main">
+                    <Controls 
+                        play={this.play}
+                        pause={this.pause}
+                        stop={this.stop}
+                        fastforward={this.fastforward}
+                        gridSize={this.gridSize}
+                    />
                     <Grid 
                         grid={this.state.grid}
                         rows={this.rows}
@@ -258,13 +265,6 @@ class Game extends React.Component {
                         oscillatorSeed={this.oscillatorSeed}
                         gliderSeed={this.gliderSeed}
                         spaceShipSeed={this.spaceShipSeed}
-                    />
-                    <Controls 
-                        play={this.play}
-                        pause={this.pause}
-                        stop={this.stop}
-                        fastforward={this.fastforward}
-                        gridSize={this.gridSize}
                     />
                 </div>
                 
