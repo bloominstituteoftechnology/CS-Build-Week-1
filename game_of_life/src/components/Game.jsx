@@ -108,7 +108,7 @@ class Game extends React.Component {
     }
 
     spaceShipSeed = () => {
-        // this.clear()
+        this.clear()
         let newGrid = copyGrid(this.state.grid)
         for (let i = 0; i < this.rows; i++) {
             for(let j = 0; j < this.columns; j++) {
