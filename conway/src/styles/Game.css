@@ -13,8 +13,26 @@
    --dark-disabled: #4a4a4b;
    }
 
+   @keyframes backgroundColorPalette {
+	0% {
+		background: #ee6055;
+	}
+	25% {
+		background: #60d394;
+	}
+	50% {
+		background: #aaf683;
+	}
+	75% {
+		background: #ffd97d;
+	}
+	100% {
+		background: #ff9b85;
+	}
+}
 
 .Board-light {
+    
     position: relative;
     margin: 0 auto;
     background-color: var(--light-disabled);
@@ -25,6 +43,12 @@
 .Cell-light { 
     background: var(--light-primary); 
     position: absolute;
+    animation-name:
+    backgroundColorPalette;
+	animation-duration: 10s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-timing-function: linear; 
 }
 
 
@@ -35,9 +59,27 @@
     background-color: var(--dark-primary);
     background-image: linear-gradient(#333 1px, transparent 1px), 
     linear-gradient(90deg, #333 1px, transparent 1px);
+    
+    
 }
 
 .Cell { 
     background: var(--dark-disabled); 
     position: absolute;
+}
+
+.game{
+    height:1000px;
+    width: 1000px;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+.ruleblock{
+    display: flex;
+    width: 100%;
+}
+
+.rules{
+    width: 270px;
 }

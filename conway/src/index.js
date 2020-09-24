@@ -4,10 +4,14 @@ import './styles/index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import { BrowserRouter as Router, withRouter } from 'react-router-dom';
+
+const AppWithRouter = withRouter(App);
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router>
+    <AppWithRouter />
+  </Router>,
   document.getElementById('root')
 );
 
