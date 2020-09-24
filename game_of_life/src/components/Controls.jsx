@@ -32,8 +32,8 @@ const Controls = props => {
                 src={Pause} 
             />
             <div 
-                className="button stop"
-                onClick={props.stop}
+                className="button"
+                onClick={props.clear}
             >Clear</div>
             <div 
                 className="button popout"

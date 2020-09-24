@@ -38,7 +38,7 @@ class Game extends React.Component {
     }
 
     randomSeed = () => {
-        this.stop()
+        this.clear()
         // make a new grid and random modify it
         let newGrid = copyGrid(this.state.grid)
         for (let i = 0; i < this.rows; i++) {
@@ -56,6 +56,7 @@ class Game extends React.Component {
     }
 
     oscillatorSeed = () => {
+        this.clear()
         let newGrid = copyGrid(this.state.grid)
         for (let i = 0; i < this.rows; i++) {
             for(let j = 0; j < this.columns; j++) {
@@ -78,6 +79,7 @@ class Game extends React.Component {
     }
 
     gliderSeed = () => {
+        this.clear()
         let newGrid = copyGrid(this.state.grid)
         for (let i = 0; i < this.rows; i++) {
             for(let j = 0; j < this.columns; j++) {
@@ -106,6 +108,7 @@ class Game extends React.Component {
     }
 
     spaceShipSeed = () => {
+        // this.clear()
         let newGrid = copyGrid(this.state.grid)
         for (let i = 0; i < this.rows; i++) {
             for(let j = 0; j < this.columns; j++) {
@@ -161,7 +164,7 @@ class Game extends React.Component {
 		clearInterval(this.interval);
     }
     
-    stop = () => {
+    clear = () => {
         clearInterval(this.interval);
         let emptyGrid = makeEmptyGrid(this.rows, this.columns)
         this.setState({
@@ -188,7 +191,7 @@ class Game extends React.Component {
                 this.rows = 25
                 this.columns = 25
         }
-        this.stop();
+        this.clear();
     }
 
     run = () => {
@@ -251,7 +254,7 @@ class Game extends React.Component {
                     <Controls 
                         play={this.play}
                         pause={this.pause}
-                        stop={this.stop}
+                        clear={this.clear}
                         fastforward={this.fastforward}
                         gridSize={this.gridSize}
                     />
