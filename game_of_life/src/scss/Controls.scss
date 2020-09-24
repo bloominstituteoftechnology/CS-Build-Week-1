@@ -39,14 +39,14 @@
     .menu {
         display: none;
         position: absolute;
+        width: 150px;
         box-shadow: 0 0 20px 2px white;
-        padding: 20px;
         color: white;
         background-color: black;
         border: 1px solid white;
 
         p:hover {
-            text-decoration: underline;
+            box-shadow: 2px 2px 15px white;
         }
     }
 
