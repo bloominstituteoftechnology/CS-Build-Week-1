@@ -38,6 +38,7 @@ class Game extends React.Component {
     }
 
     randomSeed = () => {
+        this.stop()
         // make a new grid and random modify it
         let newGrid = copyGrid(this.state.grid)
         for (let i = 0; i < this.rows; i++) {

@@ -37,7 +37,7 @@ const Controls = props => {
             >Clear</div>
             <div 
                 className="button popout"
-            > Size
+            >Size
                 <div className="menu">
                     <p onClick={makeGridSmall}>Small</p>
                     <p onClick={makeGridRegular}>Regular</p>

@@ -1,5 +1,5 @@
 import React from 'react';
-import Question_Mark from '../utils/question_mark.png';
+import Question_Mark from '../utils/question_mark.jpg';
 import Oscillator from '../utils/preset2.png';
 import Glider from '../utils/preset3.png';
 import SpaceShip from '../utils/preset4.png';
