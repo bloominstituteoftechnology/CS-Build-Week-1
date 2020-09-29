@@ -123,7 +123,7 @@ class Board extends Component {
 		return (
 			<div style={{ textAlign: 'center' }}>
 				<ButtonGroup size="lg">
-  				<Button size="lg" onClick={this.step}>STEP</Button>
+  				{/* <Button size="lg" onClick={this.step}>STEP</Button> */}
   				<Button size="lg" onClick={this.seed}>SEED</Button>
   				<Button size="lg" onClick={this.play}>PLAY</Button>
 					<Button size="lg" onClick={this.pause}>PAUSE</Button>
