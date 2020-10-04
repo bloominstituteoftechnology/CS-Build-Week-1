@@ -8,9 +8,9 @@ function App() {
   const [alert, setAlert] = useState("");
   let pixelSize;
   if (width > 1000) {
-    pixelSize = 7;
+    pixelSize = 8;
   } else {
-    pixelSize = 5;
+    pixelSize = 4;
   }
   console.log(pixelSize);
   const [cellSizePx, setCellSizePx] = useState(pixelSize);

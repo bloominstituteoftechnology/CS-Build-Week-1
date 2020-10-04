@@ -13,7 +13,7 @@ export const drawGrid = ({
 }) => {
   context.strokeStyle = "black";
   context.beginPath();
-
+  console.log("counts ", nX, nY);
   //recalcuate offsets to avoid hellish nightmare --- move this to live with event listener
   context.lineWidth = 1;
   for (let x = pL; x <= gridWidth - pR; x += s) {
