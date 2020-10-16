@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
 
+// import Populate from '.playing';
 
 // This component hold all logic and displays the grid
 
@@ -34,6 +35,7 @@ const Grid = () => {
     });
 
     const [start, setStart] = useState(false);
+    // UNCOMENT ONCE WORKING-------------------------------------------------------------
     const [interval, setInterval] = useState(500); // This state is used for increasing the speed of the cells
     const [color, setColor] = useState([
         "red",
@@ -46,21 +48,23 @@ const Grid = () => {
         "pink",
         "gray",
         "brown"
-    ])
+    ]);
+    const [gen, setGen] = useState(0);
 
-    // This is the function used to increase speed
-    const increaseSpeed = () => {
-        setInterval(interval - 10)
+    // UNCOMMENT ONCE WORKING------------------------------------------
+    // // This is the function used to increase speed
+    // const increaseSpeed = () => {
+    //     setInterval(interval - 10)
 
-        console.log(interval)
-    }
+    //     console.log(interval)
+    // }
 
-    // Used to decrease speed
-    const decreaseSpeed = () => {
-        setInterval(interval + 10)
+    // // Used to decrease speed
+    // const decreaseSpeed = () => {
+    //     setInterval(interval + 10)
 
-        console.log(interval)
-    }
+    //     console.log(interval)
+    // }
 
     // Randomize color
     const changeColor = () => {
@@ -84,7 +88,7 @@ const Grid = () => {
                         surround.forEach(([x, y]) => {
                             const genI = i + x;
                             const genJ = j + y;
-                            // making sure we are in the grib and not out of it
+                            // making sure we are in the grid and not out of it
                             if (genI >= 0 && genI < Rows && genJ >= 0 && genJ < Col) {
                                  neighbors += g[genI][genJ]
                             }
@@ -102,7 +106,9 @@ const Grid = () => {
             })
         })
     
-        setTimeout(Populate, interval);
+        setInterval(Populate, interval)
+        // setTimeout(Populate, interval);
+        setGen(gen + 1)
     }, []);
 
     return (
@@ -126,7 +132,7 @@ const Grid = () => {
                             style={{ 
                                 width: 20, 
                                 height: 20,
-                                backgroundColor: grid[x][y] ? color : undefined,
+                                backgroundColor: grid[x][y] ? 'black' : undefined,
                                 border: 'solid 1px black'
                             }}
                         />
@@ -168,13 +174,14 @@ const Grid = () => {
             </button>
 
             {/* Not working speed button */}
-            <div>
+            {/* <div>
                 Speed:
                 <button onClick={increaseSpeed}> + </button>
                 <button onClick={decreaseSpeed}> - </button>
-            </div>
+            </div> */}
 
             <button onClick={changeColor}> Change Color </button>
+            <div>Generaton: {gen}</div>
         </>
     )
 }
