@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
 
+// import Generation from './generation.js';
 // import Populate from '.playing';
 
 // This component hold all logic and displays the grid
@@ -74,6 +75,7 @@ const Grid = () => {
     const runningRef = useRef();
     runningRef.current = start
 
+    // This runs the game
     const Populate = useCallback(() => {
         if (!runningRef.current) {
             return;
@@ -181,7 +183,7 @@ const Grid = () => {
             </div> */}
 
             <button onClick={changeColor}> Change Color </button>
-            <div>Generaton: {gen}</div>
+            <h2>Generation: {gen}</h2>
         </>
     )
 }

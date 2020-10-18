@@ -1,3 +1,4 @@
+// functional component
 import React, { useState } from 'react';
 
 function Generation() {
@@ -15,3 +16,22 @@ function Generation() {
 };
 
 export default Generation;
+
+// class component
+
+// import React from 'react';
+
+// export default class Generation extends React.Component {
+//     constructor() {
+//         super();
+//         this.state = {
+//             generation: 0
+//         }
+//     }
+
+//     render() {
+//         return (
+//         <h2>Generation: {this.state.generation}</h2>
+//         )
+//     }
+// };
