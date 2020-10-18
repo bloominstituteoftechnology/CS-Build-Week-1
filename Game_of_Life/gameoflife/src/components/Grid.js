@@ -108,7 +108,7 @@ const Grid = () => {
             })
         })
     
-        setInterval(Populate, interval)
+        setTimeout(Populate, interval)
         // setTimeout(Populate, interval);
         setGen(gen + 1)
     }, []);

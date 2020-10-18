@@ -9,7 +9,7 @@ function App() {
     return (
         <>
             <Grid />
-            <Generation />
+            {/* <Generation /> */}
         </>
     )
 };
