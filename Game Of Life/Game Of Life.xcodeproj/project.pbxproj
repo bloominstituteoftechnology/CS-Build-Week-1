@@ -13,6 +13,8 @@
 		C34210752536A70100479650 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C34210742536A70100479650 /* Assets.xcassets */; };
 		C34210782536A70100479650 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C34210762536A70100479650 /* LaunchScreen.storyboard */; };
 		C34210812536A77800479650 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34210802536A77800479650 /* GridView.swift */; };
+		C3AED1BC253B60B8001AA791 /* GameBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AED1BB253B60B8001AA791 /* GameBoardViewController.swift */; };
+		C3AED1BF253B7589001AA791 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AED1BE253B7589001AA791 /* Matrix.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		C34210772536A70100479650 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C34210792536A70100479650 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C34210802536A77800479650 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		C3AED1BB253B60B8001AA791 /* GameBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardViewController.swift; sourceTree = "<group>"; };
+		C3AED1BE253B7589001AA791 /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,7 @@
 		C34210872536AAE100479650 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C3AED1BB253B60B8001AA791 /* GameBoardViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -93,6 +98,7 @@
 		C34210882536AAE700479650 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C3AED1BE253B7589001AA791 /* Matrix.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -178,6 +184,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C342106C2536A70000479650 /* AppDelegate.swift in Sources */,
+				C3AED1BF253B7589001AA791 /* Matrix.swift in Sources */,
+				C3AED1BC253B60B8001AA791 /* GameBoardViewController.swift in Sources */,
 				C34210812536A77800479650 /* GridView.swift in Sources */,
 				C342106E2536A70000479650 /* SceneDelegate.swift in Sources */,
 			);

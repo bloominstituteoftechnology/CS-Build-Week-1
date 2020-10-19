@@ -12,11 +12,11 @@ class GridView: UIView {
     private var path = UIBezierPath()
     fileprivate var gridWidthMultiple: CGFloat
     {
-        return 20
+        return CGFloat(GameBoardViewController.columnCount)
     }
     fileprivate var gridHeightMultiple : CGFloat
     {
-        return 20
+        return CGFloat(GameBoardViewController.rowCount)
     }
     
     fileprivate var gridWidth: CGFloat
@@ -62,7 +62,6 @@ class GridView: UIView {
     {
         drawGrid()
         
-        // Specify a border (stroke) color.
         UIColor.tertiarySystemBackground.setStroke()
         path.stroke()
     }
