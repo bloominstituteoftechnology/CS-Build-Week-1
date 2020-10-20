@@ -22,3 +22,19 @@ function handleCellClick(e){
         cell.classList.toggle('on')
     }
 }
+var canvas = document.getElementById('canvas')
+function initialize(){
+    for(i = 0; i < height; i++){
+        canvasArr.push([])
+        var row = document.createElement('tr');
+        for(j = 0; j < width; j++){
+            canvasArr[i].push(0)
+            var cell = document.createElement('td')
+            cell.id = `r${i}c${j}`
+            cell.addEventListener('click', handleCellClick)
+            row.appendChild(cell)
+        }
+        canvas.appendChild(row)
+    }
+}
+initialize()
