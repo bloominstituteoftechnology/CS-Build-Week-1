@@ -38,3 +38,10 @@ function initialize(){
     }
 }
 initialize()
+
+function reinitialize(){
+    while(canvas.firstChild){
+        canvas.removeChild(canvas.firstChild)
+    }
+    initialize()
+}
