@@ -38,11 +38,13 @@ function App () {
   const runningRef = useRef(running);
   runningRef.current = running;
 
-  const incrementGen = () => {
-    setGeneration(generation + 1)
-    setInterval(incrementGen, 700)
-  }
-
+  const incrementGen = useCallback(() => {
+    setGeneration(gen => {
+      return produce(gen, genCopy => {
+        genCopy + 1
+      })
+    })
+  })
 
   const runSimulation = useCallback(() => {
     if (!runningRef.current) {
@@ -71,6 +73,7 @@ function App () {
         }
       });
     });
+
 
     incrementGen();
 
@@ -146,7 +149,7 @@ function App () {
        {color === 'green' ? 'change back!' : 'Make boxes green!'}
       </button>
       <button onClick={ () => {
-        incrementGen()
+        setGeneration(generation + 1)
       }}>
         Generation!
       </button>
