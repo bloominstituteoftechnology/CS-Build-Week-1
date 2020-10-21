@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import produce from 'immer';
 
 // import Generation from './generation.js';
@@ -37,7 +37,7 @@ const Grid = () => {
 
     const [start, setStart] = useState(false);
     // UNCOMENT ONCE WORKING-------------------------------------------------------------
-    const [interval, setInterval] = useState(500); // This state is used for increasing the speed of the cells
+    // const [speed, setSpeed] = useState(100); // This state is used for increasing the speed of the cells
     const [color, setColor] = useState([
         "red",
         "orange",
@@ -51,6 +51,9 @@ const Grid = () => {
         "brown"
     ]);
     const [gen, setGen] = useState(0);
+
+    const [speedInput, setSpeedInput] = useState("");
+    const [clickable, setClickable] = useState(true)
 
     // UNCOMMENT ONCE WORKING------------------------------------------
     // // This is the function used to increase speed
@@ -66,6 +69,26 @@ const Grid = () => {
 
     //     console.log(interval)
     // }
+
+    const useInterval = (callback, delay, grid, clickable) => {
+        const savedCallback = useRef();
+
+        useEffect(() => {
+            savedCallback.current = callback;
+        }, [callback]);
+
+        useEffect(() => {
+            if (!clickable) {
+                function tick() {
+                    savedCallback.current();
+                }
+                if (delay !== null) {
+                    let id = setInterval(tick, delay);
+                    return () => clearInterval(id)
+                }
+            }
+        }, [delay, grid, clickable]);
+    };
 
     // Randomize color
     const changeColor = () => {
@@ -108,10 +131,12 @@ const Grid = () => {
             })
         })
     
-        setTimeout(Populate, interval)
+        setInterval(Populate)
         // setTimeout(Populate, interval);
         setGen(gen + 1)
     }, []);
+
+    useInterval(+speedInput || 500, grid, clickable)
 
     return (
         <>
@@ -181,6 +206,13 @@ const Grid = () => {
                 <button onClick={increaseSpeed}> + </button>
                 <button onClick={decreaseSpeed}> - </button>
             </div> */}
+
+            // Set speed
+            <input 
+                placeholder="Enter speed in miiliseconds"
+                value={speedInput}
+                onChange={e => setSpeedInput(e.target.value)}
+            />
 
             <button onClick={changeColor}> Change Color </button>
             <h2>Generation: {gen}</h2>
