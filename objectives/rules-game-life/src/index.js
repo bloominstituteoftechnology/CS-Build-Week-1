@@ -45,3 +45,11 @@ function reinitialize(){
     }
     initialize()
 }
+function checkAlive(x,y,arr){
+    var count = 0
+    if(x > 0 && y > 0 && canvasArr[y-1][x-1] === 1){
+        count++
+    }
+    if(y > 0&& canvasArr[y-1][x] === 1){
+        count++
+    }
