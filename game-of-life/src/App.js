@@ -29,7 +29,7 @@ function App () {
     return generateEmptyGrid();
   });
 
-  const [generation, setGeneration] = useState(1)
+  const [generation, setGeneration] = useState(0)
 
   const [color, setColor] = useState('orange')
 
@@ -40,16 +40,22 @@ function App () {
   const runningRef = useRef(running);
   runningRef.current = running;
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (runningRef.current) {
+  //     const id = window.setInterval(() => {
+  //       setGeneration(generation => generation + 1);
+  //     }, 700);
+  //     setIntervalId(id);
+  //   } else {
+  //     window.clearInterval(intervalId);
+  //   }
+  // }, [runningRef.current])
+
+  const addGen = () => {
     if (runningRef.current) {
-      const id = window.setInterval(() => {
-        setGeneration(generation => generation + 1);
-      }, 700);
-      setIntervalId(id);
-    } else {
-      window.clearInterval(intervalId);
+      setGeneration(generation => generation + 1);
     }
-  }, [runningRef.current])
+  }
 
   const runSimulation = useCallback(() => {
     if (!runningRef.current) {
@@ -78,6 +84,8 @@ function App () {
         }
       });
     });
+    
+    addGen();
     setTimeout(runSimulation, 700);
   }, []);
 
@@ -106,6 +114,7 @@ function App () {
           }
 
           setGrid(rows);
+          setGeneration(0);
         }}
       >
         random
@@ -114,6 +123,7 @@ function App () {
         onClick={() => {
           setGrid(generateEmptyGrid());
           setGeneration(0)
+          setRunning(!running)
         }}
       >
         clear
