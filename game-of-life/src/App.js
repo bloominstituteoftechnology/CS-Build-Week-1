@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import produce from "immer";
 
 const numRows = 25;
@@ -29,22 +29,27 @@ function App () {
     return generateEmptyGrid();
   });
 
-  const [generation, setGeneration] = useState(0)
+  const [generation, setGeneration] = useState(1)
 
   const [color, setColor] = useState('orange')
 
   const [running, setRunning] = useState(false);
 
+  const [intervalId, setIntervalId] = useState(null);
+
   const runningRef = useRef(running);
   runningRef.current = running;
 
-  const incrementGen = useCallback(() => {
-    setGeneration(gen => {
-      return produce(gen, genCopy => {
-        genCopy + 1
-      })
-    })
-  })
+  useEffect(() => {
+    if (runningRef.current) {
+      const id = window.setInterval(() => {
+        setGeneration(generation => generation + 1);
+      }, 700);
+      setIntervalId(id);
+    } else {
+      window.clearInterval(intervalId);
+    }
+  }, [runningRef.current])
 
   const runSimulation = useCallback(() => {
     if (!runningRef.current) {
@@ -73,10 +78,6 @@ function App () {
         }
       });
     });
-
-
-    incrementGen();
-
     setTimeout(runSimulation, 700);
   }, []);
 
@@ -90,7 +91,6 @@ function App () {
           if (!running) {
             runningRef.current = true;
             runSimulation();
-            incrementGen();
           }
         }}
       >
@@ -113,6 +113,7 @@ function App () {
       <button
         onClick={() => {
           setGrid(generateEmptyGrid());
+          setGeneration(0)
         }}
       >
         clear
@@ -148,9 +149,7 @@ function App () {
       }}>
        {color === 'green' ? 'change back!' : 'Make boxes green!'}
       </button>
-      <button onClick={ () => {
-        setGeneration(generation + 1)
-      }}>
+      <button>
         Generation!
       </button>
     </>
