@@ -41,7 +41,6 @@ const Grid = () => {
 
     // const [start, setStart] = useState(false);
     // UNCOMENT ONCE WORKING-------------------------------------------------------------
-    const [interval, setInterval] = useState(500)
     const [color, setColor] = useState([
         "red",
         "orange",
@@ -57,9 +56,11 @@ const Grid = () => {
 
     const [start, setStart] = useState(false);
     const [gen, setGen] = useState(0);
+    const [speed, setSpeed] = useState(500)
+    // const speed = 500;
 
     // UNCOMMENT ONCE WORKING------------------------------------------
-    // // This is the function used to increase speed
+    // This is the function used to increase speed
     // const increaseSpeed = () => {
     //     setInterval(interval - 10)
 
@@ -86,40 +87,40 @@ const Grid = () => {
 
     // This runs the game
     const Populate = useCallback(() => {
-        if (!runningRef.current) {
-            return;
-        }
+        setInterval(() => {
+            if (!runningRef.current) {
+                return;
+            }
 
-        setGrid((g) => {
-            return produce(g, gridCopy => {
-                for (let i = 0; i < Rows; i++) {
-                    // checking for neighbors
-                    for (let j = 0; j < Col; j++) {
-                        let neighbors = 0;
-                        surround.forEach(([x, y]) => {
-                            const genI = i + x;
-                            const genJ = j + y;
-                            // making sure we are in the grid and not out of it
-                            if (genI >= 0 && genI < Rows && genJ >= 0 && genJ < Col) {
-                                 neighbors += g[genI][genJ]
-                            }
-                        })
-    
-                        // determines if a cell dies or is born depending on above condition
-                        if (neighbors < 2 || neighbors > 3) {
-                            gridCopy[i][j] = 0;
-                        } else if (g[i][j] === 0 && neighbors === 3) {
-                            gridCopy[i][j] = 1;
-                        }                        
-                          
+            setGrid((g) => {
+                return produce(g, gridCopy => {
+                    for (let i = 0; i < Rows; i++) {
+                        // checking for neighbors
+                        for (let j = 0; j < Col; j++) {
+                            let neighbors = 0;
+                            surround.forEach(([x, y]) => {
+                                const genI = i + x;
+                                const genJ = j + y;
+                                // making sure we are in the grid and not out of it
+                                if (genI >= 0 && genI < Rows && genJ >= 0 && genJ < Col) {
+                                     neighbors += g[genI][genJ]
+                                }
+                            })
+        
+                            // determines if a cell dies or is born depending on above condition
+                            if (neighbors < 2 || neighbors > 3) {
+                                gridCopy[i][j] = 0;
+                            } else if (g[i][j] === 0 && neighbors === 3) {
+                                gridCopy[i][j] = 1;
+                            }                        
+                              
+                        }
                     }
-                }
-            })
-        })
-    
-        // setInterval(Populate, interval)
-        setTimeout(Populate, interval);
-        setGen(++genRef.current);
+                })
+            });
+            setGen(++genRef.current);
+        }, speed)
+        
     }, []);
 
     return (
@@ -156,7 +157,7 @@ const Grid = () => {
                 onClick={() => {
                     setStart(!start);
                     if (!start) {
-                        runningRef.current = true;
+                        runningRef.current = !start;
                         Populate();
                     }
                 }}
