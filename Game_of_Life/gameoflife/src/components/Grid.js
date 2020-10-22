@@ -1,11 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import produce from 'immer';
 
-// import Generation from './generation.js';
-// import Populate from '.playing';
-
-// This component hold all logic and displays the grid
-
 const Rows = 25;
 const Col = 25;
 
@@ -21,6 +16,15 @@ const surround = [
     [-1, -1]
 ];
 
+const randomGrid = () => {
+    const rows = [];
+    for (let i = 0; i < Rows; i++) {
+        rows.push(Array.from(Array(Col), () => Math.random() > .7 ? 1 : 0));
+    };
+    // setGrid(rows);
+    return rows;
+};
+
 // Clearing grid. 
 const clearGrid = () => {
     const rows = [];
@@ -35,9 +39,9 @@ const Grid = () => {
         return clearGrid();
     });
 
-    const [start, setStart] = useState(false);
+    // const [start, setStart] = useState(false);
     // UNCOMENT ONCE WORKING-------------------------------------------------------------
-    // const [speed, setSpeed] = useState(100); // This state is used for increasing the speed of the cells
+    const [interval, setInterval] = useState(500)
     const [color, setColor] = useState([
         "red",
         "orange",
@@ -50,10 +54,9 @@ const Grid = () => {
         "gray",
         "brown"
     ]);
-    const [gen, setGen] = useState(0);
 
-    const [speedInput, setSpeedInput] = useState("");
-    const [clickable, setClickable] = useState(true)
+    const [start, setStart] = useState(false);
+    const [gen, setGen] = useState(0);
 
     // UNCOMMENT ONCE WORKING------------------------------------------
     // // This is the function used to increase speed
@@ -70,32 +73,15 @@ const Grid = () => {
     //     console.log(interval)
     // }
 
-    const useInterval = (callback, delay, grid, clickable) => {
-        const savedCallback = useRef();
-
-        useEffect(() => {
-            savedCallback.current = callback;
-        }, [callback]);
-
-        useEffect(() => {
-            if (!clickable) {
-                function tick() {
-                    savedCallback.current();
-                }
-                if (delay !== null) {
-                    let id = setInterval(tick, delay);
-                    return () => clearInterval(id)
-                }
-            }
-        }, [delay, grid, clickable]);
-    };
-
     // Randomize color
     const changeColor = () => {
         setColor()
     }
 
-    const runningRef = useRef();
+    const genRef = useRef(gen);
+    genRef.current = gen;
+
+    const runningRef = useRef(start);
     runningRef.current = start
 
     // This runs the game
@@ -131,12 +117,10 @@ const Grid = () => {
             })
         })
     
-        setInterval(Populate)
-        // setTimeout(Populate, interval);
-        setGen(gen + 1)
+        // setInterval(Populate, interval)
+        setTimeout(Populate, interval);
+        setGen(++genRef.current);
     }, []);
-
-    useInterval(+speedInput || 500, grid, clickable)
 
     return (
         <>
@@ -191,11 +175,12 @@ const Grid = () => {
 
             {/* Randomize button */}
             <button onClick={() => {
-                const rows = [];
-                for (let i = 0; i < Rows; i++) {
-                    rows.push(Array.from(Array(Col), () => Math.random() > .7 ? 1 : 0));
-                };
-                setGrid(rows);
+                // const rows = [];
+                // for (let i = 0; i < Rows; i++) {
+                //     rows.push(Array.from(Array(Col), () => Math.random() > .7 ? 1 : 0));
+                // };
+                // setGrid(rows);
+                setGrid(randomGrid());
             }}>
                 Randomize
             </button>
@@ -206,13 +191,6 @@ const Grid = () => {
                 <button onClick={increaseSpeed}> + </button>
                 <button onClick={decreaseSpeed}> - </button>
             </div> */}
-
-            // Set speed
-            <input 
-                placeholder="Enter speed in miiliseconds"
-                value={speedInput}
-                onChange={e => setSpeedInput(e.target.value)}
-            />
 
             <button onClick={changeColor}> Change Color </button>
             <h2>Generation: {gen}</h2>
