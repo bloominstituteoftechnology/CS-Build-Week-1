@@ -39,39 +39,32 @@ const Grid = () => {
         return clearGrid();
     });
 
-    // const [start, setStart] = useState(false);
     // UNCOMENT ONCE WORKING-------------------------------------------------------------
     const [color, setColor] = useState([
         "red",
         "orange",
-        "yellow",
-        "green",
-        "cyan",
         "blue",
-        "purple",
-        "pink",
-        "gray",
-        "brown"
+        "green"
     ]);
 
     const [start, setStart] = useState(false);
     const [gen, setGen] = useState(0);
-    const [speed, setSpeed] = useState(500)
+    const [speed, setSpeed] = useState()
     // const speed = 500;
 
     // UNCOMMENT ONCE WORKING------------------------------------------
     // This is the function used to increase speed
     // const increaseSpeed = () => {
-    //     setInterval(interval - 10)
+    //     setSpeed(speed + 10)
 
-    //     console.log(interval)
+    //     console.log(speed)
     // }
 
     // // Used to decrease speed
     // const decreaseSpeed = () => {
-    //     setInterval(interval + 10)
+    //     setSpeed(speed - 10)
 
-    //     console.log(interval)
+    //     console.log(speed)
     // }
 
     // Randomize color
@@ -123,6 +116,11 @@ const Grid = () => {
         
     }, []);
 
+    function handleChange(event) {
+        setSpeed(event.target.value)       
+
+    };
+
     return (
         <>
             <div 
@@ -168,7 +166,9 @@ const Grid = () => {
             {/* Clear grid button */}
             <button
                 onClick={() => {
-                    setGrid(clearGrid());
+                    setGrid(clearGrid())
+                    setGen(gen == 0)
+                    setSpeed(speed == 500)
                 }}
             >
                 Clear Board
@@ -176,24 +176,28 @@ const Grid = () => {
 
             {/* Randomize button */}
             <button onClick={() => {
-                // const rows = [];
-                // for (let i = 0; i < Rows; i++) {
-                //     rows.push(Array.from(Array(Col), () => Math.random() > .7 ? 1 : 0));
-                // };
-                // setGrid(rows);
                 setGrid(randomGrid());
             }}>
                 Randomize
             </button>
 
-            {/* Not working speed button */}
+            {/* Not working dynamic speed button */}
             {/* <div>
                 Speed:
                 <button onClick={increaseSpeed}> + </button>
                 <button onClick={decreaseSpeed}> - </button>
             </div> */}
 
-            <button onClick={changeColor}> Change Color </button>
+            <div>
+                <input
+                    type='number'
+                    value={speed}
+                    onChange={handleChange}
+                />
+                    Enter speed in ms
+            </div>
+
+            {/* <button onClick={changeColor}> Change Color </button> */}
             <h2>Generation: {gen}</h2>
         </>
     )
