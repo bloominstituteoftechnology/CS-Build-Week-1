@@ -53,3 +53,39 @@ function checkAlive(x,y,arr){
     if(y > 0&& canvasArr[y-1][x] === 1){
         count++
     }
+    if(y > 0 && x < width-1 !== null && canvasArr[y-1][x+1] === 1){
+        count++
+    }
+    if(x > 0 && canvasArr[y][x-1] === 1){
+        count++
+    }
+    if(x < width-1 && canvasArr[y][x+1] === 1){
+        count++
+    }
+    if(y< height-1 && x > 0 !== null && canvasArr[y+1][x-1] === 1){
+        count++
+    }
+    if(y < height-1 && arr[y+1][x] === 1){
+        count++
+    }
+    if(y < height-1 && x < width-1 && canvasArr[y+1][x+1] === 1){
+        count++
+    }
+    if(count < 2 || count > 3){
+        if(arr[y][x] === 1){
+            arr[y][x] = 0
+        } 
+        return {alive:false, data: arr}
+    }else{ 
+        if(canvasArr[y][x] < 1 && count == 3){
+            arr[y][x] = 1
+            return {alive: true, data: arr, counter: count}
+        }else if(canvasArr[y][x] == 0 && count !== 3){
+            return {alive: false, data: arr, counter: count}
+        }else{
+            return {alive: true, data: arr, counter: count}
+        }
+
+    }
+
+}
