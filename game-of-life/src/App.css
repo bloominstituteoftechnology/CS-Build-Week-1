@@ -1,3 +1,14 @@
 .App {
     text-align: center;
 }
+
+.info {
+    display: flex;
+    justify-content: space-evenly;
+    /* border: 2px solid green; */
+
+}
+
+.box {
+    width: 50rem
+}
