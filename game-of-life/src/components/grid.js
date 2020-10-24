@@ -876,7 +876,7 @@ function Grid () {
         onClick={() => {
           setGrid(generateEmptyGrid());
           setGeneration(0)
-          setRunning(!running)
+          setRunning(false)
         }}
       >
         clear
