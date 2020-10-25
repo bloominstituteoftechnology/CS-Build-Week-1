@@ -88,3 +88,4 @@ function increment(dir, amount){
         y.innerHTML = `Height: ${height}`
     }
     reinitialize()
+}
