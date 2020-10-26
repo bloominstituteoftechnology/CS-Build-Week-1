@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import produce from 'immer';
+import { Dropdown } from 'react-bootstrap';
 
 const Rows = 25;
 const Col = 25;
@@ -40,16 +41,11 @@ const Grid = () => {
     });
 
     // UNCOMENT ONCE WORKING-------------------------------------------------------------
-    const [color, setColor] = useState([
-        "red",
-        "orange",
-        "blue",
-        "green"
-    ]);
+    const [color, setColor] = useState('black');
 
     const [start, setStart] = useState(false);
     const [gen, setGen] = useState(0);
-    const [speed, setSpeed] = useState()
+    const [speed, setSpeed] = useState("")
     // const speed = 500;
 
     // UNCOMMENT ONCE WORKING------------------------------------------
@@ -68,9 +64,9 @@ const Grid = () => {
     // }
 
     // Randomize color
-    const changeColor = () => {
-        setColor()
-    }
+    // const changeColor = () => {
+    //     setColor()
+    // }
 
     const genRef = useRef(gen);
     genRef.current = gen;
@@ -121,6 +117,26 @@ const Grid = () => {
 
     };
 
+    function handleSelect(event) {
+        setColor(event)
+    };
+
+    // setColor(hue) = {
+	// 	switch (hue) {
+	// 		case "1":
+	// 			this.cols = 20;
+	// 			this.rows = 10;
+	// 		break;
+	// 		case "2":
+	// 			this.cols = 50;
+	// 			this.rows = 30;
+	// 		break;
+	// 		default:
+	// 			this.cols = 70;
+	// 			this.rows = 50;
+	// 	}
+	// }
+
     return (
         <>
             <div 
@@ -142,7 +158,7 @@ const Grid = () => {
                             style={{ 
                                 width: 20, 
                                 height: 20,
-                                backgroundColor: grid[x][y] ? 'black' : undefined,
+                                backgroundColor: grid[x][y] ? color : undefined,
                                 border: 'solid 1px black'
                             }}
                         />
@@ -190,14 +206,21 @@ const Grid = () => {
 
             <div>
                 <input
-                    type='number'
+                    // type='text'
                     value={speed}
                     onChange={handleChange}
                 />
                     Enter speed in ms
             </div>
 
-            {/* <button onClick={changeColor}> Change Color </button> */}
+            <select>
+                <option value="grapefruit">Grapefruit</option>
+                <option value="lime">Lime</option>
+                <option selected value="coconut">Coconut</option>
+                <option value="mango">Mango</option>
+            </select>
+
+
             <h2>Generation: {gen}</h2>
         </>
     )
