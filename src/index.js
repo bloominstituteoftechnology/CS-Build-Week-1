@@ -89,3 +89,24 @@ function checkAlive(x,y,arr){
     }
 
 }
+function sim(){
+    if(running){
+        count++
+        gen.innerHTML = `Generation: ${count}`
+        var newArr = JSON.parse(JSON.stringify(canvasArr))
+        for(y = 0; y < height; y++){
+            for(x = 0; x < width; x++){
+                let item = document.getElementById(`r${y}c${x}`)
+                let res = checkAlive(x,y,newArr)
+                newArr = res.data
+                if(res.alive){
+                    item.classList.add('on')
+                }else{
+                    item.classList.remove('on')  
+                }
+            }
+        }
+        canvasArr = newArr
+    }
+
+}
