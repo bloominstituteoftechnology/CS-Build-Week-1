@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="SgY-pi-efb">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Game Of Life-->
+        <scene sceneID="DCf-w2-IeC">
+            <objects>
+                <viewController id="oHq-Z3-wh6" customClass="GameBoardViewController" customModule="Game_Of_Life" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Eq0-cg-Mgw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kHY-sV-woL">
+                                <rect key="frame" x="20" y="108" width="374" height="669"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="CLq-0W-ESD">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SquareCollectionViewCell" id="rNT-kG-QX4" customClass="SquareCollectionViewCell" customModule="Game_Of_Life" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="as3-w1-ATm">
+                                                    <rect key="frame" x="4" y="4" width="42.5" height="42.5"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="as3-w1-ATm" secondAttribute="height" id="Gog-Ud-Nnx"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="as3-w1-ATm" firstAttribute="width" secondItem="rNT-kG-QX4" secondAttribute="width" multiplier="0.85" id="F18-IW-Nud"/>
+                                            <constraint firstItem="as3-w1-ATm" firstAttribute="centerY" secondItem="rNT-kG-QX4" secondAttribute="centerY" id="bjN-cC-xrY"/>
+                                            <constraint firstItem="as3-w1-ATm" firstAttribute="centerX" secondItem="rNT-kG-QX4" secondAttribute="centerX" id="xk8-yW-CcK"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="squareView" destination="as3-w1-ATm" id="6jc-mH-Zdp"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="oHq-Z3-wh6" id="T5G-A4-c7D"/>
+                                    <outlet property="delegate" destination="oHq-Z3-wh6" id="Bz7-ba-fdQ"/>
+                                </connections>
+                            </collectionView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="bottom" spacing="119" translatesAutoresizingMaskIntoConstraints="NO" id="kCU-bD-aHZ">
+                                <rect key="frame" x="20" y="797" width="374" height="23"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lwc-vu-WmC">
+                                        <rect key="frame" x="0.0" y="0.0" width="45.5" height="23"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <state key="normal" image="arrow.uturn.left" catalog="system">
+                                            <color key="titleColor" systemColor="systemBackgroundColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="resetAction:" destination="oHq-Z3-wh6" eventType="touchUpInside" id="gdk-cY-7mp"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mMB-f3-YOk">
+                                        <rect key="frame" x="164.5" y="1" width="45" height="22"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <state key="normal" image="play.fill" catalog="system"/>
+                                        <state key="selected" image="pause.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="playAction:" destination="oHq-Z3-wh6" eventType="touchUpInside" id="t3O-yN-OJw"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l7V-79-HHE">
+                                        <rect key="frame" x="328.5" y="1" width="45.5" height="22"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <state key="normal" image="shuffle" catalog="system"/>
+                                        <connections>
+                                            <action selector="randomAction:" destination="oHq-Z3-wh6" eventType="touchUpInside" id="Zs4-F3-wBS"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="sSd-O7-tQg"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sSd-O7-tQg" firstAttribute="bottom" secondItem="kCU-bD-aHZ" secondAttribute="bottom" constant="42" id="8f7-Ap-0K8"/>
+                            <constraint firstItem="kHY-sV-woL" firstAttribute="leading" secondItem="sSd-O7-tQg" secondAttribute="leading" constant="20" id="EOU-u5-gg4"/>
+                            <constraint firstItem="kHY-sV-woL" firstAttribute="top" secondItem="sSd-O7-tQg" secondAttribute="top" constant="20" id="WNv-ru-uta"/>
+                            <constraint firstItem="kCU-bD-aHZ" firstAttribute="top" secondItem="kHY-sV-woL" secondAttribute="bottom" constant="20" id="XcA-ic-whm"/>
+                            <constraint firstItem="sSd-O7-tQg" firstAttribute="trailing" secondItem="kCU-bD-aHZ" secondAttribute="trailing" constant="20" id="hOu-2u-vMK"/>
+                            <constraint firstAttribute="trailing" secondItem="kHY-sV-woL" secondAttribute="trailing" constant="20" id="juX-zL-ZgP"/>
+                            <constraint firstItem="kCU-bD-aHZ" firstAttribute="leading" secondItem="sSd-O7-tQg" secondAttribute="leading" constant="20" id="tvb-sk-j3o"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Game Of Life" id="dYU-e3-Hee">
+                        <barButtonItem key="rightBarButtonItem" image="ellipsis" catalog="system" id="PO3-g4-B8b">
+                            <color key="tintColor" systemColor="labelColor"/>
+                            <connections>
+                                <segue destination="SFk-1m-nzI" kind="show" id="NOV-Ux-m6i"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="kHY-sV-woL" id="Vdo-68-66g"/>
+                        <outlet property="playPauseButton" destination="mMB-f3-YOk" id="jOo-AK-aXQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k1f-2P-LG2" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2066.666666666667" y="84.375"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="8GD-jv-zYL">
+            <objects>
+                <viewController id="SgY-pi-efb" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="433-uo-uCb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CGOIL" translatesAutoresizingMaskIntoConstraints="NO" id="ilm-1j-2I6">
+                                <rect key="frame" x="87" y="94" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="UYG-gG-9Fw"/>
+                                    <constraint firstAttribute="height" constant="128" id="xHs-KS-ev2"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPa-SW-3SG">
+                                <rect key="frame" x="138" y="393" width="138" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="138" id="cxX-dE-4vk"/>
+                                </constraints>
+                                <state key="normal" title="ABOUT">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="ytX-VX-8hj" kind="popoverPresentation" popoverAnchorView="XPa-SW-3SG" id="hO8-qB-ddK">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7sH-sp-dwP">
+                                <rect key="frame" x="111.5" y="307" width="191" height="36"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="191" id="Yu6-KG-dXU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="PLAY">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="vMa-5w-b75" kind="presentation" modalPresentationStyle="fullScreen" id="AWZ-RH-gDJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dY6-fC-K0W"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ilm-1j-2I6" firstAttribute="top" secondItem="dY6-fC-K0W" secondAttribute="top" constant="50" id="0jj-JM-X1W"/>
+                            <constraint firstItem="7sH-sp-dwP" firstAttribute="centerX" secondItem="433-uo-uCb" secondAttribute="centerX" id="Gb6-ZH-Tqj"/>
+                            <constraint firstItem="7sH-sp-dwP" firstAttribute="top" secondItem="ilm-1j-2I6" secondAttribute="bottom" constant="85" id="HH6-ge-1mi"/>
+                            <constraint firstItem="XPa-SW-3SG" firstAttribute="centerX" secondItem="433-uo-uCb" secondAttribute="centerX" id="JTm-0g-cWT"/>
+                            <constraint firstItem="XPa-SW-3SG" firstAttribute="top" secondItem="7sH-sp-dwP" secondAttribute="bottom" constant="50" id="kXR-lk-aHL"/>
+                            <constraint firstItem="ilm-1j-2I6" firstAttribute="centerX" secondItem="433-uo-uCb" secondAttribute="centerX" id="oJA-KH-UrU"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FjV-6m-owc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="279.71014492753625" y="83.705357142857139"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="MdO-b0-KcD">
+            <objects>
+                <viewController id="SFk-1m-nzI" customClass="SettingsViewController" customModule="Game_Of_Life" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iZ5-Iu-y6i">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Theme:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fSX-2h-UG1">
+                                <rect key="frame" x="20" y="108" width="374" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Speed:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7g-Rl-ZZG">
+                                <rect key="frame" x="20" y="283" width="374" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="qWT-TH-q4d">
+                                <rect key="frame" x="20" y="158" width="374" height="75"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="38F-uE-eOG"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="a8j-sv-qOb">
+                                    <size key="itemSize" width="71" height="74"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellColor" id="0py-f6-ILo">
+                                        <rect key="frame" x="0.0" y="0.5" width="71" height="74"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Wpf-Eh-dwZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="71" height="74"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="71" height="74"/>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="SFk-1m-nzI" id="0t5-gl-BfS"/>
+                                    <outlet property="delegate" destination="SFk-1m-nzI" id="hRp-9B-7l5"/>
+                                </connections>
+                            </collectionView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.10000000000000001" minValue="0.10000000000000001" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="8eW-ws-tvb">
+                                <rect key="frame" x="68" y="333" width="288" height="31"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <connections>
+                                    <action selector="gameSpeedSlider:" destination="SFk-1m-nzI" eventType="valueChanged" id="3MK-dl-5RR"/>
+                                </connections>
+                            </slider>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bolt.slash" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="tbv-A3-vXg">
+                                <rect key="frame" x="20" y="332" width="30" height="31.5"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="ANo-qb-U7Y"/>
+                                    <constraint firstAttribute="width" constant="30" id="F2W-g9-H90"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bolt.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="iq9-T3-NmI">
+                                <rect key="frame" x="364" y="332" width="30" height="31.5"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="8Vt-QS-xte"/>
+                                    <constraint firstAttribute="height" constant="30" id="NOB-ft-h8K"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="s4D-o2-XT7"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="tbv-A3-vXg" firstAttribute="leading" secondItem="s4D-o2-XT7" secondAttribute="leading" constant="20" id="5n1-Jt-Hij"/>
+                            <constraint firstItem="fSX-2h-UG1" firstAttribute="top" secondItem="s4D-o2-XT7" secondAttribute="top" constant="20" id="6cP-bD-qN4"/>
+                            <constraint firstItem="s4D-o2-XT7" firstAttribute="trailing" secondItem="iq9-T3-NmI" secondAttribute="trailing" constant="20" id="7nt-eF-SFg"/>
+                            <constraint firstItem="qWT-TH-q4d" firstAttribute="top" secondItem="fSX-2h-UG1" secondAttribute="bottom" constant="20" id="8sT-PJ-u0z"/>
+                            <constraint firstItem="qWT-TH-q4d" firstAttribute="leading" secondItem="s4D-o2-XT7" secondAttribute="leading" constant="20" id="H6B-NU-OXc"/>
+                            <constraint firstItem="s4D-o2-XT7" firstAttribute="trailing" secondItem="fSX-2h-UG1" secondAttribute="trailing" constant="20" id="JlQ-jz-6uF"/>
+                            <constraint firstItem="s4D-o2-XT7" firstAttribute="trailing" secondItem="b7g-Rl-ZZG" secondAttribute="trailing" constant="20" id="Nhe-eJ-3fF"/>
+                            <constraint firstItem="8eW-ws-tvb" firstAttribute="leading" secondItem="tbv-A3-vXg" secondAttribute="trailing" constant="20" id="Sp8-ig-vqH"/>
+                            <constraint firstItem="fSX-2h-UG1" firstAttribute="leading" secondItem="s4D-o2-XT7" secondAttribute="leading" constant="20" id="bh3-GF-khs"/>
+                            <constraint firstItem="b7g-Rl-ZZG" firstAttribute="top" secondItem="qWT-TH-q4d" secondAttribute="bottom" constant="50" id="di8-V4-jj9"/>
+                            <constraint firstItem="b7g-Rl-ZZG" firstAttribute="leading" secondItem="s4D-o2-XT7" secondAttribute="leading" constant="20" id="ioe-UX-8k9"/>
+                            <constraint firstItem="8eW-ws-tvb" firstAttribute="top" secondItem="b7g-Rl-ZZG" secondAttribute="bottom" constant="20" id="kCL-eD-Eah"/>
+                            <constraint firstItem="iq9-T3-NmI" firstAttribute="leading" secondItem="8eW-ws-tvb" secondAttribute="trailing" constant="10" id="snX-sM-Jm8"/>
+                            <constraint firstItem="tbv-A3-vXg" firstAttribute="top" secondItem="b7g-Rl-ZZG" secondAttribute="bottom" constant="20" id="uIy-Un-ppx"/>
+                            <constraint firstItem="s4D-o2-XT7" firstAttribute="trailing" secondItem="qWT-TH-q4d" secondAttribute="trailing" constant="20" id="uhT-iM-LTT"/>
+                            <constraint firstItem="iq9-T3-NmI" firstAttribute="top" secondItem="b7g-Rl-ZZG" secondAttribute="bottom" constant="20" id="w4R-Vm-uiJ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="3u7-9I-w6L"/>
+                    <connections>
+                        <outlet property="collectionView" destination="qWT-TH-q4d" id="qlL-fI-LfU"/>
+                        <outlet property="speedSlider" destination="8eW-ws-tvb" id="dCy-mg-KX9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3P0-Qc-Npe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2805.7971014492755" y="83.705357142857139"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Reu-tR-mOD">
+            <objects>
+                <viewController id="ytX-VX-8hj" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4So-uE-9uq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="about" translatesAutoresizingMaskIntoConstraints="NO" id="7De-VE-29X">
+                                <rect key="frame" x="120.5" y="35" width="173" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="173" id="jYe-f0-V5c"/>
+                                    <constraint firstAttribute="height" constant="56" id="tfT-tV-sxc"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dgI-qw-GRr">
+                                <rect key="frame" x="20" y="116" width="374" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="CaR-tg-hsI"/>
+                                </constraints>
+                                <string key="text">The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970. It is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. One interacts with the Game of Life by creating an initial configuration and observing how it evolves. It is Turing complete and can simulate a universal constructor or any other Turing machine. </string>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kjL-oR-oqG">
+                                <rect key="frame" x="20" y="326.5" width="374" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="LvD-id-ptk"/>
+                                </constraints>
+                                <mutableString key="text">In late 1940, John von Neumann defined life as a creation (as a being or organism) which can reproduce itself and simulate a Turing machine. Von Neumann was thinking about an engineering solution which would use electromagnetic components floating randomly in liquid or gas. This turned out not to be realistic with the technology available at the time. Stanislaw Ulam invented cellular automata, which were intended to simulate von Neumann's theoretical electromagnetic constructions. Ulam discussed using computers to simulate his cellular automata in a two-dimensional lattice in several papers. In parallel, von Neumann attempted to construct Ulam's cellular automaton. Although successful, he was busy with other projects and left some details unfinished. His construction was complicated because it tried to simulate his own engineering design. Over time, simpler life constructions were provided by other researchers, and published in papers and books.
+
+Motivated by questions in mathematical logic and in part by work on simulation games by Ulam, among others, John Conway began doing experiments in 1968 with a variety of different two-dimensional cellular automaton rules. Conway's initial goal was to define an interesting and unpredictable cell automaton. For example, he wanted some configurations to last for a long time before dying and other configurations to go on forever without allowing cycles. It was a significant challenge and an open problem for years before experts on cellular automata managed to prove that, indeed, the Game of Life admitted of a configuration which was alive in the sense of satisfying Von Neumann's two general requirements. While the definitions before the Game of Life were proof-oriented, Conway's construction aimed at simplicity without a priori providing proof the automaton was alive.
+
+Conway chose his rules carefully, after considerable experimentation, to meet these criteria:
+
+    There should be no explosive growth.
+    There should exist small initial patterns with chaotic, unpredictable outcomes.
+    There should be potential for von Neumann universal constructors.
+    The rules should be as simple as possible, whilst adhering to the above constraints.[4]
+
+The game made its first public appearance in the October 1970 issue of Scientific American, in Martin Gardner's "Mathematical Games" column. Theoretically, the Game of Life has the power of a universal Turing machine: anything that can be computed algorithmically can be computed within the Game of Life.[5][6][7] Gardner wrote, "Because of Life's analogies with the rise, fall and alterations of a society of living organisms, it belongs to a growing class of what are called 'simulation games' (games that resemble real life processes)."[8]
+
+Since its publication, the Game of Life has attracted much interest because of the surprising ways in which the patterns can evolve. It provides an example of emergence and self-organization. Scholars in various fields, such as computer science, physics, biology, biochemistry, economics, mathematics, philosophy, and generative sciences, have made use of the way that complex patterns can emerge from the implementation of the game's simple rules.[citation needed] The game can also serve as a didactic analogy, used to convey the somewhat counter-intuitive notion that design and organization can spontaneously emerge in the absence of a designer. For example, philosopher Daniel Dennett has used the analogy of the Game of Life "universe" extensively to illustrate the possible evolution of complex philosophical constructs, such as consciousness and free will, from the relatively simple set of deterministic physical laws which might govern our universe.[9][10][11]
+
+The popularity of the Game of Life was helped by its coming into being at the same time as increasingly inexpensive computer access. The game could be run for hours on these machines, which would otherwise have remained unused at night. In this respect, it foreshadowed the later popularity of computer-generated fractals. For many, the Game of Life was simply a programming challenge: a fun way to use otherwise wasted CPU cycles. For some, however, the Game of Life had more philosophical connotations. It developed a cult following through the 1970s and beyond; current developments have gone so far as to create theoretic emulations of computer systems within the confines of a Game of Life board.[12][13] </mutableString>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Xl2-rv-VLp">
+                                <rect key="frame" x="20" y="537" width="374" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="F0a-uc-V92"/>
+                                </constraints>
+                                <mutableString key="text">The universe of the Game of Life is an infinite, two-dimensional orthogonal grid of square cells, each of which is in one of two possible states, live or dead, (or populated and unpopulated, respectively). Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:
+
+    Any live cell with fewer than two live neighbours dies, as if by underpopulation.
+    Any live cell with two or three live neighbours lives on to the next generation.
+    Any live cell with more than three live neighbours dies, as if by overpopulation.
+    Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+
+These rules, which compare the behavior of the automaton to real life, can be condensed into the following:
+
+    Any live cell with two or three live neighbours survives.
+    Any dead cell with three live neighbours becomes a live cell.
+    All other live cells die in the next generation. Similarly, all other dead cells stay dead.
+
+The initial pattern constitutes the seed of the system. The first generation is created by applying the above rules simultaneously to every cell in the seed; births and deaths occur simultaneously, and the discrete moment at which this happens is sometimes called a tick. Each generation is a pure function of the preceding one. The rules continue to be applied repeatedly to create further generations. </mutableString>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Origins:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4bM-v9-pKp">
+                                <rect key="frame" x="20" y="286" width="374" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rules:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EQ4-8m-dUZ">
+                                <rect key="frame" x="20" y="496.5" width="374" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="uVz-ch-rVf"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="4bM-v9-pKp" firstAttribute="top" secondItem="dgI-qw-GRr" secondAttribute="bottom" constant="20" id="12c-ej-zZ3"/>
+                            <constraint firstItem="uVz-ch-rVf" firstAttribute="trailing" secondItem="kjL-oR-oqG" secondAttribute="trailing" constant="20" id="1Sf-Bp-F4Z"/>
+                            <constraint firstItem="uVz-ch-rVf" firstAttribute="trailing" secondItem="dgI-qw-GRr" secondAttribute="trailing" constant="20" id="46G-7g-zkP"/>
+                            <constraint firstItem="kjL-oR-oqG" firstAttribute="leading" secondItem="uVz-ch-rVf" secondAttribute="leading" constant="20" id="5KX-81-5ZM"/>
+                            <constraint firstItem="7De-VE-29X" firstAttribute="centerX" secondItem="4So-uE-9uq" secondAttribute="centerX" id="7IJ-Gg-Mwg"/>
+                            <constraint firstItem="Xl2-rv-VLp" firstAttribute="top" secondItem="EQ4-8m-dUZ" secondAttribute="bottom" constant="20" id="BoZ-LI-EBl"/>
+                            <constraint firstItem="dgI-qw-GRr" firstAttribute="leading" secondItem="uVz-ch-rVf" secondAttribute="leading" constant="20" id="GmT-dV-vcE"/>
+                            <constraint firstItem="4bM-v9-pKp" firstAttribute="leading" secondItem="uVz-ch-rVf" secondAttribute="leading" constant="20" id="QPI-0y-iEC"/>
+                            <constraint firstItem="uVz-ch-rVf" firstAttribute="trailing" secondItem="4bM-v9-pKp" secondAttribute="trailing" constant="20" id="QvJ-WU-AXT"/>
+                            <constraint firstItem="EQ4-8m-dUZ" firstAttribute="leading" secondItem="uVz-ch-rVf" secondAttribute="leading" constant="20" id="RKv-tG-4dS"/>
+                            <constraint firstItem="EQ4-8m-dUZ" firstAttribute="top" secondItem="kjL-oR-oqG" secondAttribute="bottom" constant="20" id="VbN-T5-22a"/>
+                            <constraint firstItem="dgI-qw-GRr" firstAttribute="top" secondItem="7De-VE-29X" secondAttribute="bottom" constant="25" id="X62-dL-xTQ"/>
+                            <constraint firstItem="kjL-oR-oqG" firstAttribute="top" secondItem="4bM-v9-pKp" secondAttribute="bottom" constant="20" id="ZN6-dO-qjx"/>
+                            <constraint firstItem="uVz-ch-rVf" firstAttribute="trailing" secondItem="EQ4-8m-dUZ" secondAttribute="trailing" constant="20" id="ZnR-Ug-RA3"/>
+                            <constraint firstItem="Xl2-rv-VLp" firstAttribute="leading" secondItem="uVz-ch-rVf" secondAttribute="leading" constant="20" id="gAU-xP-N7J"/>
+                            <constraint firstItem="uVz-ch-rVf" firstAttribute="trailing" secondItem="Xl2-rv-VLp" secondAttribute="trailing" constant="20" id="gRa-dj-b11"/>
+                            <constraint firstItem="7De-VE-29X" firstAttribute="top" secondItem="uVz-ch-rVf" secondAttribute="top" constant="35" id="j9g-6h-Yb8"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JA2-Vt-Jx4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1156.521739130435" y="-613.39285714285711"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Clh-4u-gp5">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vMa-5w-b75" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="y5n-Px-4VF"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3Pv-95-xRY">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="labelColor"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="oHq-Z3-wh6" kind="relationship" relationship="rootViewController" id="Lgn-xG-pPe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sgq-Od-TiZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1156.521739130435" y="84.375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="CGOIL" width="1016" height="518"/>
+        <image name="about" width="616" height="150"/>
+        <image name="arrow.uturn.left" catalog="system" width="128" height="112"/>
+        <image name="bolt.fill" catalog="system" width="101" height="128"/>
+        <image name="bolt.slash" catalog="system" width="95" height="128"/>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <image name="pause.fill" catalog="system" width="116" height="128"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="shuffle" catalog="system" width="128" height="93"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
