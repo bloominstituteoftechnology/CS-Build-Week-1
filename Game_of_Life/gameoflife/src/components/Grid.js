@@ -45,7 +45,7 @@ const Grid = () => {
 
     const [start, setStart] = useState(false);
     const [gen, setGen] = useState(0);
-    const [speed, setSpeed] = useState("")
+    const [speed, setSpeed] = useState(500)
     // const speed = 500;
 
     // UNCOMMENT ONCE WORKING------------------------------------------
@@ -108,13 +108,26 @@ const Grid = () => {
                 })
             });
             setGen(++genRef.current);
-        }, speed)
-        
+        })
+        console.log("speed in pop")
     }, []);
 
     function handleChange(event) {
-        setSpeed(event.target.value)       
+        setColor(event.target.value) 
+        console.log(event)      
+    };
 
+    function handleSpeedChange(event) {
+        setSpeed(event.target.value) 
+        console.log("speed", event)      
+    };
+
+    function handleSubmit(event) {
+        event.preventDefault();
+    };
+
+    function handleSpeedSubmit(event) {
+        event.preventDefault();
     };
 
     function handleSelect(event) {
@@ -183,8 +196,8 @@ const Grid = () => {
             <button
                 onClick={() => {
                     setGrid(clearGrid())
-                    setGen(gen == 0)
-                    setSpeed(speed == 500)
+                    setGen(gen === 0)
+                    // setSpeed(speed === 500)
                 }}
             >
                 Clear Board
@@ -205,21 +218,30 @@ const Grid = () => {
             </div> */}
 
             <div>
-                <input
-                    // type='text'
-                    value={speed}
-                    onChange={handleChange}
-                />
+                <form onSubmit={handleSpeedSubmit}>
+                    <input
+                        // type='text'
+                        value={speed}
+                        onChange={handleSpeedChange}
+                    />
+                </form>
+
                     Enter speed in ms
+                    <input type="submit" value="Submit" />
             </div>
 
-            <select>
-                <option value="grapefruit">Grapefruit</option>
-                <option value="lime">Lime</option>
-                <option selected value="coconut">Coconut</option>
-                <option value="mango">Mango</option>
-            </select>
-
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Pick a color:
+                    <select value={color} onChange={handleChange}>
+                        <option value="red">Red</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="pink">pink</option>
+                    </select>
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
 
             <h2>Generation: {gen}</h2>
         </>
