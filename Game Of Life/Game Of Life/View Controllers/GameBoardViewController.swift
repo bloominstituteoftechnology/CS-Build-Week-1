@@ -8,49 +8,74 @@
 import UIKit
 
 class GameBoardViewController: UIViewController {
-    let numViewPerRow = 15
     
-    var cells = [String: UIView]()
+    @IBOutlet weak var collectionView: UICollectionView!
+    var dataSource: [Cell]  = [] {
+        didSet {
+            self.collectionView.reloadData()
+        }
+    }
+    @IBOutlet var playPauseButton: UIButton!
     
+    let pixelSize = 20
+    
+    static var stop = false
+    
+    var boardWidth: Int {
+        return Int(floor(collectionView.frame.size.width/CGFloat(pixelSize)))
+    }
+    var boardHeight: Int {
+        return Int(floor(collectionView.frame.size.height/CGFloat(pixelSize)))
+    }
+
+    var game: Game!
+
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let width = view.frame.width / CGFloat(numViewPerRow)
-                
-        for j in 0...20 {
-            for i in 0...numViewPerRow {
-                let cellView = UIView()
-                cellView.backgroundColor = .secondarySystemBackground
-                cellView.frame = CGRect(x: CGFloat(i) * width, y: CGFloat(j) * width, width: width, height: width)
-                cellView.layer.borderWidth = 0.5
-                cellView.layer.borderColor = UIColor.label.cgColor
-                view.addSubview(cellView)
-                
-                let key = "\(i)|\(j)"
-                cells[key] = cellView
-            }
+        game = Game(width: boardWidth, height: boardHeight)
+        game.addStateObserver { [weak self] state in
+            self?.display(state)
         }
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTouch)))
-//        cells["10|10"]?.backgroundColor = .red
     }
-    @objc func handleTouch(gesture: UIGestureRecognizer) {
-        let location = gesture.location(in: view)
-        print(location)
-        
-        let width = view.frame.width / CGFloat(numViewPerRow)
-        
-        let i = Int(location.x / width)
-        let j = Int(location.y / width)
+    
+    func display(_ state: State) {
+        self.dataSource = state.cells
+    }
+    
+    @IBAction func resetAction(_ sender: UIButton) {
+        game.reset()
+    }
+    @IBAction func playAction(_ sender: UIButton) {
+        GameBoardViewController.stop.toggle()
+        playPauseButton.isSelected = !playPauseButton.isSelected
+        game.play()
+    }
+    @IBAction func randomAction(_ sender: UIButton) {
+        game.random()
+    }
+}
 
-        print("Column: \(i)", "Row: \(j)")
-        
-        let key = "\(i)|\(j)"
-        let cellView = cells[key]
-        
-        if cellView?.backgroundColor == .label {
-            cellView?.backgroundColor = .secondarySystemBackground
-        } else {
-            cellView?.backgroundColor = .label
-        }
+extension GameBoardViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSource.count
     }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(SquareCollectionViewCell.self)", for: indexPath) as! SquareCollectionViewCell
+        cell.configureWithState(dataSource[indexPath.item].isAlive)
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: pixelSize, height: pixelSize)
+    }
+
 }

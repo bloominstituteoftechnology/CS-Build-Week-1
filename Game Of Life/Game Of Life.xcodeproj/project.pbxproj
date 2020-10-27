@@ -7,17 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C3310961253D7490008F8A93 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3310960253D7490008F8A93 /* SettingsViewController.swift */; };
 		C342106C2536A70000479650 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C342106B2536A70000479650 /* AppDelegate.swift */; };
 		C342106E2536A70000479650 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C342106D2536A70000479650 /* SceneDelegate.swift */; };
 		C34210732536A70000479650 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C34210712536A70000479650 /* Main.storyboard */; };
 		C34210752536A70100479650 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C34210742536A70100479650 /* Assets.xcassets */; };
 		C34210782536A70100479650 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C34210762536A70100479650 /* LaunchScreen.storyboard */; };
+		C396D7792543D01C003F3D08 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C396D7782543D01C003F3D08 /* SettingsViewController.swift */; };
 		C3AED1BC253B60B8001AA791 /* GameBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AED1BB253B60B8001AA791 /* GameBoardViewController.swift */; };
+		C3CC86042542808400093906 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CC86032542808400093906 /* Cell.swift */; };
+		C3CC860A2542822600093906 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CC86092542822600093906 /* Game.swift */; };
+		C3CC860D2542829F00093906 /* SquareCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CC860C2542829F00093906 /* SquareCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C3310960253D7490008F8A93 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C34210682536A70000479650 /* Game Of Life.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Of Life.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C342106B2536A70000479650 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C342106D2536A70000479650 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -25,7 +27,11 @@
 		C34210742536A70100479650 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C34210772536A70100479650 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C34210792536A70100479650 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C396D7782543D01C003F3D08 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C3AED1BB253B60B8001AA791 /* GameBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardViewController.swift; sourceTree = "<group>"; };
+		C3CC86032542808400093906 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		C3CC86092542822600093906 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		C3CC860C2542829F00093906 /* SquareCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +77,7 @@
 		C34210852536AAC900479650 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C3CC86092542822600093906 /* Game.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -80,6 +87,7 @@
 			children = (
 				C34210712536A70000479650 /* Main.storyboard */,
 				C34210762536A70100479650 /* LaunchScreen.storyboard */,
+				C3CC860C2542829F00093906 /* SquareCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -88,7 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				C3AED1BB253B60B8001AA791 /* GameBoardViewController.swift */,
-				C3310960253D7490008F8A93 /* SettingsViewController.swift */,
+				C396D7782543D01C003F3D08 /* SettingsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -96,6 +104,7 @@
 		C34210882536AAE700479650 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C3CC86032542808400093906 /* Cell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -181,9 +190,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C342106C2536A70000479650 /* AppDelegate.swift in Sources */,
+				C3CC860A2542822600093906 /* Game.swift in Sources */,
+				C396D7792543D01C003F3D08 /* SettingsViewController.swift in Sources */,
+				C3CC86042542808400093906 /* Cell.swift in Sources */,
+				C3CC860D2542829F00093906 /* SquareCollectionViewCell.swift in Sources */,
 				C3AED1BC253B60B8001AA791 /* GameBoardViewController.swift in Sources */,
 				C342106E2536A70000479650 /* SceneDelegate.swift in Sources */,
-				C3310961253D7490008F8A93 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +273,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -316,6 +329,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
