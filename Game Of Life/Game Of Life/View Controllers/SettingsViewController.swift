@@ -18,7 +18,11 @@ class SettingsViewController: UIViewController {
     var colorImages: [UIColor] = [
         UIColor.label,
         UIColor.red,
-        UIColor.green
+        UIColor.green,
+        UIColor.purple,
+        UIColor.blue,
+        UIColor.orange,
+        UIColor.systemPink
     ]
     
     override func viewDidLoad() {
@@ -33,7 +37,7 @@ class SettingsViewController: UIViewController {
 
 extension SettingsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return colorImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -43,12 +47,35 @@ extension SettingsViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
         if indexPath.row == 0 {
             SettingsViewController.currentCellColor = .label
+            cell?.layer.borderColor = UIColor.label.cgColor
+            cell?.layer.borderWidth = 1
         } else if indexPath.row == 1 {
             SettingsViewController.currentCellColor = .red
+            cell?.layer.borderColor = UIColor.label.cgColor
+            cell?.layer.borderWidth = 1
         } else if indexPath.row == 2 {
             SettingsViewController.currentCellColor = .green
+            cell?.layer.borderColor = UIColor.label.cgColor
+            cell?.layer.borderWidth = 1
+        } else if indexPath.row == 3 {
+            SettingsViewController.currentCellColor = .purple
+            cell?.layer.borderColor = UIColor.label.cgColor
+            cell?.layer.borderWidth = 1
+        } else if indexPath.row == 4 {
+            SettingsViewController.currentCellColor = .blue
+            cell?.layer.borderColor = UIColor.label.cgColor
+            cell?.layer.borderWidth = 1
+        } else if indexPath.row == 5 {
+            SettingsViewController.currentCellColor = .orange
+            cell?.layer.borderColor = UIColor.label.cgColor
+            cell?.layer.borderWidth = 1
+        } else if indexPath.row == 6 {
+            SettingsViewController.currentCellColor = .systemPink
+            cell?.layer.borderColor = UIColor.label.cgColor
+            cell?.layer.borderWidth = 1
         }
     }
     
