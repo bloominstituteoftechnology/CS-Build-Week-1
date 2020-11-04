@@ -137,6 +137,7 @@ class Game extends React.Component {
               }
           }
       }
+      console.log(this.board[29][1])
 
     this.setState({ gen: this.state.gen +1});
     this.board = newBoard;
@@ -160,21 +161,21 @@ class Game extends React.Component {
      let neighbors = 0;
      const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
      for (let i = 0; i < dirs.length; i++) {
-        //iterating through directions
+        //setting reference to sub array surroindingx,y coordinates
          const dir = dirs[i];
-         //new index for x
+         //vertical
          let y1 = y + dir[0];
-         // new index for y
+         // horitzontal (:
          let x1 = x + dir[1];
-         //if the neighbor indices are in bounds:
+
          if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
            //if we are still inbounds
              neighbors++;
 
          }
-         //else do nothing breaks loop
-         /// TO:DO//
+         /// TO DO://
          //figure out wrap
+         //Else we are not in bounds
      }
      //reutrns the number of live neighbors
      return neighbors;
@@ -296,7 +297,7 @@ class Game extends React.Component {
             <h2>About the algorithm</h2>
             <p>This implementation uses a double buffering technique with a 2d array. Cells are loaded onto a secondary matrix and states of life and death are kept track on the old matrix. Neighbors are caclulated by using a directional array to check the rectangle around squares. Then for each iteration the algorithim checks to see the number of live neighbors and implements the rules accordingly. </p>
             <p>Conways Game of life was written in the 70s as a solution to John VonNoumen's hypothetical self replicating machine. It is of theortical interest because the game of life has the power of a universal turing machine which means any computation that can be computed algoritimically can be computed using the game of life. </p>
-            <p>Paul randall impleneted a Turing complete version which can be found <a href = "http://rendell-attic.org/gol/tm.htm">here</a></p>
+            <p>Paul randall impleneted a Turing complete version which can be found <a href = "http://rendell-attic.org/gol/tm.htm"target = "_blank" rel="noopener noreferrer">here</a></p>
 
           </div>
         </div>
