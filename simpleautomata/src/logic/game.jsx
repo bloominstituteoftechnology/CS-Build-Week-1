@@ -33,7 +33,7 @@ class Game extends React.Component {
   state = {
     //array of cells
     cells: [],
-    interval: 200,
+    interval: 70,
     isRunning: false,
     gen: 0,
   }
@@ -66,7 +66,8 @@ class Game extends React.Component {
   //getElementOffset calculates the  position of a board element (obv will be mappped on the whole array eventually)
   //getBoundingClientRect return the size of an element and its position relative to the viewport
   //The returned value is a DOMRect object which is the union of the rectangles returned by getClientRects() for the element, i.e., the CSS border-boxes associated with the element. The result is the smallest rectangle which contains the entire element, with read-only left, top, right, bottom, x, y, width, and height properties describing the overall border-box in pixels. Properties other than width and height are relative to the top-left of the viewport.
-  // sicne we are in a grid we can use this with some simple calculations.
+  // since we are in a grid we can use this with some simple calculations.
+  // this basically will let us match the board click with the 
   getElementOffset() {
     const rect = this.boardRef.getBoundingClientRect();
     const doc = document.documentElement;
@@ -145,14 +146,6 @@ class Game extends React.Component {
     }, this.state.interval);
   }
 
-
-  /*
-    * Calculate the number of neighbors at point (x, y)
-  * @param {Array} board
-  * @param {int} x
-  * @param {int} y
-  */
-
   mod(n, m) {
     return ((n % m) + m) % m;
   }
@@ -168,36 +161,13 @@ class Game extends React.Component {
          let y1 = y + dir[0];
          // horitzontal (:
          let x1 = x + dir[1];
+        
+        //Make all neighbor checks inbounds
+         x1 = this.mod(x1, NUM_COLUMNS);
+         y1 = this.mod(y1, NUM_ROWS); 
+        // if neighbor exists apped neighbor count
+         board[y1][x1] && neighbors++;
 
-        x1 = this.mod(x1, NUM_COLUMNS);
-        y1 = this.mod(y1, NUM_ROWS); 
-        board[y1][x1] && neighbors++;
-
-        // neighbors++;
-        //  if (x1 <0){
-        //    x1 += NUM_COLUMNS; 
-        //  }
-
-        //  else if(x1>= NUM_COLUMNS){
-        //    x1 -= NUM_COLUMNS;
-        //  }
-
-        //  if(y1 < 0){
-        //    y1 += NUM_ROWS;
-        //  }
-
-        //  else if(y1 >= NUM_ROWS){
-        //    y1 -= NUM_ROWS;
-        //  }
-
-        //  if (x1 >= 0 && x1 < NUM_COLUMNS && y1 >= 0 && y1 < NUM_ROWS && board[y1][x1]) {
-        //    //if we are still inbounds
-        //      neighbors++;
-
-        //  }
-         /// TO DO://
-         //figure out wrap
-         //Else we are not in bounds
      }
      //reutrns the number of live neighbors
      return neighbors;
@@ -265,17 +235,9 @@ class Game extends React.Component {
     this.setState({ cells: this.makeCells() });
   }
 
-  // presetHanddler = e => {
-  //   switch(e.target.value){
-  //     case: 'glider':
-  //       break;
-  //     case: 'blinker':
-  //       break;
-  //   }
-  // }
 
-  //event handler with render method to allow user to toggle cells to true(on) onClick.
   render() {
+    //event handler within render function to allow user to toggle cells to true(on) onClick.
     const { cells } = this.state;
     return (
       <div className="page">
