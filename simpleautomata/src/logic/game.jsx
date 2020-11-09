@@ -2,8 +2,10 @@ import React from 'react';
 import '../styles/Game.css';
 
 const CELL_SIZE = 20;
-const WIDTH = 800;
-const HEIGHT = 600;
+const NUM_COLUMNS = 40;
+const NUM_ROWS= 30;
+const PX_WIDTH = CELL_SIZE * NUM_COLUMNS;
+const PX_HEIGHT = CELL_SIZE * NUM_ROWS;
 
 class Cell extends React.Component {
   render() {
@@ -25,24 +27,23 @@ class Cell extends React.Component {
 class Game extends React.Component {
   constructor(){
     super();
-    this.rows = HEIGHT / CELL_SIZE;
-    this.cols = WIDTH / CELL_SIZE;
+    this.boardRef = React.createRef();
     this.board = this.makeEmptyBoard();
   }
   state = {
     //array of cells
     cells: [],
-    interval: 200,
+    interval: 70,
     isRunning: false,
     gen: 0,
   }
   //method to create an empty board:
   makeEmptyBoard(){
     let board = [];
-    for(let y = 0; y < this.rows; y++){
+    for(let y = 0; y < NUM_ROWS; y++){
       //make y axis of arrays
       board[y] = [];
-      for (let x = 0; x < this.cols; x++){
+      for (let x = 0; x < NUM_COLUMNS; x++){
         // so we have a "2D" array with an array of arrays for entries.
         board[y][x] = false;
       }
@@ -53,8 +54,8 @@ class Game extends React.Component {
   //Create cells from this.board:
   makeCells(){
     let cells = [];
-    for (let y = 0; y < this.rows; y++){
-      for (let x = 0; x < this.cols; x++){
+    for (let y = 0; y < NUM_ROWS; y++){
+      for (let x = 0; x < NUM_COLUMNS; x++){
         if(this.board[y][x]){
           cells.push({ x, y});
         }
@@ -63,17 +64,30 @@ class Game extends React.Component {
     return cells;
   }
   //getElementOffset calculates the  position of a board element (obv will be mappped on the whole array eventually)
-  //getBoundingClientRect return shte size of an element and its position relative to the viewport
+  //getBoundingClientRect return the size of an element and its position relative to the viewport
   //The returned value is a DOMRect object which is the union of the rectangles returned by getClientRects() for the element, i.e., the CSS border-boxes associated with the element. The result is the smallest rectangle which contains the entire element, with read-only left, top, right, bottom, x, y, width, and height properties describing the overall border-box in pixels. Properties other than width and height are relative to the top-left of the viewport.
-  // sicne we are in a grid we can use this with some simple calculations.
+  // since we are in a grid we can use this with some simple calculations.
+  // this basically will let us match the board click with the 
   getElementOffset() {
     const rect = this.boardRef.getBoundingClientRect();
     const doc = document.documentElement;
-
+    console.log(rect);
     return {
       x: (rect.left + window.pageXOffset) - doc.clientLeft,
       y: (rect.top + window.pageYOffset) - doc.clientTop,
     };
+  }
+
+  //listener function for increase in board size:
+  handleResize = (expand) => {
+    if(expand.row){
+      //augment NUM_ROWS++
+    }
+    if(expand.column){
+      //augment NUM_COLUMNS++
+    }
+
+    //call in render
   }
 
   handleClick = (event) => {
@@ -87,14 +101,11 @@ class Game extends React.Component {
       const x = Math.floor(offsetX / CELL_SIZE);
       const y = Math.floor(offsetY / CELL_SIZE);
 
-      if(x>= 0 && x <= this.cols && y>= 0 && y<= this.rows){
+      if(x>= 0 && x <= NUM_COLUMNS && y>= 0 && y<= NUM_ROWS){
         this.board[y][x] = !this.board[y][x];
       }
 
       this.setState({ cells: this.makeCells() });
-    }
-    else{
-      console.log("noclick");
     }
   }
 
@@ -114,13 +125,12 @@ class Game extends React.Component {
   }
 
   runIteration() {
-    console.log('running iteration');
     //double buffering
     let newBoard = this.makeEmptyBoard();
 
     //logic for each iteration:
-      for (let y = 0; y < this.rows; y++) {
-          for (let x = 0; x < this.cols; x++) {
+      for (let y = 0; y < NUM_ROWS; y++) {
+          for (let x = 0; x < NUM_COLUMNS; x++) {
               let neighbors = this.calculateNeighbors(this.board, x, y);
               //cehck neighbors from old array.
               if (this.board[y][x]) {
@@ -137,7 +147,6 @@ class Game extends React.Component {
               }
           }
       }
-      console.log(this.board[29][1])
 
     this.setState({ gen: this.state.gen +1});
     this.board = newBoard;
@@ -148,34 +157,28 @@ class Game extends React.Component {
     }, this.state.interval);
   }
 
-
-  /*
-    * Calculate the number of neighbors at point (x, y)
-  * @param {Array} board
-  * @param {int} x
-  * @param {int} y
-  */
+  mod(n, m) {
+    return ((n % m) + m) % m;
+  }
 
   calculateNeighbors(board, x, y) {
     //initialize neighbor count
      let neighbors = 0;
      const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
      for (let i = 0; i < dirs.length; i++) {
-        //setting reference to sub array surroindingx,y coordinates
+        //setting reference to sub array surrounding x,y coordinates
          const dir = dirs[i];
          //vertical
          let y1 = y + dir[0];
          // horitzontal (:
          let x1 = x + dir[1];
+        
+        //Make all neighbor checks inbounds
+         x1 = this.mod(x1, NUM_COLUMNS);
+         y1 = this.mod(y1, NUM_ROWS); 
+        // if neighbor exists apped neighbor count
+         board[y1][x1] && neighbors++;
 
-         if (x1 >= 0 && x1 < this.cols && y1 >= 0 && y1 < this.rows && board[y1][x1]) {
-           //if we are still inbounds
-             neighbors++;
-
-         }
-         /// TO DO://
-         //figure out wrap
-         //Else we are not in bounds
      }
      //reutrns the number of live neighbors
      return neighbors;
@@ -193,8 +196,8 @@ class Game extends React.Component {
   }
 
   handleRandom = () => {
-      for (let y = 0; y < this.rows; y++) {
-          for (let x = 0; x < this.cols; x++) {
+      for (let y = 0; y < NUM_ROWS; y++) {
+          for (let x = 0; x < NUM_COLUMNS; x++) {
               this.board[y][x] = (Math.random() >= 0.5);
           }
       }
@@ -243,25 +246,17 @@ class Game extends React.Component {
     this.setState({ cells: this.makeCells() });
   }
 
-  // presetHanddler = e => {
-  //   switch(e.target.value){
-  //     case: 'glider':
-  //       break;
-  //     case: 'blinker':
-  //       break;
-  //   }
-  // }
 
-  //event handler with render method to allow user to toggle cells to true(on) onClick.
   render() {
+    //event handler within render function to allow user to toggle cells to true(on) onClick.
     const { cells } = this.state;
     return (
       <div className="page">
         <div>current gen: {this.state.gen}</div>
         <div className="Board"
-          style = {{ width: WIDTH, height: HEIGHT,
+          style = {{ overflow: 'auto', resize: 'both', minWidth: PX_WIDTH, minHeight: PX_HEIGHT,
              backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}} onClick={this.handleClick}
-          ref={(n) => { this.boardRef = n; }}>
+          ref= { (n) => {this.boardRef = n}}>
           {cells.map(cell => (<Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
           ))}
         </div>
