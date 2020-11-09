@@ -78,6 +78,17 @@ class Game extends React.Component {
     };
   }
 
+  //listener function for increase in board size:
+  handleResize = (expand) => {
+    if(expand.row){
+      //augment NUM_ROWS++
+    }
+    if(expand.column){
+      //augment NUM_COLUMNS++
+    }
+
+    //call in render
+  }
 
   handleClick = (event) => {
     if(this.state.isRunning === false){
