@@ -246,6 +246,32 @@ const App = () => {
 
         test
       </button>
+      <button  
+       onClick = {()=>{
+          
+        let arr= []
+         let g =  symmetry(numRows, 15) 
+         let z = symmetry(numCols,21)
+         let [gOne, gTwo]= g
+         let[zOne, zTwo]=z
+          console.log('G', gOne +=1, "Z", z)
+         for ( let i = 0; i<numRows; i ++){
+          arr.push(Array.from(Array(numCols), () => 0));
+         
+          }
+          
+          //  arr[gOne][zOne] = arr[gOne+=1][zOne+=1]  =arr[gOne][gOne+=1]
+           
+          //  arr[gTwo+=1][zTwo+=1]=arr[gOne+=1][zOne+=1]
+           arr[15][21]=arr[16][21]=arr[17][21]
+           
+           =arr[17][22]=arr[17][23]=arr[14][22]=arr[16][24]=arr[13][23]=arr[15][25]=
+           arr[14][25]=arr[13][25]=arr[13][24]
+           =1
+           setGrid(arr)
+       }}>
+        Replicator
+      </button>
       
      
    
