@@ -2,6 +2,14 @@
     text-align: center;
 }
 
+.grid {
+    /* border: 10px solid orange; */
+    margin-left: 42rem;
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(25, 20px);
+}
+
 .info {
     display: flex;
     justify-content: space-evenly;
@@ -11,4 +19,10 @@
 
 .box {
     width: 50rem
+}
+
+@media screen and (max-width: 900px) {
+    .grid {
+        margin-left: 0;
+    }
 }

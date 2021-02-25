@@ -896,13 +896,7 @@ function Grid () {
         randomize colors!
       </button>
       <div
-        style={{
-          // border: '10px solid orange',
-          marginLeft: '43rem',
-          marginTop: '2rem',
-          display: "grid",
-          gridTemplateColumns: `repeat(${numCols}, 20px)`
-        }}
+        class='grid'
       >
         {grid.map((rows, i) =>
           rows.map((col, k) => (
