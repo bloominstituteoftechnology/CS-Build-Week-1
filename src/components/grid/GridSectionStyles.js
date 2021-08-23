@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Grid = styled.main`
+export const Grid = styled.table`
   display: flex;
   flex-direction: column;
   width: 90%;
@@ -9,7 +9,7 @@ export const Grid = styled.main`
   margin: 0 auto;
 `;
 
-export const Row = styled.section`
+export const Row = styled.tr`
   display: flex;
   justify-content: center;
   width: 100%;
@@ -17,7 +17,7 @@ export const Row = styled.section`
   margin-bottom: 1px;
 `;
 
-export const Col = styled.article`
+export const Col = styled.td`
   border: .2px solid rgba(238,130,238, .9);
   border-bottom: none;
   &:not(:last-child) {

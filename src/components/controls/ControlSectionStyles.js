@@ -1,10 +1,5 @@
 import styled from 'styled-components';
 
-
-export const Controls = styled.main`
-  margin-top: 30px;
-`;
-
 export const Button = styled.button`
   font-family: 'Space Mono', monospace;
   font-size: 2.5rem;
@@ -29,7 +24,7 @@ export const Button = styled.button`
   }
 `;
 
-export const OptionsSection = styled.section`
+export const OptionsContainer = styled.div`
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
@@ -47,7 +42,7 @@ export const OptionsSection = styled.section`
   }
 `;
 
-export const PresetSection = styled.section`
+export const PresetContainer = styled.div`
   width: 50%;
   select {
     font-family: 'Space Mono', monospace;
@@ -63,7 +58,7 @@ export const PresetSection = styled.section`
   }
 `;
 
-export const RangeSlider = styled.section`
+export const RangeSlider = styled.div`
   width: 50%;
   &,
   &:before,
@@ -152,17 +147,5 @@ export const RangeSlider = styled.section`
   input::-moz-focus-inner,
   input::-moz-focus-outer { 
     border: 0; 
-  }
-`;
-
-export const GenerationSection = styled.main`
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  h2{
-    font-size: 4rem;
-    color: rgba(248,205,218, .7);
-    text-shadow: 1px 1px 8px rgba(238,130,238, .7);
   }
 `;

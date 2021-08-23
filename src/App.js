@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { Main, GenerationSection } from './AppStyles';
+
 import GridSection from './components/grid/GridSection';
 import ControlSection from './components/controls/ControlSection';
-import { cellInitAlgo, cellPresetAlgo, CellAlgo, clearCellsAlgo } from './CellAlgo';
+import RulesSection from './components/rules/RulesSection';
 
-import { Main, MainHeader } from './AppStyles';
+import { cellInitAlgo, cellPresetAlgo, CellAlgo, clearCellsAlgo } from './CellAlgo';
 
 
 let interval;
@@ -71,17 +73,17 @@ class App extends Component {
   render() {
     return (
       <Main>
-        <MainHeader>
-          <h1>Conway's Game of Life</h1>
-        </MainHeader>
+        <h1>Conway's Game of Life</h1>
         <GridSection
           currentNodeHolder={this.state.currentNodeHolder}
           canClick={this.state.canClick}
-          />
+        />
+        <GenerationSection>
+          <h2>Generation: {this.state.generation}</h2>
+        </GenerationSection>
         <ControlSection 
           canClick={this.state.canClick}
           gridSizeValue={this.state.gridSizeValue}
-          generation={this.state.generation}
           endGame={this.endGame}
           clearCells={this.clearCells}
           startGame={this.startGame}
@@ -89,6 +91,7 @@ class App extends Component {
           selectGridPreset={this.selectGridPreset}
           handleGridSizeChange={this.handleGridSizeChange}
         />
+        <RulesSection />
       </Main>
     );
   }

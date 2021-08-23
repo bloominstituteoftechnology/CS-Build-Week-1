@@ -1,41 +1,28 @@
 import React, { Component } from 'react'
-import Modal from '../modal/Modal';
 
 import { 
-  Controls,
   Button,
-  OptionsSection,
-  PresetSection,
-  RangeSlider,
-  GenerationSection
+  OptionsContainer,
+  PresetContainer,
+  RangeSlider
 } from './ControlSectionStyles';
 
 
 class ControlSection extends Component {
-  state = {
-    isModalOpen: true
-  }
-
-  handleModal = () => {
-    this.setState(prevState => {
-      return {isModalOpen: !prevState.isModalOpen}
-    });
-  }
-  
   render() {
     return (
-      <Controls>
+      <section aria-labelledby="grid-controls-heading">
+        <h2 id="grid-controls-heading" className="visually-hidden">controls section</h2>
 
-        <section>
+        <div>
           <Button onClick={this.props.canClick? this.props.startGame: null}>Start</Button>
           <Button onClick={this.props.canClick? this.props.stepGeneration: null}>Step</Button>
           <Button onClick={this.props.endGame}>Stop</Button>
           <Button onClick={this.props.canClick? this.props.clearCells: null}>Clear Grid</Button>
-          <Button onClick={this.handleModal}>Rules</Button>
-        </section>
+        </div>
 
-        <OptionsSection>
-          <PresetSection>
+        <OptionsContainer>
+          <PresetContainer>
             <label htmlFor="gridPresets">Choose a preset:</label>
             <select onChange={this.props.canClick? this.props.selectGridPreset: null} id="gridPresets">
               <option defaultSelected value="">-- Select --</option>
@@ -44,7 +31,7 @@ class ControlSection extends Component {
               <option value="Blinkers">Blinkers</option>
               <option value="Random">Random</option>
             </select>
-          </PresetSection>
+          </PresetContainer>
 
           <RangeSlider className="range-slider">
             <label htmlFor="gridSizeSlider">Choose a grid size:</label>
@@ -60,19 +47,8 @@ class ControlSection extends Component {
             />
             <span className="range-slider__value">{this.props.gridSizeValue}</span>
           </RangeSlider>
-        </OptionsSection>
-
-        <GenerationSection>
-          <h2>Generation: {this.props.generation}</h2>
-        </GenerationSection>
-
-        {this.state.isModalOpen ? (
-          <Modal 
-            handleModal={this.handleModal}
-            isModalOpen={this.state.isModalOpen}
-          />
-        ) : null}
-      </Controls>
+        </OptionsContainer>
+      </section>
     )
   }
 }
