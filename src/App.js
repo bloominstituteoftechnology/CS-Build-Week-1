@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
-import { Main, GenerationSection } from './AppStyles';
+import React, { Component } from "react";
+import { Main, GenerationSection } from "./AppStyles";
 
-import GridSection from './components/grid/GridSection';
-import ControlSection from './components/controls/ControlSection';
-import RulesSection from './components/rules/RulesSection';
+import GridSection from "./components/grid/GridSection";
+import ControlSection from "./components/controls/ControlSection";
+import RulesSection from "./components/rules/RulesSection";
 
-import { cellInitAlgo, cellPresetAlgo, CellAlgo, clearCellsAlgo } from './CellAlgo';
-
+import {
+  cellInitAlgo,
+  cellPresetAlgo,
+  CellAlgo,
+  clearCellsAlgo,
+} from "./CellAlgo";
 
 let interval;
 
@@ -15,8 +19,8 @@ class App extends Component {
     currentNodeHolder: [],
     canClick: true,
     generation: 0,
-    gridSizeValue: 16
-  }
+    gridSizeValue: 16,
+  };
 
   componentDidMount() {
     this.init();
@@ -25,50 +29,53 @@ class App extends Component {
   init = () => {
     let nextNodeHolder = cellInitAlgo(this.state.gridSizeValue);
     this.setState({ currentNodeHolder: nextNodeHolder });
-  }
+  };
 
   handleGridSizeChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
     setTimeout(() => {
       this.init();
     }, 0);
-  }
+  };
 
   selectGridPreset = (e) => {
     let currentNodeHolder = this.state.currentNodeHolder.slice();
     let nextNodeHolder = cellPresetAlgo(currentNodeHolder, e.target.value);
     this.setState({ currentNodeHolder: nextNodeHolder });
-  }
+  };
 
   stepGeneration = () => {
     this.playGame();
-  }
+  };
 
   startGame = () => {
-    this.setState({canClick: false});
+    this.setState({ canClick: false });
     interval = setInterval(() => {
       this.playGame();
     }, 500);
-  }
+  };
 
   playGame = () => {
     let currentNodeHolder = this.state.currentNodeHolder.slice();
     let nextNodeHolder = CellAlgo(currentNodeHolder);
-    this.setState(prevState => {
-      return { currentNodeHolder: nextNodeHolder, generation: prevState.generation + 1 };
+    this.setState((prevState) => {
+      return {
+        currentNodeHolder: nextNodeHolder,
+        generation: prevState.generation + 1,
+      };
     });
-  }
+  };
 
   endGame = () => {
     clearInterval(interval);
     this.setState({ canClick: true });
-  }
+  };
 
   clearCells = () => {
     let currentNodeHolder = this.state.currentNodeHolder.slice();
     let nextNodeHolder = clearCellsAlgo(currentNodeHolder);
     this.setState({ currentNodeHolder: nextNodeHolder, generation: 0 });
-  }
+  };
 
   render() {
     return (
@@ -81,7 +88,7 @@ class App extends Component {
         <GenerationSection>
           <h2>Generation: {this.state.generation}</h2>
         </GenerationSection>
-        <ControlSection 
+        <ControlSection
           canClick={this.state.canClick}
           gridSizeValue={this.state.gridSizeValue}
           endGame={this.endGame}

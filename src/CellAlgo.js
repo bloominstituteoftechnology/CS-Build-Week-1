@@ -1,4 +1,3 @@
-
 export const cellInitAlgo = (gridSizeValue) => {
   let nextNodeHolder = [];
   class Node {
@@ -14,12 +13,11 @@ export const cellInitAlgo = (gridSizeValue) => {
   for (let i = 0; i < nextNodeHolder.length; i++) {
     for (let j = 0; j < nextNodeHolder.length; j++) {
       nextNodeHolder[i].push(new Node(id));
-      id++
+      id++;
     }
   }
   return nextNodeHolder;
-}
-
+};
 
 export const cellPresetAlgo = (currentNodeHolder, target) => {
   let len = currentNodeHolder.length;
@@ -33,15 +31,15 @@ export const cellPresetAlgo = (currentNodeHolder, target) => {
       }
     }
   }
-  switch(target) {
-    case 'Glider':
+  switch (target) {
+    case "Glider":
       currentNodeHolder[middleOfGrid][middleOfGrid].isAlive = true;
       currentNodeHolder[middleOfGrid][middleOfGrid + 1].isAlive = true;
       currentNodeHolder[middleOfGrid - 1][middleOfGrid - 1].isAlive = true;
       currentNodeHolder[middleOfGrid - 1][middleOfGrid + 1].isAlive = true;
       currentNodeHolder[middleOfGrid + 1][middleOfGrid].isAlive = true;
       break;
-      case 'Acorn':
+    case "Acorn":
       currentNodeHolder[middleOfGrid][middleOfGrid].isAlive = true;
       currentNodeHolder[middleOfGrid][middleOfGrid + 1].isAlive = true;
       currentNodeHolder[middleOfGrid][middleOfGrid + 4].isAlive = true;
@@ -49,8 +47,8 @@ export const cellPresetAlgo = (currentNodeHolder, target) => {
       currentNodeHolder[middleOfGrid][middleOfGrid + 6].isAlive = true;
       currentNodeHolder[middleOfGrid - 2][middleOfGrid + 1].isAlive = true;
       currentNodeHolder[middleOfGrid - 1][middleOfGrid + 3].isAlive = true;
-    break;
-    case 'Blinkers':
+      break;
+    case "Blinkers":
       currentNodeHolder[middleOfGrid][middleOfGrid].isAlive = true;
       currentNodeHolder[middleOfGrid][middleOfGrid + 1].isAlive = true;
       currentNodeHolder[middleOfGrid][middleOfGrid - 1].isAlive = true;
@@ -78,8 +76,8 @@ export const cellPresetAlgo = (currentNodeHolder, target) => {
       currentNodeHolder[middleOfGrid - 4][middleOfGrid - 4].isAlive = true;
       currentNodeHolder[middleOfGrid - 4][middleOfGrid - 5].isAlive = true;
       currentNodeHolder[middleOfGrid - 4][middleOfGrid - 6].isAlive = true;
-    break;
-    case 'Random':
+      break;
+    case "Random":
       let random;
       for (let i = 0; i < len; i++) {
         for (let j = 0; j < len; j++) {
@@ -89,13 +87,12 @@ export const cellPresetAlgo = (currentNodeHolder, target) => {
           }
         }
       }
-    break;
+      break;
     default:
-    break;
+      break;
   }
   return currentNodeHolder;
-}
-
+};
 
 export const CellAlgo = (currentNodeHolder) => {
   let len = currentNodeHolder.length;
@@ -113,45 +110,45 @@ export const CellAlgo = (currentNodeHolder) => {
     for (let j = 0; j < len; j++) {
       if (currentNodeHolder[i][j].isAlive) {
         let checker = 0;
-      
-        if (i > 0 && j > 0 && currentNodeHolder[i-1][j-1]) {
-          if (currentNodeHolder[i-1][j-1].isAlive) {
-            checker++
+
+        if (i > 0 && j > 0 && currentNodeHolder[i - 1][j - 1]) {
+          if (currentNodeHolder[i - 1][j - 1].isAlive) {
+            checker++;
           }
         }
-        if (i > 0 && currentNodeHolder[i-1][j]) {
-          if (currentNodeHolder[i-1][j].isAlive) {
-            checker++
+        if (i > 0 && currentNodeHolder[i - 1][j]) {
+          if (currentNodeHolder[i - 1][j].isAlive) {
+            checker++;
           }
         }
-        if (i > 0 && j < lenCheck && currentNodeHolder[i-1][j+1]) {
-          if (currentNodeHolder[i-1][j+1].isAlive) {
-            checker++
+        if (i > 0 && j < lenCheck && currentNodeHolder[i - 1][j + 1]) {
+          if (currentNodeHolder[i - 1][j + 1].isAlive) {
+            checker++;
           }
         }
-        if (j > 0 && currentNodeHolder[i][j-1]) {
-          if (currentNodeHolder[i][j-1].isAlive) {
-            checker++
+        if (j > 0 && currentNodeHolder[i][j - 1]) {
+          if (currentNodeHolder[i][j - 1].isAlive) {
+            checker++;
           }
         }
-        if (j < lenCheck && currentNodeHolder[i][j+1]) {
-          if (currentNodeHolder[i][j+1].isAlive) {
-            checker++
+        if (j < lenCheck && currentNodeHolder[i][j + 1]) {
+          if (currentNodeHolder[i][j + 1].isAlive) {
+            checker++;
           }
         }
-        if (j > 0 && i < lenCheck && currentNodeHolder[i+1][j-1]) {
-          if (currentNodeHolder[i+1][j-1].isAlive) {
-            checker++
+        if (j > 0 && i < lenCheck && currentNodeHolder[i + 1][j - 1]) {
+          if (currentNodeHolder[i + 1][j - 1].isAlive) {
+            checker++;
           }
         }
-        if (i < lenCheck && currentNodeHolder[i+1][j]) {
-          if (currentNodeHolder[i+1][j].isAlive) {
-            checker++
+        if (i < lenCheck && currentNodeHolder[i + 1][j]) {
+          if (currentNodeHolder[i + 1][j].isAlive) {
+            checker++;
           }
         }
-        if (i < lenCheck && j < lenCheck && currentNodeHolder[i+1][j+1]) {
-          if (currentNodeHolder[i+1][j+1].isAlive) {
-            checker++
+        if (i < lenCheck && j < lenCheck && currentNodeHolder[i + 1][j + 1]) {
+          if (currentNodeHolder[i + 1][j + 1].isAlive) {
+            checker++;
           }
         }
         if (checker === 2 || checker === 3) {
@@ -162,45 +159,45 @@ export const CellAlgo = (currentNodeHolder) => {
 
       if (!currentNodeHolder[i][j].isAlive) {
         let checker = 0;
-        
-        if (i > 0 && j > 0 && currentNodeHolder[i-1][j-1]) {
-          if (currentNodeHolder[i-1][j-1].isAlive) {
-            checker++
+
+        if (i > 0 && j > 0 && currentNodeHolder[i - 1][j - 1]) {
+          if (currentNodeHolder[i - 1][j - 1].isAlive) {
+            checker++;
           }
         }
-        if (i > 0 && currentNodeHolder[i-1][j]) {
-          if (currentNodeHolder[i-1][j].isAlive) {
-            checker++
+        if (i > 0 && currentNodeHolder[i - 1][j]) {
+          if (currentNodeHolder[i - 1][j].isAlive) {
+            checker++;
           }
         }
-        if (i > 0 && j < lenCheck && currentNodeHolder[i-1][j+1]) {
-          if (currentNodeHolder[i-1][j+1].isAlive) {
-            checker++
+        if (i > 0 && j < lenCheck && currentNodeHolder[i - 1][j + 1]) {
+          if (currentNodeHolder[i - 1][j + 1].isAlive) {
+            checker++;
           }
         }
-        if (j > 0 && currentNodeHolder[i][j-1]) {
-          if (currentNodeHolder[i][j-1].isAlive) {
-            checker++
+        if (j > 0 && currentNodeHolder[i][j - 1]) {
+          if (currentNodeHolder[i][j - 1].isAlive) {
+            checker++;
           }
         }
-        if (j < lenCheck && currentNodeHolder[i][j+1]) {
-          if (currentNodeHolder[i][j+1].isAlive) {
-            checker++
+        if (j < lenCheck && currentNodeHolder[i][j + 1]) {
+          if (currentNodeHolder[i][j + 1].isAlive) {
+            checker++;
           }
         }
-        if (j > 0 && i < lenCheck && currentNodeHolder[i+1][j-1]) {
-          if (currentNodeHolder[i+1][j-1].isAlive) {
-            checker++
+        if (j > 0 && i < lenCheck && currentNodeHolder[i + 1][j - 1]) {
+          if (currentNodeHolder[i + 1][j - 1].isAlive) {
+            checker++;
           }
         }
-        if (i < lenCheck && currentNodeHolder[i+1][j]) {
-          if (currentNodeHolder[i+1][j].isAlive) {
-            checker++
+        if (i < lenCheck && currentNodeHolder[i + 1][j]) {
+          if (currentNodeHolder[i + 1][j].isAlive) {
+            checker++;
           }
         }
-        if (i < lenCheck && j < lenCheck && currentNodeHolder[i+1][j+1]) {
-          if (currentNodeHolder[i+1][j+1].isAlive) {
-            checker++
+        if (i < lenCheck && j < lenCheck && currentNodeHolder[i + 1][j + 1]) {
+          if (currentNodeHolder[i + 1][j + 1].isAlive) {
+            checker++;
           }
         }
         if (checker === 3) {
@@ -210,7 +207,7 @@ export const CellAlgo = (currentNodeHolder) => {
     }
   }
   return nextNodeHolder;
-}
+};
 
 export const clearCellsAlgo = (currentNodeHolder) => {
   for (let i = 0; i < currentNodeHolder.length; i++) {
@@ -221,4 +218,4 @@ export const clearCellsAlgo = (currentNodeHolder) => {
     }
   }
   return currentNodeHolder;
-}
+};
