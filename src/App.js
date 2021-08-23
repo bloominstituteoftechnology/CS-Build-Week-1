@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { GlobalStyles } from "./GlobalStyles";
 import { Main, GenerationSection } from "./AppStyles";
 
 import GridSection from "./components/grid/GridSection";
@@ -79,27 +80,30 @@ class App extends Component {
 
   render() {
     return (
-      <Main>
-        <h1>Conway's Game of Life</h1>
-        <GridSection
-          currentNodeHolder={this.state.currentNodeHolder}
-          canClick={this.state.canClick}
-        />
-        <GenerationSection>
-          <h2>Generation: {this.state.generation}</h2>
-        </GenerationSection>
-        <ControlSection
-          canClick={this.state.canClick}
-          gridSizeValue={this.state.gridSizeValue}
-          endGame={this.endGame}
-          clearCells={this.clearCells}
-          startGame={this.startGame}
-          stepGeneration={this.stepGeneration}
-          selectGridPreset={this.selectGridPreset}
-          handleGridSizeChange={this.handleGridSizeChange}
-        />
-        <RulesSection />
-      </Main>
+      <>
+        <GlobalStyles />
+        <Main>
+          <h1>Conway's Game of Life</h1>
+          <GridSection
+            currentNodeHolder={this.state.currentNodeHolder}
+            canClick={this.state.canClick}
+          />
+          <GenerationSection>
+            <h2>Generation: {this.state.generation}</h2>
+          </GenerationSection>
+          <ControlSection
+            canClick={this.state.canClick}
+            gridSizeValue={this.state.gridSizeValue}
+            endGame={this.endGame}
+            clearCells={this.clearCells}
+            startGame={this.startGame}
+            stepGeneration={this.stepGeneration}
+            selectGridPreset={this.selectGridPreset}
+            handleGridSizeChange={this.handleGridSizeChange}
+          />
+          <RulesSection />
+        </Main>
+      </>
     );
   }
 }
