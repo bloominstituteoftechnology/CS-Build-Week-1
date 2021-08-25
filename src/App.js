@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { GlobalStyles } from "./GlobalStyles";
-import { Main, GenerationSection } from "./AppStyles";
 
 import GridSection from "./components/grid/GridSection";
 import ControlSection from "./components/controls/ControlSection";
 import RulesSection from "./components/rules/RulesSection";
+import Spacer from "./components/Spacer";
 
 import {
   cellInitAlgo,
@@ -14,7 +14,6 @@ import {
 } from "./CellAlgo";
 
 let interval;
-
 class App extends Component {
   state = {
     currentNodeHolder: [],
@@ -33,7 +32,7 @@ class App extends Component {
   };
 
   handleGridSizeChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ gridSizeValue: e.target.value });
     setTimeout(() => {
       this.init();
     }, 0);
@@ -82,15 +81,21 @@ class App extends Component {
     return (
       <>
         <GlobalStyles />
-        <Main>
-          <h1>Conway's Game of Life</h1>
+        <main>
+          <Spacer axis="vertical" size="15" />
+          <h1>{"Conway's"} Game of Life</h1>
+          <Spacer axis="vertical" size="15" />
           <GridSection
             currentNodeHolder={this.state.currentNodeHolder}
             canClick={this.state.canClick}
           />
-          <GenerationSection>
-            <h2>Generation: {this.state.generation}</h2>
-          </GenerationSection>
+          <Spacer axis="vertical" size="15" />
+          <section aria-labelledby="cell-generation-heading">
+            <h2 id="cell-generation-heading">
+              Generation: {this.state.generation}
+            </h2>
+          </section>
+          <Spacer axis="vertical" size="30" />
           <ControlSection
             canClick={this.state.canClick}
             gridSizeValue={this.state.gridSizeValue}
@@ -101,8 +106,10 @@ class App extends Component {
             selectGridPreset={this.selectGridPreset}
             handleGridSizeChange={this.handleGridSizeChange}
           />
+          <Spacer axis="vertical" size="30" />
           <RulesSection />
-        </Main>
+          <Spacer axis="vertical" size="30" />
+        </main>
       </>
     );
   }

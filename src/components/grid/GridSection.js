@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Row, Col } from "./GridSectionStyles";
+import { Grid, Row, Col, CellButton } from "./GridSectionStyles";
 
 class GridSection extends Component {
   toggleCell = (col) => {
@@ -25,7 +25,7 @@ class GridSection extends Component {
                 {this.props.currentNodeHolder[index].map((col) => {
                   return col.isAlive ? (
                     <Col>
-                      <button
+                      <CellButton
                         onClick={
                           this.props.canClick
                             ? () => this.toggleCell(col)
@@ -33,11 +33,11 @@ class GridSection extends Component {
                         }
                       >
                         <span className="visually-hidden">alive</span>
-                      </button>
+                      </CellButton>
                     </Col>
                   ) : (
                     <Col dead>
-                      <button
+                      <CellButton
                         onClick={
                           this.props.canClick
                             ? () => this.toggleCell(col)
@@ -45,7 +45,7 @@ class GridSection extends Component {
                         }
                       >
                         <span className="visually-hidden">dead</span>
-                      </button>
+                      </CellButton>
                     </Col>
                   );
                 })}

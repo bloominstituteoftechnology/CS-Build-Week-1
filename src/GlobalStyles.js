@@ -1,18 +1,17 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
   /* Base
   * ========================================================================== */
-  
+  :root {
+    --border-radius-primary: 3px;
+  }
+
   html {
     cursor: default;
     box-sizing: border-box;
     background: #000000;
-    background: linear-gradient(
-        to right,
-        #000000,
-        #434343
-    );
+    color: white;
     /*only break work when necessary and add hyphen*/
     overflow-wrap: anywhere;
     word-break: break-word;
@@ -153,11 +152,18 @@ export const GlobalStyles = createGlobalStyle`
   /* Text-level styles
   * ========================================================================== */
 
-  /*default header styles*/
+  /*default heading styles*/
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
     font-family: 'Space Mono', monospace;
+    color: rgba(248, 205, 218, 0.7);
+    text-shadow: 1px 1px 8px rgba(238, 130, 238, 0.7);
+  }
+
+  /*center headings*/
+  h1, h2, h3 {
+    text-align: center;
   }
 
   /*default text styles*/
@@ -252,5 +258,30 @@ export const GlobalStyles = createGlobalStyle`
 
   .hidden {
     display: none;
+  }
+`;
+
+export const RowFlexWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: ${(props) => props.main || "center"};
+  align-items: ${(props) => props.cross || "center"};
+  gap: ${(props) => props.gap || "0"};
+`;
+
+export const Button = styled.button`
+  color: rgba(248, 205, 218, 0.8);
+  text-shadow: 1px 1px 8px rgba(238, 130, 238, 0.7);
+  padding: 10px 20px;
+  background-color: rgba(248, 205, 218, 0.1);
+
+  border-radius: var(--border-radius-primary);
+  border: 1px solid rgba(238, 130, 238, 0.9);
+  box-shadow: 0.5px 0.5px 10px 0.5px rgba(238, 130, 238, 0.3);
+
+  &:hover {
+    cursor: pointer;
+    background: #134e5e;
+    background: linear-gradient(to right, #134e5e, #71b280);
   }
 `;
