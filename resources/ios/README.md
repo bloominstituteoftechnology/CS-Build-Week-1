@@ -1,6 +1,6 @@
 # iOS Hints and Resources
 
-Please refer to [this Training Kit module](https://learn.lambdaschool.com/ios2/module/recEEqjQwd10wS6Wl/) for references to custom drawing.
+Please refer to [this Training Kit module](https://learn.bloomtech.com/ios2/module/recEEqjQwd10wS6Wl/) for references to custom drawing.
 
 To create your grid for drawing, use a UIView subclass and the `draw` method.
 

@@ -5,7 +5,7 @@
 **NOTE: This is not a data science project.** If you're in the data
 science track and want to do a DS-specific project, jump to the [Data
 Science Build Week
-Repo](https://github.com/LambdaSchool/CS-Data-Science-Build-Week-1).
+Repo](https://github.com/BloomInstituteOfTechnology/CS-Data-Science-Build-Week-1).
 
 ---
 
@@ -151,7 +151,7 @@ Implement at least 3 of the following features:
   work you did to implement your project
 * Expand your simulation into the third dimension. Google `3D Conways
   Life`. Google for how to do 3D stuff on your platform. Web users might
-  check out [3D-ThreeJS](https://github.com/LambdaSchool/3D-ThreeJS),
+  check out [3D-ThreeJS](https://github.com/BloomInstituteOfTechnology/3D-ThreeJS),
   and iOS might look at [SceneKit](https://developer.apple.com/scenekit/).
 * Explore alternate algorithms for finding the nth generation, such
   as [Hashlife](https://en.wikipedia.org/wiki/Hashlife)

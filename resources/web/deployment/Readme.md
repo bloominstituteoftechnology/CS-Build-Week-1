@@ -44,10 +44,10 @@ rm -rf node_modules/gh-pages/.cache
 
 ### 5. Ensure GitHub Pages is enabled with your repository
    * Go to _Settings_
-   ![settings](https://github.com/LambdaSchool/Conways-Life/blob/master/github-settings.png?raw=true)
+   ![settings](https://github.com/BloomInstituteOfTechnology/Conways-Life/blob/master/github-settings.png?raw=true)
    * Enable GitHub Pages
    * Set the source to be the _gh-pages branch_
-   ![source](https://github.com/LambdaSchool/Conways-Life/blob/master/pages-source.png?raw=true)
+   ![source](https://github.com/BloomInstituteOfTechnology/Conways-Life/blob/master/pages-source.png?raw=true)
    
 ### 6. View your app at **https://[github-username].github.io/[github-repo-name]/**
 
